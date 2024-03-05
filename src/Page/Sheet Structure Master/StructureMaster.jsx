@@ -129,7 +129,7 @@ function StructureMaster() {
             >
               <PlusOutlined style={{ fontSize: "20px" }} /> &nbsp;
               New
-            </Button>
+            </Button> 
             <Button
               variant="contained"
               style={{ width: "130px" }}
