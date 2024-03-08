@@ -10,7 +10,7 @@
     z-index: 1;
     text-align: center;
     font-size: 16px;
-    background: linear-gradient(to top, #EEF5FF, #B7C9F2);
+    background: linear-gradient(to top, #c1d1f1, #BCCEF8);
     padding: 9px;
 }
 
@@ -18,7 +18,7 @@
   padding: 10px;
 }
 
-/*Popup*/
+/*Popup Sheet Structure Master*/
 .popup{
     display: flex;
     justify-content: center;
@@ -48,7 +48,7 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    width: 700px;
+    width: 800px;
     height: auto;
     border-radius: 10px !important;
   }
@@ -60,7 +60,11 @@
   }
 
   .gridContainer{
+    display: flex;
     align-items: center;
     align-content: center;
-    padding: 3px;
+    width: 100%;
+    text-align: left;
+    margin-left: 4.3%;
+    padding: 0.4%;
   }

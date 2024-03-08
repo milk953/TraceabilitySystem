@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from "react";
+import "/src/Page/Style.css";
+// import "./master.css";
+import Popup from "./Popup";
+import { Empty } from "antd";
+import Hearder from "../Header/Hearder";
 import {
   TextField,
   Table,
@@ -14,6 +19,7 @@ import {
   TableContainer,
   Paper,
   Box,
+  Tooltip,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -27,12 +33,10 @@ import {
   FlagFilled,
   InfoCircleOutlined,
 } from "@ant-design/icons";
-import "./master.css";
-import Popup from "./Popup";
-import { Empty } from "antd";
 
 
-function StructureMaster() {
+
+function SheetMaster() {
 
   const [ShowData, setShowData] = useState(false);
   const [checkHead, setCheckHead] = useState("hidden"); //ตัวแปรเช็คค่าของ ตาราง
@@ -63,13 +67,18 @@ function StructureMaster() {
     setCheckData("visible")
   }
 
+  const OpenEdit = async () => {
+    PopupOpen();
+  }
+
 
   return (
     <>
+    <Hearder/>
       <Popup isOpen={OpenPopup} onClose={PopupClose} />
       <div
         style={{
-          marginTop: "0px",
+          marginTop: "60px",
           marginLeft: "90px",
           justifyContent: "left",
           display: "flex",
@@ -129,7 +138,7 @@ function StructureMaster() {
             >
               <PlusOutlined style={{ fontSize: "20px" }} /> &nbsp;
               New
-            </Button> 
+            </Button>
             <Button
               variant="contained"
               style={{ width: "130px" }}
@@ -191,14 +200,22 @@ function StructureMaster() {
             <TableBody style={{ overflowY: "auto" }}>
               <TableRow>
                 <TableCell>
-                  <EditNoteIcon style={{ color: "#F3B664", fontSize: "30px" }} />
+                  <Tooltip title="Edit">
+                    <EditNoteIcon
+                      style={{ color: "#F3B664", fontSize: "30px" }}
+                      onClick={OpenEdit}
+                    />
+                  </Tooltip>
                 </TableCell>
                 <TableCell>
-                  <DeleteForeverIcon
-                    style={{
-                      color: "#EF4040",
-                      fontSize: "30",
-                    }} />
+                  <Tooltip title="Delete">
+                    <DeleteForeverIcon
+                      style={{
+                        color: "#EF4040",
+                        fontSize: "30",
+                      }}
+                    />
+                  </Tooltip>
                 </TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
@@ -252,7 +269,7 @@ function StructureMaster() {
         </TableContainer>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default StructureMaster
+export default SheetMaster;

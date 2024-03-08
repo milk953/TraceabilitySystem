@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./master.css";
+import "/src/Page/Style.css";
 import {
   Typography,
   FormControl,
@@ -44,220 +44,322 @@ function Popup({ isOpen, onClose }) {
             </Typography>
           </CardContent>
           <Box sx={{ flexGrow: 1, marginBottom: "10px" }}>
-            <Grid style={{
-              width: "100%",
-              textAlign: "left",
-              marginLeft: 30,
-            }}>
-              <Grid container className="gridContainer">
+            <Grid
+              container
+              className="gridContainer"
+              spacing={0}
+            >
+              <Grid item xs={2.4}>
                 <Typography>
                   SHT Code :
                 </Typography>
+              </Grid>
+              <Grid item xs={3.6}>
                 <TextField
                   id="txtSHTCode"
                   variant="outlined"
                   size="small"
-                  style={{ width: "150px", marginLeft: "55px" }}
+                  style={{ width: "71%" }}
                 />
               </Grid>
+            </Grid>
 
-              <Grid container className="gridContainer">
+
+            <Grid
+              container
+              className="gridContainer"
+              spacing={0}
+            >
+              <Grid item xs={2.4}>
                 <Typography>
                   SHT Name :
                 </Typography>
+              </Grid>
+              <Grid item xs={3.6}>
                 <TextField
                   id="txtSHTName"
                   variant="outlined"
                   size="small"
-                  style={{ width: "490px", marginLeft: "51px" }}
+                  style={{ width: "238%" }}
                 />
               </Grid>
-              <Grid container className="gridContainer">
+            </Grid>
+            <Grid
+              container
+              className="gridContainer"
+              spacing={0}
+            >
+              <Grid item xs={2.4}>
                 <Typography>
                   Plant Flag :
                 </Typography>
+              </Grid>
+              <Grid item xs={3.6}>
                 <Checkbox
-                  style={{ marginLeft: "46px" }}
+                  style={{ padding: "0" }}
                   checked={isPlantChecked}
                   onChange={(e) => setIsPlantChecked(e.target.checked)}
                 />
+              </Grid>
+              <Grid item xs={2.4}>
                 <Typography
                   style={{
-                    marginLeft: isPlantChecked ? "209px" : "0",
                     display: isPlantChecked ? 'block' : 'none',
                   }}
                 >
                   Plant Code :
                 </Typography>
+              </Grid>
+              <Grid item xs={3.6}>
                 <TextField
                   id="txtPlantCode"
                   variant="outlined"
                   size="small"
                   style={{
-                    width: "150px",
-                    marginLeft: "10px",
+                    width: "71%",
                     display: isPlantChecked ? 'block' : 'none',
                   }}
                 />
               </Grid>
+            </Grid>
 
-              {isPlantChecked && (
-                <Grid container className="gridContainer">
+            {isPlantChecked && (
+              <Grid
+                container
+                className="gridContainer"
+                spacing={0}
+              >
+                <Grid item xs={2.4}>
                   <Typography>
                     Plant Start Digit :
                   </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
                   <TextField
                     id="txtPStartDigit"
                     variant="outlined"
                     size="small"
-                    style={{ width: "150px", marginLeft: "17px" }}
+                    style={{ width: "71%", }}
                   />
-                  <Typography style={{ marginLeft: "62px" }}>
+                </Grid>
+                <Grid item xs={2.4}>
+                  <Typography>
                     Plant End Digit :
                   </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
                   <TextField
                     id="txtPEndDigit"
                     variant="outlined"
                     size="small"
-                    style={{ width: "150px", marginLeft: "10px" }}
+                    style={{ width: "71%", }}
                   />
                 </Grid>
-              )}
+              </Grid>
+            )}
 
-              <Grid container className="gridContainer">
+            <Grid
+              container
+              className="gridContainer"
+              spacing={0}
+            >
+              <Grid item xs={2.4}>
                 <Typography>
                   Lot Flag :
                 </Typography>
-                <Checkbox 
-                style={{ marginLeft: "60px" }}y
-                checked={isLotChecked}
-                onChange={(e) => setIsLotChecked(e.target.checked)}
-                 />
               </Grid>
+              <Grid item xs={3.6}>
+                <Checkbox
+                  style={{ padding: "0" }}
+                  checked={isLotChecked}
+                  onChange={(e) => setIsLotChecked(e.target.checked)}
+                />
+              </Grid>
+            </Grid>
 
-              {isLotChecked && (
-              <Grid container className="gridContainer">
-                <Typography>
-                  Lot Start Digit :
-                </Typography>
-                <TextField
-                  id="txtLStartDigit"
-                  variant="outlined"
-                  size="small"
-                  style={{ width: "150px", marginLeft: "31px" }}
-                />
-                <Typography style={{ marginLeft: "77px" }}>
-                  Lot End Digit :
-                </Typography>
-                <TextField
-                  id="txtLEndDigit"
-                  variant="outlined"
-                  size="small"
-                  style={{ width: "150px", marginLeft: "10px" }}
-                />
+            {isLotChecked && (
+              <Grid
+                container
+                className="gridContainer"
+                spacing={0}
+              >
+                <Grid item xs={2.4}>
+                  <Typography>
+                    Lot Start Digit :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
+                  <TextField
+                    id="txtLStartDigit"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: "71%" }}
+                  />
+                </Grid>
+                <Grid item xs={2.4}>
+                  <Typography>
+                    Lot End Digit :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
+                  <TextField
+                    id="txtLEndDigit"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: "71%" }}
+                  />
+                </Grid>
               </Grid>
-              )}
-              
-              <Grid container className="gridContainer">
+            )}
+
+            <Grid container
+              className="gridContainer"
+              spacing={0}
+            >
+              <Grid item xs={2.4}>
                 <Typography>
                   Model Flag :
                 </Typography>
-                <Checkbox 
-                style={{ marginLeft: "38px" }}
-                checked={isModelChecked}
-                onChange={(e) => setIsModelChecked(e.target.checked)} 
+              </Grid>
+              <Grid item xs={3.6}>
+                <Checkbox
+                  style={{ padding: "0" }}
+                  checked={isModelChecked}
+                  onChange={(e) => setIsModelChecked(e.target.checked)}
                 />
               </Grid>
-              
-              {isModelChecked && (
-              <Grid container className="gridContainer">
-                <Typography>
-                  Model Start Digit :
-                </Typography>
-                <TextField
-                  id="txtMStartDigit"
-                  variant="outlined"
-                  size="small"
-                  style={{ width: "150px", marginLeft: "10px" }}
-                />
-                <Typography style={{ marginLeft: "56px" }}>
-                  Model End Digit :
-                </Typography>
-                <TextField
-                  id="txtMEndDigit"
-                  variant="outlined"
-                  size="small"
-                  style={{ width: "150px", marginLeft: "10px" }}
-                />
-              </Grid>
-              )}
+            </Grid>
 
-              <Grid container className="gridContainer">
+            {isModelChecked && (
+              <Grid
+                container
+                className="gridContainer"
+                spacing={0}
+              >
+                <Grid item xs={2.4}>
+                  <Typography>
+                    Model Start Digit :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
+                  <TextField
+                    id="txtMStartDigit"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: "71%" }}
+                  />
+                </Grid>
+                <Grid item xs={2.4}>
+                  <Typography>
+                    Model End Digit :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
+                  <TextField
+                    id="txtMEndDigit"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: "71%" }}
+                  />
+                </Grid>
+              </Grid>
+            )}
+
+            <Grid
+              container
+              className="gridContainer"
+              spacing={0}
+            >
+              <Grid item xs={2.4}>
                 <Typography>
                   Seq Flag :
                 </Typography>
-                <Checkbox 
-                style={{ marginLeft: "54px" }}
-                checked={isSeqChecked}
-                onChange={(e) => setIsSeqChecked(e.target.checked)} 
+              </Grid>
+              <Grid item xs={3.6}>
+                <Checkbox
+                  style={{ padding: "0" }}
+                  checked={isSeqChecked}
+                  onChange={(e) => setIsSeqChecked(e.target.checked)}
                 />
-                <Typography 
-                style={{ 
-                  marginLeft: isSeqChecked ? "205px" : "0",
-                  display: isSeqChecked ? 'block' : 'none',
-                }}>
+              </Grid>
+              <Grid item xs={2.4}>
+                <Typography
+                  style={{
+                    display: isSeqChecked ? 'block' : 'none',
+                  }}>
                   Seq Format :
                 </Typography>
+              </Grid>
+              <Grid item xs={3.6}>
                 <TextField
                   id="txtSeqFormat"
                   variant="outlined"
                   size="small"
-                  style={{ 
-                    width: "150px", 
-                    marginLeft: isSeqChecked ? "10px" : "0",
-                    display: isSeqChecked ? 'block' : 'none', 
+                  style={{
+                    width: "71%",
+                    display: isSeqChecked ? 'block' : 'none',
                   }}
                 />
               </Grid>
+            </Grid>
 
-              {isSeqChecked && (
-              <Grid container className="gridContainer">
-                <Typography>
-                  Seq Start Digit :
-                </Typography>
-                <TextField
-                  id="txtSeqStartDigit"
-                  variant="outlined"
-                  size="small"
-                  style={{ width: "150px", marginLeft: "25px" }}
-                />
-                <Typography style={{ marginLeft: "71px" }}>
-                  Seq End Digit :
-                </Typography>
-                <TextField
-                  id="txtSeqEndDigit"
-                  variant="outlined"
-                  size="small"
-                  style={{ width: "150px", marginLeft: "10px" }}
-                />
+            {isSeqChecked && (
+              <Grid
+                container
+                className="gridContainer"
+                spacing={0}
+              >
+                <Grid item xs={2.4}>
+                  <Typography>
+                    Seq Start Digit :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
+                  <TextField
+                    id="txtSeqStartDigit"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: "71%" }}
+                  />
+                </Grid>
+                <Grid item xs={2.4}>
+                  <Typography>
+                    Seq End Digit :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3.6}>
+                  <TextField
+                    id="txtSeqEndDigit"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: "71%" }}
+                  />
+                </Grid>
               </Grid>
-              )}
+            )}
 
-              <Grid>
+            <Grid
+              container
+              className="gridContainer"
+              spacing={0}
+            >
+              <Grid item xs={2}>
                 <Button
                   variant="contained"
                   style={{
-                    width: "100px",
-                    marginTop: "10px",
+                    width: "80%",
+                    marginTop: "7%",
                   }}
                 >
                   Save
-                </Button>&nbsp;&nbsp;
+                </Button>
+              </Grid>
+              <Grid item xs={2}>
                 <Button
                   variant="contained"
                   style={{
-                    width: "100px",
-                    marginTop: "10px",
+                    width: "80%",
+                    marginTop: "7%",
                   }}
                   color="error"
                   onClick={onClose}

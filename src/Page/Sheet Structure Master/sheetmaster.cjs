@@ -13,3 +13,9 @@ const FPC = {
     password: "fpc",
     connectString: "PCTTLIV",
 };
+
+const SMT = {
+    user: "SMT",
+    password: "SMT",
+    connectString: "NAPKDBSV",
+};
