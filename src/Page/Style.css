@@ -40,8 +40,6 @@
     width: 60%; /* Adjust the width as needed */
     height: 70%;
     text-align: center;
-    overflow: auto;
-  
   }
 
   .StructurePopup{
@@ -50,6 +48,7 @@
     background-color: #fff;
     width: 800px;
     height: auto;
+    overflow: auto;
     border-radius: 10px !important;
   }
 

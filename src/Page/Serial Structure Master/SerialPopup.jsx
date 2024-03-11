@@ -40,7 +40,8 @@ function SerialPopup({ isOpen, onClose }) {
 
     return (
         <div className="popup">
-            <div className="popupcontect">
+            <div className="popupcontect"
+                style={{ overflowY: 'auto', maxHeight: '80vh' }}>
                 <Card className="StructurePopup">
                     <CardContent>
                         <Typography className="HeadPopup"
@@ -673,6 +674,7 @@ function SerialPopup({ isOpen, onClose }) {
                         </Grid>
                     </Box>
                 </Card>
+
             </div>
         </div >
     )
