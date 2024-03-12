@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-// import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar/sidebar";
 import Avatar from "@mui/material/Avatar";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { deepOrange, deepPurple } from "@mui/material/colors";
@@ -14,6 +14,13 @@ import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 
 function Hearder() {
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+      };
+
     return (
         <>
             <Box sx={{ flexGrow: 1 }}>
@@ -30,11 +37,11 @@ function Hearder() {
                             color="inherit"
                             aria-label="menu"
                             sx={{ mr: 2 }}
-                        //   onClick={toggleSidebar}
+                            onClick={toggleSidebar}
                         >
                             <MenuIcon />
                         </IconButton>
-                        {/* <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} /> */}
+                        <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             TRACEABILITY SYSTEM
                         </Typography>

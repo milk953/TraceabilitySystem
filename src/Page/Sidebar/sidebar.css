@@ -1,0 +1,451 @@
+
+.ListItem {
+    cursor: pointer;
+    
+    color: rgb(119, 118, 118);
+    width: 95%;
+    margin-left: 5px;
+  }
+  
+  .ListItem:hover {
+    background-color: #bae7ff; /* เมื่อโฮเวอร์ */
+    border-radius: 10px;
+    color: #40a9ff;
+    width: 95%;
+    margin-left: 5px;
+  }
+  
+  /* สไตล์สำหรับรายการรายการย่อย */
+  .SubMenuItem {
+    cursor: pointer;
+    margin-left: 20px;
+    
+    width: 50%;
+  }
+  
+  .SubMenuItem:hover {
+    background-color: #bae7ff; /* เมื่อโฮเวอร์ */
+    border-radius: 10px;
+    color: #40a9ff;
+    width: 90%;
+  }
+  
+  .MuiBox-root.css-1b9mqa5 {
+    border: 1px solid rgb(197, 192, 192);
+    margin-left: 30%;
+    margin-top: 5%;
+  }
+  .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiTableContainer-root.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+    border: 1px solid rgb(197, 192, 192);
+    margin: 10%;
+    margin-top: 5%;
+  }
+  
+  .Table {
+    text-align: center;
+    padding-top: 2%;
+  }
+  .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiTableContainer-root.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+    margin-left: 25%;
+  }
+  .Table {
+    text-align: center;
+  }
+  
+  .Table th,
+  .Table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* สร้างสีพื้นหลังสำหรับแถวที่เลื่อนเมาส์เหนือ */
+  .Table tr:hover {
+    background-color: #f4efef;
+  }
+  
+  .Headslide {
+    font-size: 16px;
+    color: rgb(119, 118, 118);
+  }
+  /* Styles for the popup container */
+  .popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(60, 60, 60, 0.5);
+    z-index: 1000; /* Ensure the popup is above other elements */
+  }
+  
+  .popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 400px; /* Adjust the width as needed */
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Styles for labels */
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Styles for input fields */
+  input {
+    width: 95%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px;
+  }
+  
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px;
+  }
+  
+  #close {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  #save {
+    background-color: #14933a;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  #save:hover {
+    background-color: #429c5d;
+  }
+  #close:hover {
+    background-color: rgb(249, 116, 129);
+  }
+  h2 {
+    margin-top: 0;
+  }
+  .SearchMaster {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    margin: auto;
+    margin-top: 5%;
+    width: 500px;
+    border: 1px solid rgb(198, 193, 193);
+    border-radius: 10px;
+  }
+  
+  #MenuMaster {
+    border-radius: 10px;
+    padding-right: 30px;
+    padding-left: 10px;
+    /*// overflow: hidden; เพิ่ม overflow เพื่อให้เส้นขอบโค้งปรากฏ */
+  }
+  
+  /* เพิ่มรูปแบบสำหรับเซลล์ <td> ในตาราง */
+  #MenuMaster td {
+    padding: 8px;
+  }
+  
+  /* เพิ่มรูปแบบสำหรับส่วนหัว <th> ในตาราง (ถ้ามี) */
+  #MenuMaster th {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  /* เพิ่มรูปแบบสำหรับเลือกอีลิเมนต์ <select> ในตาราง */
+  #MenuMaster select {
+    width: 100%;
+    padding: 4px;
+  }
+  #titleMenu {
+    text-align: center;
+    padding-top: 10px;
+  }
+  
+  #SearchTB {
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  button {
+    border-radius: 8px;
+  
+    border: 1px solid transparent;
+  
+    padding: 0.6em 1.2em;
+  
+    font-size: 1em;
+  
+    font-weight: 500;
+  
+    font-family: inherit;
+  
+    background-color: #82b9d8;
+    color: #fff;
+  
+    cursor: pointer;
+  
+    transition: border-color 0.25s;
+    margin-bottom: 5px;
+  }
+  
+  /* เพิ่มการเลื่อนในตาราง */
+  .table-container {
+    max-height: 400px; /* ปรับความสูงตารางตามที่คุณต้องการ */
+    border: 1px solid rgb(191, 186, 186);
+    border-radius: 5px;
+  }
+  
+  /* ทำให้หัวตารางคงอยู่ด้านบน */
+  .tableMaster thead {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff; /* สีพื้นหลังของหัวตาราง */
+    z-index: 1; /* ทำให้หัวตารางอยู่ด้านบนของเนื้อหา */
+  }
+  
+  .tableMaster {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .tableMaster th,
+  .tableMaster td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* สร้างสีพื้นหลังสำหรับแถวที่เลื่อนเมาส์เหนือ */
+  .tableMaster tr:hover {
+    background-color: #f3e8e8;
+  }
+  #TableH {
+    margin-top: 5%;
+    font-size: 16px;
+  }
+  /* เพิ่มการเลื่อนในตาราง */
+  .table-container {
+    max-height: 400px; /* ปรับความสูงตารางตามที่คุณต้องการ */
+    overflow-y: auto;
+    border-radius: 1px solid red;
+  }
+  
+  #table {
+    border: 1px solid rgb(198, 193, 193);
+    margin-left: 25%;
+    border-radius: 10px;
+    padding-right: 30px;
+    padding-left: 10px;
+  }
+  
+  
+  
+  #titleMenu {
+    text-align: center;
+    padding-top: 10px;
+  }
+  
+  #SearchTB {
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  button {
+    border-radius: 8px;
+  
+    border: 1px solid transparent;
+  
+    padding: 0.6em 1.2em;
+  
+    font-size: 1em;
+  
+    font-weight: 500;
+  
+    font-family: inherit;
+  
+    background-color: #82b9d8;
+    color: #fff;
+  
+    cursor: pointer;
+  
+    transition: border-color 0.25s;
+    margin-bottom: 5px;
+  }
+  .button {
+    text-align: center;
+  }
+  
+  
+  #frame {
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .hidden-td {
+    display: none;
+  }
+  
+  #TableH {
+    margin-top: 1%;
+    font-size: 16px;
+  }
+  #graph {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  /* เพิ่มการเลื่อนในตาราง */
+  .table-container {
+    max-height: 400px;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+    text-align: center;
+  }
+  
+  #bt th {
+    border-radius: 5px;
+    background-color: #a3daab;
+    padding: 8px;
+  }
+  
+  #bt td {
+    vertical-align: top;
+    width: 200px;
+  }
+  #bt button {
+    margin-top: 5px;
+    border-radius: 25px;
+    background-color: rgb(245, 147, 147);
+  }
+  
+  #backhome {
+    background-color: #20924c;
+  }
+  #bt button:hover {
+    background-color: #f1bdbd;
+  }
+  
+  button:hover {
+    background-color: #9bd2f3;
+  }
+  
+  #backhome:hover {
+    background-color: #46b872;
+  }
+  
+  .RoleMaster {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 7%;
+    width: 500px;
+    border: 1px solid rgb(198, 193, 193);
+    border-radius: 10px;
+  }
+  .TableRole {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    max-width: 500px;
+  }
+  
+  .custom-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff; /* สีพื้นหลังของหัวตาราง */
+    z-index: 1; /* ทำให้หัวตารางอยู่ด้านบนของเนื้อหา */
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* สร้างสีพื้นหลังสำหรับแถวที่เลื่อนเมาส์เหนือ */
+  .tableMaster tr:hover {
+    background-color: #f3e8e8;
+  }
+  
+  /* Testing*/
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+  }
+  
+  .dropdown-button {
+    background-color: #ffffff00;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .dropdown-button:hover {
+    background-color: #ffffff00;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 300px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .dropdown-menu li {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu li:hover {
+    background-color: #9be4f3;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    border-radius: 5%;
+  }
+  .ListItem_data0 {
+    margin-right: 5px;
+  }
+  .hamburgermenu:hover .Bar{
+    display: block;
+  }
