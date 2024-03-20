@@ -63,7 +63,7 @@
   .HeadPopup{
     font-size: 50;
     text-align: center;
-    background-color: #B7C9F2;
+    background-color: #aec1ec;
   }
 
   .gridContainer{
@@ -73,5 +73,5 @@
     width: 100%;
     text-align: left;
     margin-left: 4.3%;
-    padding: 0.4%;
+    padding: 0.3%;
   }

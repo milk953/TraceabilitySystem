@@ -63,7 +63,10 @@ function SerialMaster() {
         setCheckData("visible")
     }
 
-    const OpenEdit = async () => {
+    const [selectedRowData, setSelectedRowData] = useState(null);
+
+    const OpenEdit = async (rowData) => {
+        setSelectedRowData(rowData);
         PopupOpen();
     }
 
@@ -71,7 +74,7 @@ function SerialMaster() {
     return (
         <>
             <Hearder />
-            <Popup isOpen={OpenPopup} onClose={PopupClose} />
+            <Popup isOpen={OpenPopup} onClose={PopupClose} rowData={selectedRowData} />
             <div
                 style={{
                     marginTop: "60px",

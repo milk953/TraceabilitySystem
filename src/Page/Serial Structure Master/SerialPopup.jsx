@@ -21,7 +21,7 @@ import {
     Checkbox,
 } from "@mui/material";
 
-function SerialPopup({ isOpen, onClose }) {
+function SerialPopup({ isOpen, onClose, rowData }) {
     if (!isOpen) {
         return null;
     }
@@ -36,7 +36,13 @@ function SerialPopup({ isOpen, onClose }) {
     const [isCheckSum, setIsCheckSum] = useState(false);
     const [isConfig, setIsConfig] = useState(false);
 
+    const handleSaveClick = () => {
 
+    }
+  
+    const ClickUpdate = () => {
+  
+    }
 
     return (
         <div className="popup">
@@ -654,6 +660,7 @@ function SerialPopup({ isOpen, onClose }) {
                                         width: "80%",
                                         marginTop: "7%",
                                     }}
+                                    onClick={rowData ? ClickUpdate : handleSaveClick}
                                 >
                                     Save
                                 </Button>
