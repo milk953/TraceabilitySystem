@@ -121,20 +121,12 @@ function Popup({ isOpen, onClose, item, searchFunction}) {
         const response = await axios.post("http://localhost:80/CheckSHTCode",{
           sht_code: TXT_SHT_Code
         });
-        const existingNumbers = response.data;
-    
-        let runningNumber = 0;
-        if (existingNumbers && existingNumbers.length > 0) {
-          // หาเลขถัดไปจากเลขในฐานข้อมูล
-          const maxNumber = Math.max(...existingNumbers);
-          runningNumber = maxNumber + 1;
-        } else {
-          // หากไม่มีข้อมูลในฐานข้อมูล ให้เริ่มต้นเลขใหม่ที่ 0
-          runningNumber = 0;
-        }
-    
-        const paddedNumber = runningNumber.toString().padStart(5, '0');
-        return paddedNumber;
+        const get_run_seq = await response.data;
+        const lastValue =
+            get_run_seq.length > 0 ? get_run_seq[get_run_seq.length - 1][0] : 0;
+          const incrementedValue = lastValue + 1;
+          const new_run_seq = [[incrementedValue]]; 
+          return new_run_seq; 
       } catch (error) {
         console.error('Error fetching or updating running number:', error);
         return '00000'; 
