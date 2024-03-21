@@ -247,7 +247,15 @@ function SheetMaster() {
           }}
         >
           <Table
-            sx={{ minWidth: 650 }}
+            sx={{ 
+              minWidth: 650,
+              '& .MuiTableHead-root': {
+                position: 'sticky',
+                top: 0,
+                zIndex: 1,
+                background: 'white',
+              },
+            }}
             aria-label="simple table"
           >
             <TableHead>

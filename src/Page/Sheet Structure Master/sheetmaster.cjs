@@ -256,19 +256,16 @@ module.exports.postCodeName = async function (req, res) {
       };
 
     module.exports.postSHTCode = async function (req, res) {
-      //app.post("/search/CodeName", async (req, res) => {
-        const { sht_code } = req.body;
 
         const searchQuery = `
-        SELECT MAX(tstm_sht_struc_code)
+        SELECT 'SM' || TO_CHAR(MAX(CAST(SUBSTRING(TSTM_SHT_STRUC_CODE, 3) AS INTEGER))+1, 'FM00000') as F_RUNNIUNG
         FROM "FETLPSQL_A1"."Traceability".trc_sheet_structure_mst
-        where tstm_sht_struc_code = '${sht_code}' 
       `;
     
         try {
           const result = await client.query(searchQuery);
           const foundDataArray = result.rows;
-          res.json(foundDataArray);
+          res.json(foundDataArray); 
           //console.log("Path",foundDataArray)
         } catch (error) {
           console.error("Error searching data:", error);

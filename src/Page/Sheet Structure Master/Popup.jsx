@@ -25,7 +25,7 @@ import axios from "axios";
 
 
 
-function Popup({ isOpen, onClose, item, searchFunction}) {
+function Popup({ isOpen, onClose, item, searchFunction }) {
 
   if (!isOpen) {
     return null;
@@ -85,18 +85,33 @@ function Popup({ isOpen, onClose, item, searchFunction}) {
 
   // const getRunningNumber = async () => {
   //   try {
-  //     const response = await axios.post("http://localhost:80/CheckSHTCode");
-  //     const latestNumber = response.data;
 
-  //     const nextNumber = latestNumber + 1;
-  //     const paddedNumber = nextNumber.toString().padStart(5, '0');
+  //     const response = await axios.post("http://localhost:80/CheckSHTCode");
       
-  //     return paddedNumber;
   //   } catch (error) {
   //     console.error('Error fetching or updating running number:', error);
-  //     return '00000'; 
+  //     return '00000';
   //   }
   // };
+
+  useEffect(() => {
+    if (STATUS_P === "NEW") {
+      const fetchData = async () => {
+        try {
+          const response = await axios.post("http://localhost:80/CheckSHTCode", {});
+          const data = response.data;
+          const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
+          setTXT_SHT_Code(new_run_seq);
+        } catch (error) {
+          console.error('Error fetching or updating running number:', error);
+          setTXT_SHT_Code('00000');
+        }
+      };
+  
+      fetchData();
+    }
+  }, [STATUS_P]);
+
 
   useEffect(() => {
 
@@ -108,38 +123,13 @@ function Popup({ isOpen, onClose, item, searchFunction}) {
         .padStart(2, "0")}/${currentDate.getFullYear()}`;
     setDate_show(formattedDate);
 
-    // let runningNumber = 0;
-    // const getRunningNumber = () => {
-    //   let paddedNumber = runningNumber.toString().padStart(5, '0');
-    //   runningNumber++;
-    //   return paddedNumber;
-    // };
-
-    const getRunningNumber = async () => {
-      try {
-
-        const response = await axios.post("http://localhost:80/CheckSHTCode",{
-          sht_code: TXT_SHT_Code
-        });
-        const get_run_seq = await response.data;
-        const lastValue =
-            get_run_seq.length > 0 ? get_run_seq[get_run_seq.length - 1][0] : 0;
-          const incrementedValue = lastValue + 1;
-          const new_run_seq = [[incrementedValue]]; 
-          return new_run_seq; 
-      } catch (error) {
-        console.error('Error fetching or updating running number:', error);
-        return '00000'; 
-      }
-    };
-
     if (STATUS_P === "NEW") {
-      setTXT_SHT_Code("SM" + getRunningNumber());
+      setTXT_SHT_Code("");
       setTXT_SHT_Name("");
       setCheck_Plant_Flag("");
       setTXT_Plant_Code("");
       setTXT_Plant_Start("");
-      setTXT_Plant_End("")
+      setTXT_Plant_End("");
       setCheck_Lot_Flag("");
       setTXT_Lot_Start("");
       setTXT_Lot_End("");
@@ -152,7 +142,6 @@ function Popup({ isOpen, onClose, item, searchFunction}) {
       setTXT_Seq_End("");
       setuser_create(UserLogin);
       setipaddress(ip);
-
     } else {
       console.log("CASE EDIT", item);
       setTXT_SHT_Code(item.tstm_sht_struc_code);
@@ -251,19 +240,19 @@ function Popup({ isOpen, onClose, item, searchFunction}) {
   useEffect(() => {
     if (STATUS_P === "EDIT") {
 
-    if (Check_Plant_Flag === "Y") {
-      setIsPlantChecked(true);
+      if (Check_Plant_Flag === "Y") {
+        setIsPlantChecked(true);
+      }
+      if (Check_Lot_Flag === "Y") {
+        setIsLotChecked(true);
+      }
+      if (Check_Model_Flag === "Y") {
+        setIsModelChecked(true);
+      }
+      if (Check_Seq_Flag === "Y") {
+        setIsSeqChecked(true);
+      }
     }
-    if (Check_Lot_Flag === "Y") {
-      setIsLotChecked(true);
-    }
-    if (Check_Model_Flag === "Y") {
-      setIsModelChecked(true);
-    } 
-    if (Check_Seq_Flag === "Y") {
-      setIsSeqChecked(true);
-    } 
-  }
   }, [STATUS_P, Check_Plant_Flag]);
 
 
@@ -312,6 +301,7 @@ function Popup({ isOpen, onClose, item, searchFunction}) {
 
     if (STATUS_P === "NEW") {
       console.log("NEW")
+    
       if (
         TXT_SHT_Code &&
         TXT_SHT_Name &&
