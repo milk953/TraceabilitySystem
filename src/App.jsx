@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Sheet_Master from './Page/Sheet Structure Master/SheetMaster';
 import Serial_Master from './Page/Serial Structure Master/SerialMaster';
+import Login from './Login/Login'
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
@@ -12,7 +13,8 @@ function App() {
     <StrictMode>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<Sheet_Master />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/SheetMaster" element={<Sheet_Master />} />
         <Route path="/SerialMaster" element={<Serial_Master />} />
         </Routes>
       </BrowserRouter>

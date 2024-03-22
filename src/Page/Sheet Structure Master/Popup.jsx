@@ -569,6 +569,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Plant_Code}
                   onChange={handleKEY_Plant_Code}
                   error={isPlantChecked && ERROR_Plant_Code}
+                  disabled={!isPlantChecked}
                 />
               </Grid>
             </Grid>
@@ -611,6 +612,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Plant_Start}
                   onChange={handleKEY_Plant_St}
                   error={isPlantChecked && ERROR_Plant_St}
+                  disabled={!isPlantChecked}
                 />
               </Grid>
               <Grid item xs={2.4}>
@@ -630,6 +632,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Plant_End}
                   onChange={handleKEY_Plant_End}
                   error={isPlantChecked && ERROR_Plant_End}
+                  disabled={!isPlantChecked}
                 />
               </Grid>
             </Grid>
@@ -698,6 +701,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Lot_Start}
                   onChange={handleKEY_Lot_St}
                   error={isLotChecked && ERROR_Lot_St}
+                  disabled={!isLotChecked}
                 />
               </Grid>
               <Grid item xs={2.4}>
@@ -717,6 +721,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Lot_End}
                   onChange={handleKEY_Lot_End}
                   error={isLotChecked && ERROR_Lot_End}
+                  disabled={!isLotChecked}
                 />
               </Grid>
             </Grid>
@@ -784,6 +789,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Model_Start}
                   onChange={handleKEY_Model_St}
                   error={isModelChecked && ERROR_Model_St}
+                  disabled={!isModelChecked}
                 />
               </Grid>
               <Grid item xs={2.4}>
@@ -803,6 +809,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Model_End}
                   onChange={handleKEY_Model_End}
                   error={isModelChecked && ERROR_Model_End}
+                  disabled={!isModelChecked}
                 />
               </Grid>
             </Grid>
@@ -866,6 +873,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Seq_Format}
                   onChange={handleKEY_Seq_For}
                   error={isSeqChecked && ERROR_Seq_For}
+                  disabled={!isSeqChecked}
                 />
               </Grid>
             </Grid>
@@ -906,6 +914,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Seq_Start}
                   onChange={handleKEY_Seq_St}
                   error={isSeqChecked && ERROR_Seq_St}
+                  disabled={!isSeqChecked}
                 />
               </Grid>
               <Grid item xs={2.4}>
@@ -922,6 +931,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   value={TXT_Seq_End}
                   onChange={handleKEY_Seq_End}
                   error={isSeqChecked && ERROR_Seq_End}
+                  disabled={!isSeqChecked}
                 />
               </Grid>
             </Grid>

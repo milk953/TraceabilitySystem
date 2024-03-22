@@ -345,7 +345,7 @@ function SheetMaster() {
                 </TableRow>
               ))}
               <TableRow style={{ visibility: checkEmpty }}>
-                <TableCell colSpan={19} >
+                <TableCell colSpan={18} >
                   <InfoCircleOutlined
                     style={{
                       visibility: checkData,
