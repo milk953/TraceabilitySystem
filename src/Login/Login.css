@@ -7,19 +7,7 @@
     margin-top: 7%;
 }
 
-h1{
 
-    font-weight: bold;
-    font-size: 55px;
-    white-space: nowrap;
-    /* background: linear-gradient( 45deg, #00bfff, #C499F3, #b8f2e6, #aed9e0, #33186B); */
-    background: linear-gradient(45deg, #190482, #11009E, #387ADF);
-    background-size: 40%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradient 5s infinite;
-}
 
 /* @keyframes gradient {
     0% {
@@ -39,6 +27,7 @@ h1{
     background-position: center;
     align-items: center;
     justify-content: center;
+    height: 100vh;
 }
 
 .gradiant-bg{
@@ -46,4 +35,12 @@ h1{
     font-weight: bold;
     
 }
+
+body {
+  margin: 0;
+}
+
+
+
+
 

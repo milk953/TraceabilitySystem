@@ -86,7 +86,16 @@ function Login() {
         <Grid item xs={12} sm={6}>
           <div className="divTrace"
           >
-            <h1>
+            <h1 style={{
+              fontweight: "bold",
+              fontSize: "55px",
+              whiteSpace: "nowrap",
+              background: "linear-gradient(45deg, #190482, #11009E, #387ADF)",
+              backgroundSize: "40%",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>
               Traceability System
             </h1>
             <p style={{
@@ -120,10 +129,10 @@ function Login() {
                 marginBottom: "10px",
               }}
             >
-            <Avatar
-              sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
+              <Avatar
+                sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <LockOutlinedIcon />
+              </Avatar>
             </Grid>
             <Grid
               item
@@ -132,9 +141,9 @@ function Login() {
                 justifyContent: "center",
               }}
             >
-            <Typography component="h1" variant="h5">
-              Login
-            </Typography>
+              <Typography component="h1" variant="h5">
+                Login
+              </Typography>
             </Grid>
 
             <TextField
@@ -210,7 +219,7 @@ function Login() {
                 )}
               </Button>
             </Grid>
-            
+
             <Grid
               item
               style={{
