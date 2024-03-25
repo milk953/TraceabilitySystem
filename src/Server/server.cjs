@@ -3,6 +3,7 @@ const oracledb = require("oracledb");
 const { Client } = require("pg");
 const app = express();
 const port = 80;
+const serverLogin = require("../Login/Login.cjs")
 const serverMenu = require("../Page/Sidebar/menu.cjs");
 const sheetmaster = require("../Page/Sheet Structure Master/sheetmaster.cjs")
 
@@ -74,6 +75,8 @@ client.connect()
 app.get("/current-date", serverMenu.getCurrentDate);
 app.get("/fetch-data", serverMenu.getFetch_menudata);
 app.post("/search/MenuName", serverMenu.postMenuname);
+app.post("/login", serverLogin.login);
+
 
 //Sheet Structure Master
 app.post("/search/CodeName", sheetmaster.postCodeName);
