@@ -35,8 +35,8 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
   const STATUS_P = localStorage.getItem("STATUS");
   //console.log("สถานะ", STATUS_P);
 
-  const UserLogin = localStorage.getItem("UserLogin");
-  const [user_create, setuser_create] = useState("");
+  const UserLogin = localStorage.getItem("IDCode");
+  const [user_id, setuser_id] = useState("");
   const ip = localStorage.getItem("ipAddress");
   const [ipaddress, setipaddress] = useState("");
 
@@ -83,16 +83,6 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [Date_show, setDate_show] = useState("");
 
-  // const getRunningNumber = async () => {
-  //   try {
-
-  //     const response = await axios.post("http://localhost:80/CheckSHTCode");
-      
-  //   } catch (error) {
-  //     console.error('Error fetching or updating running number:', error);
-  //     return '00000';
-  //   }
-  // };
 
   useEffect(() => {
     if (STATUS_P === "NEW") {
@@ -140,7 +130,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
       setTXT_Seq_Format("");
       setTXT_Seq_Start("");
       setTXT_Seq_End("");
-      setuser_create(UserLogin);
+      setuser_id(UserLogin);
       setipaddress(ip);
     } else {
       console.log("CASE EDIT", item);
@@ -160,6 +150,8 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
       setTXT_Seq_Format(item.tstm_seq_format);
       setTXT_Seq_Start(item.tstm_seq_start_digit);
       setTXT_Seq_End(item.tstm_seq_end_digit);
+      setuser_id(item.tstm_modified_by);
+      setipaddress(item.tstm_modified_ip);
     }
 
   }, []);
@@ -318,7 +310,8 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
         Check_Seq_Flag &&
         (Check_Seq_Flag === 'N' || TXT_Seq_Format) &&
         (Check_Seq_Flag === 'N' || TXT_Seq_Start) &&
-        (Check_Seq_Flag === 'N' || TXT_Seq_End)
+        (Check_Seq_Flag === 'N' || TXT_Seq_End) &&
+        UserLogin
       ) {
         try {
           const response = await axios.post("http://localhost:80/insSheet_Master", {
@@ -338,7 +331,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
             seq_format: Check_Seq_Flag === 'N' ? null : TXT_Seq_Format,
             seq_start_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_Start,
             seq_end_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_End,
-            emp_id: user_create,
+            emp_id: UserLogin,
             ip_address: ipaddress
 
           });
@@ -396,7 +389,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
             seq_format: Check_Seq_Flag === 'N' ? null : TXT_Seq_Format,
             seq_start_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_Start,
             seq_end_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_End,
-            emp_id: user_create,
+            emp_id: UserLogin,
             ip_address: ipaddress
 
           });

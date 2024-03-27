@@ -93,14 +93,29 @@ module.exports.postMenuname = async function (req, res) {
   }
 };
 
-module.exports.login = async function (req, res) {
+module.exports.Menuname = async function (req, res) {
   try {
-    const { User, Password } = req.body;
-    const connect = await oracledb.getConnection(DBfpc_fpc_pctt);
+    const { login_id } = req.body;
+    const connect = await oracledb.getConnection(FPC);
     const query = `
-    SELECT F_ID_CODE ,F_NAME ,F_LASTNAME
-    FROM TRAIN_PROGRAMMER_PERSON 
-    WHERE  F_NAME= '${User}' AND F_ID_CODE = '${Password}' `;
+    SELECT
+	   NM.MENU_ID,
+	   NM.MENU_NAME ,
+	   NM.URL ,
+	   NM.SEQ ,
+	   NM.ACTIVE_FLAG ,
+	   NM.VISIBLE_FLAG ,
+	   NM.PARENT_ID
+    FROM
+	   NAP_MAP_ROLE_USER NMRU
+    INNER JOIN NAP_MAP_ROLE_MENU NMRM ON
+	   NMRM.ROLE_ID = NMRU.ROLE_ID
+    INNER JOIN NAP_MENU NM ON
+	   NM.MENU_ID = NMRM.MENU_ID
+    WHERE
+	   NMRU.LOGIN_ID = '${login_id}'
+	  AND NM.APP_ID = '16'
+    ORDER BY NM.SEQ `;
     const result = await connect.execute(query);
     connect.release();
     res.json(result.rows);

@@ -73,8 +73,7 @@ client.connect()
 
 //menuname
 app.get("/current-date", serverMenu.getCurrentDate);
-app.get("/fetch-data", serverMenu.getFetch_menudata);
-app.post("/search/MenuName", serverMenu.postMenuname);
+app.post("/MenuName", serverMenu.Menuname);
 app.post("/login", serverLogin.login);
 
 

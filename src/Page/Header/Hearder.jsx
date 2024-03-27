@@ -14,8 +14,10 @@ import "/src/Page/Style.css";
 import { useNavigate } from "react-router-dom";
 
 function Hearder() {
-    
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const user = localStorage.getItem("Username");
+    const surname = localStorage.getItem("Lastname");
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -59,7 +61,7 @@ function Hearder() {
                                 fontFamily: "Roboto, sans-serif",
                             }}
                         >
-                            Username:   &nbsp; &nbsp;   | &nbsp; <text>Logout</text>
+                            Username: {user} {surname} &nbsp;&nbsp;
                             <br />
 
                         </Button>

@@ -16,6 +16,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import BuildIcon from "@mui/icons-material/Build";
 import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
 import SourceIcon from "@mui/icons-material/Source";
+import LogoutIcon from '@mui/icons-material/Logout';
 // import moment from "moment";
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import SensorsOutlinedIcon from '@mui/icons-material/SensorsOutlined';
@@ -23,24 +24,45 @@ function sidebar({ isOpen, onClose }) {
   const [subMenuOpen1, setSubMenuOpen1] = useState(false);
   const [subMenuOpen2, setSubMenuOpen2] = useState(false);
   const [subMenuOpen3, setSubMenuOpen3] = useState(false);
-  const [data, setdata] = useState([]);
-  const [data2, setdata2] = useState([]);
+  const [subMenuOpen4, setSubMenuOpen4] = useState(false);
+  const [subMenuOpen5, setSubMenuOpen5] = useState(false);
+  const [menu, setmenu] = useState([]);
+  const [menuID, setmenuID] = useState([]);
+  const [menuMain, setmenuMain] = useState([]);
+
   const [Icondrop1, setIcondrop1] = useState(false);
   const [Icondrop2, setIcondrop2] = useState(false);
   const [Icondrop3, setIcondrop3] = useState(false);
-  const menutest = async () => {
-    try {
-      const res = await axios.get("http://localhost:80/fetch-data");
-      setdata2(res.data);
-      console.log(res, "/////");
-      const Parent = [...new Set(res.data.map((item) => item.parent_id))];
-      setdata(Parent);
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
-    }
+  const [Icondrop4, setIcondrop4] = useState(false);
+  const Login_ID = localStorage.getItem("UserLogin");
+
+  const Menu = async () => {
+    axios.post("http://localhost:80/MenuName", {
+      login_id: Login_ID,
+    }).then((res) => {
+      console.log(res.data.length, "hereeeeee")
+      // setmenuTest(res.data)
+      let datamenu = [];
+      let datamenuid = [];
+      let main = [];
+      for (let i = 0; i < res.data.length; i++) {
+
+        datamenu.push(res.data[i][1]);
+
+        datamenuid.push(res.data[i][6]);
+
+        main.push(res.data[i][0]);
+
+      }
+
+      setmenu(datamenu);
+      setmenuID(datamenuid);
+      setmenuMain(main);
+
+    })
   };
   useEffect(() => {
-    menutest()
+    Menu()
   }, []);
 
   const navigate = useNavigate();
@@ -60,21 +82,28 @@ function sidebar({ isOpen, onClose }) {
     setSubMenuOpen3(!subMenuOpen3);
   };
 
-  const handleButtonClick = (menuName) => {
-    // console.log(menuName);
-    const System = "x";
-    const ParentMenuName = "y";
+  const toggleSubMenu4 = () => {
+    setIcondrop4(!Icondrop4);
+    setSubMenuOpen4(!subMenuOpen4);
+  };
 
-    if (menuName != "") {
-      console.error("hereM", menuName);
+  const toggleSubMenu5 = () => {
+    setSubMenuOpen5(!subMenuOpen5);
+  };
+
+  const handleButtonClick = () => {
+    // console.log(menuName);
+
+    if (Login_ID != "") {
+      console.error("hereM", Login_ID);
       axios
-        .post("http://localhost:80/search/MenuName", {
-          System: System,
-          ParentMenuName: ParentMenuName,
-          MenuName: menuName,
+        .post("http://localhost:80/MenuName", {
+
+          login_id: Login_ID,
         })
         .then((res) => {
-          const urll = res.data.map((item) => item.url);
+          const urll = res.data.map((item) => item[2]);
+          console.log("testt", urll);
           gopath(urll);
         })
         .catch((error) => {
@@ -88,6 +117,13 @@ function sidebar({ isOpen, onClose }) {
     const go = "/" + path;
     navigate(go);
   };
+
+  const Logout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("Username");
+    localStorage.removeItem("Lastname");
+    navigate("/");
+  }
   //date
   const [currentDate, setCurrentDate] = useState("");
   useEffect(() => {
@@ -121,28 +157,30 @@ function sidebar({ isOpen, onClose }) {
             <AssignmentOutlinedIcon color="primary" />
           </ListItemIcon>
           <ListItemText
-            primary={<span style={{ marginRight: "5px" }}>{data[0]}</span>}
+            primary={<span style={{ marginRight: "5px" }}>{menu[0]}</span>}
           />
-          {Icondrop1 ? <UpOutlined /> : <DownOutlined />}
+          {menuID.map(
+            (item, index) =>
+              menuID[index] === menuMain[0] && (
+                Icondrop1 ? <UpOutlined /> : <DownOutlined />
+              ))}
         </ListItem>
         {subMenuOpen1 && (
           <>
-            {data2.map(
+            {menuID.map(
               (item, index) =>
-                item.parent_id === "Report" && (
+                menuID[index] === menuMain[0] && (
                   <ListItem
                     className="SubMenuItem"
 
                     onClick={() => {
                       onClose();
-                      handleButtonClick(item.menu_name);
+                      handleButtonClick(item[0]);
                     }}
-
-
 
                     key={index}
                   ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
-                    <ListItemText primary={item.menu_name} />
+                    <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
             )}
@@ -154,14 +192,18 @@ function sidebar({ isOpen, onClose }) {
           <ListItemIcon>
             <SensorsOutlinedIcon color="success" />
           </ListItemIcon>
-          <ListItemText primary={data[1]} />
-          {Icondrop2 ? <UpOutlined /> : <DownOutlined />}
+          <ListItemText primary={menu[1]} />
+          {menuID.map(
+            (item, index) =>
+              menuID[index] === menuMain[1] && (
+                Icondrop2 ? <UpOutlined /> : <DownOutlined />
+              ))}
         </ListItem>
         {subMenuOpen2 && (
           <>
-            {data2.map(
+            {menuID.map(
               (item, index) =>
-                item.parent_id === "Scan" && (
+                menuID[index] === menuMain[1] && (
                   <ListItem
                     className="SubMenuItem"
 
@@ -172,7 +214,7 @@ function sidebar({ isOpen, onClose }) {
 
                     key={index}
                   ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
-                    <ListItemText primary={item.menu_name} />
+                    <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
             )}
@@ -183,14 +225,49 @@ function sidebar({ isOpen, onClose }) {
           <ListItemIcon>
             <BuildIcon color="secondary" />
           </ListItemIcon>
-          <ListItemText primary={data[2]} />
-          {Icondrop3 ? <UpOutlined /> : <DownOutlined />}
+          <ListItemText primary={menu[2]} />
+          {menuID.map(
+            (item, index) =>
+              menuID[index] === menuMain[2] && (
+                Icondrop3 ? <UpOutlined /> : <DownOutlined />
+              ))}
         </ListItem>
         {subMenuOpen3 && (
           <>
-            {data2.map(
+            {menuID.map(
               (item, index) =>
-                item.parent_id === "Maintain" && (
+                menuID[index] === menuMain[2] && (
+                  <ListItem
+                    className="SubMenuItem"
+                    onClick={() => {
+                      onClose();
+                      handleButtonClick(item[5]);
+                    }}
+                    key={index}
+                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
+                    <ListItemText primary={menu[index]} />
+                  </ListItem>
+                )
+            )}
+          </>
+        )}
+        {/*Menu4 */}
+        <ListItem className="ListItem" onClick={toggleSubMenu4}>
+          <ListItemIcon>
+            <SourceIcon style={{ color: 'orange' }} />
+          </ListItemIcon>
+          <ListItemText primary={menu[3]} />
+          {menuID.map(
+            (item, index) =>
+              menuID[index] === menuMain[3] && (
+                Icondrop4 ? <UpOutlined /> : <DownOutlined />
+              ))}
+        </ListItem>
+        {subMenuOpen4 && (
+          <>
+            {menuID.map(
+              (item, index) =>
+                menuID[index] === menuMain[3] && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
@@ -199,7 +276,34 @@ function sidebar({ isOpen, onClose }) {
                     }}
                     key={index}
                   ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
-                    <ListItemText primary={item.menu_name} />
+                    <ListItemText primary={menu[index]} />
+                  </ListItem>
+                )
+            )}
+          </>
+        )}
+        {/*Menu5 */}
+        <ListItem className="ListItem" onClick={toggleSubMenu5}
+        >
+          <ListItemIcon>
+            <LogoutIcon style={{ color: 'gray' }} />
+          </ListItemIcon>
+          <ListItemText primary={menu[4]} onClick={Logout} />
+        </ListItem>
+        {subMenuOpen5 && (
+          <>
+            {menuID.map(
+              (item, index) =>
+                menuID[index] === menuMain[4] && (
+                  <ListItem
+                    className="SubMenuItem"
+                    onClick={() => {
+                      onClose();
+                      // handleButtonClick(item.menu_name);
+                    }}
+                    key={index}
+                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
+                    <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
             )}

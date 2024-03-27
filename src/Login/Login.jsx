@@ -40,44 +40,44 @@ function Login() {
       document.title = "Login Page";
     }
   }, []);
-  //   const PageLOT = () => {
-  //     // navigate("/ViewTrace(Lot)");
-  //      window.location.href = "/ViewTrace(Lot)";
-  //   };
-  //   const handleLogin = async () => {
-  //     axios
-  //     .post("http://10.17.66.120:3001/login", {
-  //       User: loginId,
-  //       Password:password
-  //     })
-  //     .then((res) => {
-  //       // console.log(res.data,"///////////////////")
-  //       if(res.data.length>0){
-  //         sessionStorage.setItem("isLoggedIn", "true");
-  //         sessionStorage.setItem("Username",res.data[0][1] );
-  //         sessionStorage.setItem("Lastname",res.data[0][2] );
+    const PageSheetMaster = () => {
+      // navigate("/SheetMaster");
+       window.location.href = "/SheetMaster";
+    };
+    const handleLogin = async () => {
+      axios
+      .post("http://localhost:80/login", {
+        User: loginId,
+        Password:password
+      })
+      .then((res) => {
+        // console.log(res.data,"///////////////////")
+        if(res.data.length>0){
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("Username",res.data[0][3] );
+          localStorage.setItem("Lastname",res.data[0][4] );
+          localStorage.setItem("UserLogin",res.data[0][0]);
+          localStorage.setItem("IDCode",res.data[0][2]);
 
-  //         setIsLoading(true);
-  //         // ใช้ setTimeout เพื่อหน่วงเวลาก่อนเปลี่ยนหน้า
-  //         setTimeout(() => {
-  //           setIsLoading(false);
-  //           // เปลี่ยนหน้าหลังจากหน่วงเวลา
-  //         //   PageLOT();
-  //         }, 1300);
-  //       }
-  //       else {
-  //         Swal.fire({
-  //           title: "Username or Password Wrong",
-  //           text: "Please Try Again",
-  //           icon: "error",
-  //           confirmButtonText: "Close",
-  //         });
-  //         return;
-  //       }
-  //     })
-
-
-  //   };
+          setIsLoading(true);
+          // ใช้ setTimeout เพื่อหน่วงเวลาก่อนเปลี่ยนหน้า
+          setTimeout(() => {
+            setIsLoading(false);
+            // เปลี่ยนหน้าหลังจากหน่วงเวลา
+            PageSheetMaster();
+          }, 1300);
+        }
+        else {
+          Swal.fire({
+            title: "Username or Password Wrong",
+            text: "Please Try Again",
+            icon: "error",
+            confirmButtonText: "Close",
+          });
+          return;
+        }
+      })
+    };
 
   return (
     <div className="login-container">
@@ -112,7 +112,7 @@ function Login() {
           <Card
             sx={{
               width: 400,
-              height: 400,
+              height: 350,
               marginLeft: 10,
               boxShadow: "0 16px 20px rgba(0, 0, 0, 0.2)",
               flexDirection: "column",
@@ -190,7 +190,7 @@ function Login() {
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  // handleLogin();
+                  handleLogin();
                 }
               }}
             />
@@ -209,7 +209,7 @@ function Login() {
                   background: 'linear-gradient(to right, #764ba2, #667eea , #00d2ff)',
                 }}
 
-                // onClick={handleLogin}
+                onClick={handleLogin}
                 disabled={isLoading}
               >
                 {isLoading ? (
