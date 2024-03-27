@@ -47,11 +47,13 @@ function SheetMaster() {
   const [name, setName] = useState("");
 
   const [TEXT_SHT_Code, setTEXT_SHT_Code] = useState("");
+  
+  const baseURL = "http://localhost:3080";
 
   const Search = async () => {
     console.log(code, name, "......")
     try {
-      const response = await axios.post("http://localhost:80/search/CodeName", {
+      const response = await axios.post(baseURL + "/search/CodeName", {
         Code: code,
         Name: name
       });
@@ -129,7 +131,7 @@ function SheetMaster() {
       if (willDelete) {
         const shtCodeToDelete = item.tstm_sht_struc_code;
         try {
-          const response = await axios.post("http://localhost:80/delSheet_Master", {
+          const response = await axios.post(baseURL + "/delSheet_Master", {
              sht_code: shtCodeToDelete
           });
           console.log("ลบข้อมูลสำเร็จ:", response.data);

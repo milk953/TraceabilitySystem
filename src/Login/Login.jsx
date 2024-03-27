@@ -18,6 +18,7 @@ import "../Login/Login.css";
 import axios from "axios";
 
 function Login() {
+  const baseURL = "http://localhost:3080";
   const navigate = useNavigate();
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +47,7 @@ function Login() {
     };
     const handleLogin = async () => {
       axios
-      .post("http://localhost:80/login", {
+      .post(baseURL + "/login", {
         User: loginId,
         Password:password
       })

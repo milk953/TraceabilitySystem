@@ -27,6 +27,8 @@ import axios from "axios";
 
 function Popup({ isOpen, onClose, item, searchFunction }) {
 
+  const baseURL = "http://localhost:3080";
+
   if (!isOpen) {
     return null;
   }
@@ -88,7 +90,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
     if (STATUS_P === "NEW") {
       const fetchData = async () => {
         try {
-          const response = await axios.post("http://localhost:80/CheckSHTCode", {});
+          const response = await axios.post(baseURL + "/CheckSHTCode", {});
           const data = response.data;
           const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
           setTXT_SHT_Code(new_run_seq);
@@ -314,7 +316,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
         UserLogin
       ) {
         try {
-          const response = await axios.post("http://localhost:80/insSheet_Master", {
+          const response = await axios.post(baseURL + "/insSheet_Master", {
             sht_code: TXT_SHT_Code,
             sht_name: TXT_SHT_Name,
             plant_flag: Check_Plant_Flag,
@@ -372,7 +374,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
       ) {
 
         try {
-          const response = await axios.post("http://localhost:80/updateSheet_Master", {
+          const response = await axios.post(baseURL + "/updateSheet_Master", {
             sht_code: TXT_SHT_Code,
             sht_name: TXT_SHT_Name,
             plant_flag: Check_Plant_Flag,

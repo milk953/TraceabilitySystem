@@ -21,6 +21,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import SensorsOutlinedIcon from '@mui/icons-material/SensorsOutlined';
 function sidebar({ isOpen, onClose }) {
+  const baseURL = "http://localhost:3080";
   const [subMenuOpen1, setSubMenuOpen1] = useState(false);
   const [subMenuOpen2, setSubMenuOpen2] = useState(false);
   const [subMenuOpen3, setSubMenuOpen3] = useState(false);
@@ -37,7 +38,7 @@ function sidebar({ isOpen, onClose }) {
   const Login_ID = localStorage.getItem("UserLogin");
 
   const Menu = async () => {
-    axios.post("http://localhost:80/MenuName", {
+    axios.post(baseURL + "/MenuName", {
       login_id: Login_ID,
     }).then((res) => {
       console.log(res.data.length, "hereeeeee")
@@ -97,7 +98,7 @@ function sidebar({ isOpen, onClose }) {
     if (Login_ID != "") {
       console.error("hereM", Login_ID);
       axios
-        .post("http://localhost:80/MenuName", {
+        .post(baseURL + "/MenuName", {
 
           login_id: Login_ID,
         })
@@ -128,7 +129,7 @@ function sidebar({ isOpen, onClose }) {
   const [currentDate, setCurrentDate] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:80/current-date")
+      .get(baseURL + "/current-date")
       .then((response) => {
         setCurrentDate(response.data.date);
       })
