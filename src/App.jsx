@@ -41,6 +41,7 @@ function App() {
         <Route path="/SerialMaster" element={<Serial_Master />} />
         </>
         ) : (
+          // ให้เปลี่ยนทางไปยังหน้าล็อกอิน ถ้ายังไม่ได้เข้าสู่ระบบ
           <Route
               path="*"
               element={<Navigate to="/" replace />}
