@@ -15,7 +15,15 @@ const FPC = {
     connectString: "NAPKDBSV",
   };
 
-const client = new Client();
+const pgConfig = {
+  user: "postgres",
+  host: "10.17.66.120",
+  database: "postgres",
+  password: "postgres",
+  port: 5432,
+};
+
+const client = new Client(pgConfig);
 client.connect();
 
 module.exports.getCurrentDate = async function (req, res) {
