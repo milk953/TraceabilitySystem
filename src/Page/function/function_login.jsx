@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const baseURL = "http://10.17.66.119:3001";
+const baseURL = "http://localhost:3080";
 
 function LoginTest() {
     
