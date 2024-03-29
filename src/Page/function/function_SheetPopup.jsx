@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 const baseURL = "http://localhost:3080";
+import swal from "sweetalert";
 
 function PopupT(onClose, item, searchFunction) {
     // console.log("มาายัง", item)
@@ -9,7 +10,6 @@ function PopupT(onClose, item, searchFunction) {
 
     const UserLogin = localStorage.getItem("IDCode");
     const [user_id, setuser_id] = useState("");
-    const ip = localStorage.getItem("ipAddress");
     const [ipaddress, setipaddress] = useState("");
 
     const [isPlantChecked, setIsPlantChecked] = useState(false);
@@ -74,6 +74,20 @@ function PopupT(onClose, item, searchFunction) {
         }
     }, [STATUS_P]);
 
+    useEffect(() => {
+        // Fetch the client's IP address from a public API
+        fetch('https://api.ipify.org?format=json')
+          .then((response) => response.json())
+          .then((data) => {
+            // Extract the IP address from the response data
+            const ipAddress = data.ip;
+            // Update the state with the client's IP address
+            setipaddress(ipAddress);
+          })
+          .catch((error) => {
+            console.error('Error fetching IP address:', error);
+          });
+      }, []);
 
     useEffect(() => {
 
@@ -103,7 +117,7 @@ function PopupT(onClose, item, searchFunction) {
             setTXT_Seq_Start("");
             setTXT_Seq_End("");
             setuser_id(UserLogin);
-            setipaddress(ip);
+            setipaddress(ipaddress);
         } else {
             console.log("CASE EDIT", item);
             setTXT_SHT_Code(item.tstm_sht_struc_code);

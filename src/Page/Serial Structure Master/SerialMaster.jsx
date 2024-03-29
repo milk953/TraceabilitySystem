@@ -32,49 +32,24 @@ import {
     FlagFilled,
     InfoCircleOutlined,
 } from "@ant-design/icons";
+import { SerialMasterPage } from "../function/function_SerialMaster";
 
 function SerialMaster() {
-    const [ShowData, setShowData] = useState(false);
-    const [checkHead, setCheckHead] = useState("hidden"); //ตัวแปรเช็คค่าของ ตาราง
-    const [checkEmpty, setCheckEmpty] = useState("hidden"); // ตัวแปรเช็คค่าว่าง
-    const [checkData, setCheckData] = useState("visible"); // ตัวแปร datashow warning
 
-    const Search = () => {
-        setShowData();
-    }
-
-    const [OpenPopup, setOpenPopup] = useState(false)
-
-    const PopupOpen = () => {
-        setOpenPopup(true);
-    };
-
-    const PopupClose = () => {
-        setOpenPopup(false);
-    };
-
-    const New = () => {
-        PopupOpen();
-    };
-
-    const Clear = () => {
-        setCheckHead("hidden");
-        setCheckEmpty("hidden");
-        setCheckData("visible")
-    }
-
-    const [selectedRowData, setSelectedRowData] = useState(null);
-
-    const OpenEdit = async (rowData) => {
-        setSelectedRowData(rowData);
-        PopupOpen();
-    }
+    const { ShowData, checkHead, checkEmpty, checkData, code, name,
+        TEXT_Code, Search, handleCode, handleName, OpenPopup,
+        PopupClose, New, Clear, selectedRowData, OpenEdit,
+        handleOpenDelete, } = SerialMasterPage();
 
 
     return (
         <>
             <Hearder />
-            <Popup isOpen={OpenPopup} onClose={PopupClose} rowData={selectedRowData} />
+            <Popup
+                isOpen={OpenPopup}
+                onClose={PopupClose}
+                item={selectedRowData}
+                searchFunction={Search} />
             <div
                 style={{
                     marginTop: "60px",
@@ -113,13 +88,17 @@ function SerialMaster() {
                             variant="outlined"
                             size="small"
                             style={{ width: "300px" }}
+                            value={code}
+                            onChange={handleCode}
                         />
                         <TextField
-                            id="txtCode"
+                            id="txtName"
                             label="Name."
                             variant="outlined"
                             size="small"
                             style={{ width: "300px" }}
+                            value={name}
+                            onChange={handleName}
                         />
                         <Button
                             variant="contained"
@@ -160,7 +139,7 @@ function SerialMaster() {
                         width: "96%",
                         marginBottom: "10px",
                         maxHeight: "450px",
-                        // visibility: checkHead,
+                        visibility: checkHead,
                     }}
                 >
                     <Table
@@ -216,97 +195,99 @@ function SerialMaster() {
                             </TableRow>
                         </TableHead>
                         <TableBody style={{ overflowY: "auto" }}>
-                            <TableRow>
-                                <TableCell>
-                                    <Tooltip title="Edit">
-                                        <EditNoteIcon
-                                            style={{ color: "#F3B664", fontSize: "30px" }}
-                                            onClick={OpenEdit}
-                                        />
-                                    </Tooltip>
+                            {ShowData.map((item, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>
+                                        <Tooltip title="Edit">
+                                            <EditNoteIcon
+                                                style={{ color: "#F3B664", fontSize: "30px" }}
+                                                onClick={() => OpenEdit(item)}
+                                            />
+                                        </Tooltip>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Tooltip title="Delete">
+                                            <DeleteForeverIcon
+                                                style={{
+                                                    color: "#EF4040",
+                                                    fontSize: "30",
+                                                }}
+                                                onClick={() => handleOpenDelete(item)}
+                                            />
+                                        </Tooltip>
+                                    </TableCell>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>{item.tssm_sn_struc_code}</TableCell>
+                                    <TableCell>{item.tssm_sn_struc_name}</TableCell>
+                                    <TableCell>{item.tssm_sn_struc_upcount}</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                            ))}
+                            <TableRow style={{ visibility: checkEmpty }}>
+                                <TableCell colSpan={35} >
+                                    <InfoCircleOutlined
+                                        style={{
+                                            visibility: checkData,
+                                            fontSize: "30px",
+                                            color: "#ffd580",
+                                            marginLeft: "500px",
+                                        }}
+                                    />
+                                    <span
+                                        style={{
+                                            visibility: checkData,
+                                            fontSize: "25px",
+                                            marginLeft: "10px",
+                                        }}
+                                    >
+                                        {" "}
+                                        Please fill in information{" "}
+                                    </span>
+                                    <Empty style={{ visibility: checkEmpty }} />
                                 </TableCell>
-                                <TableCell>
-                                    <Tooltip title="Delete">
-                                        <DeleteForeverIcon
-                                            style={{
-                                                color: "#EF4040",
-                                                fontSize: "30",
-                                            }}
-                                        />
-                                    </Tooltip>
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
                             </TableRow>
-
-                            {/* <TableRow style={{ visibility: checkEmpty }}>
-                  <TableCell colSpan={19} >
-                    <InfoCircleOutlined
-                      style={{
-                        visibility: checkData,
-                        fontSize: "30px",
-                        color: "#ffd580",
-                        marginLeft: "500px",
-                      }}
-                    />
-                    <Typography 
-                      style={{
-                        visibility: checkData,
-                        fontSize: "25px",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      {" "}
-                      Please fill in information{" "}
-                    </Typography>
-                    <Empty style={{ visibility: checkEmpty }} />
-                  </TableCell>
-                </TableRow> */}
                         </TableBody>
                     </Table>
                 </TableContainer>
