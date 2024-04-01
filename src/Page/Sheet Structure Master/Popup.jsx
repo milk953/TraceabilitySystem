@@ -31,7 +31,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
     return null;
   }
 
-  const{STATUS_P, ipaddress, isPlantChecked, setIsPlantChecked, isLotChecked, setIsLotChecked,
+  const { STATUS_P, ipaddress, isPlantChecked, setIsPlantChecked, isLotChecked, setIsLotChecked,
     isModelChecked, setIsModelChecked, isSeqChecked, setIsSeqChecked,
     ERROR_SHT_Code, ERROR_SHT_Name, ERROR_Plant_Code, ERROR_Plant_St,
     ERROR_Plant_End, ERROR_Lot_St, ERROR_Lot_End, ERROR_Model_St, ERROR_Model_End,
@@ -145,7 +145,6 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   checked={isPlantChecked}
                   onChange={(e) => {
                     setIsPlantChecked(e.target.checked);
-                    console.log(e.target.checked);
                   }}
                 />
               </Grid>
@@ -166,6 +165,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                     display: (
                       isPlantChecked)
                   }}
@@ -210,6 +210,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                     display: (isPlantChecked)
                   }}
                   value={TXT_Plant_Start}
@@ -230,6 +231,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                     display: (isPlantChecked)
                   }}
                   value={TXT_Plant_End}
@@ -299,6 +301,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isLotChecked ? "inherit" : "#F5F7F8",
                     display: (isLotChecked)
                   }}
                   value={TXT_Lot_Start}
@@ -319,6 +322,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isLotChecked ? "inherit" : "#F5F7F8",
                     display: (isLotChecked)
                   }}
                   value={TXT_Lot_End}
@@ -387,6 +391,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isModelChecked ? "inherit" : "#F5F7F8",
                     display: (isModelChecked)
                   }}
                   value={TXT_Model_Start}
@@ -407,6 +412,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isModelChecked ? "inherit" : "#F5F7F8",
                     display: (isModelChecked)
                   }}
                   value={TXT_Model_End}
@@ -471,6 +477,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   size="small"
                   style={{
                     width: "71%",
+                    backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
                     display: (isSeqChecked)
                   }}
                   value={TXT_Seq_Format}
@@ -513,7 +520,10 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   id="txtSeqStartDigit"
                   variant="outlined"
                   size="small"
-                  style={{ width: "71%" }}
+                  style={{
+                    width: "71%",
+                    backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
+                  }}
                   value={TXT_Seq_Start}
                   onChange={handleKEY_Seq_St}
                   error={isSeqChecked && ERROR_Seq_St}
@@ -530,7 +540,10 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                   id="txtSeqEndDigit"
                   variant="outlined"
                   size="small"
-                  style={{ width: "71%" }}
+                  style={{
+                    width: "71%",
+                    backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
+                  }}
                   value={TXT_Seq_End}
                   onChange={handleKEY_Seq_End}
                   error={isSeqChecked && ERROR_Seq_End}
