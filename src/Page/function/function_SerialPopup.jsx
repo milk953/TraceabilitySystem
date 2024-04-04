@@ -65,7 +65,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
     const [TXT_Week_End, setTXT_Week_End] = useState("");
     //weekConvert
     const [Check_Week_Con, setCheck_Week_Con] = useState("");
-    const [Cb_Week_Con, setCb_Week_Con] = useState("");
+    const [Cb_Week_Con, setCb_Week_Con] = useState('');
     //Seq
     const [Check_Seq_Flag, setCheck_Seq_Flag] = useState("");
     const [TXT_Seq_Format, setTXT_Seq_Format] = useState("");
@@ -73,7 +73,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
     const [TXT_Seq_End, setTXT_Seq_End] = useState("");
     //SeqConvert
     const [Check_Seq_Con, setCheck_Seq_Con] = useState("");
-    const [Cb_Seq_Con, setCb_Seq_Con] = useState("");
+    const [Cb_Seq_Con, setCb_Seq_Con] = useState('');
     //Eng
     const [Check_Eng_Flag, setCheck_Eng_Flag] = useState("");
     const [TXT_Eng_Start, setTXT_Eng_Start] = useState("");
@@ -425,7 +425,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
         if (isNaN(TXT_Week_End) || TXT_Week_End === "") {
             setERROR_Week_End(true);
         }
-        if (Cb_Week_Con === "") {
+        if (!Cb_Week_Con) {
             setERROR_Week_Con(true);
         }
         if (TXT_Seq_Format === "") {
@@ -437,7 +437,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
         if (isNaN(TXT_Seq_End) || TXT_Seq_End === "") {
             setERROR_Seq_End(true);
         }
-        if (Cb_Seq_Con === "") {
+        if (!Cb_Seq_Con) {
             setERROR_Seq_Con(true);
         }
         if (isNaN(TXT_Eng_Start) || TXT_Eng_Start === "") {

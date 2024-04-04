@@ -169,7 +169,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     display: (
                       isPlantChecked)
                   }}
-                  value={TXT_Plant_Code}
+                  value={isPlantChecked ? TXT_Plant_Code : ''}
                   onChange={handleKEY_Plant_Code}
                   error={isPlantChecked && ERROR_Plant_Code}
                   disabled={!isPlantChecked}
@@ -213,7 +213,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                     display: (isPlantChecked)
                   }}
-                  value={TXT_Plant_Start}
+                  value={isPlantChecked ? TXT_Plant_Start : ''}
                   onChange={handleKEY_Plant_St}
                   error={isPlantChecked && ERROR_Plant_St}
                   disabled={!isPlantChecked}
@@ -234,7 +234,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                     display: (isPlantChecked)
                   }}
-                  value={TXT_Plant_End}
+                  value={isPlantChecked ? TXT_Plant_End : ''}
                   onChange={handleKEY_Plant_End}
                   error={isPlantChecked && ERROR_Plant_End}
                   disabled={!isPlantChecked}
@@ -304,7 +304,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     backgroundColor: isLotChecked ? "inherit" : "#F5F7F8",
                     display: (isLotChecked)
                   }}
-                  value={TXT_Lot_Start}
+                  value={isLotChecked ? TXT_Lot_Start : ''}
                   onChange={handleKEY_Lot_St}
                   error={isLotChecked && ERROR_Lot_St}
                   disabled={!isLotChecked}
@@ -325,7 +325,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     backgroundColor: isLotChecked ? "inherit" : "#F5F7F8",
                     display: (isLotChecked)
                   }}
-                  value={TXT_Lot_End}
+                  value={isLotChecked ? TXT_Lot_End : ''}
                   onChange={handleKEY_Lot_End}
                   error={isLotChecked && ERROR_Lot_End}
                   disabled={!isLotChecked}
@@ -394,7 +394,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     backgroundColor: isModelChecked ? "inherit" : "#F5F7F8",
                     display: (isModelChecked)
                   }}
-                  value={TXT_Model_Start}
+                  value={isModelChecked ? TXT_Model_Start : ''}
                   onChange={handleKEY_Model_St}
                   error={isModelChecked && ERROR_Model_St}
                   disabled={!isModelChecked}
@@ -415,7 +415,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     backgroundColor: isModelChecked ? "inherit" : "#F5F7F8",
                     display: (isModelChecked)
                   }}
-                  value={TXT_Model_End}
+                  value={isModelChecked ? TXT_Model_End : ''}
                   onChange={handleKEY_Model_End}
                   error={isModelChecked && ERROR_Model_End}
                   disabled={!isModelChecked}
@@ -480,7 +480,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
                     display: (isSeqChecked)
                   }}
-                  value={TXT_Seq_Format}
+                  value={isSeqChecked ? TXT_Seq_Format : ''}
                   onChange={handleKEY_Seq_For}
                   error={isSeqChecked && ERROR_Seq_For}
                   disabled={!isSeqChecked}
@@ -524,7 +524,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     width: "71%",
                     backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
                   }}
-                  value={TXT_Seq_Start}
+                  value={isSeqChecked ? TXT_Seq_Start : ''}
                   onChange={handleKEY_Seq_St}
                   error={isSeqChecked && ERROR_Seq_St}
                   disabled={!isSeqChecked}
@@ -544,7 +544,7 @@ function Popup({ isOpen, onClose, item, searchFunction }) {
                     width: "71%",
                     backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
                   }}
-                  value={TXT_Seq_End}
+                  value={isSeqChecked ? TXT_Seq_End : ''}
                   onChange={handleKEY_Seq_End}
                   error={isSeqChecked && ERROR_Seq_End}
                   disabled={!isSeqChecked}

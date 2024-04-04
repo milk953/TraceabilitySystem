@@ -94,9 +94,10 @@ function SerialMasterPage() {
       }).then(async (willDelete) => {
         if (willDelete) {
           const snCodeToDelete = item.tssm_sn_struc_code;
+          console.log("//////////",item.tssm_sn_struc_code)
           try {
             const response = await axios.post(baseURL + "/delSerial_Master", {
-               sht_code: snCodeToDelete
+               sn_code: snCodeToDelete
             });
             console.log("ลบข้อมูลสำเร็จ:", response.data);
             swal("Your data has been deleted successfully", {

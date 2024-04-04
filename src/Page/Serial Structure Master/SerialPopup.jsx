@@ -184,14 +184,14 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
-                                    {ERROR_SN_UpCount ? "Please input Up Count." : null}
+                                    {ERROR_SN_UpCount ? "Please input Up Count and Number only." : null}
                                 </Typography>
                             </Grid>
                             <Grid item xs={2.7}>
                             </Grid>
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
-                                    {ERROR_SN_Length ? "Please input Length." : null}
+                                    {ERROR_SN_Length ? "Please input Length and Number only." : null}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -228,7 +228,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                                         display: isPlantChecked
                                     }}
-                                    value={TXT_Plant_Code}
+                                    value={isPlantChecked ? TXT_Plant_Code : ''}
                                     onChange={handleKEY_Plant_Code}
                                     error={isPlantChecked && ERROR_Plant_Code}
                                     disabled={!isPlantChecked}
@@ -271,7 +271,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Plant_Start}
+                                    value={isPlantChecked ? TXT_Plant_Start : ''}
                                     onChange={handleKEY_Plant_St}
                                     error={isPlantChecked && ERROR_Plant_St}
                                     disabled={!isPlantChecked}
@@ -291,7 +291,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isPlantChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Plant_End}
+                                    value={isPlantChecked ? TXT_Plant_End : ''}
                                     onChange={handleKEY_Plant_End}
                                     error={isPlantChecked && ERROR_Plant_End}
                                     disabled={!isPlantChecked}
@@ -308,14 +308,14 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isPlantChecked && ERROR_Plant_St ?
-                                        "Please input Plant Start Digit and Number Only." : null}
+                                        "Please input Plant Start Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                             <Grid item xs={2.7}></Grid>
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isPlantChecked && ERROR_Plant_End ?
-                                        "Please input Plant End Digit and Number Only." : null}
+                                        "Please input Plant End Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -353,7 +353,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         backgroundColor: isWeekChecked ? "inherit" : "#F5F7F8",
                                         display: isWeekChecked,
                                     }}
-                                    value={TXT_Week_Code}
+                                    value={isWeekChecked ? TXT_Week_Code : ''}
                                     onChange={handleKEY_Week_Code}
                                     error={isWeekChecked && ERROR_Week_Code}
                                     disabled={!isWeekChecked}
@@ -396,7 +396,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isWeekChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Week_Start}
+                                    value={isWeekChecked ? TXT_Week_Start : ''}
                                     onChange={handleKEY_Week_St}
                                     error={isWeekChecked && ERROR_Week_St}
                                     disabled={!isWeekChecked}
@@ -416,7 +416,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isWeekChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Week_End}
+                                    value={isWeekChecked ? TXT_Week_End : ''}
                                     onChange={handleKEY_Week_End}
                                     error={isWeekChecked && ERROR_Week_End}
                                     disabled={!isWeekChecked}
@@ -433,14 +433,14 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isWeekChecked && ERROR_Week_St ?
-                                        "Please input Week Start Digit and Number Only." : null}
+                                        "Please input Week Start Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                             <Grid item xs={2.7}></Grid>
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isWeekChecked && ERROR_Week_End ?
-                                        "Please input Week End Digit and Number Only." : null}
+                                        "Please input Week End Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -477,12 +477,15 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         backgroundColor: isWeekConChecked ? "inherit" : "#F5F7F8",
                                         display: isWeekConChecked
                                     }}
-                                    value={Cb_Week_Con || ''}
+                                    value={isWeekConChecked ? Cb_Week_Con || '34' : ''}
                                     onChange={handleKEY_Week_Con}
                                     error={isWeekConChecked && ERROR_Week_Con}
                                     disabled={!isWeekConChecked}
                                 >
-                                    <MenuItem value=''></MenuItem>
+                                    <MenuItem value='16'>16</MenuItem>
+                                    <MenuItem value='32'>32</MenuItem>
+                                    <MenuItem value='34'>34</MenuItem>
+                                    <MenuItem value='36'>36</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>
@@ -536,7 +539,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
                                         display: isSeqChecked
                                     }}
-                                    value={TXT_Seq_Format}
+                                    value={isSeqChecked ? TXT_Seq_Format : ''}
                                     onChange={handleKEY_Seq_For}
                                     error={isSeqChecked && ERROR_Seq_For}
                                     disabled={!isSeqChecked}
@@ -579,7 +582,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Seq_Start}
+                                    value={isSeqChecked ? TXT_Seq_Start : ''}
                                     onChange={handleKEY_Seq_St}
                                     error={isSeqChecked && ERROR_Seq_St}
                                     disabled={!isSeqChecked}
@@ -599,7 +602,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isSeqChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Seq_End}
+                                    value={isSeqChecked ? TXT_Seq_End : ''}
                                     onChange={handleKEY_Seq_End}
                                     error={isSeqChecked && ERROR_Seq_End}
                                     disabled={!isSeqChecked}
@@ -616,14 +619,14 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isSeqChecked && ERROR_Seq_St ?
-                                        "Please input Seq Start Digit and Number Only." : null}
+                                        "Please input Seq Start Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                             <Grid item xs={2.7}></Grid>
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isSeqChecked && ERROR_Seq_End ?
-                                        "Please input Seq End Digit and Number Only." : null}
+                                        "Please input Seq End Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -660,11 +663,15 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         backgroundColor: isSeqConChecked ? "inherit" : "#F5F7F8",
                                         display: isSeqConChecked,
                                     }}
-                                    value={Cb_Seq_Con}
+                                    value={isSeqConChecked ? Cb_Seq_Con || '34' : ''}
                                     onChange={handleKEY_Seq_Con}
                                     error={ERROR_Seq_Con}
                                     disabled={!isSeqConChecked}
                                 >
+                                    <MenuItem value='16'>16</MenuItem>
+                                    <MenuItem value='32'>32</MenuItem>
+                                    <MenuItem value='34'>34</MenuItem>
+                                    <MenuItem value='36'>36</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>
@@ -723,7 +730,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isEngChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Eng_Start}
+                                    value={isEngChecked ? TXT_Eng_Start : ''}
                                     onChange={handleKEY_Eng_St}
                                     error={ERROR_Eng_St}
                                     disabled={!isEngChecked}
@@ -743,7 +750,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isEngChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Eng_End}
+                                    value={isEngChecked ? TXT_Eng_End : ''}
                                     onChange={handleKEY_Eng_End}
                                     error={ERROR_Eng_End}
                                     disabled={!isEngChecked}
@@ -760,14 +767,14 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isEngChecked && ERROR_Eng_St ?
-                                        "Please input Eng Start Digit and Number Only." : null}
+                                        "Please input Eng Start Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                             <Grid item xs={2.7}></Grid>
                             <Grid item xs={3.3}>
                                 <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
                                     {isEngChecked && ERROR_Eng_End ?
-                                        "Please input Eng End Digit and Number Only." : null}
+                                        "Please input Eng End Digit and Number only." : null}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -810,7 +817,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isRevChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Rev_Start}
+                                    value={isRevChecked ? TXT_Rev_Start : ''}
                                     onChange={handleKEY_Rev_St}
                                     error={isRevChecked && ERROR_Rev_St}
                                     disabled={!isRevChecked}
@@ -830,7 +837,7 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isRevChecked ? "inherit" : "#F5F7F8",
                                     }}
-                                    value={TXT_Rev_End}
+                                    value={isRevChecked ? TXT_Rev_End : ''}
                                     onChange={handleKEY_Rev_End}
                                     error={isRevChecked && ERROR_Rev_End}
                                     disabled={!isRevChecked}
@@ -838,6 +845,26 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                         </Grid>
 
+                        <Grid
+                            container
+                            className="gridContainer"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.7}></Grid>
+                            <Grid item xs={3.3}>
+                                <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
+                                    {isRevChecked && ERROR_Rev_St ?
+                                        "Please input Rev Start Digit and Number only." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.7}></Grid>
+                            <Grid item xs={3.3}>
+                                <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
+                                    {isRevChecked && ERROR_Rev_End ?
+                                        "Please input Rev End Digit and Number only." : null}
+                                </Typography>
+                            </Grid>
+                        </Grid>
 
                         <Grid container
                             className="gridContainer"
@@ -877,6 +904,9 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isCheckSumChecked ? "inherit" : "#F5F7F8",
                                     }}
+                                    value={isCheckSumChecked ? TXT_CheckSum_Start : ''}
+                                    onChange={handleKEY_CheckSum_St}
+                                    error={isCheckSumChecked && ERROR_CheckSum_St}
                                     disabled={!isCheckSumChecked}
                                 />
                             </Grid>
@@ -894,11 +924,34 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isCheckSumChecked ? "inherit" : "#F5F7F8",
                                     }}
+                                    value={isCheckSumChecked ? TXT_CheckSum_End : ''}
+                                    onChange={handleKEY_CheckSum_End}
+                                    error={isCheckSumChecked && ERROR_CheckSum_End}
                                     disabled={!isCheckSumChecked}
                                 />
                             </Grid>
                         </Grid>
 
+                        <Grid
+                            container
+                            className="gridContainer"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.7}></Grid>
+                            <Grid item xs={3.3}>
+                                <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
+                                    {isCheckSumChecked && ERROR_CheckSum_St ?
+                                        "Please input Check Sum Start Digit and Number only." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.7}></Grid>
+                            <Grid item xs={3.3}>
+                                <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
+                                    {isCheckSumChecked && ERROR_CheckSum_End ?
+                                        "Please input Check Sum End Digit and Number only." : null}
+                                </Typography>
+                            </Grid>
+                        </Grid>
 
                         <Grid container
                             className="gridContainer"
@@ -938,6 +991,9 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isConfigChecked ? "inherit" : "#F5F7F8",
                                     }}
+                                    value={isConfigChecked ? TXT_Config_Start : ''}
+                                    onChange={handleKEY_Config_St}
+                                    error={isConfigChecked && ERROR_Config_St}
                                     disabled={!isConfigChecked}
                                 />
                             </Grid>
@@ -955,11 +1011,34 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "71%",
                                         backgroundColor: isConfigChecked ? "inherit" : "#F5F7F8",
                                     }}
+                                    value={isConfigChecked ? TXT_Config_End : ''}
+                                    onChange={handleKEY_Config_End}
+                                    error={isConfigChecked && ERROR_Config_End}
                                     disabled={!isConfigChecked}
                                 />
                             </Grid>
                         </Grid>
 
+                        <Grid
+                            container
+                            className="gridContainer"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.7}></Grid>
+                            <Grid item xs={3.3}>
+                                <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
+                                    {isConfigChecked && ERROR_Config_St ?
+                                        "Please input Config Start Digit and Number only." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.7}></Grid>
+                            <Grid item xs={3.3}>
+                                <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
+                                    {isConfigChecked && ERROR_Config_End ?
+                                        "Please input Config End Digit and Number only." : null}
+                                </Typography>
+                            </Grid>
+                        </Grid>
 
                         <Grid
                             container

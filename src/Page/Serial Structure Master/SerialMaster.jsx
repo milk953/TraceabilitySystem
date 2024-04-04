@@ -121,10 +121,10 @@ function SerialMaster() {
                             variant="contained"
                             style={{ width: "130px" }}
                             color="error"
+                            onClick={Clear}
                         >
                             <CloseOutlined
                                 style={{ fontSize: "20px" }}
-                                onClick={Clear}
                             /> &nbsp;
                             Cancel
                         </Button>
@@ -143,7 +143,15 @@ function SerialMaster() {
                     }}
                 >
                     <Table
-                        sx={{ minWidth: 650 }}
+                        sx={{
+                            minWidth: 650,
+                            '& .MuiTableHead-root': {
+                                position: 'sticky',
+                                top: 0,
+                                zIndex: 1,
+                                background: 'white',
+                            },
+                        }}
                         aria-label="simple table"
                     >
                         <TableHead>
@@ -250,28 +258,28 @@ function SerialMaster() {
                                     <TableCell>{item.tssm_seq_convert}</TableCell>
                                     <TableCell>{item.tssm_seq_convert_base}</TableCell>
                                     <TableCell>
-                                    {item.tssm_eng_flag === 'Y' && (
+                                        {item.tssm_eng_flag === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>{item.tssm_eng_start_digit}</TableCell>
                                     <TableCell>{item.tssm_eng_end_digit}</TableCell>
                                     <TableCell>
-                                    {item.tssm_rev_flag === 'Y' && (
+                                        {item.tssm_rev_flag === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>{item.tssm_rev_start_digit}</TableCell>
                                     <TableCell>{item.tssm_rev_end_digit}</TableCell>
                                     <TableCell>
-                                    {item.tssm_checksum_flag === 'Y' && (
+                                        {item.tssm_checksum_flag === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>{item.tssm_checksum_start_digit}</TableCell>
                                     <TableCell>{item.tssm_checksum_end_digit}</TableCell>
                                     <TableCell>
-                                    {item.tssm_config_flag === 'Y' && (
+                                        {item.tssm_config_flag === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
