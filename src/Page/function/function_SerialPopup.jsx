@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const baseURL = "http://localhost:3080";
+import { getBaseURL } from "../Common/function_Common";
 import swal from "sweetalert";
 
 function PopupSerialMaster(onClose, item, searchFunction) {
-    // console.log("มาายัง", item)
+    const { baseURL } = getBaseURL();
     const STATUS_P = localStorage.getItem("STATUS");
     //console.log("สถานะ", STATUS_P);v
 
@@ -558,7 +558,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                     searchFunction();
                     onClose();
                 } catch (error) {
-                    console.error("ไม่สามารถบันนทึกข้อมูลได้:", error);
+                    console.error("ไม่สามารถบันทึกข้อมูลได้:", error);
                 }
             } else {
                 console.error("ไม่สามารถบันทึกข้อมูลได้: ค่าว่างถูกส่งเข้ามา");
@@ -650,7 +650,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                     searchFunction();
                     onClose();
                 } catch (error) {
-                    console.error("ไม่สามารถบันนทึกข้อมูลได้:", error);
+                    console.error("ไม่สามารถแก้ไขข้อมูลได้:", error);
                 }
             } else {
                 console.error("ไม่สามารถบันทึกข้อมูลได้: ค่าว่างถูกส่งเข้ามา");
@@ -700,32 +700,32 @@ function PopupSerialMaster(onClose, item, searchFunction) {
             setCheck_Config_Flag("");
             setTXT_Config_Start("");
             setTXT_Config_End("");
-        } 
+        }
     };
 
     return {
         STATUS_P, ipaddress, isPlantChecked, setIsPlantChecked, isWeekChecked, setIsWeekChecked,
         isWeekConChecked, setIsWeekConChecked, isSeqChecked, setIsSeqChecked,
-        isSeqConChecked, setIsSeqConChecked, isEngChecked, setIsEngChecked, 
-        isRevChecked, setIsRevChecked, isCheckSumChecked, setIsCheckSum, isConfigChecked, setIsConfig, 
-        ERROR_SN_Code, ERROR_SN_Name, ERROR_SN_UpCount, ERROR_SN_Length, 
-        ERROR_Plant_Code, ERROR_Plant_St, ERROR_Plant_End, ERROR_Week_Code, ERROR_Week_St, ERROR_Week_End, 
+        isSeqConChecked, setIsSeqConChecked, isEngChecked, setIsEngChecked,
+        isRevChecked, setIsRevChecked, isCheckSumChecked, setIsCheckSum, isConfigChecked, setIsConfig,
+        ERROR_SN_Code, ERROR_SN_Name, ERROR_SN_UpCount, ERROR_SN_Length,
+        ERROR_Plant_Code, ERROR_Plant_St, ERROR_Plant_End, ERROR_Week_Code, ERROR_Week_St, ERROR_Week_End,
         ERROR_Week_Con, ERROR_Seq_For, ERROR_Seq_St, ERROR_Seq_End, ERROR_Seq_Con,
-        ERROR_Eng_St, ERROR_Eng_End, ERROR_Rev_St, ERROR_Rev_End, 
+        ERROR_Eng_St, ERROR_Eng_End, ERROR_Rev_St, ERROR_Rev_End,
         ERROR_CheckSum_St, ERROR_CheckSum_End, ERROR_Config_St, ERROR_Config_End,
-        TXT_SN_Code, TXT_SN_Name, TXT_SN_UpCount, TXT_SN_Length, 
+        TXT_SN_Code, TXT_SN_Name, TXT_SN_UpCount, TXT_SN_Length,
         Check_Plant_Flag, TXT_Plant_Code, TXT_Plant_Start, TXT_Plant_End,
         Check_Week_Flag, TXT_Week_Code, TXT_Week_Start, TXT_Week_End, Check_Week_Con, Cb_Week_Con,
         Check_Seq_Flag, TXT_Seq_Format, TXT_Seq_Start, TXT_Seq_End, Check_Seq_Con, Cb_Seq_Con,
         Check_Eng_Flag, TXT_Eng_Start, TXT_Eng_End, Check_Rev_Flag, TXT_Rev_Start, TXT_Rev_End,
-        Check_CheckSum_Flag, TXT_CheckSum_Start, TXT_CheckSum_End, 
-        Check_Config_Flag, TXT_Config_Start, TXT_Config_End, 
-        handleKEY_SN_Code, handleKEY_SN_Name, handleKEY_SN_UpCount, handleKEY_SN_Length, 
-        handleKEY_Plant_Code, handleKEY_Plant_St, handleKEY_Plant_End, 
+        Check_CheckSum_Flag, TXT_CheckSum_Start, TXT_CheckSum_End,
+        Check_Config_Flag, TXT_Config_Start, TXT_Config_End,
+        handleKEY_SN_Code, handleKEY_SN_Name, handleKEY_SN_UpCount, handleKEY_SN_Length,
+        handleKEY_Plant_Code, handleKEY_Plant_St, handleKEY_Plant_End,
         handleKEY_Week_Code, handleKEY_Week_St, handleKEY_Week_End, handleKEY_Week_Con,
         handleKEY_Seq_For, handleKEY_Seq_St, handleKEY_Seq_End, handleKEY_Seq_Con,
         handleKEY_Eng_St, handleKEY_Eng_End, handleKEY_Rev_St, handleKEY_Rev_End,
-        handleKEY_CheckSum_St, handleKEY_CheckSum_End, handleKEY_Config_St, 
+        handleKEY_CheckSum_St, handleKEY_CheckSum_End, handleKEY_Config_St,
         handleKEY_Config_End, handleSaveClick, Clear
     }
 }

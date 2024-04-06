@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const baseURL = "http://localhost:3080";
+import { usePopupFunctions, getBaseURL } from "../Common/function_Common";
 
 function SerialMasterPage() {
+
+    const{ baseURL } = getBaseURL();
 
     const [ShowData, setShowData] = useState([]);
     const [checkHead, setCheckHead] = useState("hidden"); //ตัวแปรเช็คค่าของ ตาราง
@@ -50,21 +52,8 @@ function SerialMasterPage() {
       setName(name);
     };
   
-    const [OpenPopup, setOpenPopup] = useState(false)
-  
-    const PopupOpen = () => {
-      setOpenPopup(true);
-    };
-  
-    const PopupClose = () => {
-      setOpenPopup(false);
-    };
-  
-    const New = () => {
-      const STATUS = "NEW";
-      localStorage.setItem("STATUS", STATUS);
-      PopupOpen();
-    };
+    const { OpenPopup, PopupOpen, PopupClose, New } = usePopupFunctions();
+    
   
     const Clear = () => {
       setCode("");

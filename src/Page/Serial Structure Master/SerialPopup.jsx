@@ -477,15 +477,15 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         backgroundColor: isWeekConChecked ? "inherit" : "#F5F7F8",
                                         display: isWeekConChecked
                                     }}
-                                    value={isWeekConChecked ? Cb_Week_Con || '34' : ''}
+                                    value={isWeekConChecked ? Cb_Week_Con || 34 : ''}
                                     onChange={handleKEY_Week_Con}
                                     error={isWeekConChecked && ERROR_Week_Con}
                                     disabled={!isWeekConChecked}
                                 >
-                                    <MenuItem value='16'>16</MenuItem>
-                                    <MenuItem value='32'>32</MenuItem>
-                                    <MenuItem value='34'>34</MenuItem>
-                                    <MenuItem value='36'>36</MenuItem>
+                                    <MenuItem value={16}>16</MenuItem>
+                                    <MenuItem value={32}>32</MenuItem>
+                                    <MenuItem value={34}>34</MenuItem>
+                                    <MenuItem value={36}>36</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>
@@ -663,15 +663,15 @@ function SerialPopup({ isOpen, onClose, item, searchFunction }) {
                                         backgroundColor: isSeqConChecked ? "inherit" : "#F5F7F8",
                                         display: isSeqConChecked,
                                     }}
-                                    value={isSeqConChecked ? Cb_Seq_Con || '34' : ''}
+                                    value={isSeqConChecked ? Cb_Seq_Con || 34 : ''}
                                     onChange={handleKEY_Seq_Con}
                                     error={ERROR_Seq_Con}
                                     disabled={!isSeqConChecked}
                                 >
-                                    <MenuItem value='16'>16</MenuItem>
-                                    <MenuItem value='32'>32</MenuItem>
-                                    <MenuItem value='34'>34</MenuItem>
-                                    <MenuItem value='36'>36</MenuItem>
+                                    <MenuItem value={16}>16</MenuItem>
+                                    <MenuItem value={32}>32</MenuItem>
+                                    <MenuItem value={34}>34</MenuItem>
+                                    <MenuItem value={36}>36</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>

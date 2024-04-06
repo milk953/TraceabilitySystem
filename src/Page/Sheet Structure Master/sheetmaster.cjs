@@ -1,18 +1,10 @@
 const express = require("express");
-const { Client } = require("pg");
 const app = express();
 app.use(express.json());
 
-const pgFETLPSQL_A1 = {
-    user: "fetltrace",
-    host: "10.17.66.120",
-    database: "FETLPSQL_A1",
-    password: "f3tltr@c3",
-    port: 5432,
-};
+const connectToDatabase = require('../Common/database.cjs');
 
-const client = new Client(pgFETLPSQL_A1);
-client.connect();
+const { FPC, SMT, pgFETLPSQL_A1, client } = connectToDatabase();
 
 module.exports.postCodeName = async function (req, res) {
     //app.post("/search/CodeName", async (req, res) => {

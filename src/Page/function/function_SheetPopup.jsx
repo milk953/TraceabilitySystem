@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const baseURL = "http://localhost:3080";
+import { getBaseURL } from "../Common/function_Common";
 import swal from "sweetalert";
 
 function PopupT(onClose, item, searchFunction) {
-    // console.log("มาายัง", item)
+    const { baseURL } = getBaseURL();
     const STATUS_P = localStorage.getItem("STATUS");
     //console.log("สถานะ", STATUS_P);v
 
@@ -416,8 +416,7 @@ function PopupT(onClose, item, searchFunction) {
           setTXT_Seq_Format("");
           setTXT_Seq_Start("");
           setTXT_Seq_End("")
-    
-        }8
+        }
       };
 
     return{

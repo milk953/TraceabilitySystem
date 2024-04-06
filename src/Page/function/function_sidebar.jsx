@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const baseURL = "http://localhost:3080";
+import { getBaseURL } from "../Common/function_Common";
 
 function sidebarT() {
-
+ 
+    const { baseURL } = getBaseURL();
     const [subMenuOpen1, setSubMenuOpen1] = useState(false);
     const [subMenuOpen2, setSubMenuOpen2] = useState(false);
     const [subMenuOpen3, setSubMenuOpen3] = useState(false);

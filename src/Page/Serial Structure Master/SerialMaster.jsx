@@ -138,7 +138,7 @@ function SerialMaster() {
                     style={{
                         width: "96%",
                         marginBottom: "10px",
-                        maxHeight: "450px",
+                        maxHeight: "440px",
                         visibility: checkHead,
                     }}
                 >
