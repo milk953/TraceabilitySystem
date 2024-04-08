@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getBaseURL } from "../Common/function_Common";
+import { getBaseURL, useIPAddress } from "../Common/function_Common";
 import swal from "sweetalert";
 
 function PopupSerialMaster(onClose, item, searchFunction) {
@@ -10,7 +10,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
 
     const UserLogin = localStorage.getItem("IDCode");
     const [user_id, setuser_id] = useState("");
-    const [ipaddress, setipaddress] = useState("");
+    const { ipaddress, setipaddress } = useIPAddress();
 
     const [isPlantChecked, setIsPlantChecked] = useState(false);
     const [isWeekChecked, setIsWeekChecked] = useState(false);
@@ -113,21 +113,6 @@ function PopupSerialMaster(onClose, item, searchFunction) {
             fetchData();
         }
     }, [STATUS_P]);
-
-    useEffect(() => {
-        // Fetch the client's IP address from a public API
-        fetch('https://api.ipify.org?format=json')
-            .then((response) => response.json())
-            .then((data) => {
-                // Extract the IP address from the response data
-                const ipAddress = data.ip;
-                // Update the state with the client's IP address
-                setipaddress(ipAddress);
-            })
-            .catch((error) => {
-                console.error('Error fetching IP address:', error);
-            });
-    }, []);
 
     useEffect(() => {
 
