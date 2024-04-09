@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import {internalIpV6, internalIpV4} from 'internal-ip';
+
+console.log(await internalIpV4());
 
 const usePopupFunctions = () => {
   const [OpenPopup, setOpenPopup] = useState(false);
@@ -27,20 +30,20 @@ const getBaseURL = () => {
 
 const useIPAddress = () => {
   const [ipaddress, setipaddress] = useState("");
+
   useEffect(() => {
     const fetchIPAddress = async () => {
       try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        const clientIPAddress = data.ip;
-        setipaddress(clientIPAddress);
+        const ipv4 = await internalIpV4();
+        setipaddress(ipv4)
       } catch (error) {
-        console.error('Error fetching IP address:', error);
+        console.error("Error fetching IP:", error);
       }
     };
 
     fetchIPAddress();
   }, []);
+
   return { ipaddress, setipaddress };
 };
 
