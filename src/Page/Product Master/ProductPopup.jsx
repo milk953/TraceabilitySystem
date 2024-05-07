@@ -1465,7 +1465,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                         </Box>
 
-                        <Box sx={{ flexGrow: 1 }}>
+                        <Box sx={{ flexGrow: 1, backgroundColor: "#E9F6FF" }}>
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1476,12 +1476,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         Require Result
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={8}>
+                                <Grid item xs={8.6}>
                                     <TableContainer
                                         component={Paper}
                                         style={{
                                             width: "90%",
-                                            marginBottom: "10px",
+                                            marginBottom: "2px",
                                             maxHeight: "400px",
                                             // visibility: checkHead,
                                         }}
@@ -1498,16 +1498,82 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                             }}
                                             aria-label="simple table"
                                         >
-                                            <TableHead>
+                                            <TableHead style={{ backgroundColor: "#BCCEF8" }}>
                                                 <TableRow>
-                                                    <TableCell></TableCell>
+                                                    <TableCell>No.</TableCell>
+                                                    <TableCell>Item</TableCell>
+                                                    <TableCell>Front Side</TableCell>
+                                                    <TableCell>Back Side</TableCell>
+                                                    <TableCell>Show Result</TableCell>
+                                                    <TableCell>Control Conn Roll</TableCell>
+                                                    <TableCell>Control Conn Sheet</TableCell>
+                                                    <TableCell>Control Final Gate</TableCell>
                                                 </TableRow>
                                             </TableHead>
+                                            <TableBody style={{ overflowY: "auto" }}>
+                                                <TableRow>
+                                                    <TableCell></TableCell>
+                                                    <TableCell></TableCell>
+                                                    <TableCell style={{textAlign: "center"}}>
+                                                        <Checkbox
+                                                            style={{ padding: "0" }}
+                                                        //   checked={isPlantChecked}
+                                                        //   onChange={(e) => {
+                                                        //     setIsPlantChecked(e.target.checked);
+                                                        //   }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell style={{textAlign: "center"}}>
+                                                        <Checkbox
+                                                            style={{ padding: "0" }}
+                                                        //   checked={isPlantChecked}
+                                                        //   onChange={(e) => {
+                                                        //     setIsPlantChecked(e.target.checked);
+                                                        //   }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell style={{textAlign: "center"}}>
+                                                        <Checkbox
+                                                            style={{ padding: "0" }}
+                                                        //   checked={isPlantChecked}
+                                                        //   onChange={(e) => {
+                                                        //     setIsPlantChecked(e.target.checked);
+                                                        //   }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell style={{textAlign: "center"}}>
+                                                        <Checkbox
+                                                            style={{ padding: "0" }}
+                                                        //   checked={isPlantChecked}
+                                                        //   onChange={(e) => {
+                                                        //     setIsPlantChecked(e.target.checked);
+                                                        //   }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell style={{textAlign: "center"}}>
+                                                        <Checkbox
+                                                            style={{ padding: "0" }}
+                                                        //   checked={isPlantChecked}
+                                                        //   onChange={(e) => {
+                                                        //     setIsPlantChecked(e.target.checked);
+                                                        //   }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell style={{textAlign: "center"}}>
+                                                        <Checkbox
+                                                            style={{ padding: "0" }}
+                                                        //   checked={isPlantChecked}
+                                                        //   onChange={(e) => {
+                                                        //     setIsPlantChecked(e.target.checked);
+                                                        //   }}
+                                                        />
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableBody>
                                         </Table>
                                     </TableContainer>
                                 </Grid>
                             </Grid>
-
                         </Box>
 
                         <Grid
