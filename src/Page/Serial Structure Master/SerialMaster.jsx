@@ -33,13 +33,13 @@ import {
     InfoCircleOutlined,
 } from "@ant-design/icons";
 import { SerialMasterPage } from "../function/function_SerialMaster";
-
+// 
 function SerialMaster() {
 
     const { ShowData, checkHead, checkEmpty, checkData, code, name,
         TEXT_Code, Search, handleCode, handleName, OpenPopup,
         PopupClose, New, Clear, selectedRowData, OpenEdit,
-        handleOpenDelete, } = SerialMasterPage();
+        handleOpenDelete,handleExportToExcel, } = SerialMasterPage();
 
 
     return (
@@ -131,7 +131,11 @@ function SerialMaster() {
                     </Box>
                 </div>
             </div>
-
+            <div style={{marginLeft: "5%"}}>
+                <Button variant="contained" color="success" onClick={handleExportToExcel} >
+                    Export to Excel
+                </Button>
+            </div>
             <div className="divTbSheet">
                 <TableContainer
                     component={Paper}

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { usePopupFunctions, getBaseURL } from "../Common/function_Common";
-
+import * as XLSX from 'xlsx';
+// 
 function SheetMasterT() {
 
     const { baseURL } = getBaseURL();
@@ -97,11 +98,80 @@ function SheetMasterT() {
         }
       });
     };
+
+    const dataTableexport = [...ShowData]; 
+    const handleExportToExcel = () => {
+        const Sheet_Structure_Master = [
+      [
+        "No.",
+        "Code",
+        "Name",
+        "Plant",
+        "",
+        "",
+        "",
+        "Lot",
+        "",
+        "",
+        "Model",
+        "",
+        "",
+        "Seq",
+        "",
+        "",
+        "",
+    ],
+    [
+        "",
+        "",
+        "",
+        "Flag",
+        "Code",
+        "Start Digit",
+        "End Digit",
+        "Flag",
+        "Start Digit",
+        "End Digit",
+        "Flag",
+        "Start Digit",
+        "End Digit",
+        "Flag",
+        "Format",
+        "Start Digit",
+        "End Digit",     
+    ],
+    ...dataTableexport.map((item, index) => [
+      index + 1,
+      item.tstm_sht_struc_code,
+      item.tstm_sht_struc_name,
+      item.tstm_plant_flag === 'Y' ? 'Y' : 'N',
+      item.tstm_plant_code,
+      item.tstm_plant_start_digit,
+      item.tstm_plant_end_digit,
+      item.tstm_lot_flag === 'Y' ? 'Y' : 'N',
+      item.tstm_lot_start_digit,
+      item.tstm_lot_end_digit,
+      item.tstm_model_flag === 'Y' ? 'Y' : 'N',
+      item.tstm_model_start_digit,
+      item.tstm_model_end_digit,
+      item.tstm_seq_flag === 'Y' ? 'Y' : 'N',
+      item.tstm_seq_format,
+      item.tstm_seq_start_digit,
+      item.tstm_seq_end_digit,
+
+            ])
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(Sheet_Structure_Master);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        XLSX.writeFile(wb, `Sheet_Structure_Master.xlsx`);
+    };
+
     return{
         ShowData, checkHead, checkEmpty, checkData, code, name,
         TEXT_SHT_Code, Search, handleCode, handleName, OpenPopup,
         PopupOpen, PopupClose, New, Clear, selectedRowData, OpenEdit,
-        handleOpenDelete,
+        handleOpenDelete,handleExportToExcel,
     }
 }
 

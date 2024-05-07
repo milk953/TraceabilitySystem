@@ -42,27 +42,111 @@ function ProductMaster() {
     const { ShowData, checkHead, checkEmpty, checkData, code, name,
         TEXT_SHT_Code, Search, handleCode, handleName, OpenPopup,
         PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete, } = SheetMasterT();
+        const handleExportToExcel = () => {}
+        // const dataTable1export = [...ShowData]; 
+        //     const handleExportToExcel = () => {
+        //         const wsData = [
+        //             [
+        //                 "No.",
+        //                 "Factory",
+        //                 "Product Name",
+        //                 "Update Count",
+        //                 "Config Code",
+        //                 "Start Seq Serial",
+        //                 "Start Seq Code",
+        //                 "Date In process Flag",
+        //                 "Date In Process",
+        //                 "Pcs Per Sheet (EFPC)",
+        //                 "Pcs Per Sheet (SMT)",
+        //                 "Serial File Format",
+        //                 "Sheet File Format",
+        //                 "Serial side",
+        //                 "Barcode Grade",
+        //                 "Barcode Req Lot",
+        //                 "Sheet Type",
+        //                 "Sheet per Lot (EFPC)",
+        //                 "Sheet per Lot (SMT)",
+        //                 "Sheet per scan",
+        //                 "Sheet per laser",
+        //                 "Sheet Model Code",
+        //                 "Sheet check Product Flag",
+        //                 "Sheet check Lot Flag",
+        //                 "Sheet Plasma Time Flag",
+        //                 "Sheet Plasma Time",
+        //                 "Sheet Xray Time Flag",
+        //                 "Product Status",
+        //                 "Conn Roll Sheet Flag",
+        //                 "Conn Roll Sheet Length",
+        //                 "Conn Roll Leaf Flag",
+        //                 "Conn Roll Length",
+        //                 "Conn Leaf Length",
+        //                 "Conn Roll Product Flag",
+        //                 "Conn Roll Product Start",
+        //                 "Conn Roll Product End",
+        //                 "Conn Roll Serial Flag",
+        //                 "Conn Roll Leaf Scan",
+        //                 "Conn Roll Req Lot Sheet",
+        //                 "Conn Roll Lot Sheet Start",
+        //                 "Conn Roll Lot Sheet End",
+        //                 "Conn Roll Req Product Sheet",
+        //                 "Conn Roll Product Sheet Start",
+        //                 "Conn Roll Product Sheet End",
+        //                 "Conn Roll Product Fix",
+        //                 "Conn Sheet Control Time Flag",
+        //                 "Conn Sheet Plasma Time Flag",
+        //                 "Conn Sheet Mix Lot Flag",
+        //                 "Conn Sheet Mix Product Flag",
+        //                 "Conn Sheet check sum Flag",
+        //                 "Conn Sheet Week Code Flag",
+        //                 "Process Control Time Flag",
+        //                 "Process Control Time",
+        //                 "Final pcs per tray",
+        //                 "Final pcs per scan",
+        //                 "Final pack group flag",
+        //                 "Final check week code flag",
+        //                 "Final PDS time skip elt",
+        //                 "Final PDS time Hide time",
+        //                 "Final PDS time flag",
+        //                 "Final PDS time",
+        //                 "Final PDS time by",
+        //                 "Final PDS time confirm flag",
+        //                 "Final conn sheet flag",
+        //                 "Final mix Lot flag",
+        //                 "Final mix product flag",
+        //                 "Fin inspect flag",
+        //                 "Final inspect process",
+        //                 "Final check sum flag",
+        //                 "Final chip ID flag",
+        //             ],
+        //             ...dataTable1export.map((item, index) => [
+        //                 index + 1,
+        //                 item.tstm_sht_struc_code,
+        //                 item.tstm_sht_struc_name,
+        //                 item.tstm_plant_flag === 'Y' ? 'Y' : 'N',
+        //                 item.tstm_plant_code,
+        //                 item.tstm_plant_start_digit,
+        //                 item.tstm_plant_end_digit,
+        //                 item.tstm_lot_flag === 'Y' ? 'Y' : 'N',
+        //                 item.tstm_lot_start_digit,
+        //                 item.tstm_lot_end_digit,
+        //                 item.tstm_model_flag === 'Y' ? 'Y' : 'N',
+        //                 item.tstm_model_start_digit,
+        //                 item.tstm_model_end_digit,
+        //                 item.tstm_seq_flag === 'Y' ? 'Y' : 'N',
+        //                 item.tstm_seq_format,
+        //                 item.tstm_seq_start_digit,
+        //                 item.tstm_seq_end_digit
+        //             ])
+        //         ];
+                
 
-        const handleExportToExcel = () => {
-            const table = document.getElementById('myTable'); 
-            const rows = table.getElementsByTagName('tr');
-            const data = [];
-        
-            for (let i = 0; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                const rowData = [];
-                for (let j = 0; j < cells.length; j++) {
-                    rowData.push(cells[j].textContent);
-                }
-                data.push(rowData);
-            }
-        
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-            XLSX.writeFile(wb, 'exported_data.xlsx');
-        };
-        
+        //         const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+        //         const wb = XLSX.utils.book_new();
+        //         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        //         XLSX.writeFile(wb, `Product_Master.xlsx`);
+        //     };
+
 
     return (
         <>
