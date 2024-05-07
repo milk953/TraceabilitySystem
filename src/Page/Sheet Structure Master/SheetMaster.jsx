@@ -35,12 +35,12 @@ import {
 } from "@ant-design/icons";
 import axios from 'axios';
 import { SheetMasterT } from "../function/function_SheetMaster";
-
+// 
 function SheetMaster() {
   
   const {ShowData, checkHead, checkEmpty, checkData, code, name,
     TEXT_SHT_Code, Search, handleCode, handleName, OpenPopup,
-    PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete,} = SheetMasterT();
+    PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete,handleExportToExcel,} = SheetMasterT();
 
   return (
     <>
@@ -131,7 +131,11 @@ function SheetMaster() {
           </Box>
         </div>
       </div>
-
+      <div style={{marginLeft: "5%"}}>
+                <Button variant="contained" color="success" onClick={handleExportToExcel} >
+                    Export to Excel
+                </Button>
+            </div>
       <div className="divTbSheet">
         <TableContainer
           component={Paper}
