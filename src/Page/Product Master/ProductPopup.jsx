@@ -391,7 +391,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                         </Grid>
 
-                        <Box sx={{ flexGrow: 1, backgroundColor: "#E9F6FF" }}>
+                        <Box sx={{ flexGrow: 1, backgroundColor: "#e0f7fa" }}>
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -993,7 +993,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                         </Box>
 
-                        <Box sx={{ flexGrow: 1, backgroundColor: "#E9F6FF" }}>
+                        <Box sx={{ flexGrow: 1, backgroundColor: "#e0f7fa" }}>
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1465,7 +1465,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                         </Box>
 
-                        <Box sx={{ flexGrow: 1, backgroundColor: "#E9F6FF" }}>
+                        <Box sx={{ flexGrow: 1, backgroundColor: "#e0f7fa" }}>
                             <Grid
                                 container
                                 className="gridContainer2"
