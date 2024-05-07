@@ -47,7 +47,7 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    width: 60%; /* Adjust the width as needed */
+    width: 60%;
     height: 70%;
     text-align: center;
   }
@@ -57,6 +57,16 @@
     flex-direction: column;
     background-color: #fff;
     width: 800px;
+    height: auto;
+    overflow: auto;
+    border-radius: 10px !important;
+  }
+
+  .ProductPopup{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 1350px;
     height: auto;
     overflow: auto;
     border-radius: 10px !important;
@@ -75,6 +85,16 @@
     width: 100%;
     text-align: left;
     margin-left: 4.3%;
+    padding: 0.3%;
+  }
+
+  .gridContainer2{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    text-align: left;
+    margin-left: 2%;
     padding: 0.3%;
   }
 

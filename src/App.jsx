@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Sheet_Master from './Page/Sheet Structure Master/SheetMaster';
 import Serial_Master from './Page/Serial Structure Master/SerialMaster';
+import Product_master from './Page/Product Master/ProductMaster';
 import Login from './Login/Login'
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
@@ -39,6 +40,7 @@ function App() {
           <>
         <Route path="/SheetMaster" element={<Sheet_Master />} />
         <Route path="/SerialMaster" element={<Serial_Master />} />
+        <Route path="/ProductMaster" element={<Product_master />} />
         </>
         ) : (
           // ให้เปลี่ยนทางไปยังหน้าล็อกอิน ถ้ายังไม่ได้เข้าสู่ระบบ
