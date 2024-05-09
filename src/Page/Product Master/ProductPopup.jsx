@@ -23,15 +23,19 @@ import {
 } from "@mui/material";
 import swal from "sweetalert";
 import axios from "axios";
-
+import { ProductMasterPopup } from "../function/function_ProductMasterPopup";
+import { getFactory } from "../Common/function_Common";
 
 function ProductPopup({ isOpen, onClose, item, searchFunction }) {
 
-    if (!isOpen) {
+    const { factory, setFactory, DDL_Factory, setDDL_Factory } = getFactory();
+    const { STATUS_P, SerialStruc, DDL_SerialStruc, setDDL_SerialStruc } = ProductMasterPopup();
+    
+    console.log("Serial", SerialStruc)
+
+  if (!isOpen) {
         return null;
     }
-
-
     return (
         <div className="popup">
             <div className="popupcontect"
@@ -59,11 +63,17 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     id="ddlFactory"
                                     variant="outlined"
                                     size="small"
-                                    //   value={TXT_SHT_Code}
-                                    //   onChange={handleKEY_SHT_Code}
+                                    value={DDL_Factory}
+                                    onChange={(e) => setDDL_Factory(e.target.value)}
                                     style={{ width: "90%" }}
                                 //   error={ERROR_SHT_Code}
-                                />
+                                >
+                                    {factory.map((item) => (
+                                        <MenuItem key={item.factory_code} value={item.factory_code}>
+                                            {item.factory_desc}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
                             </Grid>
                         </Grid>
                         <Grid
@@ -342,11 +352,16 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     id="ddlFactory"
                                     variant="outlined"
                                     size="small"
-                                    // value="ACTIVE"
-                                    //   onChange={handleKEY_SHT_Code}
+                                    value={DDL_SerialStruc}
+                                    onChange={(e) => setDDL_SerialStruc(e.target.value)}
                                     style={{ width: "90%" }}
                                 //   error={ERROR_SHT_Code}
                                 >
+                                    {/* {SerialStruc.map((item) => (
+                                        <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_code}>
+                                            {item.tssm_sn_struc_name}
+                                        </MenuItem>
+                                    ))} */}
                                 </Select>
                             </Grid>
                         </Grid>
@@ -1243,17 +1258,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1.7}>
-                                    <TextField
-                                        id="txtConnSheetConTime"
-                                        variant="outlined"
-                                        size="small"
-                                        style={{
-                                            width: "90%",
-                                        }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    <Checkbox
+                                        style={{ padding: "0" }}
+                                    //   checked={isPlantChecked}
+                                    //   onChange={(e) => {
+                                    //     setIsPlantChecked(e.target.checked);
+                                    //   }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1514,7 +1524,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                                 <TableRow>
                                                     <TableCell></TableCell>
                                                     <TableCell></TableCell>
-                                                    <TableCell style={{textAlign: "center"}}>
+                                                    <TableCell style={{ textAlign: "center" }}>
                                                         <Checkbox
                                                             style={{ padding: "0" }}
                                                         //   checked={isPlantChecked}
@@ -1523,7 +1533,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                                         //   }}
                                                         />
                                                     </TableCell>
-                                                    <TableCell style={{textAlign: "center"}}>
+                                                    <TableCell style={{ textAlign: "center" }}>
                                                         <Checkbox
                                                             style={{ padding: "0" }}
                                                         //   checked={isPlantChecked}
@@ -1532,7 +1542,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                                         //   }}
                                                         />
                                                     </TableCell>
-                                                    <TableCell style={{textAlign: "center"}}>
+                                                    <TableCell style={{ textAlign: "center" }}>
                                                         <Checkbox
                                                             style={{ padding: "0" }}
                                                         //   checked={isPlantChecked}
@@ -1541,7 +1551,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                                         //   }}
                                                         />
                                                     </TableCell>
-                                                    <TableCell style={{textAlign: "center"}}>
+                                                    <TableCell style={{ textAlign: "center" }}>
                                                         <Checkbox
                                                             style={{ padding: "0" }}
                                                         //   checked={isPlantChecked}
@@ -1550,7 +1560,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                                         //   }}
                                                         />
                                                     </TableCell>
-                                                    <TableCell style={{textAlign: "center"}}>
+                                                    <TableCell style={{ textAlign: "center" }}>
                                                         <Checkbox
                                                             style={{ padding: "0" }}
                                                         //   checked={isPlantChecked}
@@ -1559,7 +1569,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                                         //   }}
                                                         />
                                                     </TableCell>
-                                                    <TableCell style={{textAlign: "center"}}>
+                                                    <TableCell style={{ textAlign: "center" }}>
                                                         <Checkbox
                                                             style={{ padding: "0" }}
                                                         //   checked={isPlantChecked}

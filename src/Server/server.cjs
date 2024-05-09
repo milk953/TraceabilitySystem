@@ -6,7 +6,8 @@ const port = 3080;
 const serverLogin = require("../Login/Login.cjs");
 const serverMenu = require("../Page/Sidebar/menu.cjs");
 const sheetmaster = require("../Page/Sheet Structure Master/sheetmaster.cjs");
-const serialmaster = require("../Page/Serial Structure Master/serialMaster.cjs")
+const serialmaster = require("../Page/Serial Structure Master/serialMaster.cjs");
+const productmaster = require("../Page/Product Master/productmaster.cjs");
 
 oracledb.initOracleClient({
   tnsAdmin: "D:\\app\\Administrator\\product\\11.2.0\\client_1\\network\\admin",
@@ -91,6 +92,13 @@ app.post("/insSerial_Master", serialmaster.insertSerial_Master);
 app.post("/updateSerial_Master", serialmaster.updateSerial_Master);
 app.post("/delSerial_Master", serialmaster.delSerial_Master);
 app.post("/CheckrunCode", serialmaster.runningCode);
+
+//Product Master
+app.post("/Factory", productmaster.getFactory);
+app.post("/SerialStructure", productmaster.getSerialStructure);
+app.post("/SheetStructure", productmaster.getSheetStructure);
+app.post("/SheetType", productmaster.getSheetType);
+app.post("/ProceesControl", productmaster.getProceesControl);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
