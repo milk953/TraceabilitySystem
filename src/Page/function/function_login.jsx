@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { getBaseURL } from "../Common/function_Common";
 
 function LoginTest() {
-
-  const { baseURL } = getBaseURL();
   const navigate = useNavigate();
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
@@ -35,9 +32,9 @@ function LoginTest() {
   };
   const handleLogin = async () => {
     axios
-      .post(baseURL + "/login", {
+      .post("/login", {
         User: loginId,
-        Password: password
+        Password: password,
       })
       .then((res) => {
         // console.log(res.data,"///////////////////")
@@ -55,8 +52,7 @@ function LoginTest() {
             // เปลี่ยนหน้าหลังจากหน่วงเวลา
             PageSheetMaster();
           }, 1300);
-        }
-        else {
+        } else {
           Swal.fire({
             title: "Username or Password Wrong",
             text: "Please Try Again",
@@ -65,12 +61,19 @@ function LoginTest() {
           });
           return;
         }
-      })
+      });
   };
   return {
-    loginId, password, showPassword, isLoading, setLoginId,
-    handlePasswordChange, togglePasswordVisibility, PageSheetMaster, handleLogin
-  }
+    loginId,
+    password,
+    showPassword,
+    isLoading,
+    setLoginId,
+    handlePasswordChange,
+    togglePasswordVisibility,
+    PageSheetMaster,
+    handleLogin,
+  };
 }
 
 export { LoginTest };

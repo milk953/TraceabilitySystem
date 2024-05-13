@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getBaseURL, useIPAddress } from "../Common/function_Common";
+import { useIPAddress } from "../Common/function_Common";
 import swal from "sweetalert";
 
 function PopupT(onClose, item, searchFunction) {
-    const { baseURL } = getBaseURL();
     const STATUS_P = localStorage.getItem("STATUS");
     //console.log("สถานะ", STATUS_P);v
 
@@ -60,7 +59,7 @@ function PopupT(onClose, item, searchFunction) {
         if (STATUS_P === "NEW") {
             const fetchData = async () => {
                 try {
-                    const response = await axios.post(baseURL + "/CheckSHTCode", {});
+                    const response = await axios.post("/CheckSHTCode", {});
                     const data = response.data;
                     const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
                     setTXT_SHT_Code(new_run_seq);
@@ -285,7 +284,7 @@ function PopupT(onClose, item, searchFunction) {
                 UserLogin
             ) {
                 try {
-                    const response = await axios.post(baseURL + "/insSheet_Master", {
+                    const response = await axios.post("/insSheet_Master", {
                         sht_code: TXT_SHT_Code,
                         sht_name: TXT_SHT_Name,
                         plant_flag: Check_Plant_Flag,
@@ -343,7 +342,7 @@ function PopupT(onClose, item, searchFunction) {
             ) {
 
                 try {
-                    const response = await axios.post(baseURL + "/updateSheet_Master", {
+                    const response = await axios.post("/updateSheet_Master", {
                         sht_code: TXT_SHT_Code,
                         sht_name: TXT_SHT_Name,
                         plant_flag: Check_Plant_Flag,

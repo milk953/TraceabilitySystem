@@ -100,6 +100,13 @@ app.post("/SheetStructure", productmaster.getSheetStructure);
 app.post("/SheetType", productmaster.getSheetType);
 app.post("/ProceesControl", productmaster.getProceesControl);
 
+
+app.get('/get-ip', (req, res) => {
+  const clientIp = req.connection.remoteAddress;
+  const ip = clientIp.includes(':') ? clientIp.split(':').pop() : clientIp;
+  res.send({ ip });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

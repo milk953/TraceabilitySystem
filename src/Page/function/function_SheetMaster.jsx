@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { usePopupFunctions, getBaseURL } from "../Common/function_Common";
+import { usePopupFunctions } from "../Common/function_Common";
 import * as XLSX from 'xlsx';
 // 
 function SheetMasterT() {
-
-    const { baseURL } = getBaseURL();
     const [ShowData, setShowData] = useState([]);
     const [checkHead, setCheckHead] = useState("hidden"); //ตัวแปรเช็คค่าของ ตาราง
     const [checkEmpty, setCheckEmpty] = useState("hidden"); // ตัวแปรเช็คค่าว่าง
@@ -19,7 +17,7 @@ function SheetMasterT() {
     const Search = async () => {
       console.log(code, name, "......")
       try {
-        const response = await axios.post(baseURL + "/search/CodeName", {
+        const response = await axios.post("/search/CodeName", {
           Code: code,
           Name: name
         });
@@ -84,7 +82,7 @@ function SheetMasterT() {
         if (willDelete) {
           const shtCodeToDelete = item.tstm_sht_struc_code;
           try {
-            const response = await axios.post(baseURL + "/delSheet_Master", {
+            const response = await axios.post("/delSheet_Master", {
                sht_code: shtCodeToDelete
             });
             console.log("ลบข้อมูลสำเร็จ:", response.data);

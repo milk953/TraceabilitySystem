@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { getBaseURL } from "../Common/function_Common";
+
 
 function sidebarT() {
  
-    const { baseURL } = getBaseURL();
+
     const [subMenuOpen1, setSubMenuOpen1] = useState(false);
     const [subMenuOpen2, setSubMenuOpen2] = useState(false);
     const [subMenuOpen3, setSubMenuOpen3] = useState(false);
@@ -22,7 +22,7 @@ function sidebarT() {
     const Login_ID = localStorage.getItem("UserLogin");
   
     const Menu = async () => {
-      axios.post(baseURL + "/MenuName", {
+      axios.post("/MenuName", {
         login_id: Login_ID,
       }).then((res) => {
         console.log(res.data.length, "hereeeeee")
@@ -82,7 +82,7 @@ function sidebarT() {
       if (Login_ID != "") {
         console.error("hereM", Login_ID);
         axios
-          .post(baseURL + "/MenuName", {
+          .post("/MenuName", {
   
             login_id: Login_ID,
           })

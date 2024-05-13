@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getBaseURL, useIPAddress } from "../Common/function_Common";
+import { useIPAddress } from "../Common/function_Common";
 import swal from "sweetalert";
 
 function ProductMasterPopup(onClose, item, searchFunction) {
-  const { baseURL } = getBaseURL();
   const STATUS_P = localStorage.getItem("STATUS");
 
   const UserLogin = localStorage.getItem("IDCode");
@@ -131,7 +130,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const SerialStrucData = async () => {
     try {
-      const res = await axios.post(baseURL + "/SerialStructure");
+      const res = await axios.post("/SerialStructure");
       setSerialStruc(res.data);
       console.log("SSSS", res.data)
     } catch (error) {
@@ -141,7 +140,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const SheetStrucData = async () => {
     try {
-      const res = await axios.post(baseURL + "/SheetStructure");
+      const res = await axios.post("/SheetStructure");
       setShtStructure(res.data);
     } catch (error) {
       console.error('Error fetching factories:', error.message);
@@ -150,7 +149,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const SheetTypeData = async () => {
     try {
-      const res = await axios.post(baseURL + "/SheetType");
+      const res = await axios.post("/SheetType");
       setShtType(res.data);
       console.log("ShtType", res.data)
     } catch (error) {
@@ -160,7 +159,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const ProcessConTimeData = async () => {
     try {
-      const res = await axios.post(baseURL + "/ProceesControl");
+      const res = await axios.post("/ProceesControl");
       setProcessConTime(res.data);
       console.log("Pro", res.data)
     } catch (error) {

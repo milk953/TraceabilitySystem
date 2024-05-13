@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getBaseURL, useIPAddress } from "../Common/function_Common";
+import { useIPAddress } from "../Common/function_Common";
 import swal from "sweetalert";
 
 function PopupSerialMaster(onClose, item, searchFunction) {
-    const { baseURL } = getBaseURL();
     const STATUS_P = localStorage.getItem("STATUS");
     //console.log("สถานะ", STATUS_P);v
 
@@ -100,7 +99,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
         if (STATUS_P === "NEW") {
             const fetchData = async () => {
                 try {
-                    const response = await axios.post(baseURL + "/CheckrunCode", {});
+                    const response = await axios.post("/CheckrunCode", {});
                     const data = response.data;
                     const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
                     setTXT_SN_Code(new_run_seq);
@@ -501,7 +500,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                 UserLogin
             ) {
                 try {
-                    const response = await axios.post(baseURL + "/insSerial_Master", {
+                    const response = await axios.post("/insSerial_Master", {
                         sn_code: TXT_SN_Code,
                         sn_name: TXT_SN_Name,
                         sn_upcount: TXT_SN_UpCount,
@@ -592,7 +591,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
             ) {
 
                 try {
-                    const response = await axios.post(baseURL + "/updateSerial_Master", {
+                    const response = await axios.post("/updateSerial_Master", {
                         sn_code: TXT_SN_Code,
                         sn_name: TXT_SN_Name,
                         sn_upcount: TXT_SN_UpCount,
