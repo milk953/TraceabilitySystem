@@ -25,7 +25,7 @@ const usePopupFunctions = () => {
 };
 
 const getBaseURL = () => {
-  const baseURL = "http://localhost:3080";
+  const baseURL = "http://localhost:3080"; //Server http://10.17.66.119:8080
   return { baseURL };
 };
 
@@ -49,6 +49,33 @@ const useIPAddress = () => {
 
   return { ipaddress, setipaddress };
 };
+
+// const useIPAddress = () => {
+//   const [ipaddress, setipaddress] = useState("");
+
+//   useEffect(() => {
+
+//     console.log("TEST IP : OPEN ");
+//     const fetchIPAddress = async () => {
+//       try {
+//          const response = await fetch('http://10.17.66.119:8080/get_ips');
+//         if (!response.ok) {
+//           throw new Error('Failed to fetch IP address');
+//         }
+//         const data = await response.json();
+//         setipaddress(data.client_ip_address);
+//         console.log(data.client_ip_address,"Show data :");
+//       } catch (error) {
+//         console.error("Error fetching IP:", error);
+//         setipaddress("เกิดข้อผิดพลาดในการดึงข้อมูล IP");
+//       }
+//     };
+
+//     fetchIPAddress();
+//   }, []);
+
+//   return { ipaddress, setipaddress };
+// };
 
 const getFactory = () => {
 

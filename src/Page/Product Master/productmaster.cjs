@@ -11,7 +11,7 @@ module.exports.getFactory = async function (req, res) {
     const strSql = [];
     strSql.push('SELECT factory_code, factory_desc');
     strSql.push('FROM "FETLPSQL_A1"."public".fpc_factory');
-    strSql.push('ORDER BY factory_code')
+    strSql.push('ORDER BY factory_desc')
 
     const query = strSql.join('\n'); // ใช้ \n เพื่อให้แต่ละคำสั่งอยู่บรรทัดเดียวกัน
     const result = await client.query(query);
