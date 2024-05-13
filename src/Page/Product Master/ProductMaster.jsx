@@ -42,8 +42,8 @@ function ProductMaster() {
 
     const { factory, setFactory, DDL_Factory, setDDL_Factory } = getFactory();
 
-    const { ShowData, checkHead, checkEmpty, checkData, Search, OpenPopup,
-            PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete,
+    const { ShowData, checkHead, checkEmpty, checkData, txtProduct, settxtProduct,
+            Search, OpenPopup, PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete,
             handleExportToExcel, } = ProductMasterPage();
 
 console.log("factory",factory)
@@ -109,8 +109,8 @@ console.log("factory",factory)
                             variant="outlined"
                             size="small"
                             style={{ width: "300px" }}
-                            value={name}
-                            // onChange={handleName}
+                            value={txtProduct}
+                            onChange={(e) => settxtProduct(e.target.value)}
                         />
                         <Button
                             variant="contained"

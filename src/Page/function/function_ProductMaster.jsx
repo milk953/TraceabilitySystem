@@ -13,7 +13,7 @@ function ProductMasterPage() {
   
     const [factory, setFactory] = useState([]);
     const [DDLFactory, setDDLFactory] = useState("");
-    // const [txtProduct, settxtProduct] = useState("");
+    const [txtProduct, settxtProduct] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -207,7 +207,7 @@ function ProductMasterPage() {
 
     return{
         ShowData, checkHead, checkEmpty, checkData, factory, DDLFactory, 
-        setDDLFactory, Search, OpenPopup,
+        setDDLFactory, txtProduct, settxtProduct, Search, OpenPopup,
         PopupOpen, PopupClose, New, Clear, selectedRowData, OpenEdit,
         handleOpenDelete,handleExportToExcel,
     }
