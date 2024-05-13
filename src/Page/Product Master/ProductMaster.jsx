@@ -280,25 +280,13 @@ console.log("factory",factory)
                                     <TableCell>{item.tstm_plant_code}</TableCell>
                                     <TableCell>{item.tstm_plant_start_digit}</TableCell>
                                     <TableCell>{item.tstm_plant_end_digit}</TableCell>
-                                    <TableCell>
-                                        {item.tstm_lot_flag === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
+                                    <TableCell></TableCell>
                                     <TableCell>{item.tstm_lot_start_digit}</TableCell>
                                     <TableCell>{item.tstm_lot_end_digit}</TableCell>
-                                    <TableCell>
-                                        {item.tstm_model_flag === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
+                                    <TableCell></TableCell>
                                     <TableCell>{item.tstm_model_start_digit}</TableCell>
                                     <TableCell>{item.tstm_model_end_digit}</TableCell>
-                                    <TableCell>
-                                        {item.tstm_seq_flag === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
+                                    <TableCell></TableCell>
                                     <TableCell>{item.tstm_seq_format}</TableCell>
                                     <TableCell>{item.tstm_seq_start_digit}</TableCell>
                                     <TableCell>{item.tstm_seq_end_digit}</TableCell>

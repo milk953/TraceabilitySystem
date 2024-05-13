@@ -13,6 +13,7 @@ function ProductMasterPage() {
   
     const [factory, setFactory] = useState([]);
     const [DDLFactory, setDDLFactory] = useState("");
+    // const [txtProduct, settxtProduct] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,7 +27,7 @@ function ProductMasterPage() {
     
         fetchData(); 
       }, []);
-    // const [txtProduct, settxtProduct] = useState("");
+    
   
 
   

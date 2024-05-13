@@ -21,6 +21,8 @@ import {
     Box,
     Checkbox,
 } from "@mui/material";
+import { Empty } from "antd";
+import {InfoCircleOutlined} from "@ant-design/icons";
 import swal from "sweetalert";
 import axios from "axios";
 import { ProductMasterPopup } from "../function/function_ProductMasterPopup";
@@ -29,11 +31,16 @@ import { getFactory } from "../Common/function_Common";
 function ProductPopup({ isOpen, onClose, item, searchFunction }) {
 
     const { factory, setFactory, DDL_Factory, setDDL_Factory } = getFactory();
-    const { STATUS_P, SerialStruc, DDL_SerialStruc, setDDL_SerialStruc } = ProductMasterPopup();
-    
+    const { STATUS_P, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
+        DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
+        DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
+        DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime,
+        checkHead, checkEmpty, checkData
+    } = ProductMasterPopup();
+
     console.log("Serial", SerialStruc)
 
-  if (!isOpen) {
+    if (!isOpen) {
         return null;
     }
     return (
@@ -206,8 +213,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     id="ddlFactory"
                                     variant="outlined"
                                     size="small"
-                                    // value=""
-                                    //   onChange={handleKEY_SHT_Code}
+                                    value={DDL_ProductStatus}
+                                    onChange={(e) => setDDL_ProductStatus(e.target.value)}
                                     style={{ width: "90%" }}
                                 //   error={ERROR_SHT_Code}
                                 >
@@ -357,11 +364,11 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{ width: "90%" }}
                                 //   error={ERROR_SHT_Code}
                                 >
-                                    {/* {SerialStruc.map((item) => (
+                                    {SerialStruc.map((item) => (
                                         <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_code}>
                                             {item.tssm_sn_struc_name}
                                         </MenuItem>
-                                    ))} */}
+                                    ))}
                                 </Select>
                             </Grid>
                         </Grid>
@@ -441,11 +448,17 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         id="ddlFactory"
                                         variant="outlined"
                                         size="small"
-                                        // value=""
-                                        //   onChange={handleKEY_SHT_Code}
+                                        value={DDL_ShtStructure}
+                                        onChange={(e) => setDDL_ShtStructure(e.target.value)}
                                         style={{ width: "90%" }}
                                     //   error={ERROR_SHT_Code}
-                                    />
+                                    >
+                                        {ShtStructure.map((item) => (
+                                            <MenuItem key={item.tstm_sht_struc_code} value={item.tstm_sht_struc_code}>
+                                                {item.tstm_sht_struc_name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </Grid>
                             </Grid>
                             <Grid
@@ -463,11 +476,17 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         id="ddlFactory"
                                         variant="outlined"
                                         size="small"
-                                        //   value={TXT_SHT_Code}
-                                        //   onChange={handleKEY_SHT_Code}
+                                        value={DDL_ShtType}
+                                        onChange={(e) => setDDL_ShtType(e.target.value)}
                                         style={{ width: "90%" }}
                                     //   error={ERROR_SHT_Code}
-                                    />
+                                    >
+                                        {ShtType.map((item) => (
+                                            <MenuItem key={item.tstm_code} value={item.tstm_code}>
+                                                {item.tstm_name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </Grid>
                                 <Grid item xs={2.2}>
                                     <Typography>
@@ -870,8 +889,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         id="ddlConRollReqLotSH"
                                         variant="outlined"
                                         size="small"
-                                        value=""
-                                        //   onChange={handleKEY_SHT_Code}
+                                        value={DDL_RollReqLotSht}
+                                        onChange={(e) => setDDL_RollReqLotSht(e.target.value)}
                                         style={{ width: "90%" }}
                                     //   error={ERROR_SHT_Code}
                                     >
@@ -933,8 +952,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         id="ddlConRollReqProSH"
                                         variant="outlined"
                                         size="small"
-                                        value=""
-                                        //   onChange={handleKEY_SHT_Code}
+                                        value={DDL_RollReqProSht}
+                                        onChange={(e) => setDDL_RollReqProSht(e.target.value)}
                                         style={{ width: "90%" }}
                                     //   error={ERROR_SHT_Code}
                                     >
@@ -1178,11 +1197,16 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         id="ddlProConTime"
                                         variant="outlined"
                                         size="small"
-                                        //   value={TXT_SHT_Code}
-                                        //   onChange={handleKEY_SHT_Code}
+                                        value={DDL_ProcessConTime}
+                                        onChange={(e) => setDDL_ProcessConTime(e.target.value)}
                                         style={{ width: "90%" }}
                                     //   error={ERROR_SHT_Code}
                                     >
+                                        {ProcessConTime.map((item) => (
+                                            <MenuItem key={item.tpct_code} value={item.tpct_code}>
+                                                {item.tpct_name}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </Grid>
                             </Grid>
@@ -1276,10 +1300,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         id="ddlFinalPDSELT"
                                         variant="outlined"
                                         size="small"
-                                        //   value={TXT_SHT_Code}
-                                        //   onChange={handleKEY_SHT_Code}
+                                        value={DDL_FinalPDStimeELT}
+                                        onChange={(e) => setDDL_FinalPDStimeELT(e.target.value)}
                                         style={{ width: "90%" }}
-                                        value=""
                                     //   error={ERROR_SHT_Code}
                                     >
                                         <MenuItem value="Yes">Yes</MenuItem>
@@ -1302,10 +1325,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         id="ddlFinalPDStht"
                                         variant="outlined"
                                         size="small"
-                                        //   value={TXT_SHT_Code}
-                                        //   onChange={handleKEY_SHT_Code}
+                                        value={DDL_FinalPDSHidetime}
+                                        onChange={(e) => setDDL_FinalPDSHidetime(e.target.value)}
                                         style={{ width: "90%" }}
-                                        value=""
                                     //   error={ERROR_SHT_Code}
                                     >
                                         <MenuItem value="Yes">Yes</MenuItem>
@@ -1579,6 +1601,29 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                                         />
                                                     </TableCell>
                                                 </TableRow>
+                                                {/* <TableRow style={{ visibility: checkEmpty }}>
+                                                    <TableCell colSpan={8}>
+                                                        <InfoCircleOutlined
+                                                            style={{
+                                                                visibility: checkData,
+                                                                fontSize: "30px",
+                                                                color: "#ffd580",
+                                                                marginLeft: "500px",
+                                                            }}
+                                                        />
+                                                        <span
+                                                            style={{
+                                                                visibility: checkData,
+                                                                fontSize: "25px",
+                                                                marginLeft: "10px",
+                                                            }}
+                                                        >
+                                                            {" "}
+                                                            Please fill in information{" "}
+                                                        </span>
+                                                        <Empty style={{ visibility: checkEmpty }} />
+                                                    </TableCell>
+                                                </TableRow> */}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
