@@ -20,7 +20,7 @@ import {
     Box,
     Checkbox,
 } from "@mui/material";
-import { PopupSerialMaster } from "../function/function_SerialPopup";
+import { PopupSerialMaster } from "./function_SerialPopup";
 
 function SerialPopup({ isOpen, onClose, item, searchFunction }) {
     if (!isOpen) {

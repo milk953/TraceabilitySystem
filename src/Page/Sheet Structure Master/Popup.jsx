@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import swal from "sweetalert";
 import axios from "axios";
-import { PopupT } from "../function/function_SheetPopup";
+import { PopupT } from "./function_SheetPopup";
 
 
 function Popup({ isOpen, onClose, item, searchFunction }) {
