@@ -32,13 +32,13 @@ function LoginTest() {
   };
   const handleLogin = async () => {
     axios
-      .post("/login", {
+      .post("/api/login", {
         User: loginId,
         Password: password,
       })
       .then((res) => {
         // console.log(res.data,"///////////////////")
-        if (res.data.length > 0) {
+        if (res.status === 200) {
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("Username", res.data[0][3]);
           localStorage.setItem("Lastname", res.data[0][4]);
@@ -46,13 +46,11 @@ function LoginTest() {
           localStorage.setItem("IDCode", res.data[0][2]);
 
           setIsLoading(true);
-          // ใช้ setTimeout เพื่อหน่วงเวลาก่อนเปลี่ยนหน้า
           setTimeout(() => {
             setIsLoading(false);
-            // เปลี่ยนหน้าหลังจากหน่วงเวลา
             PageSheetMaster();
           }, 1300);
-        } else {
+        } else if (res.status === 401) {
           Swal.fire({
             title: "Username or Password Wrong",
             text: "Please Try Again",
