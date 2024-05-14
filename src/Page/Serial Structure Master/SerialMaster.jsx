@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "/src/Page/Style.css";
+import "../Serial Structure Master/Style.css";
 import Popup from "./SerialPopup";
 import { Empty } from "antd";
 import Hearder from "../Header/Hearder";
