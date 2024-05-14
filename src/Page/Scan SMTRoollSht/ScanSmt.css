@@ -1,0 +1,22 @@
+/* style={{margin: 'auto',width:'400px' }} */
+.ScanSMT{
+    margin: auto;
+    width: 500px !important;
+
+}
+
+.ScanSMT th{
+    padding: 0px !important;
+    background-color: #D04848 !important ;
+    border-radius: 5px  5px 0 0!important;
+    color: #fff;
+}
+
+.ScanSMT td{
+    padding: 5px 5px 5px 5px!important;
+    /* margin: 10px !important; */
+}
+
+.BtLotno{
+    background-color: #D04848 !important ;
+}
