@@ -16,9 +16,16 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import {
+  ArrowRightOutlined
+} from '@ant-design/icons';
 import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
 import Hearder from "../Header/Hearder";
+import {Fn_ScanSMTRollSht} from "../function/function_ScanSMTRollSht";
 function ScanSMTRoollSht() {
+
+  const { txt_lotNo,handleLotxt_Lotno,sl_Product} = Fn_ScanSMTRollSht();
+  
   return (
     <div>
       <Hearder />
@@ -35,10 +42,10 @@ function ScanSMTRoollSht() {
             <Typography variant="h6">LotNo. :</Typography>
           </TableCell>
           <TableCell colSpan={2}>
-            <TextField id="FamTo" size="small" label="LotNo. : " fullWidth></TextField>
+            <TextField id="LotNo" size="small" fullWidth value={txt_lotNo} onChange={handleLotxt_Lotno}></TextField>
           </TableCell>
           <TableCell >
-            <button className="BtLotno"> Click</button>
+            <button className="BtLotno"> <ArrowRightOutlined /></button>
           </TableCell>
         </TableRow>
         <TableRow>
@@ -46,15 +53,17 @@ function ScanSMTRoollSht() {
             <Typography variant="h6">Product :</Typography>
           </TableCell>
           <TableCell colSpan={3}>
+            {console.log('strPrdName',sl_Product)}
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label" size="small">
+              {/* <InputLabel id="demo-simple-select-label" size="small">
                 Product :
-              </InputLabel>
-              <Select size="small" label="Product :">
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+              </InputLabel> */}
+              <Select size="small"  value={sl_Product}>
+                <MenuItem  value={sl_Product}>{sl_Product}</MenuItem>
+                {/* <MenuItem value='2'>Twenty</MenuItem>
+                <MenuItem value='3'>Thirty</MenuItem> */}
               </Select>
+              {/* <TextField value={sl_Product}></TextField> */}
             </FormControl>
           </TableCell>
         </TableRow>
@@ -66,7 +75,7 @@ function ScanSMTRoollSht() {
             <TextField
               id="FamTo"
               size="small"
-              label="Check Roll. :"
+              // label="Check Roll. :"
               fullWidth
             ></TextField>
           </TableCell>
@@ -79,7 +88,7 @@ function ScanSMTRoollSht() {
             <TextField
               id="FamTo"
               size="small"
-              label="Operator. :"
+              // label="Operator. :"
               fullWidth
             ></TextField>
           </TableCell>
@@ -114,7 +123,7 @@ function ScanSMTRoollSht() {
             <TextField
               id="FamTo"
               size="small"
-              label="Roll/Sht No. :"
+              // label="Roll/Sht No. :"
               fullWidth
             ></TextField>
           </TableCell>

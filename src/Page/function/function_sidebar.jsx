@@ -22,7 +22,7 @@ function sidebarT() {
     const Login_ID = localStorage.getItem("UserLogin");
   
     const Menu = async () => {
-      axios.post("/MenuName", {
+      axios.post("/api/MenuName", {
         login_id: Login_ID,
       }).then((res) => {
         console.log(res.data.length, "hereeeeee")
@@ -82,7 +82,7 @@ function sidebarT() {
       if (Login_ID != "") {
         console.error("hereM", Login_ID);
         axios
-          .post("/MenuName", {
+          .post("/api/MenuName", {
   
             login_id: Login_ID,
           })

@@ -32,7 +32,7 @@ function LoginTest() {
   };
   const handleLogin = async () => {
     axios
-      .post("/login", {
+      .post("/api/login", {
         User: loginId,
         Password: password,
       })
