@@ -17,6 +17,10 @@ function LoginTest() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const [ipAddress, setIpAddress] = useState("");
+ 
+
+  localStorage.setItem("ip", ipAddress);
 
   useEffect(() => {
     const currentURL = window.location.href;
@@ -25,6 +29,12 @@ function LoginTest() {
     if (isMatchingURL) {
       document.title = "Login Page";
     }
+    const page_load = () => {
+      axios.get("/api/getIPaddress").then((res) => {
+        setIpAddress(res.data.ip);
+      });
+    };
+    page_load();
   }, []);
   const PageSheetMaster = () => {
     // navigate("/SheetMaster");
