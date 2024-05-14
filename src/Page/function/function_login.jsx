@@ -17,6 +17,10 @@ function LoginTest() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const [ipAddress, setIpAddress] = useState("");
+ 
+
+  localStorage.setItem("ip", ipAddress);
 
   useEffect(() => {
     const currentURL = window.location.href;
@@ -25,6 +29,12 @@ function LoginTest() {
     if (isMatchingURL) {
       document.title = "Login Page";
     }
+    const page_load = () => {
+      axios.get("/api/getIPaddress").then((res) => {
+        setIpAddress(res.data.ip);
+      });
+    };
+    page_load();
   }, []);
   const PageSheetMaster = () => {
     // navigate("/SheetMaster");
@@ -38,7 +48,7 @@ function LoginTest() {
       })
       .then((res) => {
         // console.log(res.data,"///////////////////")
-        if (res.data.length > 0) {
+        if (res.status === 200) {
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("Username", res.data[0][3]);
           localStorage.setItem("Lastname", res.data[0][4]);
@@ -46,13 +56,11 @@ function LoginTest() {
           localStorage.setItem("IDCode", res.data[0][2]);
 
           setIsLoading(true);
-          // ใช้ setTimeout เพื่อหน่วงเวลาก่อนเปลี่ยนหน้า
           setTimeout(() => {
             setIsLoading(false);
-            // เปลี่ยนหน้าหลังจากหน่วงเวลา
             PageSheetMaster();
           }, 1300);
-        } else {
+        } else if (res.status === 401) {
           Swal.fire({
             title: "Username or Password Wrong",
             text: "Please Try Again",

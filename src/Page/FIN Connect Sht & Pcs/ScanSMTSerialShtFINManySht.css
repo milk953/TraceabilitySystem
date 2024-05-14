@@ -1,0 +1,23 @@
+.css-1ex1afd-MuiTableCell-root {
+  padding: 3px !important;
+}
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 5.5px 8px !important;
+  width: 200px !important;
+}
+
+.select {
+  width: 215px !important;
+  font-size: 14px !important;
+}
+.mainTable {
+  width: 400px !important;
+  margin: auto;
+}
+.Head {
+  margin-top: 100px;
+}
+.pnlBackSide{
+  width: 400px !important;
+  margin: auto;
+}
