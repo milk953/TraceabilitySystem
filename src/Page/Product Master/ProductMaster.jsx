@@ -34,7 +34,7 @@ import {
     InfoCircleOutlined,
 } from "@ant-design/icons";
 import axios from 'axios';
-import { ProductMasterPage } from "../function/function_ProductMaster.jsx";
+import { ProductMasterPage } from "./function_ProductMaster.jsx";
 import { getFactory } from "../Common/function_Common";
 import * as XLSX from 'xlsx';
 

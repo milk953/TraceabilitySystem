@@ -9,7 +9,7 @@ import axios from "axios";
 import "./sidebar.css"
 import { DownOutlined, UpOutlined, MenuOutlined } from "@ant-design/icons";
 import Circle from '@mui/icons-material/CircleOutlined';
-import {sidebarT} from "../function/function_sidebar"
+import {sidebarT} from "./function_sidebar"
 
 //Icon
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

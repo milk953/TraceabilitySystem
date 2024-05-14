@@ -32,7 +32,7 @@ import {
     FlagFilled,
     InfoCircleOutlined,
 } from "@ant-design/icons";
-import { SerialMasterPage } from "../function/function_SerialMaster";
+import { SerialMasterPage } from "./function_SerialMaster";
 // 
 function SerialMaster() {
 

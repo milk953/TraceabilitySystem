@@ -14,9 +14,9 @@ import Typography from '@mui/material/Typography';
 import Swal from "sweetalert2";
 import CircularProgress from "@mui/material/CircularProgress";
 // import Header from "../Page/Header/Hearder";
-import "../Login/Login.css";
+import "./Login.css";
 // import axios from "axios";
-import {LoginTest} from "../Page/function/function_login";
+import {LoginTest} from "./function_login";
 
 function Login() {
   

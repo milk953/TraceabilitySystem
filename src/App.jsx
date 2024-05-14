@@ -6,8 +6,8 @@ import Serial_Master from "./Page/Serial Structure Master/SerialMaster";
 import Product_master from "./Page/Product Master/ProductMaster";
 
 import FINConncetSht from './Page/FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht'
-import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRoollSht";
-import Login from "./Login/Login"; 
+import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRollSht";
+import Login from "./Page/Login/Login"; 
 import axios from "axios";
 const backendUrl = "http://10.17.74.228:3001";
 axios.defaults.baseURL = backendUrl;

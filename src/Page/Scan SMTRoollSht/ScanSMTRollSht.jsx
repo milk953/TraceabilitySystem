@@ -19,9 +19,9 @@ import {
 import {
   ArrowRightOutlined
 } from '@ant-design/icons';
-import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
+// import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
 import Hearder from "../Header/Hearder";
-import {Fn_ScanSMTRollSht} from "../function/function_ScanSMTRollSht";
+import {Fn_ScanSMTRollSht} from "./function_ScanSMTRollSht";
 function ScanSMTRoollSht() {
 
   const { txt_lotNo,handleLotxt_Lotno,sl_Product} = Fn_ScanSMTRollSht();

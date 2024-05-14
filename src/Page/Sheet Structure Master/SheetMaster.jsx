@@ -34,7 +34,7 @@ import {
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import axios from 'axios';
-import { SheetMasterT } from "../function/function_SheetMaster";
+import { SheetMasterT } from "./function_SheetMaster";
 // 
 function SheetMaster() {
   

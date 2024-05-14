@@ -25,7 +25,7 @@ import { Empty } from "antd";
 import {InfoCircleOutlined} from "@ant-design/icons";
 import swal from "sweetalert";
 import axios from "axios";
-import { ProductMasterPopup } from "../function/function_ProductMasterPopup";
+import { ProductMasterPopup } from "./function_ProductMasterPopup";
 import { getFactory } from "../Common/function_Common";
 
 function ProductPopup({ isOpen, onClose, item, searchFunction }) {
