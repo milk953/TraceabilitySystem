@@ -82,7 +82,7 @@ function sidebarT() {
       if (Login_ID != "") {
         console.error("hereM", Login_ID);
         axios
-          .post("/MenuName", {
+          .post("/api/MenuName", {
   
             login_id: Login_ID,
           })
