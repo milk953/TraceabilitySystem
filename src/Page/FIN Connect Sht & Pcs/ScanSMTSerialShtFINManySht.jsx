@@ -102,7 +102,7 @@ function ScanSMTSerialShtFINManySht() {
         </Table>
         <Table className="pnlBackSide" component={Paper}>
           <TableRow>
-            <TableCell>{ipAddress}</TableCell>
+            <TableCell className="IPTEst">{ipAddress}</TableCell>
             <TableCell>Databound</TableCell>
             <TableCell>
               <TextField size="small" id="txtLot"></TextField>
