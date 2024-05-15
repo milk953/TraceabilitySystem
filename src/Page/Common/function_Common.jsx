@@ -57,7 +57,7 @@ const getFactory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(baseURL + "/Factory");
+        const response = await axios.post("/Factory");
         setFactory(response.data);
       } catch (error) {
         console.error('Error fetching factories:', error.message);

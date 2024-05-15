@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "/src/Page/Style.css";
+import "../Sheet Structure Master/Style.css";
 // import "./master.css";
 import Popup from "./Popup";
 import { Empty } from "antd";

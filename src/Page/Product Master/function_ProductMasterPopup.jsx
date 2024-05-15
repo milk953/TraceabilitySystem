@@ -70,12 +70,12 @@ function ProductMasterPopup(onClose, item, searchFunction) {
   const [txtConRollLeafScan, settxtConRollLeafScan] = useState("");
 
   const [DDL_RollReqLotSht, setDDL_RollReqLotSht] = useState("Yes");
-  const [txtRollReqLotShtSt, settxtRollReqLotShtSt] = useState("");
-  const [txtRollReqLotShtEnd, settxtRollReqLotShtEnd] = useState("");
+  const [txtRollLotShtSt, settxtRollLotShtSt] = useState("");
+  const [txtRollLotShtEnd, settxtRollLotShtEnd] = useState("");
 
   const [DDL_RollReqProSht, setDDL_RollReqProSht] = useState("Yes");
-  const [txtRollReqRroShtSt, settxtRollReqRroShtSt] = useState("");
-  const [txtRollReqRroShtEnd, settxtRollReqRroShtEnd] = useState("");
+  const [txtRollProShtSt, settxtRollProShtSt] = useState("");
+  const [txtRollProShtEnd, settxtRollProShtEnd] = useState("");
 
   const [txtRollProFix, settxtRollProFix] = useState("");
 
@@ -117,6 +117,28 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const [FinalchipIDflag, setFinalchipIDflag] = useState("");
 
+  //Checkbox
+  const [isDateInproflag, setisDateInproflag] = useState(false);
+  const [isBarcodeReqflag, setisBarcodeReqflag] = useState(false);
+  const [isPlasmaTimeFlag, setisPlasmaTimeFlag] = useState(false);
+  const [isConRollShtFlag, setisConRollShtFlag] = useState(false);
+  const [isConRollLeafFlag, setisConRollLeafFlag] = useState(false);
+  const [isConRollProFlag, setisConRollProFlag] = useState(false);
+  const [isConRollSerialFlag, setisConRollSerialFlag] = useState(false);
+  const [isConShtTimeFlag, setisConShtTimeFlag] = useState(false);
+  const [isConShtPlasTimeFlag, setisConShtPlasTimeFlag] = useState(false);
+  const [isProcessConTimeFlag, setisProcessConTimeFlag] = useState(false);
+  const [isFinalPDStimeflag, setisFinalPDStimeflag] = useState(false);
+
+  //SetError
+  const [ErrorProdName, setErrorProdName] = useState(false);
+  const [ErrorUpCount, setErrorUpCount] = useState(false);
+  const [ErrorConfigCode, setErrorConfigCode] = useState(false);
+  const [ErrorStSeqSerial, setErrorStSeqSerial] = useState(false);
+  const [ErrorStSeqCode, setErrorStSeqCode] = useState(false);
+  const [ErrorDateInProcess, setErrorDateInProcess] = useState(false);
+
+  //CheckTable
   const [checkHead, setCheckHead] = useState("hidden");
   const [checkEmpty, setCheckEmpty] = useState("hidden");
   const [checkData, setCheckData] = useState("visible");
@@ -167,11 +189,61 @@ function ProductMasterPopup(onClose, item, searchFunction) {
     }
   };
 
+  const handleKeyProductName= (event) => {
+    const txtProductName = event.target.value;
+    settxtProductName(txtProductName);
+  };
+
+  const handleKeyUpCount= (event) => {
+    const txtUpCount= event.target.value;
+    settxtUpCount(txtUpCount);
+    // setErrorDateInProcess(false);
+  };
+
+  const handleKeyConfigCode= (event) => {
+    const txtConfig= event.target.value;
+    settxtConfig(txtConfig);
+    // setErrorDateInProcess(false);
+  };
+
+  const handleKeyStSeqSeriel= (event) => {
+    const txtStSeqSerial= event.target.value;
+    settxtStSeqSerial(txtStSeqSerial);
+    // setErrorDateInProcess(false);
+  };
+
+  const handleKeyStSeqCode= (event) => {
+    const txtStSeqCode= event.target.value;
+    settxtStSeqCode(txtStSeqCode);
+    // setErrorDateInProcess(false);
+  };
+  
+  const handleKeyDateInProcees= (event) => {
+    const txtDateInProcess= event.target.value;
+    settxtDateInProcess(txtDateInProcess);
+    setErrorDateInProcess(false);
+  };
+  
+
+  const handleKeyBarcodeGrade= (event) => {
+    const txtBarcodeGrade= event.target.value;
+    settxtBarcodeGrade(txtBarcodeGrade);
+    // setErrorDateInProcess(false);
+  };
+
+
   return {
     STATUS_P, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
     DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
     DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
-    DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime,
+    DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag,
+    isPlasmaTimeFlag, setisPlasmaTimeFlag, isConRollShtFlag, setisConRollShtFlag, isConRollLeafFlag, setisConRollLeafFlag,
+    isConRollProFlag, setisConRollProFlag, isConRollSerialFlag, setisConRollSerialFlag, isConShtTimeFlag, setisConShtTimeFlag,
+    isConShtPlasTimeFlag, setisConShtPlasTimeFlag, isProcessConTimeFlag, setisProcessConTimeFlag, isFinalPDStimeflag, setisFinalPDStimeflag,
+    txtProductName, txtUpCount, txtConfig, txtStSeqSerial, txtStSeqCode, txtDateInProcess, txtPcsPerSHTEFPC, txtPcsPerSHTSMT, txtSerialFile,
+    txtBarcodeGrade, txtshtFileFormat, txtShtperLotEFPC, txtShtperLotSMT, txtShtperscan, txtShtperlaser, txtShtModelCode, txtPlasmaTime,
+    txtConRollShtLength, txtConRollLength, txtConLeafLength, txtConRollProSt, txtConRollProEnd, txtConRollLeafScan, txtRollLotShtSt, txtRollLotShtEnd,
+    txtRollProShtSt, txtRollProShtEnd, txtRollProFix, txtConShtTime, txtConShtPlasTime, txtFinalpcstray, txtFinalpcsscan, txtFinalPDStime, txtFinalPDStimeby,
     checkHead, checkEmpty, checkData
   }
 }

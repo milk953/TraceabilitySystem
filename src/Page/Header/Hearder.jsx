@@ -10,7 +10,6 @@ import Sidebar from "../Sidebar/sidebar";
 import Avatar from "@mui/material/Avatar";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { deepOrange, deepPurple } from "@mui/material/colors";
-import "/src/Page/Style.css";
 import { useNavigate } from "react-router-dom";
 
 function Hearder() {

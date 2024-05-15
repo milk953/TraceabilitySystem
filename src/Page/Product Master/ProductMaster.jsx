@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "/src/Page/Style.css";
+import "../Product Master/Style.css";
 // import "./master.css";
 import Popup from "./ProductPopup.jsx";
 import { Empty } from "antd";

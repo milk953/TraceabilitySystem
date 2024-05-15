@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "/src/Page/Style.css";
+import "../Product Master/Style.css";
 import {
     Typography,
     FormControl,
@@ -22,7 +22,7 @@ import {
     Checkbox,
 } from "@mui/material";
 import { Empty } from "antd";
-import {InfoCircleOutlined} from "@ant-design/icons";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import swal from "sweetalert";
 import axios from "axios";
 import { ProductMasterPopup } from "./function_ProductMasterPopup";
@@ -34,7 +34,14 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
     const { STATUS_P, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
         DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
         DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
-        DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime,
+        DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag,
+        isPlasmaTimeFlag, setisPlasmaTimeFlag, isConRollShtFlag, setisConRollShtFlag, isConRollLeafFlag, setisConRollLeafFlag,
+        isConRollProFlag, setisConRollProFlag, isConRollSerialFlag, setisConRollSerialFlag, isConShtTimeFlag, setisConShtTimeFlag,
+        isConShtPlasTimeFlag, setisConShtPlasTimeFlag, isProcessConTimeFlag, setisProcessConTimeFlag, isFinalPDStimeflag, setisFinalPDStimeflag,
+        txtProductName, txtUpCount, txtConfig, txtStSeqSerial, txtStSeqCode, txtDateInProcess, txtPcsPerSHTEFPC, txtPcsPerSHTSMT, txtSerialFile,
+        txtBarcodeGrade, txtshtFileFormat, txtShtperLotEFPC, txtShtperLotSMT, txtShtperscan, txtShtperlaser, txtShtModelCode, txtPlasmaTime,
+        txtConRollShtLength, txtConRollLength, txtConLeafLength, txtConRollProSt, txtConRollProEnd, txtConRollLeafScan, txtRollLotShtSt, txtRollLotShtEnd,
+        txtRollProShtSt, txtRollProShtEnd, txtRollProFix, txtConShtTime, txtConShtPlasTime, txtFinalpcstray, txtFinalpcsscan, txtFinalPDStime, txtFinalPDStimeby,
         checkHead, checkEmpty, checkData
     } = ProductMasterPopup();
 
@@ -108,14 +115,14 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={1.7}>
                                 <TextField
-                                    id="txtConnSheetConTime"
+                                    id="txtProductName"
                                     variant="outlined"
                                     size="small"
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
+                                  value={txtProductName}
+                                //   onChange={handleKEY_Plant_Code}ecked ? TXT_Plant_
                                 //   error={isPlantChecked && ERROR_Plant_Code}
                                 //   disabled={!isPlantChecked}
                                 />
@@ -237,10 +244,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={1.7}>
                                 <Checkbox
                                     style={{ padding: "0" }}
-                                //   checked={isPlantChecked}
-                                //   onChange={(e) => {
-                                //     setIsPlantChecked(e.target.checked);
-                                //   }}
+                                    checked={isDateInproflag}
+                                    onChange={(e) => {
+                                        setisDateInproflag(e.target.checked);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -255,11 +262,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     size="small"
                                     style={{
                                         width: "90%",
+                                        backgroundColor: isDateInproflag ? "inherit" : "#F5F7F8",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={isDateInproflag ? txtDateInProcess : ''}
+                                    //   onChange={handleKEY_Plant_Code}
+                                    //   error={isPlantChecked && ERROR_Plant_Code}
+                                    disabled={!isDateInproflag}
                                 />
                             </Grid>
                         </Grid>
@@ -386,10 +394,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={1.7}>
                                 <Checkbox
                                     style={{ padding: "0" }}
-                                //   checked={isPlantChecked}
-                                //   onChange={(e) => {
-                                //     setIsPlantChecked(e.target.checked);
-                                //   }}
+                                    checked={isBarcodeReqflag}
+                                    onChange={(e) => {
+                                        setisBarcodeReqflag(e.target.checked);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -404,11 +412,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     size="small"
                                     style={{
                                         width: "90%",
+                                        backgroundColor: isBarcodeReqflag ? "inherit" : "#F5F7F8",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={isBarcodeReqflag ? txtBarcodeGrade : ''}
+                                    //   onChange={handleKEY_Plant_Code}
+                                    //   error={isPlantChecked && ERROR_Plant_Code}
+                                    disabled={!isBarcodeReqflag}
                                 />
                             </Grid>
                         </Grid>
@@ -651,10 +660,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isPlasmaTimeFlag}
+                                      onChange={(e) => {
+                                        setisPlasmaTimeFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -669,11 +678,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isPlasmaTimeFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isPlasmaTimeFlag ? txtPlasmaTime : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isPlasmaTimeFlag && ERROR_Plant_Code}
+                                      disabled={!isPlasmaTimeFlag}
                                     />
                                 </Grid>
                             </Grid>
@@ -693,10 +703,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isConRollShtFlag}
+                                      onChange={(e) => {
+                                        setisConRollShtFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -711,11 +721,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollShtFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConRollShtFlag ? txtConRollShtLength : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isConRollShtFlag && ERROR_Plant_Code}
+                                      disabled={!isConRollShtFlag}
                                     />
                                 </Grid>
                             </Grid>
@@ -732,10 +743,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isConRollLeafFlag}
+                                      onChange={(e) => {
+                                        setisConRollLeafFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -750,11 +761,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollLeafFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConRollLeafFlag ? txtConRollLength : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isConRollLeafFlag && ERROR_Plant_Code}
+                                      disabled={!isConRollLeafFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -769,11 +781,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollLeafFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConRollLeafFlag ? txtConLeafLength : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isConRollLeafFlag && ERROR_Plant_Code}
+                                      disabled={!isConRollLeafFlag}
                                     />
                                 </Grid>
                             </Grid>
@@ -790,10 +803,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isConRollProFlag}
+                                      onChange={(e) => {
+                                        setisConRollProFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -808,11 +821,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollProFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConRollProFlag ? txtConRollProSt : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isConRollProFlag && ERROR_Plant_Code}
+                                      disabled={!isConRollProFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -827,11 +841,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollProFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConRollProFlag ? txtConRollProEnd : ''}
                                     //   onChange={handleKEY_Plant_Code}
                                     //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                      disabled={!isConRollProFlag}
                                     />
                                 </Grid>
                             </Grid>
@@ -848,10 +863,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isConRollSerialFlag}
+                                      onChange={(e) => {
+                                        setisConRollSerialFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -866,11 +881,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollSerialFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConRollSerialFlag ? txtConRollLeafScan : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isConRollSerialFlag && ERROR_Plant_Code}
+                                      disabled={!isConRollSerialFlag}
                                     />
                                 </Grid>
                             </Grid>
@@ -1041,10 +1057,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isConShtTimeFlag}
+                                      onChange={(e) => {
+                                        setisConShtTimeFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1059,11 +1075,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConShtTimeFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConShtTimeFlag ? txtConShtTime : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isConShtTimeFlag && ERROR_Plant_Code}
+                                      disabled={!isConShtTimeFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1094,10 +1111,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isConShtPlasTimeFlag}
+                                      onChange={(e) => {
+                                        setisConShtPlasTimeFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1112,11 +1129,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConShtPlasTimeFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isConShtPlasTimeFlag ? txtConShtPlasTime : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isConShtPlasTimeFlag && ERROR_Plant_Code}
+                                      disabled={!isConShtPlasTimeFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1181,10 +1199,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isProcessConTimeFlag}
+                                      onChange={(e) => {
+                                        setisProcessConTimeFlag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1199,7 +1217,11 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         value={DDL_ProcessConTime}
                                         onChange={(e) => setDDL_ProcessConTime(e.target.value)}
-                                        style={{ width: "90%" }}
+                                        style={{ 
+                                            width: "90%",
+                                            backgroundColor: isProcessConTimeFlag ? "inherit" : "#F5F7F8",
+                                         }}
+                                        disabled={!isProcessConTimeFlag}
                                     //   error={ERROR_SHT_Code}
                                     >
                                         {ProcessConTime.map((item) => (
@@ -1343,10 +1365,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                      checked={isFinalPDStimeflag}
+                                      onChange={(e) => {
+                                        setisFinalPDStimeflag(e.target.checked);
+                                      }}
                                     />
                                 </Grid>
 
@@ -1362,11 +1384,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isFinalPDStimeflag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
+                                      value={isFinalPDStimeflag ? txtFinalPDStime : ''}
                                     //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                    //   error={isFinalPDStimeflag && ERROR_Plant_Code}
+                                      disabled={!isFinalPDStimeflag}
                                     />
                                 </Grid>
                             </Grid>
