@@ -2,7 +2,7 @@
   padding: 3px !important;
 } */
 
-.mainTable td{
+.mainTable td {
   padding: 3px !important;
 }
 
@@ -22,7 +22,43 @@
 .Head {
   margin-top: 100px;
 }
-.pnlBackSide{
+.pnlBackSide {
   width: 400px !important;
   margin: auto;
+}
+
+.gvBackSide {
+  width: 400px !important;
+  margin: auto;
+  margin-top: 20px;
+}
+.gvBackSide td {
+  padding: 3px;
+}
+
+.gvBackSide input {
+  width: 200px !important;
+}
+
+.lblTbLog {
+  width: 400px !important;
+  margin: auto;
+  background-color: red;
+}
+.lblTbLog td {
+  text-align: center;
+}
+
+.styleEnable {
+  background-color: White;
+  font-weight: normal;
+  font-size: 11pt;
+  color: Black;
+  text-transform: uppercase;
+}
+.styleDisable {
+  background-color: Silver;
+  font-weight: normal;
+  font-size: 11pt;
+  color: Black;
 }

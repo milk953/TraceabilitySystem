@@ -21,18 +21,31 @@ import {
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialShtFINManySht.css";
 import Hearder from "../Header/Hearder";
-import {fn_ScanSMTSerialShtFINManySht} from "./fn_ScanSMTSerialShtFINManySht";
+import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
+import { Input } from "antd";
 function ScanSMTSerialShtFINManySht() {
-  const options = ["Option 1", "Option 2"];
-  const lblStyle = {
-    width: "100px",
-    padding: "0px",
-    height: "50px",
-  };
-  const {lot, setLot ,ipAddress} = fn_ScanSMTSerialShtFINManySht();
-
-
-
+  const {
+    lot,
+    setLot,
+    product,
+    setProduct,
+    selectproduct,
+    setselectproduct,
+    getIntialSheet,
+    dtData1,
+    setDtData1,
+    lblError,
+    setLblError,
+    lblErrorState,
+    setLblErrorState,
+    productState,
+    setProductState,
+    getInitialSerial,
+    serialData,
+    setSerialData,
+    handleSave,
+    handleCancel,
+  } = fn_ScanSMTSerialShtFINManySht();
   return (
     <div>
       <Hearder />
@@ -59,12 +72,19 @@ function ScanSMTSerialShtFINManySht() {
               <TableCell>Product:</TableCell>
               <TableCell>
                 <FormControl fullWidth>
-                  <InputLabel size="small">Product :</InputLabel>
-                  <Select className="select" size="small" label="Product :">
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
+                  <Autocomplete
+                    readOnly={false}
+                    value={selectproduct}
+                    onChange={(e, value) => setselectproduct(value)}
+                    options={product.map((item) => item[0])}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        size="small"
+                        sx={{ textAlign: "left" }}
+                      />
+                    )}
+                  />
                 </FormControl>
               </TableCell>
               <TableCell></TableCell>
@@ -98,18 +118,150 @@ function ScanSMTSerialShtFINManySht() {
               <TableCell></TableCell>
             </TableRow>
           </TableBody>
-        
-        </Table>
-        <Table className="pnlBackSide" component={Paper}>
-          <TableRow>
-            <TableCell className="IPTEst">{ipAddress}</TableCell>
-            <TableCell>Databound</TableCell>
-            <TableCell>
-              <TextField size="small" id="txtLot"></TextField>
-            </TableCell>
-          </TableRow>
         </Table>
       </div>
+
+      <div className="pnlBackside">
+        <Table
+          className="gvBackSide"
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            fontSize: "15px",
+          }}
+        >
+          <TableBody>
+            {dtData1.map((row, index) => (
+              <TableRow key={index} style={{ backgroundColor: "White" }}>
+                <TableCell
+                  style={{
+                    width: "3%",
+                    fontWeight: "bold",
+                    textAlign: "right",
+                    color: "White",
+                    backgroundColor: "#006666",
+                  }}
+                >
+                  {row.SEQ}
+                </TableCell>
+                <TableCell
+                  style={{
+                    width: "40%",
+                    fontWeight: "bold",
+                    textAlign: "right",
+                    color: "White",
+                    backgroundColor: "#006666",
+                  }}
+                >
+                  {row.TITLE}
+                </TableCell>
+                <TableCell
+                  style={{
+                    width: "70%",
+                    fontSize: "15px",
+                    backgroundColor: "#006666",
+                    color: "Black",
+                    paddingRight: "10px",
+                  }}
+                >
+                  <Input
+                    type="text"
+                    style={{ width: "98%", textTransform: "uppercase" }}
+                    maxLength="30"
+                    className="styleEnable"
+                    onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                  />
+                  <Input
+                    type="text"
+                    style={{ width: "98%", textTransform: "uppercase" }}
+                    maxLength="30"
+                    className="styleEnable"
+                    onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="pnlSerial">
+        <Table
+        component={Paper}
+          style={{
+            width: "400px",
+            borderCollapse: "collapse",
+            fontSize: "15px",
+            margin: "auto",
+          }}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell
+                style={{
+                  width: "3%",
+                  textAlign: "right",
+                  color: "White",
+                  backgroundColor: "#006666",
+                  fontWeight: "bold",
+                }}
+              >
+                Sheet
+              </TableCell>
+              <TableCell
+                style={{
+                  width: "40%",
+                  textAlign: "right",
+                  color: "White",
+                  backgroundColor: "#006666",
+                  fontWeight: "bold",
+                }}
+              >
+                No.
+              </TableCell>
+              <TableCell
+                style={{
+                  width: "60%%",
+                  textAlign: "right",
+                  color: "White",
+                  backgroundColor: "#006666",
+                  fontWeight: "bold",
+                }}
+              >
+                Serial No.
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {serialData.map((row, index) => (
+              <TableRow key={index} style={{ backgroundColor: "White" }}>
+                <TableCell style={{ width: "3%", textAlign: "right" }}>
+                  {row.SEQ}
+                </TableCell>
+                <TableCell style={{ width: "40%", textAlign: "right" }}>
+                  {row.TITLE}
+                </TableCell>
+                <TableCell style={{ width: "70%", paddingRight: "10px" }}>
+                  <Input
+                    type="text"
+                    style={{ width: "98%", textTransform: "uppercase" }}
+                    maxLength="30"
+                    className="styleEnable"
+                    onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <Button onClick={getInitialSerial}>123</Button>
+      {lblErrorState && (
+        <div className="lblLog">
+          <Table className="lblTbLog">
+            <TableCell>{lblError}</TableCell>
+          </Table>
+        </div>
+      )}
     </div>
   );
 }
