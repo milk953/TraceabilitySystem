@@ -40,13 +40,11 @@ import * as XLSX from 'xlsx';
 
 function ProductMaster() {
 
-    const { factory, setFactory, DDL_Factory, setDDL_Factory } = getFactory();
+    const { factory, setFactory} = getFactory();
 
-    const { ShowData, checkHead, checkEmpty, checkData, txtProduct, settxtProduct,
-            Search, OpenPopup, PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete,
-            handleExportToExcel, } = ProductMasterPage();
+    const { ShowData, checkHead, checkEmpty, checkData, DDLFactory, setDDLFactory, txtProduct, settxtProduct, Search,  
+        OpenPopup, PopupOpen, PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete, handleExportToExcel, } = ProductMasterPage();
 
-console.log("factory",factory)
     return (
         <>
             <Hearder />
@@ -92,9 +90,9 @@ console.log("factory",factory)
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={DDL_Factory}
+                                value={DDLFactory}
                                 label="Factory"
-                                onChange={(e) => setDDL_Factory(e.target.value)}
+                                onChange={(e) => setDDLFactory(e.target.value)}
                             >
                                 {factory.map((item) => (
                                     <MenuItem key={item.factory_code} value={item.factory_code}>

@@ -191,7 +191,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const SerialStrucData = async () => {
     try {
-      const res = await axios.post("/SerialStructure");
+      const res = await axios.post("/api/SerialStructure");
       setSerialStruc(res.data);
       console.log("SSSS", res.data)
     } catch (error) {
@@ -201,7 +201,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const SheetStrucData = async () => {
     try {
-      const res = await axios.post("/SheetStructure");
+      const res = await axios.post("/api/SheetStructure");
       setShtStructure(res.data);
     } catch (error) {
       console.error('Error fetching factories:', error.message);
@@ -210,7 +210,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const SheetTypeData = async () => {
     try {
-      const res = await axios.post("/SheetType");
+      const res = await axios.post("/api/SheetType");
       setShtType(res.data);
       console.log("ShtType", res.data)
     } catch (error) {
@@ -220,7 +220,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   const ProcessConTimeData = async () => {
     try {
-      const res = await axios.post("/ProceesControl");
+      const res = await axios.post("/api/ProceesControl");
       setProcessConTime(res.data);
       console.log("Pro", res.data)
     } catch (error) {
@@ -639,7 +639,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
 
   return {
-    STATUS_P, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_Serialside, setDDL_Serialside, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
+    STATUS_P, DDL_Factory, setDDL_Factory, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_Serialside, setDDL_Serialside, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
     DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
     DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
     DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag,
