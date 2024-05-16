@@ -45,6 +45,10 @@ function ScanSMTSerialShtFINManySht() {
     setSerialData,
     handleSave,
     handleCancel,
+    panalSerialOpen,
+    setPanalSerialOpen,
+    pnlRollLeafOpen,
+    setPnlRollLeafOpen,
   } = fn_ScanSMTSerialShtFINManySht();
   return (
     <div>
@@ -117,6 +121,24 @@ function ScanSMTSerialShtFINManySht() {
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
+            {pnlRollLeafOpen && (
+              <>
+                <TableRow>
+                  <TableCell>Rool Leaf No.:</TableCell>
+                  <TableCell>
+                    <TextField size="small"></TextField>
+                  </TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Total Pcs:</TableCell>
+                  <TableCell>
+                    <TextField size="small"></TextField>
+                  </TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </>
+            )}
           </TableBody>
         </Table>
       </div>
@@ -184,77 +206,78 @@ function ScanSMTSerialShtFINManySht() {
           </TableBody>
         </Table>
       </div>
-      <div className="pnlSerial">
-        <Table
-        component={Paper}
-          style={{
-            width: "400px",
-            borderCollapse: "collapse",
-            fontSize: "15px",
-            margin: "auto",
-          }}
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell
-                style={{
-                  width: "3%",
-                  textAlign: "right",
-                  color: "White",
-                  backgroundColor: "#006666",
-                  fontWeight: "bold",
-                }}
-              >
-                Sheet
-              </TableCell>
-              <TableCell
-                style={{
-                  width: "40%",
-                  textAlign: "right",
-                  color: "White",
-                  backgroundColor: "#006666",
-                  fontWeight: "bold",
-                }}
-              >
-                No.
-              </TableCell>
-              <TableCell
-                style={{
-                  width: "60%%",
-                  textAlign: "right",
-                  color: "White",
-                  backgroundColor: "#006666",
-                  fontWeight: "bold",
-                }}
-              >
-                Serial No.
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {serialData.map((row, index) => (
-              <TableRow key={index} style={{ backgroundColor: "White" }}>
-                <TableCell style={{ width: "3%", textAlign: "right" }}>
-                  {row.SEQ}
+      {panalSerialOpen && (
+        <div className="pnlSerial">
+          <Table
+            component={Paper}
+            style={{
+              width: "400px",
+              borderCollapse: "collapse",
+              fontSize: "15px",
+              margin: "auto",
+            }}
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  style={{
+                    width: "3%",
+                    textAlign: "right",
+                    color: "White",
+                    backgroundColor: "#006666",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Sheet
                 </TableCell>
-                <TableCell style={{ width: "40%", textAlign: "right" }}>
-                  {row.TITLE}
+                <TableCell
+                  style={{
+                    width: "40%",
+                    textAlign: "right",
+                    color: "White",
+                    backgroundColor: "#006666",
+                    fontWeight: "bold",
+                  }}
+                >
+                  No.
                 </TableCell>
-                <TableCell style={{ width: "70%", paddingRight: "10px" }}>
-                  <Input
-                    type="text"
-                    style={{ width: "98%", textTransform: "uppercase" }}
-                    maxLength="30"
-                    className="styleEnable"
-                    onKeyDown={(e) => keyenter(e.keyCode, this, "")}
-                  />
+                <TableCell
+                  style={{
+                    width: "60%%",
+                    textAlign: "right",
+                    color: "White",
+                    backgroundColor: "#006666",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Serial No.
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-      <Button onClick={getInitialSerial}>123</Button>
+            </TableHead>
+            <TableBody>
+              {serialData.map((row, index) => (
+                <TableRow key={index} style={{ backgroundColor: "White" }}>
+                  <TableCell style={{ width: "3%", textAlign: "right" }}>
+                    {row.SEQ}
+                  </TableCell>
+                  <TableCell style={{ width: "40%", textAlign: "right" }}>
+                    {row.TITLE}
+                  </TableCell>
+                  <TableCell style={{ width: "70%", paddingRight: "10px" }}>
+                    <Input
+                      type="text"
+                      style={{ width: "98%", textTransform: "uppercase" }}
+                      maxLength="30"
+                      className="styleEnable"
+                      onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
       {lblErrorState && (
         <div className="lblLog">
           <Table className="lblTbLog">
