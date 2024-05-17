@@ -19,7 +19,7 @@ function SerialMasterPage() {
     const Search = async () => {
       console.log(code, name, "......")
       try {
-        const response = await axios.post("/Search/Serial", {
+        const response = await axios.post("/api/SearchSerial", {
           Code: code,
           Name: name
         });
@@ -85,7 +85,7 @@ function SerialMasterPage() {
           const snCodeToDelete = item.tssm_sn_struc_code;
           console.log("item--//",item.tssm_sn_struc_code)
           try {
-            const response = await axios.post("/delSerial_Master", {
+            const response = await axios.post("/api/delSerial_Master", {
                sn_code: snCodeToDelete
             });
             console.log("ลบข้อมูลสำเร็จ:", response.data);

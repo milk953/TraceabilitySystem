@@ -13,19 +13,6 @@ function ProductMasterPage() {
     const [factory, setFactory] = useState([]);
     const [DDLFactory, setDDLFactory] = useState("");
     const [txtProduct, settxtProduct] = useState("");
-
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.post("/Factory"); 
-            setFactory(response.data);
-          } catch (error) {
-            console.error('Error fetching factories:', error.message);
-          }
-        };
-    
-        fetchData(); 
-      }, []);
     
   
 
@@ -205,10 +192,8 @@ function ProductMasterPage() {
             };
 
     return{
-        ShowData, checkHead, checkEmpty, checkData, factory, DDLFactory, 
-        setDDLFactory, txtProduct, settxtProduct, Search, OpenPopup,
-        PopupOpen, PopupClose, New, Clear, selectedRowData, OpenEdit,
-        handleOpenDelete,handleExportToExcel,
+        ShowData, checkHead, checkEmpty, checkData, DDLFactory, setDDLFactory, txtProduct, settxtProduct, Search,  
+        OpenPopup, PopupOpen, PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete, handleExportToExcel,
     }
 }
 

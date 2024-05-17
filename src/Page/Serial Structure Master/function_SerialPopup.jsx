@@ -99,7 +99,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
         if (STATUS_P === "NEW") {
             const fetchData = async () => {
                 try {
-                    const response = await axios.post("/CheckrunCode", {});
+                    const response = await axios.post("/api/CheckrunCode", {});
                     const data = response.data;
                     const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
                     setTXT_SN_Code(new_run_seq);
@@ -500,7 +500,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                 UserLogin
             ) {
                 try {
-                    const response = await axios.post("/insSerial_Master", {
+                    const response = await axios.post("/api/insSerial_Master", {
                         sn_code: TXT_SN_Code,
                         sn_name: TXT_SN_Name,
                         sn_upcount: TXT_SN_UpCount,
@@ -586,12 +586,11 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                 Check_Config_Flag &&
                 (Check_Config_Flag === 'N' || TXT_Config_Start) &&
                 (Check_Config_Flag === 'N' || TXT_Config_End) &&
-                UserLogin &&
-                ipaddress
+                UserLogin 
             ) {
 
                 try {
-                    const response = await axios.post("/updateSerial_Master", {
+                    const response = await axios.post("/api/updateSerial_Master", {
                         sn_code: TXT_SN_Code,
                         sn_name: TXT_SN_Name,
                         sn_upcount: TXT_SN_UpCount,

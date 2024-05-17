@@ -59,7 +59,7 @@ function PopupT(onClose, item, searchFunction) {
         if (STATUS_P === "NEW") {
             const fetchData = async () => {
                 try {
-                    const response = await axios.post("/CheckSHTCode", {});
+                    const response = await axios.post("/api/CheckSHTCode", {});
                     const data = response.data;
                     const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
                     setTXT_SHT_Code(new_run_seq);
@@ -284,7 +284,7 @@ function PopupT(onClose, item, searchFunction) {
                 UserLogin
             ) {
                 try {
-                    const response = await axios.post("/insSheet_Master", {
+                    const response = await axios.post("/api/insSheet_Master", {
                         sht_code: TXT_SHT_Code,
                         sht_name: TXT_SHT_Name,
                         plant_flag: Check_Plant_Flag,
@@ -342,7 +342,7 @@ function PopupT(onClose, item, searchFunction) {
             ) {
 
                 try {
-                    const response = await axios.post("/updateSheet_Master", {
+                    const response = await axios.post("/api/updateSheet_Master", {
                         sht_code: TXT_SHT_Code,
                         sht_name: TXT_SHT_Name,
                         plant_flag: Check_Plant_Flag,
