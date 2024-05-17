@@ -54,6 +54,7 @@ function LoginTest() {
           localStorage.setItem("Lastname", res.data[0][4]);
           localStorage.setItem("UserLogin", res.data[0][0]);
           localStorage.setItem("IDCode", res.data[0][2]);
+          localStorage.setItem("Factory", res.data[0][1]);
 
           setIsLoading(true);
           setTimeout(() => {
