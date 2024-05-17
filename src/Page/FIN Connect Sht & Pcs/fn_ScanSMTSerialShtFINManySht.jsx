@@ -101,6 +101,9 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [dtProductSerial, setDtProductSerial] = useState([]);
 
   const [lblresult, setLblresult] = useState("SUCCESS");
+  const [lblresultState, setLblresultState] = useState(false);
+  const [gvScanResult, setGvScanResult] = useState([]);
+  const [gvScanResultState, setGvScanResultState] = useState(false);
   const ibtBack = () => {
     setLot("");
   };
@@ -203,6 +206,44 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     // txtLottxtChange();
     Getproduct();
     Setmode("LOT");
+    const dummyData = [
+      {
+        SheetNo: "001",
+        No: "A01",
+        SerialNo: "SN123456",
+        ScanResult: "Pass",
+        Remark: "No issues",
+      },
+      {
+        SheetNo: "002",
+        No: "A02",
+        SerialNo: "SN123457",
+        ScanResult: "Fail",
+        Remark: "Missing component",
+      },
+      {
+        SheetNo: "003",
+        No: "A03",
+        SerialNo: "SN123458",
+        ScanResult: "Pass",
+        Remark: "No issues",
+      },
+      {
+        SheetNo: "004",
+        No: "A04",
+        SerialNo: "SN123459",
+        ScanResult: "Pass",
+        Remark: "Slight delay",
+      },
+      {
+        SheetNo: "005",
+        No: "A05",
+        SerialNo: "SN123460",
+        ScanResult: "Fail",
+        Remark: "Incorrect serial number",
+      },
+    ];
+    setGvScanResult(dummyData);
   }, []);
 
   //txtLot
@@ -442,6 +483,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     txtLottxtChange,
     lblresult,
     setLblresult,
+    gvScanResult,
+    setGvScanResult,
+    gvScanResultState,
+    lblresultState
   };
 };
 

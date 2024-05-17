@@ -28,40 +28,24 @@ import axios from "axios";
 function ScanSMTSerialShtFINManySht() {
   const {
     lot,
-    setLot,
     product,
-    setProduct,
     selectproduct,
     setselectproduct,
-    getIntialSheet,
     dtData1,
-    setDtData1,
     lblError,
-    setLblError,
     lblErrorState,
-    setLblErrorState,
-    productState,
-    setProductState,
-    getInitialSerial,
     serialData,
-    setSerialData,
-    handleSave,
-    handleCancel,
     panalSerialOpen,
-    setPanalSerialOpen,
     pnlRollLeafOpen,
-    setPnlRollLeafOpen,
     lblCheckRoll,
-    setLblCheckRoll,
     pnlMachineOpen,
-    setPnlMachineOpen,
     lblTotalSht,
-    setLblTotalSht,
     lblTotalPcs,
-    setLblTotalPcs,
     txtLottxtChange,
     lblresult,
-    setLblresult,
+    gvScanResult,
+    gvScanResultState,
+    lblresultState,
   } = fn_ScanSMTSerialShtFINManySht();
   const handleProductChange = (event, value) => {
     setselectproduct(value);
@@ -79,7 +63,7 @@ function ScanSMTSerialShtFINManySht() {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>Lot No.:</TableCell>
+              <TableCell sx={{width:'400px'}}>Lot No.:</TableCell>
               <TableCell>
                 <TextField
                   size="small"
@@ -172,7 +156,41 @@ function ScanSMTSerialShtFINManySht() {
           </TableBody>
         </Table>
         <div className="lblResult">
-          <Table>{lblresult}</Table>
+          {lblresultState && (
+            <Table id="lblResult" sx={{ width: "1000px" }} component={Paper}>
+              {lblresult}
+            </Table>
+          )}
+          {gvScanResultState && (
+            <Table id="gvScanResult" component={Paper}>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ width: "70px" }}>Sheet No.</TableCell>
+                  <TableCell sx={{ width: "70px" }}>No.</TableCell>
+                  <TableCell>Serial No.</TableCell>
+                  <TableCell>Scan Result</TableCell>
+                  <TableCell>Remark</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {gvScanResult.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell id="gvScanResultBodyNum">
+                      {row.SheetNo}
+                    </TableCell>
+                    <TableCell id="gvScanResultBodyNum">{row.No}</TableCell>
+                    <TableCell id="gvScanResultBodyTxt">
+                      {row.SerialNo}
+                    </TableCell>
+                    <TableCell id="gvScanResultBodyNum">
+                      {row.ScanResult}
+                    </TableCell>
+                    <TableCell id="gvScanResultBodyTxt">{row.Remark}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </div>
       </div>
 
