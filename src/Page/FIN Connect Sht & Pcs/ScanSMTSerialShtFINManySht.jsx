@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Table,
@@ -18,11 +18,13 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
+
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialShtFINManySht.css";
 import Hearder from "../Header/Hearder";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
 import { Input } from "antd";
+import axios from "axios";
 function ScanSMTSerialShtFINManySht() {
   const {
     lot,
@@ -49,7 +51,22 @@ function ScanSMTSerialShtFINManySht() {
     setPanalSerialOpen,
     pnlRollLeafOpen,
     setPnlRollLeafOpen,
+    lblCheckRoll,
+    setLblCheckRoll,
+    pnlMachineOpen,
+    setPnlMachineOpen,
+    lblTotalSht,
+    setLblTotalSht,
+    lblTotalPcs,
+    setLblTotalPcs,
+    txtLottxtChange,
+    lblresult,
+    setLblresult,
   } = fn_ScanSMTSerialShtFINManySht();
+  const handleProductChange = (event, value) => {
+    setselectproduct(value);
+  };
+
   return (
     <div>
       <Hearder />
@@ -64,7 +81,17 @@ function ScanSMTSerialShtFINManySht() {
             <TableRow>
               <TableCell>Lot No.:</TableCell>
               <TableCell>
-                <TextField size="small" id="txtLot"></TextField>
+                <TextField
+                  size="small"
+                  id="txtField"
+                  defaultValue={lot}
+                  // onChange={(e) => txtLottxtChange(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      txtLottxtChange(e.target.value);
+                    }
+                  }}
+                ></TextField>
               </TableCell>
               <TableCell>
                 <Button>
@@ -77,16 +104,14 @@ function ScanSMTSerialShtFINManySht() {
               <TableCell>
                 <FormControl fullWidth>
                   <Autocomplete
+                    id="ddlProduct"
                     readOnly={false}
+                    options={product}
                     value={selectproduct}
-                    onChange={(e, value) => setselectproduct(value)}
-                    options={product.map((item) => item[0])}
+                    onChange={handleProductChange}
+                    getOptionLabel={(option) => option[0]}
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        size="small"
-                        sx={{ textAlign: "left" }}
-                      />
+                      <TextField {...params} size="small" />
                     )}
                   />
                 </FormControl>
@@ -96,44 +121,49 @@ function ScanSMTSerialShtFINManySht() {
             <TableRow>
               <TableCell>Lot Ref. No.:</TableCell>
               <TableCell>
-                <TextField size="small"></TextField>
+                <TextField size="small" id="txtField"></TextField>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Operator:</TableCell>
               <TableCell>
-                <TextField size="small"></TextField>
+                <TextField size="small" id="txtField"></TextField>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Total Sht:</TableCell>
-              <TableCell>
-                <TextField size="small"></TextField>
-              </TableCell>
+              <TableCell>{lblTotalSht}</TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Total Pcs:</TableCell>
-              <TableCell>
-                <TextField size="small"></TextField>
-              </TableCell>
+              <TableCell>{lblTotalPcs}</TableCell>
               <TableCell></TableCell>
             </TableRow>
             {pnlRollLeafOpen && (
               <>
                 <TableRow>
-                  <TableCell>Rool Leaf No.:</TableCell>
+                  <TableCell>Roll Leaf No.:</TableCell>
                   <TableCell>
-                    <TextField size="small"></TextField>
+                    <TextField size="small" id="txtField"></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Total Pcs:</TableCell>
+                  <TableCell>Check Roll:</TableCell>
+                  <TableCell>{lblCheckRoll}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </>
+            )}
+            {pnlMachineOpen && (
+              <>
+                <TableRow>
+                  <TableCell>Machine No.:</TableCell>
                   <TableCell>
-                    <TextField size="small"></TextField>
+                    <TextField size="small" id="txtField"></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -141,6 +171,9 @@ function ScanSMTSerialShtFINManySht() {
             )}
           </TableBody>
         </Table>
+        <div className="lblResult">
+          <Table>{lblresult}</Table>
+        </div>
       </div>
 
       <div className="pnlBackside">
@@ -209,6 +242,7 @@ function ScanSMTSerialShtFINManySht() {
       {panalSerialOpen && (
         <div className="pnlSerial">
           <Table
+            id="pnlSerial"
             component={Paper}
             style={{
               width: "400px",
@@ -285,6 +319,8 @@ function ScanSMTSerialShtFINManySht() {
           </Table>
         </div>
       )}
+
+      {/* <Button onClick={getIntialSheet}>123</Button> */}
     </div>
   );
 }
