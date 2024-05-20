@@ -1,27 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Typography,
-  FormControl,
-  TableRow,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  Paper,
-  TableHead,
-  Select,
-  MenuItem,
-  Grid,
-  TextField,
-  Button,
-  InputLabel,
-  Card,
-  CardContent,
-  Box,
-  Checkbox,
-} from "@mui/material";
-
 const usePopupFunctions = () => {
   const [OpenPopup, setOpenPopup] = useState(false);
 
@@ -82,12 +60,4 @@ const getFactory = () => {
 
 };
 
-const renderMenuItems = () => {
-  return (
-      <MenuItem value="">
-        <em>Select...</em>
-      </MenuItem>
-  );
-};
-
-export { usePopupFunctions, useIPAddress, getFactory, renderMenuItems };
+export { usePopupFunctions, useIPAddress, getFactory };
