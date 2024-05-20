@@ -18,7 +18,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
   const [txtConfig, settxtConfig] = useState("");
   const [txtStSeqSerial, settxtStSeqSerial] = useState("");
   const [txtStSeqCode, settxtStSeqCode] = useState("");
-  const [DDL_ProductStatus, setDDL_ProductStatus] = useState("ACTIVE");
+  const [DDL_ProductStatus, setDDL_ProductStatus] = useState("Active");
   //Date In Process
   const [DateProFlag, setDateProFlag] = useState("");
   const [txtDateInProcess, settxtDateInProcess] = useState("");
@@ -608,13 +608,13 @@ function ProductMasterPopup(onClose, item, searchFunction) {
     if (txtRollProFix === "") {
       setErrorRollProFix(true);
     }
-    if (isNaN(txtConShtTime) || txtConShtTime === "") {
+    if (isNaN(txtConShtTime) || isConShtTimeFlag && txtConShtTime === "") {
       setErrorConShtConTime(true);
     }
-    if (isNaN(txtConShtPlasTime) || txtConShtPlasTime === "") {
+    if (isNaN(txtConShtPlasTime) || isConShtPlasTimeFlag && txtConShtPlasTime === "") {
       setErrorConShtPlasTime(true);
     }
-    if (!DDL_ProcessConTime) {
+    if (isProcessConTimeFlag && !DDL_ProcessConTime) {
       setErrorProcessConTime(true)
     }
     if (isNaN(txtFinalpcstray) || txtFinalpcstray === "") {
@@ -629,89 +629,89 @@ function ProductMasterPopup(onClose, item, searchFunction) {
     if (!DDL_FinalPDSHidetime) {
       setErrorFinalPDSHidetime(true);
     }
-    if (isNaN(txtFinalPDStime) || txtFinalPDStime === "") {
+    if (isNaN(txtFinalPDStime) || isFinalPDStimeflag && txtFinalPDStime === "") {
       setErrorFinalPDStime(true);
     }
     if (txtFinalPDStimeby === "") {
       setErrorFinalPDStimeby(true);
     }
 
-    const Clear = () => {
-      if (STATUS_P === "NEW") {
-        setDDL_Factory("")
-        settxtProductName("");
-        settxtUpCount("");
-        settxtConfig("");
-        settxtStSeqSerial("");
-        settxtStSeqCode("");
-        setDDL_ProductStatus("");
-        setDateProFlag("");
-        settxtDateInProcess("");
-        settxtPcsPerSHTEFPC("");
-        settxtPcsPerSHTSMT("");
-        settxtSerialFile("");
-        setDDL_Serialside("");
-        setDDL_SerialStruc("");
-        setBarReqFlag("");
-        settxtBarcodeGrade("");
-        settxtshtFileFormat("");
-        setDDL_ShtStructure("");
-        setDDL_ShtType("");
-        settxtShtperLotEFPC("");
-        settxtShtperLotSMT("");
-        settxtShtperscan("");
-        settxtShtperlaser("");
-        settxtShtModelCode("");
-        setShtProFlag("");
-        setShtLotFlag("");
-        setShtXrayFlag("");
-        setPlasmaTimeFlag("");
-        settxtPlasmaTime("");
-        setConRollShtFlag("");
-        settxtConRollShtLength("");
-        setConRollLeafFlag("");
-        settxtConRollLength("");
-        settxtConLeafLength("");
-        setConRollProFlag("");
-        settxtConRollProSt("");
-        settxtConRollProEnd("");
-        setConRollSerialFlag("");
-        settxtConRollLeafScan("");
-        setDDL_RollReqLotSht("");
-        settxtRollLotShtSt("");
-        settxtRollLotShtEnd("");
-        setDDL_RollReqProSht("");
-        settxtRollProShtSt("");
-        settxtRollProShtEnd("");
-        settxtRollProFix("");
-        setConShtTimeFlag("");
-        settxtConShtTime("");
-        setConShtsumFlag("");
-        setConShtPlasTimeFlag("");
-        settxtConShtPlasTime("");
-        setConShtCodeFlag("");
-        setConShtMixLotFlag("");
-        setConShtMixProFlag("");
-        setProcessConTimeFlag("");
-        setDDL_ProcessConTime("");
-        settxtFinalpcstray("");
-        settxtFinalpcsscan("");
-        setFinalpackgroupflag("");
-        setFinalweekcodeflag("");
-        setDDL_FinalPDStimeELT("");
-        setDDL_FinalPDSHidetime("");
-        setFinalPDStimeflag("");
-        settxtFinalPDStime("");
-        settxtFinalPDStimeby("");
-        setFinalPDSconfirmflag("");
-        setFinalconnshtflag("");
-        setFinalmixLotflag("");
-        setFinalmixproflag("");
-        setFinalchecksumflag("");
-        setFinalchipIDflag("");
-      }
-    };
+  };
 
+  const Clear = () => {
+    if (STATUS_P === "NEW") {
+      setDDL_Factory(factory_login)
+      settxtProductName("");
+      settxtUpCount("");
+      settxtConfig("");
+      settxtStSeqSerial("");
+      settxtStSeqCode("");
+      setDDL_ProductStatus("");
+      setDateProFlag("");
+      settxtDateInProcess("");
+      settxtPcsPerSHTEFPC("");
+      settxtPcsPerSHTSMT("");
+      settxtSerialFile("");
+      setDDL_Serialside("");
+      setDDL_SerialStruc("");
+      setBarReqFlag("");
+      settxtBarcodeGrade("");
+      settxtshtFileFormat("");
+      setDDL_ShtStructure("");
+      setDDL_ShtType("");
+      settxtShtperLotEFPC("");
+      settxtShtperLotSMT("");
+      settxtShtperscan("");
+      settxtShtperlaser("");
+      settxtShtModelCode("");
+      setShtProFlag("");
+      setShtLotFlag("");
+      setShtXrayFlag("");
+      setPlasmaTimeFlag("");
+      settxtPlasmaTime("");
+      setConRollShtFlag("");
+      settxtConRollShtLength("");
+      setConRollLeafFlag("");
+      settxtConRollLength("");
+      settxtConLeafLength("");
+      setConRollProFlag("");
+      settxtConRollProSt("");
+      settxtConRollProEnd("");
+      setConRollSerialFlag("");
+      settxtConRollLeafScan("");
+      setDDL_RollReqLotSht("");
+      settxtRollLotShtSt("");
+      settxtRollLotShtEnd("");
+      setDDL_RollReqProSht("");
+      settxtRollProShtSt("");
+      settxtRollProShtEnd("");
+      settxtRollProFix("");
+      setConShtTimeFlag("");
+      settxtConShtTime("");
+      setConShtsumFlag("");
+      setConShtPlasTimeFlag("");
+      settxtConShtPlasTime("");
+      setConShtCodeFlag("");
+      setConShtMixLotFlag("");
+      setConShtMixProFlag("");
+      setProcessConTimeFlag("");
+      setDDL_ProcessConTime("");
+      settxtFinalpcstray("");
+      settxtFinalpcsscan("");
+      setFinalpackgroupflag("");
+      setFinalweekcodeflag("");
+      setDDL_FinalPDStimeELT("");
+      setDDL_FinalPDSHidetime("");
+      setFinalPDStimeflag("");
+      settxtFinalPDStime("");
+      settxtFinalPDStimeby("");
+      setFinalPDSconfirmflag("");
+      setFinalconnshtflag("");
+      setFinalmixLotflag("");
+      setFinalmixproflag("");
+      setFinalchecksumflag("");
+      setFinalchipIDflag("");
+    }
   };
 
 
@@ -737,7 +737,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
     ErrorDateInProcess, ErrorPcsPerShtEFPC, ErrorPcsPerShtSMT, ErrorSerialFile, ErrorSerialside, ErrorSerialStruc, ErrorBarcodeGrade, ErrorShtFileFormat, ErrorShtStruc, ErrorShtType, ErrorShtPerLotEFPC,
     ErrorShtPerLotSMT, ErrorShtPerscan, ErrorShtPerlaser, ErrorShtModelCode, ErrorShtPlasTime, ErrorRollShtLength, ErrorRollLength, ErrorConLeafLength, ErrorRollProSt, ErrorRollProEnd, ErrorRollLeafScan,
     ErrorRollReqLotSht, ErrorRollLotShtSt, ErrorRollLotShtEnd, ErrorRollReqProSht, ErrorRollProShtSt, ErrorRollProShtEnd, ErrorRollProFix, ErrorConShtConTime, ErrorConShtPlasTime, ErrorProcessConTime,
-    ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick
+    ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick, Clear
   }
 }
 

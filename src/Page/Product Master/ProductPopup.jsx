@@ -26,11 +26,12 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import swal from "sweetalert";
 import axios from "axios";
 import { ProductMasterPopup } from "./function_ProductMasterPopup";
-import { getFactory } from "../Common/function_Common";
+import { getFactory, renderMenuItems } from "../Common/function_Common";
 
 function ProductPopup({ isOpen, onClose, item, searchFunction }) {
 
     const { factory, setFactory } = getFactory();
+    const renderMenu = renderMenuItems();
     const { STATUS_P, DDL_Factory, setDDL_Factory, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_Serialside, setDDL_Serialside, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
         DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
         DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
@@ -52,7 +53,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
         ErrorDateInProcess, ErrorPcsPerShtEFPC, ErrorPcsPerShtSMT, ErrorSerialFile, ErrorSerialside, ErrorSerialStruc, ErrorBarcodeGrade, ErrorShtFileFormat, ErrorShtStruc, ErrorShtType, ErrorShtPerLotEFPC,
         ErrorShtPerLotSMT, ErrorShtPerscan, ErrorShtPerlaser, ErrorShtModelCode, ErrorShtPlasTime, ErrorRollShtLength, ErrorRollLength, ErrorConLeafLength, ErrorRollProSt, ErrorRollProEnd, ErrorRollLeafScan,
         ErrorRollReqLotSht, ErrorRollLotShtSt, ErrorRollLotShtEnd, ErrorRollReqProSht, ErrorRollProShtSt, ErrorRollProShtEnd, ErrorRollProFix, ErrorConShtConTime, ErrorConShtPlasTime, ErrorProcessConTime,
-        ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick
+        ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick, Clear
     } = ProductMasterPopup(onClose, item, searchFunction);
 
     console.log("Serial", SerialStruc)
@@ -255,8 +256,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{ width: "90%" }}
                                     error={ErrorProStatus}
                                 >
-                                    <MenuItem value="ACTIVE">ACTIVE</MenuItem>
-                                    <MenuItem value="INACTIVE">INACTIVE</MenuItem>
+                                    <MenuItem value="Active">ACTIVE</MenuItem>
+                                    <MenuItem value="Inactive">INACTIVE</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>
@@ -444,7 +445,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     onChange={handleDDLSerialside}
                                     style={{ width: "90%" }}
                                     error={ErrorSerialside}
-                                />
+                                    displayEmpty
+                                >
+                                    <MenuItem value="">
+                                        <em>Select...</em>
+                                    </MenuItem>
+                                </Select>
                             </Grid>
                             <Grid item xs={2.2}>
                                 <Typography style={{ marginLeft: "8%" }}>
@@ -460,7 +466,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     onChange={handleDDLSerialStruc}
                                     style={{ width: "90%" }}
                                     error={ErrorSerialStruc}
+                                    displayEmpty
                                 >
+                                    {renderMenu}
                                     {SerialStruc.map((item) => (
                                         <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_code}>
                                             {item.tssm_sn_struc_name}
@@ -2178,7 +2186,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     }}
                                     color="error"
                                     onClick={() => {
-                                        // Clear();
+                                        Clear();
                                         onClose();
                                     }}
                                 >
