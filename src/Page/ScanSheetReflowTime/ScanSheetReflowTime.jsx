@@ -23,6 +23,7 @@ import "./ScanSheetReflowTime.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Hearder from "../Header/Hearder";
 import { fn_ScanSheetReflowTime } from "./fn_ScanSheetReflowTime";
+import HomeIcon from '@mui/icons-material/Home';
 
 function ScanSheetReflowTime() {
   const { txtmcNo, txtSheetNo, lblSheet, lblResult, lblRemark } =
@@ -68,10 +69,14 @@ function ScanSheetReflowTime() {
       <div className="pnlResult">
         <Table id="TableResult" component={Paper}>
           <TableRow>
-            <TableCell sx={{ fontSize: "70px" }}>lblResult</TableCell>
+            <TableCell sx={{ fontSize: "60px", padding: "0px" }}>
+              {lblResult}
+            </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "30px" }}>lblRemark</TableCell>
+            <TableCell sx={{ fontSize: "34px", padding: "0px" }}>
+              {lblRemark}
+            </TableCell>
           </TableRow>
         </Table>
       </div>
@@ -89,6 +94,9 @@ function ScanSheetReflowTime() {
             </TableCell>
           </TableRow>
         </Table>
+      </div>
+      <div style={{display:'flex',justifyContent:'center',marginTop:'5px'}}>
+        <Button sx={{fontSize:'11px'}}> Return to Menu</Button>
       </div>
     </div>
   );
