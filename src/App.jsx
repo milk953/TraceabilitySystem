@@ -11,7 +11,9 @@ import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
 
 import Login from "./Page/Login/Login"; 
 
-const backendUrl = "http://10.17.74.228:3001";
+import axios from "axios";
+const backendUrl = "http://localhost:3001";
+
 axios.defaults.baseURL = backendUrl;
 const App = () => {
   return (
