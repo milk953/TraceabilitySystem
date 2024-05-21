@@ -10,7 +10,7 @@ import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRollSht";
 import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
 
 import Login from "./Page/Login/Login"; 
-import axios from "axios";
+
 const backendUrl = "http://10.17.74.228:3001";
 axios.defaults.baseURL = backendUrl;
 const App = () => {
