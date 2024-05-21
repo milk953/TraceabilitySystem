@@ -9,7 +9,7 @@ import FINConncetSht from './Page/FIN Connect Sht & Pcs/ScanSMTSerialShtFINManyS
 import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRollSht";
 import Login from "./Page/Login/Login"; 
 import axios from "axios";
-const backendUrl = "http://10.17.74.228:3001";
+const backendUrl = "http://localhost:3001";
 axios.defaults.baseURL = backendUrl;
 const App = () => {
   return (
