@@ -24,7 +24,6 @@ import "./ScanSMTSerialShtFINManySht.css";
 import Hearder from "../Header/Hearder";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
 import { Input } from "antd";
-import axios from "axios";
 function ScanSMTSerialShtFINManySht() {
   const {
     lot,
@@ -47,6 +46,14 @@ function ScanSMTSerialShtFINManySht() {
     gvScanResult,
     gvScanResultState,
     lblresultState,
+    fctextFieldlot,
+    ibtBack,
+    fctextFieldMachine,
+    fctextFileRollLeaf,
+    fcddlProduct,
+    fcgvBackSide_txtSideback_0,
+    fcgvSerial,
+    txtRollLeaf
   } = fn_ScanSMTSerialShtFINManySht();
   const handleProductChange = (event, value) => {
     setselectproduct(value);
@@ -70,6 +77,7 @@ function ScanSMTSerialShtFINManySht() {
                   size="small"
                   id="txtField"
                   value={lot}
+                  inputRef={fctextFieldlot}
                   onChange={(e) => {
                     txtLottxtChange(e.target.value);
                   }}
@@ -81,7 +89,7 @@ function ScanSMTSerialShtFINManySht() {
                 ></TextField>
               </TableCell>
               <TableCell>
-                <Button>
+                <Button onClick={ibtBack}>
                   <BackspaceIcon />
                 </Button>
               </TableCell>
@@ -98,7 +106,7 @@ function ScanSMTSerialShtFINManySht() {
                     onChange={handleProductChange}
                     getOptionLabel={(option) => option}
                     renderInput={(params) => (
-                      <TextField {...params} size="small" />
+                      <TextField {...params} size="small"inputRef={fcddlProduct} />
                     )}
                   />
                 </FormControl>
@@ -134,7 +142,7 @@ function ScanSMTSerialShtFINManySht() {
                 <TableRow>
                   <TableCell>Roll Leaf No.:</TableCell>
                   <TableCell>
-                    <TextField size="small" id="txtField"></TextField>
+                    <TextField size="small" id="txtField" inputRef={fctextFileRollLeaf} value={txtRollLeaf}></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -150,7 +158,7 @@ function ScanSMTSerialShtFINManySht() {
                 <TableRow>
                   <TableCell>Machine No.:</TableCell>
                   <TableCell>
-                    <TextField size="small" id="txtField"></TextField>
+                    <TextField size="small" id="txtField" inputRef={fctextFieldMachine}></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
