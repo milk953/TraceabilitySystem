@@ -1,3 +1,4 @@
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 import { LineAxisOutlined } from "@mui/icons-material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -112,7 +113,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     switch (strType) {
       case "LOT":
         setProductState(true);
-        setLot("");
+        // setLot("");
         setLotState(true);
         // txtLot.CSs
         setLblErrorState(false);
@@ -120,7 +121,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         localStorage.setItem("hfMode", "LOT");
       // focus(txtlot)
       case "LOT_ERROR":
-        setLot("");
+        // setLot("");
         setLotState(true);
         // txtLot.CSs
 
@@ -193,7 +194,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const Getproduct = () => {
     try {
       axios.get("/api/GetProductData").then((res) => {
-        setProduct(res.data.Product);
+        setProduct(res.data.Product.flat());
+        console.log(res.data.Product.flat(), "get data");
       });
     } catch (error) {
       console.log(error, "get data error");
@@ -247,46 +249,105 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   }, []);
 
   //txtLot
-  const [strPrdname, setStrPrdname] = useState("");
-  const txtLottxtChange = (lot) => {
-    let strLotData = "";
-    let strLot = "";
+  const txtLottxtChange = async (lot1) => {
+    setLot(lot1);
+    
+    var strLotData = "";
+    var strLot = "";
+    var strPrdname = "";
 
-    let dtLotData = [];
-    strLotData = lot.trim().toLocaleUpperCase().split(";");
-    // strLotData = "130272927";
-    if (strLotData.length - 1 >= 2) {
+    strLotData = lot1.trim().toLocaleUpperCase().split(";");
+    if (strLotData.length >= 2) {
       strLot = strLotData[0].trim();
-      console.log(strLot, "strLot");
-      axios
-        .post("/api/GetProductDataByLot", {
+      try {
+        const response = await axios.post("/api/GetProductDataByLot", {
           strLot: strLot,
-        })
-        .then((res) => {
-          if (res.data.PRD_NAME.length > 0) {
-            dtLotData.push(res.data);
-            setStrPrdname(res.data.PRD_NAME);
-            sethfRollNo(res.data.ROLL_NO);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
         });
+        if (response.data.PRD_NAME.length > 0) {
+          strPrdname = response.data.PRD_NAME;
+          sethfRollNo(response.data.ROLL_NO);
+        }
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
 
-      if (strPrdname != "") {
+      if (strPrdname !== "") {
+        setLblError("");
         setLblErrorState(false);
         setLot(strLot);
         setLotRef(strLot);
-        getCountDataBylot(strLot);
+        // getCountDataBylot(strLot);
         try {
-          console.log(strPrdname, "strPrdname");
           setselectproduct(strPrdname);
-        } catch (error) {}
+          console.log(strPrdname, "strPrdname");
+          // getProductSerialMaster();
+          // getInitialSheet();
+          if (hfCheckRollSht === "Y") {
+            setPnlMachineOpen(true);
+            // focus("txtMachine");
+          } else {
+            setPnlMachineOpen(false);
+            // focus("gvBackSide_txtSideback_0");
+          }
+        } catch (error) {
+          var intProduct = strPrdname.toLowerCase().indexOf("-", 12) + 1;
+          if (intProduct > 0) {
+            var part1 = strPrdname.substring(0, intProduct);
+            var part2 = strPrdname
+              .substring(intProduct + 1, intProduct + 1 + 10)
+              .trim();
+            strPrdname = part1 + part2;
+            try {
+              setselectproduct(strPrdname);
+              // getProductSerialMaster();
+              // getInitialSheet();
+              if (hfCheckRollSht === "Y") {
+                setPnlRollLeafOpen(true);
+                // settxtRollLeaf("");
+                // focus("txtRollLeaf");
+              } else {
+                Setmode("SERIAL");
+                // settxtMachine("");
+                if (hfReqMachine === "y") {
+                  setPnlMachineOpen(true);
+                  // focus("txtMachine");
+                } else {
+                  setPnlMachineOpen(false);
+                  // focus("gvBackSide_txtSideback_0");
+                }
+              }
+            } catch (error) {
+              setLblError("Product" + strPrdname + "not found.");
+              setLblErrorState(true);
+              // focus("ddlProduct");
+            }
+          } else {
+            setLblError("Product" + strPrdname + "not found.");
+            setLblErrorState(true);
+            // focus("ddlProduct");
+          }
+        }
+      } else {
+        setselectproduct(product[0]);
+        // setLot("");
+        setGvScanResult([]);
+
+        setLblError("Invalid Lot No.");
+        sethfMode("LOT");
+        focus("txtLot");
       }
-    } else {
-      console.log("less than 2");
+    }
+    else {
+      setselectproduct(product[0]);
+      // setLot("");
+      setGvScanResult([]);
+
+      setLblError("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด" );
+      sethfMode("LOT");
+      focus("txtLot");
     }
   };
+
   const getCountDataBylot = (lot) => {
     setLblTotalSht("0");
     setLblTotalPcs("0");
@@ -486,7 +547,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     gvScanResult,
     setGvScanResult,
     gvScanResultState,
-    lblresultState
+    lblresultState,
   };
 };
 

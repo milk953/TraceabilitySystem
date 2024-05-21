@@ -28,6 +28,7 @@ import axios from "axios";
 function ScanSMTSerialShtFINManySht() {
   const {
     lot,
+    setLot,
     product,
     selectproduct,
     setselectproduct,
@@ -63,13 +64,15 @@ function ScanSMTSerialShtFINManySht() {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell sx={{width:'400px'}}>Lot No.:</TableCell>
+              <TableCell sx={{ width: "400px" }}>Lot No.:</TableCell>
               <TableCell>
                 <TextField
                   size="small"
                   id="txtField"
-                  defaultValue={lot}
-                  // onChange={(e) => txtLottxtChange(e.target.value)}
+                  value={lot}
+                  onChange={(e) => {
+                    txtLottxtChange(e.target.value);
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       txtLottxtChange(e.target.value);
@@ -93,7 +96,7 @@ function ScanSMTSerialShtFINManySht() {
                     options={product}
                     value={selectproduct}
                     onChange={handleProductChange}
-                    getOptionLabel={(option) => option[0]}
+                    getOptionLabel={(option) => option}
                     renderInput={(params) => (
                       <TextField {...params} size="small" />
                     )}
