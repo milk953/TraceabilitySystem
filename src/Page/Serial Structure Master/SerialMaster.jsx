@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "/src/Page/Style.css";
+import "../Serial Structure Master/Style.css";
 import Popup from "./SerialPopup";
 import { Empty } from "antd";
 import Hearder from "../Header/Hearder";
@@ -142,7 +142,7 @@ function SerialMaster() {
                     style={{
                         width: "96%",
                         marginBottom: "10px",
-                        maxHeight: "440px",
+                        maxHeight: "400px",
                         visibility: checkHead,
                     }}
                 >

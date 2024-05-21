@@ -17,7 +17,7 @@ function SheetMasterT() {
     const Search = async () => {
       console.log(code, name, "......")
       try {
-        const response = await axios.post("/search/CodeName", {
+        const response = await axios.post("/api/searchCodeName", {
           Code: code,
           Name: name
         });
@@ -82,7 +82,7 @@ function SheetMasterT() {
         if (willDelete) {
           const shtCodeToDelete = item.tstm_sht_struc_code;
           try {
-            const response = await axios.post("/delSheet_Master", {
+            const response = await axios.post("/api/delSheet_Master", {
                sht_code: shtCodeToDelete
             });
             console.log("ลบข้อมูลสำเร็จ:", response.data);

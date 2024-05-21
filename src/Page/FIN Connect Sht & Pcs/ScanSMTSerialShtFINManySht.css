@@ -1,10 +1,15 @@
-.css-1ex1afd-MuiTableCell-root {
+/* .css-1ex1afd-MuiTableCell-root {
+  padding: 3px !important;
+} */
+
+.mainTable td {
   padding: 3px !important;
 }
-.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+
+/* .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 5.5px 8px !important;
   width: 200px !important;
-}
+} */
 
 .select {
   width: 215px !important;
@@ -12,12 +17,107 @@
 }
 .mainTable {
   width: 400px !important;
-  margin: auto;
+  margin: left;
+  margin-left: 10px;
 }
+.mainTable th {
+  background-color: rgb(243, 8, 8);
+  color: white;
+  font-weight: 700;
+  font-family: Arial;
+}
+
 .Head {
   margin-top: 100px;
+  display: flex;
 }
-.pnlBackSide{
+.lblResult {
+  margin-left: 50px;
+  width: 1000px;
+  text-align: center;
+  font-size: 80px;
+  height: 100px;
+}
+#lblResult {
+  background-color: #ffff99;
+  color: rgb(108, 221, 3);
+}
+.pnlBackSide {
   width: 400px !important;
-  margin: auto;
+  margin: left;
+}
+
+.gvBackSide {
+  width: 400px !important;
+  margin: left;
+  margin-top: 20px;
+}
+.gvBackSide td {
+  padding: 3px;
+}
+
+.gvBackSide input {
+  width: 200px !important;
+}
+
+.lblTbLog {
+  width: 400px !important;
+  margin: left;
+  background-color: red;
+}
+.lblTbLog td {
+  text-align: center;
+}
+
+.styleEnable {
+  background-color: White;
+  font-weight: normal;
+  font-size: 11pt;
+  color: Black;
+  text-transform: uppercase;
+}
+.styleDisable {
+  background-color: Silver;
+  font-weight: normal;
+  font-size: 11pt;
+  color: Black;
+}
+
+#txtField {
+  padding: 1px !important;
+  font-size: 16px;
+  width: 230px;
+}
+
+#ddlProduct {
+  padding: 1px !important;
+  font-size: 12px;
+}
+.pnlSerial {
+  width: 400px !important;
+  margin: left;
+  margin-left: 10px;
+}
+
+#gvScanResultBodyNum {
+  text-align: center;
+  border-right: 1px solid rgb(221, 219, 219);
+}
+#gvScanResultBodyTxt {
+  text-align: left;
+  border-right: 1px solid rgb(221, 219, 219);
+}
+
+#gvScanResult {
+  margin-top: 20px;
+  width: 1000px;
+  border: 1px solid rgb(221, 219, 219);
+}
+#gvScanResult th {
+  text-align: center;
+  border-right: 1px solid rgb(221, 219, 219);
+  background-color: rgb(243, 8, 8);
+  color: white;
+  font-weight: 700;
+  font-family: Arial;
 }

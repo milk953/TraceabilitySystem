@@ -1,0 +1,51 @@
+.pnlMain {
+  display: flex;
+  margin: auto;
+  margin-top: 80px;
+  width: 600px;
+  height: 300px;
+}
+#TableMain {
+  width: 600px !important;
+  margin: 0 auto;
+}
+#TableMain th {
+  text-align: center;
+  font-size: 38px;
+}
+
+.pnlResult {
+  display: flex;
+  margin: auto;
+  width: 600px;
+  margin-top: 20px;
+}
+#TableResult {
+  height: 180px;
+}
+#TableResult td {
+  /* font-size: 80px; */
+  text-align: center;
+}
+.pnlSave {
+  display: flex;
+  margin: auto;
+  width: 600px;
+  margin-top: 20px;
+}
+#TableSave {
+  width: 600px;
+  margin: 0 auto;
+}
+#TableSave td {
+  text-align: center;
+}
+
+#lbltxt {
+  width: 150px;
+  text-align: right;
+}
+.txtField {
+  width: 300px;
+  padding: 1px;
+}

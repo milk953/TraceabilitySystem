@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "/src/Page/Style.css";
+import "../Product Master/Style.css";
 import {
     Typography,
     FormControl,
@@ -22,7 +22,7 @@ import {
     Checkbox,
 } from "@mui/material";
 import { Empty } from "antd";
-import {InfoCircleOutlined} from "@ant-design/icons";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import swal from "sweetalert";
 import axios from "axios";
 import { ProductMasterPopup } from "./function_ProductMasterPopup";
@@ -30,12 +30,29 @@ import { getFactory } from "../Common/function_Common";
 
 function ProductPopup({ isOpen, onClose, item, searchFunction }) {
 
-    const { factory, setFactory, DDL_Factory, setDDL_Factory } = getFactory();
-    const { STATUS_P, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
+    const { factory, setFactory } = getFactory();
+    const { STATUS_P, DDL_Factory, setDDL_Factory, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_Serialside, setDDL_Serialside, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
         DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
         DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
-        DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime,
-        checkHead, checkEmpty, checkData
+        DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag,
+        isPlasmaTimeFlag, setisPlasmaTimeFlag, isConRollShtFlag, setisConRollShtFlag, isConRollLeafFlag, setisConRollLeafFlag,
+        isConRollProFlag, setisConRollProFlag, isConRollSerialFlag, setisConRollSerialFlag, isConShtTimeFlag, setisConShtTimeFlag,
+        isConShtPlasTimeFlag, setisConShtPlasTimeFlag, isProcessConTimeFlag, setisProcessConTimeFlag, isFinalPDStimeflag, setisFinalPDStimeflag,
+        txtProductName, txtUpCount, txtConfig, txtStSeqSerial, txtStSeqCode, txtDateInProcess, txtPcsPerSHTEFPC, txtPcsPerSHTSMT, txtSerialFile,
+        txtBarcodeGrade, txtshtFileFormat, txtShtperLotEFPC, txtShtperLotSMT, txtShtperscan, txtShtperlaser, txtShtModelCode, txtPlasmaTime,
+        txtConRollShtLength, txtConRollLength, txtConLeafLength, txtConRollProSt, txtConRollProEnd, txtConRollLeafScan, txtRollLotShtSt, txtRollLotShtEnd,
+        txtRollProShtSt, txtRollProShtEnd, txtRollProFix, txtConShtTime, txtConShtPlasTime, txtFinalpcstray, txtFinalpcsscan, txtFinalPDStime, txtFinalPDStimeby,
+        checkHead, checkEmpty, checkData, handleDDLFactory, handleKeyProductName, handleKeyUpCount, handleKeyConfigCode, handleKeyStSeqSeriel, handleKeyStSeqCode, handleDDLProStatus,
+        handleKeyDateInProcees, handleKeyPcsPerShtEFPC, handleKeyPcsPerShtSMT, handleKeySerialFile, handleDDLSerialside, handleDDLSerialStruc, handleKeyBarcodeGrade,
+        handleKeyShtFileFormat, handleDDLShtStructure, handleDDLShtType, handleKeyShtperLotEFPC, handleKeyShtperLotSMT, handleKeyShtperscan, handleKeyShtperlaser,
+        handleKeyShtModelCode, handleKeyShtPlasTime, handleKeyRollShtLength, handleKeyConRollLength, handleKeyConLeafLength, handleKeyConRollProSt, handleKeyConRollProEnd,
+        handleKeyRollLeafScan, handleDDLRollReqLotSht, handleKeyRollLotShtSt, handleKeyRollLotShtEnd, handleDDLRollReqProSht, handleKeyRollProShtSt, handleKeyRollProShtEnd,
+        handleKeyRollProFix, handleKeyConShtTime, handleKeyConShtPlasTime, handleDDLProcessConTime, handleKeyFinalpcstray, handleKeyFinalpcsscan, handleDDLFinalPDStimeELT,
+        handleDDLFinalPDSHidetime, handleKeyFinalPDStime, handleKeyFinalPDStimeby, ErrorFactory, ErrorProdName, ErrorUpCount, ErrorConfigCode, ErrorStSeqSerial, ErrorStSeqCode, ErrorProStatus,
+        ErrorDateInProcess, ErrorPcsPerShtEFPC, ErrorPcsPerShtSMT, ErrorSerialFile, ErrorSerialside, ErrorSerialStruc, ErrorBarcodeGrade, ErrorShtFileFormat, ErrorShtStruc, ErrorShtType, ErrorShtPerLotEFPC,
+        ErrorShtPerLotSMT, ErrorShtPerscan, ErrorShtPerlaser, ErrorShtModelCode, ErrorShtPlasTime, ErrorRollShtLength, ErrorRollLength, ErrorConLeafLength, ErrorRollProSt, ErrorRollProEnd, ErrorRollLeafScan,
+        ErrorRollReqLotSht, ErrorRollLotShtSt, ErrorRollLotShtEnd, ErrorRollReqProSht, ErrorRollProShtSt, ErrorRollProShtEnd, ErrorRollProFix, ErrorConShtConTime, ErrorConShtPlasTime, ErrorProcessConTime,
+        ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick
     } = ProductMasterPopup();
 
     console.log("Serial", SerialStruc)
@@ -71,9 +88,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     variant="outlined"
                                     size="small"
                                     value={DDL_Factory}
-                                    onChange={(e) => setDDL_Factory(e.target.value)}
+                                    onChange={handleDDLFactory}
                                     style={{ width: "90%" }}
-                                //   error={ERROR_SHT_Code}
+                                    error={ErrorFactory}
                                 >
                                     {factory.map((item) => (
                                         <MenuItem key={item.factory_code} value={item.factory_code}>
@@ -90,8 +107,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                         >
                             <Grid item xs={2.2}></Grid>
                             <Grid item xs={1.7}>
-                                <Typography style={{ fontSize: "small", color: "red", width: "71%" }}>
-                                    {/* {ERROR_SHT_Code ? "Please input SHT Code" : null} */}
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorFactory ? "Please select Factory." : null}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -108,16 +125,15 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={1.7}>
                                 <TextField
-                                    id="txtConnSheetConTime"
+                                    id="txtProductName"
                                     variant="outlined"
                                     size="small"
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtProductName}
+                                    onChange={handleKeyProductName}
+                                    error={ErrorProdName}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -127,16 +143,15 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={1.7}>
                                 <TextField
-                                    id="txtConnSheetConTime"
+                                    id="txtUpdateCount"
                                     variant="outlined"
                                     size="small"
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtUpCount}
+                                    onChange={handleKeyUpCount}
+                                    error={ErrorUpCount}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -152,11 +167,35 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtConfig}
+                                    onChange={handleKeyConfigCode}
+                                    error={ErrorConfigCode}
                                 />
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            container
+                            className="gridContainer2"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorProdName ? "Please input Product Name." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorUpCount ? "Please input Update Count and Number only." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorConfigCode ? "Please input Config Code." : null}
+                                </Typography>
                             </Grid>
                         </Grid>
 
@@ -178,10 +217,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtStSeqSerial}
+                                    onChange={handleKeyStSeqSeriel}
+                                    error={ErrorStSeqSerial}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -197,10 +235,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtStSeqCode}
+                                    onChange={handleKeyStSeqCode}
+                                    error={ErrorStSeqCode}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -214,13 +251,38 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     variant="outlined"
                                     size="small"
                                     value={DDL_ProductStatus}
-                                    onChange={(e) => setDDL_ProductStatus(e.target.value)}
+                                    onChange={handleDDLProStatus}
                                     style={{ width: "90%" }}
-                                //   error={ERROR_SHT_Code}
+                                    error={ErrorProStatus}
                                 >
                                     <MenuItem value="ACTIVE">ACTIVE</MenuItem>
                                     <MenuItem value="INACTIVE">INACTIVE</MenuItem>
                                 </Select>
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            container
+                            className="gridContainer2"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorStSeqSerial ? "Please input Start Seq Serial and Number only." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorStSeqCode ? "Please input Start Seq Code." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorProStatus ? "Please select Product Status." : null}
+                                </Typography>
                             </Grid>
                         </Grid>
 
@@ -237,10 +299,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={1.7}>
                                 <Checkbox
                                     style={{ padding: "0" }}
-                                //   checked={isPlantChecked}
-                                //   onChange={(e) => {
-                                //     setIsPlantChecked(e.target.checked);
-                                //   }}
+                                    checked={isDateInproflag}
+                                    onChange={(e) => {
+                                        setisDateInproflag(e.target.checked);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -250,17 +312,34 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={1.7}>
                                 <TextField
-                                    id="txtConnSheetConTime"
+                                    id="txtDateInProcess"
                                     variant="outlined"
                                     size="small"
                                     style={{
                                         width: "90%",
+                                        backgroundColor: isDateInproflag ? "inherit" : "#F5F7F8",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtDateInProcess}
+                                    onChange={handleKeyDateInProcees}
+                                    error={isDateInproflag && ErrorDateInProcess}
+                                    disabled={!isDateInproflag}
                                 />
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            container
+                            className="gridContainer2"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}></Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {isDateInproflag && ErrorDateInProcess ?
+                                        "Please input Date In Process." : null}
+                                </Typography>
                             </Grid>
                         </Grid>
 
@@ -276,16 +355,15 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={1.7}>
                                 <TextField
-                                    id="txtConnSheetConTime"
+                                    id="txtPcsPerSHTEFPC"
                                     variant="outlined"
                                     size="small"
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtPcsPerSHTEFPC}
+                                    onChange={handleKeyPcsPerShtEFPC}
+                                    error={ErrorPcsPerShtEFPC}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -295,17 +373,37 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={1.7}>
                                 <TextField
-                                    id="txtConnSheetConTime"
+                                    id="txtPcsPerSHTSMT"
                                     variant="outlined"
                                     size="small"
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtPcsPerSHTSMT}
+                                    onChange={handleKeyPcsPerShtSMT}
+                                    error={ErrorPcsPerShtSMT}
                                 />
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            container
+                            className="gridContainer2"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorPcsPerShtEFPC ?
+                                        "Please input Pcs Per Sheet (EFPC) and Number only." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorPcsPerShtSMT ?
+                                        "Please input Pcs Per Sheet (SMT) and Number only." : null}
+                                </Typography>
                             </Grid>
                         </Grid>
 
@@ -327,10 +425,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{
                                         width: "90%",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={txtSerialFile}
+                                    onChange={handleKeySerialFile}
+                                    error={ErrorSerialFile}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -343,10 +440,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     id="ddlFactory"
                                     variant="outlined"
                                     size="small"
-                                    //   value={TXT_SHT_Code}
-                                    //   onChange={handleKEY_SHT_Code}
+                                    value={DDL_Serialside}
+                                    onChange={handleDDLSerialside}
                                     style={{ width: "90%" }}
-                                //   error={ERROR_SHT_Code}
+                                    error={ErrorSerialside}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -360,9 +457,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     variant="outlined"
                                     size="small"
                                     value={DDL_SerialStruc}
-                                    onChange={(e) => setDDL_SerialStruc(e.target.value)}
+                                    onChange={handleDDLSerialStruc}
                                     style={{ width: "90%" }}
-                                //   error={ERROR_SHT_Code}
+                                    error={ErrorSerialStruc}
                                 >
                                     {SerialStruc.map((item) => (
                                         <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_code}>
@@ -370,6 +467,31 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         </MenuItem>
                                     ))}
                                 </Select>
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            container
+                            className="gridContainer2"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorSerialFile ? "Please input Serial File Format." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorSerialside ? "Please select Serial side." : null}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {ErrorSerialStruc ? "Please select Serial Structure." : null}
+                                </Typography>
                             </Grid>
                         </Grid>
 
@@ -386,10 +508,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             <Grid item xs={1.7}>
                                 <Checkbox
                                     style={{ padding: "0" }}
-                                //   checked={isPlantChecked}
-                                //   onChange={(e) => {
-                                //     setIsPlantChecked(e.target.checked);
-                                //   }}
+                                    checked={isBarcodeReqflag}
+                                    onChange={(e) => {
+                                        setisBarcodeReqflag(e.target.checked);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={2.2}>
@@ -404,12 +526,29 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     size="small"
                                     style={{
                                         width: "90%",
+                                        backgroundColor: isBarcodeReqflag ? "inherit" : "#F5F7F8",
                                     }}
-                                //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                //   onChange={handleKEY_Plant_Code}
-                                //   error={isPlantChecked && ERROR_Plant_Code}
-                                //   disabled={!isPlantChecked}
+                                    value={isBarcodeReqflag ? txtBarcodeGrade : ''}
+                                    onChange={handleKeyBarcodeGrade}
+                                    error={isBarcodeReqflag && ErrorBarcodeGrade}
+                                    disabled={!isBarcodeReqflag}
                                 />
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            container
+                            className="gridContainer2"
+                            spacing={0}
+                        >
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}></Grid>
+                            <Grid item xs={2.2}></Grid>
+                            <Grid item xs={1.7}>
+                                <Typography style={{ fontSize: "small", color: "red" }}>
+                                    {isBarcodeReqflag && ErrorBarcodeGrade ?
+                                        "Please input Barcode Grade." : null}
+                                </Typography>
                             </Grid>
                         </Grid>
 
@@ -432,10 +571,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtshtFileFormat}
+                                        onChange={handleKeyShtFileFormat}
+                                        error={ErrorShtFileFormat}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -449,9 +587,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         variant="outlined"
                                         size="small"
                                         value={DDL_ShtStructure}
-                                        onChange={(e) => setDDL_ShtStructure(e.target.value)}
+                                        onChange={handleDDLShtStructure}
                                         style={{ width: "90%" }}
-                                    //   error={ERROR_SHT_Code}
+                                        error={ErrorShtStruc}
                                     >
                                         {ShtStructure.map((item) => (
                                             <MenuItem key={item.tstm_sht_struc_code} value={item.tstm_sht_struc_code}>
@@ -461,6 +599,28 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     </Select>
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtFileFormat ?
+                                            "Please input Sheet File Format." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtStruc ?
+                                            "Please select Sheet Structure." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -477,9 +637,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         variant="outlined"
                                         size="small"
                                         value={DDL_ShtType}
-                                        onChange={(e) => setDDL_ShtType(e.target.value)}
+                                        onChange={handleDDLShtType}
                                         style={{ width: "90%" }}
-                                    //   error={ERROR_SHT_Code}
+                                        error={ErrorShtType}
                                     >
                                         {ShtType.map((item) => (
                                             <MenuItem key={item.tstm_code} value={item.tstm_code}>
@@ -501,10 +661,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtShtperLotEFPC}
+                                        onChange={handleKeyShtperLotEFPC}
+                                        error={ErrorShtPerLotEFPC}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -520,13 +679,41 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtShtperLotSMT}
+                                        onChange={handleKeyShtperLotSMT}
+                                        error={ErrorShtPerLotSMT}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtType ?
+                                            "Please select Sheet Type." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtPerLotEFPC ?
+                                            "Please input Sheet per Lot (EFPC) and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtPerLotSMT ?
+                                            "Please input Sheet per Lot (SMT) and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -545,10 +732,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtShtperscan}
+                                        onChange={handleKeyShtperscan}
+                                        error={ErrorShtPerscan}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -564,10 +750,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtShtperlaser}
+                                        onChange={handleKeyShtperlaser}
+                                        error={ErrorShtPerlaser}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -583,13 +768,41 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtShtModelCode}
+                                        onChange={handleKeyShtModelCode}
+                                        error={ErrorShtModelCode}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtPerscan ?
+                                            "Please input Sheet per scan and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtPerlaser ?
+                                            "Please input Sheet per laser and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorShtModelCode ?
+                                            "Please input Sheet Model Code." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -651,10 +864,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isPlasmaTimeFlag}
+                                        onChange={(e) => {
+                                            setisPlasmaTimeFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -669,12 +882,28 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isPlasmaTimeFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtPlasmaTime}
+                                        onChange={handleKeyShtPlasTime}
+                                        error={isPlasmaTimeFlag && ErrorShtPlasTime}
+                                        disabled={!isPlasmaTimeFlag}
                                     />
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isPlasmaTimeFlag && ErrorShtPlasTime ?
+                                            "Please input Sheet Plasma Time(Hrs.) and Number only." : null}
+                                    </Typography>
                                 </Grid>
                             </Grid>
                         </Box>
@@ -693,10 +922,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConRollShtFlag}
+                                        onChange={(e) => {
+                                            setisConRollShtFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -706,19 +935,37 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 </Grid>
                                 <Grid item xs={1.7}>
                                     <TextField
-                                        id="txtCoRollshLength"
+                                        id="txtConRollShtLength"
                                         variant="outlined"
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollShtFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConRollShtFlag ? txtConRollShtLength : ''}
+                                        onChange={handleKeyRollShtLength}
+                                        error={ErrorRollShtLength}
+                                        disabled={!isConRollShtFlag}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConRollShtFlag && ErrorRollShtLength ?
+                                            "Please input Conn Roll Sheet Length and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -732,10 +979,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConRollLeafFlag}
+                                        onChange={(e) => {
+                                            setisConRollLeafFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -745,16 +992,17 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 </Grid>
                                 <Grid item xs={1.7}>
                                     <TextField
-                                        id="txtCoRollLength"
+                                        id="txtConRollLength"
                                         variant="outlined"
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollLeafFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConRollLeafFlag ? txtConRollLength : ''}
+                                        onChange={handleKeyConRollLength}
+                                        error={isConRollLeafFlag && ErrorRollLength}
+                                        disabled={!isConRollLeafFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -769,14 +1017,39 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollLeafFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConRollLeafFlag ? txtConLeafLength : ''}
+                                        onChange={handleKeyConLeafLength}
+                                        error={isConRollLeafFlag && ErrorConLeafLength}
+                                        disabled={!isConRollLeafFlag}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConRollLeafFlag && ErrorRollLength ?
+                                            "Please input Conn Roll Length and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConRollLeafFlag && ErrorConLeafLength ?
+                                            "Please input Conn Leaf Length and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -790,10 +1063,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConRollProFlag}
+                                        onChange={(e) => {
+                                            setisConRollProFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -808,11 +1081,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollProFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConRollProFlag ? txtConRollProSt : ''}
+                                        onChange={handleKeyConRollProSt}
+                                        error={isConRollProFlag && ErrorRollProSt}
+                                        disabled={!isConRollProFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -827,14 +1101,39 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollProFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConRollProFlag ? txtConRollProEnd : ''}
+                                        onChange={handleKeyConRollProEnd}
+                                        error={isConRollProFlag && ErrorRollProEnd}
+                                        disabled={!isConRollProFlag}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConRollProFlag && ErrorRollProSt ?
+                                            "Please input Conn Roll Product Start and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConRollProFlag && ErrorRollProEnd ?
+                                            "Please input Conn Roll Product End and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -848,10 +1147,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConRollSerialFlag}
+                                        onChange={(e) => {
+                                            setisConRollSerialFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -866,14 +1165,32 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConRollSerialFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConRollSerialFlag ? txtConRollLeafScan : ''}
+                                        onChange={handleKeyRollLeafScan}
+                                        error={isConRollSerialFlag && ErrorRollLeafScan}
+                                        disabled={!isConRollSerialFlag}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConRollSerialFlag && ErrorRollLeafScan ?
+                                            "Please input Conn Roll Leaf Scan and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -890,9 +1207,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         variant="outlined"
                                         size="small"
                                         value={DDL_RollReqLotSht}
-                                        onChange={(e) => setDDL_RollReqLotSht(e.target.value)}
+                                        onChange={handleDDLRollReqLotSht}
                                         style={{ width: "90%" }}
-                                    //   error={ERROR_SHT_Code}
+                                        error={ErrorRollReqLotSht}
                                     >
                                         <MenuItem value="Yes">Yes</MenuItem>
                                         <MenuItem value="No">No</MenuItem>
@@ -911,10 +1228,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtRollLotShtSt}
+                                        onChange={handleKeyRollLotShtSt}
+                                        error={ErrorRollLotShtSt}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -930,13 +1246,41 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtRollLotShtEnd}
+                                        onChange={handleKeyRollLotShtEnd}
+                                        error={ErrorRollLotShtEnd}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorRollReqLotSht ?
+                                            "Please select Conn Roll Req Lot Sheet." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorRollLotShtSt ?
+                                            "Please input Conn Roll Lot Sheet Start and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorRollLotShtEnd ?
+                                            "Please input Conn Roll Lot Sheet End and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -953,9 +1297,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         variant="outlined"
                                         size="small"
                                         value={DDL_RollReqProSht}
-                                        onChange={(e) => setDDL_RollReqProSht(e.target.value)}
+                                        onChange={handleDDLRollReqProSht}
                                         style={{ width: "90%" }}
-                                    //   error={ERROR_SHT_Code}
+                                        error={ErrorRollReqProSht}
                                     >
                                         <MenuItem value="Yes">Yes</MenuItem>
                                         <MenuItem value="No">No</MenuItem>
@@ -974,10 +1318,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtRollProShtSt}
+                                        onChange={handleKeyRollProShtSt}
+                                        error={ErrorRollProShtSt}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -993,13 +1336,41 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtRollProShtEnd}
+                                        onChange={handleKeyRollProShtEnd}
+                                        error={ErrorRollProShtEnd}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorRollReqProSht ?
+                                            "Please select Conn Roll Req Product Sheet." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorRollProShtSt ?
+                                            "Please input Conn Roll Product Sheet Start and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorRollProShtEnd ?
+                                            "Please input Conn Roll Product Sheet End and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1018,11 +1389,23 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtRollProFix}
+                                        onChange={handleKeyRollProFix}
+                                        error={ErrorRollProFix}
                                     />
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorRollProFix ?
+                                            "Please input Conn Roll Product Fix." : null}
+                                    </Typography>
                                 </Grid>
                             </Grid>
                         </Box>
@@ -1041,10 +1424,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConShtTimeFlag}
+                                        onChange={(e) => {
+                                            setisConShtTimeFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1059,11 +1442,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConShtTimeFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConShtTimeFlag ? txtConShtTime : ''}
+                                        onChange={handleKeyConShtTime}
+                                        error={isConShtTimeFlag && ErrorConShtConTime}
+                                        disabled={!isConShtTimeFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1081,6 +1465,25 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConShtTimeFlag && ErrorConShtConTime ?
+                                            "Please input Conn Sheet Control Time (Hrs.) and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1094,10 +1497,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConShtPlasTimeFlag}
+                                        onChange={(e) => {
+                                            setisConShtPlasTimeFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1112,11 +1515,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isConShtPlasTimeFlag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isConShtPlasTimeFlag ? txtConShtPlasTime : ''}
+                                        onChange={handleKeyConShtPlasTime}
+                                        error={isConShtPlasTimeFlag && ErrorConShtPlasTime}
+                                        disabled={!isConShtPlasTimeFlag}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1134,6 +1538,25 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isConShtPlasTimeFlag && ErrorConShtPlasTime ?
+                                            "Please input Conn Sheet Plasma Time (Hrs.) and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1168,6 +1591,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     />
                                 </Grid>
                             </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1181,10 +1605,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isProcessConTimeFlag}
+                                        onChange={(e) => {
+                                            setisProcessConTimeFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1198,9 +1622,13 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         variant="outlined"
                                         size="small"
                                         value={DDL_ProcessConTime}
-                                        onChange={(e) => setDDL_ProcessConTime(e.target.value)}
-                                        style={{ width: "90%" }}
-                                    //   error={ERROR_SHT_Code}
+                                        onChange={handleDDLProcessConTime}
+                                        style={{
+                                            width: "90%",
+                                            backgroundColor: isProcessConTimeFlag ? "inherit" : "#F5F7F8",
+                                        }}
+                                        disabled={!isProcessConTimeFlag}
+                                        error={ErrorProcessConTime}
                                     >
                                         {ProcessConTime.map((item) => (
                                             <MenuItem key={item.tpct_code} value={item.tpct_code}>
@@ -1208,6 +1636,21 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                             </MenuItem>
                                         ))}
                                     </Select>
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isProcessConTimeFlag && ErrorProcessConTime ?
+                                            "Please select Process Control Time." : null}
+                                    </Typography>
                                 </Grid>
                             </Grid>
                         </Box>
@@ -1231,10 +1674,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtFinalpcstray}
+                                        onChange={handleKeyFinalpcstray}
+                                        error={ErrorFinalpcstray}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1250,13 +1692,34 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={txtFinalpcsscan}
+                                        onChange={handleKeyFinalpcsscan}
+                                        error={ErrorFinalpcsscan}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorFinalpcstray ?
+                                            "Please input Final pcs per tray and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorFinalpcsscan ?
+                                            "Please input Final pcs per scan and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1301,15 +1764,34 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         variant="outlined"
                                         size="small"
                                         value={DDL_FinalPDStimeELT}
-                                        onChange={(e) => setDDL_FinalPDStimeELT(e.target.value)}
+                                        onChange={handleDDLFinalPDStimeELT}
                                         style={{ width: "90%" }}
-                                    //   error={ERROR_SHT_Code}
+                                        error={ErrorFinalPDStimeELT}
                                     >
                                         <MenuItem value="Yes">Yes</MenuItem>
                                         <MenuItem value="No">No</MenuItem>
                                     </Select>
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorFinalPDStimeELT ?
+                                            "Please select Final PDS time skip ELT." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1326,9 +1808,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         variant="outlined"
                                         size="small"
                                         value={DDL_FinalPDSHidetime}
-                                        onChange={(e) => setDDL_FinalPDSHidetime(e.target.value)}
+                                        onChange={handleDDLFinalPDSHidetime}
                                         style={{ width: "90%" }}
-                                    //   error={ERROR_SHT_Code}
+                                        error={ErrorFinalPDSHidetime}
                                     >
                                         <MenuItem value="Yes">Yes</MenuItem>
                                         <MenuItem value="No">No</MenuItem>
@@ -1343,10 +1825,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalPDStimeflag}
+                                        onChange={(e) => {
+                                            setisFinalPDStimeflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
 
@@ -1362,14 +1844,39 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: isFinalPDStimeflag ? "inherit" : "#F5F7F8",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                        value={isFinalPDStimeflag ? txtFinalPDStime : ''}
+                                        onChange={handleKeyFinalPDStime}
+                                        error={isFinalPDStimeflag && ErrorFinalPDStime}
+                                        disabled={!isFinalPDStimeflag}
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorFinalPDSHidetime ?
+                                            "Please select Final PDS time Hide time." : null}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}></Grid>
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {isFinalPDStimeflag && ErrorFinalPDStime ?
+                                            "Please input Final PDS time (Hrs.) and Number only." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1388,10 +1895,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                    //   value={isPlantChecked ? TXT_Plant_Code : ''}
-                                    //   onChange={handleKEY_Plant_Code}
-                                    //   error={isPlantChecked && ERROR_Plant_Code}
-                                    //   disabled={!isPlantChecked}
+                                      value={txtFinalPDStimeby}
+                                      onChange={handleKeyFinalPDStimeby}
+                                      error={ErrorFinalPDStimeby}
                                     />
                                 </Grid>
 
@@ -1425,6 +1931,21 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     />
                                 </Grid>
                             </Grid>
+
+                            <Grid
+                                container
+                                className="gridContainer2"
+                                spacing={0}
+                            >
+                                <Grid item xs={2.2}></Grid>
+                                <Grid item xs={1.7}>
+                                    <Typography style={{ fontSize: "small", color: "red" }}>
+                                        {ErrorFinalPDStimeby ?
+                                            "Please input Final PDS time by." : null}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
                             <Grid
                                 container
                                 className="gridContainer2"
@@ -1643,7 +2164,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         width: "80%",
                                         marginTop: "7%",
                                     }}
-                                //   onClick={handleSaveClick}
+                                    onClick={handleSaveClick}
                                 >
                                     Save
                                 </Button>
