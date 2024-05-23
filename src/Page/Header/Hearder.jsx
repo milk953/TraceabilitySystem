@@ -27,9 +27,11 @@ function Hearder() {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar
                     position="fixed"
-                    style={{
-                        background: 'radial-gradient(circle, #00d2ff, #764ba2, #667eea)',
-                    }}
+                    
+                         style={{ background: '#595959'
+                            // 'radial-gradient(circle,#eb2f96 ,#88AB8E)'
+                        }}
+                    
                 >
                     <Toolbar>
                         <IconButton

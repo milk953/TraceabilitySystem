@@ -174,46 +174,18 @@ function sidebar({ isOpen, onClose }) {
             )}
           </>
         )}
-        {/*Menu5 */}
+        {/*logout */} 
+         <div style={{ position: 'fixed', bottom: 1,}}>
         <ListItem className="ListItem" onClick={toggleSubMenu5}
         >
+        
           <ListItemIcon>
             <LogoutIcon style={{ color: 'gray' }} />
           </ListItemIcon>
           <ListItemText primary={menu[4]} onClick={Logout} />
         </ListItem>
-        {subMenuOpen5 && (
-          <>
-            {menuID.map(
-              (item, index) =>
-                menuID[index] === menuMain[4] && (
-                  <ListItem
-                    className="SubMenuItem"
-                    onClick={() => {
-                      onClose();
-                      // handleButtonClick(item.menu_name);
-                    }}
-                    key={index}
-                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
-                    <ListItemText primary={menu[index]} />
-                  </ListItem>
-                )
-            )}
-          </>
-        )}
-        <ListItem className="ListItem" style={{ marginTop: "170%" }}>
-          <ListItemText
-            primary={
-              <span
-                style={{
-                  fontSize: "12px",
-                }}
-              >
-                {/* Login Date: {moment(currentDate).format(`DD/MM/YYYY HH:mm:ss`)}{" "} */}
-              </span>
-            }
-          />
-        </ListItem>
+        </div>
+        
       </List>
     </Drawer>
   );
