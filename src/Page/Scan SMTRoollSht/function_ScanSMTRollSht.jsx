@@ -81,8 +81,6 @@ function Fn_ScanSMTRollSht() {
   // --------------------------------------
   useEffect(() => {
     getProduct();
-   
-    // testData();
   }, []);
   const handleLotxt_Lotno = () => {
     setlbllog("")
@@ -126,6 +124,9 @@ function Fn_ScanSMTRollSht() {
               console.log("Catch");
               // console.error("Error during login:", error);
               const intProduct = strPrdName.indexOf("-", 12);
+              //มีทำต่ออีกนิดหน่อย ยังไม่ได้เขียน May
+            
+            
             }
             axios
               .post("/api/GetRollLeafTotalByLot", {
@@ -312,6 +313,7 @@ function Fn_ScanSMTRollSht() {
   // }
 
   const HandleSL_Product = (PD) => {
+    setsl_Product(PD)
     console.log(PD, "Pd");
     if (txt_lotNo != "") {
       setlbllog("");

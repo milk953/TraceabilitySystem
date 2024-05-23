@@ -52,10 +52,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
         ErrorDateInProcess, ErrorPcsPerShtEFPC, ErrorPcsPerShtSMT, ErrorSerialFile, ErrorSerialside, ErrorSerialStruc, ErrorBarcodeGrade, ErrorShtFileFormat, ErrorShtStruc, ErrorShtType, ErrorShtPerLotEFPC,
         ErrorShtPerLotSMT, ErrorShtPerscan, ErrorShtPerlaser, ErrorShtModelCode, ErrorShtPlasTime, ErrorRollShtLength, ErrorRollLength, ErrorConLeafLength, ErrorRollProSt, ErrorRollProEnd, ErrorRollLeafScan,
         ErrorRollReqLotSht, ErrorRollLotShtSt, ErrorRollLotShtEnd, ErrorRollReqProSht, ErrorRollProShtSt, ErrorRollProShtEnd, ErrorRollProFix, ErrorConShtConTime, ErrorConShtPlasTime, ErrorProcessConTime,
-        ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick
-    } = ProductMasterPopup();
-
-    console.log("Serial", SerialStruc)
+        ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick, Clear
+    } = ProductMasterPopup(onClose, item, searchFunction);
+    console.log("Serial", item)
 
     if (!isOpen) {
         return null;
@@ -255,8 +254,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{ width: "90%" }}
                                     error={ErrorProStatus}
                                 >
-                                    <MenuItem value="ACTIVE">ACTIVE</MenuItem>
-                                    <MenuItem value="INACTIVE">INACTIVE</MenuItem>
+                                    <MenuItem value="Active">ACTIVE</MenuItem>
+                                    <MenuItem value="Inactive">INACTIVE</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>
@@ -444,7 +443,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     onChange={handleDDLSerialside}
                                     style={{ width: "90%" }}
                                     error={ErrorSerialside}
-                                />
+                                    displayEmpty
+                                >
+                                    <MenuItem value="">
+                                        -Select-
+                                    </MenuItem>
+                                </Select>
                             </Grid>
                             <Grid item xs={2.2}>
                                 <Typography style={{ marginLeft: "8%" }}>
@@ -460,9 +464,13 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     onChange={handleDDLSerialStruc}
                                     style={{ width: "90%" }}
                                     error={ErrorSerialStruc}
+                                    displayEmpty
                                 >
+                                    <MenuItem value="">
+                                        -Select-
+                                    </MenuItem>
                                     {SerialStruc.map((item) => (
-                                        <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_code}>
+                                        <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_name}>
                                             {item.tssm_sn_struc_name}
                                         </MenuItem>
                                     ))}
@@ -590,9 +598,13 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         onChange={handleDDLShtStructure}
                                         style={{ width: "90%" }}
                                         error={ErrorShtStruc}
+                                        displayEmpty
                                     >
+                                        <MenuItem value="">
+                                            -Select-
+                                        </MenuItem>
                                         {ShtStructure.map((item) => (
-                                            <MenuItem key={item.tstm_sht_struc_code} value={item.tstm_sht_struc_code}>
+                                            <MenuItem key={item.tstm_sht_struc_code} value={item.tstm_sht_struc_name}>
                                                 {item.tstm_sht_struc_name}
                                             </MenuItem>
                                         ))}
@@ -640,7 +652,11 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         onChange={handleDDLShtType}
                                         style={{ width: "90%" }}
                                         error={ErrorShtType}
+                                        displayEmpty
                                     >
+                                        <MenuItem value="">
+                                            -Select-
+                                        </MenuItem>
                                         {ShtType.map((item) => (
                                             <MenuItem key={item.tstm_code} value={item.tstm_code}>
                                                 {item.tstm_name}
@@ -1211,8 +1227,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{ width: "90%" }}
                                         error={ErrorRollReqLotSht}
                                     >
-                                        <MenuItem value="Yes">Yes</MenuItem>
-                                        <MenuItem value="No">No</MenuItem>
+                                        <MenuItem value="Y">Yes</MenuItem>
+                                        <MenuItem value="N">No</MenuItem>
                                     </Select>
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1230,7 +1246,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         }}
                                         value={txtRollLotShtSt}
                                         onChange={handleKeyRollLotShtSt}
-                                        error={ErrorRollLotShtSt}
+                                        error={DDL_RollReqLotSht === "Y" && ErrorRollLotShtSt}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1248,7 +1264,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         }}
                                         value={txtRollLotShtEnd}
                                         onChange={handleKeyRollLotShtEnd}
-                                        error={ErrorRollLotShtEnd}
+                                        error={DDL_RollReqLotSht === "Y" && ErrorRollLotShtEnd}
                                     />
                                 </Grid>
                             </Grid>
@@ -1268,14 +1284,14 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={2.2}></Grid>
                                 <Grid item xs={1.7}>
                                     <Typography style={{ fontSize: "small", color: "red" }}>
-                                        {ErrorRollLotShtSt ?
+                                        {DDL_RollReqLotSht === "Y" && ErrorRollLotShtSt ?
                                             "Please input Conn Roll Lot Sheet Start and Number only." : null}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={2.2}></Grid>
                                 <Grid item xs={1.7}>
                                     <Typography style={{ fontSize: "small", color: "red" }}>
-                                        {ErrorRollLotShtEnd ?
+                                        {DDL_RollReqLotSht === "Y" && ErrorRollLotShtEnd ?
                                             "Please input Conn Roll Lot Sheet End and Number only." : null}
                                     </Typography>
                                 </Grid>
@@ -1301,8 +1317,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{ width: "90%" }}
                                         error={ErrorRollReqProSht}
                                     >
-                                        <MenuItem value="Yes">Yes</MenuItem>
-                                        <MenuItem value="No">No</MenuItem>
+                                        <MenuItem value="Y">Yes</MenuItem>
+                                        <MenuItem value="N">No</MenuItem>
                                     </Select>
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1320,7 +1336,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         }}
                                         value={txtRollProShtSt}
                                         onChange={handleKeyRollProShtSt}
-                                        error={ErrorRollProShtSt}
+                                        error={DDL_RollReqProSht === "Y" && ErrorRollProShtSt}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1338,7 +1354,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         }}
                                         value={txtRollProShtEnd}
                                         onChange={handleKeyRollProShtEnd}
-                                        error={ErrorRollProShtEnd}
+                                        error={DDL_RollReqProSht === "Y" && ErrorRollProShtEnd}
                                     />
                                 </Grid>
                             </Grid>
@@ -1358,14 +1374,14 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={2.2}></Grid>
                                 <Grid item xs={1.7}>
                                     <Typography style={{ fontSize: "small", color: "red" }}>
-                                        {ErrorRollProShtSt ?
+                                        {DDL_RollReqProSht === "Y" && ErrorRollProShtSt ?
                                             "Please input Conn Roll Product Sheet Start and Number only." : null}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={2.2}></Grid>
                                 <Grid item xs={1.7}>
                                     <Typography style={{ fontSize: "small", color: "red" }}>
-                                        {ErrorRollProShtEnd ?
+                                        {DDL_RollReqProSht === "Y" && ErrorRollProShtEnd ?
                                             "Please input Conn Roll Product Sheet End and Number only." : null}
                                     </Typography>
                                 </Grid>
@@ -1629,9 +1645,13 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         }}
                                         disabled={!isProcessConTimeFlag}
                                         error={ErrorProcessConTime}
+                                        displayEmpty
                                     >
+                                        <MenuItem value="">
+                                            -Select-
+                                        </MenuItem>
                                         {ProcessConTime.map((item) => (
-                                            <MenuItem key={item.tpct_code} value={item.tpct_code}>
+                                            <MenuItem key={item.tpct_code} value={item.tpct_name}>
                                                 {item.tpct_name}
                                             </MenuItem>
                                         ))}
@@ -1768,8 +1788,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{ width: "90%" }}
                                         error={ErrorFinalPDStimeELT}
                                     >
-                                        <MenuItem value="Yes">Yes</MenuItem>
-                                        <MenuItem value="No">No</MenuItem>
+                                        <MenuItem value="Y">Yes</MenuItem>
+                                        <MenuItem value="N">No</MenuItem>
                                     </Select>
                                 </Grid>
                             </Grid>
@@ -1812,8 +1832,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{ width: "90%" }}
                                         error={ErrorFinalPDSHidetime}
                                     >
-                                        <MenuItem value="Yes">Yes</MenuItem>
-                                        <MenuItem value="No">No</MenuItem>
+                                        <MenuItem value="Y">Yes</MenuItem>
+                                        <MenuItem value="N">No</MenuItem>
                                     </Select>
                                 </Grid>
 
@@ -1895,9 +1915,9 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         style={{
                                             width: "90%",
                                         }}
-                                      value={txtFinalPDStimeby}
-                                      onChange={handleKeyFinalPDStimeby}
-                                      error={ErrorFinalPDStimeby}
+                                        value={txtFinalPDStimeby}
+                                        onChange={handleKeyFinalPDStimeby}
+                                        error={ErrorFinalPDStimeby}
                                     />
                                 </Grid>
 
@@ -2178,7 +2198,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     }}
                                     color="error"
                                     onClick={() => {
-                                        // Clear();
+                                        Clear();
                                         onClose();
                                     }}
                                 >
