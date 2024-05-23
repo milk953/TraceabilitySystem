@@ -1,24 +1,27 @@
 /* style={{margin: 'auto',width:'400px' }} */
 .ScanSMT{
     margin: auto;
-    width: 500px !important;
-
+    width: 450px !important;
+   
 }
 
 .ScanSMT th{
     /* margin: auto;
-    
     width: 400px !important; */
-    padding: 0px !important;
+    padding: 7px !important;
     background-color: #D04848 !important ;
     border-radius: 5px  5px 0 0!important;
     color: #fff;
+    
 
+}
+.aaaa{
+    color: green !important;
 }
 
 .ScanSMT td{
 
-    padding: 5px 5px 5px 5px!important;
+    padding: 4px 4px 4px 4px!important;
     /* margin: 10px !important; */
 
 
@@ -26,4 +29,40 @@
 
 .BtLotno{
     background-color: #D04848 !important ;
+}
+
+.CSS-GvSerial{
+    margin: auto;
+    width: 400px !important;
+    
+  
+
+}
+
+.CSS-GvSerial th{
+    background-color: #12422e !important ;
+    color: #fff;
+    border: 1px solid rgb(255, 255, 255)
+
+}
+
+.CSS-GvScanResult{
+  
+    width: 900px !important;
+
+    
+
+}
+
+.CSS-GvScanResult th{
+    /* margin: auto;
+    width: 400px !important; */
+    padding: 7px !important;
+    background-color: #2b4cc1 !important ;
+    /* border-radius: 5px  5px 0 0!important; */
+    color: #fff;
+    border: 1px solid rgb(255, 255, 255);
+    text-align: center;
+    
+
 }

@@ -45,7 +45,8 @@ function ProductMasterPage() {
 
   
     const Clear = () => {
-      
+      setDDLFactory("");
+      settxtProduct("");
       setCheckHead("hidden");
       setCheckEmpty("hidden");
       setCheckData("visible");
@@ -57,7 +58,6 @@ function ProductMasterPage() {
       const STATUS = "EDIT";
       localStorage.setItem("STATUS", STATUS);
       setSelectedRowData(item);
-    //   setTEXT_SHT_Code(item.tstm_sht_struc_code);
       PopupOpen();
     }
   

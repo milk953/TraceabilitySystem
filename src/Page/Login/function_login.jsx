@@ -18,7 +18,6 @@ function LoginTest() {
     setShowPassword(!showPassword);
   };
   const [ipAddress, setIpAddress] = useState("");
- 
 
   localStorage.setItem("ip", ipAddress);
 
@@ -41,8 +40,8 @@ function LoginTest() {
     window.location.href = "/SheetMaster";
   };
   const handleLogin = async () => {
-    axios
-      .post("/api/login", {
+    try {
+      const res = await axios.post("/api/login", {
         User: loginId,
         Password: password,
       })
@@ -70,8 +69,41 @@ function LoginTest() {
           });
           return;
         }
+=======
+>>>>>>> 65109acfe627410dc56bd1622ca8f86a29c53ae3
       });
+
+      if (res.status === 200) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("Username", res.data[0][3]);
+        localStorage.setItem("Lastname", res.data[0][4]);
+        localStorage.setItem("UserLogin", res.data[0][0]);
+        localStorage.setItem("IDCode", res.data[0][2]);
+
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          PageSheetMaster();
+        }, 1300);
+      } else if (res.status === 401) {
+        Swal.fire({
+          title: "Username or Password Wrong",
+          text: "Please Try Again",
+          icon: "error",
+          confirmButtonText: "Close",
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+      Swal.fire({
+        title: "An error occurred",
+        text: "Please try again later",
+        icon: "error",
+        confirmButtonText: "Close",
+      });
+    }
   };
+
   return {
     loginId,
     password,

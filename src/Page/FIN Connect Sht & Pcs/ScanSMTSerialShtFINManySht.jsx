@@ -24,10 +24,10 @@ import "./ScanSMTSerialShtFINManySht.css";
 import Hearder from "../Header/Hearder";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
 import { Input } from "antd";
-import axios from "axios";
 function ScanSMTSerialShtFINManySht() {
   const {
     lot,
+    setLot,
     product,
     selectproduct,
     setselectproduct,
@@ -46,6 +46,14 @@ function ScanSMTSerialShtFINManySht() {
     gvScanResult,
     gvScanResultState,
     lblresultState,
+    fctextFieldlot,
+    ibtBack,
+    fctextFieldMachine,
+    fctextFileRollLeaf,
+    fcddlProduct,
+    fcgvBackSide_txtSideback_0,
+    fcgvSerial,
+    txtRollLeaf
   } = fn_ScanSMTSerialShtFINManySht();
   const handleProductChange = (event, value) => {
     setselectproduct(value);
@@ -63,13 +71,16 @@ function ScanSMTSerialShtFINManySht() {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell sx={{width:'400px'}}>Lot No.:</TableCell>
+              <TableCell sx={{ width: "400px" }}>Lot No.:</TableCell>
               <TableCell>
                 <TextField
                   size="small"
                   id="txtField"
-                  defaultValue={lot}
-                  // onChange={(e) => txtLottxtChange(e.target.value)}
+                  value={lot}
+                  inputRef={fctextFieldlot}
+                  onChange={(e) => {
+                    txtLottxtChange(e.target.value);
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       txtLottxtChange(e.target.value);
@@ -78,7 +89,7 @@ function ScanSMTSerialShtFINManySht() {
                 ></TextField>
               </TableCell>
               <TableCell>
-                <Button>
+                <Button onClick={ibtBack}>
                   <BackspaceIcon />
                 </Button>
               </TableCell>
@@ -93,9 +104,9 @@ function ScanSMTSerialShtFINManySht() {
                     options={product}
                     value={selectproduct}
                     onChange={handleProductChange}
-                    getOptionLabel={(option) => option[0]}
+                    getOptionLabel={(option) => option}
                     renderInput={(params) => (
-                      <TextField {...params} size="small" />
+                      <TextField {...params} size="small"inputRef={fcddlProduct} />
                     )}
                   />
                 </FormControl>
@@ -131,7 +142,7 @@ function ScanSMTSerialShtFINManySht() {
                 <TableRow>
                   <TableCell>Roll Leaf No.:</TableCell>
                   <TableCell>
-                    <TextField size="small" id="txtField"></TextField>
+                    <TextField size="small" id="txtField" inputRef={fctextFileRollLeaf} value={txtRollLeaf}></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -147,7 +158,7 @@ function ScanSMTSerialShtFINManySht() {
                 <TableRow>
                   <TableCell>Machine No.:</TableCell>
                   <TableCell>
-                    <TextField size="small" id="txtField"></TextField>
+                    <TextField size="small" id="txtField" inputRef={fctextFieldMachine}></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>

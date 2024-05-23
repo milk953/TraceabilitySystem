@@ -1,6 +1,7 @@
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 import { LineAxisOutlined } from "@mui/icons-material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 const fn_ScanSMTSerialShtFINManySht = () => {
   //region useState
@@ -99,13 +100,26 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [lblTotalSht, setLblTotalSht] = useState("");
   const [lblTotalPcs, setLblTotalPcs] = useState("");
   const [dtProductSerial, setDtProductSerial] = useState([]);
-
+  const [txtRollLeaf, settxtRollLeaf] = useState("");
   const [lblresult, setLblresult] = useState("SUCCESS");
   const [lblresultState, setLblresultState] = useState(false);
   const [gvScanResult, setGvScanResult] = useState([]);
   const [gvScanResultState, setGvScanResultState] = useState(false);
+
+  const fctextFieldlot = useRef(null);
+  const fctextFieldMachine = useRef(null);
+  const fctextFileRollLeaf = useRef(null);
+  const fcddlProduct = useRef(null);
+  const fcgvBackSide_txtSideback_0 = useRef(null);
+  const fcgvSerial = useRef(null);
+
   const ibtBack = () => {
     setLot("");
+    setLotState(true);
+    setPanalSerialOpen(false);
+    setselectproduct(product[0]);
+    Setmode("LOT");
+    fctextFieldlot.current.focus();
   };
 
   const Setmode = (strType) => {
@@ -116,9 +130,9 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setLotState(true);
         // txtLot.CSs
         setLblErrorState(false);
-        //pnlSerial.Visible = False
+        setPanalSerialOpen(false);
         localStorage.setItem("hfMode", "LOT");
-      // focus(txtlot)
+        fctextFieldlot.current.focus();
       case "LOT_ERROR":
         setLot("");
         setLotState(true);
@@ -128,12 +142,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         //pnlSerial.Visible = False
 
         localStorage.setItem("hfMode", "LOT");
-      // fnSetFocus("txtLot")
+        fctextFieldlot.current.focus();
       case "SERIAL":
         setLotState(false);
         //txtLot.CSs
         setLblErrorState(false);
-        //pnlSerial.Visible = true
+        // setPanalSerialOpen(true);
         localStorage.setItem("hfMode", "SERIAL");
       // getInitialSerial()
       case "SERIAL_ERROR":
@@ -144,7 +158,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setLotState(false);
         //txtLot.CSs
         setLblErrorState(false);
-      //pnlSerial.Visible = False
+        setPanalSerialOpen(false);
       // getInitialSerial()
       //fnSetFocus("gvSerial")
       case "SERIAL_NG":
@@ -153,7 +167,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setLblErrorState(false);
     }
   };
-  //test
+
   const getIntialSheet = () => {
     const newData = [];
     const hfShtScanValue = parseInt(hfShtScan);
@@ -193,10 +207,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const Getproduct = () => {
     try {
       axios.get("/api/GetProductData").then((res) => {
-        setProduct(res.data.Product);
+        setProduct(res.data.Product.flat());
       });
     } catch (error) {
-      console.log(error, "get data error");
+      console.error(error, "get data error");
     }
   };
   useEffect(() => {
@@ -247,46 +261,122 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   }, []);
 
   //txtLot
-  const [strPrdname, setStrPrdname] = useState("");
-  const txtLottxtChange = (lot) => {
-    let strLotData = "";
-    let strLot = "";
+  const txtLottxtChange = async (e) => {
+    setLot(e);
 
-    let dtLotData = [];
-    strLotData = lot.trim().toLocaleUpperCase().split(";");
-    // strLotData = "130272927";
-    if (strLotData.length - 1 >= 2) {
+    var strLotData = "";
+    var strLot = "";
+    var strPrdname = "";
+
+    strLotData = e.trim().toLocaleUpperCase().split(";");
+    if (strLotData.length >= 2) {
       strLot = strLotData[0].trim();
-      console.log(strLot, "strLot");
-      axios
-        .post("/api/GetProductDataByLot", {
+      try {
+        const response = await axios.post("/api/GetProductDataByLot", {
           strLot: strLot,
-        })
-        .then((res) => {
-          if (res.data.PRD_NAME.length > 0) {
-            dtLotData.push(res.data);
-            setStrPrdname(res.data.PRD_NAME);
-            sethfRollNo(res.data.ROLL_NO);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
         });
+        if (response.data.PRD_NAME.length > 0) {
+          strPrdname = response.data.PRD_NAME;
+          sethfRollNo(response.data.ROLL_NO);
+        }
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
 
-      if (strPrdname != "") {
+      if (strPrdname !== "") {
+        setLblError("");
         setLblErrorState(false);
         setLot(strLot);
         setLotRef(strLot);
-        getCountDataBylot(strLot);
+        // getCountDataBylot(strLot);
         try {
-          console.log(strPrdname, "strPrdname");
           setselectproduct(strPrdname);
-        } catch (error) {}
+          // getProductSerialMaster();
+          // getInitialSheet();
+          if (hfCheckRollSht === "Y") {
+            setPnlMachineOpen(true);
+            fctextFieldMachine.current.focus();
+          } else {
+            setPnlMachineOpen(false);
+            // focus("gvBackSide_txtSideback_0");
+          }
+        } catch (error) {
+          var intProduct = strPrdname.toLowerCase().indexOf("-", 12) + 1;
+          if (intProduct > 0) {
+            var part1 = strPrdname.substring(0, intProduct);
+            var part2 = strPrdname
+              .substring(intProduct + 1, intProduct + 1 + 10)
+              .trim();
+            strPrdname = part1 + part2;
+            try {
+              setselectproduct(strPrdname);
+              // getProductSerialMaster();
+              // getInitialSheet();
+              if (hfCheckRollSht === "Y") {
+                setPnlRollLeafOpen(true);
+                settxtRollLeaf("");
+                fctextFileRollLeaf.current.focus();
+              } else {
+                Setmode("SERIAL");
+                // settxtMachine("");
+                if (hfReqMachine === "y") {
+                  setPnlMachineOpen(true);
+                  fctextFieldMachine.current.focus();
+                } else {
+                  setPnlMachineOpen(false);
+                  // focus("gvBackSide_txtSideback_0");
+                }
+              }
+            } catch (error) {
+              setLblError("Product" + strPrdname + "not found.");
+              setLblErrorState(true);
+              fcddlProduct.current.focus();
+            }
+          } else {
+            setLblError("Product" + strPrdname + "not found.");
+            setLblErrorState(true);
+            fcddlProduct.current.focus();
+          }
+        }
+      } else {
+        setselectproduct(product[0]);
+        // setLot("");
+        setGvScanResult([]);
+
+        setLblError("Invalid Lot No.");
+        sethfMode("LOT");
+        fctextFieldlot.current.focus();
       }
     } else {
-      console.log("less than 2");
+      setselectproduct(product[0]);
+      // setLot("");
+      setGvScanResult([]);
+
+      setLblError("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด");
+      sethfMode("LOT");
+      fctextFieldlot.current.focus();
     }
   };
+
+  const ddlProductChange = async (e) => {
+    // getProductSerialMaster();
+    if (lot.trim.toLocaleUpperCase!=""){
+      setLblError("");
+      setLblErrorState(false);
+      try {
+        const response = await axios.post("/api/GetProductDataByLot", {
+          // strLot: strLot,
+        });
+        if (response.data.PRD_NAME.length > 0) {
+          strPrdname = response.data.PRD_NAME;
+          sethfRollNo(response.data.ROLL_NO);
+        }
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    }
+  };
+
   const getCountDataBylot = (lot) => {
     setLblTotalSht("0");
     setLblTotalPcs("0");
@@ -307,7 +397,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   async function getProductSerialMaster() {
@@ -486,7 +576,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     gvScanResult,
     setGvScanResult,
     gvScanResultState,
-    lblresultState
+    lblresultState,
+    fctextFieldlot,
+    ibtBack,
+    fctextFieldMachine,
+    fctextFileRollLeaf,
+    fcddlProduct,
+    fcgvBackSide_txtSideback_0,
+    fcgvSerial,
+    txtRollLeaf,
   };
 };
 

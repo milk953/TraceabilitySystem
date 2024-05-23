@@ -54,8 +54,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
         ErrorRollReqLotSht, ErrorRollLotShtSt, ErrorRollLotShtEnd, ErrorRollReqProSht, ErrorRollProShtSt, ErrorRollProShtEnd, ErrorRollProFix, ErrorConShtConTime, ErrorConShtPlasTime, ErrorProcessConTime,
         ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick, Clear
     } = ProductMasterPopup(onClose, item, searchFunction);
-
-    console.log("Serial", SerialStruc)
+    console.log("Serial", item)
 
     if (!isOpen) {
         return null;
@@ -447,7 +446,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     displayEmpty
                                 >
                                     <MenuItem value="">
-                                        <em>Select...</em>
+                                        -Select-
                                     </MenuItem>
                                 </Select>
                             </Grid>
@@ -468,10 +467,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     displayEmpty
                                 >
                                     <MenuItem value="">
-                                        <em>Select...</em>
+                                        -Select-
                                     </MenuItem>
                                     {SerialStruc.map((item) => (
-                                        <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_code}>
+                                        <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_name}>
                                             {item.tssm_sn_struc_name}
                                         </MenuItem>
                                     ))}
@@ -599,9 +598,13 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         onChange={handleDDLShtStructure}
                                         style={{ width: "90%" }}
                                         error={ErrorShtStruc}
+                                        displayEmpty
                                     >
+                                        <MenuItem value="">
+                                            -Select-
+                                        </MenuItem>
                                         {ShtStructure.map((item) => (
-                                            <MenuItem key={item.tstm_sht_struc_code} value={item.tstm_sht_struc_code}>
+                                            <MenuItem key={item.tstm_sht_struc_code} value={item.tstm_sht_struc_name}>
                                                 {item.tstm_sht_struc_name}
                                             </MenuItem>
                                         ))}
@@ -649,7 +652,11 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         onChange={handleDDLShtType}
                                         style={{ width: "90%" }}
                                         error={ErrorShtType}
+                                        displayEmpty
                                     >
+                                        <MenuItem value="">
+                                            -Select-
+                                        </MenuItem>
                                         {ShtType.map((item) => (
                                             <MenuItem key={item.tstm_code} value={item.tstm_code}>
                                                 {item.tstm_name}
@@ -1638,9 +1645,13 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         }}
                                         disabled={!isProcessConTimeFlag}
                                         error={ErrorProcessConTime}
+                                        displayEmpty
                                     >
+                                        <MenuItem value="">
+                                            -Select-
+                                        </MenuItem>
                                         {ProcessConTime.map((item) => (
-                                            <MenuItem key={item.tpct_code} value={item.tpct_code}>
+                                            <MenuItem key={item.tpct_code} value={item.tpct_name}>
                                                 {item.tpct_name}
                                             </MenuItem>
                                         ))}

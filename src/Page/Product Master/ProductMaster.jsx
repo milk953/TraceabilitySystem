@@ -286,7 +286,11 @@ function ProductMaster() {
                                     <TableCell>{item.tpm_sht_file_format}</TableCell>
                                     <TableCell>{item.tpm_serial_side}</TableCell>
                                     <TableCell>{item.tpm_barcode_grade}</TableCell>
-                                    <TableCell>{item.tpm_barcode_req_lot}</TableCell>
+                                    <TableCell>
+                                        {item.tpm_barcode_req_lot === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
                                     <TableCell>{item.tpm_sht_type}</TableCell>
                                     <TableCell>{item.tpm_sht_per_lot_efpc}</TableCell>
                                     <TableCell>{item.tpm_sht_per_lot_smt}</TableCell>

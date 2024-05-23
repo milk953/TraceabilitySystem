@@ -7,9 +7,14 @@ import Product_master from "./Page/Product Master/ProductMaster";
 
 import FINConncetSht from './Page/FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht'
 import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRollSht";
+import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
+
 import Login from "./Page/Login/Login"; 
+
 import axios from "axios";
+
 const backendUrl = "http://10.17.74.227:3001";
+
 axios.defaults.baseURL = backendUrl;
 const App = () => {
   return (
@@ -22,6 +27,8 @@ const App = () => {
           <Route path="/ProductMaster" element={<Product_master />} />
           <Route path="/ScanSMTRoollSht" element={<ScanSMTRoollSht />} />
           <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />
+          <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
+
         </Routes>
       </BrowserRouter>
     </StrictMode>
