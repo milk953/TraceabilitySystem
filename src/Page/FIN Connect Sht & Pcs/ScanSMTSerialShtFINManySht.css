@@ -21,8 +21,8 @@
   margin-left: 10px;
 }
 .mainTable th {
-  background-color: rgb(243, 8, 8);
-  color: white;
+  /* background-color: rgb(243, 8, 8); */
+  color: black;
   font-weight: 700;
   font-family: Arial;
 }
