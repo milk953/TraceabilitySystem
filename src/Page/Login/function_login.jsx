@@ -69,8 +69,6 @@ function LoginTest() {
           });
           return;
         }
-=======
->>>>>>> 65109acfe627410dc56bd1622ca8f86a29c53ae3
       });
 
       if (res.status === 200) {
