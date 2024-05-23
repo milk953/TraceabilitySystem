@@ -6,10 +6,9 @@
 }
 
 .ScanSMT th{
-    /* margin: auto;
-    width: 400px !important; */
-    padding: 7px !important;
-    background-color: #D04848 !important ;
+ 
+    padding: 3px !important;
+    background-color: #8c8c8c !important ;
     border-radius: 5px  5px 0 0!important;
     color: #fff;
     
@@ -29,6 +28,12 @@
 
 .BtLotno{
     background-color: #D04848 !important ;
+    padding: 1px !important;
+    font-size: 15px;
+    width: 35px;
+    height: 20px;
+border-radius: 4px;
+margin: auto;
 }
 
 .CSS-GvSerial{
@@ -49,7 +54,7 @@
 .CSS-GvScanResult{
   
     width: 900px !important;
-
+    margin-left: 50px;
     
 
 }
@@ -58,11 +63,20 @@
     /* margin: auto;
     width: 400px !important; */
     padding: 7px !important;
-    background-color: #2b4cc1 !important ;
+    background-color: #096dd9 !important ;
     /* border-radius: 5px  5px 0 0!important; */
     color: #fff;
-    border: 1px solid rgb(255, 255, 255);
     text-align: center;
-    
-
 }
+#txtfild {
+    padding: 1px !important;
+    font-size: 16px;
+    padding-left: 5px !important;
+}
+  
+#selectPd {
+    padding: 0 !important;
+    font-size: 14px !important;
+    padding-left: 5px !important;
+  }
+  

@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/SheetMaster" element={<Sheet_Master />} />
           <Route path="/SerialMaster" element={<Serial_Master />} />
           <Route path="/ProductMaster" element={<Product_master />} />
-          <Route path="/ScanSMTRoollSht" element={<ScanSMTRoollSht />} />
+          <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
           <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
 
