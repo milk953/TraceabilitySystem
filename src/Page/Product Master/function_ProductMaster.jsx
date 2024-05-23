@@ -18,34 +18,35 @@ function ProductMasterPage() {
 
   
     const Search = async () => {
-    //   console.log(code, name, "......")
-    //   try {
-    //     const response = await axios.post("/search/CodeName", {
-    //       Code: code,
-    //       Name: name
-    //     });
-    //     const data = response.data;
-    //     console.log("/////", data)
-    //     setShowData(data);
-    //     if (data.length > 0) {
-    //       setCheckEmpty("hidden");
-    //       setCheckData("hidden");
-    //       setCheckHead("visible");
-    //     } else {
-    //       setCheckEmpty("visible");
-    //       setCheckData("visible");
-    //     }
+
+      try {
+        const response = await axios.post("/api/searchFactory", {
+          Factory: DDLFactory,
+          Product: txtProduct
+        });
+        const data = response.data;
+        console.log("/////", data)
+        setShowData(data);
+        if (data.length > 0) {
+          setCheckEmpty("hidden");
+          setCheckData("hidden");
+          setCheckHead("visible");
+        } else {
+          setCheckEmpty("visible");
+          setCheckData("visible");
+        }
   
-    //   } catch (error) {
-    //     console.error('Error fetching search results:', error);
-    //   }
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      }
     };
   
     const { OpenPopup, PopupOpen, PopupClose, New } = usePopupFunctions();
 
   
     const Clear = () => {
-      
+      setDDLFactory("");
+      settxtProduct("");
       setCheckHead("hidden");
       setCheckEmpty("hidden");
       setCheckData("visible");
@@ -57,7 +58,6 @@ function ProductMasterPage() {
       const STATUS = "EDIT";
       localStorage.setItem("STATUS", STATUS);
       setSelectedRowData(item);
-    //   setTEXT_SHT_Code(item.tstm_sht_struc_code);
       PopupOpen();
     }
   
