@@ -83,7 +83,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [productState, setProductState] = useState(true);
   const [lblError, setLblError] = useState("");
   const [lblErrorState, setLblErrorState] = useState(false);
-  const [lotRef, setLotRef] = useState("");
   const [operator, setOperator] = useState("");
   const [sht, setSht] = useState("");
   const [pcs, setPcs] = useState("");
@@ -105,6 +104,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [lblresultState, setLblresultState] = useState(false);
   const [gvScanResult, setGvScanResult] = useState([]);
   const [gvScanResultState, setGvScanResultState] = useState(false);
+  const [txtMachine, settxtmachine] = useState("");
+  const [txtLotRef, settxtLotRef] = useState("");
 
   const fctextFieldlot = useRef(null);
   const fctextFieldMachine = useRef(null);
@@ -112,6 +113,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const fcddlProduct = useRef(null);
   const fcgvBackSide_txtSideback_0 = useRef(null);
   const fcgvSerial = useRef(null);
+  const fcOpertor = useRef(null);
 
   const ibtBack = () => {
     setLot("");
@@ -287,7 +289,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setLblError("");
         setLblErrorState(false);
         setLot(strLot);
-        setLotRef(strLot);
+        settxtLotRef(strLot);
         // getCountDataBylot(strLot);
         try {
           setselectproduct(strPrdname);
@@ -357,26 +359,68 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       fctextFieldlot.current.focus();
     }
   };
-
-  const ddlProductChange = async (e) => {
+  const handleProductChange = async (event, value) => {
+    setselectproduct(value);
     // getProductSerialMaster();
-    if (lot.trim.toLocaleUpperCase!=""){
+    var GetConnectShtMasterCheckResultState = "";
+    if (lot.trim.toLocaleUpperCase != "") {
       setLblError("");
       setLblErrorState(false);
       try {
-        const response = await axios.post("/api/GetProductDataByLot", {
-          // strLot: strLot,
-        });
-        if (response.data.PRD_NAME.length > 0) {
-          strPrdname = response.data.PRD_NAME;
-          sethfRollNo(response.data.ROLL_NO);
+        const response = await axios.get("/api/GetConnectShtMasterCheckResult");
+        if (response.data.Result.length > 0) {
+          GetConnectShtMasterCheckResultState = response.data.Result;
         }
       } catch (error) {
         console.error("Error fetching product data:", error);
       }
+    } else {
+      setselectproduct(product[0]);
+      Setmode("LOT");
+    }
+    if (GetConnectShtMasterCheckResultState == "OK") {
+      getCountDataBylot(lot.trim.toLocaleUpperCase);
+      // getInitialSheet();
+      if (hfCheckRollSht === "Y") {
+        setPnlMachineOpen(true);
+        settxtRollLeaf("");
+        fctextFieldMachine.current.focus();
+      } else {
+        Setmode("SERIAL");
+        settxtmachine("");
+        if (hfReqMachine === "Y") {
+          pnlMachineOpen(true);
+          fctextFieldMachine.current.focus();
+        } else {
+          // fcgvBackSide_txtSideback_0.current.focus();
+        }
+      }
+    } else {
+      setselectproduct(product[0]);
+      setLot("");
+      setGvScanResult([]);
+      setLblError(
+        `${product[0]} not test maxter! / ${product[0]} ยังไม่ทดสอบมาสเตอร์`
+      );
+      setLblErrorState(true);
+      sethfMode("LOT");
     }
   };
-
+  const txtLotRef_TextChanged = async (event) => {
+    const value = event.target.value;
+    settxtLotRef(value);
+    if (value && value.trim().toLocaleUpperCase() !== "") {
+      var strLotdata = value.trim().toLocaleUpperCase().split(";");
+      if (strLotdata.length >= 2) {
+        settxtLotRef(strLotdata[0]);
+        fcOpertor.current.focus();
+      } else {
+        settxtLotRef(value.trim().toLocaleUpperCase());
+      }
+    } else {
+      settxtLotRef("");
+    }
+  };
   const getCountDataBylot = (lot) => {
     setLblTotalSht("0");
     setLblTotalPcs("0");
@@ -585,6 +629,11 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     fcgvBackSide_txtSideback_0,
     fcgvSerial,
     txtRollLeaf,
+    fcOpertor,
+    txtLotRef,
+
+    handleProductChange,
+    txtLotRef_TextChanged,
   };
 };
 

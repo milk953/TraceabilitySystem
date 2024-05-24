@@ -53,11 +53,12 @@ function ScanSMTSerialShtFINManySht() {
     fcddlProduct,
     fcgvBackSide_txtSideback_0,
     fcgvSerial,
-    txtRollLeaf
+    fcOpertor,
+    txtRollLeaf,
+    txtLotRef,
+    handleProductChange,
+    txtLotRef_TextChanged,
   } = fn_ScanSMTSerialShtFINManySht();
-  const handleProductChange = (event, value) => {
-    setselectproduct(value);
-  };
 
   return (
     <div>
@@ -103,10 +104,14 @@ function ScanSMTSerialShtFINManySht() {
                     readOnly={false}
                     options={product}
                     value={selectproduct}
-                    onChange={handleProductChange}
+                    onInputChange={handleProductChange}
                     getOptionLabel={(option) => option}
                     renderInput={(params) => (
-                      <TextField {...params} size="small"inputRef={fcddlProduct} />
+                      <TextField
+                        {...params}
+                        size="small"
+                        inputRef={fcddlProduct}
+                      />
                     )}
                   />
                 </FormControl>
@@ -116,14 +121,23 @@ function ScanSMTSerialShtFINManySht() {
             <TableRow>
               <TableCell>Lot Ref. No.:</TableCell>
               <TableCell>
-                <TextField size="small" id="txtField"></TextField>
+                <TextField
+                  size="small"
+                  id="txtField"
+                  value={txtLotRef}
+                  onChange={txtLotRef_TextChanged}
+                ></TextField>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Operator:</TableCell>
               <TableCell>
-                <TextField size="small" id="txtField"></TextField>
+                <TextField
+                  size="small"
+                  id="txtField"
+                  inputRef={fcOpertor}
+                ></TextField>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
@@ -142,7 +156,12 @@ function ScanSMTSerialShtFINManySht() {
                 <TableRow>
                   <TableCell>Roll Leaf No.:</TableCell>
                   <TableCell>
-                    <TextField size="small" id="txtField" inputRef={fctextFileRollLeaf} value={txtRollLeaf}></TextField>
+                    <TextField
+                      size="small"
+                      id="txtField"
+                      inputRef={fctextFileRollLeaf}
+                      value={txtRollLeaf}
+                    ></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -158,7 +177,11 @@ function ScanSMTSerialShtFINManySht() {
                 <TableRow>
                   <TableCell>Machine No.:</TableCell>
                   <TableCell>
-                    <TextField size="small" id="txtField" inputRef={fctextFieldMachine}></TextField>
+                    <TextField
+                      size="small"
+                      id="txtField"
+                      inputRef={fctextFieldMachine}
+                    ></TextField>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>

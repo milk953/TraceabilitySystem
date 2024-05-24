@@ -12,8 +12,8 @@ import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
 import Login from "./Page/Login/Login"; 
 
 import axios from "axios";
+const backendUrl = "http://10.17.74.228:3001";
 
-const backendUrl = "http://10.17.74.227:3001";
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/SheetMaster" element={<Sheet_Master />} />
           <Route path="/SerialMaster" element={<Serial_Master />} />
           <Route path="/ProductMaster" element={<Product_master />} />
-          <Route path="/ScanSMTRoollSht" element={<ScanSMTRoollSht />} />
+          <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
           <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
 

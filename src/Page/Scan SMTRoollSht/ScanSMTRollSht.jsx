@@ -57,17 +57,18 @@ function ScanSMTRoollSht() {
             <Table className="ScanSMT" component={Paper}>
               <TableHead>
                 <TableCell colSpan={4} align="center">
-                  <Typography variant="h5">Connect Roll/Sht & Leaf</Typography>
+                  <Typography variant="h6">Connect Roll/Sht & Leaf</Typography>
                 </TableCell>
               </TableHead>
               <TableBody>
                 <TableRow>
                   <TableCell align="right">
-                    <Typography variant="h6">LotNo. :</Typography>
+                 
+                  <Typography > LotNo. :</Typography>
                   </TableCell>
                   <TableCell colSpan={2}>
                     <TextField
-                      id="LotNo"
+                      id="txtfild"
                       size="small"
                       fullWidth
                       value={txt_lotNo}
@@ -80,6 +81,7 @@ function ScanSMTRoollSht() {
                         if (e.key === "Enter") {
                           handleLotxt_Lotno();
                         }
+                        
                       }}
                       // style={StyleEneble()}
                       // disabled ={StyleDisabled()}
@@ -88,18 +90,18 @@ function ScanSMTRoollSht() {
                   <TableCell>
                     <button className="BtLotno">
                       {" "}
-                      <ArrowLeftOutlined />
+                      <DeleteOutlined />
                     </button>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="right">
-                    <Typography variant="h6">Product :</Typography>
+                    <Typography >Product :</Typography>
                   </TableCell>
                   <TableCell colSpan={3}>
                     <FormControl fullWidth>
                       <Autocomplete
-                        // readOnly={false}
+                      id='selectPd'
                         value={sl_Product}
                         onChange={(e, value) => HandleSL_Product(value)}
                         options={Product.map((item) => item[0])}
@@ -116,19 +118,19 @@ function ScanSMTRoollSht() {
                 </TableRow>
                 <TableRow>
                   <TableCell align="right">
-                    <Typography variant="h6">Check Roll :</Typography>
+                    <Typography >Check Roll :</Typography>
                   </TableCell>
                   <TableCell
                     colSpan={1}
-                    style={
-                        lblCheckRoll === "ON"
-                        ? { backgroundColor: "#73d13d" }
-                        : lblCheckRoll === "OFF"
-                        ? { backgroundColor: "#f5222d" }
-                        : { backgroundColor: "" }
-                    }
-                  >
-                    <Typography
+                   
+                  > <div style={
+                    lblCheckRoll === "ON"
+                    ? { backgroundColor: "#73d13d" }
+                    : lblCheckRoll === "OFF"
+                    ? { backgroundColor: "#f5222d" }
+                    : { backgroundColor: "" }
+                }>
+ <Typography
                       variant="button"
                       style={{
                         marginLeft: "15px",
@@ -138,16 +140,18 @@ function ScanSMTRoollSht() {
                     >
                       {lblCheckRoll}
                     </Typography>
+                  </div>
+                   
                   </TableCell>
                   <TableCell colSpan={2}></TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="right">
-                    <Typography variant="h6">Operator :</Typography>
+                    <Typography >Operator :</Typography>
                   </TableCell>
                   <TableCell colSpan={3}>
                     <TextField
-                      id="FamTo"
+                      id="txtfild"
                       size="small"
                       // label="Operator. :"
                       fullWidth
@@ -157,11 +161,11 @@ function ScanSMTRoollSht() {
                 </TableRow>
                 <TableRow>
                   <TableCell align="right">
-                    <Typography variant="h6">Total Leaf :</Typography>
+                    <Typography>Total Leaf :</Typography>
                   </TableCell>
                   <TableCell>
                     <TextField
-                      id="FamTo"
+                      id="txtfild"
                       size="small"
                       style={{ width: "70px" }}
                       value={txtTotalLeaf}
@@ -169,11 +173,11 @@ function ScanSMTRoollSht() {
                     ></TextField>
                   </TableCell>
                   <TableCell align="right">
-                    <Typography variant="h6">Total Sht. :</Typography>
+                    <Typography>Total Sht. :</Typography>
                   </TableCell>
                   <TableCell style={{ width: "70px" }}>
                     <TextField
-                      id="FamTo"
+                      id="txtfild"
                       size="small"
                       value={lbltotalSht}
                     ></TextField>
@@ -181,11 +185,11 @@ function ScanSMTRoollSht() {
                 </TableRow>
                 <TableRow>
                   <TableCell align="right">
-                    <Typography variant="h6">Roll/Sht No. :</Typography>
+                    <Typography >Roll/Sht No. :</Typography>
                   </TableCell>
                   <TableCell colSpan={3}>
                     <TextField
-                      id="txtRollLeaf"
+                      id="txtfild"
                       size="small"
                       value={txtRollLeaf}
                       onChange={(e) => {
@@ -221,21 +225,38 @@ function ScanSMTRoollSht() {
             )}
           </td>
           <td>
-            <Table className="CSS-GvScanResult" style={{ display: "none" }}>
-              <TableHead>
-                <TableCell width="50px">No.</TableCell>
-                <TableCell width="200px">Roll/Sheet No.</TableCell>
-                <TableCell width="200px">Leaf No.</TableCell>
-                <TableCell width="150px">Scan Result</TableCell>
-                <TableCell width="300px">Remark</TableCell>
-                <TableRow></TableRow>
+          <Paper
+                elevation={3}
+                style={{
+                  width: "800px",
+                  margin: "auto",
+                  height: "70px",
+                  textAlign: "center",
+                  marginTop:"10px", 
+                  backgroundColor: ""
+                }}
+
+              >
+                <Typography variant="h4" style={{ paddingTop: "15px",color:'#fff' }}>
+                  lblResult
+                </Typography>
+              </Paper>
+            <Table className="CSS-GvScanResult" style={{ display: "" }} component={Card}>
+              <TableHead >
+                <TableRow >
+                <TableCell  sx={{ borderRight: '1px solid #d9d9d9' }} width="50px">No.</TableCell>
+                <TableCell sx={{ borderRight: '1px solid #d9d9d9' }}  width="200px">Roll/Sheet No.</TableCell>
+                <TableCell sx={{ borderRight: '1px solid #d9d9d9' }}  width="200px">Leaf No.</TableCell>
+                <TableCell sx={{ borderRight: '1px solid #d9d9d9' }}  width="150px">Scan Result</TableCell>
+                <TableCell  width="300px">Remark</TableCell>
+                </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell>xxxx</TableCell>
-                  <TableCell>yyy</TableCell>
-                  <TableCell>sss</TableCell>
-                  <TableCell>zzz</TableCell>
+                  <TableCell sx={{ borderRight: '1px solid #d9d9d9' }}  >xxxx</TableCell>
+                  <TableCell sx={{ borderRight: '1px solid #d9d9d9' }}>yyy</TableCell>
+                  <TableCell sx={{ borderRight: '1px solid #d9d9d9' }}>sss</TableCell>
+                  <TableCell sx={{ borderRight: '1px solid #d9d9d9' }}>zzz</TableCell>
                   <TableCell>qqq</TableCell>
                 </TableRow>
               </TableBody>
@@ -249,7 +270,6 @@ function ScanSMTRoollSht() {
         style={{ display: "none", borderRadius: "60px" }}
       >
         <TableHead>
-          {" "}
           <TableCell>No.</TableCell>
           <TableCell>Leaf No.</TableCell>
           <TableRow></TableRow>
