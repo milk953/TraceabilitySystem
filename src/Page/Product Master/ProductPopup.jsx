@@ -34,10 +34,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
     const { STATUS_P, DDL_Factory, setDDL_Factory, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_Serialside, setDDL_Serialside, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
         DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
         DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
-        DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag,
-        isPlasmaTimeFlag, setisPlasmaTimeFlag, isConRollShtFlag, setisConRollShtFlag, isConRollLeafFlag, setisConRollLeafFlag,
-        isConRollProFlag, setisConRollProFlag, isConRollSerialFlag, setisConRollSerialFlag, isConShtTimeFlag, setisConShtTimeFlag,
-        isConShtPlasTimeFlag, setisConShtPlasTimeFlag, isProcessConTimeFlag, setisProcessConTimeFlag, isFinalPDStimeflag, setisFinalPDStimeflag,
+        DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag, isShtcheckProflag, setisShtcheckProflag,
+        isShtcheckLotflag, setisShtcheckLotflag, isShtXrayTimeflag, setisShtXrayTimeflag, isPlasmaTimeFlag, setisPlasmaTimeFlag, isConRollShtFlag, setisConRollShtFlag, isConRollLeafFlag, setisConRollLeafFlag,
+        isConRollProFlag, setisConRollProFlag, isConRollSerialFlag, setisConRollSerialFlag, isConShtTimeFlag, setisConShtTimeFlag, isConShtsumFlag, setisConShtsumFlag, isConShtWeekCodeFlag, setisConShtWeekCodeFlag,
+        isConShtPlasTimeFlag, setisConShtPlasTimeFlag, isProcessConTimeFlag, setisProcessConTimeFlag, isFinalPDStimeflag, setisFinalPDStimeflag, isConShtMixLotFlag, setisConShtMixLotFlag, isConShtMixProFlag,
+        setisConShtMixProFlag, isFinalpackgroupflag, setisFinalpackgroupflag, isFinalweekcodeflag, setisFinalweekcodeflag, isFinalPDStimeconflag, setisFinalPDStimeconflag, isFinalconshtflag, setisFinalconshtflag,
+        isFinalmixLotflag, setisFinalmixLotflag, isFinalmixProflag, setisFinalmixProflag, isFinalchecksumflag, setisFinalchecksumflag, isFinalchipIDflag, setisFinalchipIDflag,
         txtProductName, txtUpCount, txtConfig, txtStSeqSerial, txtStSeqCode, txtDateInProcess, txtPcsPerSHTEFPC, txtPcsPerSHTSMT, txtSerialFile,
         txtBarcodeGrade, txtshtFileFormat, txtShtperLotEFPC, txtShtperLotSMT, txtShtperscan, txtShtperlaser, txtShtModelCode, txtPlasmaTime,
         txtConRollShtLength, txtConRollLength, txtConLeafLength, txtConRollProSt, txtConRollProEnd, txtConRollLeafScan, txtRollLotShtSt, txtRollLotShtEnd,
@@ -54,7 +56,6 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
         ErrorRollReqLotSht, ErrorRollLotShtSt, ErrorRollLotShtEnd, ErrorRollReqProSht, ErrorRollProShtSt, ErrorRollProShtEnd, ErrorRollProFix, ErrorConShtConTime, ErrorConShtPlasTime, ErrorProcessConTime,
         ErrorFinalpcstray, ErrorFinalpcsscan, ErrorFinalPDStimeELT, ErrorFinalPDSHidetime, ErrorFinalPDStime, ErrorFinalPDStimeby, handleSaveClick, Clear
     } = ProductMasterPopup(onClose, item, searchFunction);
-    console.log("Serial", item)
 
     if (!isOpen) {
         return null;
@@ -254,8 +255,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     style={{ width: "90%" }}
                                     error={ErrorProStatus}
                                 >
-                                    <MenuItem value="Active">ACTIVE</MenuItem>
-                                    <MenuItem value="Inactive">INACTIVE</MenuItem>
+                                    <MenuItem value="ACTIVE">ACTIVE</MenuItem>
+                                    <MenuItem value="INACTIVE">INACTIVE</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>
@@ -445,9 +446,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     error={ErrorSerialside}
                                     displayEmpty
                                 >
-                                    <MenuItem value="">
-                                        -Select-
-                                    </MenuItem>
+                                    <MenuItem value="">-Select-</MenuItem>
+                                    <MenuItem value="b">b</MenuItem>
                                 </Select>
                             </Grid>
                             <Grid item xs={2.2}>
@@ -654,9 +654,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         error={ErrorShtType}
                                         displayEmpty
                                     >
-                                        <MenuItem value="">
-                                            -Select-
-                                        </MenuItem>
+                                        <MenuItem value="">-Select-</MenuItem>
+                                        <MenuItem value="P">P</MenuItem>
                                         {ShtType.map((item) => (
                                             <MenuItem key={item.tstm_code} value={item.tstm_code}>
                                                 {item.tstm_name}
@@ -832,10 +831,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isShtcheckProflag}
+                                        onChange={(e) => {
+                                            setisShtcheckProflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -846,10 +845,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isShtcheckLotflag}
+                                        onChange={(e) => {
+                                            setisShtcheckLotflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -860,10 +859,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isShtXrayTimeflag}
+                                        onChange={(e) => {
+                                            setisShtXrayTimeflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -1474,10 +1473,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConShtsumFlag}
+                                        onChange={(e) => {
+                                            setisConShtsumFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -1547,10 +1546,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConShtWeekCodeFlag}
+                                        onChange={(e) => {
+                                            setisConShtWeekCodeFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -1586,10 +1585,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConShtMixLotFlag}
+                                        onChange={(e) => {
+                                            setisConShtMixLotFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1600,10 +1599,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isConShtMixProFlag}
+                                        onChange={(e) => {
+                                            setisConShtMixProFlag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -1753,10 +1752,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalpackgroupflag}
+                                        onChange={(e) => {
+                                            setisFinalpackgroupflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1767,10 +1766,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalweekcodeflag}
+                                        onChange={(e) => {
+                                            setisFinalweekcodeflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1929,10 +1928,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalPDStimeconflag}
+                                        onChange={(e) => {
+                                            setisFinalPDStimeconflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
 
@@ -1944,10 +1943,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalconshtflag}
+                                        onChange={(e) => {
+                                            setisFinalconshtflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -1979,10 +1978,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalmixLotflag}
+                                        onChange={(e) => {
+                                            setisFinalmixLotflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
 
@@ -1994,10 +1993,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalmixProflag}
+                                        onChange={(e) => {
+                                            setisFinalmixProflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
 
@@ -2009,10 +2008,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalchecksumflag}
+                                        onChange={(e) => {
+                                            setisFinalchecksumflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -2029,10 +2028,10 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                 <Grid item xs={1.7}>
                                     <Checkbox
                                         style={{ padding: "0" }}
-                                    //   checked={isPlantChecked}
-                                    //   onChange={(e) => {
-                                    //     setIsPlantChecked(e.target.checked);
-                                    //   }}
+                                        checked={isFinalchipIDflag}
+                                        onChange={(e) => {
+                                            setisFinalchipIDflag(e.target.checked);
+                                        }}
                                     />
                                 </Grid>
                             </Grid>

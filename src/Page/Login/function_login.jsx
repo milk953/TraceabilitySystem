@@ -45,7 +45,7 @@ function LoginTest() {
         User: loginId,
         Password: password,
       })
-      .then((res) => {
+
         // console.log(res.data,"///////////////////")
         if (res.status === 200) {
           localStorage.setItem("isLoggedIn", "true");
@@ -69,7 +69,6 @@ function LoginTest() {
           });
           return;
         }
-      });
 
       if (res.status === 200) {
         localStorage.setItem("isLoggedIn", "true");
