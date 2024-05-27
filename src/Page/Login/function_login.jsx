@@ -45,32 +45,6 @@ function LoginTest() {
         User: loginId,
         Password: password,
       })
-      .then((res) => {
-        // console.log(res.data,"///////////////////")
-        if (res.status === 200) {
-          localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("Username", res.data[0][3]);
-          localStorage.setItem("Lastname", res.data[0][4]);
-          localStorage.setItem("UserLogin", res.data[0][0]);
-          localStorage.setItem("IDCode", res.data[0][2]);
-          localStorage.setItem("Factory", res.data[0][1]);
-
-          setIsLoading(true);
-          setTimeout(() => {
-            setIsLoading(false);
-            PageSheetMaster();
-          }, 1300);
-        } else if (res.status === 401) {
-          Swal.fire({
-            title: "Username or Password Wrong",
-            text: "Please Try Again",
-            icon: "error",
-            confirmButtonText: "Close",
-          });
-          return;
-        }
-      });
-
       if (res.status === 200) {
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("Username", res.data[0][3]);
