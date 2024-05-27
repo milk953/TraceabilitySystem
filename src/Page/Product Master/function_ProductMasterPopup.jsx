@@ -121,15 +121,30 @@ function ProductMasterPopup(onClose, item, searchFunction) {
   //Checkbox
   const [isDateInproflag, setisDateInproflag] = useState(false);
   const [isBarcodeReqflag, setisBarcodeReqflag] = useState(false);
+  const [isShtcheckProflag, setisShtcheckProflag] = useState(false);
+  const [isShtcheckLotflag, setisShtcheckLotflag] = useState(false);
+  const [isShtXrayTimeflag, setisShtXrayTimeflag] = useState(false);
   const [isPlasmaTimeFlag, setisPlasmaTimeFlag] = useState(false);
   const [isConRollShtFlag, setisConRollShtFlag] = useState(false);
   const [isConRollLeafFlag, setisConRollLeafFlag] = useState(false);
   const [isConRollProFlag, setisConRollProFlag] = useState(false);
   const [isConRollSerialFlag, setisConRollSerialFlag] = useState(false);
   const [isConShtTimeFlag, setisConShtTimeFlag] = useState(false);
+  const [isConShtsumFlag, setisConShtsumFlag] = useState(false);
   const [isConShtPlasTimeFlag, setisConShtPlasTimeFlag] = useState(false);
+  const [isConShtWeekCodeFlag, setisConShtWeekCodeFlag] = useState(false);
+  const [isConShtMixLotFlag, setisConShtMixLotFlag] = useState(false);
+  const [isConShtMixProFlag, setisConShtMixProFlag] = useState(false);
   const [isProcessConTimeFlag, setisProcessConTimeFlag] = useState(false);
+  const [isFinalpackgroupflag, setisFinalpackgroupflag] = useState(false);
+  const [isFinalweekcodeflag, setisFinalweekcodeflag] = useState(false);
   const [isFinalPDStimeflag, setisFinalPDStimeflag] = useState(false);
+  const [isFinalPDStimeconflag, setisFinalPDStimeconflag] = useState(false);
+  const [isFinalconshtflag, setisFinalconshtflag] = useState(false);
+  const [isFinalmixLotflag, setisFinalmixLotflag] = useState(false);
+  const [isFinalmixProflag, setisFinalmixProflag] = useState(false);
+  const [isFinalchecksumflag, setisFinalchecksumflag] = useState(false);
+  const [isFinalchipIDflag, setisFinalchipIDflag] = useState(false);
 
   //SetError
   const [ErrorFactory, setErrorFactory] = useState(false);
@@ -849,6 +864,136 @@ function ProductMasterPopup(onClose, item, searchFunction) {
       setErrorFinalPDStimeby(true);
     }
 
+    let DateProFlag = isDateInproflag ? 'Y' : 'N';
+    let BarReqFlag = isBarcodeReqflag ? 'Y' : 'N';
+    let ShtProFlag = isShtcheckProflag ? 'Y' : 'N';
+    let ShtLotFlag = isShtcheckLotflag ? 'Y' : 'N';
+    let ShtXrayFlag = isShtXrayTimeflag ? 'Y' : 'N';
+    let PlasmaTimeFlag = isPlasmaTimeFlag ? 'Y' : 'N';
+    let ConRollShtFlag = isConRollShtFlag ? 'Y' : 'N';
+    let ConRollLeafFlag = isConRollLeafFlag ? 'Y' : 'N';
+    let ConRollProFlag = isConRollProFlag ? 'Y' : 'N';
+    let ConRollSerialFlag = isConRollSerialFlag ? 'Y' : 'N';
+    let ConShtTimeFlag = isConShtTimeFlag ? 'Y' : 'N';
+    let ConShtsumFlag = isConShtsumFlag ? 'Y' : 'N';
+    let ConShtPlasTimeFlag = isConShtPlasTimeFlag ? 'Y' : 'N';
+    let ConShtCodeFlag = isConShtWeekCodeFlag ? 'Y' : 'N';
+    let ConShtMixLotFlag = isConShtMixLotFlag ? 'Y' : 'N';
+    let ConShtMixProFlag = isConShtMixProFlag ? 'Y' : 'N';
+    let ProcessConTimeFlag = isProcessConTimeFlag ? 'Y' : 'N';
+    let Finalpackgroupflag = isFinalpackgroupflag ? 'Y' : 'N';
+    let Finalweekcodeflag = isFinalweekcodeflag ? 'Y' : 'N';
+    let FinalPDStimeflag = isFinalPDStimeflag ? 'Y' : 'N';
+    let FinalPDSconfirmflag = isFinalPDStimeconflag ? 'Y' : 'N';
+    let Finalconnshtflag = isFinalconshtflag ? 'Y' : 'N';
+    let FinalmixLotflag = isFinalmixLotflag ? 'Y' : 'N';
+    let Finalmixproflag = isFinalmixProflag ? 'Y' : 'N';
+    let Finalchecksumflag = isFinalchecksumflag ? 'Y' : 'N';
+    let FinalchipIDflag = isFinalchipIDflag ? 'Y' : 'N';
+
+    if (STATUS_P === "NEW") {
+      console.log("NEW")
+
+      if (
+        DDL_Factory &&
+        txtProductName
+      ) {
+        try {
+          const response = await axios.post("/api/insProduct_Master", {
+            tpm_factory: DDL_Factory,
+            tpm_product_name: txtProductName,
+            tpm_update_count: txtUpCount,
+            tpm_config_code: txtConfig,
+            tpm_start_seq_serial: txtStSeqSerial,
+            tpm_start_seq_code: txtStSeqCode,
+            tpm_product_status: DDL_ProductStatus,
+            tpm_date_inproc_flg: DateProFlag,
+            tpm_date_inproc: DateProFlag === 'N' ? null : txtDateInProcess,
+            tpm_pcs_per_sht_efpc: txtPcsPerSHTEFPC,
+            tpm_pcs_per_sht_smt: txtPcsPerSHTSMT,
+            tpm_serial_file_format: txtSerialFile,
+            tpm_serial_side: DDL_Serialside,
+            tpm_serial_structure: DDL_SerialStruc,
+            tpm_barcode_req_lot: BarReqFlag,
+            tpm_barcode_grade: BarReqFlag === 'N' ? null : txtBarcodeGrade,
+            tpm_sht_file_format: txtshtFileFormat,
+            tpm_sht__structure: DDL_ShtStructure,
+            tpm_sht_type: DDL_ShtType,
+            tpm_sht_per_lot_efpc: txtShtperLotEFPC,
+            tpm_sht_per_lot_smt: txtShtperLotSMT,
+            tpm_sht_per_scan: txtShtperscan,
+            tpm_sht_per_laser: txtShtperlaser,
+            tpm_sht_model_code: txtShtModelCode,
+            tpm_sht_check_prd_flag: ShtProFlag,
+            tpm_sht_check_lot_flag: ShtLotFlag,
+            tpm_sht_xray_1_time_flg: ShtXrayFlag,
+            tpm_sht_plasma_time_flg: PlasmaTimeFlag,
+            tpm_sht_plasma_time: PlasmaTimeFlag === 'N' ? null : txtPlasmaTime,
+            tpm_conn_roll_sht_flg: ConRollShtFlag,
+            tpm_conn_roll_sht_length: ConRollShtFlag === 'N' ? null : txtConRollShtLength,
+            tpm_conn_roll_leaf_flg: ConRollLeafFlag,
+            tpm_conn_roll_length: ConRollLeafFlag === 'N' ? null : txtConRollLength,
+            tpm_conn_leaf_length: ConRollLeafFlag === 'N' ? null : txtConLeafLength,
+            tpm_conn_roll_prd_flg: ConRollProFlag,
+            tpm_conn_roll_prd_start: ConRollProFlag === 'N' ? null : txtConRollProSt,
+            tpm_conn_roll_prd_end: ConRollProFlag === 'N' ? null : txtConRollProEnd,
+            tpm_conn_roll_serial_flg: ConRollSerialFlag,
+            tpm_conn_roll_leaf_scan: ConRollSerialFlag === 'N' ? null : txtConRollLeafScan,
+            tpm_conn_roll_req_lot_sht: DDL_RollReqLotSht,
+            tpm_conn_roll_lot_sht_start: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtSt,
+            tpm_conn_roll_lot_sht_end: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtEnd,
+            tpm_conn_roll_req_prd_sht: DDL_RollReqProSht,
+            tpm_conn_roll_prd_sht_start: DDL_RollReqProSht === 'N' ? null : txtRollProShtSt,
+            tpm_conn_roll_prd_sht_end: DDL_RollReqProSht === 'N' ? null : txtRollLotShtEnd,
+            tpm_conn_roll_prd_fix: txtRollProFix,
+            tpm_conn_sht_control_time_flg: ConShtTimeFlag,
+            tpm_conn_sht_control_time: ConShtTimeFlag === 'N' ? null : txtConShtTime,
+            tpm_conn_sht_checksum_flg: ConShtsumFlag,
+            tpm_conn_sht_plasma_time_flg: ConShtPlasTimeFlag,
+            tpm_conn_sht_plasma_time: ConShtPlasTimeFlag === 'N' ? null : txtConShtPlasTime,
+            tpm_conn_sht_check_weekcode_flg: ConShtCodeFlag,
+            tpm_conn_sht_mix_lot_flg: ConShtMixLotFlag,
+            tpm_conn_sht_mix_product_flg: ConShtMixProFlag,
+            tpm_proc_control_time_flg: ProcessConTimeFlag,
+            tpm_proc_control_time: ProcessConTimeFlag === 'N' ? null : DDL_ProcessConTime,
+            tpm_fin_pcs_per_tray: txtFinalpcstray,
+            tpm_fin_pcs_per_scan: txtFinalpcsscan,
+            tpm_fin_pack_group_flg: Finalpackgroupflag,
+            tpm_fin_check_weekcode_flg: Finalweekcodeflag,
+            tpm_fin_pds_time_skip_elt: DDL_FinalPDStimeELT,
+            tpm_fin_pds_time_hide_time: DDL_FinalPDSHidetime,
+            tpm_fin_pds_time_flg: FinalPDStimeflag,
+            tpm_fin_pds_time: FinalPDStimeflag === 'N' ? null : txtFinalPDStime,
+            tpm_fin_pds_time_by: txtFinalPDStimeby,
+            tpm_fin_pds_time_confirm_flg: FinalPDSconfirmflag,
+            tpm_fin_conn_sht_flg: Finalconnshtflag,
+            tpm_fin_mix_lot_flg: FinalmixLotflag,
+            tpm_fin_mix_product_flg: Finalmixproflag,
+            tpm_fin_checksum_flg: Finalchecksumflag,
+            tpm_fin_chip_id_flg: FinalchipIDflag,
+            tpm_create_by: ipaddress,
+            tpm_create_program: UserLogin,
+            tpm_update_by: ipaddress,
+            tpm_update_program: UserLogin
+          });
+          console.log("บันทึกข้อมูลสำเร็จ =", response);
+          swal("success", "You save data success", "success");
+          searchFunction();
+          onClose();
+
+        } catch (error) {
+          console.error("ไม่สามารถบันทึกข้อมูลได้:", error);
+        }
+      } else {
+        console.error("ไม่สามารถบันทึกข้อมูลได้: ค่าว่างถูกส่งเข้ามา");
+        swal(
+          "Unable to save information",
+          "Please check the information entered.",
+          "error"
+        );
+      }
+    }
+
   };
 
   const Clear = () => {
@@ -932,10 +1077,12 @@ function ProductMasterPopup(onClose, item, searchFunction) {
     STATUS_P, DDL_Factory, setDDL_Factory, DDL_ProductStatus, setDDL_ProductStatus, SerialStruc, DDL_Serialside, setDDL_Serialside, DDL_SerialStruc, setDDL_SerialStruc, ShtStructure,
     DDL_ShtStructure, setDDL_ShtStructure, ShtType, DDL_ShtType, setDDL_ShtType, ProcessConTime, DDL_ProcessConTime, setDDL_ProcessConTime,
     DDL_RollReqLotSht, setDDL_RollReqLotSht, DDL_RollReqProSht, setDDL_RollReqProSht, DDL_FinalPDStimeELT, setDDL_FinalPDStimeELT,
-    DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag,
-    isPlasmaTimeFlag, setisPlasmaTimeFlag, isConRollShtFlag, setisConRollShtFlag, isConRollLeafFlag, setisConRollLeafFlag,
-    isConRollProFlag, setisConRollProFlag, isConRollSerialFlag, setisConRollSerialFlag, isConShtTimeFlag, setisConShtTimeFlag,
-    isConShtPlasTimeFlag, setisConShtPlasTimeFlag, isProcessConTimeFlag, setisProcessConTimeFlag, isFinalPDStimeflag, setisFinalPDStimeflag,
+    DDL_FinalPDSHidetime, setDDL_FinalPDSHidetime, isDateInproflag, setisDateInproflag, isBarcodeReqflag, setisBarcodeReqflag, isShtcheckProflag, setisShtcheckProflag,
+    isShtcheckLotflag, setisShtcheckLotflag, isShtXrayTimeflag, setisShtXrayTimeflag, isPlasmaTimeFlag, setisPlasmaTimeFlag, isConRollShtFlag, setisConRollShtFlag, isConRollLeafFlag, setisConRollLeafFlag,
+    isConRollProFlag, setisConRollProFlag, isConRollSerialFlag, setisConRollSerialFlag, isConShtTimeFlag, setisConShtTimeFlag, isConShtsumFlag, setisConShtsumFlag, isConShtWeekCodeFlag, setisConShtWeekCodeFlag,
+    isConShtPlasTimeFlag, setisConShtPlasTimeFlag, isProcessConTimeFlag, setisProcessConTimeFlag, isFinalPDStimeflag, setisFinalPDStimeflag, isConShtMixLotFlag, setisConShtMixLotFlag, isConShtMixProFlag,
+    setisConShtMixProFlag, isFinalpackgroupflag, setisFinalpackgroupflag, isFinalweekcodeflag, setisFinalweekcodeflag, isFinalPDStimeconflag, setisFinalPDStimeconflag, isFinalconshtflag, setisFinalconshtflag,
+    isFinalmixLotflag, setisFinalmixLotflag, isFinalmixProflag, setisFinalmixProflag, isFinalchecksumflag, setisFinalchecksumflag, isFinalchipIDflag, setisFinalchipIDflag,
     txtProductName, txtUpCount, txtConfig, txtStSeqSerial, txtStSeqCode, txtDateInProcess, txtPcsPerSHTEFPC, txtPcsPerSHTSMT, txtSerialFile,
     txtBarcodeGrade, txtshtFileFormat, txtShtperLotEFPC, txtShtperLotSMT, txtShtperscan, txtShtperlaser, txtShtModelCode, txtPlasmaTime,
     txtConRollShtLength, txtConRollLength, txtConLeafLength, txtConRollProSt, txtConRollProEnd, txtConRollLeafScan, txtRollLotShtSt, txtRollLotShtEnd,
