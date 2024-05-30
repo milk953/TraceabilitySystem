@@ -93,8 +93,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                     error={ErrorFactory}
                                 >
                                     {factory.map((item) => (
-                                        <MenuItem key={item.factory_code} value={item.factory_code}>
-                                            {item.factory_desc}
+                                        <MenuItem key={item.p_factory_code} value={item.p_factory_code}>
+                                            {item.p_factory_desc}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -457,7 +457,7 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                             </Grid>
                             <Grid item xs={1.7}>
                                 <Select
-                                    id="ddlFactory"
+                                    id="SerialStruc"
                                     variant="outlined"
                                     size="small"
                                     value={DDL_SerialStruc}
@@ -470,8 +470,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         -Select-
                                     </MenuItem>
                                     {SerialStruc.map((item) => (
-                                        <MenuItem key={item.tssm_sn_struc_code} value={item.tssm_sn_struc_name}>
-                                            {item.tssm_sn_struc_name}
+                                        <MenuItem key={item.p_tssm_sn_struc_code} value={item.p_tssm_sn_struc_name}>
+                                            {item.p_tssm_sn_struc_name}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -604,8 +604,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                             -Select-
                                         </MenuItem>
                                         {ShtStructure.map((item) => (
-                                            <MenuItem key={item.tstm_sht_struc_code} value={item.tstm_sht_struc_name}>
-                                                {item.tstm_sht_struc_name}
+                                            <MenuItem key={item.p_tstm_sht_struc_code} value={item.p_tstm_sht_struc_name}>
+                                                {item.p_tstm_sht_struc_name}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -657,8 +657,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         <MenuItem value="">-Select-</MenuItem>
                                         <MenuItem value="P">P</MenuItem>
                                         {ShtType.map((item) => (
-                                            <MenuItem key={item.tstm_code} value={item.tstm_code}>
-                                                {item.tstm_name}
+                                            <MenuItem key={item.p_tstm_code} value={item.p_tstm_code}>
+                                                {item.p_tstm_name}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -1242,10 +1242,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: DDL_RollReqLotSht === "Y" ? "#FFFFFF" : "#F5F7F8",
                                         }}
                                         value={txtRollLotShtSt}
                                         onChange={handleKeyRollLotShtSt}
                                         error={DDL_RollReqLotSht === "Y" && ErrorRollLotShtSt}
+                                        disabled={DDL_RollReqLotSht === "N"}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1260,10 +1262,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: DDL_RollReqLotSht === "Y" ? "#FFFFFF" : "#F5F7F8",
                                         }}
                                         value={txtRollLotShtEnd}
                                         onChange={handleKeyRollLotShtEnd}
                                         error={DDL_RollReqLotSht === "Y" && ErrorRollLotShtEnd}
+                                        disabled={DDL_RollReqLotSht === "N"}
                                     />
                                 </Grid>
                             </Grid>
@@ -1332,10 +1336,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: DDL_RollReqProSht === "Y" ? "#FFFFFF" : "#F5F7F8",
                                         }}
                                         value={txtRollProShtSt}
                                         onChange={handleKeyRollProShtSt}
                                         error={DDL_RollReqProSht === "Y" && ErrorRollProShtSt}
+                                        disabled={DDL_RollReqProSht === "N"}
                                     />
                                 </Grid>
                                 <Grid item xs={2.2}>
@@ -1350,10 +1356,12 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                         size="small"
                                         style={{
                                             width: "90%",
+                                            backgroundColor: DDL_RollReqProSht === "Y" ? "#FFFFFF" : "#F5F7F8",
                                         }}
                                         value={txtRollProShtEnd}
                                         onChange={handleKeyRollProShtEnd}
                                         error={DDL_RollReqProSht === "Y" && ErrorRollProShtEnd}
+                                        disabled={DDL_RollReqProSht === "N"}
                                     />
                                 </Grid>
                             </Grid>
@@ -1650,8 +1658,8 @@ function ProductPopup({ isOpen, onClose, item, searchFunction }) {
                                             -Select-
                                         </MenuItem>
                                         {ProcessConTime.map((item) => (
-                                            <MenuItem key={item.tpct_code} value={item.tpct_name}>
-                                                {item.tpct_name}
+                                            <MenuItem key={item.p_tpct_code} value={item.p_tpct_code}>
+                                                {item.p_tpct_name}
                                             </MenuItem>
                                         ))}
                                     </Select>
