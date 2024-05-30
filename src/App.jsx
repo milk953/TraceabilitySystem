@@ -13,7 +13,7 @@ import Homepage from "./Page/Homepage/Homepage";
 import Login from "./Page/Login/Login"; 
 
 import axios from "axios";
-const backendUrl = "http://localhost:3001";
+const backendUrl = "http://10.17.74.228:3001";
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
     <StrictMode>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<Login />} />
+        {/* <Route path="/" element={<Login />} /> */}
           <Route path="/SheetMaster" element={<Sheet_Master />} />
           <Route path="/SerialMaster" element={<Serial_Master />} />
           <Route path="/ProductMaster" element={<Product_master />} />
@@ -29,7 +29,7 @@ const App = () => {
           <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
           <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />
-          <Route path="/Homepage" element={<Homepage />} />
+          <Route path="/" element={<Homepage />} />
         </Routes>
       </BrowserRouter>
     </StrictMode>

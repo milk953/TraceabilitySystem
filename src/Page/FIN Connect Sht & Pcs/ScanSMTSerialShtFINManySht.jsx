@@ -18,6 +18,7 @@ import {
   Grid,
   Paper,
   Card,
+  Typography,
 } from "@mui/material";
 
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -62,6 +63,8 @@ function ScanSMTSerialShtFINManySht() {
     txtLotRef_TextChanged,
     gvbacksideOpen,
     lblresultOpen,
+    ShowTableResult,
+    imageSize,
   } = fn_ScanSMTSerialShtFINManySht();
 
   return (
@@ -72,17 +75,18 @@ function ScanSMTSerialShtFINManySht() {
         component={Paper}
         style={{
           margin: "auto",
-          width: "90%",
+          width: "95%",
           maxWidth: "1400px",
           marginTop: "50px",
-          height: "auto",
+          maxHeight: "1200px",
           minHeight: "200px",
           padding: "20px",
+          overflow: "auto",
         }}
       >
         <table>
           <tr>
-            <td>
+            <td className="maintd">
               <Table className="mainTable" component={Paper}>
                 <TableHead>
                   <TableRow>
@@ -172,6 +176,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>{lblTotalPcs}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
+                  {/* {console.log(pnlRollLeafOpen)} */}
                   {pnlRollLeafOpen && (
                     <>
                       <TableRow>
@@ -211,25 +216,41 @@ function ScanSMTSerialShtFINManySht() {
                 </TableBody>
               </Table>
             </td>
-            <td style={{ textAlign: "center", width: "900px" }}>
+            <td
+              style={{
+                textAlign: "center",
+                width: "900px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: "0",
+                margin: "0",
+                verticalAlign: "top",
+              }}
+            >
               <img
-                style={{
-                  width: "320px",
-                  height: "250px",
-                }}
-                src="src/assets/1.jpg" // Import the image
+                style={imageSize}
+                src="src/assets/1.jpg"
                 alt="Description of the image"
               />
               {lblresultOpen && (
                 <div className="lblResult">
                   {lblresultState && (
-                    <Table
-                      id="lblResult"
-                      sx={{ width: "400px" }}
-                      component={Paper}
+                    <Paper
+                      className="lblResultCard"
+                      elevation={3}
+                      style={{
+                        background: " #ff4d4f",
+                        display: gvScanResult,
+                      }}
                     >
-                      {lblresult}
-                    </Table>
+                      <Typography
+                        variant="h4"
+                        style={{ paddingTop: "5px", color: "#fff" }}
+                      >
+                        {lblresult}
+                      </Typography>
+                    </Paper>
                   )}
                   {gvScanResultState && (
                     <Table id="gvScanResult" component={Paper}>
@@ -271,119 +292,125 @@ function ScanSMTSerialShtFINManySht() {
               )}
             </td>
           </tr>
-          <td>
-            {gvbacksideOpen && (
-              <div className="pnlBackside">
-                <Table component={Paper} className="gvBackSide">
-                  <TableBody>
-                    {console.log(dtData1)}
-                    {dtData1.map((row, index) => (
-                      <TableRow
-                        key={index}
-                        style={{ backgroundColor: "White" }}
-                      >
-                        <TableCell>{row.SEQ}</TableCell>
-                        <TableCell>{row.TITLE}</TableCell>
-                        <TableCell>
-                          <Input
-                            type="text"
-                            style={{
-                              width: "98%",
-                              textTransform: "uppercase",
-                            }}
-                            maxLength="30"
-                            className="styleEnable"
-                            onKeyDown={(e) => keyenter(e.keyCode, this, "")}
-                          />
-                          <Input
-                            type="text"
-                            style={{
-                              width: "98%",
-                              textTransform: "uppercase",
-                            }}
-                            maxLength="30"
-                            className="styleEnable"
-                            onKeyDown={(e) => keyenter(e.keyCode, this, "")}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-            {console.log(lblErrorState)}
-            {lblErrorState && (
-              <div className="lblLog">
-                <Table className="lblTbLog">
-                  <TableCell>{lblError}</TableCell>
-                </Table>
-              </div>
-            )}
-            <div className="panelgvSerial">
-              {panalSerialOpen && (
-                <Table classname="gvSerial" component={Paper}>
-                  <TableHead className="gvSerialHead">
-                    <TableRow>
-                      <TableCell className="gvSerialCell">Sheet</TableCell>
-                      <TableCell className="gvSerialCell">No.</TableCell>
-                      <TableCell className="gvSerialCell">Serial No.</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {serialData.map((row, index) => (
-                      <TableRow
-                        key={index}
-                        style={{ padding: "4px 4px 4px 4px" }}
-                      >
-                        <TableCell
-                          className="gvSerialCell"
-                          style={{ width: "3%", textAlign: "right" }}
+          <tr>
+            <td>
+              {gvbacksideOpen && (
+                <div className="pnlBackside">
+                  <Table component={Paper} className="gvBackSide">
+                    <TableBody>
+                      {console.log(dtData1)}
+                      {dtData1.map((row, index) => (
+                        <TableRow
+                          key={index}
+                          style={{ backgroundColor: "White" }}
                         >
-                          {row.SEQ}
-                        </TableCell>
-                        <TableCell
-                          className="gvSerialCell"
-                          style={{ width: "40%", textAlign: "right" }}
-                        >
-                          {row.TITLE}
-                        </TableCell>
-                        <TableCell
-                          className="gvSerialCell"
-                          style={{ width: "70%", paddingRight: "10px" }}
-                        >
-                          <Input
-                            type="text"
-                            style={{
-                              width: "98%",
-                              textTransform: "uppercase",
-                            }}
-                            maxLength="30"
-                            className="styleEnable"
-                            onKeyDown={(e) => keyenter(e.keyCode, this, "")}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                    <TableRow>
-                      <TableCell
-                        colSpan={3}
-                        style={{
-                          textAlign: "center",
-                          padding: "3px",
-                          gap: "10px",
-                        }}
-                      >
-                        <Button className="BtSave">OK</Button>
-                        &nbsp;&nbsp;
-                        <Button className="BtCancel"> Cancel</Button>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+                          <TableCell>{row.SEQ}</TableCell>
+                          <TableCell>{row.TITLE}</TableCell>
+                          <TableCell>
+                            <Input
+                              type="text"
+                              style={{
+                                width: "98%",
+                                textTransform: "uppercase",
+                              }}
+                              maxLength="30"
+                              className="styleEnable"
+                              onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                            />
+                            <Input
+                              type="text"
+                              style={{
+                                width: "98%",
+                                textTransform: "uppercase",
+                              }}
+                              maxLength="30"
+                              className="styleEnable"
+                              onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               )}
-            </div>
-          </td>
+              {console.log(lblErrorState)}
+              {lblErrorState && (
+                <div className="lblLog">
+                  <Table className="lblTbLog">
+                    <TableCell>{lblError}</TableCell>
+                  </Table>
+                </div>
+              )}
+              <div className="panelgvSerial">
+                {panalSerialOpen && (
+                  <Table classname="gvSerial" component={Paper}>
+                    <TableHead className="gvSerialHead">
+                      <TableRow>
+                        <TableCell className="gvSerialCell">Sheet</TableCell>
+                        <TableCell className="gvSerialCell">No.</TableCell>
+                        <TableCell className="gvSerialCell">
+                          Serial No.
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {serialData.map((row, index) => (
+                        <TableRow
+                          key={index}
+                          style={{ padding: "4px 4px 4px 4px" }}
+                        >
+                          <TableCell
+                            className="gvSerialCell"
+                            style={{ width: "3%", textAlign: "right" }}
+                          >
+                            {row.SEQ}
+                          </TableCell>
+                          <TableCell
+                            className="gvSerialCell"
+                            style={{ width: "40%", textAlign: "right" }}
+                          >
+                            {row.TITLE}
+                          </TableCell>
+                          <TableCell
+                            className="gvSerialCell"
+                            style={{ width: "70%", paddingRight: "10px" }}
+                          >
+                            <Input
+                              type="text"
+                              style={{
+                                width: "98%",
+                                textTransform: "uppercase",
+                              }}
+                              maxLength="30"
+                              className="styleEnable"
+                              onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      <TableRow>
+                        <TableCell
+                          colSpan={3}
+                          style={{
+                            textAlign: "center",
+                            padding: "3px",
+                            gap: "10px",
+                          }}
+                        >
+                          <Button className="BtSave" onClick={ShowTableResult}>
+                            OK
+                          </Button>
+                          &nbsp;&nbsp;
+                          <Button className="BtCancel"> Cancel</Button>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                )}
+              </div>
+            </td>
+          </tr>
         </table>
       </Card>
     </div>
