@@ -40,9 +40,9 @@ import * as XLSX from 'xlsx';
 
 function ProductMaster() {
 
-    const { factory, setFactory} = getFactory();
+    const { factory, setFactory } = getFactory();
 
-    const { ShowData, checkHead, checkEmpty, checkData, DDLFactory, setDDLFactory, txtProduct, settxtProduct, Search,  
+    const { ShowData, checkHead, checkEmpty, checkData, DDLFactory, setDDLFactory, txtProduct, settxtProduct, Search, alignData,
         OpenPopup, PopupOpen, PopupClose, New, Clear, selectedRowData, OpenEdit, handleOpenDelete, handleExportToExcel, } = ProductMasterPage();
 
     return (
@@ -95,8 +95,8 @@ function ProductMaster() {
                                 onChange={(e) => setDDLFactory(e.target.value)}
                             >
                                 {factory.map((item) => (
-                                    <MenuItem key={item.factory_code} value={item.factory_code}>
-                                        {item.factory_desc}
+                                    <MenuItem key={item.p_factory_code} value={item.p_factory_code}>
+                                        {item.p_factory_desc}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -150,7 +150,7 @@ function ProductMaster() {
                 <TableContainer
                     component={Paper}
                     style={{
-                        width: "96%",
+                        width: "100%",
                         marginBottom: "10px",
                         height: "400px",
                         visibility: checkHead,
@@ -268,176 +268,178 @@ function ProductMaster() {
                                         </Tooltip>
                                     </TableCell>
                                     <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{item.tpm_factory}</TableCell>
-                                    <TableCell>{item.tpm_product_name}</TableCell>
-                                    <TableCell>{item.tpm_update_count}</TableCell>
-                                    <TableCell>{item.tpm_config_code}</TableCell>
-                                    <TableCell>{item.tpm_start_seq_serial}</TableCell>
-                                    <TableCell>{item.tpm_start_seq_code}</TableCell>
+                                    <TableCell>{item.p_tpm_factory}</TableCell>
+                                    <TableCell className="autowidthcell">
+                                        {item.p_tpm_product_name}
+                                    </TableCell>
+                                    <TableCell>{alignData(item.p_tpm_update_count)}</TableCell>
+                                    <TableCell>{item.p_tpm_config_code}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_start_seq_serial)}</TableCell>
+                                    <TableCell>{item.p_tpm_start_seq_code}</TableCell>
                                     <TableCell>
-                                        {item.tpm_date_inproc_flg === 'Y' && (
+                                        {item.p_tpm_date_inproc_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
-                                    <TableCell>{item.tpm_date_inproc}</TableCell>
-                                    <TableCell>{item.tpm_pcs_per_sht_efpc}</TableCell>
-                                    <TableCell>{item.tpm_pcs_per_sht_smt}</TableCell>
-                                    <TableCell>{item.tpm_serial_file_format}</TableCell>
-                                    <TableCell>{item.tpm_sht_file_format}</TableCell>
-                                    <TableCell>{item.tpm_serial_side}</TableCell>
-                                    <TableCell>{item.tpm_barcode_grade}</TableCell>
+                                    <TableCell>{item.p_tpm_date_inproc}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_pcs_per_sht_efpc)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_pcs_per_sht_smt)}</TableCell>
+                                    <TableCell>{item.p_tpm_serial_file_format}</TableCell>
+                                    <TableCell>{item.p_tpm_sht_file_format}</TableCell>
+                                    <TableCell>{item.p_tpm_serial_side}</TableCell>
+                                    <TableCell>{item.p_tpm_barcode_grade}</TableCell>
                                     <TableCell>
-                                        {item.tpm_barcode_req_lot === 'Y' && (
+                                        {item.p_tpm_barcode_req_lot === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
-                                    <TableCell>{item.tpm_sht_type}</TableCell>
-                                    <TableCell>{item.tpm_sht_per_lot_efpc}</TableCell>
-                                    <TableCell>{item.tpm_sht_per_lot_smt}</TableCell>
-                                    <TableCell>{item.tpm_sht_per_scan}</TableCell>
-                                    <TableCell>{item.tpm_sht_per_laser}</TableCell>
-                                    <TableCell>{item.tpm_sht_model_code}</TableCell>
+                                    <TableCell>{item.p_tpm_sht_type}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_sht_per_lot_efpc)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_sht_per_lot_smt)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_sht_per_scan)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_sht_per_laser)}</TableCell>
+                                    <TableCell>{item.p_tpm_sht_model_code}</TableCell>
                                     <TableCell>
-                                        {item.tpm_sht_check_prd_flag === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.tpm_sht_check_lot_flag === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.tpm_sht_plasma_time_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_sht_plasma_time}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_sht_xray_1_time_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_product_status}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_conn_roll_sht_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_conn_roll_sht_length}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_conn_roll_leaf_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_conn_roll_length}</TableCell>
-                                    <TableCell>{item.tpm_conn_leaf_length}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_conn_roll_prd_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_conn_roll_prd_start}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_prd_end}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_conn_roll_serial_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_conn_roll_leaf_scan}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_req_lot_sht}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_lot_sht_start}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_lot_sht_end}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_req_prd_sht}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_prd_sht_start}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_prd_sht_end}</TableCell>
-                                    <TableCell>{item.tpm_conn_roll_prd_fix}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_conn_sht_control_time_flg === 'Y' && (
+                                        {item.p_tpm_sht_check_prd_flag === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_conn_sht_plasma_time_flg === 'Y' && (
+                                        {item.p_tpm_sht_check_lot_flag === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_conn_sht_mix_lot_flg === 'Y' && (
+                                        {item.p_tpm_sht_plasma_time_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{alignData(item.p_tpm_sht_plasma_time)}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_sht_xray_1_time_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{item.p_tpm_product_status}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_conn_roll_sht_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_sht_length)}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_conn_roll_leaf_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_length)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_leaf_length)}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_conn_roll_prd_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_prd_start)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_prd_end)}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_conn_roll_serial_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_leaf_scan)}</TableCell>
+                                    <TableCell>{item.p_tpm_conn_roll_req_lot_sht}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_lot_sht_start)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_lot_sht_end)}</TableCell>
+                                    <TableCell>{item.p_tpm_conn_roll_req_prd_sht}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_prd_sht_start)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_conn_roll_prd_sht_end)}</TableCell>
+                                    <TableCell>{item.p_tpm_conn_roll_prd_fix}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_conn_sht_control_time_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_conn_sht_mix_product_flg === 'Y' && (
+                                        {item.p_tpm_conn_sht_plasma_time_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_conn_sht_checksum_flg === 'Y' && (
+                                        {item.p_tpm_conn_sht_mix_lot_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_conn_sht_check_weekcode_flg === 'Y' && (
+                                        {item.p_tpm_conn_sht_mix_product_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_proc_control_time_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_proc_control_time}</TableCell>
-                                    <TableCell>{item.tpm_fin_pcs_per_tray}</TableCell>
-                                    <TableCell>{item.tpm_fin_pcs_per_scan}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_fin_pack_group_flg === 'Y' && (
+                                        {item.p_tpm_conn_sht_checksum_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_fin_check_weekcode_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_fin_pds_time_skip_elt}</TableCell>
-                                    <TableCell>{item.tpm_fin_pds_time_hide_time}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_fin_pds_time_flg === 'Y' && (
-                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>{item.tpm_fin_pds_time}</TableCell>
-                                    <TableCell>{item.tpm_fin_pds_time_by}</TableCell>
-                                    <TableCell>
-                                        {item.tpm_fin_pds_time_confirm_flg === 'Y' && (
+                                        {item.p_tpm_conn_sht_check_weekcode_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_fin_conn_sht_flg === 'Y' && (
+                                        {item.p_tpm_proc_control_time_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{item.p_tpm_proc_control_time}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_fin_pcs_per_tray)}</TableCell>
+                                    <TableCell>{alignData(item.p_tpm_fin_pcs_per_scan)}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_fin_pack_group_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_fin_mix_lot_flg === 'Y' && (
+                                        {item.p_tpm_fin_check_weekcode_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{item.p_tpm_fin_pds_time_skip_elt}</TableCell>
+                                    <TableCell>{item.p_tpm_fin_pds_time_hide_time}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_fin_pds_time_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{alignData(item.p_tpm_fin_pds_time)}</TableCell>
+                                    <TableCell>{item.p_tpm_fin_pds_time_by}</TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_fin_pds_time_confirm_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_fin_mix_product_flg === 'Y' && (
+                                        {item.p_tpm_fin_conn_sht_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_fin_mix_lot_flg === 'Y' && (
+                                            <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item.p_tpm_fin_mix_product_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
                                     <TableCell>
-                                        {item.tpm_fin_checksum_flg === 'Y' && (
+                                        {item.p_tpm_fin_checksum_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {item.tpm_fin_chip_id_flg === 'Y' && (
+                                        {item.p_tpm_fin_chip_id_flg === 'Y' && (
                                             <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                         )}
                                     </TableCell>
