@@ -24,6 +24,7 @@ import "./ScanSMTSerialShtFINManySht.css";
 import Hearder from "../Header/Hearder";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
 import { Input } from "antd";
+import { DisplaySettings } from "@mui/icons-material";
 function ScanSMTSerialShtFINManySht() {
   const {
     lot,
@@ -58,6 +59,7 @@ function ScanSMTSerialShtFINManySht() {
     txtLotRef,
     handleProductChange,
     txtLotRef_TextChanged,
+    gvbacksideOpen,
   } = fn_ScanSMTSerialShtFINManySht();
 
   return (
@@ -227,70 +229,73 @@ function ScanSMTSerialShtFINManySht() {
           )}
         </div>
       </div>
-
-      <div className="pnlBackside">
-        <Table
-          className="gvBackSide"
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            fontSize: "15px",
-          }}
-        >
-          <TableBody>
-            {dtData1.map((row, index) => (
-              <TableRow key={index} style={{ backgroundColor: "White" }}>
-                <TableCell
-                  style={{
-                    width: "3%",
-                    fontWeight: "bold",
-                    textAlign: "right",
-                    color: "White",
-                    backgroundColor: "#006666",
-                  }}
-                >
-                  {row.SEQ}
-                </TableCell>
-                <TableCell
-                  style={{
-                    width: "40%",
-                    fontWeight: "bold",
-                    textAlign: "right",
-                    color: "White",
-                    backgroundColor: "#006666",
-                  }}
-                >
-                  {row.TITLE}
-                </TableCell>
-                <TableCell
-                  style={{
-                    width: "70%",
-                    fontSize: "15px",
-                    backgroundColor: "#006666",
-                    color: "Black",
-                    paddingRight: "10px",
-                  }}
-                >
-                  <Input
-                    type="text"
-                    style={{ width: "98%", textTransform: "uppercase" }}
-                    maxLength="30"
-                    className="styleEnable"
-                    onKeyDown={(e) => keyenter(e.keyCode, this, "")}
-                  />
-                  <Input
-                    type="text"
-                    style={{ width: "98%", textTransform: "uppercase" }}
-                    maxLength="30"
-                    className="styleEnable"
-                    onKeyDown={(e) => keyenter(e.keyCode, this, "")}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      {gvbacksideOpen && (
+        <div className="pnlBackside">
+          <Table
+            className="gvBackSide"
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "15px",
+            }}
+          >
+            <TableBody>
+              {console.log(dtData1)}
+              {dtData1.map((row, index) => (
+                <TableRow key={index} style={{ backgroundColor: "White" }}>
+                  <TableCell
+                    style={{
+                      width: "3%",
+                      fontWeight: "bold",
+                      textAlign: "right",
+                      color: "White",
+                      backgroundColor: "#006666",
+                    }}
+                  >
+                    {row.SEQ}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "40%",
+                      fontWeight: "bold",
+                      textAlign: "right",
+                      color: "White",
+                      backgroundColor: "#006666",
+                    }}
+                  >
+                    {row.TITLE}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "70%",
+                      fontSize: "15px",
+                      backgroundColor: "#006666",
+                      color: "Black",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    <Input
+                      type="text"
+                      style={{ width: "98%", textTransform: "uppercase" }}
+                      maxLength="30"
+                      className="styleEnable"
+                      onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                    />
+                    <Input
+                      type="text"
+                      style={{ width: "98%", textTransform: "uppercase" }}
+                      maxLength="30"
+                      className="styleEnable"
+                      onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
+      {console.log(panalSerialOpen, "panalSerialOpen")}
       {panalSerialOpen && (
         <div className="pnlSerial">
           <Table
@@ -362,6 +367,10 @@ function ScanSMTSerialShtFINManySht() {
               ))}
             </TableBody>
           </Table>
+          <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+            <Button>OK</Button>
+            <Button>Cancel</Button>
+          </div>
         </div>
       )}
       {lblErrorState && (
