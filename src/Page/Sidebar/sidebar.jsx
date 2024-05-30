@@ -1,50 +1,62 @@
 import React, { useEffect, useState, StrictMode } from "react";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+
 import ListItemIcon from "@mui/material/ListItemIcon";
+
+import { Drawer, List, ListItem, ListItemText} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./sidebar.css"
+import "./sidebar.css";
 import { DownOutlined, UpOutlined, MenuOutlined } from "@ant-design/icons";
-import Circle from '@mui/icons-material/CircleOutlined';
-import {sidebarT} from "./function_sidebar"
+import Circle from "@mui/icons-material/CircleOutlined";
+import { sidebarT } from "./function_sidebar";
 
 //Icon
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import WorkIcon from "@mui/icons-material/Work";
 import BuildIcon from "@mui/icons-material/Build";
-import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
+import BuildOutlinedIcon from "@mui/icons-material/BuildOutlined";
 import SourceIcon from "@mui/icons-material/Source";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 // import moment from "moment";
-import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
-import SensorsOutlinedIcon from '@mui/icons-material/SensorsOutlined';
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import SensorsOutlinedIcon from "@mui/icons-material/SensorsOutlined";
 function sidebar({ isOpen, onClose }) {
-  
-  const {subMenuOpen1, subMenuOpen2, subMenuOpen3, subMenuOpen4, subMenuOpen5,
-    menu, menuID, menuMain, Icondrop1, Icondrop2, Icondrop3, Icondrop4,
-    toggleSubMenu1, toggleSubMenu2, toggleSubMenu3, toggleSubMenu4,
-    toggleSubMenu5, handleButtonClick, Logout } = sidebarT();
+  const {
+    subMenuOpen1,
+    subMenuOpen2,
+    subMenuOpen3,
+    subMenuOpen4,
+    subMenuOpen5,
+    menu,
+    menuID,
+    menuMain,
+    Icondrop1,
+    Icondrop2,
+    Icondrop3,
+    Icondrop4,
+    toggleSubMenu1,
+    toggleSubMenu2,
+    toggleSubMenu3,
+    toggleSubMenu4,
+    toggleSubMenu5,
+    handleButtonClick,
+    Logout,
+  } = sidebarT();
 
   return (
-    <Drawer anchor="left"
-      open={isOpen} onClose={onClose}
-      sx={{ border: "10" }}>
+    <Drawer
+      anchor="left"
+      open={isOpen}
+      onClose={onClose}
+      sx={{ border: "10" }}
+    >
       <List sx={{ width: "300px" }}>
-        <ListItem className="Headslide"
-          onClick={onClose}
-        >
+        <ListItem className="Headslide" onClick={onClose}>
           <ListItemText style={{ marginLeft: "10px" }} primary="Welcome" />
           <ArrowBackIcon onClick={onClose} />
         </ListItem>
         {/*Menu1 */}
-        <ListItem
-          className="ListItem"
-          onClick={toggleSubMenu1}
-
-        >
+        <ListItem className="ListItem" onClick={toggleSubMenu1}>
           <ListItemIcon>
             <AssignmentOutlinedIcon color="primary" />
           </ListItemIcon>
@@ -53,9 +65,9 @@ function sidebar({ isOpen, onClose }) {
           />
           {menuID.map(
             (item, index) =>
-              menuID[index] === menuMain[0] && (
-                Icondrop1 ? <UpOutlined /> : <DownOutlined />
-              ))}
+              menuID[index] === menuMain[0] &&
+              (Icondrop1 ? <UpOutlined /> : <DownOutlined />)
+          )}
         </ListItem>
         {subMenuOpen1 && (
           <>
@@ -64,14 +76,13 @@ function sidebar({ isOpen, onClose }) {
                 menuID[index] === menuMain[0] && (
                   <ListItem
                     className="SubMenuItem"
-
                     onClick={() => {
                       onClose();
                       handleButtonClick(item[0]);
                     }}
-
                     key={index}
-                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
+                  >
+                    <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
                     <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
@@ -87,9 +98,9 @@ function sidebar({ isOpen, onClose }) {
           <ListItemText primary={menu[1]} />
           {menuID.map(
             (item, index) =>
-              menuID[index] === menuMain[1] && (
-                Icondrop2 ? <UpOutlined /> : <DownOutlined />
-              ))}
+              menuID[index] === menuMain[1] &&
+              (Icondrop2 ? <UpOutlined /> : <DownOutlined />)
+          )}
         </ListItem>
         {subMenuOpen2 && (
           <>
@@ -98,14 +109,13 @@ function sidebar({ isOpen, onClose }) {
                 menuID[index] === menuMain[1] && (
                   <ListItem
                     className="SubMenuItem"
-
                     onClick={() => {
                       onClose();
                       handleButtonClick(item.menu_name);
                     }}
-
                     key={index}
-                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
+                  >
+                    <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
                     <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
@@ -120,9 +130,9 @@ function sidebar({ isOpen, onClose }) {
           <ListItemText primary={menu[2]} />
           {menuID.map(
             (item, index) =>
-              menuID[index] === menuMain[2] && (
-                Icondrop3 ? <UpOutlined /> : <DownOutlined />
-              ))}
+              menuID[index] === menuMain[2] &&
+              (Icondrop3 ? <UpOutlined /> : <DownOutlined />)
+          )}
         </ListItem>
         {subMenuOpen3 && (
           <>
@@ -136,7 +146,8 @@ function sidebar({ isOpen, onClose }) {
                       handleButtonClick(item[5]);
                     }}
                     key={index}
-                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
+                  >
+                    <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
                     <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
@@ -146,14 +157,14 @@ function sidebar({ isOpen, onClose }) {
         {/*Menu4 */}
         <ListItem className="ListItem" onClick={toggleSubMenu4}>
           <ListItemIcon>
-            <SourceIcon style={{ color: 'orange' }} />
+            <SourceIcon style={{ color: "orange" }} />
           </ListItemIcon>
           <ListItemText primary={menu[3]} />
           {menuID.map(
             (item, index) =>
-              menuID[index] === menuMain[3] && (
-                Icondrop4 ? <UpOutlined /> : <DownOutlined />
-              ))}
+              menuID[index] === menuMain[3] &&
+              (Icondrop4 ? <UpOutlined /> : <DownOutlined />)
+          )}
         </ListItem>
         {subMenuOpen4 && (
           <>
@@ -167,7 +178,8 @@ function sidebar({ isOpen, onClose }) {
                       handleButtonClick(item.menu_name);
                     }}
                     key={index}
-                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
+                  >
+                    <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
                     <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
@@ -175,10 +187,9 @@ function sidebar({ isOpen, onClose }) {
           </>
         )}
         {/*Menu5 */}
-        <ListItem className="ListItem" onClick={toggleSubMenu5}
-        >
+        <ListItem className="ListItem" onClick={toggleSubMenu5}>
           <ListItemIcon>
-            <LogoutIcon style={{ color: 'gray' }} />
+            <LogoutIcon style={{ color: "gray" }} />
           </ListItemIcon>
           <ListItemText primary={menu[4]} onClick={Logout} />
         </ListItem>
@@ -194,7 +205,8 @@ function sidebar({ isOpen, onClose }) {
                       // handleButtonClick(item.menu_name);
                     }}
                     key={index}
-                  ><Circle style={{ fontSize: '8px', marginRight: "10px" }} />
+                  >
+                    <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
                     <ListItemText primary={menu[index]} />
                   </ListItem>
                 )
@@ -217,6 +229,6 @@ function sidebar({ isOpen, onClose }) {
       </List>
     </Drawer>
   );
-};
+}
 
 export default sidebar;
