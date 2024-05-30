@@ -213,19 +213,7 @@ function sidebar({ isOpen, onClose }) {
             )}
           </>
         )}
-        <ListItem className="ListItem" style={{ marginTop: "170%" }}>
-          <ListItemText
-            primary={
-              <span
-                style={{
-                  fontSize: "12px",
-                }}
-              >
-                {/* Login Date: {moment(currentDate).format(`DD/MM/YYYY HH:mm:ss`)}{" "} */}
-              </span>
-            }
-          />
-        </ListItem>
+     
       </List>
     </Drawer>
   );

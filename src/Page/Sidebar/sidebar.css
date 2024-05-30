@@ -1,10 +1,9 @@
 
 .ListItem {
     cursor: pointer;
-    
     color: rgb(119, 118, 118);
     width: 95%;
-    margin-left: 5px;
+    
   }
   
   .ListItem:hover {
@@ -12,14 +11,13 @@
     border-radius: 10px;
     color: #40a9ff;
     width: 95%;
-    margin-left: 5px;
+   
   }
   
   /* สไตล์สำหรับรายการรายการย่อย */
   .SubMenuItem {
     cursor: pointer;
     margin-left: 20px;
-    
     width: 50%;
   }
   
