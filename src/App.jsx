@@ -13,7 +13,6 @@ import Homepage from "./Page/Homepage/Homepage";
 import Login from "./Page/Login/Login"; 
 
 import axios from "axios";
-
 const backendUrl = "http://localhost:3001";
 
 axios.defaults.baseURL = backendUrl;
