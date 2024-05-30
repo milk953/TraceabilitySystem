@@ -1,18 +1,16 @@
 /* style={{margin: 'auto',width:'400px' }} */
 .ScanSMT{
     margin: auto;
-    width: 450px !important;
+    max-width:  450px;
+    width:  450px;
    
 }
 
 .ScanSMT th{
- 
     padding: 3px !important;
     background-color: #8c8c8c !important ;
     border-radius: 5px  5px 0 0!important;
     color: #fff;
-    
-
 }
 .aaaa{
     color: green !important;
@@ -32,41 +30,60 @@
     font-size: 15px;
     width: 35px;
     height: 20px;
-border-radius: 4px;
-margin: auto;
+    border-radius: 4px;
+    margin: auto;
+}
+
+.BtSave{
+    background-color: #1A5D1A !important ;
+    color: #fff !important;
+    height: 30px;
+  
+}
+
+.BtCancel{
+    background-color: #E0282E!important ;
+    color: #fff !important;
+    height: 30px;
 }
 
 .CSS-GvSerial{
     margin: auto;
-    width: 400px !important;
-    
-  
-
+    max-width: 400px !important;
+    width: 90% !important;
 }
 
 .CSS-GvSerial th{
     background-color: #12422e !important ;
     color: #fff;
-    border: 1px solid rgb(255, 255, 255)
+    padding: 5px;
+}
 
+.CSS-GvSerial td{
+    padding: 4px 4px 4px 4px!important;
 }
 
 .CSS-GvScanResult{
-  
-    width: 900px !important;
-    margin-left: 50px;
-    
-
+    max-width: 900px;
+    width: 100% !important;
+    margin-top: 10px;
+}
+.Card-lblResult{
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    height: 45px;
+    text-align: center;
 }
 
+
 .CSS-GvScanResult th{
-    /* margin: auto;
-    width: 400px !important; */
+  
     padding: 7px !important;
-    background-color: #096dd9 !important ;
-    /* border-radius: 5px  5px 0 0!important; */
+    background-color: #378CE7 !important ;
     color: #fff;
     text-align: center;
+    
 }
 #txtfild {
     padding: 1px !important;

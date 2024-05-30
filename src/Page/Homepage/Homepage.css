@@ -1,0 +1,87 @@
+.Head-Menu1 {
+    border-radius: 25px;
+    padding: 5px;
+    text-align: center;
+    background: #739072;
+    color: #fff;
+    width: 220px;
+    margin: 5px;
+    height: 300px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.Head-Menu1:hover {
+    background: #5a7257;
+    transform: scale(1.05);
+}
+
+.Head-Menu2 {
+    border-radius: 25px;
+    padding: 5px;
+    text-align: center;
+    background: #CD8D7A;
+    color: #fff;
+    width: 220px;
+    margin: 5px;
+    height: 300px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.Head-Menu2:hover {
+    background: #a8634e;
+    transform: scale(1.05);
+}
+
+.Head-Menu3 {
+    border-radius: 25px;
+    padding: 5px;
+    text-align: center;
+    background: #f4a86f;
+    color: #fff;
+    width: 220px;
+    margin: 5px;
+    height: 300px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.Head-Menu3:hover {
+    background: #e88f4b;
+    transform: scale(1.05);
+}
+
+.count-Menu1 {
+    border-radius: 7px;
+    padding: 5px;
+    text-align: center;
+    background: #012101;
+    width: 20px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+
+.count-Menu2 {
+    border-radius: 7px;
+    padding: 5px;
+    text-align: center;
+    background: #6c4336;
+    width: 20px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.count-Menu3 {
+    border-radius: 7px;
+    padding: 5px;
+    text-align: center;
+    background: #db7b31;
+    width: 20px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+
+.hoverable:hover {
+    background: #c0c0c0;
+    transform: scale(1.05);
+}
