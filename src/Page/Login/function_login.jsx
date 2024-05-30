@@ -36,7 +36,6 @@ function LoginTest() {
     page_load();
   }, []);
   const PageSheetMaster = () => {
-    // navigate("/SheetMaster");
     window.location.href = "/SheetMaster";
   };
   const handleLogin = async () => {
@@ -55,7 +54,7 @@ function LoginTest() {
         setIsLoading(true);
         setTimeout(() => {
           setIsLoading(false);
-          PageSheetMaster();
+          window.location.href = "/Homepage";
         }, 1300);
       } else if (res.status === 401) {
         Swal.fire({

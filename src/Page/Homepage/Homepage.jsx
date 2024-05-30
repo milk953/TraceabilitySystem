@@ -17,6 +17,7 @@ import {
   InputLabel,
   Autocomplete,
   InputAdornment,
+  Grid
 } from "@mui/material";
 
 import {
@@ -52,12 +53,17 @@ function ScanSheetMOTTime() {
           padding: "20px",
         }}
       >
-        <div style={{ textAlign: "center" }}>
-          {/* <Search
-            placeholder="Search.."
-            style={{ width: 800, marginTop: "20px" }}
-          /> */}
-          <FormControl style={{ width: 800 }} fullWidth>
+        
+      
+        <div style={{  }}>
+      <Grid container alignItems="center" justifyContent="space-between">
+        <Grid item>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: '#3D3B40' }}>
+            Traceability System
+          </Typography>
+        </Grid>
+        <Grid item>
+        <FormControl style={{ width: 400 }} fullWidth>
             <Autocomplete
               id="selectPd"
               value={SL_menu}
@@ -68,6 +74,7 @@ function ScanSheetMOTTime() {
                   {...params}
                   size="small"
                   sx={{ textAlign: "left" }}
+                  placeholder="Search Menu.."
                   InputProps={{
                     ...params.InputProps,
                     startAdornment: (
@@ -80,8 +87,10 @@ function ScanSheetMOTTime() {
               )}
             />
           </FormControl>
-        </div>
-        <table style={{ marginTop: "40px", maxWidth: "1400px", width: "100%" }}>
+        </Grid>
+      </Grid>
+    </div>
+        <table style={{ marginTop: "25px", maxWidth: "1400px", width: "100%" }}>
           <tbody>
             <tr>
               <td
