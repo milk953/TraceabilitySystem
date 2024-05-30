@@ -201,13 +201,13 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
   useEffect(() => {
     if (STATUS_P === "NEW") {
-      setDDL_Factory(factory_login)
+      setDDL_Factory(factory_login);
       settxtProductName("");
       settxtUpCount("");
       settxtConfig("");
       settxtStSeqSerial("");
       settxtStSeqCode("");
-      setDDL_ProductStatus("Active");
+      setDDL_ProductStatus("ACTIVE");
       setDateProFlag("");
       settxtDateInProcess("");
       settxtPcsPerSHTEFPC("");
@@ -274,77 +274,77 @@ function ProductMasterPopup(onClose, item, searchFunction) {
       setFinalchipIDflag("");
     } else if (STATUS_P === "EDIT" && item) {
       console.log("CASE EDIT", item);
-      setDDL_Factory(item.tpm_factory);
-      settxtProductName(item.tpm_product_name);
-      settxtUpCount(item.tpm_update_count);
-      settxtConfig(item.tpm_config_code);
-      settxtStSeqSerial(item.tpm_start_seq_serial);
-      settxtStSeqCode(item.tpm_start_seq_code);
-      setDDL_ProductStatus(item.tpm_product_status);
-      setDateProFlag(item.tpm_date_inproc_flg);
-      settxtDateInProcess(item.tpm_date_inproc);
-      settxtPcsPerSHTEFPC(item.tpm_pcs_per_sht_efpc);
-      settxtPcsPerSHTSMT(item.tpm_pcs_per_sht_smt);
-      settxtSerialFile(item.tpm_serial_file_format);
-      setDDL_Serialside(item.tpm_serial_side);
-      setDDL_SerialStruc(item.tpm_serial_structure);
-      setBarReqFlag(item.tpm_barcode_req_lot);
-      settxtBarcodeGrade(item.tpm_barcode_grade);
-      settxtshtFileFormat(item.tpm_sht_file_format);
-      setDDL_ShtStructure(item.tpm_sht__structure);
-      setDDL_ShtType(item.tpm_sht_type);
-      settxtShtperLotEFPC(item.tpm_sht_per_lot_efpc);
-      settxtShtperLotSMT(item.tpm_sht_per_lot_smt);
-      settxtShtperscan(item.tpm_sht_per_scan);
-      settxtShtperlaser(item.tpm_sht_per_laser);
-      settxtShtModelCode(item.tpm_sht_model_code);
-      setShtProFlag(item.tpm_sht_check_prd_flag);
-      setShtLotFlag(item.tpm_sht_check_lot_flag);
-      setShtXrayFlag(item.tpm_sht_xray_1_time_flg);
-      setPlasmaTimeFlag(item.tpm_sht_plasma_time_flg);
-      settxtPlasmaTime(item.tpm_sht_plasma_time);
-      setConRollShtFlag(item.tpm_conn_roll_sht_flg);
-      settxtConRollShtLength(item.tpm_conn_roll_sht_length);
-      setConRollLeafFlag(item.tpm_conn_roll_leaf_flg);
-      settxtConRollLength(item.tpm_conn_roll_length);
-      settxtConLeafLength(item.tpm_conn_leaf_length);
-      setConRollProFlag(item.tpm_conn_roll_prd_flg);
-      settxtConRollProSt(item.tpm_conn_roll_prd_start);
-      settxtConRollProEnd(item.tpm_conn_roll_prd_end);
-      setConRollSerialFlag(item.tpm_conn_roll_serial_flg);
-      settxtConRollLeafScan(item.tpm_conn_roll_leaf_scan);
-      setDDL_RollReqLotSht(item.tpm_conn_roll_req_lot_sht);
-      settxtRollLotShtSt(item.tpm_conn_roll_lot_sht_start);
-      settxtRollLotShtEnd(item.tpm_conn_roll_lot_sht_end);
-      setDDL_RollReqProSht(item.tpm_conn_roll_req_prd_sht);
-      settxtRollProShtSt(item.tpm_conn_roll_prd_sht_start);
-      settxtRollProShtEnd(item.tpm_conn_roll_prd_sht_end);
-      settxtRollProFix(item.tpm_conn_roll_prd_fix);
-      setConShtTimeFlag(item.tpm_conn_sht_control_time_flg);
-      settxtConShtTime(item.tpm_conn_sht_control_time);
-      setConShtsumFlag(item.tpm_conn_sht_checksum_flg);
-      setConShtPlasTimeFlag(item.tpm_conn_sht_plasma_time_flg);
-      settxtConShtPlasTime(item.tpm_conn_sht_plasma_time);
-      setConShtCodeFlag(item.tpm_conn_sht_check_weekcode_flg);
-      setConShtMixLotFlag(item.tpm_conn_sht_mix_lot_flg);
-      setConShtMixProFlag(item.tpm_conn_sht_mix_product_flg);
-      setProcessConTimeFlag(item.tpm_proc_control_time_flg);
-      setDDL_ProcessConTime(item.tpm_proc_control_time);
-      settxtFinalpcstray(item.tpm_fin_pcs_per_tray);
-      settxtFinalpcsscan(item.tpm_fin_pcs_per_scan);
-      setFinalpackgroupflag(item.tpm_fin_pack_group_flg);
-      setFinalweekcodeflag(item.tpm_fin_check_weekcode_flg);
-      setDDL_FinalPDStimeELT(item.tpm_fin_pds_time_skip_elt);
-      setDDL_FinalPDSHidetime(item.tpm_fin_pds_time_hide_time);
-      setFinalPDStimeflag(item.tpm_fin_pds_time_flg);
-      settxtFinalPDStime(item.tpm_fin_pds_time);
-      settxtFinalPDStimeby(item.tpm_fin_pds_time_by);
-      setFinalPDSconfirmflag(item.tpm_fin_pds_time_confirm_flg);
-      setFinalconnshtflag(item.tpm_fin_conn_sht_flg);
-      setFinalmixLotflag(item.tpm_fin_mix_lot_flg);
-      setFinalmixproflag(item.tpm_fin_mix_product_flg);
-      setFinalchecksumflag(item.tpm_fin_checksum_flg);
-      setFinalchipIDflag(item.tpm_fin_chip_id_flg);
+      setDDL_Factory(item.p_tpm_factory);
+      settxtProductName(item.p_tpm_product_name);
+      settxtUpCount(item.p_tpm_update_count);
+      settxtConfig(item.p_tpm_config_code);
+      settxtStSeqSerial(item.p_tpm_start_seq_serial);
+      settxtStSeqCode(item.p_tpm_start_seq_code);
+      setDDL_ProductStatus(item.p_tpm_product_status);
+      setDateProFlag(item.p_tpm_date_inproc_flg);
+      settxtDateInProcess(item.p_tpm_date_inproc);
+      settxtPcsPerSHTEFPC(item.p_tpm_pcs_per_sht_efpc);
+      settxtPcsPerSHTSMT(item.p_tpm_pcs_per_sht_smt);
+      settxtSerialFile(item.p_tpm_serial_file_format);
+      setDDL_Serialside(item.p_tpm_serial_side);
+      setDDL_SerialStruc(item.p_tpm_serial_structure);
+      setBarReqFlag(item.p_tpm_barcode_req_lot);
+      settxtBarcodeGrade(item.p_tpm_barcode_grade);
+      settxtshtFileFormat(item.p_tpm_sht_file_format);
+      setDDL_ShtStructure(item.p_tpm_sht__structure);
+      setDDL_ShtType(item.p_tpm_sht_type);
+      settxtShtperLotEFPC(item.p_tpm_sht_per_lot_efpc);
+      settxtShtperLotSMT(item.p_tpm_sht_per_lot_smt);
+      settxtShtperscan(item.p_tpm_sht_per_scan);
+      settxtShtperlaser(item.p_tpm_sht_per_laser);
+      settxtShtModelCode(item.p_tpm_sht_model_code);
+      setShtProFlag(item.p_tpm_sht_check_prd_flag);
+      setShtLotFlag(item.p_tpm_sht_check_lot_flag);
+      setShtXrayFlag(item.p_tpm_sht_xray_1_time_flg);
+      setPlasmaTimeFlag(item.p_tpm_sht_plasma_time_flg);
+      settxtPlasmaTime(item.p_tpm_sht_plasma_time);
+      setConRollShtFlag(item.p_tpm_conn_roll_sht_flg);
+      settxtConRollShtLength(item.p_tpm_conn_roll_sht_length);
+      setConRollLeafFlag(item.p_tpm_conn_roll_leaf_flg);
+      settxtConRollLength(item.p_tpm_conn_roll_length);
+      settxtConLeafLength(item.p_tpm_conn_leaf_length);
+      setConRollProFlag(item.p_tpm_conn_roll_prd_flg);
+      settxtConRollProSt(item.p_tpm_conn_roll_prd_start);
+      settxtConRollProEnd(item.p_tpm_conn_roll_prd_end);
+      setConRollSerialFlag(item.p_tpm_conn_roll_serial_flg);
+      settxtConRollLeafScan(item.p_tpm_conn_roll_leaf_scan);
+      setDDL_RollReqLotSht(item.p_tpm_conn_roll_req_lot_sht);
+      settxtRollLotShtSt(item.p_tpm_conn_roll_lot_sht_start);
+      settxtRollLotShtEnd(item.p_tpm_conn_roll_lot_sht_end);
+      setDDL_RollReqProSht(item.p_tpm_conn_roll_req_prd_sht);
+      settxtRollProShtSt(item.p_tpm_conn_roll_prd_sht_start);
+      settxtRollProShtEnd(item.p_tpm_conn_roll_prd_sht_end);
+      settxtRollProFix(item.p_tpm_conn_roll_prd_fix);
+      setConShtTimeFlag(item.p_tpm_conn_sht_control_time_flg);
+      settxtConShtTime(item.p_tpm_conn_sht_control_time);
+      setConShtsumFlag(item.p_tpm_conn_sht_checksum_flg);
+      setConShtPlasTimeFlag(item.p_tpm_conn_sht_plasma_time_flg);
+      settxtConShtPlasTime(item.p_tpm_conn_sht_plasma_time);
+      setConShtCodeFlag(item.p_tpm_conn_sht_check_weekcode_flg);
+      setConShtMixLotFlag(item.p_tpm_conn_sht_mix_lot_flg);
+      setConShtMixProFlag(item.p_tpm_conn_sht_mix_product_flg);
+      setProcessConTimeFlag(item.p_tpm_proc_control_time_flg);
+      setDDL_ProcessConTime(item.p_tpm_proc_control_time);
+      settxtFinalpcstray(item.p_tpm_fin_pcs_per_tray);
+      settxtFinalpcsscan(item.p_tpm_fin_pcs_per_scan);
+      setFinalpackgroupflag(item.p_tpm_fin_pack_group_flg);
+      setFinalweekcodeflag(item.p_tpm_fin_check_weekcode_flg);
+      setDDL_FinalPDStimeELT(item.p_tpm_fin_pds_time_skip_elt);
+      setDDL_FinalPDSHidetime(item.p_tpm_fin_pds_time_hide_time);
+      setFinalPDStimeflag(item.p_tpm_fin_pds_time_flg);
+      settxtFinalPDStime(item.p_tpm_fin_pds_time);
+      settxtFinalPDStimeby(item.p_tpm_fin_pds_time_by);
+      setFinalPDSconfirmflag(item.p_tpm_fin_pds_time_confirm_flg);
+      setFinalconnshtflag(item.p_tpm_fin_conn_sht_flg);
+      setFinalmixLotflag(item.p_tpm_fin_mix_lot_flg);
+      setFinalmixproflag(item.p_tpm_fin_mix_product_flg);
+      setFinalchecksumflag(item.p_tpm_fin_checksum_flg);
+      setFinalchipIDflag(item.p_tpm_fin_chip_id_flg);
     }
   }, [STATUS_P, item]);
 
@@ -900,81 +900,81 @@ function ProductMasterPopup(onClose, item, searchFunction) {
       ) {
         try {
           const response = await axios.post("/api/insProduct_Master", {
-            tpm_factory: DDL_Factory,
-            tpm_product_name: txtProductName,
-            tpm_update_count: txtUpCount,
-            tpm_config_code: txtConfig,
-            tpm_start_seq_serial: txtStSeqSerial,
-            tpm_start_seq_code: txtStSeqCode,
-            tpm_product_status: DDL_ProductStatus,
-            tpm_date_inproc_flg: DateProFlag,
-            tpm_date_inproc: DateProFlag === 'N' ? null : txtDateInProcess,
-            tpm_pcs_per_sht_efpc: txtPcsPerSHTEFPC,
-            tpm_pcs_per_sht_smt: txtPcsPerSHTSMT,
-            tpm_serial_file_format: txtSerialFile,
-            tpm_serial_side: DDL_Serialside,
-            tpm_serial_structure: DDL_SerialStruc,
-            tpm_barcode_req_lot: BarReqFlag,
-            tpm_barcode_grade: BarReqFlag === 'N' ? null : txtBarcodeGrade,
-            tpm_sht_file_format: txtshtFileFormat,
-            tpm_sht__structure: DDL_ShtStructure,
-            tpm_sht_type: DDL_ShtType,
-            tpm_sht_per_lot_efpc: txtShtperLotEFPC,
-            tpm_sht_per_lot_smt: txtShtperLotSMT,
-            tpm_sht_per_scan: txtShtperscan,
-            tpm_sht_per_laser: txtShtperlaser,
-            tpm_sht_model_code: txtShtModelCode,
-            tpm_sht_check_prd_flag: ShtProFlag,
-            tpm_sht_check_lot_flag: ShtLotFlag,
-            tpm_sht_xray_1_time_flg: ShtXrayFlag,
-            tpm_sht_plasma_time_flg: PlasmaTimeFlag,
-            tpm_sht_plasma_time: PlasmaTimeFlag === 'N' ? null : txtPlasmaTime,
-            tpm_conn_roll_sht_flg: ConRollShtFlag,
-            tpm_conn_roll_sht_length: ConRollShtFlag === 'N' ? null : txtConRollShtLength,
-            tpm_conn_roll_leaf_flg: ConRollLeafFlag,
-            tpm_conn_roll_length: ConRollLeafFlag === 'N' ? null : txtConRollLength,
-            tpm_conn_leaf_length: ConRollLeafFlag === 'N' ? null : txtConLeafLength,
-            tpm_conn_roll_prd_flg: ConRollProFlag,
-            tpm_conn_roll_prd_start: ConRollProFlag === 'N' ? null : txtConRollProSt,
-            tpm_conn_roll_prd_end: ConRollProFlag === 'N' ? null : txtConRollProEnd,
-            tpm_conn_roll_serial_flg: ConRollSerialFlag,
-            tpm_conn_roll_leaf_scan: ConRollSerialFlag === 'N' ? null : txtConRollLeafScan,
-            tpm_conn_roll_req_lot_sht: DDL_RollReqLotSht,
-            tpm_conn_roll_lot_sht_start: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtSt,
-            tpm_conn_roll_lot_sht_end: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtEnd,
-            tpm_conn_roll_req_prd_sht: DDL_RollReqProSht,
-            tpm_conn_roll_prd_sht_start: DDL_RollReqProSht === 'N' ? null : txtRollProShtSt,
-            tpm_conn_roll_prd_sht_end: DDL_RollReqProSht === 'N' ? null : txtRollLotShtEnd,
-            tpm_conn_roll_prd_fix: txtRollProFix,
-            tpm_conn_sht_control_time_flg: ConShtTimeFlag,
-            tpm_conn_sht_control_time: ConShtTimeFlag === 'N' ? null : txtConShtTime,
-            tpm_conn_sht_checksum_flg: ConShtsumFlag,
-            tpm_conn_sht_plasma_time_flg: ConShtPlasTimeFlag,
-            tpm_conn_sht_plasma_time: ConShtPlasTimeFlag === 'N' ? null : txtConShtPlasTime,
-            tpm_conn_sht_check_weekcode_flg: ConShtCodeFlag,
-            tpm_conn_sht_mix_lot_flg: ConShtMixLotFlag,
-            tpm_conn_sht_mix_product_flg: ConShtMixProFlag,
-            tpm_proc_control_time_flg: ProcessConTimeFlag,
-            tpm_proc_control_time: ProcessConTimeFlag === 'N' ? null : DDL_ProcessConTime,
-            tpm_fin_pcs_per_tray: txtFinalpcstray,
-            tpm_fin_pcs_per_scan: txtFinalpcsscan,
-            tpm_fin_pack_group_flg: Finalpackgroupflag,
-            tpm_fin_check_weekcode_flg: Finalweekcodeflag,
-            tpm_fin_pds_time_skip_elt: DDL_FinalPDStimeELT,
-            tpm_fin_pds_time_hide_time: DDL_FinalPDSHidetime,
-            tpm_fin_pds_time_flg: FinalPDStimeflag,
-            tpm_fin_pds_time: FinalPDStimeflag === 'N' ? null : txtFinalPDStime,
-            tpm_fin_pds_time_by: txtFinalPDStimeby,
-            tpm_fin_pds_time_confirm_flg: FinalPDSconfirmflag,
-            tpm_fin_conn_sht_flg: Finalconnshtflag,
-            tpm_fin_mix_lot_flg: FinalmixLotflag,
-            tpm_fin_mix_product_flg: Finalmixproflag,
-            tpm_fin_checksum_flg: Finalchecksumflag,
-            tpm_fin_chip_id_flg: FinalchipIDflag,
-            tpm_create_by: ipaddress,
-            tpm_create_program: UserLogin,
-            tpm_update_by: ipaddress,
-            tpm_update_program: UserLogin
+            p_tpm_factory: DDL_Factory,
+            p_tpm_product_name: txtProductName,
+            p_tpm_update_count: txtUpCount,
+            p_tpm_config_code: txtConfig,
+            p_tpm_start_seq_serial: txtStSeqSerial,
+            p_tpm_start_seq_code: txtStSeqCode,
+            p_tpm_product_status: DDL_ProductStatus,
+            p_tpm_date_inproc_flg: DateProFlag,
+            p_tpm_date_inproc: DateProFlag === 'N' ? null : txtDateInProcess,
+            p_tpm_pcs_per_sht_efpc: txtPcsPerSHTEFPC,
+            p_tpm_pcs_per_sht_smt: txtPcsPerSHTSMT,
+            p_tpm_serial_file_format: txtSerialFile,
+            p_tpm_serial_side: DDL_Serialside,
+            p_tpm_serial_structure: DDL_SerialStruc,
+            p_tpm_barcode_req_lot: BarReqFlag,
+            p_tpm_barcode_grade: BarReqFlag === 'N' ? null : txtBarcodeGrade,
+            p_tpm_sht_file_format: txtshtFileFormat,
+            p_tpm_sht__structure: DDL_ShtStructure,
+            p_tpm_sht_type: DDL_ShtType,
+            p_tpm_sht_per_lot_efpc: txtShtperLotEFPC,
+            p_tpm_sht_per_lot_smt: txtShtperLotSMT,
+            p_tpm_sht_per_scan: txtShtperscan,
+            p_tpm_sht_per_laser: txtShtperlaser,
+            p_tpm_sht_model_code: txtShtModelCode,
+            p_tpm_sht_check_prd_flag: ShtProFlag,
+            p_tpm_sht_check_lot_flag: ShtLotFlag,
+            p_tpm_sht_xray_1_time_flg: ShtXrayFlag,
+            p_tpm_sht_plasma_time_flg: PlasmaTimeFlag,
+            p_tpm_sht_plasma_time: PlasmaTimeFlag === 'N' ? null : txtPlasmaTime,
+            p_tpm_conn_roll_sht_flg: ConRollShtFlag,
+            p_tpm_conn_roll_sht_length: ConRollShtFlag === 'N' ? null : txtConRollShtLength,
+            p_tpm_conn_roll_leaf_flg: ConRollLeafFlag,
+            p_tpm_conn_roll_length: ConRollLeafFlag === 'N' ? null : txtConRollLength,
+            p_tpm_conn_leaf_length: ConRollLeafFlag === 'N' ? null : txtConLeafLength,
+            p_tpm_conn_roll_prd_flg: ConRollProFlag,
+            p_tpm_conn_roll_prd_start: ConRollProFlag === 'N' ? null : txtConRollProSt,
+            p_tpm_conn_roll_prd_end: ConRollProFlag === 'N' ? null : txtConRollProEnd,
+            p_tpm_conn_roll_serial_flg: ConRollSerialFlag,
+            p_tpm_conn_roll_leaf_scan: ConRollSerialFlag === 'N' ? null : txtConRollLeafScan,
+            p_tpm_conn_roll_req_lot_sht: DDL_RollReqLotSht,
+            p_tpm_conn_roll_lot_sht_start: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtSt,
+            p_tpm_conn_roll_lot_sht_end: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtEnd,
+            p_tpm_conn_roll_req_prd_sht: DDL_RollReqProSht,
+            p_tpm_conn_roll_prd_sht_start: DDL_RollReqProSht === 'N' ? null : txtRollProShtSt,
+            p_tpm_conn_roll_prd_sht_end: DDL_RollReqProSht === 'N' ? null : txtRollLotShtEnd,
+            p_tpm_conn_roll_prd_fix: txtRollProFix,
+            p_tpm_conn_sht_control_time_flg: ConShtTimeFlag,
+            p_tpm_conn_sht_control_time: ConShtTimeFlag === 'N' ? null : txtConShtTime,
+            p_tpm_conn_sht_checksum_flg: ConShtsumFlag,
+            p_tpm_conn_sht_plasma_time_flg: ConShtPlasTimeFlag,
+            p_tpm_conn_sht_plasma_time: ConShtPlasTimeFlag === 'N' ? null : txtConShtPlasTime,
+            p_tpm_conn_sht_check_weekcode_flg: ConShtCodeFlag,
+            p_tpm_conn_sht_mix_lot_flg: ConShtMixLotFlag,
+            p_tpm_conn_sht_mix_product_flg: ConShtMixProFlag,
+            p_tpm_proc_control_time_flg: ProcessConTimeFlag,
+            p_tpm_proc_control_time: ProcessConTimeFlag === 'N' ? null : DDL_ProcessConTime,
+            p_tpm_fin_pcs_per_tray: txtFinalpcstray,
+            p_tpm_fin_pcs_per_scan: txtFinalpcsscan,
+            p_tpm_fin_pack_group_flg: Finalpackgroupflag,
+            p_tpm_fin_check_weekcode_flg: Finalweekcodeflag,
+            p_tpm_fin_pds_time_skip_elt: DDL_FinalPDStimeELT,
+            p_tpm_fin_pds_time_hide_time: DDL_FinalPDSHidetime,
+            p_tpm_fin_pds_time_flg: FinalPDStimeflag,
+            p_tpm_fin_pds_time: FinalPDStimeflag === 'N' ? null : txtFinalPDStime,
+            p_tpm_fin_pds_time_by: txtFinalPDStimeby,
+            p_tpm_fin_pds_time_confirm_flg: FinalPDSconfirmflag,
+            p_tpm_fin_conn_sht_flg: Finalconnshtflag,
+            p_tpm_fin_mix_lot_flg: FinalmixLotflag,
+            p_tpm_fin_mix_product_flg: Finalmixproflag,
+            p_tpm_fin_checksum_flg: Finalchecksumflag,
+            p_tpm_fin_chip_id_flg: FinalchipIDflag,
+            p_tpm_create_by: ipaddress,
+            p_tpm_create_program: UserLogin,
+            p_tpm_update_by: ipaddress,
+            p_tpm_update_program: UserLogin
           });
           console.log("บันทึกข้อมูลสำเร็จ =", response);
           swal("success", "You save data success", "success");
@@ -992,84 +992,182 @@ function ProductMasterPopup(onClose, item, searchFunction) {
           "error"
         );
       }
+    } else {
+      console.log("EDIT")
+      if (
+        DDL_Factory &&
+        txtProductName
+      ) {
+        try {
+          const response = await axios.post("/api/updateProduct_Master", {
+            p_tpm_factory: DDL_Factory,
+            p_tpm_product_name: txtProductName,
+            p_tpm_update_count: txtUpCount,
+            p_tpm_config_code: txtConfig,
+            p_tpm_start_seq_serial: txtStSeqSerial,
+            p_tpm_start_seq_code: txtStSeqCode,
+            p_tpm_product_status: DDL_ProductStatus,
+            p_tpm_date_inproc_flg: DateProFlag,
+            p_tpm_date_inproc: DateProFlag === 'N' ? null : txtDateInProcess,
+            p_tpm_pcs_per_sht_efpc: txtPcsPerSHTEFPC,
+            p_tpm_pcs_per_sht_smt: txtPcsPerSHTSMT,
+            p_tpm_serial_file_format: txtSerialFile,
+            p_tpm_serial_side: DDL_Serialside,
+            p_tpm_serial_structure: DDL_SerialStruc,
+            p_tpm_barcode_req_lot: BarReqFlag,
+            p_tpm_barcode_grade: BarReqFlag === 'N' ? null : txtBarcodeGrade,
+            p_tpm_sht_file_format: txtshtFileFormat,
+            p_tpm_sht__structure: DDL_ShtStructure,
+            p_tpm_sht_type: DDL_ShtType,
+            p_tpm_sht_per_lot_efpc: txtShtperLotEFPC,
+            p_tpm_sht_per_lot_smt: txtShtperLotSMT,
+            p_tpm_sht_per_scan: txtShtperscan,
+            p_tpm_sht_per_laser: txtShtperlaser,
+            p_tpm_sht_model_code: txtShtModelCode,
+            p_tpm_sht_check_prd_flag: ShtProFlag,
+            p_tpm_sht_check_lot_flag: ShtLotFlag,
+            p_tpm_sht_xray_1_time_flg: ShtXrayFlag,
+            p_tpm_sht_plasma_time_flg: PlasmaTimeFlag,
+            p_tpm_sht_plasma_time: PlasmaTimeFlag === 'N' ? null : txtPlasmaTime,
+            p_tpm_conn_roll_sht_flg: ConRollShtFlag,
+            p_tpm_conn_roll_sht_length: ConRollShtFlag === 'N' ? null : txtConRollShtLength,
+            p_tpm_conn_roll_leaf_flg: ConRollLeafFlag,
+            p_tpm_conn_roll_length: ConRollLeafFlag === 'N' ? null : txtConRollLength,
+            p_tpm_conn_leaf_length: ConRollLeafFlag === 'N' ? null : txtConLeafLength,
+            p_tpm_conn_roll_prd_flg: ConRollProFlag,
+            p_tpm_conn_roll_prd_start: ConRollProFlag === 'N' ? null : txtConRollProSt,
+            p_tpm_conn_roll_prd_end: ConRollProFlag === 'N' ? null : txtConRollProEnd,
+            p_tpm_conn_roll_serial_flg: ConRollSerialFlag,
+            p_tpm_conn_roll_leaf_scan: ConRollSerialFlag === 'N' ? null : txtConRollLeafScan,
+            p_tpm_conn_roll_req_lot_sht: DDL_RollReqLotSht,
+            p_tpm_conn_roll_lot_sht_start: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtSt,
+            p_tpm_conn_roll_lot_sht_end: DDL_RollReqLotSht === 'N' ? null : txtRollLotShtEnd,
+            p_tpm_conn_roll_req_prd_sht: DDL_RollReqProSht,
+            p_tpm_conn_roll_prd_sht_start: DDL_RollReqProSht === 'N' ? null : txtRollProShtSt,
+            p_tpm_conn_roll_prd_sht_end: DDL_RollReqProSht === 'N' ? null : txtRollLotShtEnd,
+            p_tpm_conn_roll_prd_fix: txtRollProFix,
+            p_tpm_conn_sht_control_time_flg: ConShtTimeFlag,
+            p_tpm_conn_sht_control_time: ConShtTimeFlag === 'N' ? null : txtConShtTime,
+            p_tpm_conn_sht_checksum_flg: ConShtsumFlag,
+            p_tpm_conn_sht_plasma_time_flg: ConShtPlasTimeFlag,
+            p_tpm_conn_sht_plasma_time: ConShtPlasTimeFlag === 'N' ? null : txtConShtPlasTime,
+            p_tpm_conn_sht_check_weekcode_flg: ConShtCodeFlag,
+            p_tpm_conn_sht_mix_lot_flg: ConShtMixLotFlag,
+            p_tpm_conn_sht_mix_product_flg: ConShtMixProFlag,
+            p_tpm_proc_control_time_flg: ProcessConTimeFlag,
+            p_tpm_proc_control_time: ProcessConTimeFlag === 'N' ? null : DDL_ProcessConTime,
+            p_tpm_fin_pcs_per_tray: txtFinalpcstray,
+            p_tpm_fin_pcs_per_scan: txtFinalpcsscan,
+            p_tpm_fin_pack_group_flg: Finalpackgroupflag,
+            p_tpm_fin_check_weekcode_flg: Finalweekcodeflag,
+            p_tpm_fin_pds_time_skip_elt: DDL_FinalPDStimeELT,
+            p_tpm_fin_pds_time_hide_time: DDL_FinalPDSHidetime,
+            p_tpm_fin_pds_time_flg: FinalPDStimeflag,
+            p_tpm_fin_pds_time: FinalPDStimeflag === 'N' ? null : txtFinalPDStime,
+            p_tpm_fin_pds_time_by: txtFinalPDStimeby,
+            p_tpm_fin_pds_time_confirm_flg: FinalPDSconfirmflag,
+            p_tpm_fin_conn_sht_flg: Finalconnshtflag,
+            p_tpm_fin_mix_lot_flg: FinalmixLotflag,
+            p_tpm_fin_mix_product_flg: Finalmixproflag,
+            p_tpm_fin_checksum_flg: Finalchecksumflag,
+            p_tpm_fin_chip_id_flg: FinalchipIDflag,
+            p_tpm_create_by: ipaddress,
+            p_tpm_create_program: UserLogin,
+            p_tpm_update_by: ipaddress,
+            p_tpm_update_program: UserLogin
+          });
+          console.log("แก้ไขข้อมูลสำเร็จ =", response);
+          swal("success", "You edit data success", "success");
+          searchFunction();
+          onClose();
+
+        } catch (error) {
+          console.error("ไม่สามารถแก้ไขข้อมูลได้:", error);
+        }
+      } else {
+        console.error("ไม่สามารถบันทึกข้อมูลได้: ค่าว่างถูกส่งเข้ามา");
+        swal(
+          "Unable to save information",
+          "Please check the information entered.",
+          "error"
+        );
+      }
     }
 
   };
 
   const Clear = () => {
-    if (STATUS_P === "EDIT") {
-      setDDL_Factory("")
-      settxtProductName("");
-      settxtUpCount("");
-      settxtConfig("");
-      settxtStSeqSerial("");
-      settxtStSeqCode("");
-      setDDL_ProductStatus("");
-      setDateProFlag("");
-      settxtDateInProcess("");
-      settxtPcsPerSHTEFPC("");
-      settxtPcsPerSHTSMT("");
-      settxtSerialFile("");
-      setDDL_Serialside("");
-      setDDL_SerialStruc("");
-      setBarReqFlag("");
-      settxtBarcodeGrade("");
-      settxtshtFileFormat("");
-      setDDL_ShtStructure("");
-      setDDL_ShtType("");
-      settxtShtperLotEFPC("");
-      settxtShtperLotSMT("");
-      settxtShtperscan("");
-      settxtShtperlaser("");
-      settxtShtModelCode("");
-      setShtProFlag("");
-      setShtLotFlag("");
-      setShtXrayFlag("");
-      setPlasmaTimeFlag("");
-      settxtPlasmaTime("");
-      setConRollShtFlag("");
-      settxtConRollShtLength("");
-      setConRollLeafFlag("");
-      settxtConRollLength("");
-      settxtConLeafLength("");
-      setConRollProFlag("");
-      settxtConRollProSt("");
-      settxtConRollProEnd("");
-      setConRollSerialFlag("");
-      settxtConRollLeafScan("");
-      setDDL_RollReqLotSht("");
-      settxtRollLotShtSt("");
-      settxtRollLotShtEnd("");
-      setDDL_RollReqProSht("");
-      settxtRollProShtSt("");
-      settxtRollProShtEnd("");
-      settxtRollProFix("");
-      setConShtTimeFlag("");
-      settxtConShtTime("");
-      setConShtsumFlag("");
-      setConShtPlasTimeFlag("");
-      settxtConShtPlasTime("");
-      setConShtCodeFlag("");
-      setConShtMixLotFlag("");
-      setConShtMixProFlag("");
-      setProcessConTimeFlag("");
-      setDDL_ProcessConTime("");
-      settxtFinalpcstray("");
-      settxtFinalpcsscan("");
-      setFinalpackgroupflag("");
-      setFinalweekcodeflag("");
-      setDDL_FinalPDStimeELT("");
-      setDDL_FinalPDSHidetime("");
-      setFinalPDStimeflag("");
-      settxtFinalPDStime("");
-      settxtFinalPDStimeby("");
-      setFinalPDSconfirmflag("");
-      setFinalconnshtflag("");
-      setFinalmixLotflag("");
-      setFinalmixproflag("");
-      setFinalchecksumflag("");
-      setFinalchipIDflag("");
-    }
+    setDDL_Factory("");
+    settxtProductName("");
+    settxtUpCount("");
+    settxtConfig("");
+    settxtStSeqSerial("");
+    settxtStSeqCode("");
+    setDDL_ProductStatus("");
+    setDateProFlag("");
+    settxtDateInProcess("");
+    settxtPcsPerSHTEFPC("");
+    settxtPcsPerSHTSMT("");
+    settxtSerialFile("");
+    setDDL_Serialside("");
+    setDDL_SerialStruc("");
+    setBarReqFlag("");
+    settxtBarcodeGrade("");
+    settxtshtFileFormat("");
+    setDDL_ShtStructure("");
+    setDDL_ShtType("");
+    settxtShtperLotEFPC("");
+    settxtShtperLotSMT("");
+    settxtShtperscan("");
+    settxtShtperlaser("");
+    settxtShtModelCode("");
+    setShtProFlag("");
+    setShtLotFlag("");
+    setShtXrayFlag("");
+    setPlasmaTimeFlag("");
+    settxtPlasmaTime("");
+    setConRollShtFlag("");
+    settxtConRollShtLength("");
+    setConRollLeafFlag("");
+    settxtConRollLength("");
+    settxtConLeafLength("");
+    setConRollProFlag("");
+    settxtConRollProSt("");
+    settxtConRollProEnd("");
+    setConRollSerialFlag("");
+    settxtConRollLeafScan("");
+    setDDL_RollReqLotSht("");
+    settxtRollLotShtSt("");
+    settxtRollLotShtEnd("");
+    setDDL_RollReqProSht("");
+    settxtRollProShtSt("");
+    settxtRollProShtEnd("");
+    settxtRollProFix("");
+    setConShtTimeFlag("");
+    settxtConShtTime("");
+    setConShtsumFlag("");
+    setConShtPlasTimeFlag("");
+    settxtConShtPlasTime("");
+    setConShtCodeFlag("");
+    setConShtMixLotFlag("");
+    setConShtMixProFlag("");
+    setProcessConTimeFlag("");
+    setDDL_ProcessConTime("");
+    settxtFinalpcstray("");
+    settxtFinalpcsscan("");
+    setFinalpackgroupflag("");
+    setFinalweekcodeflag("");
+    setDDL_FinalPDStimeELT("");
+    setDDL_FinalPDSHidetime("");
+    setFinalPDStimeflag("");
+    settxtFinalPDStime("");
+    settxtFinalPDStimeby("");
+    setFinalPDSconfirmflag("");
+    setFinalconnshtflag("");
+    setFinalmixLotflag("");
+    setFinalmixproflag("");
+    setFinalchecksumflag("");
+    setFinalchipIDflag("");
   };
 
 

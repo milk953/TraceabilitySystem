@@ -5,6 +5,7 @@ import React, { useEffect, useState, useRef } from "react";
 
 const fn_ScanSMTSerialShtFINManySht = () => {
   //region useState
+
   const [hfUserID, sethfUserID] = useState("");
   const [hfUserStation, sethfUserStation] = useState("");
   const [hfUserFactory, sethfUserFactory] = useState("");
@@ -16,11 +17,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [hfTrayFlag, sethfTrayFlag] = useState("");
   const [hfTrayLength, sethfTrayLength] = useState("");
   const [hfTestResultFlag, sethfTestResultFlag] = useState("");
-  const [hfSerialCount, sethfSerialCount] = useState("");
+  const [hfSerialCount, sethfSerialCount] = useState("10");
   const [hfAutoScan, sethfAutoScan] = useState("");
   const [hfMode, sethfMode] = useState("");
-  const [hfBarcodeSide, sethfBarcodeSide] = useState("10");
-  const [hfShtScan, sethfShtScan] = useState("10");
+
   const [hfConfigCheck, sethfConfigCheck] = useState("");
   const [hfConfigCode, sethfConfigCode] = useState("");
   const [hfConfigStart, sethfConfigStart] = useState("");
@@ -91,7 +91,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [dtData1, setDtData1] = useState([]);
   const [serialData, setSerialData] = useState([]);
 
-  const [panalSerialOpen, setPanalSerialOpen] = useState(false);
   const [pnlRollLeafOpen, setPnlRollLeafOpen] = useState(false);
   const [lblCheckRoll, setLblCheckRoll] = useState("");
   const [pnlMachineOpen, setPnlMachineOpen] = useState(false);
@@ -125,51 +124,59 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
 
   const Setmode = (strType) => {
-    switch (strType) {
-      case "LOT":
-        setProductState(true);
-        setLot("");
-        setLotState(true);
-        // txtLot.CSs
-        setLblErrorState(false);
-        setPanalSerialOpen(false);
-        localStorage.setItem("hfMode", "LOT");
-        fctextFieldlot.current.focus();
-      case "LOT_ERROR":
-        setLot("");
-        setLotState(true);
-        // txtLot.CSs
+    console.log(strType, "strType");
 
-        setLblErrorState(true);
-        //pnlSerial.Visible = False
-
-        localStorage.setItem("hfMode", "LOT");
-        fctextFieldlot.current.focus();
-      case "SERIAL":
-        setLotState(false);
-        //txtLot.CSs
-        setLblErrorState(false);
-        // setPanalSerialOpen(true);
-        localStorage.setItem("hfMode", "SERIAL");
-      // getInitialSerial()
-      case "SERIAL_ERROR":
-        setLotState(false);
-        //txtLot.CSs
-        setLblErrorState(true);
-      case "SERIAL_OK":
-        setLotState(false);
-        //txtLot.CSs
-        setLblErrorState(false);
-        setPanalSerialOpen(false);
+    if (strType === "LOT") {
+      console.log("LOT is called");
+      setProductState(true);
+      setLot("");
+      setLotState(true);
+      // txtLot.CSs
+      setLblErrorState(false);
+      setPanalSerialOpen(false);
+      localStorage.setItem("hfMode", "LOT");
+      fctextFieldlot.current.focus();
+    } else if (strType === "LOT_ERROR") {
+      console.log("LOT_ERROR is called");
+      setLot("");
+      setLotState(true);
+      // txtLot.CSs
+      setLblErrorState(true);
+      //pnlSerial.Visible = False
+      localStorage.setItem("hfMode", "LOT");
+      fctextFieldlot.current.focus();
+    } else if (strType === "SERIAL") {
+      console.log("SERIAL is called");
+      setLotState(false);
+      //txtLot.CSs
+      setLblErrorState(false);
+      // setPanalSerialOpen(true);
+      localStorage.setItem("hfMode", "SERIAL");
+      getInitialSerial();
+    } else if (strType === "SERIAL_ERROR") {
+      console.log("SERIAL_ERROR is called");
+      setLotState(false);
+      //txtLot.CSs
+      setLblErrorState(true);
+    } else if (strType === "SERIAL_OK") {
+      console.log("SERIAL_OK is called");
+      setLotState(false);
+      //txtLot.CSs
+      setLblErrorState(false);
+      // setPanalSerialOpen(false);
       // getInitialSerial()
       //fnSetFocus("gvSerial")
-      case "SERIAL_NG":
-        setLotState(false);
-        //txtLot.CSs
-        setLblErrorState(false);
+    } else if (strType === "SERIAL_NG") {
+      console.log("SERIAL_NG is called");
+      setLotState(false);
+      //txtLot.CSs
+      setLblErrorState(false);
     }
   };
 
+  const [hfShtScan, sethfShtScan] = useState("1");
+  const [gvbacksideOpen, setGvbacksideOpen] = useState(false);
+  const [hfBarcodeSide, sethfBarcodeSide] = useState("F");
   const getIntialSheet = () => {
     const newData = [];
     const hfShtScanValue = parseInt(hfShtScan);
@@ -182,11 +189,16 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       newData.push(newRow);
     }
     setDtData1(newData);
+    setGvbacksideOpen(true);
   };
+
+  const [panalSerialOpen, setPanalSerialOpen] = useState(false);
   const getInitialSerial = () => {
+    console.log("getInitialSerial is called");
     const newData = [];
     const hfShtScanValue = parseInt(hfShtScan);
     const hfSerialCountValue = parseInt(hfSerialCount);
+    console.log(hfShtScanValue, hfSerialCountValue, "hfShtScanValue");
     for (let intSht = 1; intSht <= hfShtScanValue; intSht++) {
       for (let intRow = 1; intRow <= hfSerialCountValue; intRow++) {
         newData.push({
@@ -196,8 +208,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         });
       }
     }
-
     setSerialData(newData);
+    setPanalSerialOpen(true);
   };
   const handleSave = () => {
     console.log("Save clicked!");
@@ -290,11 +302,11 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setLblErrorState(false);
         setLot(strLot);
         settxtLotRef(strLot);
-        // getCountDataBylot(strLot);
+        getCountDataBylot(strLot);
         try {
           setselectproduct(strPrdname);
-          // getProductSerialMaster();
-          // getInitialSheet();
+          // getProductSerialMaster(); wait to add
+          getIntialSheet();
           if (hfCheckRollSht === "Y") {
             setPnlMachineOpen(true);
             fctextFieldMachine.current.focus();
@@ -313,7 +325,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             try {
               setselectproduct(strPrdname);
               // getProductSerialMaster();
-              // getInitialSheet();
+
+              // getIntialSheet();
               if (hfCheckRollSht === "Y") {
                 setPnlRollLeafOpen(true);
                 settxtRollLeaf("");
@@ -454,7 +467,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     sethfTrayLength("0");
     sethfTestResultFlag("");
     sethfBarcodeSide("");
-    sethfShtScan("1");
+    sethfShtScan("20");
     sethfConfigCheck("N");
     sethfConfigCode("");
     sethfConfigStart("0");
@@ -631,7 +644,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     txtRollLeaf,
     fcOpertor,
     txtLotRef,
-
+    gvbacksideOpen,
     handleProductChange,
     txtLotRef_TextChanged,
   };
