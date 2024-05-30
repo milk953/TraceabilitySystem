@@ -1,0 +1,304 @@
+import React, { useState, useEffect } from "react";
+import {
+  TextField,
+  Card,
+  Table,
+  TableCell,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableContainer,
+  Paper,
+  Typography,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Autocomplete,
+  InputAdornment,
+} from "@mui/material";
+
+import {
+  ArrowRightOutlined,
+  DeleteOutlined,
+  ArrowLeftOutlined,
+  HighlightOutlined,
+  AreaChartOutlined,
+  ScheduleOutlined,
+} from "@ant-design/icons";
+import SearchIcon from "@mui/icons-material/Search";
+import "/src/Page/Homepage/Homepage.css";
+import { Input, Space } from "antd";
+const { Search } = Input;
+import Hearder from "../Header/Hearder";
+import { fn_Homepage } from "./fn_Homepage";
+function ScanSheetMOTTime() {
+  const { Showmenu, menu, SelectMenu, setSL_menu, SL_menu, HandleSL_Menu } =
+    fn_Homepage();
+  return (
+    <div>
+      <Hearder />
+      <h1>ScanSheetMOTTime</h1>
+      <Card
+        component={Paper}
+        style={{
+          margin: "auto",
+          width: "90%",
+          maxWidth: "1400px",
+          marginTop: "50px",
+          height: "auto",
+          maxHeight: "550px",
+          padding: "20px",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          {/* <Search
+            placeholder="Search.."
+            style={{ width: 800, marginTop: "20px" }}
+          /> */}
+          <FormControl style={{ width: 800 }} fullWidth>
+            <Autocomplete
+              id="selectPd"
+              value={SL_menu}
+              onChange={(e, value) => HandleSL_Menu(value)}
+              options={menu.map((item, index) => menu[index][1])}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  size="small"
+                  sx={{ textAlign: "left" }}
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
+            />
+          </FormControl>
+        </div>
+        <table style={{ marginTop: "40px", maxWidth: "1400px", width: "100%" }}>
+          <tbody>
+            <tr>
+              <td
+                style={{
+                  width: "660px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div className="Head-Menu1" onClick={() => SelectMenu("W")}>
+                  {" "}
+                  <Typography
+                    variant="h5"
+                    style={{ margin: "auto", marginTop: "70px" }}
+                  >
+                    <HighlightOutlined /> <br></br> Work
+                  </Typography>
+                  <br></br>
+                  <div className="count-Menu1">10 </div>
+                </div>
+                <div className="Head-Menu2" onClick={() => SelectMenu("M")}>
+                  <Typography
+                    variant="h5"
+                    style={{ margin: "auto", marginTop: "70px" }}
+                  >
+                    <ScheduleOutlined /> <br></br> Maintain
+                  </Typography>
+                  <br></br>
+                  <div className="count-Menu2">18 </div>
+                </div>
+
+                <div className="Head-Menu3" onClick={() => SelectMenu("V")}>
+                  <Typography
+                    variant="h5"
+                    style={{ margin: "auto", marginTop: "70px" }}
+                  >
+                    <AreaChartOutlined /> <br></br> View Data
+                  </Typography>
+                  <br></br>
+                  <div className="count-Menu3">9</div>
+                </div>
+              </td>
+              <td
+                style={{
+                  width: "700px",
+                  textAlign: "center",
+                  //   border:'1px solid red',
+                  verticalAlign: "top",
+                }}
+              >
+                {Showmenu === "img" && (
+                  <img
+                    style={{
+                      width: "400px",
+                      height: "400px",
+                    }}
+                    src="src/assets/2.png" // Import the image
+                    alt="Description of the image"
+                  />
+                )}
+                {Showmenu === "Work" && (
+                  <Table
+                    style={{
+                      width: "300px",
+                      margin: "auto",
+                      height: "100%",
+                      maxHeight: "300px",
+                    }}
+                    component={Card}
+                  >
+                    <TableHead>
+                      <TableRow style={{ background: "#739072" }}>
+                        <TableCell
+                          align="center"
+                          style={{ padding: "4px 8px" }}
+                        >
+                          {" "}
+                          {/* Adjust padding here */}
+                          <Typography variant="body2">Work</Typography>{" "}
+                          {/* Adjust typography size if needed */}
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow align="center">
+                        {menu
+                          .filter((item) => item[0] === "0928")
+                          .map((item, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                background: "#d9d9d9",
+                                width: "300px",
+                                margin: "5px",
+                                padding: "5px",
+                                borderRadius: "5px",
+                                textAlign: "center",
+                                transition: "background 0.3s ease",
+                              }}
+                              className="hoverable"
+                              onClick={() => HandleSL_Menu(item[1])}
+                            >
+                              {item[1]}
+                            </div>
+                          ))}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                )}
+                {Showmenu === "Maintain" && (
+                  <TableContainer
+                    sx={{
+                      maxHeight: "300px",
+                      width: "350px",
+                      margin: "auto",
+                      overflowY: "auto",
+                    }}
+                  >
+                    <Table component={Card}>
+                      <TableHead>
+                        <TableRow style={{ background: "#CD8D7A" }}>
+                          <TableCell
+                            align="center"
+                            style={{ padding: "4px 8px" }}
+                          >
+                            {" "}
+                            {/* Adjust padding here */}
+                            <Typography variant="body2">
+                              Maintain
+                            </Typography>{" "}
+                            {/* Adjust typography size if needed */}
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow align="center">
+                          {menu
+                            .filter((item) => item[0] === "0929")
+                            .map((item, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  background: "#d9d9d9",
+                                  width: "300px",
+                                  margin: "5px",
+                                  padding: "5px",
+                                  borderRadius: "5px",
+                                  textAlign: "center",
+                                  transition: "background 0.3s ease",
+                                }}
+                                className="hoverable"
+                              >
+                                {item[1]}
+                              </div>
+                            ))}
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+                {Showmenu === "View" && (
+                  <Table
+                    style={{
+                      width: "300px",
+                      margin: "auto",
+                      height: "100%",
+                      maxHeight: "300px",
+                    }}
+                    component={Card}
+                  >
+                    <TableHead>
+                      <TableRow style={{ background: "#f4a86f" }}>
+                        <TableCell
+                          align="center"
+                          style={{ padding: "4px 8px" }}
+                        >
+                          {" "}
+                          {/* Adjust padding here */}
+                          <Typography variant="body2">
+                            View Data
+                          </Typography>{" "}
+                          {/* Adjust typography size if needed */}
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow align="center">
+                        {menu
+                          .filter((item) => item[0] === "0930")
+                          .map((item, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                background: "#d9d9d9",
+                                width: "300px",
+                                margin: "5px",
+                                padding: "5px",
+                                borderRadius: "5px",
+                                textAlign: "center",
+                                transition: "background 0.3s ease",
+                              }}
+                              className="hoverable"
+                            >
+                              {item[1]}
+                            </div>
+                          ))}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </Card>
+    </div>
+  );
+}
+
+export default ScanSheetMOTTime;

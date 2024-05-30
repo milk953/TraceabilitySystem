@@ -8,13 +8,15 @@ function Fn_ScanSMTRollSht() {
   const [Product, setProduct] = useState([]);
   const [lbllog, setlbllog] = useState("");
   const [visblelog, setvisblelog] = useState(false); //falseซ่อน true โชว์
-  const [gvScanResult, setgvScanResult] = useState("");
+  const [gvScanResult, setgvScanResult] = useState('none');
   const [txtRollLeaf, settxtRollLeaf] = useState("");
   const [txtTotalLeaf, settxtTotalLeaf] = useState("");
+  const [txtOperator, setOperator] = useState("");
   const [lblCheckRoll, setlblCheckRoll] = useState("");
   const [lbltotalSht, setlbltotalSht] = useState("");
   const [Mode, SetMode] = useState("");
-
+  const [GvSerial, SetGvSerial] = useState("none");
+  const [txtLeafNo, SettxtLeafNo]= useState(Array(txtTotalLeaf).fill(''));
   // --------------------------------------
   const [hfUserID, setHfUserID] = useState("");
   const [hfUserStation, setHfUserStation] = useState("");
@@ -27,7 +29,7 @@ function Fn_ScanSMTRollSht() {
   const [hfTrayFlag, setHfTrayFlag] = useState("");
   const [hfTrayLength, setHfTrayLength] = useState("");
   const [hfTestResultFlag, setHfTestResultFlag] = useState("");
-  const [hfSerialCount, setHfSerialCount] = useState("");
+  const [hfSerialCount, setHfSerialCount] = useState([]);
   const [hfAutoScan, setHfAutoScan] = useState("");
   const [hfMode, setHfMode] = useState("");
   const [hfConfigCheck, setHfConfigCheck] = useState("");
@@ -85,6 +87,8 @@ function Fn_ScanSMTRollSht() {
   const handleLotxt_Lotno = () => {
     setlbllog("")
     setvisblelog(false)
+    SetGvSerial('none')
+    setgvScanResult('none')
     let strPrdName = "";
     let RollNo = "";
     let strLot = "";
@@ -97,14 +101,17 @@ function Fn_ScanSMTRollSht() {
         txt_lotno: strLot,
       })
       .then((res) => {
+        // SetGvSerial('')
+        
         // console.log("GetProductDataByLot",res.data)
         if (res.data.length > 0) {
+          SetGvSerial('')
           strPrdName = res.data.flat()[0];
           RollNo = res.data.flat()[1];
-          // console.log("strPrdName1",strPrdName,"xxx",RollNo.length,"yyy")
+           console.log("strPrdName1",strPrdName,"xxx",RollNo,"yyy")
           setHfRollNo(RollNo);
           if (strPrdName != "") {
-            console.log("xxxxx");
+       
             setlbllog("");
             setvisblelog(false);
             settxt_lotNo(strLot);
@@ -155,7 +162,7 @@ function Fn_ScanSMTRollSht() {
   const getProduct = () => {
     axios.post("/api/getProduct").then((res) => {
       console.log(res.data, "getPD");
-      setProduct(res.data);
+       setProduct(res.data);
     });
   };
   const StyleDisabled = (disabled) => disabled;
@@ -191,23 +198,7 @@ function Fn_ScanSMTRollSht() {
   //   }
   // };
 
-  const testData = () => {
-    const Data = {
-      SHT_SEQ: [1, 2, 3, 4], //gvSerial[i][intSeq]
-      LOT_NO: ["130272927", "130272928", " 130272935", "130272936"], //txtLot.Text
-      ROLL_NO: ["xxx1", "xxxx2,", "xxxx3", "xxxx4"], //มาจากgetDatabyLot [RollNo]
-      ROLL_LEAF: [txtRollLeaf, txtRollLeaf, txtRollLeaf, txtRollLeaf], //txtRollLeaf.Text
-      SHT_NO: ["1234", "1111", "3333", "6666"], //gvSerial[i][txtLeafNo]
-      SCAN_RESULT: ["", "", "", ""], //""
-      REMARK: ["N", "N", "N", "N"], //""
-      ROW_UPDATE: ["N", "N", "N", "N"], //N
-      UPDATE_FLG: ["N", "N", "N", "N"], //N
-      MACHINE: ["N", "N", "N", "N"], //""
-      PRODUCT: [Product, Product, Product, Product], // ddlProduct.SelectedValue
-    };
-    setgvScanResult(Data);
-  };
-
+ 
   const getProductSerialMaster = (strPrdName) => {
     // setHfSerialLength(0)
     // setHfSerialFixFlag('N')
@@ -260,17 +251,22 @@ function Fn_ScanSMTRollSht() {
     // setHfSerialStartCode("")
     axios
       .post("/api/GetSerialProductByProduct", {
-        strPrdName: "RGOZ-686ML-0A", //'strPrdName' ,
+        strPrdName: strPrdName, //'strPrdName' ,
       })
       .then((res) => {
         console.log(res.data, "GetSPBPD1");
         let data = res.data;
         // console.log(data[PRM_ABBR],"GetSPBPD2")
         if (data.length > 0) {
-          console.log("data3", data[0].PRM_CONN_ROLL_PRD_FLG);
+          console.log("data3", data[0]);
+          //HF
+            setHfSerialCount([data[0].SLM_SERIAL_COUNT])
+          //---
           settxtTotalLeaf(data[0].PRM_CONN_ROLL_LEAF_SCAN);
+          
           if (data[0].PRM_CONN_ROLL_PRD_FLG.toUpperCase == "Y") {
             setlblCheckRoll("ON");
+            
             //StyleCheckRoll("ON")
           } else {
             setlblCheckRoll("OFF");
@@ -321,24 +317,54 @@ function Fn_ScanSMTRollSht() {
     }
   };
 
-  const getInitialSheet = () => {
-    // Dim dtData As New DataTable
-    // dtData.Columns.Add(New DataColumn("SHEET", Type.GetType("System.String")))
-    // dtData.Columns.Add(New DataColumn("SEQ", Type.GetType("System.Double")))
-    // hfSerialCount.Value = CStr(CInt(txtTotalLeaf.Text))
-    // For intRow As Integer = 1 To CInt(hfSerialCount.Value)
-    //     Dim drRow As DataRow
-    //     drRow = dtData.NewRow
-    //     drRow("SEQ") = intRow
-    //     dtData.Rows.Add(drRow)
-    // Next
-    // gvSerial.DataSource = dtData
-    // gvSerial.DataBind()
-    // 'If gvSerial.Rows.Count > 0 Then
-    // '    fnSetFocus("gvSerial_txtSerial_0")
-    // 'End If
-    // Return 0
+  const Bt_Save = () => {
+    setgvScanResult('')
+   if(hfMode==save){
+    // setgvScanResult('')
+    //   setRollSheetData()
+
+   }
   };
+
+  const setRollSheetData = () => {
+    let _strFileError  = ""
+    // let dtSheet  = getInputSheet()
+    let _bolPrdError = false
+    let _bolError = false
+    let _strScanResultAll  = "OK"
+    let _intCount = 0
+    let _intRow = 0
+    let _strLot  = ""
+
+    // Dim _strRollLeaf As String = txtRollLeaf.Text.Trim.ToUpper
+    setvisblelog(false)
+    setlbllog('')
+
+    if(hfConnRollLength == txtRollLeaf){
+    //  if(txtOperator!=''){
+    //   axios
+    //   .post("/api/GetRollLeafDuplicate", {
+    //     strPrdName: strPrdName, //'strPrdName' ,
+    //   })
+    //   .then((res) => {})
+    //  }
+
+    if(hfCheckRollPrdFlg=='Y' &&  _bolError != false ){
+      _bolError=true
+      // for 
+    }
+    }
+
+
+
+   };
+   const handleTextFieldChange = (index, event) => {
+    const newData = [...txtLeafNo];
+    newData[index] = event.target.value;
+    SettxtLeafNo(newData);
+  };
+
+
 
   return {
     settxt_lotNo,
@@ -359,6 +385,15 @@ function Fn_ScanSMTRollSht() {
     lblCheckRoll,
     lbltotalSht,
     // StyleCheckRoll
+    GvSerial,
+    hfSerialCount,
+    Bt_Save,
+    txtOperator,
+    hfRollNo,
+    SettxtLeafNo,
+    txtLeafNo,
+   handleTextFieldChange 
+    
   };
 }
 
