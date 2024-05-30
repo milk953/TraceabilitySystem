@@ -1,10 +1,9 @@
 
 .ListItem {
     cursor: pointer;
-    
     color: rgb(119, 118, 118);
     width: 95%;
-    margin-left: 5px;
+    
   }
   
   .ListItem:hover {
@@ -19,7 +18,6 @@
   .SubMenuItem {
     cursor: pointer;
     margin-left: 20px;
-    
     width: 50%;
   }
   

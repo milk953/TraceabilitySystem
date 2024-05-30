@@ -34,7 +34,7 @@ function Hearder() {
         <AppBar
           position="fixed"
           style={{
-            background: "radial-gradient(circle, #00d2ff, #764ba2, #667eea)",
+            background: "#92C7CF",
           }}
         >
           <Toolbar>
