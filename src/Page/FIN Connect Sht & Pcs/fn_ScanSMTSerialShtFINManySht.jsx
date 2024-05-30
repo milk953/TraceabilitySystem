@@ -17,7 +17,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [hfTrayFlag, sethfTrayFlag] = useState("");
   const [hfTrayLength, sethfTrayLength] = useState("");
   const [hfTestResultFlag, sethfTestResultFlag] = useState("");
-  const [hfSerialCount, sethfSerialCount] = useState("10");
+  
   const [hfAutoScan, sethfAutoScan] = useState("");
   const [hfMode, sethfMode] = useState("");
 
@@ -81,8 +81,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [lotState, setLotState] = useState(true);
   const [product, setProduct] = useState([]);
   const [productState, setProductState] = useState(true);
-  const [lblError, setLblError] = useState("");
-  const [lblErrorState, setLblErrorState] = useState(false);
+  const [lblError, setLblError] = useState("Error Message");
+  const [lblErrorState, setLblErrorState] = useState(true);
   const [operator, setOperator] = useState("");
   const [sht, setSht] = useState("");
   const [pcs, setPcs] = useState("");
@@ -99,12 +99,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [lblTotalPcs, setLblTotalPcs] = useState("");
   const [dtProductSerial, setDtProductSerial] = useState([]);
   const [txtRollLeaf, settxtRollLeaf] = useState("");
-  const [lblresult, setLblresult] = useState("SUCCESS");
-  const [lblresultState, setLblresultState] = useState(false);
+  
+  const [lblresultState, setLblresultState] = useState(true);
   const [gvScanResult, setGvScanResult] = useState([]);
-  const [gvScanResultState, setGvScanResultState] = useState(false);
+  const [gvScanResultState, setGvScanResultState] = useState(true);
   const [txtMachine, settxtmachine] = useState("");
   const [txtLotRef, settxtLotRef] = useState("");
+
+  const [lblresult, setLblresult] = useState("SUCCESS");
+  const[lblresultOpen,setLblresultOpen]=useState(true)
 
   const fctextFieldlot = useRef(null);
   const fctextFieldMachine = useRef(null);
@@ -177,6 +180,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [hfShtScan, sethfShtScan] = useState("1");
   const [gvbacksideOpen, setGvbacksideOpen] = useState(false);
   const [hfBarcodeSide, sethfBarcodeSide] = useState("F");
+  const [hfSerialCount, sethfSerialCount] = useState("1");
   const getIntialSheet = () => {
     const newData = [];
     const hfShtScanValue = parseInt(hfShtScan);
@@ -647,6 +651,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     gvbacksideOpen,
     handleProductChange,
     txtLotRef_TextChanged,
+    lblresultOpen
   };
 };
 

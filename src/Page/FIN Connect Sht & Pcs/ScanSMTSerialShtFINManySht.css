@@ -16,15 +16,19 @@
   font-size: 14px !important;
 }
 .mainTable {
-  width: 400px !important;
-  margin: left;
-  margin-left: 10px;
+  margin: auto;
+  max-width: 400px;
 }
 .mainTable th {
   /* background-color: rgb(243, 8, 8); */
   color: black;
-  font-weight: 700;
+  /* font-weight: 700; */
   font-family: Arial;
+  padding: 8px !important;
+  background-color: #8c8c8c !important ;
+  border-radius: 5px 5px 0 0 !important;
+  color: #fff;
+  font-size: 20px;
 }
 
 .Head {
@@ -33,10 +37,11 @@
 }
 .lblResult {
   margin-left: 50px;
-  width: 1000px;
+  width: 600px;
   text-align: center;
   font-size: 80px;
   height: 100px;
+  
 }
 #lblResult {
   background-color: #ffff99;
@@ -50,10 +55,11 @@
 .gvBackSide {
   width: 400px !important;
   margin: left;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 .gvBackSide td {
   padding: 3px;
+  width: 100px;
 }
 
 .gvBackSide input {
@@ -93,12 +99,26 @@
   padding: 1px !important;
   font-size: 12px;
 }
-.pnlSerial {
+
+.gvSerial {
   width: 400px !important;
   margin: left;
-  margin-left: 10px;
+  margin-top: 20px !important;
 }
 
+.gvSerial td {
+  padding: 4px 4px 4px 4px !important;
+}
+
+.panelgvSerial {
+  margin-top: 10px;
+}
+.gvSerialCell {
+  padding: 1px !important;
+  /* background-color: #006666; */
+  margin: auto;
+  text-align: center !important;
+}
 #gvScanResultBodyNum {
   text-align: center;
   border-right: 1px solid rgb(221, 219, 219);
