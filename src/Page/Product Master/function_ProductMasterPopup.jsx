@@ -896,7 +896,77 @@ function ProductMasterPopup(onClose, item, searchFunction) {
 
       if (
         DDL_Factory &&
-        txtProductName
+        txtProductName &&
+        txtUpCount &&
+        txtConfig &&
+        txtStSeqSerial &&
+        txtStSeqCode &&
+        DDL_ProductStatus &&
+        DateProFlag &&
+        (DateProFlag === 'N' || txtDateInProcess) &&
+        txtPcsPerSHTEFPC &&
+        txtPcsPerSHTSMT &&
+        txtSerialFile &&
+        DDL_Serialside &&
+        DDL_SerialStruc &&
+        BarReqFlag &&
+        (BarReqFlag === 'N' || txtBarcodeGrade) &&
+        txtshtFileFormat &&
+        DDL_ShtStructure &&
+        DDL_ShtType &&
+        txtShtperLotEFPC &&
+        txtShtperLotSMT &&
+        txtShtperscan &&
+        txtShtperlaser &&
+        txtShtModelCode &&
+        ShtProFlag &&
+        ShtLotFlag &&
+        ShtXrayFlag &&
+        PlasmaTimeFlag &&
+        (PlasmaTimeFlag === 'N' || txtPlasmaTime) &&
+        ConRollShtFlag &&
+        (ConRollShtFlag === 'N' || txtConRollShtLength) &&
+        ConRollLeafFlag &&
+        (ConRollLeafFlag === 'N' || txtConRollLength) &&
+        (ConRollLeafFlag === 'N' || txtConLeafLength) &&
+        ConRollProFlag &&
+        (ConRollProFlag === 'N' || txtConRollProSt) &&
+        (ConRollProFlag === 'N' || txtConRollProEnd) &&
+        ConRollSerialFlag &&
+        (ConRollSerialFlag === 'N' || txtConRollLeafScan) &&
+        DDL_RollReqLotSht &&
+        (DDL_RollReqLotSht === 'N' || txtRollLotShtSt) &&
+        (DDL_RollReqLotSht === 'N' || txtRollLotShtEnd) &&
+        DDL_RollReqProSht &&
+        (DDL_RollReqProSht === 'N' || txtRollProShtSt) &&
+        (DDL_RollReqProSht === 'N' || txtRollProShtEnd) &&
+        txtRollProFix &&
+        ConShtTimeFlag &&
+        (ConShtTimeFlag === 'N' || txtConShtTime) &&
+        ConShtsumFlag &&
+        ConShtPlasTimeFlag &&
+        (ConShtPlasTimeFlag === 'N' || txtConShtPlasTime) &&
+        ConShtCodeFlag &&
+        ConShtMixLotFlag &&
+        ConShtMixProFlag &&
+        ProcessConTimeFlag &&
+        (ProcessConTimeFlag === 'N' || DDL_ProcessConTime) &&
+        txtFinalpcstray &&
+        txtFinalpcsscan &&
+        Finalpackgroupflag &&
+        Finalweekcodeflag &&
+        DDL_FinalPDStimeELT &&
+        DDL_FinalPDSHidetime &&
+        FinalPDStimeflag &&
+        (FinalPDStimeflag === 'N' || txtFinalPDStime) &&
+        txtFinalPDStimeby &&
+        FinalPDSconfirmflag &&
+        Finalconnshtflag &&
+        FinalmixLotflag &&
+        Finalmixproflag &&
+        Finalchecksumflag &&
+        FinalchipIDflag 
+
       ) {
         try {
           const response = await axios.post("/api/insProduct_Master", {
@@ -996,7 +1066,76 @@ function ProductMasterPopup(onClose, item, searchFunction) {
       console.log("EDIT")
       if (
         DDL_Factory &&
-        txtProductName
+        txtProductName &&
+        txtUpCount &&
+        txtConfig &&
+        txtStSeqSerial &&
+        txtStSeqCode &&
+        DDL_ProductStatus &&
+        DateProFlag &&
+        (DateProFlag === 'N' || txtDateInProcess) &&
+        txtPcsPerSHTEFPC &&
+        txtPcsPerSHTSMT &&
+        txtSerialFile &&
+        DDL_Serialside &&
+        DDL_SerialStruc &&
+        BarReqFlag &&
+        (BarReqFlag === 'N' || txtBarcodeGrade) &&
+        txtshtFileFormat &&
+        DDL_ShtStructure &&
+        DDL_ShtType &&
+        txtShtperLotEFPC &&
+        txtShtperLotSMT &&
+        txtShtperscan &&
+        txtShtperlaser &&
+        txtShtModelCode &&
+        ShtProFlag &&
+        ShtLotFlag &&
+        ShtXrayFlag &&
+        PlasmaTimeFlag &&
+        (PlasmaTimeFlag === 'N' || txtPlasmaTime) &&
+        ConRollShtFlag &&
+        (ConRollShtFlag === 'N' || txtConRollShtLength) &&
+        ConRollLeafFlag &&
+        (ConRollLeafFlag === 'N' || txtConRollLength) &&
+        (ConRollLeafFlag === 'N' || txtConLeafLength) &&
+        ConRollProFlag &&
+        (ConRollProFlag === 'N' || txtConRollProSt) &&
+        (ConRollProFlag === 'N' || txtConRollProEnd) &&
+        ConRollSerialFlag &&
+        (ConRollSerialFlag === 'N' || txtConRollLeafScan) &&
+        DDL_RollReqLotSht &&
+        (DDL_RollReqLotSht === 'N' || txtRollLotShtSt) &&
+        (DDL_RollReqLotSht === 'N' || txtRollLotShtEnd) &&
+        DDL_RollReqProSht &&
+        (DDL_RollReqProSht === 'N' || txtRollProShtSt) &&
+        (DDL_RollReqProSht === 'N' || txtRollProShtEnd) &&
+        txtRollProFix &&
+        ConShtTimeFlag &&
+        (ConShtTimeFlag === 'N' || txtConShtTime) &&
+        ConShtsumFlag &&
+        ConShtPlasTimeFlag &&
+        (ConShtPlasTimeFlag === 'N' || txtConShtPlasTime) &&
+        ConShtCodeFlag &&
+        ConShtMixLotFlag &&
+        ConShtMixProFlag &&
+        ProcessConTimeFlag &&
+        (ProcessConTimeFlag === 'N' || DDL_ProcessConTime) &&
+        txtFinalpcstray &&
+        txtFinalpcsscan &&
+        Finalpackgroupflag &&
+        Finalweekcodeflag &&
+        DDL_FinalPDStimeELT &&
+        DDL_FinalPDSHidetime &&
+        FinalPDStimeflag &&
+        (FinalPDStimeflag === 'N' || txtFinalPDStime) &&
+        txtFinalPDStimeby &&
+        FinalPDSconfirmflag &&
+        Finalconnshtflag &&
+        FinalmixLotflag &&
+        Finalmixproflag &&
+        Finalchecksumflag &&
+        FinalchipIDflag
       ) {
         try {
           const response = await axios.post("/api/updateProduct_Master", {
