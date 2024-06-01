@@ -93,6 +93,7 @@ function ProductMaster() {
                                 value={DDLFactory}
                                 label="Factory"
                                 onChange={(e) => setDDLFactory(e.target.value)}
+                                style={{ backgroundColor: 'white' }}
                             >
                                 {factory.map((item) => (
                                     <MenuItem key={item.p_factory_code} value={item.p_factory_code}>
@@ -106,7 +107,7 @@ function ProductMaster() {
                             label="Product"
                             variant="outlined"
                             size="small"
-                            style={{ width: "300px" }}
+                            style={{ width: "300px", backgroundColor: 'white' }}
                             value={txtProduct}
                             onChange={(e) => settxtProduct(e.target.value)}
                         />
