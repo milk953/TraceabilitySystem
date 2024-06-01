@@ -21,7 +21,6 @@ const App = () => {
     <StrictMode>
       <BrowserRouter>
         <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
           <Route path="/SheetMaster" element={<Sheet_Master />} />
           <Route path="/SerialMaster" element={<Serial_Master />} />
           <Route path="/ProductMaster" element={<Product_master />} />

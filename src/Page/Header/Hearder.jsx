@@ -8,12 +8,12 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "../Sidebar/sidebar";
 import Avatar from "@mui/material/Avatar";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function Hearder() {
+  const { openLoginModal } = fn_Homepage();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const user = localStorage.getItem("Username");
   const surname = localStorage.getItem("Lastname");
@@ -27,7 +27,9 @@ function Hearder() {
     localStorage.removeItem("Username");
     localStorage.removeItem("Lastname");
     navigate("/");
-  }
+    location.reload();
+    openLoginModal();
+  };
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -66,10 +68,10 @@ function Hearder() {
                 fontFamily: "Roboto, sans-serif",
               }}
             >
-              Username: {user} {surname} &nbsp;&nbsp;
+              Username: {user ?? 'Guest'} {surname} &nbsp;&nbsp;
               <br />
             </Button>
-            <LogoutIcon onClick={Logout}  />
+            <LogoutIcon onClick={Logout} />
           </Toolbar>
         </AppBar>
       </Box>

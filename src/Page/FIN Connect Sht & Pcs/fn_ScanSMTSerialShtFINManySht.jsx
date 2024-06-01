@@ -130,7 +130,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setPanalSerialOpen(false);
     setselectproduct(product[0]);
     Setmode("LOT");
-    // fctextFieldlot.current.focus();8
+    fctextFieldlot.current.focus();
   };
   const ShowTableResult = () => {
     setLblresultOpen(true);
@@ -150,7 +150,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       setLblErrorState(false);
       setPanalSerialOpen(false);
       localStorage.setItem("hfMode", "LOT");
-      // fctextFieldlot.current.focus();
+      fctextFieldlot.current.focus();
     } else if (strType === "LOT_ERROR") {
       console.log("LOT_ERROR is called");
       setLot("");
@@ -159,7 +159,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       setLblErrorState(true);
       //pnlSerial.Visible = False
       localStorage.setItem("hfMode", "LOT");
-      // fctextFieldlot.current.focus();
+      fctextFieldlot.current.focus();
     } else if (strType === "SERIAL") {
       console.log("SERIAL is called");
       setLotState(false);
@@ -310,6 +310,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setLot(strLot);
         settxtLotRef(strLot);
         getCountDataBylot(strLot);
+        // fcgvBackSide_txtSide back_0.current.focus();
         try {
           setselectproduct(strPrdname);
           // getProductSerialMaster(); wait to add
@@ -337,13 +338,13 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               if (hfCheckRollSht === "Y") {
                 setPnlRollLeafOpen(true);
                 settxtRollLeaf("");
-                // fctextFileRollLeaf.current.focus();
+                fctextFileRollLeaf.current.focus();
               } else {
                 Setmode("SERIAL");
                 // settxtMachine("");
                 if (hfReqMachine === "y") {
                   setPnlMachineOpen(true);
-                  // fctextFieldMachine.current.focus();
+                  fctextFieldMachine.current.focus();
                 } else {
                   setPnlMachineOpen(false);
                   // focus("gvBackSide_txtSideback_0");
@@ -352,12 +353,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             } catch (error) {
               setLblError("Product" + strPrdname + "not found.");
               setLblErrorState(true);
-              // fcddlProduct.current.focus();
+              fcddlProduct.current.focus();
             }
           } else {
             setLblError("Product" + strPrdname + "not found.");
             setLblErrorState(true);
-            // fcddlProduct.current.focus();
+            fcddlProduct.current.focus();
           }
         }
       } else {
@@ -367,7 +368,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
 
         setLblError("Invalid Lot No.");
         sethfMode("LOT");
-        // fctextFieldlot.current.focus();
+        fctextFieldlot.current.focus();
       }
     } else {
       setselectproduct(product[0]);
@@ -376,7 +377,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
 
       setLblError("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด");
       sethfMode("LOT");
-      // fctextFieldlot.current.focus();
+      fctextFieldlot.current.focus();
     }
   };
   const handleProductChange = async (event, value) => {
@@ -404,7 +405,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       if (hfCheckRollSht === "Y") {
         setPnlMachineOpen(true);
         settxtRollLeaf("");
-        // fctextFieldMachine.current.focus();
+        fctextFieldMachine.current.focus();
       } else {
         Setmode("SERIAL");
         settxtmachine("");

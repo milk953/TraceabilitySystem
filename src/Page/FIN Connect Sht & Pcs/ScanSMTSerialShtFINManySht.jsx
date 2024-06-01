@@ -65,6 +65,8 @@ function ScanSMTSerialShtFINManySht() {
     lblresultOpen,
     ShowTableResult,
     imageSize,
+    gvBackSide_txtSideback_0,
+    gvBackSide_txtSideback_0_Change,
   } = fn_ScanSMTSerialShtFINManySht();
 
   return (
@@ -315,6 +317,7 @@ function ScanSMTSerialShtFINManySht() {
                               }}
                               maxLength="30"
                               className="styleEnable"
+                              inputRef={fcgvBackSide_txtSideback_0}
                               onKeyDown={(e) => keyenter(e.keyCode, this, "")}
                             />
                             <Input
