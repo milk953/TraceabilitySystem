@@ -187,32 +187,15 @@ function sidebar({ isOpen, onClose }) {
           </>
         )}
         {/*Menu5 */}
-        <ListItem className="ListItem" onClick={toggleSubMenu5}>
+        <footer style={{ position: 'fixed', bottom: 0, width: '100%' }}>
+        <ListItem className="ListItem1" onClick={toggleSubMenu5}>
           <ListItemIcon>
-            <LogoutIcon style={{ color: "gray" }} />
+            <LogoutIcon style={{ color: 'gray' }} />
           </ListItemIcon>
           <ListItemText primary={menu[4]} onClick={Logout} />
         </ListItem>
-        {subMenuOpen5 && (
-          <>
-            {menuID.map(
-              (item, index) =>
-                menuID[index] === menuMain[4] && (
-                  <ListItem
-                    className="SubMenuItem"
-                    onClick={() => {
-                      onClose();
-                      // handleButtonClick(item.menu_name);
-                    }}
-                    key={index}
-                  >
-                    <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
-                    <ListItemText primary={menu[index]} />
-                  </ListItem>
-                )
-            )}
-          </>
-        )}
+      
+      </footer>
      
       </List>
     </Drawer>

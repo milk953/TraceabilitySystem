@@ -6,11 +6,30 @@
     
   }
   
+
+  
   .ListItem:hover {
     background-color: #bae7ff; /* เมื่อโฮเวอร์ */
     border-radius: 10px;
     color: #40a9ff;
     width: 95%;
+    margin-left: 5px;
+  }
+
+  .ListItem1 {
+    cursor: pointer;
+    color: rgb(119, 118, 118);
+    width: 95%;
+    
+  }
+  
+
+  
+  .ListItem1:hover {
+    background-color: #bae7ff; /* เมื่อโฮเวอร์ */
+    border-radius: 10px;
+    color: #40a9ff;
+    width: 290px;
     margin-left: 5px;
   }
   
