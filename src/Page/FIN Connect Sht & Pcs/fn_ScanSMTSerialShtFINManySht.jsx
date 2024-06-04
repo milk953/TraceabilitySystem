@@ -315,6 +315,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setselectproduct(strPrdname);
           // getProductSerialMaster(); wait to add
           getIntialSheet();
+          fcOpertor.current.focus();
           if (hfCheckRollSht === "Y") {
             setPnlMachineOpen(true);
             // fctextFieldMachine.current.focus();
