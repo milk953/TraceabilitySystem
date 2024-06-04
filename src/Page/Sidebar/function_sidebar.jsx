@@ -25,24 +25,18 @@ function sidebarT() {
       axios.post("/api/MenuName", {
         login_id: Login_ID,
       }).then((res) => {
-        // setmenuTest(res.data)
+       console.log(res.data,'apimenu')
         let datamenu = [];
         let datamenuid = [];
         let main = [];
         for (let i = 0; i < res.data.length; i++) {
-  
           datamenu.push(res.data[i][1]);
-  
           datamenuid.push(res.data[i][6]);
-  
           main.push(res.data[i][0]);
-  
         }
-  
         setmenu(datamenu);
         setmenuID(datamenuid);
         setmenuMain(main);
-  
       })
     };
     useEffect(() => {
@@ -50,9 +44,6 @@ function sidebarT() {
     }, []);
   
     const navigate = useNavigate();
-    const Page1 = () => {
-      navigate("/Page1");
-    };
     const toggleSubMenu1 = () => {
       setIcondrop1(!Icondrop1);
       setSubMenuOpen1(!subMenuOpen1);
@@ -76,30 +67,29 @@ function sidebarT() {
     };
   
     const handleButtonClick = () => {
-      // console.log(menuName);
+       console.log('เข้าๅๅ');
   
       if (Login_ID != "") {
-        console.error("hereM", Login_ID);
-        axios
-          .post("/api/MenuName", {
-  
-            login_id: Login_ID,
-          })
-          .then((res) => {
-            const urll = res.data.map((item) => item[2]);
-            console.log("testt", urll);
-            gopath(urll);
-          })
-          .catch((error) => {
-            console.error("Error:", error.message);
-          });
+        console.error("menulogin", Login_ID);
+        // axios
+        //   .post("/api/MenuName", {
+        //     login_id: Login_ID,
+        //   })
+        //   .then((res) => {
+        //     const urll = res.data.map((item) => item[2]);
+        //     console.log("testt", urll);
+        //     gopath(urll);
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error:", error.message);
+        //   });
       }
     };
   
     const gopath = (path) => {
       console.warn(path);
       const go = "/" + path;
-      navigate(go);
+      // navigate(go);
     };
   
     const Logout = () => {

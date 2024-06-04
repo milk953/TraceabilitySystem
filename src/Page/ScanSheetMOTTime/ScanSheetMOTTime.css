@@ -4,9 +4,7 @@
     max-width: 1400px;
     margin-top: 50px;
     height: 500px;
-  
     padding: 20px;
-
 }
 
 .TableMot1 th{
@@ -17,10 +15,6 @@
 }
 
 .TableMot1 td{
-
     padding: 4px 4px 4px 4px!important;
     /* margin: 10px !important; */
-   
-
-
 }

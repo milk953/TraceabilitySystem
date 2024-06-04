@@ -63,11 +63,11 @@ function sidebar({ isOpen, onClose }) {
           <ListItemText
             primary={<span style={{ marginRight: "5px" }}>{menu[0]}</span>}
           />
-          {menuID.map(
+          {/* {menuID.map(
             (item, index) =>
               menuID[index] === menuMain[0] &&
               (Icondrop1 ? <UpOutlined /> : <DownOutlined />)
-          )}
+          )} */}
         </ListItem>
         {subMenuOpen1 && (
           <>
@@ -96,11 +96,11 @@ function sidebar({ isOpen, onClose }) {
             <SensorsOutlinedIcon color="success" />
           </ListItemIcon>
           <ListItemText primary={menu[1]} />
-          {menuID.map(
+          {/* {menuID.map(
             (item, index) =>
-              menuID[index] === menuMain[1] &&
-              (Icondrop2 ? <UpOutlined /> : <DownOutlined />)
-          )}
+              menuID[index] === menuMain[1] && */}
+              {Icondrop2 ? <UpOutlined /> : <DownOutlined />}
+          {/* )} */}
         </ListItem>
         {subMenuOpen2 && (
           <>
@@ -128,11 +128,7 @@ function sidebar({ isOpen, onClose }) {
             <BuildIcon color="secondary" />
           </ListItemIcon>
           <ListItemText primary={menu[2]} />
-          {menuID.map(
-            (item, index) =>
-              menuID[index] === menuMain[2] &&
-              (Icondrop3 ? <UpOutlined /> : <DownOutlined />)
-          )}
+          {Icondrop3 ? <UpOutlined /> : <DownOutlined />}
         </ListItem>
         {subMenuOpen3 && (
           <>
@@ -160,11 +156,7 @@ function sidebar({ isOpen, onClose }) {
             <SourceIcon style={{ color: "orange" }} />
           </ListItemIcon>
           <ListItemText primary={menu[3]} />
-          {menuID.map(
-            (item, index) =>
-              menuID[index] === menuMain[3] &&
-              (Icondrop4 ? <UpOutlined /> : <DownOutlined />)
-          )}
+          {Icondrop4 ? <UpOutlined /> : <DownOutlined />}
         </ListItem>
         {subMenuOpen4 && (
           <>
