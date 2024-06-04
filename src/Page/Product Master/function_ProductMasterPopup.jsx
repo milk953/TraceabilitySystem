@@ -197,6 +197,21 @@ function ProductMasterPopup(onClose, item, searchFunction) {
   const [checkHead, setCheckHead] = useState("hidden");
   const [checkEmpty, setCheckEmpty] = useState("hidden");
   const [checkData, setCheckData] = useState("visible");
+  
+  function getTimestamp() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+  
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+  }
+
+  const timestamp = getTimestamp();
 
 
   useEffect(() => {
@@ -1043,8 +1058,10 @@ function ProductMasterPopup(onClose, item, searchFunction) {
             p_tpm_fin_chip_id_flg: FinalchipIDflag,
             p_tpm_create_by: ipaddress,
             p_tpm_create_program: UserLogin,
+            p_tpm_create_date: timestamp,
             p_tpm_update_by: ipaddress,
-            p_tpm_update_program: UserLogin
+            p_tpm_update_program: UserLogin,
+            p_tpm_update_date: timestamp
           });
           console.log("บันทึกข้อมูลสำเร็จ =", response);
           swal("success", "You save data success", "success");
@@ -1212,8 +1229,10 @@ function ProductMasterPopup(onClose, item, searchFunction) {
             p_tpm_fin_chip_id_flg: FinalchipIDflag,
             p_tpm_create_by: ipaddress,
             p_tpm_create_program: UserLogin,
+            p_tpm_create_date: timestamp,
             p_tpm_update_by: ipaddress,
-            p_tpm_update_program: UserLogin
+            p_tpm_update_program: UserLogin,
+            p_tpm_update_date: timestamp
           });
           console.log("แก้ไขข้อมูลสำเร็จ =", response);
           swal("success", "You edit data success", "success");
