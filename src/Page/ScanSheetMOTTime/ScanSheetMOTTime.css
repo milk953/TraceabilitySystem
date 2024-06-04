@@ -1,0 +1,26 @@
+.Card-ScanSheetMOTTime{
+    margin: auto;
+    width: 95%;
+    max-width: 1400px;
+    margin-top: 50px;
+    height: 500px;
+  
+    padding: 20px;
+
+}
+
+.TableMot1 th{
+    padding: 3px !important;
+    background-color: #8c8c8c !important ;
+    border-radius: 5px  5px 0 0!important;
+    color: #fff;
+}
+
+.TableMot1 td{
+
+    padding: 4px 4px 4px 4px!important;
+    /* margin: 10px !important; */
+   
+
+
+}
