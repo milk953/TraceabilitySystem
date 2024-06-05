@@ -86,12 +86,12 @@ function ProductMasterPage() {
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
-        const factoryCode = item.p_tpm_factory;
+        const factoryCode = item.p_tpm_plant_code;
         const productName = item.p_tpm_product_name;
 
         try {
           const response = await axios.post("/api/delProduct_Master", {
-            p_tpm_factory: factoryCode,
+            p_tpm_plant_code: factoryCode,
             p_tpm_product_name: productName
           });
           console.log("ลบข้อมูลสำเร็จ:", response.data);

@@ -290,7 +290,7 @@ function ProductMaster() {
                                             </Tooltip>
                                         </TableCell>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{item.p_tpm_factory}</TableCell>
+                                        <TableCell>{item.p_tpm_plant_code}</TableCell>
                                         <TableCell className="autowidthcell">
                                             {item.p_tpm_product_name}
                                         </TableCell>

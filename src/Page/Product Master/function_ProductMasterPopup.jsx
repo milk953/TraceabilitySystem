@@ -289,7 +289,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
       setFinalchipIDflag("");
     } else if (STATUS_P === "EDIT" && item) {
       console.log("CASE EDIT", item);
-      setDDL_Factory(item.p_tpm_factory);
+      setDDL_Factory(item.p_tpm_plant_code);
       settxtProductName(item.p_tpm_product_name);
       settxtUpCount(item.p_tpm_update_count);
       settxtConfig(item.p_tpm_config_code);
@@ -985,7 +985,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
       ) {
         try {
           const response = await axios.post("/api/insProduct_Master", {
-            p_tpm_factory: DDL_Factory,
+            p_tpm_plant_code: DDL_Factory,
             p_tpm_product_name: txtProductName,
             p_tpm_update_count: txtUpCount,
             p_tpm_config_code: txtConfig,
@@ -1156,7 +1156,7 @@ function ProductMasterPopup(onClose, item, searchFunction) {
       ) {
         try {
           const response = await axios.post("/api/updateProduct_Master", {
-            p_tpm_factory: DDL_Factory,
+            p_tpm_plant_code: DDL_Factory,
             p_tpm_product_name: txtProductName,
             p_tpm_update_count: txtUpCount,
             p_tpm_config_code: txtConfig,
