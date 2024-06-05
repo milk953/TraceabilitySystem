@@ -41,6 +41,9 @@ function sidebar({ isOpen, onClose }) {
     toggleSubMenu5,
     handleButtonClick,
     Logout,
+    GoNavigate,
+    menuPath,
+    setmenuPath
   } = sidebarT();
 
   return (
@@ -55,42 +58,20 @@ function sidebar({ isOpen, onClose }) {
           <ListItemText style={{ marginLeft: "10px" }} primary="Welcome" />
           <ArrowBackIcon onClick={onClose} />
         </ListItem>
-        {/*Menu1 */}
+        {/*Menu1 Home*/}
         <ListItem className="ListItem" onClick={toggleSubMenu1}>
           <ListItemIcon>
             <AssignmentOutlinedIcon color="primary" />
           </ListItemIcon>
           <ListItemText
-            primary={<span style={{ marginRight: "5px" }}>{menu[0]}</span>}
+            primary={<span style={{ marginRight: "5px" }} >{menu[0]}</span>} 
           />
-          {/* {menuID.map(
-            (item, index) =>
-              menuID[index] === menuMain[0] &&
-              (Icondrop1 ? <UpOutlined /> : <DownOutlined />)
-          )} */}
+         
         </ListItem>
-        {subMenuOpen1 && (
-          <>
-            {menuID.map(
-              (item, index) =>
-                menuID[index] === menuMain[0] && (
-                  <ListItem
-                    className="SubMenuItem"
-                    onClick={() => {
-                      onClose();
-                      handleButtonClick(item[0]);
-                    }}
-                    key={index}
-                  >
-                    <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
-                    <ListItemText primary={menu[index]} />
-                  </ListItem>
-                )
-            )}
-          </>
-        )}
+       
+      
 
-        {/*Menu2 */}
+        {/*Menu2  Work*/}
         <ListItem className="ListItem" onClick={toggleSubMenu2}>
           <ListItemIcon>
             <SensorsOutlinedIcon color="success" />
@@ -111,7 +92,7 @@ function sidebar({ isOpen, onClose }) {
                     className="SubMenuItem"
                     onClick={() => {
                       onClose();
-                      handleButtonClick(item.menu_name);
+                      GoNavigate(menuPath[index]);
                     }}
                     key={index}
                   >
@@ -139,7 +120,7 @@ function sidebar({ isOpen, onClose }) {
                     className="SubMenuItem"
                     onClick={() => {
                       onClose();
-                      handleButtonClick(item[5]);
+                      GoNavigate(menuPath[index]);
                     }}
                     key={index}
                   >
@@ -167,7 +148,7 @@ function sidebar({ isOpen, onClose }) {
                     className="SubMenuItem"
                     onClick={() => {
                       onClose();
-                      handleButtonClick(item.menu_name);
+                      GoNavigate(menuPath[index]);
                     }}
                     key={index}
                   >

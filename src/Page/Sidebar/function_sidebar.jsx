@@ -14,7 +14,7 @@ function sidebarT() {
     const [menu, setmenu] = useState([]);
     const [menuID, setmenuID] = useState([]);
     const [menuMain, setmenuMain] = useState([]);
-  
+    const [menuPath, setmenuPath] = useState([]);
     const [Icondrop1, setIcondrop1] = useState(false);
     const [Icondrop2, setIcondrop2] = useState(false);
     const [Icondrop3, setIcondrop3] = useState(false);
@@ -25,18 +25,21 @@ function sidebarT() {
       axios.post("/api/MenuName", {
         login_id: Login_ID,
       }).then((res) => {
-       console.log(res.data,'apimenu')
+       console.log(res.data[0][2],'apimenu')
         let datamenu = [];
         let datamenuid = [];
         let main = [];
+        let Path = [];
         for (let i = 0; i < res.data.length; i++) {
           datamenu.push(res.data[i][1]);
           datamenuid.push(res.data[i][6]);
           main.push(res.data[i][0]);
+          Path.push(res.data[i][2]);
         }
         setmenu(datamenu);
         setmenuID(datamenuid);
         setmenuMain(main);
+        setmenuPath(Path)
       })
     };
     useEffect(() => {
@@ -86,10 +89,9 @@ function sidebarT() {
       }
     };
   
-    const gopath = (path) => {
-      console.warn(path);
-      const go = "/" + path;
-      // navigate(go);
+    const GoNavigate = (path) => {
+      console.log(path,'pathhh');
+      window.location.href = path;
     };
   
     const Logout = () => {
@@ -103,7 +105,7 @@ function sidebarT() {
         subMenuOpen1, subMenuOpen2, subMenuOpen3, subMenuOpen4, subMenuOpen5,
         menu, menuID, menuMain, Icondrop1, Icondrop2, Icondrop3, Icondrop4,
         Menu, toggleSubMenu1, toggleSubMenu2, toggleSubMenu3, toggleSubMenu4,
-        toggleSubMenu5, handleButtonClick, Logout
+        toggleSubMenu5, handleButtonClick, Logout,GoNavigate,menuPath,setmenuPath
     }
 
 }
