@@ -11,6 +11,7 @@ import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
 import ScanSheetMOTTime from "./Page/ScanSheetMOTTime/ScanSheetMOTTime";
 import Homepage from "./Page/Homepage/Homepage";
 import Login from "./Page/Login/Login"; 
+import ConfirmBarcodeGrade from "./Page/Confirm Barcode Grade/ConfirmBarcodeGrade";
 
 import axios from "axios";
 const backendUrl = "http://10.17.74.226:3001";
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
           <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />
           <Route path="/" element={<Homepage />} />
+          <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
         </Routes>
       </BrowserRouter>
     </StrictMode>

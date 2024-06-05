@@ -68,7 +68,7 @@ function ScanSheetMOTTime() {
           <Table
             className="TableMot1"
             component={Card}
-            sx={{ width: "100%", maxWidth: "600px" }}
+            sx={{ width: "100%", maxWidth: "600px", minWidth:'600px'}}
           >
             <TableHead>
               <TableRow>
@@ -203,9 +203,9 @@ function ScanSheetMOTTime() {
           </Table>
           <img
             style={{
-              width: "490px",
+              width: "540px",
               height: "400px",
-              marginLeft: "180px",
+              marginLeft: "10%",
             }}
             src="src/assets/1.jpg" // Import the image
             alt="Description of the image"
