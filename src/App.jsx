@@ -14,7 +14,7 @@ import Login from "./Page/Login/Login";
 import ConfirmBarcodeGrade from "./Page/Confirm Barcode Grade/ConfirmBarcodeGrade";
 
 import axios from "axios";
-const backendUrl = "http://10.17.74.226:3001";
+const backendUrl = "http://10.17.74.228:3001";
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
