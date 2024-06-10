@@ -124,13 +124,14 @@ function ScanSMTSerialShtFINManySht() {
                   </TableRow>
                   <TableRow>
                     <TableCell>Product:</TableCell>
-                    <TableCell>
+                    <TableCell>  
                       <FormControl fullWidth>
                         <Autocomplete
                           id="ddlProduct"
                           readOnly={false}
-                          options={product}
+                          options={(product.map((item) => item.prd_name))}
                           value={selectproduct}
+                        
                           onInputChange={handleProductChange}
                           getOptionLabel={(option) => option}
                           renderInput={(params) => (

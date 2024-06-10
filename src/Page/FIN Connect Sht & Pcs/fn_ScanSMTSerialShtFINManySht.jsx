@@ -128,7 +128,9 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setLot("");
     setLotState(true);
     setPanalSerialOpen(false);
-    setselectproduct(product[0]);
+    setselectproduct(product);
+    Getproduct();
+    
     Setmode("LOT");
     fctextFieldlot.current.focus();
   };
@@ -237,7 +239,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const Getproduct = () => {
     try {
       axios.get("/api/GetProductData").then((res) => {
-        setProduct(res.data.Product.flat());
+        setProduct(res.data);
+        console.log(res.data, "res.data");
       });
     } catch (error) {
       console.error(error, "get data error");
@@ -383,6 +386,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const handleProductChange = async (event, value) => {
     setselectproduct(value);
+    console.log(value, "value");
     // getProductSerialMaster();
     var GetConnectShtMasterCheckResultState = "";
     if (lot.trim.toLocaleUpperCase != "") {
@@ -397,7 +401,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         console.error("Error fetching product data:", error);
       }
     } else {
-      setselectproduct(product[0]);
+      setselectproduct(product);
       Setmode("LOT");
     }
     if (GetConnectShtMasterCheckResultState == "OK") {
@@ -418,11 +422,11 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         }
       }
     } else {
-      setselectproduct(product[0]);
+      setselectproduct(product);
       setLot("");
       setGvScanResult([]);
       setLblError(
-        `${product[0]} not test maxter! / ${product[0]} ยังไม่ทดสอบมาสเตอร์`
+        `${product} not test maxter! / ${product} ยังไม่ทดสอบมาสเตอร์`
       );
       setLblErrorState(true);
       sethfMode("LOT");
