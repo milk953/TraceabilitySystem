@@ -4,3 +4,13 @@
     padding-left: 5px !important;
 }
 
+.Card-ConfirmBarcode{
+    margin: auto;
+    width: 95%;
+    max-width: 1400px;
+    margin-top: 50px;
+    max-height:  1500px;
+    height: 100%;
+    padding: 20px;
+}
+
