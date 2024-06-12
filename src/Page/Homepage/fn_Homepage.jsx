@@ -11,7 +11,7 @@ function fn_Homepage() {
   const [ipAddress, setIpAddress] = useState("");
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
   const openLoginModal = () => {
-    console.log(LoginStatus, "LoginStatus");
+    // console.log(LoginStatus, "LoginStatus");
     if (window.location.pathname === "/" && LoginStatus === false) {
       Swal.fire({
         title: "เข้าสู่ระบบ",
@@ -25,8 +25,8 @@ function fn_Homepage() {
         preConfirm: () => {
           var username = Swal.getPopup().querySelector("#username").value;
           var password = Swal.getPopup().querySelector("#password").value;
-          console.log(username);
-          console.log(password);
+          // console.log(username);
+          // console.log(password);
           handleLogin(username, password);
         },
       });
@@ -51,7 +51,7 @@ function fn_Homepage() {
       )
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data, "res.data");
+          // console.log(res.data, "res.data");
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("Username", res.data[0][3]);
           localStorage.setItem("Lastname", res.data[0][4]);

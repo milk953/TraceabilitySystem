@@ -35,8 +35,8 @@ function ScanSMTSerialShtFINManySht() {
     selectproduct,
     setselectproduct,
     dtData1,
-    lblError,
-    lblErrorState,
+    lblLog,
+    lblLogState,
     serialData,
     panalSerialOpen,
     pnlRollLeafOpen,
@@ -54,7 +54,7 @@ function ScanSMTSerialShtFINManySht() {
     fctextFieldMachine,
     fctextFileRollLeaf,
     fcddlProduct,
-    fcgvBackSide_txtSideback_0,
+    fctxtSideBack,
     fcgvSerial,
     fcOpertor,
     txtRollLeaf,
@@ -67,8 +67,23 @@ function ScanSMTSerialShtFINManySht() {
     imageSize,
     gvBackSide_txtSideback_0,
     gvBackSide_txtSideback_0_Change,
+    txtOperator_TextChanged,
+    txtRollLeaf_TextChanged,
+    txtOperator,
+    handleFrontSideChange,
+    txtSideFront,
+    fctxtsideFront,
+    handleBackSideChange,
+    txtSideBack,
+    handleFrontSide2Change,
+    txtSideFront2,
+    handleCancel
   } = fn_ScanSMTSerialShtFINManySht();
-
+  useEffect(() => {
+    if (gvbacksideOpen === true) {
+      fctxtSideBack.current.focus();
+    }
+  }, [gvbacksideOpen]);
   return (
     <div>
       <Hearder />
@@ -124,14 +139,13 @@ function ScanSMTSerialShtFINManySht() {
                   </TableRow>
                   <TableRow>
                     <TableCell>Product:</TableCell>
-                    <TableCell>  
+                    <TableCell>
                       <FormControl fullWidth>
                         <Autocomplete
                           id="ddlProduct"
                           readOnly={false}
-                          options={(product.map((item) => item.prd_name))}
+                          options={product.map((item) => item.prd_name)}
                           value={selectproduct}
-                        
                           onInputChange={handleProductChange}
                           getOptionLabel={(option) => option}
                           renderInput={(params) => (
@@ -165,6 +179,10 @@ function ScanSMTSerialShtFINManySht() {
                         size="small"
                         id="txtField"
                         inputRef={fcOpertor}
+                        value={txtOperator}
+                        onChange={(e) => {
+                          txtOperator_TextChanged(e.target.value);
+                        }}
                       ></TextField>
                     </TableCell>
                     <TableCell></TableCell>
@@ -179,7 +197,6 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>{lblTotalPcs}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
-                  {/* {console.log(pnlRollLeafOpen)} */}
                   {pnlRollLeafOpen && (
                     <>
                       <TableRow>
@@ -190,6 +207,9 @@ function ScanSMTSerialShtFINManySht() {
                             id="txtField"
                             inputRef={fctextFileRollLeaf}
                             value={txtRollLeaf}
+                            onChange={(e) => {
+                              txtRollLeaf_TextChanged(e.target.value);
+                            }}
                           ></TextField>
                         </TableCell>
                         <TableCell></TableCell>
@@ -301,7 +321,6 @@ function ScanSMTSerialShtFINManySht() {
                 <div className="pnlBackside">
                   <Table component={Paper} className="gvBackSide">
                     <TableBody>
-                      {console.log(dtData1)}
                       {dtData1.map((row, index) => (
                         <TableRow
                           key={index}
@@ -318,8 +337,9 @@ function ScanSMTSerialShtFINManySht() {
                               }}
                               maxLength="30"
                               className="styleEnable"
-                              inputRef={fcgvBackSide_txtSideback_0}
-                              onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                              ref={fctxtSideBack}
+                              value = {txtSideBack[index]}
+                              onChange={(e) => handleBackSideChange(index, e)}
                             />
                             <Input
                               type="text"
@@ -328,8 +348,10 @@ function ScanSMTSerialShtFINManySht() {
                                 textTransform: "uppercase",
                               }}
                               maxLength="30"
+                              inputRef={fctxtsideFront}
                               className="styleEnable"
-                              onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                              value={txtSideFront2[index]}
+                              onChange={(e) => handleFrontSide2Change(index, e)}
                             />
                           </TableCell>
                         </TableRow>
@@ -338,11 +360,10 @@ function ScanSMTSerialShtFINManySht() {
                   </Table>
                 </div>
               )}
-              {console.log(lblErrorState)}
-              {lblErrorState && (
+              {lblLogState && (
                 <div className="lblLog">
                   <Table className="lblTbLog">
-                    <TableCell>{lblError}</TableCell>
+                    <TableCell>{lblLog}</TableCell>
                   </Table>
                 </div>
               )}
@@ -368,13 +389,13 @@ function ScanSMTSerialShtFINManySht() {
                             className="gvSerialCell"
                             style={{ width: "3%", textAlign: "right" }}
                           >
-                            {row.SEQ}
+                            {row.SHEET}
                           </TableCell>
                           <TableCell
                             className="gvSerialCell"
                             style={{ width: "40%", textAlign: "right" }}
                           >
-                            {row.TITLE}
+                            {row.SEQ}
                           </TableCell>
                           <TableCell
                             className="gvSerialCell"
@@ -388,7 +409,8 @@ function ScanSMTSerialShtFINManySht() {
                               }}
                               maxLength="30"
                               className="styleEnable"
-                              onKeyDown={(e) => keyenter(e.keyCode, this, "")}
+                              value={txtSideFront[index]}
+                              onChange={(e) => handleFrontSideChange(index, e)}
                             />
                           </TableCell>
                         </TableRow>
@@ -406,7 +428,7 @@ function ScanSMTSerialShtFINManySht() {
                             OK
                           </Button>
                           &nbsp;&nbsp;
-                          <Button className="BtCancel"> Cancel</Button>
+                          <Button className="BtCancel" onClick={handleCancel}> Cancel</Button>
                         </TableCell>
                       </TableRow>
                     </TableBody>
