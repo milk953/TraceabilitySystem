@@ -19,7 +19,6 @@ const backendUrl = "http://10.17.74.228:3001";
 axios.defaults.baseURL = backendUrl;
 const App = () => {
   return (
-    <StrictMode>
       <BrowserRouter>
         <Routes>
           <Route path="/SheetMaster" element={<Sheet_Master />} />
@@ -33,7 +32,6 @@ const App = () => {
           <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
         </Routes>
       </BrowserRouter>
-    </StrictMode>
   );
 };
 

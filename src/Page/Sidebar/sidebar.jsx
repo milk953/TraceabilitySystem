@@ -39,7 +39,7 @@ function sidebar({ isOpen, onClose }) {
     toggleSubMenu3,
     toggleSubMenu4,
     toggleSubMenu5,
-    handleButtonClick,
+    Home,
     Logout,
     GoNavigate,
     menuPath,
@@ -63,13 +63,8 @@ function sidebar({ isOpen, onClose }) {
           <ListItemIcon>
             <AssignmentOutlinedIcon color="primary" />
           </ListItemIcon>
-          <ListItemText
-            primary={<span style={{ marginRight: "5px" }} >{menu[0]}</span>} 
-          />
-         
+          <ListItemText primary={menu[0]} onClick={Home} />
         </ListItem>
-       
-      
 
         {/*Menu2  Work*/}
         <ListItem className="ListItem" onClick={toggleSubMenu2}>
@@ -167,9 +162,7 @@ function sidebar({ isOpen, onClose }) {
           </ListItemIcon>
           <ListItemText primary={menu[4]} onClick={Logout} />
         </ListItem>
-      
       </footer>
-     
       </List>
     </Drawer>
   );

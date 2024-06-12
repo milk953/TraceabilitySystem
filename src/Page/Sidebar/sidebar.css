@@ -3,7 +3,6 @@
     cursor: pointer;
     color: rgb(119, 118, 118);
     width: 95%;
-    
   }
   
 
@@ -20,7 +19,6 @@
     cursor: pointer;
     color: rgb(119, 118, 118);
     width: 95%;
-    
   }
   
 
@@ -45,6 +43,7 @@
     border-radius: 10px;
     color: #40a9ff;
     width: 90%;
+    margin-left: 5px;
   }
   
   .MuiBox-root.css-1b9mqa5 {

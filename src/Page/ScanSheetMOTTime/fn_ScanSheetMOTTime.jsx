@@ -180,7 +180,7 @@ function fn_ScanSheetMOTTime() {
     settxtSheet("");
     setEnableLotNo(false);
     fctxtLotno.current.focus();
-    x; // }
+    // }
   };
 
   const BtClick_back = async () => {
