@@ -25,7 +25,7 @@ function sidebarT() {
       axios.post("/api/MenuName", {
         login_id: Login_ID,
       }).then((res) => {
-       console.log(res.data[0][2],'apimenu')
+       console.log(res.data,'apimenu')
         let datamenu = [];
         let datamenuid = [];
         let main = [];
