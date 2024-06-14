@@ -25,7 +25,7 @@ function sidebarT() {
       axios.post("/api/MenuName", {
         login_id: Login_ID,
       }).then((res) => {
-       console.log(res.data[0][2],'apimenu')
+       console.log(res.data,'apimenu')
         let datamenu = [];
         let datamenuid = [];
         let main = [];
@@ -69,24 +69,8 @@ function sidebarT() {
       setSubMenuOpen5(!subMenuOpen5);
     };
   
-    const handleButtonClick = () => {
-       console.log('เข้าๅๅ');
-  
-      if (Login_ID != "") {
-        console.error("menulogin", Login_ID);
-        // axios
-        //   .post("/api/MenuName", {
-        //     login_id: Login_ID,
-        //   })
-        //   .then((res) => {
-        //     const urll = res.data.map((item) => item[2]);
-        //     console.log("testt", urll);
-        //     gopath(urll);
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error:", error.message);
-        //   });
-      }
+    const Home = () => {
+      window.location.href = '/';
     };
   
     const GoNavigate = (path) => {
@@ -105,7 +89,7 @@ function sidebarT() {
         subMenuOpen1, subMenuOpen2, subMenuOpen3, subMenuOpen4, subMenuOpen5,
         menu, menuID, menuMain, Icondrop1, Icondrop2, Icondrop3, Icondrop4,
         Menu, toggleSubMenu1, toggleSubMenu2, toggleSubMenu3, toggleSubMenu4,
-        toggleSubMenu5, handleButtonClick, Logout,GoNavigate,menuPath,setmenuPath
+        toggleSubMenu5, Home, Logout,GoNavigate,menuPath,setmenuPath
     }
 
 }

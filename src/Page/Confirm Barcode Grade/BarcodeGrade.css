@@ -4,3 +4,43 @@
     padding-left: 5px !important;
 }
 
+.Card-ConfirmBarcode{
+    margin: auto;
+    width: 95%;
+    max-width: 1400px;
+    margin-top: 50px;
+  
+    height: 100%;
+    padding: 20px;
+}
+
+.gvBackSideBarcode{
+    margin-top: 30px;
+    width: 400px !important;
+    margin: left;
+}
+
+.gvBackSideBarcode td {
+    padding: 3px;
+    width: 100px;
+  }
+  .gvBackSideBarcode input {
+    width: 200px !important;
+  }
+
+.CSS-GvSerialBarcode{
+    /* margin: auto; */
+    margin-top: 30px;
+    max-width: 400px !important;
+    width: 90% !important;
+}
+
+.CSS-GvSerialBarcode th{
+    background-color: #12422e !important ;
+    color: #fff;
+    padding: 5px;
+}
+
+.CSS-GvSerialBarcode td{
+    padding: 4px 4px 4px 4px!important;
+}
