@@ -122,15 +122,26 @@
   margin: auto;
   text-align: center !important;
 }
-#gvScanResultBodyNum {
+#gvScanResultSheet{
   text-align: center;
   border-right: 1px solid rgb(221, 219, 219);
 }
-#gvScanResultBodyTxt {
-  text-align: left;
+#gvScanResultSeq{
+  text-align: center;
   border-right: 1px solid rgb(221, 219, 219);
 }
-
+#gvScanResultSerial{
+  text-align: center;
+  border-right: 1px solid rgb(221, 219, 219);
+}
+#gvScanResultScan{
+  text-align: center;
+  border-right: 1px solid rgb(221, 219, 219);
+}
+#gvScanResultRemark{
+  text-align: center;
+  border-right: 1px solid rgb(221, 219, 219);
+}
 #gvScanResult {
   margin-top: 20px;
   width: auto;
@@ -150,6 +161,7 @@
   max-width: 400px;
   width: 100%;
   margin: auto;
+  margin-left: 200px;
   height: 45px;
   text-align: center;
 }

@@ -77,7 +77,7 @@ function ScanSMTSerialShtFINManySht() {
     txtSideBack,
     handleFrontSide2Change,
     txtSideFront2,
-    handleCancel
+    handleCancel,
   } = fn_ScanSMTSerialShtFINManySht();
   useEffect(() => {
     if (gvbacksideOpen === true) {
@@ -241,11 +241,11 @@ function ScanSMTSerialShtFINManySht() {
             </td>
             <td
               style={{
-                textAlign: "center",
+                textAlign: "left",
                 width: "900px",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                alignItems: "left",
                 padding: "0",
                 margin: "0",
                 verticalAlign: "top",
@@ -263,6 +263,7 @@ function ScanSMTSerialShtFINManySht() {
                       className="lblResultCard"
                       elevation={3}
                       style={{
+                        alignItems: "center",
                         background: " #ff4d4f",
                         display: gvScanResult,
                       }}
@@ -276,41 +277,85 @@ function ScanSMTSerialShtFINManySht() {
                     </Paper>
                   )}
                   {gvScanResultState && (
-                    <Table id="gvScanResult" component={Paper}>
-                      <TableHead>
+                    <Table
+                      id="gvScanResult"
+                      component={Paper}
+                      style={{ width: "900px" ,margunBottom:"20px"}}
+                    >
+                      <TableHead sx={{ height: "20px" }}>
                         <TableRow>
-                          <TableCell sx={{ width: "70px" }}>
+                          <TableCell
+                            sx={{
+                              width: "70px",
+                              height: "10px",
+                              padding: "0px",
+                            }}
+                          >
                             Sheet No.
                           </TableCell>
-                          <TableCell sx={{ width: "70px" }}>No.</TableCell>
-                          <TableCell>Serial No.</TableCell>
-                          <TableCell>Scan Result</TableCell>
-                          <TableCell>Remark</TableCell>
+                          <TableCell
+                            sx={{
+                              width: "70px",
+                              height: "10px",
+                              padding: "1px",
+                            }}
+                          >
+                            No.
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "100px",
+                              height: "10px",
+                              padding: "1px",
+                            }}
+                          >
+                            Serial No.
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "70px",
+                              height: "10px",
+                              padding: "0px",
+                            }}
+                          >
+                            Scan Result
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "300px",
+                              height: "10px",
+                              padding: "0px",
+                            }}
+                          >
+                            Remark
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {gvScanResult.map((row, index) => (
                           <TableRow key={index}>
-                            <TableCell id="gvScanResultBodyNum">
-                              {row.SheetNo}
+                            <TableCell id="gvScanResultSheet">
+                              {row.SHEET}
                             </TableCell>
-                            <TableCell id="gvScanResultBodyNum">
-                              {row.No}
+                            <TableCell id="gvScanResultSeq">
+                              {row.SEQ}
                             </TableCell>
-                            <TableCell id="gvScanResultBodyTxt">
-                              {row.SerialNo}
+                            <TableCell id="gvScanResultSerial">
+                              {row.SERIAL}
                             </TableCell>
-                            <TableCell id="gvScanResultBodyNum">
-                              {row.ScanResult}
+                            <TableCell id="gvScanResultScan">
+                              {row.SCAN_RESULT}
                             </TableCell>
-                            <TableCell id="gvScanResultBodyTxt">
-                              {row.Remark}
+                            <TableCell id="gvScanResultRemark">
+                              {row.REMARK}
                             </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
+                     
                   )}
+                   &nbsp; &nbsp;
                 </div>
               )}
             </td>
@@ -338,7 +383,7 @@ function ScanSMTSerialShtFINManySht() {
                               maxLength="30"
                               className="styleEnable"
                               ref={fctxtSideBack}
-                              value = {txtSideBack[index]}
+                              value={txtSideBack[index]}
                               onChange={(e) => handleBackSideChange(index, e)}
                             />
                             <Input
@@ -428,7 +473,10 @@ function ScanSMTSerialShtFINManySht() {
                             OK
                           </Button>
                           &nbsp;&nbsp;
-                          <Button className="BtCancel" onClick={handleCancel}> Cancel</Button>
+                          <Button className="BtCancel" onClick={handleCancel}>
+                            {" "}
+                            Cancel
+                          </Button>
                         </TableCell>
                       </TableRow>
                     </TableBody>
