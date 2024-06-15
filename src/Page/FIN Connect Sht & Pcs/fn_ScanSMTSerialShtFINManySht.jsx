@@ -1160,11 +1160,36 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           }
           if(!_bolError && _strUpdateError == ""){
             //Sucha modify 31-Aug-2016 update slowly
-            const res = await axios.post("/api/SetSerialLotShtTable", {}) //ทำ api
-            _strUpdateError == res.data.p_error
+            var dataSetSerialRecordTimeTrayTable = {};
+            if (i <= 0){
+              dataSetSerialRecordTimeTrayTable = {
+                intSerialLength: hfSerialLength,
+                BarcodeSide: hfBarcodeSide, 
+                USER_ID : txtOperator
+            }
+            dtSerial.push(dataSetSerialRecordTimeTrayTable);
+          }
+          var jsonData = JSON.stringify(dataSetSerialRecordTimeTrayTable);
+          jsonData = jsonData.replace('},{', ',');
+            const res = await axios.post("/api/SetSerialLotShtTable", jsonData,{
+              headers: {
+                'Content-Type': 'application/json'
+            }
+            }) .then((res) => {_strUpdateError = res.data.p_error}).catch((error) => {alert(error)});
             if (_strUpdateError !== ""){
               _strScanResultAll = "NG"
             }else if (hfPlasmaConnShtPcs == 'Y'){
+              var dataSetSerialRecordTimeTrayTable ={};
+              if (i <= 0){
+                  dataSetSerialRecordTimeTrayTable = {
+                  OPERATER: txtOperator,
+                  Program: 'frm_ScanSMTSerialShtFIN',
+                  TYPE: ''
+                }
+                dtSerial.push(dataSetSerialRecordTimeTrayTable);
+              }
+              var jsonData = JSON.stringify(dataSetSerialRecordTimeTrayTable);
+              jsonData = jsonData.replace('},{', ',');
               const res = await axios.post('/api/SetSerialRecordTimeTrayTable', jsonData, {
                 headers: {
                     'Content-Type': 'application/json'
