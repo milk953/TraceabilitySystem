@@ -1,0 +1,56 @@
+.TbScanSht {
+    margin: auto;
+    width: 400px;
+}
+
+.TbScanSht th{
+    background-color: #8c8c8c;
+    border-radius: 5px  5px 0 0;
+    color: #fff;
+    padding: 5px;
+}
+
+.TbScanSht td {
+    padding: 4px ;
+}
+
+#txtfield {
+    padding: 1px;
+    font-size: 16px;
+    padding-left: 5px 
+}
+
+#select {
+    padding: 0 ;
+    font-size: 14px;
+    padding-left: 5px;
+  }
+
+.btIcon {
+    padding: 0px !important;
+    min-width: 50px !important;
+}
+
+.divgvScan{
+    justify-content: center;
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    margin-left: 50px;
+    width: 725px;
+}
+
+.divgvScan th {
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+    font-size: 16px;
+    background: linear-gradient(to top, #c1d1f1, #BCCEF8);
+    padding: 9px;
+}
+
+.divgvScan td {
+    padding: 10px;
+  }
