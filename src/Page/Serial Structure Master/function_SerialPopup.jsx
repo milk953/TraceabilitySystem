@@ -94,6 +94,20 @@ function PopupSerialMaster(onClose, item, searchFunction) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [Date_show, setDate_show] = useState("");
 
+    function getTimestamp() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+    }
+
+    const timestamp = getTimestamp();
 
     useEffect(() => {
         if (STATUS_P === "NEW") {
@@ -101,7 +115,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                 try {
                     const response = await axios.post("/api/CheckrunCode", {});
                     const data = response.data;
-                    const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
+                    const new_run_seq = data[0].f_running;
                     setTXT_SN_Code(new_run_seq);
                 } catch (error) {
                     console.error('Error fetching or updating running number:', error);
@@ -163,40 +177,40 @@ function PopupSerialMaster(onClose, item, searchFunction) {
             setipaddress(ipaddress);
         } else {
             console.log("CASE EDIT", item);
-            setTXT_SN_Code(item.tssm_sn_struc_code);
-            setTXT_SN_Name(item.tssm_sn_struc_name);
-            setTXT_SN_UpCount(item.tssm_sn_struc_upcount);
-            setTXT_SN_Length(item.tssm_sn_length);
-            setCheck_Plant_Flag(item.tssm_plant_flag);
-            setTXT_Plant_Code(item.tssm_plant_code);
-            setTXT_Plant_Start(item.tssm_plant_start_digit);
-            setTXT_Plant_End(item.tssm_plant_end_digit);
-            setCheck_Week_Flag(item.tssm_week_flag);
-            setTXT_Week_Code(item.tssm_week_code);
-            setTXT_Week_Start(item.tssm_week_start_digit);
-            setTXT_Week_End(item.tssm_week_end_digit);
-            setCheck_Week_Con(item.tssm_week_convert);
-            setCb_Week_Con(item.tssm_week_convert_base);
-            setCheck_Seq_Flag(item.tssm_seq_flag);
-            setTXT_Seq_Format(item.tssm_seq_format);
-            setTXT_Seq_Start(item.tssm_seq_start_digit);
-            setTXT_Seq_End(item.tssm_seq_end_digit);
-            setCheck_Seq_Con(item.tssm_seq_convert);
-            setCb_Seq_Con(item.tssm_seq_convert_base);
-            setCheck_Eng_Flag(item.tssm_eng_flag);
-            setTXT_Eng_Start(item.tssm_eng_start_digit);
-            setTXT_Eng_End(item.tssm_eng_end_digit);
-            setCheck_Rev_Flag(item.tssm_rev_flag);
-            setTXT_Rev_Start(item.tssm_rev_start_digit);
-            setTXT_Rev_End(item.tssm_rev_end_digit);
-            setCheck_CheckSum_Flag(item.tssm_checksum_flag);
-            setTXT_CheckSum_Start(item.tssm_checksum_start_digit);
-            setTXT_CheckSum_End(item.tssm_checksum_end_digit);
-            setCheck_Config_Flag(item.tssm_config_flag);
-            setTXT_Config_Start(item.tssm_config_start_digit);
-            setTXT_Config_End(item.tssm_config_end_digit);
-            setuser_id(item.tssm_modified_by);
-            setipaddress(item.tssm_modified_ip);
+            setTXT_SN_Code(item.p_tssm_sn_struc_code);
+            setTXT_SN_Name(item.p_tssm_sn_struc_name);
+            setTXT_SN_UpCount(item.p_tssm_sn_struc_upcount);
+            setTXT_SN_Length(item.p_tssm_sn_length);
+            setCheck_Plant_Flag(item.p_tssm_plant_flag);
+            setTXT_Plant_Code(item.p_tssm_plant_code);
+            setTXT_Plant_Start(item.p_tssm_plant_start_digit);
+            setTXT_Plant_End(item.p_tssm_plant_end_digit);
+            setCheck_Week_Flag(item.p_tssm_week_flag);
+            setTXT_Week_Code(item.p_tssm_week_code);
+            setTXT_Week_Start(item.p_tssm_week_start_digit);
+            setTXT_Week_End(item.p_tssm_week_end_digit);
+            setCheck_Week_Con(item.p_tssm_week_convert);
+            setCb_Week_Con(item.p_tssm_week_convert_base);
+            setCheck_Seq_Flag(item.p_tssm_seq_flag);
+            setTXT_Seq_Format(item.p_tssm_seq_format);
+            setTXT_Seq_Start(item.p_tssm_seq_start_digit);
+            setTXT_Seq_End(item.p_tssm_seq_end_digit);
+            setCheck_Seq_Con(item.p_tssm_seq_convert);
+            setCb_Seq_Con(item.p_tssm_seq_convert_base);
+            setCheck_Eng_Flag(item.p_tssm_eng_flag);
+            setTXT_Eng_Start(item.p_tssm_eng_start_digit);
+            setTXT_Eng_End(item.p_tssm_eng_end_digit);
+            setCheck_Rev_Flag(item.p_tssm_rev_flag);
+            setTXT_Rev_Start(item.p_tssm_rev_start_digit);
+            setTXT_Rev_End(item.p_tssm_rev_end_digit);
+            setCheck_CheckSum_Flag(item.p_tssm_checksum_flag);
+            setTXT_CheckSum_Start(item.p_tssm_checksum_start_digit);
+            setTXT_CheckSum_End(item.p_tssm_checksum_end_digit);
+            setCheck_Config_Flag(item.p_tssm_config_flag);
+            setTXT_Config_Start(item.p_tssm_config_start_digit);
+            setTXT_Config_End(item.p_tssm_config_end_digit);
+            setuser_id(item.p_tssm_modified_by);
+            setipaddress(item.p_tssm_modified_ip);
         }
 
     }, []);
@@ -534,6 +548,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                         config_start_digit: Check_Config_Flag === 'N' ? null : TXT_Config_Start,
                         config_end_digit: Check_Config_Flag === 'N' ? null : TXT_Config_End,
                         emp_id: UserLogin,
+                        modified_date: timestamp,
                         ip_address: ipaddress
 
                     });
@@ -586,7 +601,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                 Check_Config_Flag &&
                 (Check_Config_Flag === 'N' || TXT_Config_Start) &&
                 (Check_Config_Flag === 'N' || TXT_Config_End) &&
-                UserLogin 
+                UserLogin
             ) {
 
                 try {
@@ -624,6 +639,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                         config_start_digit: Check_Config_Flag === 'N' ? null : TXT_Config_Start,
                         config_end_digit: Check_Config_Flag === 'N' ? null : TXT_Config_End,
                         emp_id: UserLogin,
+                        modified_date: timestamp,
                         ip_address: ipaddress
 
                     });

@@ -233,38 +233,38 @@ function SheetMaster() {
                       </Tooltip>
                     </TableCell>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{item.tstm_sht_struc_code}</TableCell>
-                    <TableCell>{item.tstm_sht_struc_name}</TableCell>
+                    <TableCell>{item.sht_code}</TableCell>
+                    <TableCell>{item.sht_name}</TableCell>
                     <TableCell>
-                      {item.tstm_plant_flag === 'Y' && (
+                      {item.plant_flag === 'Y' && (
                         <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                       )}
                     </TableCell>
-                    <TableCell>{item.tstm_plant_code}</TableCell>
-                    <TableCell>{item.tstm_plant_start_digit}</TableCell>
-                    <TableCell>{item.tstm_plant_end_digit}</TableCell>
+                    <TableCell>{item.plant_code}</TableCell>
+                    <TableCell>{item.plant_start_digit}</TableCell>
+                    <TableCell>{item.plant_end_digit}</TableCell>
                     <TableCell>
-                      {item.tstm_lot_flag === 'Y' && (
+                      {item.lot_flag === 'Y' && (
                         <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                       )}
                     </TableCell>
-                    <TableCell>{item.tstm_lot_start_digit}</TableCell>
-                    <TableCell>{item.tstm_lot_end_digit}</TableCell>
+                    <TableCell>{item.lot_start_digit}</TableCell>
+                    <TableCell>{item.lot_end_digit}</TableCell>
                     <TableCell>
-                      {item.tstm_model_flag === 'Y' && (
+                      {item.model_flag === 'Y' && (
                         <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                       )}
                     </TableCell>
-                    <TableCell>{item.tstm_model_start_digit}</TableCell>
-                    <TableCell>{item.tstm_model_end_digit}</TableCell>
+                    <TableCell>{item.model_start_digit}</TableCell>
+                    <TableCell>{item.model_end_digit}</TableCell>
                     <TableCell>
-                      {item.tstm_seq_flag === 'Y' && (
+                      {item.seq_flag === 'Y' && (
                         <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                       )}
                     </TableCell>
-                    <TableCell>{item.tstm_seq_format}</TableCell>
-                    <TableCell>{item.tstm_seq_start_digit}</TableCell>
-                    <TableCell>{item.tstm_seq_end_digit}</TableCell>
+                    <TableCell>{item.seq_format}</TableCell>
+                    <TableCell>{item.seq_start_digit}</TableCell>
+                    <TableCell>{item.seq_end_digit}</TableCell>
                   </TableRow>
                 ))}
                 <TableRow style={{ visibility: checkEmpty }}>

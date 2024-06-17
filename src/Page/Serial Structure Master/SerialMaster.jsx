@@ -251,66 +251,66 @@ function SerialMaster() {
                                             </Tooltip>
                                         </TableCell>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{item.tssm_sn_struc_code}</TableCell>
-                                        <TableCell>{item.tssm_sn_struc_name}</TableCell>
-                                        <TableCell>{item.tssm_sn_struc_upcount}</TableCell>
-                                        <TableCell>{item.tssm_sn_length}</TableCell>
+                                        <TableCell>{item.p_tssm_sn_struc_code}</TableCell>
+                                        <TableCell>{item.p_tssm_sn_struc_name}</TableCell>
+                                        <TableCell>{item.p_tssm_sn_struc_upcount}</TableCell>
+                                        <TableCell>{item.p_tssm_sn_length}</TableCell>
                                         <TableCell>
-                                            {item.tssm_plant_flag === 'Y' && (
+                                            {item.p_tssm_plant_flag === 'Y' && (
                                                 <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                             )}
                                         </TableCell>
-                                        <TableCell>{item.tssm_plant_code}</TableCell>
-                                        <TableCell>{item.tssm_plant_start_digit}</TableCell>
-                                        <TableCell>{item.tssm_plant_end_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_plant_code}</TableCell>
+                                        <TableCell>{item.p_tssm_plant_start_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_plant_end_digit}</TableCell>
                                         <TableCell>
-                                            {item.tssm_week_flag === 'Y' && (
+                                            {item.p_tssm_week_flag === 'Y' && (
                                                 <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                             )}
                                         </TableCell>
-                                        <TableCell>{item.tssm_week_code}</TableCell>
-                                        <TableCell>{item.tssm_week_start_digit}</TableCell>
-                                        <TableCell>{item.tssm_week_end_digit}</TableCell>
-                                        <TableCell>{item.tssm_week_convert}</TableCell>
-                                        <TableCell>{item.tssm_week_convert_base}</TableCell>
+                                        <TableCell>{item.p_tssm_week_code}</TableCell>
+                                        <TableCell>{item.p_tssm_week_start_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_week_end_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_week_convert}</TableCell>
+                                        <TableCell>{item.p_tssm_week_convert_base}</TableCell>
                                         <TableCell>
-                                            {item.tssm_seq_flag === 'Y' && (
+                                            {item.p_tssm_seq_flag === 'Y' && (
                                                 <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                             )}
                                         </TableCell>
-                                        <TableCell>{item.tssm_seq_format}</TableCell>
-                                        <TableCell>{item.tssm_seq_start_digit}</TableCell>
-                                        <TableCell>{item.tssm_seq_end_digit}</TableCell>
-                                        <TableCell>{item.tssm_seq_convert}</TableCell>
-                                        <TableCell>{item.tssm_seq_convert_base}</TableCell>
+                                        <TableCell>{item.p_tssm_seq_format}</TableCell>
+                                        <TableCell>{item.p_tssm_seq_start_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_seq_end_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_seq_convert}</TableCell>
+                                        <TableCell>{item.p_tssm_seq_convert_base}</TableCell>
                                         <TableCell>
-                                            {item.tssm_eng_flag === 'Y' && (
+                                            {item.p_tssm_eng_flag === 'Y' && (
                                                 <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                             )}
                                         </TableCell>
-                                        <TableCell>{item.tssm_eng_start_digit}</TableCell>
-                                        <TableCell>{item.tssm_eng_end_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_eng_start_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_eng_end_digit}</TableCell>
                                         <TableCell>
-                                            {item.tssm_rev_flag === 'Y' && (
+                                            {item.p_tssm_rev_flag === 'Y' && (
                                                 <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                             )}
                                         </TableCell>
-                                        <TableCell>{item.tssm_rev_start_digit}</TableCell>
-                                        <TableCell>{item.tssm_rev_end_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_rev_start_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_rev_end_digit}</TableCell>
                                         <TableCell>
-                                            {item.tssm_checksum_flag === 'Y' && (
+                                            {item.p_tssm_checksum_flag === 'Y' && (
                                                 <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                             )}
                                         </TableCell>
-                                        <TableCell>{item.tssm_checksum_start_digit}</TableCell>
-                                        <TableCell>{item.tssm_checksum_end_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_checksum_start_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_checksum_end_digit}</TableCell>
                                         <TableCell>
-                                            {item.tssm_config_flag === 'Y' && (
+                                            {item.p_tssm_config_flag === 'Y' && (
                                                 <FlagFilled style={{ color: "#83A2FF", fontSize: "20px" }} />
                                             )}
                                         </TableCell>
-                                        <TableCell>{item.tssm_config_start_digit}</TableCell>
-                                        <TableCell>{item.tssm_config_end_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_config_start_digit}</TableCell>
+                                        <TableCell>{item.p_tssm_config_end_digit}</TableCell>
                                     </TableRow>
                                 ))}
                                 <TableRow style={{ visibility: checkEmpty }}>
