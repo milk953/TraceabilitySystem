@@ -69,7 +69,7 @@ function SerialMasterPage() {
       const STATUS = "EDIT";
       localStorage.setItem("STATUS", STATUS);
       setSelectedRowData(item);
-      setTEXT_Code(item.tssm_sn_struc_code);
+      setTEXT_Code(item.p_tssm_sn_struc_code);
       PopupOpen();
     }
   
@@ -82,8 +82,8 @@ function SerialMasterPage() {
         dangerMode: true,
       }).then(async (willDelete) => {
         if (willDelete) {
-          const snCodeToDelete = item.tssm_sn_struc_code;
-          console.log("item--//",item.tssm_sn_struc_code)
+          const snCodeToDelete = item.p_tssm_sn_struc_code;
+          console.log("item--//",item.p_tssm_sn_struc_code)
           try {
             const response = await axios.post("/api/delSerial_Master", {
                sn_code: snCodeToDelete
@@ -176,38 +176,38 @@ function SerialMasterPage() {
     ],
     ...dataTableexport.map((item, index) => [
         index + 1,
-        item.tssm_sn_struc_code,
-        item.tssm_sn_struc_name,
-        item.tssm_sn_struc_upcount,
-        item.tssm_sn_length,
-        item.tssm_plant_flag === 'Y' ? 'Y' : 'N',
-        item.tssm_plant_code,
-        item.tssm_plant_start_digit,
-        item.tssm_plant_end_digit,
-        item.tssm_week_flag  === 'Y' ? 'Y' : 'N',
-        item.tssm_week_code,
-        item.tssm_week_start_digit,
-        item.tssm_week_end_digit,
-        item.tssm_week_convert,
-        item.tssm_week_convert_base,
-        item.tssm_seq_flag  === 'Y' ? 'Y' : 'N',
-        item.tssm_seq_format,
-        item.tssm_seq_start_digit,
-        item.tssm_seq_end_digit,
-        item.tssm_seq_convert,
-        item.tssm_seq_convert_base,
-        item.tssm_eng_flag === 'Y' ? 'Y' : 'N',
-        item.tssm_eng_start_digit,
-        item.tssm_eng_end_digit,
-        item.tssm_rev_flag  === 'Y' ? 'Y' : 'N',
-        item.tssm_rev_start_digit,
-        item.tssm_rev_end_digit,
-        item.tssm_checksum_flag  === 'Y' ? 'Y' : 'N', 
-        item.tssm_checksum_start_digit,
-        item.tssm_checksum_end_digit,
-        item.tssm_config_flag  === 'Y' ? 'Y' : 'N',
-        item.tssm_config_start_digit,
-        item.tssm_config_end_digit,
+        item.p_tssm_sn_struc_code,
+        item.p_tssm_sn_struc_name,
+        item.p_tssm_sn_struc_upcount,
+        item.p_tssm_sn_length,
+        item.p_tssm_plant_flag === 'Y' ? 'Y' : 'N',
+        item.p_tssm_plant_code,
+        item.p_tssm_plant_start_digit,
+        item.p_tssm_plant_end_digit,
+        item.p_tssm_week_flag  === 'Y' ? 'Y' : 'N',
+        item.p_tssm_week_code,
+        item.p_tssm_week_start_digit,
+        item.p_tssm_week_end_digit,
+        item.p_tssm_week_convert,
+        item.p_tssm_week_convert_base,
+        item.p_tssm_seq_flag  === 'Y' ? 'Y' : 'N',
+        item.p_tssm_seq_format,
+        item.p_tssm_seq_start_digit,
+        item.p_tssm_seq_end_digit,
+        item.p_tssm_seq_convert,
+        item.p_tssm_seq_convert_base,
+        item.p_tssm_eng_flag === 'Y' ? 'Y' : 'N',
+        item.p_tssm_eng_start_digit,
+        item.p_tssm_eng_end_digit,
+        item.p_tssm_rev_flag  === 'Y' ? 'Y' : 'N',
+        item.p_tssm_rev_start_digit,
+        item.p_tssm_rev_end_digit,
+        item.p_tssm_checksum_flag  === 'Y' ? 'Y' : 'N', 
+        item.p_tssm_checksum_start_digit,
+        item.p_tssm_checksum_end_digit,
+        item.p_tssm_config_flag  === 'Y' ? 'Y' : 'N',
+        item.p_tssm_config_start_digit,
+        item.p_tssm_config_end_digit,
 
             ])
         ];

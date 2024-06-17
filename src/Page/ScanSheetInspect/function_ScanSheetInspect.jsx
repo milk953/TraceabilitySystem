@@ -36,6 +36,8 @@ function fn_ScanSheetInspect() {
     //Table
     const [gvScanResult, setgvScanResult] = useState(false);
     const [gvScanData, setgvScanData] = useState([]);
+    const [gvExport, setgvExport] = useState(false);
+    const [gvExportData, setgvExportData] = useState([]);
 
     const [isBinNoDisabled, setisBinNoDisabled] = useState(false);
     const [isShtNoDisabled, setisShtNoDisabled] = useState(false);
@@ -46,6 +48,7 @@ function fn_ScanSheetInspect() {
     const selShtBin = useRef(null);
     const inputShtNo = useRef(null);
     const inputScanDate = useRef(null);
+    const selShtXOut = useRef(null);
 
     const ClearLot = () => {
         settxtLotNo("");
@@ -100,6 +103,7 @@ function fn_ScanSheetInspect() {
                         } else {
                             setselBinNo(hfBINGroup);
                             setgvScanResult(true);
+                            handlegvScanResult();
                             SetMode("DATE");
                         }
                     } else if (strPrdName != "") {
@@ -111,7 +115,7 @@ function fn_ScanSheetInspect() {
                         settxtLotNo("");
                         setlabellog("Lot " + strLot + " not found");
                         setvisiblelog(true);
-                        setgvScanResult(true); //ลองโชว์ Table เฉยๆ
+                        // setgvScanResult(true); //ลองโชว์ Table เฉยๆ
                         sethfMode("LOT");
                     }
                 });
@@ -145,6 +149,7 @@ function fn_ScanSheetInspect() {
 
     useEffect(() => {
         BinNoData();
+        handlegvScanResult();
     }, []);
 
     const BinNoData = async (strBinGroup) => {
@@ -163,22 +168,119 @@ function fn_ScanSheetInspect() {
     const handleselShtBin = async (event) => {
         const selBinNo = event.target.value;
         setselBinNo(selBinNo);
+        handlegvScanResult();
+        selShtXOut.current.focus();
     };
 
-    const handelgvScanResult = async () => {
+    const [boolDup, setboolDup] = useState([]);
+
+    const handleShtNo = async () => {
+
+        let strError = "";
+        let strCheckValue = "";
+        let strSheetNo = txtShtNo.toUpperCase().trim();
+
+        if (strSheetNo != "") {
+            if (txtWeekCode.trim().length !== 4) {
+                setlabellog("Please input correct week code.");
+                SetMode("SHEET_ERROR");
+            } else if (txtScanBy.trim() === "") {
+                setlabellog("Please input scan by.");
+                SetMode("SHEET_ERROR");
+            } else {
+                try {
+                    const res = await axios.post("/api/Common/getproductshtinspectdup", {
+                        strLotno: txtLotNo,
+                        strSheetno: strSheetNo
+                    });
+                    const data = res.data;
+                    setboolDup(data);
+                } catch (error) {
+                    console.error('Error fetching getinspectdup:', error.message);
+                }
+                if (boolDup) {
+                    setlabellog("Please confirm for delete?");
+                    SetMode("SHEET_CONFIRM");
+                } else {
+                    if (hfControlBy === "LOT") {
+                        strCheckValue = txtLotNo.toUpperCase().trim();
+                    } else {
+                        strCheckValue = txtRollNo.toUpperCase().trim().replace(/-/g, "");
+                    }
+                    if (hfCheckFlg === "Y") {
+                        if (
+                            strCheckValue.substring(
+                                parseInt(hfControlStart),
+                                parseInt(hfControlEnd) - parseInt(hfControlStart) + 1
+                            ) !==
+                            strSheetNo.substring(
+                                parseInt(hfSerialStart),
+                                parseInt(hfSerialEnd) - parseInt(hfSerialStart) + 1
+                            )
+                        ) {
+                            strError = "Serial mix lot";
+                        }
+                    }
+                    if (strError === "") {
+                        strError === SetLotSheetIns();
+                        if (strError === "") {
+                            SetMode("SHEET_OK");
+                        } else {
+                            setlabellog("Error: " + strError);
+                            SetMode("SHEET_ERROR");
+                        }
+                    } else {
+                        setlabellog("Error: " + strError);
+                        SetMode("SHEET_ERROR");
+                    }
+                }
+            }
+        } else {
+            SetMode("SHEET");
+        }
+        handlegvScanResult();
+    };
+
+    const SetLotSheetIns = async () => {
+        try {
+            const res = await axios.post("/api/SetLotSheetIns", {
+                strLot: txtLotNo,
+                strShtNo: txtShtNo,
+                strPrdName: txtProduct,
+                strRollNo: txtRollNo,
+                strScanBy: txtScanBy,
+                strDate: txtScanDate,
+                strShift: selShift,
+                strWeekNo: txtWeekCode,
+                strBinGrp: hfBINGroup,
+                strBinNo: selBinNo,
+                strUserID: hfUserID,
+                strStation: hfUserStation,
+                strFlag: "I"
+            });
+            console.log("บันทึกข้อมูลสำเร็จ =", res);
+        } catch (error) {
+            console.error('Error fetching SetLotSheetIns:', error.message);
+        }
+    }
+
+    const handlegvScanResult = async () => {
+
+        let strControlBy = ""
+        sethfControlBy(strControlBy);
 
         try {
             const res = await axios.post("/api/getProductShtInspect", {
                 strLot: txtLotNo,
                 strPrdName: txtProduct,
                 strBinGrp: hfBINGroup,
-                
+                strBinNo: selBinNo,
             });
             const data = res.data;
-            // setBinNo(data);
+            setgvScanData(data);
             console.log("naaa", data);
         } catch (error) {
-            console.error('Error fetching binno:', error.message);
+            console.error('Error fetching getProductShtIn:', error.message);
         }
     }
 
@@ -194,7 +296,7 @@ function fn_ScanSheetInspect() {
             setvisiblelog(false);
             setpnlSuccess(false);
             setpnlSerial(false);
-            //gvScanResult();
+            //setgvScanResult(false);
             localStorage.setItem("hfMode", "LOT");
             inputLot.current.focus();
         } else if (strType === "LOT_ERROR") {
@@ -260,7 +362,8 @@ function fn_ScanSheetInspect() {
         txtScanDate, settxtScanDate, selShift, setselShift, txtWeekCode, settxtWeekCode, selBinNo, setselBinNo,
         txtShtNo, settxtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, hfUserID, hfUserStation,
         hfUserFactory, hfMode, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart, hfControlEnd, hfBINGroup, hfControlBy,
-        gvScanResult, inputScanDate, ibtDateRefresh, BinNo, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled
+        gvScanResult, inputScanDate, ibtDateRefresh, BinNo, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin,
+        gvScanData, handleShtNo
     }
 }
 

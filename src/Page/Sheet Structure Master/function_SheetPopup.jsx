@@ -61,7 +61,7 @@ function PopupT(onClose, item, searchFunction) {
                 try {
                     const response = await axios.post("/api/CheckSHTCode", {});
                     const data = response.data;
-                    const new_run_seq = data[0].f_runniung; // Adjust the key according to your response
+                    const new_run_seq = data[0].f_running; 
                     setTXT_SHT_Code(new_run_seq);
                 } catch (error) {
                     console.error('Error fetching or updating running number:', error);
@@ -104,24 +104,24 @@ function PopupT(onClose, item, searchFunction) {
             setipaddress(ipaddress);
         } else {
             console.log("CASE EDIT", item);
-            setTXT_SHT_Code(item.tstm_sht_struc_code);
-            setTXT_SHT_Name(item.tstm_sht_struc_name);
-            setCheck_Plant_Flag(item.tstm_plant_flag);
-            setTXT_Plant_Code(item.tstm_plant_code);
-            setTXT_Plant_Start(item.tstm_plant_start_digit)
-            setTXT_Plant_End(item.tstm_plant_end_digit);
-            setCheck_Lot_Flag(item.tstm_lot_flag);
-            setTXT_Lot_Start(item.tstm_lot_start_digit);
-            setTXT_Lot_End(item.tstm_lot_end_digit);
-            setCheck_Model_Flag(item.tstm_model_flag);
-            setTXT_Model_Start(item.tstm_model_start_digit);
-            setTXT_Model_End(item.tstm_model_end_digit);
-            setCheck_Seq_Flag(item.tstm_seq_flag);
-            setTXT_Seq_Format(item.tstm_seq_format);
-            setTXT_Seq_Start(item.tstm_seq_start_digit);
-            setTXT_Seq_End(item.tstm_seq_end_digit);
-            setuser_id(item.tstm_modified_by);
-            setipaddress(item.tstm_modified_ip);
+            setTXT_SHT_Code(item.sht_code);
+            setTXT_SHT_Name(item.sht_name);
+            setCheck_Plant_Flag(item.plant_flag);
+            setTXT_Plant_Code(item.plant_code);
+            setTXT_Plant_Start(item.plant_start_digit)
+            setTXT_Plant_End(item.plant_end_digit);
+            setCheck_Lot_Flag(item.lot_flag);
+            setTXT_Lot_Start(item.lot_start_digit);
+            setTXT_Lot_End(item.lot_end_digit);
+            setCheck_Model_Flag(item.model_flag);
+            setTXT_Model_Start(item.model_start_digit);
+            setTXT_Model_End(item.model_end_digit);
+            setCheck_Seq_Flag(item.seq_flag);
+            setTXT_Seq_Format(item.seq_format);
+            setTXT_Seq_Start(item.seq_start_digit);
+            setTXT_Seq_End(item.seq_end_digit);
+            setuser_id(item.modified_by);
+            setipaddress(item.modified_ip);
         }
 
     }, []);

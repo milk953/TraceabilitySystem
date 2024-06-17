@@ -67,7 +67,7 @@ function SheetMasterT() {
       const STATUS = "EDIT";
       localStorage.setItem("STATUS", STATUS);
       setSelectedRowData(item);
-      setTEXT_SHT_Code(item.tstm_sht_struc_code);
+      setTEXT_SHT_Code(item.sht_code);
       PopupOpen();
     }
   
@@ -80,7 +80,7 @@ function SheetMasterT() {
         dangerMode: true,
       }).then(async (willDelete) => {
         if (willDelete) {
-          const shtCodeToDelete = item.tstm_sht_struc_code;
+          const shtCodeToDelete = item.sht_code;
           try {
             const response = await axios.post("/api/delSheet_Master", {
                sht_code: shtCodeToDelete
@@ -140,22 +140,22 @@ function SheetMasterT() {
     ],
     ...dataTableexport.map((item, index) => [
       index + 1,
-      item.tstm_sht_struc_code,
-      item.tstm_sht_struc_name,
-      item.tstm_plant_flag === 'Y' ? 'Y' : 'N',
-      item.tstm_plant_code,
-      item.tstm_plant_start_digit,
-      item.tstm_plant_end_digit,
-      item.tstm_lot_flag === 'Y' ? 'Y' : 'N',
-      item.tstm_lot_start_digit,
-      item.tstm_lot_end_digit,
-      item.tstm_model_flag === 'Y' ? 'Y' : 'N',
-      item.tstm_model_start_digit,
-      item.tstm_model_end_digit,
-      item.tstm_seq_flag === 'Y' ? 'Y' : 'N',
-      item.tstm_seq_format,
-      item.tstm_seq_start_digit,
-      item.tstm_seq_end_digit,
+      item.sht_code,
+      item.sht_name,
+      item.plant_flag === 'Y' ? 'Y' : 'N',
+      item.plant_code,
+      item.plant_start_digit,
+      item.plant_end_digit,
+      item.lot_flag === 'Y' ? 'Y' : 'N',
+      item.ot_start_digit,
+      item.lot_end_digit,
+      item.model_flag === 'Y' ? 'Y' : 'N',
+      item.model_start_digit,
+      item.model_end_digit,
+      item.seq_flag === 'Y' ? 'Y' : 'N',
+      item.seq_format,
+      item.seq_start_digit,
+      item.seq_end_digit,
 
             ])
         ];

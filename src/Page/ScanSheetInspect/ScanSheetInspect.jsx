@@ -37,7 +37,8 @@ function ScanSheetInspect() {
         txtScanDate, settxtScanDate, selShift, setselShift, txtWeekCode, settxtWeekCode, selBinNo, setselBinNo,
         txtShtNo, settxtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, hfUserID, hfUserStation,
         hfUserFactory, hfMode, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart, hfControlEnd, hfBINGroup, hfControlBy,
-        gvScanResult, inputScanDate, ibtDateRefresh, BinNo, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled
+        gvScanResult, inputScanDate, ibtDateRefresh, BinNo, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin,
+        gvScanData, handleShtNo
     } = fn_ScanSheetInspect();
 
     return (
@@ -87,6 +88,10 @@ function ScanSheetInspect() {
                                             inputRef={inputLot}
                                             fullWidth
                                             value={txtLotNo}
+                                            disabled={istxtLotDisabled}
+                                            style={{
+                                                backgroundColor: istxtLotDisabled ? "#EEEEEE" : "inherit",
+                                            }}
                                             onChange={(e) => {
                                                 settxtLotNo(e.target.value);
                                             }}
@@ -275,14 +280,12 @@ function ScanSheetInspect() {
                                             }}
                                             options={BinNo.map((item) =>
                                             ({
-                                                value: item.bin_no, 
+                                                value: item.bin_no,
                                                 bin_name: item.bin_name
                                             }))}
                                             value={selBinNo}
                                             getOptionLabel={(item) => item.bin_name || ""}
-                                            onChange={(event, newValue) => {
-                                                setselBinNo(newValue?.value || '');
-                                            }}
+                                            onChange={handleselShtBin}
                                             renderInput={(params) => (
                                                 <TextField {...params}
                                                     onKeyDown={(e) => {
@@ -308,6 +311,7 @@ function ScanSheetInspect() {
                                             size="small"
                                             fullWidth
                                             value={txtShtNo}
+                                            onChange={handleShtNo}
                                             style={{
                                                 backgroundColor: isShtNoDisabled ? "#EEEEEE" : "inherit",
                                             }}
@@ -483,9 +487,19 @@ function ScanSheetInspect() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
-                                    <TableCell></TableCell>
-                                </TableRow>
+                                {gvScanData.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{item.seq}</TableCell>
+                                        <TableCell>{item.roll_no}</TableCell>
+                                        <TableCell>{item.lot_no}</TableCell>
+                                        <TableCell>{item.shift}</TableCell>
+                                        <TableCell>{item.week_no}</TableCell>
+                                        <TableCell>{item.bin_no}</TableCell>
+                                        <TableCell>{item.sheet}</TableCell>
+                                        <TableCell>{item.scan_by}</TableCell>
+                                        <TableCell>{item.scan_date}</TableCell>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
