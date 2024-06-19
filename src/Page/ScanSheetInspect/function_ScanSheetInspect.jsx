@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { usePopupFunctions } from "../Common/function_Common";
 import * as XLSX from 'xlsx';
 
 function fn_ScanSheetInspect() {
@@ -49,6 +48,7 @@ function fn_ScanSheetInspect() {
     const inputShtNo = useRef(null);
     const inputScanDate = useRef(null);
     const selShtXOut = useRef(null);
+    const btnCancel = useRef(null);
 
     const ClearLot = () => {
         settxtLotNo("");
@@ -56,7 +56,6 @@ function fn_ScanSheetInspect() {
     }
 
     const handleLotNo = () => {
-        // setvisiblelog(false)
         let strPrdName = "";
         let RollNo = "";
         let strLot = "";
@@ -66,7 +65,7 @@ function fn_ScanSheetInspect() {
 
         if (strLot != "") {
             settxtLotNo(strLot);
-            axios.post("/api/getLotNo", {
+            axios.post("/api/Common/getProductDataByLot", {
                 txtlotno: strLot,
             })
                 .then((res) => {
@@ -142,6 +141,61 @@ function fn_ScanSheetInspect() {
         }
     };
 
+    const ibtExportClick = async () => {
+        try {
+            const res = await axios.post("/api/getProductShtInsByLot", {
+                strType: hfControlBy,
+                strLot: txtLotNo,
+                strRollNo: txtRollNo,
+                strPrdName: txtProduct
+            });
+            const data = res.data;
+            setgvExportData(data);
+            console.log("gvexport:", data);
+        } catch (error) {
+            console.error('Error fetching binno:', error.message);
+        }
+        ExportToExcel();
+
+    }
+
+    const dataTableexport = [...gvExportData];
+    const ExportToExcel = () => {
+        const ScanSheetInspect = [
+            [
+                "Seq",
+                "Roll No.",
+                "Lot No.",
+                "Product",
+                "Scan Date",
+                "Shift",
+                "Week Code",
+                "Bin No.",
+                "Sheet No.",
+                "Update Date",
+            ],
+            ...dataTableexport.map((item, index) => [
+                item.seq,
+                item.roll_no,
+                item.lot_no,
+                item.product,
+                item.scan_date,
+                item.shift,
+                item.week_code,
+                item.bin_no,
+                item.sheet_no,
+                item.update_date,
+
+            ])
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(ScanSheetInspect);
+        const wb = XLSX.utils.book_new();
+
+        const fileName = hfControlBy === "LOT" ? `${txtProduct}_${txtLotNo}` : `${txtProduct}_${txtRollNo}`;
+        XLSX.utils.book_append_sheet(wb, ws, fileName);
+        XLSX.writeFile(wb, `${fileName}.xlsx`);
+    };
+
     const ibtDateRefresh = async () => {
         fetchData();
         inputScanDate.current.focus();
@@ -149,7 +203,7 @@ function fn_ScanSheetInspect() {
 
     useEffect(() => {
         BinNoData();
-        handlegvScanResult();
+        // handlegvScanResult(); //ทดสอบว่ามีข้อมูลมามั้ย
     }, []);
 
     const BinNoData = async (strBinGroup) => {
@@ -169,6 +223,7 @@ function fn_ScanSheetInspect() {
         const selBinNo = event.target.value;
         setselBinNo(selBinNo);
         handlegvScanResult();
+        setgvScanResult(true);
         selShtXOut.current.focus();
     };
 
@@ -239,6 +294,7 @@ function fn_ScanSheetInspect() {
             SetMode("SHEET");
         }
         handlegvScanResult();
+        setgvScanResult(true);
     };
 
     const SetLotSheetIns = async () => {
@@ -262,7 +318,7 @@ function fn_ScanSheetInspect() {
         } catch (error) {
             console.error('Error fetching SetLotSheetIns:', error.message);
         }
-    }
+    };
 
     const handlegvScanResult = async () => {
 
@@ -282,6 +338,47 @@ function fn_ScanSheetInspect() {
         } catch (error) {
             console.error('Error fetching getProductShtIn:', error.message);
         }
+    };
+
+    const btDelShtClick = () => {
+        let strError = "";
+        strError = SetLotSheetIns();
+        if (strError === "") {
+            settxtShtNo("");
+            setlabellog("Deleted complete.");
+            setvisiblelog(true);
+            setpnlSerial(false);
+            setgvScanResult(true);
+            handlegvScanResult();
+            inputShtNo.current.focus();
+        } else {
+            setlabellog("Error: " + strError);
+            SetMode("SHEET_ERROR");
+        }
+    };
+
+    const btDelLotClick = () => {
+        let strError = "";
+        strError = SetLotSheetIns();
+        if (strError === "") {
+            settxtShtNo("");
+            setlabellog("Deleted complete.");
+            setvisiblelog(true);
+            setpnlSerial(false);
+            setgvScanResult(true);
+            handlegvScanResult();
+            inputShtNo.current.focus();
+        } else {
+            setlabellog("Error: " + strError);
+            SetMode("SHEET_ERROR");
+        }
+    };
+
+    const btCancelClick = () => {
+        setpnlSuccess(false);
+        setpnlSerial(false);
+        settxtShtNo("");
+        inputShtNo.current.focus();
     }
 
     const SetMode = (strType) => {
@@ -296,7 +393,7 @@ function fn_ScanSheetInspect() {
             setvisiblelog(false);
             setpnlSuccess(false);
             setpnlSerial(false);
-            //setgvScanResult(false);
+            setgvScanResult(false);
             localStorage.setItem("hfMode", "LOT");
             inputLot.current.focus();
         } else if (strType === "LOT_ERROR") {
@@ -346,7 +443,7 @@ function fn_ScanSheetInspect() {
             setvisiblelog(true);
             setpnlSerial(true);
             setpnlSuccess(false);
-            // btnCancel.current.focus();
+            btnCancel.current.focus();
         } else if (strType === "SHEET_OK") {
             settxtShtNo("");
             setlabellog(false);
@@ -363,7 +460,8 @@ function fn_ScanSheetInspect() {
         txtShtNo, settxtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, hfUserID, hfUserStation,
         hfUserFactory, hfMode, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart, hfControlEnd, hfBINGroup, hfControlBy,
         gvScanResult, inputScanDate, ibtDateRefresh, BinNo, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin,
-        gvScanData, handleShtNo
+        gvScanData, handleShtNo, ibtExportClick, inputScanBy, selShtBin, inputShtNo, btnCancel, btDelShtClick, btDelLotClick,
+        btCancelClick
     }
 }
 
