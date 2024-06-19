@@ -1,0 +1,55 @@
+.pnlMainBaking {
+    display: flex;
+    margin: auto;
+    /* margin-top: 80px; */
+    width: 600px;
+    height: 300px;
+  }
+  #TableMainBaking {
+    width: 600px !important;
+    margin: 0 auto;
+  }
+  #TableMainBaking th {
+    text-align: center;
+    font-size: 38px;
+  }
+  #TableMainBaking td {
+   padding: 1%;
+  }
+  
+  .pnlResultBaking {
+    display: flex;
+    margin: auto;
+    width: 600px;
+    margin-top: 20px;
+  }
+  #TableResultBaking {
+    height: 180px;
+  }
+  #TableResultBaking td {
+    /* font-size: 80px; */
+    text-align: center;
+  }
+  .pnlSaveBaking {
+    display: flex;
+    margin: auto;
+    width: 600px;
+    margin-top: 20px;
+  }
+  #TableSaveBaking {
+    width: 600px;
+    margin: 0 auto;
+  }
+  #TableSaveBaking td {
+    text-align: center;
+  }
+  
+  #lbltxtBaking {
+    width: 150px;
+    text-align: right;
+  }
+  .txtFieldBaking {
+    width: 300px;
+    padding: 1px;
+  }
+  
