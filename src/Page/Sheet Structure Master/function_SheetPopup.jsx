@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useIPAddress } from "../Common/function_Common";
+import { useIPAddress, getTimestamp } from "../Common/function_Common";
 import swal from "sweetalert";
 
 function PopupT(onClose, item, searchFunction) {
@@ -54,6 +54,7 @@ function PopupT(onClose, item, searchFunction) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [Date_show, setDate_show] = useState("");
 
+    const timestamp = getTimestamp();
 
     useEffect(() => {
         if (STATUS_P === "NEW") {
@@ -302,6 +303,7 @@ function PopupT(onClose, item, searchFunction) {
                         seq_start_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_Start,
                         seq_end_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_End,
                         emp_id: UserLogin,
+                        modified_date: timestamp,
                         ip_address: ipaddress
 
                     });
@@ -360,6 +362,7 @@ function PopupT(onClose, item, searchFunction) {
                         seq_start_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_Start,
                         seq_end_digit: Check_Seq_Flag === 'N' ? null : TXT_Seq_End,
                         emp_id: UserLogin,
+                        modified_date: timestamp,
                         ip_address: ipaddress
 
                     });
