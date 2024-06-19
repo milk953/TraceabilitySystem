@@ -59,16 +59,41 @@ function ConfirmBarcodeGrade() {
     hfSerialCount,
     visiblgvSerial,
     lblLog,
-    visibleLog
+    visibleLog,
+    txtSerial,
+    txtSideBack,
+    txtSideFront,
+    handleBackSideChange,
+    handleFrontSideChange,
+    handleSerialChange,
+    gvScanResult,
+    lblResult,
+    btnCancel_Click,
+    btnSave_Click,
+    handleTxt_RollLeaf,
+    handleTxt_LotRef,
+    handleTxt_Opreator,
+    visiblegvScanResult,
+    fcRollleaf,
+    fctMachchine,
+    fcLotNo,
+    fcOperator,
+    fcProduct,
+    fcGvSerial,
+    fcGvBackSide_txtsideback_0,
+    fcGvSerial_txtSerial_0,
+    visibleRollLeaf,
+    visibleMachine
   } = fn_ConfirmBarcodeGrade();
+  // inputRef={}
   return (
     <div>
       <Hearder />
       <h1>ConfirmBarcodeGrade</h1>
       <Card component={Paper} className="Card-ConfirmBarcode">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={10} md={4}>
+          <Grid container spacing={2} >
+            <Grid item xs={10} md={4} >
               <Table
                 className="TableMot1"
                 component={Card}
@@ -107,6 +132,7 @@ function ConfirmBarcodeGrade() {
                         size="small"
                         fullWidth
                         value={txt_lotNo}
+                        inputRef={fcLotNo}
                         onChange={(e) => {
                           settxt_lotNo(e.target.value);
                         }}
@@ -136,6 +162,7 @@ function ConfirmBarcodeGrade() {
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
                         <Autocomplete
+                        inputRef={fcProduct}
                           id="selectPdBarcode"
                           value={SlProduct}
                           onChange={(e, value) => handleSL_Product(value)}
@@ -162,6 +189,7 @@ function ConfirmBarcodeGrade() {
                         onChange={(e) => settxtLotRef(e.target.value)}
                         size="small"
                         fullWidth
+                       
                       />
                     </TableCell>
                   </TableRow>
@@ -176,6 +204,7 @@ function ConfirmBarcodeGrade() {
                         onChange={(e) => settxtOperator(e.target.value)}
                         size="small"
                         fullWidth
+                        inputRef={fcProduct}
                       />
                     </TableCell>
                   </TableRow>
@@ -195,7 +224,7 @@ function ConfirmBarcodeGrade() {
                       <Typography>{lblTotalPcs}</Typography>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  <TableRow style={{display: visibleRollLeaf}}>
                     <TableCell align="right">
                       <Typography>Roll Leaf No. :</Typography>
                     </TableCell>
@@ -203,13 +232,17 @@ function ConfirmBarcodeGrade() {
                       <TextField
                         id="txtfild"
                         size="small"
+                        inputRef={fcRollleaf}
                         value={txtRollLeaf}
-                        onChange={(e) => settxtRollLeaf(e.target.value)}
+                        onChange={(e) => {
+                          settxtRollLeaf(e.target.value);
+                          handleTxt_RollLeaf();
+                        }}
                         fullWidth
                       />
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  <TableRow style={{display:visibleMachine}}>
                     <TableCell align="right">
                       <Typography>Machine No. :</Typography>
                     </TableCell>
@@ -220,23 +253,14 @@ function ConfirmBarcodeGrade() {
                         value={txtMachineNo}
                         onChange={(e) => settxtMachineNo(e.target.value)}
                         fullWidth
+                        inputRef={fctMachchine}
                       />
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-              {/* {console.log(
-                visiblgvBackSide,
-                "visiblgvBackSide",
-                hfShtScan,
-                hfBarcodeSide
-              )} */}
-             
-            
-              {/* style={{ background: "red" }} */}
 
-              
-                             {visiblgvBackSide == true && (
+              {visiblgvBackSide == true && (
                 <Table component={Paper} className="gvBackSideBarcode">
                   <TableBody>
                     {Array.from({ length: hfShtScan }, (_, index) => (
@@ -264,15 +288,16 @@ function ConfirmBarcodeGrade() {
                             id="txtfild"
                             size="small"
                             fullWidth
-                            // value={txtLeafNo[index]}
-                            // onChange={(event) => handleTextFieldChange(index, event)}
+                            value={txtSideBack[index]}
+                            inputRef={fcGvBackSide_txtsideback_0}
+                             onChange={(event) => handleBackSideChange(index, event)}
                           />
                           <TextField
                             id="txtfild"
                             size="small"
                             fullWidth
-                            // value={txtLeafNo[index]}
-                            // onChange={(event) => handleTextFieldChange(index, event)}
+                            value={txtSideFront[index]}
+                             onChange={(event) => handleFrontSideChange(index, event)}
                           />
                         </TableCell>
                       </TableRow>
@@ -281,8 +306,25 @@ function ConfirmBarcodeGrade() {
                 </Table>
               )}
               {visibleLog == true && (
-               <Card component={Paper} style={{width:'400px',height:'40px',marginTop:'30px',textAlign:'center'}}>{lblLog}</Card>
-               )}
+               <Card
+               component={Paper}
+               style={{
+                 width: "400px",
+                 height: "40px",
+                 margin:'auto',
+               
+                 textAlign: "center",
+                 background: "#BB2525",
+                 paddingTop: "18px",
+                 color: "yellow",  // กำหนดสีฟอนต์เป็นสีเหลือง
+                 fontWeight: "bold",  // กำหนดความหนาของฟอนต์
+                 marginTop: "30px",
+               }}
+             >
+               {lblLog}
+             </Card>
+             
+              )}
               {visiblgvSerial == true && (
                 <Table className="CSS-GvSerialBarcode" component={Card}>
                   <TableHead>
@@ -309,7 +351,7 @@ function ConfirmBarcodeGrade() {
                           sx={{ borderRight: "1px solid #d9d9d9" }}
                           align="center"
                         >
-                          No.
+                        {hfShtScan}
                         </TableCell>
                         <TableCell
                           align="center"
@@ -323,37 +365,130 @@ function ConfirmBarcodeGrade() {
                             id="txtfild"
                             size="small"
                             fullWidth
-                            // value={txtLeafNo[index]}
-                            // onChange={(event) => handleTextFieldChange(index, event)}
+                            inputRef={fcGvSerial_txtSerial_0}
+                            value={txtSerial[index]}
+                            onChange={(event) => handleSerialChange(index, event)}
                           />
                         </TableCell>
                       </TableRow>
                     ))}
                     <TableRow>
-                      <TableCell align="center" colSpan={3} >
+                      <TableCell align="center" colSpan={3}>
                         Please be confirm to save?
                       </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={3} align="center">
-                        <Button  variant="contained" size="small">Yes</Button> &nbsp;&nbsp;
-                        <Button  variant="contained" size="small"  color="error">Cancel</Button>
+                        <Button variant="contained" size="small"  onClick={btnSave_Click}>
+                          Yes
+                        </Button>{" "}
+                        &nbsp;&nbsp;
+                        <Button variant="contained" size="small" color="error"  onClick={btnCancel_Click} >
+                          Cancel
+                        </Button>
                       </TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
               )}
-            </Grid>
-            {/* <Grid item xs={12} md={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid red' }}>
-              <img
+            </Grid >
+            {/* border:'1PX SOLID green' */}
+            <Grid item xs={10} md={7} style={{ margin: 'auto', marginTop: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        
+            <img
                 style={{
-                  width: '100%',
-                  height: 'auto',
+                  width: "420px",
+                  height: "350px",
+                  marginBottom:'30px'
                 }}
-                src="src/assets/1.jpg" // Make sure the path to the image is correct
+                src="src/assets/1.jpg" // Import the image
                 alt="Description of the image"
               />
-            </Grid> */}
+                {visiblegvScanResult == true && (
+                  <>
+            <Paper
+                className="Card-lblResult"
+                elevation={3}
+                style={{
+                  background: " #ff4d4f",
+                  // display: gvScanResult,
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  style={{ paddingTop: "3px", color: "#fff" }}
+                >
+                  {lblResult}
+                </Typography>
+              </Paper>
+              <Table
+                className="CSS-GvScanResult"
+                // style={{ display: gvScanResult }}
+                component={Card}
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      width="50px"
+                    >
+                     SHEET
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      width="200px"
+                    >
+                    No.
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      width="200px"
+                    >
+                      Serial No.
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      width="150px"
+                    >
+                      Grade
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      width="150px"
+                    >
+                      Scan Result
+                    </TableCell>
+                    <TableCell width="300px">Remark</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+             
+                  {Array.from({ length: gvScanResult.length}, (_, index) => (
+                    <TableRow key={index}>
+                      <TableCell align="center" sx={{ borderRight: "1px solid #d9d9d9" }}>{gvScanResult[index].SHEET}</TableCell>
+                      <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
+                       {gvScanResult[index].SEQ}
+                      </TableCell>
+                      <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
+                      {gvScanResult[index].SERIAL}
+                      </TableCell>
+                      <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
+                      {gvScanResult[index].SERIAL_GRADE}
+                      </TableCell>
+                      <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
+                      {gvScanResult[index].SCAN_RESULT}
+                      </TableCell>
+                      <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
+                      {gvScanResult[index].REMARK}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              </>
+               )}   
+            </Grid>
+
           </Grid>
         </Box>
       </Card>
