@@ -38,7 +38,8 @@ function ScanSheetInspect() {
         txtShtNo, settxtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, hfUserID, hfUserStation,
         hfUserFactory, hfMode, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart, hfControlEnd, hfBINGroup, hfControlBy,
         gvScanResult, inputScanDate, ibtDateRefresh, BinNo, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin,
-        gvScanData, handleShtNo
+        gvScanData, handleShtNo, ibtExportClick, inputScanBy, selShtBin, inputShtNo, btnCancel, btDelShtClick, btDelLotClick,
+        btCancelClick
     } = fn_ScanSheetInspect();
 
     return (
@@ -85,7 +86,7 @@ function ScanSheetInspect() {
                                         <TextField
                                             id="txtfield"
                                             size="small"
-                                            inputRef={inputLot}
+                                            ref={inputLot}
                                             fullWidth
                                             value={txtLotNo}
                                             disabled={istxtLotDisabled}
@@ -135,7 +136,7 @@ function ScanSheetInspect() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon">
+                                        <Button className="btIcon" onClick={ibtExportClick}>
                                             <Tooltip title="Export Data" placement="right-end">
                                                 <FileExcelFilled
                                                     style={{
@@ -177,6 +178,7 @@ function ScanSheetInspect() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
+                                            ref={inputScanBy}
                                             value={txtScanBy}
                                             onChange={(e) => {
                                                 settxtScanBy(e.target.value);
@@ -198,7 +200,7 @@ function ScanSheetInspect() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
-                                            inputRef={inputScanDate}
+                                            ref={inputScanDate}
                                             value={txtScanDate}
                                             onChange={(e) => {
                                                 settxtScanDate(e.target.value);
@@ -233,6 +235,9 @@ function ScanSheetInspect() {
                                             options={['A', 'B']}
                                             value={selShift}
                                             defaultValue='A'
+                                            onChange={(e, value) => {
+                                                setselShift(value);
+                                            }}
                                             renderInput={(params) => (
                                                 <TextField {...params}
                                                     onKeyDown={(e) => {
@@ -275,6 +280,7 @@ function ScanSheetInspect() {
                                         <Autocomplete
                                             id="select"
                                             size="small"
+                                            ref={selShtBin}
                                             style={{
                                                 backgroundColor: isBinNoDisabled ? "#EEEEEE" : "inherit",
                                             }}
@@ -285,13 +291,13 @@ function ScanSheetInspect() {
                                             }))}
                                             value={selBinNo}
                                             getOptionLabel={(item) => item.bin_name || ""}
-                                            onChange={handleselShtBin}
+                                            onChange={(e, value) => handleselShtBin(value)}
                                             renderInput={(params) => (
                                                 <TextField {...params}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
                                                             e.preventDefault();
-                                                            setselShift(params.inputProps.value);
+                                                            setselBinNo(params.inputProps.value);
                                                         }
                                                     }}
                                                 />
@@ -310,6 +316,7 @@ function ScanSheetInspect() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
+                                            ref={inputShtNo}
                                             value={txtShtNo}
                                             onChange={handleShtNo}
                                             style={{
@@ -407,6 +414,7 @@ function ScanSheetInspect() {
                                     marginRight: "50px",
                                     width: "30ox"
                                 }}
+                                onClick={btDelShtClick}
                             >
                                 Delete Sheet
                             </Button>
@@ -416,12 +424,15 @@ function ScanSheetInspect() {
                                     marginTop: "5px",
                                     marginRight: "50px",
                                 }}
+                                onClick={btDelLotClick}
                             >
                                 Delete Lot
                             </Button>
                             <Button
                                 size="small"
                                 style={{ marginTop: "5px" }}
+                                ref={btnCancel}
+                                onClick={btCancelClick}
                             >
                                 Cancel
                             </Button>
@@ -489,15 +500,15 @@ function ScanSheetInspect() {
                             <TableBody>
                                 {gvScanData.map((item, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>{item.seq}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.seq}</TableCell>
                                         <TableCell>{item.roll_no}</TableCell>
                                         <TableCell>{item.lot_no}</TableCell>
-                                        <TableCell>{item.shift}</TableCell>
-                                        <TableCell>{item.week_no}</TableCell>
-                                        <TableCell>{item.bin_no}</TableCell>
-                                        <TableCell>{item.sheet}</TableCell>
-                                        <TableCell>{item.scan_by}</TableCell>
-                                        <TableCell>{item.scan_date}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.shift}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.week_no}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.bin_no}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.sheet}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.scan_by}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.scan_date}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
