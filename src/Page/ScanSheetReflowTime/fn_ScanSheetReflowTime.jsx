@@ -118,11 +118,11 @@ function fn_ScanSheetReflowTime() {
             setLblResult({ text: "NG", styled: "red" });
           }
         } else {
-          alert("ไม่พบข้อมูล");
           setPnlSaveState(true);
           setLblSheet(txtSheetNo);
           setPnlSaveState(true);
-          setTxtmcNoState({ open: false });
+          setTxtmcNoState({ open: true });
+          PnlmainDisable();
           setLblRemark("Exists record time, please be confirm.");
           return
         }
@@ -139,6 +139,10 @@ function fn_ScanSheetReflowTime() {
       setTxtSheetNoState({ disabled: false, state: true });
     }
   };
+  function PnlmainDisable() {
+    setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#dbdede" } });
+    setTxtSheetNoState({ disabled: true, styled: { backgroundColor: "#dbdede" } });
+  }
   const btnCancel_Click = () => {
     setPnlSaveState(false);
     setTxtmcNoState({
