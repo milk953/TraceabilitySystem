@@ -86,7 +86,7 @@ function ScanSheetInspect() {
                                         <TextField
                                             id="txtfield"
                                             size="small"
-                                            ref={inputLot}
+                                            inputRef={inputLot}
                                             fullWidth
                                             value={txtLotNo}
                                             disabled={istxtLotDisabled}
@@ -178,7 +178,7 @@ function ScanSheetInspect() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
-                                            ref={inputScanBy}
+                                            inputRef={inputScanBy}
                                             value={txtScanBy}
                                             onChange={(e) => {
                                                 settxtScanBy(e.target.value);
@@ -200,7 +200,7 @@ function ScanSheetInspect() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
-                                            ref={inputScanDate}
+                                            inputRef={inputScanDate}
                                             value={txtScanDate}
                                             onChange={(e) => {
                                                 settxtScanDate(e.target.value);
@@ -316,7 +316,7 @@ function ScanSheetInspect() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
-                                            ref={inputShtNo}
+                                            inputRef={inputShtNo}
                                             value={txtShtNo}
                                             onChange={handleShtNo}
                                             style={{
@@ -431,7 +431,7 @@ function ScanSheetInspect() {
                             <Button
                                 size="small"
                                 style={{ marginTop: "5px" }}
-                                ref={btnCancel}
+                                inputRef={btnCancel}
                                 onClick={btCancelClick}
                             >
                                 Cancel

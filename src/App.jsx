@@ -14,7 +14,9 @@ import ConfirmBarcodeGrade from "./Page/Confirm Barcode Grade/ConfirmBarcodeGrad
 import TestApi from "./testApi";
 import axios from "axios";
 import ScanSheetBakeTime from "./Page/ScanSheetBakeTime/ScanSheetBakeTime";
-const backendUrl = "http://10.17.74.228:3001";
+import ScanSheetInspect from "./Page/ScanSheetInspect/ScanSheetInspect";
+import ScanSheetInspectXOut from "./Page/ScanSheetInspectXOut/ScanSheetInspectXOut";
+const backendUrl = "http://10.17.74.227:3001";
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
@@ -31,6 +33,8 @@ const App = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
+          <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
+          <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
           {/* <Route path="/TestApi" element={<TestApi />} /> */}
         </Routes>
       </BrowserRouter>

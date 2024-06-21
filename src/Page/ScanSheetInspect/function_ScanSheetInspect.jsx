@@ -66,12 +66,14 @@ function fn_ScanSheetInspect() {
         if (strLot != "") {
             settxtLotNo(strLot);
             axios.post("/api/Common/getProductDataByLot", {
-                txtlotno: strLot,
+                strLot: strLot,
             })
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        strPrdName = res.data.flat()[0];
-                        settxtRollNo(res.data.flat()[1]);
+                    let data = res.data.flat().flat();
+                    if (data.length > 0) {
+                        strPrdName = data[0][0];
+                        settxtRollNo(data[0][1]);
+                        console.log(strPrdName)
                     }
                 })
 
