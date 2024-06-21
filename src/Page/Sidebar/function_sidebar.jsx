@@ -25,7 +25,6 @@ function sidebarT() {
       axios.post("/api/MenuName", {
         login_id: Login_ID,
       }).then((res) => {
-       console.log(res.data,'apimenu')
         let datamenu = [];
         let datamenuid = [];
         let main = [];
@@ -74,7 +73,6 @@ function sidebarT() {
     };
   
     const GoNavigate = (path) => {
-      console.log(path,'pathhh');
       window.location.href = path;
     };
   

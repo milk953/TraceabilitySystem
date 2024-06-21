@@ -286,7 +286,7 @@ function ScanSMTSerialShtFINManySht() {
                         <TableRow>
                           <TableCell
                             sx={{
-                              width: "70px",
+                              width: "50px",
                               height: "10px",
                               padding: "0px",
                             }}
@@ -322,7 +322,7 @@ function ScanSMTSerialShtFINManySht() {
                           </TableCell>
                           <TableCell
                             sx={{
-                              width: "300px",
+                              width: "350px",
                               height: "10px",
                               padding: "0px",
                             }}

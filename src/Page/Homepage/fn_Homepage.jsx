@@ -11,7 +11,6 @@ function fn_Homepage() {
   const [ipAddress, setIpAddress] = useState("");
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
   const openLoginModal = () => {
-    // console.log(LoginStatus, "LoginStatus");
     if (window.location.pathname === "/" && LoginStatus === false) {
       Swal.fire({
         title: "เข้าสู่ระบบ",
@@ -25,8 +24,6 @@ function fn_Homepage() {
         preConfirm: () => {
           var username = Swal.getPopup().querySelector("#username").value;
           var password = Swal.getPopup().querySelector("#password").value;
-          // console.log(username);
-          // console.log(password);
           handleLogin(username, password);
         },
       });
@@ -58,7 +55,13 @@ function fn_Homepage() {
           localStorage.setItem("UserLogin", res.data[0][0]);
           localStorage.setItem("IDCode", res.data[0][2]);
           Swal.close();
-          Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success");
+          Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
+            (result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            }
+          );
         } else if (res.status === 401) {
           Swal.fire(
             "ผิดพลาด",
@@ -88,7 +91,6 @@ function fn_Homepage() {
     axios.post("/api/MenuHome", {}).then((res) => {
       setmenu(res.data);
     });
-    openLoginModal();
   };
   useEffect(() => {
     page_load();

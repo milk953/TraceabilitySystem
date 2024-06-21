@@ -45,7 +45,11 @@ function ScanSheetBakeTime() {
     handleTxtmc_Change,
     handleTxtLotNo_Change,
     handleTxtSheetNo_Change,
-    handdleDelete_Chaange
+
+    //btn
+    btnDelete,
+    btnCancel,
+    btnReplace
   } = fn_ScanSheetBakeTime();
   useEffect(() => {
     if (txtmcState.Focus ==true && txtmc==""){
@@ -192,13 +196,13 @@ function ScanSheetBakeTime() {
         <Table id="TableSaveBaking" component={Paper}>
           <TableRow>
             <TableCell>
-              <Button>Replace</Button>
+              <Button onClick={btnReplace}>Replace</Button>
             </TableCell>
             <TableCell>
-              <Button onClick={handdleDelete_Chaange}>Delete</Button>
+              <Button onClick={btnDelete}>Delete</Button>
             </TableCell>
             <TableCell>
-              <Button>Cancel</Button>
+              <Button onClick={btnCancel}>Cancel</Button>
             </TableCell>
           </TableRow>
         </Table>

@@ -1,8 +1,4 @@
-import { RetweetOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { parse } from "dotenv";
-import { color } from "framer-motion";
-import { get, set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 
 function fn_ScanSheetBakeTime() {
@@ -178,10 +174,11 @@ function fn_ScanSheetBakeTime() {
         let txtSheetNoSubstring = txtSheetNo.substring(start - 1, end);
         if (hfCheckprdAbbr != txtSheetNoSubstring) {
           strStatus = "F";
-          strError = "Sheet product mix";
+          strError = "Invalid sheet length";
         }
       }
       if (
+
         parseInt(hfConnLeafLength) > 0 &&
         parseInt(hfConnLeafLength) !== txtSheetNo.length &&
         strStatus == "F"
@@ -237,7 +234,7 @@ function fn_ScanSheetBakeTime() {
       });
     }
   };
-  const handdleDelete_Chaange = async () => {
+  const btnDelete = async () => {
     let strError = "";
     let strStatus = "";
     strError = await getData("DeleteBakingRecordTimeData", {
@@ -258,7 +255,41 @@ function fn_ScanSheetBakeTime() {
     setTxtSheetNoState({Focus: true});
 
   };
+  const btnReplace = async () =>{
+    let strError = "";
+    let strStatus = "";
+    strError = await getData("CallSMTBakingRecordTimeResult", {
+      strSheetNo: txtSheetNo,
+      strmachineNo: txtProcess,
+      strLotno: txtLotNo,
+      strProduct: lblProductName,
+      strProcess: txtProcess,
+    });
+    const currentTime = new Date().toLocaleTimeString("en-US", {
+      hour12: false,
+    });
+    setLblSheet(`${txtSheetNo} [${currentTime}]`);
+    setLblRemark(strError);
+    if (strError == "") {
+      setLblResult({ text: "OK", styled: "green" });
+    } else {
+      setLblResult({ text: "NG", styled: "red" });
+    }
+    setPnlSaveState(false);
+    PnlmainEnable();
+    setTxtSheetNo("");
+    setTxtSheetNoState({Focus: true});
+  }
+  const btnCancel = () => {
+    setPnlSaveState(false);
+    PnlmainEnable();
+    setLblSheet("");
+    setLblRemark("");
+    setLblResult("");
+    setTxtSheetNo("");
+    setTxtSheetNoState({Focus: true});
 
+  }
   function PnlmainDisable() {
     setTxtProcessState({
       disabled: true,
@@ -289,10 +320,10 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "#dbdede" },
     });
   }
-
+  
   async function getData(type, params) {
     let Result = "";
-    if (type == "prdName") {
+    if (type == "prdName") { //ok
       await axios
         .post("/api/Common/getProductNameByLot", {
           strLot: params,
@@ -305,7 +336,7 @@ function fn_ScanSheetBakeTime() {
         .catch((error) => {
           alert(error);
         });
-    } else if (type == "getSerial") {
+    } else if (type == "getSerial") {   //ok
       await axios
         .post(
           "/api/GetSerialProductByProduct",
@@ -333,7 +364,7 @@ function fn_ScanSheetBakeTime() {
         .catch((error) => {
           alert(error);
         });
-    } else if (type == "GetMOTRecordTimeData") {
+    } else if (type == "GetMOTRecordTimeData") { //ok
       await axios
         .post(
           "/api/Common/getMOTRecordTimeData",
@@ -341,6 +372,7 @@ function fn_ScanSheetBakeTime() {
             dataList: {
               strSheetNo: params.txtSheetNo,
               strProcId: params.txtProcess,
+              strPlantCode :'G'
             },
           },
           {
@@ -373,6 +405,7 @@ function fn_ScanSheetBakeTime() {
               strProduct: params.strProduct,
               strProcess: params.strProcess,
               strFactory: hfFactory,
+               strPlantCode :'G'
             },
           },
           {
@@ -396,6 +429,7 @@ function fn_ScanSheetBakeTime() {
               strPlantCode: hfFactory,
               strSheetNo: params.strSheetNo,
               strProcId: params.strProcId,
+               strPlantCode :'G'
             },
           },
           {
@@ -447,7 +481,10 @@ function fn_ScanSheetBakeTime() {
     handleTxtmc_Change,
     handleTxtLotNo_Change,
     handleTxtSheetNo_Change,
-    handdleDelete_Chaange
+    //btn
+    btnDelete,
+    btnReplace,
+    btnCancel
   };
 }
 

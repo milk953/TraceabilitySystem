@@ -12,6 +12,7 @@ import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
+import HomeIcon from "@mui/icons-material/Home";
 function Hearder() {
   const { openLoginModal } = fn_Homepage();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -29,6 +30,39 @@ function Hearder() {
     navigate("/");
     location.reload();
     openLoginModal();
+  };
+  const loginBtn = () => {
+    if (window.location.pathname !== "/") {
+      const goHome = () => {
+        navigate("/");
+      };
+      return (
+        <Button onClick={goHome} variant="contained" sx={{ fontSize: "12px" }}>
+          <HomeIcon/>
+        </Button>
+      );
+    }
+    return (
+      <Button
+        onClick={openLoginModal}
+        variant="contained"
+        sx={{ fontSize: "12px" }}
+      >
+        Login
+      </Button>
+    );
+  };
+  const logOut = () => {
+    return (
+      <Button
+        onClick={Logout}
+        variant="contained"
+        color="error"
+        sx={{ fontSize: "12px" }}
+      >
+        Logout
+      </Button>
+    );
   };
   return (
     <>
@@ -68,10 +102,10 @@ function Hearder() {
                 fontFamily: "Roboto, sans-serif",
               }}
             >
-              Username: {user ?? 'Guest'} {surname} &nbsp;&nbsp;
+              Username: {user ?? "Guest"} {surname} &nbsp;&nbsp;
               <br />
             </Button>
-            <LogoutIcon onClick={Logout} />
+            {user ? logOut() : loginBtn()}
           </Toolbar>
         </AppBar>
       </Box>

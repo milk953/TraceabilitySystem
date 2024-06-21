@@ -133,7 +133,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     padding: "0",
     margin: "0",
     align: "center",
-    margin:'auto'
+    margin: "auto",
   });
 
   const ibtBack = () => {
@@ -195,8 +195,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
 
   const [panalSerialOpen, setPanalSerialOpen] = useState(false);
 
-  const handleSave = () => {
-  };
+  const handleSave = () => {};
 
   const handleCancel = () => {
     setSerialDataTable();
@@ -217,8 +216,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     // txtLottxtChange();
     Getproduct();
 
-    Setmode("LOT");   
-    
+    Setmode("LOT");
+
     if (selectproduct !== "" && lot !== "") {
       getIntialSheet();
     }
@@ -232,7 +231,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       height: "150px",
       padding: "0",
       align: "center",
-      margin:'auto'
+      margin: "auto",
     });
     var strLotData = "";
     var strLot = "";
@@ -290,8 +289,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           }
           return;
         } catch (error) {
-          console.error('Error occurred:', error);
-          console.log('infunction')
+          console.error("Error occurred:", error);
+          console.log("infunction");
           var intProduct = strPrdname.indexOf("-", 12);
           if (intProduct > -1) {
             strPrdname =
@@ -486,7 +485,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     };
     axios
       .post("/api/GetLotSerialCountData", {
-        strLot: lot,
+        dataList: {
+          strLot: lot,
+          strPlantCode: "G",
+        },
       })
       .then((res) => {
         if (res.data != "") {
@@ -788,40 +790,75 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       for (let i = 0; i < dtSerial.length; i++) {
         _strShtNoBack = dtSerial[i].BACK_SIDE;
         _strShtNoFront = dtSerial[i].FRONT_SIDE;
-        console.log(hfCheckPrdSht, "hfCheckPrdSht" , dtSerial[i].SEQ, "dtSerial[i].SEQ",!_bolError )
-        if (hfCheckPrdSht === "Y" && parseInt(dtSerial[i].SEQ === 1) && _bolError === true ) 
-        {
-          if (hfCheckPrdAbbr !== _strShtNoBack.substring( parseInt(hfCheckPrdShtStart), parseInt(hfCheckPrdShtEnd) - parseInt(hfCheckPrdShtStart) + 1 )) 
-          {
+        console.log(
+          hfCheckPrdSht,
+          "hfCheckPrdSht",
+          dtSerial[i].SEQ,
+          "dtSerial[i].SEQ",
+          !_bolError
+        );
+        if (
+          hfCheckPrdSht === "Y" &&
+          parseInt(dtSerial[i].SEQ === 1) &&
+          _bolError === true
+        ) {
+          if (
+            hfCheckPrdAbbr !==
+            _strShtNoBack.substring(
+              parseInt(hfCheckPrdShtStart),
+              parseInt(hfCheckPrdShtEnd) - parseInt(hfCheckPrdShtStart) + 1
+            )
+          ) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet product mix";
             _bolError = true;
           }
-          if ( hfCheckPrdAbbr !==_strShtNoFront.substring( parseInt(hfCheckPrdShtStart), parseInt(hfCheckPrdShtEnd) - parseInt(hfCheckPrdShtStart) + 1))
-          {
+          if (
+            hfCheckPrdAbbr !==
+            _strShtNoFront.substring(
+              parseInt(hfCheckPrdShtStart),
+              parseInt(hfCheckPrdShtEnd) - parseInt(hfCheckPrdShtStart) + 1
+            )
+          ) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet product mix";
             _bolError = true;
           }
         }
-        if( hfCheckLotSht === "Y" && parseInt(dtSerial[i].SEQ === 1) && !_bolError ) 
-        {
-          if ( txtLotRef !== _strShtNoBack.substring( parseInt(hfCheckLotShtStart), parseInt(hfCheckLotShtEnd) - parseInt(hfCheckLotShtStart) + 1 ))
-          {
+        if (
+          hfCheckLotSht === "Y" &&
+          parseInt(dtSerial[i].SEQ === 1) &&
+          !_bolError
+        ) {
+          if (
+            txtLotRef !==
+            _strShtNoBack.substring(
+              parseInt(hfCheckLotShtStart),
+              parseInt(hfCheckLotShtEnd) - parseInt(hfCheckLotShtStart) + 1
+            )
+          ) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet lot mix";
             _bolError = true;
           }
-          if ( txtLotRef !== _strShtNoFront.substring( parseInt(hfCheckLotShtStart), parseInt(hfCheckLotShtEnd) - parseInt(hfCheckLotShtStart) + 1 ))
-          {
+          if (
+            txtLotRef !==
+            _strShtNoFront.substring(
+              parseInt(hfCheckLotShtStart),
+              parseInt(hfCheckLotShtEnd) - parseInt(hfCheckLotShtStart) + 1
+            )
+          ) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet lot mix";
             _bolError = true;
           }
         }
         //Check sheet plasma time control
-        if ( hfShtPlasmaTimeFlg === "Y" && parseInt(dtSerial[i].SEQ === 1) && !_bolError )
-        {
+        if (
+          hfShtPlasmaTimeFlg === "Y" &&
+          parseInt(dtSerial[i].SEQ === 1) &&
+          !_bolError
+        ) {
           const res2 = await axios.post("/api/GetConnectShtPlasmaTime", {
             strSheetnoF: _strShtNoFront,
             strSheetnoB: _strShtNoBack,
@@ -834,8 +871,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             _bolError = true;
           }
         }
-        if (parseInt(dtSerial[i].SEQ === 1)) 
-        {
+        if (parseInt(dtSerial[i].SEQ === 1)) {
           let _inCountSeq = 0;
           let _strSerialNoDup = "";
           const res = await axios.post("/api/GetSheetDuplicateConnectShtType", {
@@ -850,32 +886,38 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             _bolError = true;
           }
         }
-        if (hfReqMachine == "Y") 
-        {
-          if ( txtMachine !== "" || txtMachine === "999999" || txtMachine === "NOT FOUND CODE" )
-          {
+        if (hfReqMachine == "Y") {
+          if (
+            txtMachine !== "" ||
+            txtMachine === "999999" ||
+            txtMachine === "NOT FOUND CODE"
+          ) {
             _strScanResultAll = "NG";
             _strErrorAll = "Invalid machine no";
             _bolError = true;
           }
         }
-        if ( parseInt(hfConnLeafLength) > 0 || parseInt(hfConnLeafLength) !== _strShtNoBack.length || parseInt(hfConnLeafLength) !== _strShtNoFront.length ) 
-        {
+        if (
+          parseInt(hfConnLeafLength) > 0 ||
+          parseInt(hfConnLeafLength) !== _strShtNoBack.length ||
+          parseInt(hfConnLeafLength) !== _strShtNoFront.length
+        ) {
           _strScanResultAll = "NG";
           _strErrorAll = "Invalid sheet length";
           _bolError = true;
         }
-        if (dtSerial[i].SERIAL !== "") 
-        {
+        if (dtSerial[i].SERIAL !== "") {
           var _strSerial = dtSerial[i].SERIAL;
           var _strTestResult = "None";
           var _strMessageUpdate = "";
           var _strScanResultUpdate = "";
 
-          if (_strSerial !== "999999") 
-          {
-            for (_intRowSerial + 1; _intRowSerial < dtSerial.length - 1; _intRowSerial++) 
-            {
+          if (_strSerial !== "999999") {
+            for (
+              _intRowSerial + 1;
+              _intRowSerial < dtSerial.length - 1;
+              _intRowSerial++
+            ) {
               if (_strSerial === dtSerial[_intRowSerial].SERIAL) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = `Serial duplicate / หมายเลขบาร์โค้ดซ้ำ`;
@@ -883,45 +925,50 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 _bolError = true;
               }
             }
-            if (_strSerial.length == parseInt(hfSerialLength)) 
-            {
+            if (_strSerial.length == parseInt(hfSerialLength)) {
               var _strFixDigit = "";
-              _strSerial = _strSerial.substring(parseInt(hfSerialStartDigit), parseInt(hfSerialEndDigit) + 1 );
-              if (_strSerial !== hfSerialDigit) 
-              {
+              _strSerial = _strSerial.substring(
+                parseInt(hfSerialStartDigit),
+                parseInt(hfSerialEndDigit) + 1
+              );
+              if (_strSerial !== hfSerialDigit) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
                 _strScanResultAll = "NG";
                 _bolError = true;
-              } 
-              else if (hfConfigCheck === "Y") 
-              {
+              } else if (hfConfigCheck === "Y") {
                 var _strConfigDigit = "";
-                _strConfigDigit = _strSerial.substring( parseInt(hfConfigStart), parseInt(hfConfigEnd) - parseInt(hfConfigStart) + 1 );
-                if (_strConfigDigit !== hfConfigCode) 
-                {
+                _strConfigDigit = _strSerial.substring(
+                  parseInt(hfConfigStart),
+                  parseInt(hfConfigEnd) - parseInt(hfConfigStart) + 1
+                );
+                if (_strConfigDigit !== hfConfigCode) {
                   _strScanResultUpdate = "NG";
                   _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
                   _strScanResultAll = "NG";
                   _bolError = true;
                 }
               }
-              if (hfSerialStartCode !== "" && !_bolError) 
-              {
-                if ( _strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode)
-                {
+              if (hfSerialStartCode !== "" && !_bolError) {
+                if (
+                  _strSerial.substring(0, hfSerialStartCode.length) !==
+                  hfSerialStartCode
+                ) {
                   _strScanResultUpdate = "NG";
                   _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
                   _strScanResultAll = "NG";
                   _bolError = true;
                 }
               }
-              if (hfCheckStartSeq === "Y" && _strScanResultUpdate !== "NG") 
-              {
+              if (hfCheckStartSeq === "Y" && _strScanResultUpdate !== "NG") {
                 var _strStartSeq = "";
-                _strStartSeq = _strSerial.substring( parseInt(hfCheckStartSeqStart), parseInt(hfCheckStartSeqEnd) -parseInt(hfCheckStartSeqStart) + 1 );
-                if (_strStartSeq !== hfCheckStartSeqCode) 
-                {
+                _strStartSeq = _strSerial.substring(
+                  parseInt(hfCheckStartSeqStart),
+                  parseInt(hfCheckStartSeqEnd) -
+                    parseInt(hfCheckStartSeqStart) +
+                    1
+                );
+                if (_strStartSeq !== hfCheckStartSeqCode) {
                   _strScanResultUpdate = "NG";
                   _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
                   _strScanResultAll = "NG";
@@ -929,34 +976,37 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 }
               }
 
-              if (hfCheckWeekCode === "Y" && _strScanResultUpdate === "NG") 
-              {
+              if (hfCheckWeekCode === "Y" && _strScanResultUpdate === "NG") {
                 var _strWeekCode = "";
-                _strWeekCode = _strSerial.substring( parseInt(hfCheckWeekCodeStart), parseInt(hfCheckWeekCodeEnd) - parseInt(hfCheckWeekCodeStart) + 1 );
-                if (_strWeekCode !== _hfWeekCode) 
-                {
+                _strWeekCode = _strSerial.substring(
+                  parseInt(hfCheckWeekCodeStart),
+                  parseInt(hfCheckWeekCodeEnd) -
+                    parseInt(hfCheckWeekCodeStart) +
+                    1
+                );
+                if (_strWeekCode !== _hfWeekCode) {
                   _strScanResultUpdate = "NG";
                   _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
                   _strScanResultAll = "NG";
                   _bolError = true;
                 }
               }
-            } 
-            else 
-            {
+            } else {
               _strScanResultUpdate = "NG";
               _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
               _strScanResultAll = "NG";
               _bolError = true;
             }
-            if (_strScanResultUpdate !== "NG") 
-            {
+            if (_strScanResultUpdate !== "NG") {
               var _inCountSeq = 0;
               var _strSerialNoDup = "";
               const res = await axios.post(
                 "/api/GetSerialDuplicateConnectSht",
                 {
-                  strSerial: _strSerial,
+                  dataList: {
+                    strLot: lot,
+                    strPlantCode: "G",
+                  },
                 }
               );
               _inCountSeq = res.data.intRow;
@@ -967,9 +1017,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 _bolError = true;
               }
             }
-          } 
-          else 
-          {
+          } else {
             _strMessageUpdate = `Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว`;
           }
           dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
@@ -977,167 +1025,152 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         }
         _intSeq += 1;
       }
-        // Shipping2D serial special check condition lot, panel and strip 
-      if(hfWeekCodeType == 'S' && _bolError == false)  
-        {
-          var strReturn = '';
-          strReturn = GetShippingSerialNo(dtSerial)
-          if (strReturn !=='')
-            {
-              _strScanResultAll = 'NG';
-              _bolError = true
-              if (strReturn !== 'NG')
-                {
-                  setLblLogState(true);
-                  setlblLog(strReturn);
-                }
-            }
+      // Shipping2D serial special check condition lot, panel and strip
+      if (hfWeekCodeType == "S" && _bolError == false) {
+        var strReturn = "";
+        strReturn = GetShippingSerialNo(dtSerial);
+        if (strReturn !== "") {
+          _strScanResultAll = "NG";
+          _bolError = true;
+          if (strReturn !== "NG") {
+            setLblLogState(true);
+            setlblLog(strReturn);
+          }
         }
-      if (hfCheckSheetELT =='Y' && _bolError == false ) // ทำ api
-        {
-          var strReturn = '';
-          // strReturn = await axios.post("/api/SetSerialLotShtELTTable", {
-            
-          // })
-          if (strReturn !== '')
-            {
-              _strScanResultAll = 'NG';
-              _bolError = true;
-              if (strReturn !== 'NG')
-                {
-                  setLblLogState(true);
-                  setlblLog(strReturn);
-                }
-            }
+      }
+      if (hfCheckSheetELT == "Y" && _bolError == false) {
+        // ทำ api
+        var strReturn = "";
+        // strReturn = await axios.post("/api/SetSerialLotShtELTTable", {
+
+        // })
+        if (strReturn !== "") {
+          _strScanResultAll = "NG";
+          _bolError = true;
+          if (strReturn !== "NG") {
+            setLblLogState(true);
+            setlblLog(strReturn);
+          }
         }
-      if (!_bolError)
-        {
-          for(let i =0 ;i<dtSerial.length; i++)
-            {
-              if(dtSerial[i].SERIAL !== "")
-                {
-                  var intCount = 0;
-                  var intCountOK = 0;
-                  var intCountNG = 0;
-                  var strRemark = '';
-                  var strError = '';
-                  var strSerial = dtSerial[i].SERIAL;
-                  var dtSerialAll = [];
-                  var bolScanDouble = false;
-                  var bolScanDuplicatev = false;
-                  var strPrdNameOrg = '';
-                  var strNG = '';
-                  var strScanResultUpdate = '';
-                  var strMessageUpdate = '';
-                  var strRejectUpdate = '';
-                  var Message = '';
-                  _bolError = False
+      }
+      if (!_bolError) {
+        for (let i = 0; i < dtSerial.length; i++) {
+          if (dtSerial[i].SERIAL !== "") {
+            var intCount = 0;
+            var intCountOK = 0;
+            var intCountNG = 0;
+            var strRemark = "";
+            var strError = "";
+            var strSerial = dtSerial[i].SERIAL;
+            var dtSerialAll = [];
+            var bolScanDouble = false;
+            var bolScanDuplicatev = false;
+            var strPrdNameOrg = "";
+            var strNG = "";
+            var strScanResultUpdate = "";
+            var strMessageUpdate = "";
+            var strRejectUpdate = "";
+            var Message = "";
+            _bolError = False;
 
-
-                  var strTestResult = 'None'
-                  if (strSerial = '999999')
-                    {
-                      strMessageUpdate = 'Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว'
-                      strScanResultUpdate = 'OK'
-                    }
-                  if ('0' == '1' && strScanResultUpdate !== 'NG' && strSerial !== '999999')
-                    {
-                      var Result = '';
-                      var FrontSheetBarcode = '';
-                      var RearSheetBarcode = '';
-                      if (hfBarcodeSide == 'F')
-                        {
-                          FrontSheetBarcode = dtSerial[i].FRONT_SIDE
-                          RearSheetBarcode = dtSerial[i].BACK_SIDE
-                        }
-                      else
-                        {
-                          FrontSheetBarcode = dtSerial[i].BACK_SIDE
-                          RearSheetBarcode = dtSerial[i].FRONT_SIDE
-                        }
-                      Result = await axios.post("/api/Get_SPI_AOI_RESULT", {}) //ทำ api
-                      if(Result == 'NG')
-                        {
-                          strScanResultUpdate = Result
-                        }
-                      strMessageUpdate = Message
-                  }
-                  if (strError !== '')
-                    {
-                      strMessageUpdate = strError
-                      strScanResultUpdate = 'NG'
-                      _bolError =true
-                    }
-                  serialData[i].SCAN_RESULT = strScanResultUpdate
-                  serialData[i].REMARK = strMessageUpdate
-                }
-              _intSeq += 1
+            var strTestResult = "None";
+            if ((strSerial = "999999")) {
+              strMessageUpdate =
+                "Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว";
+              strScanResultUpdate = "OK";
             }
-          //'' Manual connect roll and sheet leaf
-          var Rollleaf_fetch = "";
-          if (!_bolError && hfCheckRollSht != "Y") {
-            if ((txtRollLeaf.length = hfConnRollLength)) {
-              const res = await axios.post("/api/GetRollLeafScrapRBMP", {
-                strRollNo: txtRollLeaf,
-              });
-              if (res.data != "") {
-                Rollleaf_fetch = res.data.SCRAP_FLG;
-                console.log(Rollleaf_fetch, "Rollleaf_fetch");
+            if (
+              "0" == "1" &&
+              strScanResultUpdate !== "NG" &&
+              strSerial !== "999999"
+            ) {
+              var Result = "";
+              var FrontSheetBarcode = "";
+              var RearSheetBarcode = "";
+              if (hfBarcodeSide == "F") {
+                FrontSheetBarcode = dtSerial[i].FRONT_SIDE;
+                RearSheetBarcode = dtSerial[i].BACK_SIDE;
+              } else {
+                FrontSheetBarcode = dtSerial[i].BACK_SIDE;
+                RearSheetBarcode = dtSerial[i].FRONT_SIDE;
               }
-              if (Rollleaf_fetch == "Y") {
+              Result = await axios.post("/api/Get_SPI_AOI_RESULT", {}); //ทำ api
+              if (Result == "NG") {
+                strScanResultUpdate = Result;
+              }
+              strMessageUpdate = Message;
+            }
+            if (strError !== "") {
+              strMessageUpdate = strError;
+              strScanResultUpdate = "NG";
+              _bolError = true;
+            }
+            serialData[i].SCAN_RESULT = strScanResultUpdate;
+            serialData[i].REMARK = strMessageUpdate;
+          }
+          _intSeq += 1;
+        }
+        //'' Manual connect roll and sheet leaf
+        var Rollleaf_fetch = "";
+        if (!_bolError && hfCheckRollSht != "Y") {
+          if ((txtRollLeaf.length = hfConnRollLength)) {
+            const res = await axios.post("/api/GetRollLeafScrapRBMP", {
+              strRollNo: txtRollLeaf,
+            });
+            if (res.data != "") {
+              Rollleaf_fetch = res.data.SCRAP_FLG;
+              console.log(Rollleaf_fetch, "Rollleaf_fetch");
+            }
+            if (Rollleaf_fetch == "Y") {
+              _bolError = True;
+              _strScanResultAll = "NG";
+              _strUpdateError = "Problem sheet from RBMP";
+              _strErrorAll = "Problem sheet from RBMP";
+            } else {
+              var dtRowLeaf = getConnectRollSheetData();
+              var intCount = 0;
+              var rowCount = 0;
+              var _strRollLeaf = txtRollLeaf;
+              const res = await axios.post("/api/GetRollLeafDuplicate", {
+                strRollLeaf: _strRollLeaf,
+              });
+              rowCount = res.data.length;
+              if (rowCount !== dtRowLeaf.length) {
+                intCount = 1;
+              } else {
+                for (let i = 0; i < rowCount; i++) {
+                  if (dtRowLeaf[i].SHT_NO !== res.data[i].SHT_NO) {
+                    intCount = 1;
+                  }
+                }
+              }
+              if ((intCount = 1)) {
                 _bolError = True;
                 _strScanResultAll = "NG";
-                _strUpdateError = "Problem sheet from RBMP";
-                _strErrorAll = "Problem sheet from RBMP";
-              } else {
-                var dtRowLeaf = getConnectRollSheetData();
-                var intCount = 0;
-                var rowCount = 0;
-                var _strRollLeaf = txtRollLeaf;
-                const res = await axios.post("/api/GetRollLeafDuplicate", {
-                  strRollLeaf: _strRollLeaf,
-                });
-                rowCount = res.data.length;
-                if (rowCount !== dtRowLeaf.length) {
-                  intCount = 1;
-                } else {
-                  for (let i = 0; i < rowCount; i++) {
-                    if (dtRowLeaf[i].SHT_NO !== res.data[i].SHT_NO) {
-                      intCount = 1;
-                    }
-                  }
+                for (let i = 0; i < dtRowLeaf.length; i++) {
+                  dtRowLeaf[i].UPDATE_FLG = "N";
+                  dtRowLeaf[i].ROW_UPDATE = "N";
+                  dtRowLeaf[i].SCAN_RESULT = "NG";
+                  dtRowLeaf[i].REMARK =
+                    "Roll/Sheet barcode duplicate / หมายเลขบาร์โค้ดซ้ำ";
+                  intCount += 1;
                 }
-                if ((intCount = 1)) {
-                  _bolError = True;
+                _strUpdateError = "Roll/Sheet barcode duplicate";
+                _strErrorAll = "Roll/Sheet barcode duplicate";
+              }
+              if (hfCheckRollPrdFlg == "Y" && !_bolError) {
+                var strRollProduct = hfRollNo + hfCheckRollPrd;
+                if (
+                  strRollProduct !==
+                  txtRollLeaf.substring(
+                    parseInt(hfCheckRollPrdStart),
+                    parseInt(hfCheckRollPrdEnd) -
+                      parseInt(hfCheckRollPrdStart) +
+                      1
+                  )
+                ) {
+                  _bolError = true;
                   _strScanResultAll = "NG";
-                  for (let i = 0; i < dtRowLeaf.length; i++) {
-                    dtRowLeaf[i].UPDATE_FLG = "N";
-                    dtRowLeaf[i].ROW_UPDATE = "N";
-                    dtRowLeaf[i].SCAN_RESULT = "NG";
-                    dtRowLeaf[i].REMARK =
-                      "Roll/Sheet barcode duplicate / หมายเลขบาร์โค้ดซ้ำ";
-                    intCount += 1;
-                  }
-                  _strUpdateError = "Roll/Sheet barcode duplicate";
-                  _strErrorAll = "Roll/Sheet barcode duplicate";
-                }
-                if (hfCheckRollPrdFlg == 'Y' && !_bolError){
-                  var strRollProduct = hfRollNo + hfCheckRollPrd;
-                  if (strRollProduct !== txtRollLeaf.substring(parseInt(hfCheckRollPrdStart), (parseInt(hfCheckRollPrdEnd) - parseInt(hfCheckRollPrdStart) + 1 ))){
-                    _bolError = true;
-                    _strScanResultAll = "NG";
-                    for (let i = 0; i < dtRowLeaf.length; i++) {
-                      dtRowLeaf[i].UPDATE_FLG = "N";
-                      dtRowLeaf[i].ROW_UPDATE = "N";
-                      dtRowLeaf[i].SCAN_RESULT = "NG";
-                      dtRowLeaf[i].REMARK =
-                        "Roll/Sheet not matching product / หมายเลขบาร์โค้ดไม่ตรงกับผลิตภัณฑ์";
-                      intCount += 1;
-                    }
-                  }
-                }
-                
-                if (!_bolError && dtRowLeaf.length > 0){
                   for (let i = 0; i < dtRowLeaf.length; i++) {
                     dtRowLeaf[i].UPDATE_FLG = "N";
                     dtRowLeaf[i].ROW_UPDATE = "N";
@@ -1146,80 +1179,109 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                       "Roll/Sheet not matching product / หมายเลขบาร์โค้ดไม่ตรงกับผลิตภัณฑ์";
                     intCount += 1;
                   }
-                  _strUpdateError = SetRollLeafTrayTable(dtRowLeaf,"SerialShtPcs")
-                  console.log(_strUpdateError, "strUpdateError");
                 }
+              }
 
+              if (!_bolError && dtRowLeaf.length > 0) {
+                for (let i = 0; i < dtRowLeaf.length; i++) {
+                  dtRowLeaf[i].UPDATE_FLG = "N";
+                  dtRowLeaf[i].ROW_UPDATE = "N";
+                  dtRowLeaf[i].SCAN_RESULT = "NG";
+                  dtRowLeaf[i].REMARK =
+                    "Roll/Sheet not matching product / หมายเลขบาร์โค้ดไม่ตรงกับผลิตภัณฑ์";
+                  intCount += 1;
+                }
+                _strUpdateError = SetRollLeafTrayTable(
+                  dtRowLeaf,
+                  "SerialShtPcs"
+                );
+                console.log(_strUpdateError, "strUpdateError");
               }
             }
-            else{
-              _strScanResultAll = "NG";
-              _strUpdateError = "Roll leaf no. incorrect.";
-              _strErrorAll = "Roll leaf no. incorrect.";
-            }
+          } else {
+            _strScanResultAll = "NG";
+            _strUpdateError = "Roll leaf no. incorrect.";
+            _strErrorAll = "Roll leaf no. incorrect.";
           }
-          if(!_bolError && _strUpdateError == ""){
-            //Sucha modify 31-Aug-2016 update slowly
-            var dataSetSerialRecordTimeTrayTable = {};
-            if (i <= 0){
-              dataSetSerialRecordTimeTrayTable = {
-                intSerialLength: hfSerialLength,
-                BarcodeSide: hfBarcodeSide, 
-                USER_ID : txtOperator
-            }
+        }
+        if (!_bolError && _strUpdateError == "") {
+          //Sucha modify 31-Aug-2016 update slowly
+          var dataSetSerialRecordTimeTrayTable = {};
+          if (i <= 0) {
+            dataSetSerialRecordTimeTrayTable = {
+              intSerialLength: hfSerialLength,
+              BarcodeSide: hfBarcodeSide,
+              USER_ID: txtOperator,
+              strPlantCode: "G",
+            };
             dtSerial.push(dataSetSerialRecordTimeTrayTable);
           }
           var jsonData = JSON.stringify(dataSetSerialRecordTimeTrayTable);
-          jsonData = jsonData.replace('},{', ',');
-            const res = await axios.post("/api/SetSerialLotShtTable", jsonData,{
+          jsonData = jsonData.replace("},{", ",");
+          const res = await axios
+            .post("/api/SetSerialLotShtTable", jsonData, {
               headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
+              },
+            })
+            .then((res) => {
+              _strUpdateError = res.data.p_error;
+            })
+            .catch((error) => {
+              alert(error);
+            });
+          if (_strUpdateError !== "") {
+            _strScanResultAll = "NG";
+          } else if (hfPlasmaConnShtPcs == "Y") {
+            var dataSetSerialRecordTimeTrayTable = {};
+            if (i <= 0) {
+              dataSetSerialRecordTimeTrayTable = {
+                OPERATER: txtOperator,
+                Program: "frm_ScanSMTSerialShtFIN",
+                TYPE: "",
+                strPlantCode: "G",
+              };
+              dtSerial.push(dataSetSerialRecordTimeTrayTable);
             }
-            }) .then((res) => {_strUpdateError = res.data.p_error}).catch((error) => {alert(error)});
-            if (_strUpdateError !== ""){
-              _strScanResultAll = "NG"
-            }else if (hfPlasmaConnShtPcs == 'Y'){
-              var dataSetSerialRecordTimeTrayTable ={};
-              if (i <= 0){
-                  dataSetSerialRecordTimeTrayTable = {
-                  OPERATER: txtOperator,
-                  Program: 'frm_ScanSMTSerialShtFIN',
-                  TYPE: ''
-                }
-                dtSerial.push(dataSetSerialRecordTimeTrayTable);
-              }
-              var jsonData = JSON.stringify(dataSetSerialRecordTimeTrayTable);
-              jsonData = jsonData.replace('},{', ',');
-              const res = await axios.post('/api/SetSerialRecordTimeTrayTable', jsonData, {
+            var jsonData = JSON.stringify(dataSetSerialRecordTimeTrayTable);
+            jsonData = jsonData.replace("},{", ",");
+            const res = await axios
+              .post("/api/SetSerialRecordTimeTrayTable", jsonData, {
                 headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then((res) => {_strUpdateError = res.data.p_error}).catch((error) => {alert(error)});            
-              if (_strUpdateError !== ""){
-                _strScanResultAll = "NG"
-              }
+                  "Content-Type": "application/json",
+                },
+              })
+              .then((res) => {
+                _strUpdateError = res.data.p_error;
+              })
+              .catch((error) => {
+                alert(error);
+              });
+            if (_strUpdateError !== "") {
+              _strScanResultAll = "NG";
             }
-          }else{
-            _strScanResultAll = "NG"
           }
+        } else {
+          _strScanResultAll = "NG";
         }
-      setLblresult(_strScanResultAll)
-      if (_strScanResultAll == 'NG') {
-        // lblresult = red color 
-      }else{
+      }
+      setLblresult(_strScanResultAll);
+      if (_strScanResultAll == "NG") {
+        // lblresult = red color
+      } else {
         // lblresult = green color
       }
       if (_strErrorAll !== "") {
-        setLblresult(`${lblresult} \n ${_strErrorAll}`)
+        setLblresult(`${lblresult} \n ${_strErrorAll}`);
       }
       setGvScanResult(dtSerial);
       // getInitialSerial();
       // getIntialSheet();
 
-      if (_strScanResultAll =='NG'){
+      if (_strScanResultAll == "NG") {
         // playsound
-      }      
-    }else{
+      }
+    } else {
       setlblLog("Please input Sheet Side No. !!! ");
       Setmode("SERIAL_ERROR");
       // playsound
@@ -1227,47 +1289,56 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     getCountDataBylot(lot);
     settxtRollLeaf("");
     settxtmachine("");
-    if (hfCheckRollSht == 'Y'){
+    if (hfCheckRollSht == "Y") {
       setPnlRollLeafOpen(true);
       sethfMode("ROLL");
       txtRollLeaf.current.focus();
-    }else if (hfReqMachine == 'Y'){
+    } else if (hfReqMachine == "Y") {
       setPnlMachineOpen(true);
       fctextFieldMachine.current.focus();
-    }else{
-      fctxtSideBack.current.focus()
+    } else {
+      fctxtSideBack.current.focus();
     }
-    return ;
+    return;
   };
 
-  const GetShippingSerialNo = (dtSerial) =>{
-    var strReturn = '';
+  const GetShippingSerialNo = (dtSerial) => {
+    var strReturn = "";
     var intSeq = 1;
-    var strShetSeq = '';
-    var strLotbase34_1 = ConvertBase34(parseInt(lot.substring(1, 2)) + parseInt(lot.substring(2, 3)) + parseInt(lot.substring(3, 4)));
-    var strLotbase34_4 = Convert0000(ConvertBase34(parseInt(lot.substring(4, 10))));
-    
-    for(let i = 0; i<dtSerial.length; i++){
-      var strResult = 'OK';
-      var strRemark = '';
-      if (hfWeekCode == 'S'){
-        if (strLotbase34_1 !== (dtSerial[i].SERIAL).substring(10, 11) || strLotbase34_4 !== (dtSerial[i].SERIAL).substring(19, 23)){
-          strReturn = 'NG';
-          strResult = 'NG';
-          strRemark = 'Serial mix lot';
-        }else{
-          if (dtSerial[i].SEQ !== dtSerial[i].SERIAL.substring(12,13)){
-            strResult = 'NG';
-            strReturn = 'NG';
-            strRemark = 'Serial mix strip';
-          }else{
-            if(intSeq == 1){
+    var strShetSeq = "";
+    var strLotbase34_1 = ConvertBase34(
+      parseInt(lot.substring(1, 2)) +
+        parseInt(lot.substring(2, 3)) +
+        parseInt(lot.substring(3, 4))
+    );
+    var strLotbase34_4 = Convert0000(
+      ConvertBase34(parseInt(lot.substring(4, 10)))
+    );
+
+    for (let i = 0; i < dtSerial.length; i++) {
+      var strResult = "OK";
+      var strRemark = "";
+      if (hfWeekCode == "S") {
+        if (
+          strLotbase34_1 !== dtSerial[i].SERIAL.substring(10, 11) ||
+          strLotbase34_4 !== dtSerial[i].SERIAL.substring(19, 23)
+        ) {
+          strReturn = "NG";
+          strResult = "NG";
+          strRemark = "Serial mix lot";
+        } else {
+          if (dtSerial[i].SEQ !== dtSerial[i].SERIAL.substring(12, 13)) {
+            strResult = "NG";
+            strReturn = "NG";
+            strRemark = "Serial mix strip";
+          } else {
+            if (intSeq == 1) {
               strShetSeq = dtSerial[i].SERIAL.substring(8, 11);
-            }else{
-              if (dtSerial[i].SERIAL.substring(8, 11) !== strShetSeq){
-                strResult = 'NG';
-                strReturn = 'NG';
-                strRemark = 'Serial mix sheet';
+            } else {
+              if (dtSerial[i].SERIAL.substring(8, 11) !== strShetSeq) {
+                strResult = "NG";
+                strReturn = "NG";
+                strRemark = "Serial mix sheet";
               }
             }
           }
@@ -1275,13 +1346,13 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
       dtSerial[i].SCAN_RESULT = strResult;
       dtSerial[i].REMARK = strRemark;
-      intSeq += 1
+      intSeq += 1;
     }
     return strReturn;
-  }
+  };
 
-  const  SetRollLeafTrayTable = async (dtRowLeaf,_strOperator) => {
-    for(let i = 0 ;i<dtRowLeaf.length; i++){
+  const SetRollLeafTrayTable = async (dtRowLeaf, _strOperator) => {
+    for (let i = 0; i < dtRowLeaf.length; i++) {
       var _strRollNo = dtRowLeaf[i].ROLL_NO;
       var _strLotNo = dtRowLeaf[i].LOT_NO;
       var _strRollLeaf = dtRowLeaf[i].ROLL_LEAF;
@@ -1289,24 +1360,23 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       var _strMachine = dtRowLeaf[i].MACHINE;
       var _strProduct = dtRowLeaf[i].PRODUCT;
       const res = await axios.post("/api/SetRollLeafTrayTable", {
-        strOperator   : _strOperator,
-        strRowUpdate  : dtRowLeaf[i].ROW_UPDATE,
-        strUpdateFlg  : dtRowLeaf[i].UPDATE_FLG,
-        strRollNo     : _strRollNo,
-        strLotNo      : _strLotNo,
-        strRollLeaf   : _strRollLeaf,
-        strSheetNo    : _strSheetNo,
-        strShtSeq     : dtRowLeaf[i].SHT_SEQ,
-        strIntRow     : dtRowLeaf[i].ROLL_SEQ,
-        strProduct    : _strProduct,
-        strMachine    : _strMachine,
-        strUserID     : txtOperator,
-      })
-      console.log(res.data.p_error, "res.data.p_error")
+        strOperator: _strOperator,
+        strRowUpdate: dtRowLeaf[i].ROW_UPDATE,
+        strUpdateFlg: dtRowLeaf[i].UPDATE_FLG,
+        strRollNo: _strRollNo,
+        strLotNo: _strLotNo,
+        strRollLeaf: _strRollLeaf,
+        strSheetNo: _strSheetNo,
+        strShtSeq: dtRowLeaf[i].SHT_SEQ,
+        strIntRow: dtRowLeaf[i].ROLL_SEQ,
+        strProduct: _strProduct,
+        strMachine: _strMachine,
+        strUserID: txtOperator,
+      });
+      console.log(res.data.p_error, "res.data.p_error");
       return res.data.p_error;
-
     }
-  }
+  };
 
   function ConvertBase34(num) {
     let shou;
@@ -1316,32 +1386,32 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     let LngNumber = num;
 
     do {
-        Amari.push(LngNumber % 34);
-        shou = Math.floor(LngNumber / 34);
-        if (shou === 0) {
-            break;
-        }
-        i += 1;
-        if (shou < 34) {
-            Amari.push(shou);
-            break;
-        }
-        LngNumber = shou;
+      Amari.push(LngNumber % 34);
+      shou = Math.floor(LngNumber / 34);
+      if (shou === 0) {
+        break;
+      }
+      i += 1;
+      if (shou < 34) {
+        Amari.push(shou);
+        break;
+      }
+      LngNumber = shou;
     } while (true);
 
     for (let j = i - 1; j >= 0; j--) {
-        StrTemp += ChangeBase34(Amari[j]);
+      StrTemp += ChangeBase34(Amari[j]);
     }
     return StrTemp;
-}
-function ChangeBase34(intnumber) {
-  const strChange = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-  return strChange[intnumber];
-}
-function Convert0000(strText) {
-  let paddedStr = "0000" + strText;
-  return paddedStr.substring(paddedStr.length - 4);
-}
+  }
+  function ChangeBase34(intnumber) {
+    const strChange = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+    return strChange[intnumber];
+  }
+  function Convert0000(strText) {
+    let paddedStr = "0000" + strText;
+    return paddedStr.substring(paddedStr.length - 4);
+  }
   return {
     lot,
     setLot,

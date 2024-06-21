@@ -38,7 +38,6 @@ function ScanSheetReflowTime() {
     btnIbtback_Click,
   } = fn_ScanSheetReflowTime();
   useEffect(() => {
-    console.log(txtSheetNoState.state, "txtmcNoState");
     if (txtSheetNoState.state == true && txtSheetNo == "") {
       FctxtSheetNo.current.focus();
     }

@@ -2,6 +2,7 @@ import axios from "axios";
 import { set } from "lodash";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 function fn_ScanSheetReflowTime() {
   const [txtmcNo, setTxtmcNo] = useState("");
@@ -70,26 +71,32 @@ function fn_ScanSheetReflowTime() {
     if (txtmcNo !== "" && txtSheetNo !== "") {
       let strError = "";
       let strStatus = "";
-      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) !== txtSheetNo.length && strStatus !== "F") {
+      if (
+        parseInt(hfConnLeafLength) > 0 &&
+        parseInt(hfConnLeafLength) !== txtSheetNo.length &&
+        strStatus !== "F"
+      ) {
         strStatus = "F";
         strError = "Invalid sheet length";
       }
       if (strStatus !== "F") {
         const res = await axios
           .post("/api/common/getreflowrecordtimedata", {
-            strSheetNo: txtSheetNo,
+             dataList: {
+              strSheetno: txtSheetNo,
+              strPlantCode :'5'
+            },
           })
           .then((res) => {
             rowCount = res.data.row_count;
-            console.log(res.data.row_count, "row_countinfunc");
+
           })
           .catch((error) => {
-            alert(error);
+            Swal.fire("Error", `${error}`, "error")
           });
 
-        console.log(rowCount, "rowCount");
+
         if (rowCount == 0) {
-          console.log("in");
           const res = await axios
             .post("api/common/CallSMTReflowRecordTimeResult", {
               dataList: [
@@ -99,14 +106,16 @@ function fn_ScanSheetReflowTime() {
                   strmachineNo: txtmcNo,
                   strLotno: "",
                   strProduct: "",
+                  strPlantCode:'5'
                 },
               ],
             })
             .then((res) => {
               strError = res.data.p_error;
+              console.log(strError)
             })
             .catch((error) => {
-              alert(error);
+              Swal.fire("Error", `${error}`, "error")
             });
           if (strError.split("") == "") {
             const currentTime = new Date().toLocaleTimeString("en-US", {
@@ -124,7 +133,7 @@ function fn_ScanSheetReflowTime() {
           setTxtmcNoState({ open: true });
           PnlmainDisable();
           setLblRemark("Exists record time, please be confirm.");
-          return
+          return;
         }
       } else {
         setLblResult({ text: "NG", styled: "red" });
@@ -141,7 +150,10 @@ function fn_ScanSheetReflowTime() {
   };
   function PnlmainDisable() {
     setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#dbdede" } });
-    setTxtSheetNoState({ disabled: true, styled: { backgroundColor: "#dbdede" } });
+    setTxtSheetNoState({
+      disabled: true,
+      styled: { backgroundColor: "#dbdede" },
+    });
   }
   const btnCancel_Click = () => {
     setPnlSaveState(false);
@@ -167,14 +179,16 @@ function fn_ScanSheetReflowTime() {
             strmachineNo: txtmcNo,
             strLotno: "",
             strProduct: "",
+            strPlantCode:'5'
           },
         ],
       })
       .then((res) => {
         strError = res.data.p_error;
+        console.log(strError)
       })
       .catch((error) => {
-        alert(error);
+        Swal.fire("Error", `${error}`, "error")
       });
     if (strError.split("") == "") {
       const currentTime = new Date().toLocaleTimeString("en-US", {
@@ -201,30 +215,30 @@ function fn_ScanSheetReflowTime() {
     const res = await axios
       .post("/api/common/deleteReflowRecordTimeData", {
         strSheetNo: txtSheetNo,
+        strPlantCode : '5'
       })
       .then((res) => {
         strError = res.data.p_error;
-        console.log(res.data.p_error, "p_error")
       })
       .catch((error) => {
-        alert(error);
+        Swal.fire("Error", `${error}`, "error")
       });
-      setLblSheet(`${lblSheet} Delete`)
-      setLblRemark(strError)
+    setLblSheet(`${lblSheet} Delete`);
+    setLblRemark(strError);
 
-      if (strStatus == 'P') {
-        setLblResult({ text: "OK", styled: "green" });
-      }else{
-        setLblResult({ text: "NG", styled: "red" });
-      }
+    if (strStatus == "P") {
+      setLblResult({ text: "OK", styled: "green" });
+    } else {
+      setLblResult({ text: "NG", styled: "red" });
+    }
 
-      setTxtSheetNo("");
-      setTxtmcNoState({
-        disabled: true,
-        styled: { backgroundColor: "#B2A8A8" },
-        open: true,
-      });
-      setTxtSheetNoState({ disabled: false, state: true });
+    setTxtSheetNo("");
+    setTxtmcNoState({
+      disabled: true,
+      styled: { backgroundColor: "#B2A8A8" },
+      open: true,
+    });
+    setTxtSheetNoState({ disabled: false, state: true });
   };
   const btnIbtback_Click = () => {
     setTxtmcNo("");
@@ -238,7 +252,7 @@ function fn_ScanSheetReflowTime() {
     setLblRemark("");
     setPnlSaveState(false);
     FctxtmcNo.current.focus();
-  }
+  };
   return {
     txtmcNo,
     txtSheetNo,
@@ -259,7 +273,7 @@ function fn_ScanSheetReflowTime() {
     btnCancel_Click,
     btnReplace_Click,
     btnDelete_Click,
-    btnIbtback_Click
+    btnIbtback_Click,
   };
 }
 
