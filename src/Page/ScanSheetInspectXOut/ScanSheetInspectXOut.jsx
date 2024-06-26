@@ -28,15 +28,16 @@ import {
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSheetInspectXOut/ScanSheetInspectXOut.css";
 import Hearder from "../Header/Hearder";
-import { fn_ScanSheetInspectXOut } from "./fn_ScanSheetInspectXOut";
+import { fn_ScanSheetInspectXOut } from "./fn_ScanSheetInspectXOut.jsx";
 
 function ScanSheetInspectXOut() {
 
     const {
         txtLotNo, settxtLotNo, txtProduct, settxtProduct, txtRollNo, settxtRollNo, txtShift, settxtShift, txtWeekCode, settxtWeekCode,
-        txtPackingBy, settxtPackingBy, txtPackingDate, settxtPackingDate, selBinNo, setselBinNo, BinNodata, lblTotalSht, setlblTotalSht,
+        txtPackingBy, settxtPackingBy, txtPackingDate, settxtPackingDate, selBinNo, setselBinNo, BinNodata, lblTotalSht, inputPackingBy,
         labellog, visiblelog, pnlSuccess, pnlSerial, hfBINGroup, hfControlBy, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart,
-        hfControlEnd, hfMode, hfUserID, hfUserStation, hfUserFactory, gvScanResult, gvScanData, pnlXOut
+        hfControlEnd, hfMode, hfUserID, hfUserStation, hfUserFactory, gvScanResult, gvScanData, pnlXOut, inputLot, inputPackingDate,
+        selShtBin, btnCancel, ClearLot, isBinNoDisabled, istxtLotDisabled, LotTextChanged, selShtBinChanged, btSaveClick, btCancelClick
     } = fn_ScanSheetInspectXOut();
 
     return (
@@ -83,25 +84,25 @@ function ScanSheetInspectXOut() {
                                         <TextField
                                             id="txtfield"
                                             size="small"
-                                            // inputRef={inputLot}
+                                            inputRef={inputLot}
                                             fullWidth
                                             value={txtLotNo}
-                                            // disabled={istxtLotDisabled}
-                                            // style={{
-                                            //     backgroundColor: istxtLotDisabled ? "#EEEEEE" : "inherit",
-                                            // }}
+                                            disabled={istxtLotDisabled}
+                                            style={{
+                                                backgroundColor: istxtLotDisabled ? "#EEEEEE" : "inherit",
+                                            }}
                                             onChange={(e) => {
                                                 settxtLotNo(e.target.value);
                                             }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         handleLotNo();
-                                        //     }
-                                        // }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    LotTextChanged();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon">
+                                        <Button className="btIcon" onClick={ClearLot}>
                                             <Tooltip title="Clear Lot" placement="right-end">
                                                 <BackspaceIcon
                                                     style={{
@@ -124,6 +125,9 @@ function ScanSheetInspectXOut() {
                                             value={txtProduct}
                                             onChange={(e) => {
                                                 settxtProduct(e.target.value);
+                                            }}
+                                            InputProps={{
+                                                readOnly: true, 
                                             }}
                                         // onKeyDown={(e) => {
                                         //     if (e.key === "Enter") {
@@ -205,6 +209,7 @@ function ScanSheetInspectXOut() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
+                                            inputRef={inputPackingBy}
                                             value={txtPackingBy}
                                             onChange={(e) => {
                                                 settxtPackingBy(e.target.value);
@@ -227,6 +232,7 @@ function ScanSheetInspectXOut() {
                                             size="small"
                                             fullWidth
                                             value={txtPackingDate}
+                                            inputRef={inputPackingDate}
                                             onChange={(e) => {
                                                 settxtPackingDate(e.target.value);
                                             }}
@@ -246,29 +252,29 @@ function ScanSheetInspectXOut() {
                                         <Autocomplete
                                             id="select"
                                             size="small"
-                                            // ref={selShtBin}
-                                            // style={{
-                                            //     backgroundColor: isBinNoDisabled ? "#EEEEEE" : "inherit",
-                                            // }}
-                                            // options={BinNo.map((item) =>
-                                            // ({
-                                            //     value: item.bin_no,
-                                            //     bin_name: item.bin_name
-                                            // }))}
-                                            // value={selBinNo}
-                                            // getOptionLabel={(item) => item.bin_name || ""}
-                                            // onChange={(e, value) => handleselShtBin(value)}
+                                            ref={selShtBin}
+                                            style={{
+                                                backgroundColor: isBinNoDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            options={BinNodata.map((item) =>
+                                            ({
+                                                value: item.bin_no,
+                                                bin_name: item.bin_name
+                                            }))}
+                                            value={selBinNo}
+                                            getOptionLabel={(item) => item.bin_name || ""}
+                                            onChange={(e, value) => selShtBinChanged(value)}
                                             renderInput={(params) => (
                                                 <TextField {...params}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
                                                             e.preventDefault();
-                                                            // setselBinNo(params.inputProps.value);
+                                                            selShtBinChanged(params.inputProps.value);
                                                         }
                                                     }}
                                                 />
                                             )}
-                                        // disabled={isBinNoDisabled}
+                                            disabled={isBinNoDisabled}
 
                                         />
                                     </TableCell>
@@ -284,6 +290,7 @@ function ScanSheetInspectXOut() {
                                                 color: "#990033"
                                             }}
                                         >
+                                            {lblTotalSht}
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
@@ -292,83 +299,83 @@ function ScanSheetInspectXOut() {
                     </TableContainer>
 
                     {pnlXOut && (
-                    <div className="divgvXOut" style={{ position: "relative" }}>
-                        <TableContainer
-                            component={Paper}
+                        <div className="divgvXOut" style={{ position: "relative" }}>
+                            <TableContainer
+                                component={Paper}
+                                style={{
+                                    width: "100%",
+                                    marginBottom: "10px",
+                                    height: "160px",
+                                }}
+                            >
+                                <Table
+                                    sx={{
+                                        minWidth: 400,
+                                        '& .MuiTableHead-root': {
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            background: 'white',
+                                        },
+                                    }}
+                                    aria-label="simple table"
+                                >
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>X-Out</TableCell>
+                                            <TableCell>QTY(Sht.)</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                </Table>
+                            </TableContainer>
+                        </div>
+                    )}
+
+                    {pnlSuccess && (
+                        <Paper
+                            elevation={3}
                             style={{
-                                width: "100%",
-                                marginBottom: "10px",
-                                height: "160px",
+                                width: "414px",
+                                margin: "auto",
+                                height: "50px",
+                                textAlign: "center",
+                                marginTop: "10px",
+                                marginLeft: "20px",
+                                backgroundColor: "Green",
                             }}
                         >
-                            <Table
-                                sx={{
-                                    minWidth: 400,
-                                    '& .MuiTableHead-root': {
-                                        position: 'sticky',
-                                        top: 0,
-                                        zIndex: 1,
-                                        background: 'white',
-                                    },
-                                }}
-                                aria-label="simple table"
+                            <Typography
+                                variant="h4"
+                                style={{ paddingTop: "5px", color: "#fff" }}
                             >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>X-Out</TableCell>
-                                        <TableCell>QTY(Sht.)</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                            </Table>
-                        </TableContainer>
-                    </div>
-                     )} 
+                                OK
+                            </Typography>
+                        </Paper>
+                    )}
 
-                    {/* {pnlSuccess && ( */}
-                    <Paper
-                        elevation={3}
-                        style={{
-                            width: "414px",
-                            margin: "auto",
-                            height: "50px",
-                            textAlign: "center",
-                            marginTop: "10px",
-                            marginLeft: "20px",
-                            backgroundColor: "Green",
-                        }}
-                    >
-                        <Typography
-                            variant="h4"
-                            style={{ paddingTop: "5px", color: "#fff" }}
+                    {visiblelog && (
+                        <Paper
+                            elevation={3}
+                            style={{
+                                width: "414px",
+                                margin: "auto",
+                                height: "40px",
+                                textAlign: "center",
+                                marginTop: "1px",
+                                marginLeft: "20px",
+                                backgroundColor: "#f5222d",
+                            }}
                         >
-                            OK
-                        </Typography>
-                    </Paper>
-                    {/* )} */}
+                            <Typography
+                                variant="h5"
+                                style={{ paddingTop: "5px", color: "#fff" }}
+                            >
+                                {labellog}
+                            </Typography>
+                        </Paper>
+                    )}
 
-                    {/* {visiblelog && ( */}
-                    <Paper
-                        elevation={3}
-                        style={{
-                            width: "414px",
-                            margin: "auto",
-                            height: "40px",
-                            textAlign: "center",
-                            marginTop: "1px",
-                            marginLeft: "20px",
-                            backgroundColor: "#f5222d",
-                        }}
-                    >
-                        <Typography
-                            variant="h5"
-                            style={{ paddingTop: "5px", color: "#fff" }}
-                        >
-                            {labellog}
-                        </Typography>
-                    </Paper>
-                    {/* )} */}
-
-                    {/* {pnlSerial && ( */}
+                    {pnlSerial && (
                     <Paper
                         elevation={2}
                         style={{
@@ -387,20 +394,20 @@ function ScanSheetInspectXOut() {
                                 marginRight: "100px",
                                 width: "30ox"
                             }}
-                        // onClick={btDelShtClick}
+                        onClick={btSaveClick}
                         >
                             Save
                         </Button>
                         <Button
                             size="small"
                             style={{ marginTop: "5px", color: "red" }}
-                        // inputRef={btnCancel}
-                        // onClick={btCancelClick}
+                            ref={btnCancel}
+                        onClick={btCancelClick}
                         >
                             Cancel
                         </Button>
                     </Paper>
-                    {/* )} */}
+                     )} 
 
                     <div>
                         <input type="hidden" value={hfUserID} />
@@ -433,7 +440,7 @@ function ScanSheetInspectXOut() {
                             width: "100%",
                             marginBottom: "10px",
                             height: "250px",
-                            // display: gvScanResult ? 'block' : 'none'
+                            display: gvScanResult ? 'block' : 'none'
                         }}
                     >
                         <Table
