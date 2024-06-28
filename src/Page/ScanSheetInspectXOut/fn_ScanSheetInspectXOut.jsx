@@ -51,7 +51,7 @@ function fn_ScanSheetInspectXOut() {
     const inputShtNo = useRef(null);
     const btnCancel = useRef(null);
 
-    localStorage.setItem("PLANT_CODE", "THA");
+    localStorage.setItem("PLANT_CODE", "G");
     const plantCode = localStorage.getItem("PLANT_CODE");
 
     useEffect(() => {
@@ -417,7 +417,8 @@ function fn_ScanSheetInspectXOut() {
         txtPackingBy, settxtPackingBy, txtPackingDate, settxtPackingDate, selBinNo, setselBinNo, BinNodata, lblTotalSht, inputPackingBy,
         labellog, visiblelog, pnlSuccess, pnlSerial, hfBINGroup, hfControlBy, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart,
         hfControlEnd, hfMode, hfUserID, hfUserStation, hfUserFactory, gvScanResult, gvScanData, pnlXOut, inputLot, inputPackingDate,
-        selShtBin, btnCancel, ClearLot, isBinNoDisabled, istxtLotDisabled, LotTextChanged, selShtBinChanged, btSaveClick, btCancelClick
+        selShtBin, btnCancel, ClearLot, isBinNoDisabled, istxtLotDisabled, LotTextChanged, selShtBinChanged, btSaveClick, btCancelClick,
+        gvXOutData
     }
 }
 
