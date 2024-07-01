@@ -38,7 +38,6 @@ function fn_ScanSheetBakeTime() {
   const Fctxtmc = useRef(null);
   const FctxtLotNo = useRef(null);
   const FctxtSheetNo = useRef(null);
-d
   //Hidden item
   const [hfURL, setHfURL] = useState("");
   const [hfPeriod, setHfPeriod] = useState("0.2");

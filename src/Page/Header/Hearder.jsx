@@ -24,9 +24,7 @@ function Hearder() {
   };
   const navigate = useNavigate();
   const Logout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("Username");
-    localStorage.removeItem("Lastname");
+    localStorage.clear();
     navigate("/");
     location.reload();
     openLoginModal();

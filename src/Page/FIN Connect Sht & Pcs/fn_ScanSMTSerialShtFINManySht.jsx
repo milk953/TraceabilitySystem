@@ -340,7 +340,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const handleProductChange = async (event, value) => {
     var prdName = value;
     setselectproduct(prdName);
-    getProductSerialMaster(prdName);
+    await getProductSerialMaster(prdName);
     if (lot != "") {
       setLblLogState(false);
       setlblLog("");
@@ -1041,9 +1041,29 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       if (hfCheckSheetELT == "Y" && _bolError == false) {
         // ทำ api
         var strReturn = "";
-        // strReturn = await axios.post("/api/SetSerialLotShtELTTable", {
-
-        // })
+        var dataSetSerialLotShtELTTable = {};
+        if (i <= 0) {
+          dataSetSerialLotShtELTTable = {
+            intSerialLength: hfSerialLength,
+            strPrdName: prd_name,
+            strPlantCode: "G",
+          };
+          dtSerial.push(dataSetSerialLotShtELTTable);
+        }
+        var jsonData = JSON.stringify(dataSetSerialLotShtELTTable);
+        jsonData = jsonData.replace("},{", ",");
+        const res = await axios
+            .post("/api/SetSerialLotShtELTTable", jsonData, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .then((res) => {
+              _strUpdateError = res.data.p_error;
+            })
+            .catch((error) => {
+              alert(error);
+            });
         if (strReturn !== "") {
           _strScanResultAll = "NG";
           _bolError = true;
@@ -1094,7 +1114,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 FrontSheetBarcode = dtSerial[i].BACK_SIDE;
                 RearSheetBarcode = dtSerial[i].FRONT_SIDE;
               }
-              Result = await axios.post("/api/Get_SPI_AOI_RESULT", {}); //ทำ api
+              Result = await axios.post("/api/Get_SPI_AOI_RESULT", {}); 
               if (Result == "NG") {
                 strScanResultUpdate = Result;
               }
