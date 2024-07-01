@@ -27,8 +27,8 @@ function fn_ScanSheetInspect() {
     const [hfControlStart, sethfControlStart] = useState("");
     const [hfControlEnd, sethfControlEnd] = useState("");
     const [hfMode, sethfMode] = useState("");
-    const [hfUserID, sethfUserID] = useState("");
-    const [hfUserStation, sethfUserStation] = useState("");
+    const hfUserID = localStorage.getItem("hfUserID");
+    const hfUserStation = localStorage.getItem("hfUserStation");
     const [hfUserFactory, sethfUserFactory] = useState("");
 
 
@@ -77,7 +77,7 @@ function fn_ScanSheetInspect() {
                     }
                 })
 
-            axios.post("/api/getProductShtGroup", {
+            axios.post("/api/Common/getProductShtGroup", {
                 strprdname: strPrdName
             })
                 .then((res) => {
@@ -210,7 +210,7 @@ function fn_ScanSheetInspect() {
 
     const BinNoData = async (strBinGroup) => {
         try {
-            const res = await axios.post("/api/getProductShtBIN", {
+            const res = await axios.post("/api/Common/getProductShtBIN", {
                 bingroup: strBinGroup,
             });
             const data = res.data;
@@ -391,7 +391,7 @@ function fn_ScanSheetInspect() {
             setisBinNoDisabled(true);
             settxtShtNo("");
             setisShtNoDisabled(true);
-            setlabellog(false);
+            setlabellog("");
             setvisiblelog(false);
             setpnlSuccess(false);
             setpnlSerial(false);
@@ -405,7 +405,6 @@ function fn_ScanSheetInspect() {
             setisBinNoDisabled(true);
             settxtShtNo("");
             setisShtNoDisabled(true);
-            setlabellog(true);
             setvisiblelog(true);
             setpnlSuccess(false);
             setpnlSerial(false);
@@ -415,7 +414,7 @@ function fn_ScanSheetInspect() {
             setistxtLotDisabled(true);
             setisBinNoDisabled(false);
             setisShtNoDisabled(false);
-            setlabellog(false);
+            setlabellog("");
             setvisiblelog(false);
             setpnlSuccess(false);
             setpnlSerial(false);
@@ -425,7 +424,7 @@ function fn_ScanSheetInspect() {
             setistxtLotDisabled(true);
             setisBinNoDisabled(false);
             setisShtNoDisabled(false);
-            setlabellog(false);
+            setlabellog("");
             setvisiblelog(false);
             setpnlSuccess(false);
             setpnlSerial(false);
@@ -434,21 +433,19 @@ function fn_ScanSheetInspect() {
         } else if (strType === "SHEET_ERROR") {
             settxtShtNo("");
             setistxtLotDisabled(true);
-            setlabellog(true);
             setvisiblelog(true);
             setpnlSerial(false);
             setpnlSuccess(false);
             inputShtNo.current.focus();
         } else if (strType === "SHEET_CONFIRM") {
             setistxtLotDisabled(true);
-            setlabellog(true);
             setvisiblelog(true);
             setpnlSerial(true);
             setpnlSuccess(false);
             btnCancel.current.focus();
         } else if (strType === "SHEET_OK") {
             settxtShtNo("");
-            setlabellog(false);
+            setlabellog("");
             setvisiblelog(false);
             setpnlSerial(false);
             setpnlSuccess(true);

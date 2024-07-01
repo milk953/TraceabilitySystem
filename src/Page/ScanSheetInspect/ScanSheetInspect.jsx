@@ -130,7 +130,7 @@ function ScanSheetInspect() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    handleLotNo();
+                                                    settxtProduct(e.target.value);
                                                 }
                                             }}
                                         />
