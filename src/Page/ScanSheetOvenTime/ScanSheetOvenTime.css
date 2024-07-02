@@ -1,0 +1,17 @@
+.pnlMainOvenTime {
+    display: flex;
+    margin: auto;
+    /* margin-top: 80px; */
+    width: 600px;
+    height: 300px;
+  }
+  #TableMainOvenTime {
+    width: 600px !important;
+    margin: 0 auto;
+  }
+  #TableMainOvenTime th {
+    text-align: center;
+    font-size: 36px;
+    line-height: 1.2em
+  }
+  
