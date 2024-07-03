@@ -1114,7 +1114,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 FrontSheetBarcode = dtSerial[i].BACK_SIDE;
                 RearSheetBarcode = dtSerial[i].FRONT_SIDE;
               }
-              Result = await axios.post("/api/Get_SPI_AOI_RESULT", {}); 
+              Result = await axios.post("/api/Get_SPI_AOI_RESULT", {}); // ทำ api
               if (Result == "NG") {
                 strScanResultUpdate = Result;
               }

@@ -27,13 +27,17 @@ function ScanSheetOvenTime() {
     setTxtSheetNo,
     txtmcNoState,
     txtSheetNoState,
+    handleTxtMcNo,
+    handleTxtSheetNo
   } = fn_ScanSheetOvenTime();
   useEffect(() => {
-    // txtmcNoState.styled.focus == true &&
-    if (txtmcNo == "") {
+
+    if (txtmcNo == "" && txtmcNoState.styled.focus == true) {
       FctxtmcNo.current.focus();
+    }if (txtSheetNo == "" && txtSheetNoState.styled.focus == true) {
+      FctxtSheetNo.current.focus();
     }
-  }, [txtmcNo]);
+  }, [txtmcNoState,txtSheetNoState]);
   return (
     <div>
       <Hearder />
@@ -54,13 +58,13 @@ function ScanSheetOvenTime() {
                 <TextField
                   size="small"
                   className="txtField"
-                  disabled={txtmcNoState.disabled}
+                  disabled={txtmcNoState.styled.disabled}
                   sx={txtmcNoState.styled}
                   inputRef={FctxtmcNo}
                   onChange={(e) => {
                     setTxtmcNo(e.target.value);
                   }}
-                  // onBlur={handleTxtMcNo}
+                  onBlur={handleTxtMcNo}
                   value={txtmcNo}
                 ></TextField>
               </TableCell>
@@ -84,14 +88,14 @@ function ScanSheetOvenTime() {
                   onChange={(e) => {
                     setTxtSheetNo(e.target.value);
                   }}
-                  //   onBlur={handleTxtSheetNo}
+                    onBlur={handleTxtSheetNo}
                 ></TextField>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell colSpan={3} sx={{ textAlign: "center" }}>
-                {/* {lblSheet} */}
+                {lblSheet.text}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -101,14 +105,14 @@ function ScanSheetOvenTime() {
         <Table id="TableResult" component={Paper}>
           <TableRow>
             <TableCell
-            //   sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled }}
+              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled }}
             >
-              {/* {lblResult.text} */}
+              {lblResult.text}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" }}>
-              {/* {lblRemark} */}
+            <TableCell sx={{ fontSize: "34px", padding: "0px" ,color:lblRemark.styled}}>
+              {lblRemark.text}
             </TableCell>
           </TableRow>
         </Table>
@@ -118,7 +122,7 @@ function ScanSheetOvenTime() {
       >
         <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
       </div>
-    </div>
+    // </div>
   );
 }
 
