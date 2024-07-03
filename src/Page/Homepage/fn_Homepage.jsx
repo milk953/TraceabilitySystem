@@ -8,8 +8,8 @@ function fn_Homepage() {
   const [menu, setmenu] = useState([]);
   const [SL_menu, setSL_menu] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState();
-  const [date,setDate] = useState();
-  const [endDate , setEndDate] = useState();
+  const [date, setDate] = useState();
+  const [endDate, setEndDate] = useState();
   //Login Region
   const [ipAddress, setIpAddress] = useState("");
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
@@ -28,6 +28,17 @@ function fn_Homepage() {
           var username = Swal.getPopup().querySelector("#username").value;
           var password = Swal.getPopup().querySelector("#password").value;
           handleLogin(username, password);
+        },
+        didOpen: () => {
+          const usernameInput = Swal.getPopup().querySelector("#username");
+          const passwordInput = Swal.getPopup().querySelector("#password");
+          passwordInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              const username = usernameInput.value;
+              const password = passwordInput.value;
+              handleLogin(username, password);
+            }
+          });
         },
       });
     } else {
@@ -99,7 +110,6 @@ function fn_Homepage() {
   };
   useEffect(() => {
     page_load();
-    
   }, []);
   // const checkDate = () => {
   //   const newDate = new Date();
