@@ -51,7 +51,7 @@ function fn_ScanSheetInspectXOut() {
     const inputShtNo = useRef(null);
     const btnCancel = useRef(null);
 
-    localStorage.setItem("PLANT_CODE", "THA");
+    localStorage.setItem("PLANT_CODE", "5");
     const plantCode = localStorage.getItem("PLANT_CODE");
 
     useEffect(() => {
@@ -110,7 +110,7 @@ function fn_ScanSheetInspectXOut() {
                     sethfBINGroup(dtGroup.bin_group);
                     setselBinNo(hfBINGroup);
 
-                    if (strLot != "") {
+                    if (strLot !== "") {
                         settxtLotNo(strLot);
                         axios.post("/api/Common/getproductshtinspectbylot", {
                             strLotno: strLot,
@@ -264,11 +264,11 @@ function fn_ScanSheetInspectXOut() {
         const dblTotalSht = parseFloat(lblTotalSht);
         let dblShtQty = 0;
         let dtData = getInputXout();
-        if (txtWeekCode.trim().length != 4) {
+        if (txtWeekCode.trim().length !== 4) {
             setlabellog("Please input correct week code.");
             setvisiblelog(true);
         } else {
-            if (txtPackingBy.trim() != "" && txtPackingDate != "") {
+            if (txtPackingBy.trim() !== "" && txtPackingDate !== "") {
                 for (const drRow of dtData) {
                     if (drRow.COUNT_FLG === "Y") {
                         dblShtQty = dblShtQty + parseFloat(drRow.SSLX_QTY);
@@ -417,7 +417,8 @@ function fn_ScanSheetInspectXOut() {
         txtPackingBy, settxtPackingBy, txtPackingDate, settxtPackingDate, selBinNo, setselBinNo, BinNodata, lblTotalSht, inputPackingBy,
         labellog, visiblelog, pnlSuccess, pnlSerial, hfBINGroup, hfControlBy, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart,
         hfControlEnd, hfMode, hfUserID, hfUserStation, hfUserFactory, gvScanResult, gvScanData, pnlXOut, inputLot, inputPackingDate,
-        selShtBin, btnCancel, ClearLot, isBinNoDisabled, istxtLotDisabled, LotTextChanged, selShtBinChanged, btSaveClick, btCancelClick
+        selShtBin, btnCancel, ClearLot, isBinNoDisabled, istxtLotDisabled, LotTextChanged, selShtBinChanged, btSaveClick, btCancelClick,
+        gvXOutData
     }
 }
 

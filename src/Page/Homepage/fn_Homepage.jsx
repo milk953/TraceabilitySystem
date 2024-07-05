@@ -7,6 +7,9 @@ function fn_Homepage() {
   const [Showmenu, setShowmenu] = useState("img");
   const [menu, setmenu] = useState([]);
   const [SL_menu, setSL_menu] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [date, setDate] = useState();
+  const [endDate, setEndDate] = useState();
   //Login Region
   const [ipAddress, setIpAddress] = useState("");
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
@@ -25,6 +28,17 @@ function fn_Homepage() {
           var username = Swal.getPopup().querySelector("#username").value;
           var password = Swal.getPopup().querySelector("#password").value;
           handleLogin(username, password);
+        },
+        didOpen: () => {
+          const usernameInput = Swal.getPopup().querySelector("#username");
+          const passwordInput = Swal.getPopup().querySelector("#password");
+          passwordInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              const username = usernameInput.value;
+              const password = passwordInput.value;
+              handleLogin(username, password);
+            }
+          });
         },
       });
     } else {
@@ -48,12 +62,11 @@ function fn_Homepage() {
       )
       .then((res) => {
         if (res.status === 200) {
-          // console.log(res.data, "res.data");
-          localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("Username", res.data[0][3]);
-          localStorage.setItem("Lastname", res.data[0][4]);
-          localStorage.setItem("UserLogin", res.data[0][0]);
-          localStorage.setItem("IDCode", res.data[0][2]);
+          setIsLoggedIn(true);
+          localStorage.setItem("Username", res.data.result[0][3]);
+          localStorage.setItem("Lastname", res.data.result[0][4]);
+          localStorage.setItem("UserLogin", res.data.result[0][0]);
+          localStorage.setItem("IDCode", res.data.result[0][2]);
           Swal.close();
           Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
             (result) => {
@@ -91,10 +104,50 @@ function fn_Homepage() {
     axios.post("/api/MenuHome", {}).then((res) => {
       setmenu(res.data);
     });
+    const newDate = new Date();
+    // setDate(newDate)
+    // setEndDate(newDate.setDate(newDate.getDate() + 7));
   };
   useEffect(() => {
     page_load();
   }, []);
+  // const checkDate = () => {
+  //   const newDate = new Date();
+  //   setDate(newDate)
+  // }
+  const checkStatus = (res) => {
+    const token = localStorage.getItem("token");
+    let timeout;
+    if (token) {
+      axios
+        .get(
+          "/api/verifyToken",
+          { headers: { Authorization: `Bearer ${token}` } },
+          {
+            validateStatus: function (status) {
+              return true;
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data, "response.data");
+          if (response.data.success) {
+            const decoded = response.data.decoded;
+            const expiryTime = new Date(decoded.exp * 1000) - new Date();
+            timeout = setTimeout(logout, expiryTime);
+            localStorage.setItem("isLoggedIn", true);
+            setIsLoggedIn(true);
+          }
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+        });
+    } else {
+      localStorage.clear();
+      setIsLoggedIn(false);
+    }
+    return () => clearTimeout(timeout);
+  };
 
   const SelectMenu = (menuID) => {
     if (menuID == "W") {
@@ -129,6 +182,7 @@ function fn_Homepage() {
     SL_menu,
     HandleSL_Menu,
     openLoginModal,
+    isLoggedIn,
   };
 }
 

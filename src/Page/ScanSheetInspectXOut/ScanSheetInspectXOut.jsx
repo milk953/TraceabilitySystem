@@ -37,7 +37,8 @@ function ScanSheetInspectXOut() {
         txtPackingBy, settxtPackingBy, txtPackingDate, settxtPackingDate, selBinNo, setselBinNo, BinNodata, lblTotalSht, inputPackingBy,
         labellog, visiblelog, pnlSuccess, pnlSerial, hfBINGroup, hfControlBy, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart,
         hfControlEnd, hfMode, hfUserID, hfUserStation, hfUserFactory, gvScanResult, gvScanData, pnlXOut, inputLot, inputPackingDate,
-        selShtBin, btnCancel, ClearLot, isBinNoDisabled, istxtLotDisabled, LotTextChanged, selShtBinChanged, btSaveClick, btCancelClick
+        selShtBin, btnCancel, ClearLot, isBinNoDisabled, istxtLotDisabled, LotTextChanged, selShtBinChanged, btSaveClick, btCancelClick,
+        gvXOutData
     } = fn_ScanSheetInspectXOut();
 
     return (
@@ -127,13 +128,13 @@ function ScanSheetInspectXOut() {
                                                 settxtProduct(e.target.value);
                                             }}
                                             InputProps={{
-                                                readOnly: true, 
+                                                readOnly: true,
                                             }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         handleLotNo();
-                                        //     }
-                                        // }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    settxtProduct(e.target.value);
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -171,11 +172,11 @@ function ScanSheetInspectXOut() {
                                             onChange={(e) => {
                                                 settxtShift(e.target.value);
                                             }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         settxtRollNo(e.target.value);
-                                        //     }
-                                        // }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    settxtShift(e.target.value);
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -326,6 +327,14 @@ function ScanSheetInspectXOut() {
                                             <TableCell>QTY(Sht.)</TableCell>
                                         </TableRow>
                                     </TableHead>
+                                    <TableBody>
+                                        {gvScanData.map((item, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>{item.xout_name}</TableCell>
+                                                <TableCell></TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
                                 </Table>
                             </TableContainer>
                         </div>
@@ -376,38 +385,38 @@ function ScanSheetInspectXOut() {
                     )}
 
                     {pnlSerial && (
-                    <Paper
-                        elevation={2}
-                        style={{
-                            width: "414px",
-                            margin: "auto",
-                            height: "40px",
-                            textAlign: "center",
-                            marginTop: "1px",
-                            marginLeft: "20px",
-                        }}
-                    >
-                        <Button
-                            size="small"
+                        <Paper
+                            elevation={2}
                             style={{
-                                marginTop: "5px",
-                                marginRight: "100px",
-                                width: "30ox"
+                                width: "414px",
+                                margin: "auto",
+                                height: "40px",
+                                textAlign: "center",
+                                marginTop: "1px",
+                                marginLeft: "20px",
                             }}
-                        onClick={btSaveClick}
                         >
-                            Save
-                        </Button>
-                        <Button
-                            size="small"
-                            style={{ marginTop: "5px", color: "red" }}
-                            ref={btnCancel}
-                        onClick={btCancelClick}
-                        >
-                            Cancel
-                        </Button>
-                    </Paper>
-                     )} 
+                            <Button
+                                size="small"
+                                style={{
+                                    marginTop: "5px",
+                                    marginRight: "100px",
+                                    width: "30ox"
+                                }}
+                                onClick={btSaveClick}
+                            >
+                                Save
+                            </Button>
+                            <Button
+                                size="small"
+                                style={{ marginTop: "5px", color: "red" }}
+                                ref={btnCancel}
+                                onClick={btCancelClick}
+                            >
+                                Cancel
+                            </Button>
+                        </Paper>
+                    )}
 
                     <div>
                         <input type="hidden" value={hfUserID} />
@@ -428,7 +437,7 @@ function ScanSheetInspectXOut() {
                         width: "320px",
                         height: "250px",
                         marginLeft: "280px",
-                        display: gvScanResult ? 'none' : 'none'
+                        display: gvScanResult ? 'none' : 'block'
                     }}
                     src="src/assets/1.jpg" // Import the image
                     alt="Description of the image"
@@ -467,6 +476,27 @@ function ScanSheetInspectXOut() {
                                     <TableCell>QTY(Pcs.)</TableCell>
                                 </TableRow>
                             </TableHead>
+                            <TableBody>
+                                {gvScanData.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell style={{ textAlign: 'left' }}>{item.roll_no}</TableCell>
+                                        <TableCell style={{ textAlign: 'left' }}>{item.lot_no}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.shift}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.week_no}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.bin_no}</TableCell>
+                                        <TableCell style={{ textAlign: 'center' }}>{item.xout_no}</TableCell>
+                                        <TableCell style={{ textAlign: 'right' }}>{item.qty}</TableCell>
+                                        <TableCell style={{ textAlign: 'right' }}>{item.pcs_qty}</TableCell>
+                                        <TableCell>
+                                            <input
+                                                type="hidden"
+                                                id="hfCountFlg"
+                                                value={item.count_flg}
+                                            />
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
                         </Table>
                     </TableContainer>
                 </div>

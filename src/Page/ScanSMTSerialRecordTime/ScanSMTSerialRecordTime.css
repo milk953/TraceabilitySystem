@@ -1,0 +1,96 @@
+.TbScanSMTSerail {
+    margin: auto;
+    width: 700px;
+}
+
+.TbScanSMTSerail th {
+    background-color: #8c8c8c;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+    padding: 5px;
+}
+
+.TbScanSMTSerail td {
+    padding: 4px;
+}
+
+#txtfield {
+    padding: 1px;
+    font-size: 16px;
+    padding-left: 5px;
+}
+
+#select {
+    padding: 0;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.btIcon {
+    padding: 0px !important;
+    min-width: 50px !important;
+}
+
+.divgvSerial {
+    justify-content: center;
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    width: 502px;
+}
+
+.divgvSerial th {
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+    font-size: 16px;
+    background-color: #12422e !important ;
+    color: #fff;
+    border-right: 1px solid rgb(221, 219, 219);
+    padding: 9px;
+}
+
+.divgvSerial td {
+    padding: 10px;
+}
+
+.divgvScanResult {
+    justify-content: center;
+    /* display: flex; */
+    flex-direction: column;
+    max-width: 100%;
+    overflow-x: auto;
+    margin-left: 0px;
+    width: 850px;
+}
+
+.divgvScanResult th {
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+    font-size: 16px;
+    background-color: #378CE7 !important ;
+    color: #fff;
+    border-right: 1px solid rgb(221, 219, 219);
+    padding: 9px;
+    font-weight: bold; 
+    font-family: Arial;
+}
+
+.divgvScanResult td {
+    padding: 10px;
+}
+
+.lblResult{
+    margin: auto;
+    margin-left: 40px;
+    margin-top: 15px !important;
+    background-color: #FFFF99;
+    width: 715px;
+}
+
+

@@ -21,7 +21,7 @@ import {LoginTest} from "./function_login";
 function Login() {
   
   const {loginId, password, showPassword, isLoading, setLoginId,
-    handlePasswordChange, togglePasswordVisibility, handleLogin} = LoginTest();
+    handlePasswordChange, togglePasswordVisibility, handleLogin,isLoggedIn} = LoginTest();
 
   return (
     <div className="login-container">
