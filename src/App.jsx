@@ -15,6 +15,7 @@ import axios from "axios";
 import ScanSheetBakeTime from "./Page/ScanSheetBakeTime/ScanSheetBakeTime";
 import ScanSheetInspect from "./Page/ScanSheetInspect/ScanSheetInspect";
 import ScanSheetInspectXOut from "./Page/ScanSheetInspectXOut/ScanSheetInspectXOut";
+import ScanSMTSerialRecordTime from "./Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime";
 import ScanSheetOvenTime from "./Page/ScanSheetOvenTime/ScanSheetOvenTime";
 import Reject from "./Page/Reject/Reject";
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -34,7 +35,8 @@ const App = () => {
           <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
           <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
-          <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />          
+          <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
+          <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />          
 
           {/* Maintenance */}
           <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
