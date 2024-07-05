@@ -15,7 +15,7 @@ import axios from "axios";
 import ScanSheetBakeTime from "./Page/ScanSheetBakeTime/ScanSheetBakeTime";
 import ScanSheetInspect from "./Page/ScanSheetInspect/ScanSheetInspect";
 import ScanSheetInspectXOut from "./Page/ScanSheetInspectXOut/ScanSheetInspectXOut";
-const backendUrl = "http://10.17.74.226:3001";
+const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
