@@ -15,6 +15,8 @@ import axios from "axios";
 import ScanSheetBakeTime from "./Page/ScanSheetBakeTime/ScanSheetBakeTime";
 import ScanSheetInspect from "./Page/ScanSheetInspect/ScanSheetInspect";
 import ScanSheetInspectXOut from "./Page/ScanSheetInspectXOut/ScanSheetInspectXOut";
+import ScanSheetOvenTime from "./Page/ScanSheetOvenTime/ScanSheetOvenTime";
+import Reject from "./Page/Reject/Reject";
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
