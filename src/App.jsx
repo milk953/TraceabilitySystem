@@ -11,12 +11,12 @@ import ScanSheetMOTTime from "./Page/ScanSheetMOTTime/ScanSheetMOTTime";
 import Homepage from "./Page/Homepage/Homepage";
 import Login from "./Page/Login/Login"; 
 import ConfirmBarcodeGrade from "./Page/Confirm Barcode Grade/ConfirmBarcodeGrade";
-import TestApi from "./testApi";
+// import TestApi from "./testApi";
 import axios from "axios";
 import ScanSheetBakeTime from "./Page/ScanSheetBakeTime/ScanSheetBakeTime";
 import ScanSheetInspect from "./Page/ScanSheetInspect/ScanSheetInspect";
 import ScanSheetInspectXOut from "./Page/ScanSheetInspectXOut/ScanSheetInspectXOut";
-const backendUrl = "http://10.17.74.227:3001";
+const backendUrl = "http://10.17.74.226:3001";
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
