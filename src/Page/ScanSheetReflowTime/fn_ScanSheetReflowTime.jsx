@@ -37,6 +37,7 @@ function fn_ScanSheetReflowTime() {
   const [hfFactory, setHfFactory] = useState("A1");
   const CompanyCode = import.meta.env.VITE_COMPANY_CODE;
   const Product_type = import.meta.env.VITE_PRODUCT_KIND;
+  const plantCode = import.meta.env.VITE_FAC;
 
   useEffect(() => {
     Pageload();
@@ -84,7 +85,7 @@ function fn_ScanSheetReflowTime() {
           .post("/api/common/getreflowrecordtimedata", {
              dataList: {
               strSheetno: txtSheetNo,
-              strPlantCode :'5'
+              strPlantCode :plantCode
             },
           })
           .then((res) => {
@@ -106,7 +107,7 @@ function fn_ScanSheetReflowTime() {
                   strmachineNo: txtmcNo,
                   strLotno: "",
                   strProduct: "",
-                  strPlantCode:'5'
+                  strPlantCode:plantCode
                 },
               ],
             })
@@ -179,7 +180,7 @@ function fn_ScanSheetReflowTime() {
             strmachineNo: txtmcNo,
             strLotno: "",
             strProduct: "",
-            strPlantCode:'5'
+            strPlantCode:plantCode
           },
         ],
       })
@@ -215,7 +216,7 @@ function fn_ScanSheetReflowTime() {
     const res = await axios
       .post("/api/common/deleteReflowRecordTimeData", {
         strSheetNo: txtSheetNo,
-        strPlantCode : '5'
+        strPlantCode : plantCode
       })
       .then((res) => {
         strError = res.data.p_error;

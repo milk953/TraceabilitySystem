@@ -29,41 +29,25 @@ function Reject() {
     setLot,
     lot,
     handleRetrice_Click,
+    handleCheckboxChange,
+    selectAll,
+    selectedRows,
+    handleSelectAll,
     handleExport,
+    setCbSelected,
+    cbSelected,
+    ip,
+    Fac,
+    setTxtOperator,
+    txtOperator,
+    handleSubmit_Click,
   } = fn_Reject();
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const [selectAll, setSelectAll] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const handleSelectAll = () => {
-    const allIds = dtDataSearch.map((item) => item);
-    if (selectAll) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(allIds);
-    }
-    setSelectAll(!selectAll);
-  };
-  const handleCheckboxChange = (id) => {
-    if (selectAll) {
-      setSelectAll(false);
-      setSelectedRows([id]);
-    } else {
-      if (selectedRows.includes(id)) {
-        setSelectedRows((prev) => prev.filter((rowId) => rowId !== id));
-      } else {
-        setSelectedRows((prev) => [...prev, id]);
-      }
-    }
-  };
-  const handleExportX= async () => {
-    // await SearchData();
-    console.log(selectedRows);
-  };
+
   return (
     <>
       <Hearder />
       <h1>Reject Page</h1>
-      {console.log(dtDataSearch, "dtDataSearchFininsh")}
       <h3 className="RejectResult" style={lblResult.styled}>
         {lblResult.text}
       </h3>
@@ -152,7 +136,10 @@ function Reject() {
           <TableBody>
             <TableRow>
               <TableCell>
-                <select>
+                <select
+                  onChange={(e) => setCbSelected(e.target.value)}
+                  value={cbSelected}
+                >
                   {rejectCombo.map((option, index) => (
                     <option key={index} value={`${option.rejcet_code}`}>
                       {option.rejcet_code === "DELETE"
@@ -166,6 +153,8 @@ function Reject() {
               </TableCell>
               <TableCell sx={{ width: "100px" }}>
                 <input
+                  value={txtOperator}
+                  onChange={(e) => setTxtOperator(e.target.value)}
                   style={{
                     width: "100px",
                     border: "1px solid black",
@@ -176,7 +165,11 @@ function Reject() {
                 />
               </TableCell>
               <TableCell sx={{ width: "100px" }}>
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit_Click}
+                >
                   Submit
                 </Button>
               </TableCell>
@@ -184,7 +177,7 @@ function Reject() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={handleExportX}
+                  onClick={handleExport}
                 >
                   Export
                 </Button>
@@ -203,7 +196,7 @@ function Reject() {
                   <Checkbox
                     {...label}
                     onChange={handleSelectAll}
-                    checked={selectAll}
+                    checked={selectedRows.length ==  dtDataSearch.length}
                   />
                 </TableCell>
                 <TableCell> Serial No</TableCell>
@@ -221,8 +214,10 @@ function Reject() {
                   <TableCell>
                     <Checkbox
                       {...label}
-                      onChange={() => handleCheckboxChange(row)}
-                      checked={selectedRows.includes(row)}
+                      onChange={(e) =>
+                        handleCheckboxChange(e, row.rem_serial_no)
+                      }
+                      checked={selectedRows.includes(row.rem_serial_no)}
                     />
                   </TableCell>
                   <TableCell>{row.rem_serial_no}</TableCell>

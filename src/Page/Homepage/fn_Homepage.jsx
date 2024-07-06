@@ -67,6 +67,7 @@ function fn_Homepage() {
           localStorage.setItem("Lastname", res.data.result[0][4]);
           localStorage.setItem("UserLogin", res.data.result[0][0]);
           localStorage.setItem("IDCode", res.data.result[0][2]);
+          
           Swal.close();
           Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
             (result) => {
@@ -104,13 +105,17 @@ function fn_Homepage() {
     axios.post("/api/MenuHome", {}).then((res) => {
       setmenu(res.data);
     });
+    localStorage.setItem("Fac", import.meta.env.VITE_FAC);
     const newDate = new Date();
     // setDate(newDate)
     // setEndDate(newDate.setDate(newDate.getDate() + 7));
   };
   useEffect(() => {
     page_load();
-  }, []);
+    if (ipAddress != ''){
+      localStorage.setItem("ipAddress", ipAddress);
+    }
+  }, [ipAddress]);
   // const checkDate = () => {
   //   const newDate = new Date();
   //   setDate(newDate)
