@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   TextField,
   Card,
@@ -53,6 +53,12 @@ function ScanSheetMOTTime() {
     BtClick_Delete,
     BtClick_Replace,
   } = fn_ScanSheetMOTTime();
+
+  useEffect(() => {
+
+   
+   
+  }, []);
   return (
     <div>
       <Hearder />
@@ -182,7 +188,7 @@ function ScanSheetMOTTime() {
                   <Card style={{ background: "#EFBC9B", height: "180px" }}>
                     <Typography
                       align="center"
-                      style={{ marginTop: "20px", fontSize: "60px" }}
+                      style={{ marginTop: "40px", fontSize: "60px" }}
                     >
                       {lblResult}
                     </Typography>

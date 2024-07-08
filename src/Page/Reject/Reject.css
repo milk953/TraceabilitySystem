@@ -1,0 +1,71 @@
+.RejectResult {
+  display: flex;
+  justify-content: center;
+  background-color: #f5f5f5;
+  font-family: "popins", sans-serif;
+  font-weight: 100;
+}
+.RejectTableFirst {
+  margin: auto;
+  width: 700px;
+}
+.RejectTableFirst td {
+  /* border: 1px solid #000; */
+  padding: 5px;
+}
+
+.DRejectTableFirst {
+  display: flex;
+  margin: auto;
+  width: 730px;
+}
+
+.DRejectTableSecond {
+  display: flex;
+  margin: auto;
+  width: 900px;
+}
+
+.RejectTableSecond {
+  margin: auto;
+  width: 900px;
+}
+.RejectTableSecond td {
+  padding: 5px;
+}
+.RejectTableSecond th {
+  padding: 5px;
+}
+
+.DRejectTableThird {
+  display: flex;
+  margin: auto;
+  width: 1200px;
+}
+
+.DRejcetTableFourth {
+  margin: auto;
+  width: 800px;
+}
+.RejcetTableFourth th {
+  padding: 5px;
+}
+.RejcetTableFourth td {
+  padding: 5px;
+}
+
+.DRejcetTableFifth {
+  margin: auto;
+  width: 900px;
+}
+.DRejcetTableFifth th {
+  padding: 5px;
+}
+.DRejcetTableFifth td {
+  padding: 5px;
+}
+
+.RejectBtoHome {
+  display: flex;
+  justify-content: center;
+}

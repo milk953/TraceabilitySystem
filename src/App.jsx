@@ -9,33 +9,39 @@ import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRollSht";
 import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
 import ScanSheetMOTTime from "./Page/ScanSheetMOTTime/ScanSheetMOTTime";
 import Homepage from "./Page/Homepage/Homepage";
-import Login from "./Page/Login/Login"; 
 import ConfirmBarcodeGrade from "./Page/Confirm Barcode Grade/ConfirmBarcodeGrade";
-import TestApi from "./testApi";
+// import TestApi from "./testApi";
 import axios from "axios";
 import ScanSheetBakeTime from "./Page/ScanSheetBakeTime/ScanSheetBakeTime";
 import ScanSheetInspect from "./Page/ScanSheetInspect/ScanSheetInspect";
 import ScanSheetInspectXOut from "./Page/ScanSheetInspectXOut/ScanSheetInspectXOut";
-const backendUrl = "http://10.17.74.227:3001";
+import ScanSMTSerialRecordTime from "./Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime";
+import ScanSheetOvenTime from "./Page/ScanSheetOvenTime/ScanSheetOvenTime";
+import Reject from "./Page/Reject/Reject";
+const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
   return (
       <BrowserRouter>
         <Routes>
+        <Route path="/" element={<Homepage />} />
           <Route path="/SheetMaster" element={<Sheet_Master />} />
           <Route path="/SerialMaster" element={<Serial_Master />} />
           <Route path="/ProductMaster" element={<Product_master />} />
           <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
-          <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />
-          <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
-          <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />
-          <Route path="/" element={<Homepage />} />
+          <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
+          <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
           <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
           <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
           <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
-          {/* <Route path="/TestApi" element={<TestApi />} /> */}
+          <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />          
+
+          {/* Maintenance */}
+          <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
+          <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
+          <Route path="/Reject" element={<Reject />} />
         </Routes>
       </BrowserRouter>
   );

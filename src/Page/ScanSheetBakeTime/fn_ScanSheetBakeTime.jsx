@@ -52,6 +52,7 @@ function fn_ScanSheetBakeTime() {
 
   const [hfConnLeafLength, setHfConnLeafLength] = useState("20");
   const [hfFactory, setHfFactory] = useState("A1");
+  const plantCode = import.meta.env.VITE_FAC;
   useEffect(() => {
     PageLoad();
   }, []);
@@ -218,7 +219,7 @@ function fn_ScanSheetBakeTime() {
         setLblResult({ text: "NG", styled: "red" });
         setLblRemark(strError);
       }
-      setTxtSheetNo("");
+      // setTxtSheetNo("");
       setTxtSheetNoState({
         disabled: false,
         styled: { backgroundColor: "white" },
@@ -257,6 +258,7 @@ function fn_ScanSheetBakeTime() {
   const btnReplace = async () =>{
     let strError = "";
     let strStatus = "";
+    console.log(txtSheetNo)
     strError = await getData("CallSMTBakingRecordTimeResult", {
       strSheetNo: txtSheetNo,
       strmachineNo: txtProcess,
@@ -371,7 +373,7 @@ function fn_ScanSheetBakeTime() {
             dataList: {
               strSheetNo: params.txtSheetNo,
               strProcId: params.txtProcess,
-              strPlantCode :'G'
+              strPlantCode : plantCode
             },
           },
           {
@@ -393,6 +395,7 @@ function fn_ScanSheetBakeTime() {
           alert(error);
         });
     } else if (type == "CallSMTBakingRecordTimeResult") {
+      console.log(plantCode,'plantCode');
       await axios
         .post(
           "/api/CallSMTBakingRecordTimeResult",
@@ -404,7 +407,7 @@ function fn_ScanSheetBakeTime() {
               strProduct: params.strProduct,
               strProcess: params.strProcess,
               strFactory: hfFactory,
-               strPlantCode :'G'
+              strPlantCode :plantCode
             },
           },
           {
@@ -428,7 +431,7 @@ function fn_ScanSheetBakeTime() {
               strPlantCode: hfFactory,
               strSheetNo: params.strSheetNo,
               strProcId: params.strProcId,
-               strPlantCode :'G'
+               strPlantCode :plantCode
             },
           },
           {

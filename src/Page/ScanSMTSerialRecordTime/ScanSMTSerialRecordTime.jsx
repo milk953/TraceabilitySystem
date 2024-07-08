@@ -32,13 +32,17 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime.css";
 import Hearder from "../Header/Hearder";
 import { fn_ScanSMTSerialRecordTime } from "./fn_ScanSMTSerialRecordTime";
+import { green } from "@mui/material/colors";
 
 function ScanSMTSerialRecordTime() {
 
     const {
-        selectedrbt, txtMachine, settxtMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, rbtPcs, rbtSht, txtLotNo, settxtLotNo,
+        selectedrbt, txtMachine, settxtMachine, handleChangeMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtLotNo, settxtLotNo,
         selProduct, setselProduct, txtRackNo, settxtRackNo, lblLot, lblLotTotal, lblLog, visiblelog, lblResult, pnlSerial, gvScanResult, istxtOpDisabled,
-        istxtTotalPcsDisabled, istxtLotDisabled, isselProDisabled, handleChangerbt
+        istxtTotalPcsDisabled, istxtLotDisabled, isselProDisabled, istxtMachineDisabled, handleChangerbt, istxtRackDisabled, isibtMCBackDisabled,
+        isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
+        handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
+        ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor
     } = fn_ScanSMTSerialRecordTime();
 
     return (
@@ -117,41 +121,49 @@ function ScanSMTSerialRecordTime() {
                                         </RadioGroup>
                                     </TableCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableCell>
-                                        <Typography>Machine No. :</Typography>
-                                    </TableCell>
-                                    <TableCell colSpan={3}>
-                                        <TextField
-                                            id="txtfield"
-                                            size="small"
-                                            fullWidth
-                                        // value={txtProduct}
-                                        // onChange={(e) => {
-                                        //     settxtProduct(e.target.value);
-                                        // }}
-                                        // InputProps={{
-                                        //     readOnly: true,
-                                        // }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         settxtProduct(e.target.value);
-                                        //     }
-                                        // }}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button className="btIcon">
-                                            <Tooltip title="Lock" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
-                                            </Tooltip>
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
+                                {pnlMachine && (
+                                    <TableRow>
+                                        <TableCell>
+                                            <Typography>Machine No. :</Typography>
+                                        </TableCell>
+                                        <TableCell colSpan={3}>
+                                            <TextField
+                                                id="txtfield"
+                                                size="small"
+                                                fullWidth
+                                                inputRef={inputMachine}
+                                                disabled={istxtMachineDisabled}
+                                                style={{
+                                                    backgroundColor: istxtMachineDisabled ? "#EEEEEE" : "inherit",
+                                                }}
+                                                value={txtMachine}
+                                                onChange={(e) => {
+                                                    settxtMachine(e.target.value);
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        handleChangeMachine();
+                                                    }
+                                                }}
+                                            />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button
+                                                className="btIcon"
+                                                disabled={isibtMCBackDisabled}
+                                                onClick={ibtMCBackClick}
+                                            >
+                                                <Tooltip title="Lock" placement="right-end">
+                                                    <BackspaceIcon
+                                                        style={{
+                                                            fontSize: '24px'
+                                                        }}
+                                                    />
+                                                </Tooltip>
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                )}
                                 <TableRow>
                                     <TableCell>
                                         <Typography>OP/Partial No. :</Typography>
@@ -161,22 +173,28 @@ function ScanSMTSerialRecordTime() {
                                             id="txtfield"
                                             size="small"
                                             fullWidth
-                                        // value={txtProduct}
-                                        // onChange={(e) => {
-                                        //     settxtProduct(e.target.value);
-                                        // }}
-                                        // InputProps={{
-                                        //     readOnly: true,
-                                        // }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         settxtProduct(e.target.value);
-                                        //     }
-                                        // }}
+                                            inputRef={inputOperator}
+                                            disabled={istxtOpDisabled}
+                                            style={{
+                                                backgroundColor: istxtOpDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            value={txtOperator}
+                                            onChange={(e) => {
+                                                settxtOperator(e.target.value);
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleChangeOperator();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon">
+                                        <Button
+                                            className="btIcon"
+                                            disabled={isibtOperatorDisabled}
+                                            onClick={ibtOperatorClick}
+                                        >
                                             <Tooltip title="Lock" placement="right-end">
                                                 <BackspaceIcon
                                                     style={{
@@ -195,27 +213,38 @@ function ScanSMTSerialRecordTime() {
                                         <TextField
                                             id="txtfield"
                                             size="small"
-                                            style={{ width: "60px" }}
-                                        // value={txtProduct}
-                                        // onChange={(e) => {
-                                        //     settxtProduct(e.target.value);
-                                        // }}
-                                        // InputProps={{
-                                        //     readOnly: true,
-                                        // }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         settxtProduct(e.target.value);
-                                        //     }
-                                        // }}
+                                            style={{
+                                                width: "60px",
+                                                backgroundColor: istxtTotalPcsDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            inputRef={inputTotalPcs}
+                                            value={txtTotalPcs}
+                                            disabled={istxtTotalPcsDisabled}
+                                            onChange={(e) => {
+                                                settxtTotalPcs(e.target.value);
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleChangeTotalPcs();
+                                                }
+                                            }}
+                                            InputProps={{
+                                                inputProps: {
+                                                    style: {
+                                                        textAlign: 'center',
+                                                    },
+                                                },
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell colSpan={2}>
                                         <RadioGroup
                                             row
+                                            value={selrbtPcsSht}
+                                            onChange={handleChangerbtPcsSht}
                                         >
                                             <FormControlLabel
-                                                value="PCS"
+                                                value="rbtPcs"
                                                 control={
                                                     <Radio
                                                         sx={{
@@ -223,13 +252,14 @@ function ScanSMTSerialRecordTime() {
                                                                 fontSize: 19,
                                                             },
                                                         }}
+                                                        checked={selrbtPcsSht === "rbtPcs"}
                                                     />
                                                 }
                                                 label="PCS"
                                                 sx={{ marginLeft: 1 }}
                                             />
                                             <FormControlLabel
-                                                value="SHT"
+                                                value="rbtSht"
                                                 control={
                                                     <Radio
                                                         sx={{
@@ -237,6 +267,7 @@ function ScanSMTSerialRecordTime() {
                                                                 fontSize: 19,
                                                             },
                                                         }}
+                                                        checked={selrbtPcsSht === "rbtSht"}
                                                     />
                                                 }
                                                 label="SHT"
@@ -245,7 +276,11 @@ function ScanSMTSerialRecordTime() {
                                         </RadioGroup>
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon">
+                                        <Button
+                                            className="btIcon"
+                                            disabled={isibtPcsBackDisabled}
+                                            onClick={ibtPcsBackClick}
+                                        >
                                             <Tooltip title="Lock" placement="right-end">
                                                 <BackspaceIcon
                                                     style={{
@@ -264,25 +299,25 @@ function ScanSMTSerialRecordTime() {
                                         <TextField
                                             id="txtfield"
                                             size="small"
-                                            // inputRef={inputLot}
+                                            inputRef={inputLot}
                                             fullWidth
-                                        // value={txtLotNo}
-                                        // disabled={istxtLotDisabled}
-                                        // style={{
-                                        //     backgroundColor: istxtLotDisabled ? "#EEEEEE" : "inherit",
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         LotTextChanged();
-                                        //     }
-                                        // }}
+                                            value={txtLotNo}
+                                            disabled={istxtLotDisabled}
+                                            style={{
+                                                backgroundColor: istxtLotDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={(e) => {
+                                                settxtLotNo(e.target.value);
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleChangeLot();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon">
+                                        <Button className="btIcon" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
                                                 <BackspaceIcon
                                                     style={{
@@ -299,11 +334,15 @@ function ScanSMTSerialRecordTime() {
                                     </TableCell>
                                     <TableCell colSpan={3}>
                                         <Autocomplete
-                                            // inputRef={fcProduct}
                                             id="select"
-                                            // value={SlProduct}
-                                            // onChange={(e, value) => handleSL_Product(value)}
-                                            // options={Product.map((item) => item.prd_name)}
+                                            disabled={isselProDisabled}
+                                            ref={ddlProduct}
+                                            style={{
+                                                backgroundColor: isselProDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            value={selProduct}
+                                            onChange={(e, value) => handleChangeProduct(value)}
+                                            options={Productdata.map((item) => item.prd_name)}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
@@ -314,28 +353,33 @@ function ScanSMTSerialRecordTime() {
                                         />
                                     </TableCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableCell>
-                                        <Typography>Rack No. :</Typography>
-                                    </TableCell>
-                                    <TableCell colSpan={3}>
-                                        <TextField
-                                            id="txtfield"
-                                            size="small"
-                                            fullWidth
-                                        // value={txtPackingDate}
-                                        // inputRef={inputPackingDate}
-                                        // onChange={(e) => {
-                                        //     settxtPackingDate(e.target.value);
-                                        // }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         settxtPackingDate(e.target.value);
-                                        //     }
-                                        // }}
-                                        />
-                                    </TableCell>
-                                </TableRow>
+                                {pnlRackNo && (
+                                    <TableRow>
+                                        <TableCell>
+                                            <Typography>Rack No. :</Typography>
+                                        </TableCell>
+                                        <TableCell colSpan={3}>
+                                            <TextField
+                                                id="txtfield"
+                                                size="small"
+                                                fullWidth
+                                                disabled={istxtRackDisabled}
+                                                style={{
+                                                    backgroundColor: istxtRackDisabled ? "#EEEEEE" : "inherit",
+                                                }}
+                                                value={txtRackNo}
+                                                onChange={(e) => {
+                                                    settxtRackNo(e.target.value);
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        settxtRackNo(e.target.value);
+                                                    }
+                                                }}
+                                            />
+                                        </TableCell>
+                                    </TableRow>
+                                )}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -361,7 +405,7 @@ function ScanSMTSerialRecordTime() {
                                 paddingRight: '170px',
                             }}
                         >
-                            {/* {lblTotalSht} */}
+                            {lblLot}
                         </Typography>
                         <Typography
 
@@ -373,7 +417,7 @@ function ScanSMTSerialRecordTime() {
                                 fontSize: "20px",
                             }}
                         >
-                            {/* {lblTotalSht} */}
+                            {lblLotTotal}
                         </Typography>
                     </Paper>
 
@@ -407,7 +451,7 @@ function ScanSMTSerialRecordTime() {
                             style={{
                                 width: "100%",
                                 marginBottom: "10px",
-                                height: "170px",
+                                height: "190px",
                                 display: "flex",
                                 flexDirection: "column",
                                 justifyContent: "space-between",
@@ -432,26 +476,28 @@ function ScanSMTSerialRecordTime() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell></TableCell>
-                                        <TableCell>
-                                            <TextField
-                                                id="txtfield"
-                                                size="small"
-                                                fullWidth
-                                            // value={txtPackingDate}
-                                            // inputRef={inputPackingDate}
-                                            // onChange={(e) => {
-                                            //     settxtPackingDate(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         settxtPackingDate(e.target.value);
-                                            //     }
-                                            // }}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
+                                    {Array.from({ length: hfSerialCount }, (_, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{index + 1}</TableCell>
+                                            <TableCell>
+                                                <TextField
+                                                    id="txtfield"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtgvSerial[index]}
+                                                    inputRef={inputgvSerial}
+                                                    onChange={(e) => {
+                                                        settxtgvSerial(e.target.value);
+                                                    }}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            handleChangeSerial(index, e)
+                                                        }
+                                                    }}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                             <div style={{
@@ -466,7 +512,7 @@ function ScanSMTSerialRecordTime() {
                                 <Button
                                     variant="contained"
                                     size="small"
-                                    style={{marginRight: "20px"}}
+                                    style={{ marginRight: "20px" }}
                                 >
                                     Save
                                 </Button>
@@ -481,82 +527,43 @@ function ScanSMTSerialRecordTime() {
                         </TableContainer>
                     </div>
                     {/* )} */}
-
-                    <div>
-                        {/* <input type="hidden" value={hfUserID} />
-                        <input type="hidden" value={hfUserStation} />
-                        <input type="hidden" value={hfUserFactory} />
-                        <input type="hidden" value={hfPlantCode} />
-                        <input type="hidden" value={hfProductKind} />
-                        <input type="hidden" value={hfSerialLength} />
-                        <input type="hidden" value={hfSerialFixFlag} />
-                        <input type="hidden" value={hfSerialDigit} />
-                        <input type="hidden" value={hfSerialStartDigit} />
-                        <input type="hidden" value={hfSerialEndDigit} />
-                        <input type="hidden" value={hfTrayFlag} />
-                        <input type="hidden" value={hfTrayLength} />
-                        <input type="hidden" value={hfTestResultFlag} />
-                        <input type="hidden" value={hfSerialCount} />
-                        <input type="hidden" value={hfAutoScan} />
-                        <input type="hidden" value={hfMode} />
-                        <input type="hidden" value={hfConfigCheck} />
-                        <input type="hidden" value={hfConfigCode} />
-                        <input type="hidden" value={hfConfigStart} />
-                        <input type="hidden" value={hfConfigEnd} />
-                        <input type="hidden" value={hfConfigRuning} />
-                        <input type="hidden" value={hfDuplicateStart} />
-                        <input type="hidden" value={hfDuplicateEnd} />
-                        <input type="hidden" value={hfChipIDCheck} />
-                        <input type="hidden" value={hfCheckPrdSht} />
-                        <input type="hidden" value={hfCheckPrdShtStart} />
-                        <input type="hidden" value={hfCheckPrdShtEnd} />
-                        <input type="hidden" value={hfCheckPrdAbbr} />
-                        <input type="hidden" value={hfPlasmaCheck} />
-                        <input type="hidden" value={hfPlasmaTime} />
-                        <input type="hidden" value={hfCheckStartSeq} />
-                        <input type="hidden" value={hfCheckStartSeqCode} />
-                        <input type="hidden" value={hfCheckStartSeqStart} />
-                        <input type="hidden" value={hfCheckStartSeqEnd} />
-                        <input type="hidden" value={hfCheckDateInProc} />
-                        <input type="hidden" value={hfDateInProc} />
-                        <input type="hidden" value={hfCheckWeekCode} />
-                        <input type="hidden" value={hfCheckWeekCodeStart} />
-                        <input type="hidden" value={hfCheckWeekCodeEnd} />
-                        <input type="hidden" value={hfWeekCodeType} />
-                        <input type="hidden" value={hfWeekCode} />
-                        <input type="hidden" value={hfSerialStartCode} /> */}
-                    </div>
                 </Box>
-                {/* <div className="lblResult">
-                    <Typography
-                     variant="h4"
-                    >
-                    label
-                    </Typography>
-                </div> */}
-                {/* <img
+
+                <img
                     style={{
                         width: "320px",
                         height: "250px",
                         marginLeft: "280px",
-                        // display: gvScanResult ? 'none' : 'none'
+                        display: gvScanResult ? 'none' : 'block'
                     }}
                     src="src/assets/1.jpg" // Import the image
                     alt="Description of the image"
-                /> */}
-                <div className="divgvScan" style={{ position: "relative" }}>
+                />
+                <div className="divgvScanResult" style={{ position: "relative" }}>
+                    <div className="lblResult"
+                        style={{
+                            display: gvScanResult ? 'block' : 'none'
+                        }}
+                    >
+                        <Typography
+                            variant="h4"
+                            color={lblResultcolor}
+                        >
+                            {lblResult}
+                        </Typography>
+                    </div>
                     <TableContainer
                         component={Paper}
                         style={{
-                            width: "100%",
+                            width: "85%",
                             marginBottom: "10px",
                             height: "250px",
-                            // display: gvScanResult ? 'block' : 'none'
+                            display: gvScanResult ? 'block' : 'none'
                         }}
                     >
                         <Table
                             sx={{
-                                minWidth: 750,
+                                minWidth: 710,
                                 '& .MuiTableHead-root': {
                                     position: 'sticky',
                                     top: 0,

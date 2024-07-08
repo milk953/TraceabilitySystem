@@ -437,7 +437,7 @@ function ScanSheetInspectXOut() {
                         width: "320px",
                         height: "250px",
                         marginLeft: "280px",
-                        display: gvScanResult ? 'none' : 'none'
+                        display: gvScanResult ? 'none' : 'block'
                     }}
                     src="src/assets/1.jpg" // Import the image
                     alt="Description of the image"

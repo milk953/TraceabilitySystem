@@ -12,6 +12,7 @@ function fn_ScanSheetMOTTime() {
   const [lblRemark, setlblRemark] = useState("");
   const [ClassnamelblResult, setClassnamelblResult] = useState("");
   const [txtMCNo, settxtMCNo] = useState("");
+  const [txtTotalLeaf, settxtTotalLeaf] = useState("");
 
   const [EnableMCNo, setEnableMCNo] = useState("");
   const [EnableLotNo, setEnableLotNo] = useState("");
@@ -27,20 +28,28 @@ function fn_ScanSheetMOTTime() {
   const fctxtMcNo = useRef(null);
   const fctxtLotno = useRef(null);
   const fctxtSheetNo = useRef(null);
+
   useEffect(() => {
-    settxtMCNo("");
-    settxtlot("");
-    settxtSheet("");
-    setlblRemark("");
-    setlblResult("");
-    setlblSheet("");
-    setEnableMCNo(false);
-    setEnableLotNo(true);
-    setEnableSheetNo(true);
+   
+     
+      settxtMCNo("");
+      settxtlot("");
+      settxtSheet("");
+      setlblRemark("");
+      setlblResult("");
+      setlblSheet("");
+      setEnableMCNo(false);
+      setEnableLotNo(true);
+      setEnableSheetNo(true);
+      fctxtMcNo.current.focus();
+
     // pnlMain.Enabled = True
     // pnlSave.Visible = False
+   
+    
 
-    fctxtMcNo.current.focus();
+
+   
   }, []);
 
   const txtLotNo_TextChanged = () => {
@@ -57,25 +66,35 @@ function fn_ScanSheetMOTTime() {
           LotNo: strLot,
         })
         .then((res) => {
-          let data = res.data[0][0];
-          console.log(data, "lotnoooo");
+          let Prd = res.data[0][0];
+          console.log(Prd, "lotnoooo");
           if (res.data.length > 0) {
-            setlblProductName(data);
+            setlblProductName(Prd);
             axios
               .post("/api/GetSerialProductByProduct", {
-                strPrdName: data,
+                prdName: Prd,
               })
               .then((res) => {
-                if (res.data.length > 0) {
-                  sethfCheckPrdSht(res.data[0].PRM_REQ_CHECK_PRD_SHT);
-                  sethfCheckPrdShtStart(res.data[0].PRM_CHECK_PRD_SHT_START);
-                  sethfCheckPrdShtEnd(res.data[0].PRM_CHECK_PRD_SHT_END);
-                  sethfCheckPrdAbbr(res.data[0].PRM_ABBR);
-                  sethfConnLeafLength(res.data[0].PRM_CONN_LEAF_LENGTH);
+                let data = res.data;
+                console.log('dataaaa',data.PRM_REQ_CHECK_PRD_SHT)
+                if (data != null) {
+                  sethfCheckPrdSht(data.PRM_REQ_CHECK_PRD_SHT);
+                  sethfCheckPrdShtStart(data.PRM_CHECK_PRD_SHT_START);
+                  sethfCheckPrdShtEnd(data.PRM_CHECK_PRD_SHT_END);
+                  sethfCheckPrdAbbr(data.PRM_ABBR);
+                  sethfConnLeafLength(data.PRM_CONN_LEAF_LENGTH);
+                  console.log(data,'rrrrrrrr')
+                  settxtTotalLeaf(data.PRM_CONN_ROLL_LEAF_SCAN)
+                  if(data.PRM_CHECK_WEEKCODE_FLG=='Y'){
+                    axios
+                    .post("/api/GetWeekCodebyLot", {
+                      prdName: Prd,
+                    })
+                    .then((res) => {})
+                  }
                 }
               });
             settxtlot(strLot);
-
             // setEnableMCNo(true);
             // setEnableLotNo(true);
             setEnableSheetNo(false);
@@ -89,6 +108,7 @@ function fn_ScanSheetMOTTime() {
     settxtlot("");
     fctxtSheetNo.current.focus();
   };
+
   const txtSheetNo_TextChanged = () => {
     let strStatus = "";
     let strError = "";
@@ -97,7 +117,7 @@ function fn_ScanSheetMOTTime() {
       setlblRemark("");
       //  sethfCheckPrdSht('Y')
       // pnlSave.Visible = False
-      console.log(hfCheckPrdSht, "hfCheckPrdSht");
+      // console.log(hfCheckPrdSht, "hfCheckPrdSht");
       if (hfCheckPrdSht == "Y") {
         const start = parseInt(hfCheckPrdShtStart);
         console.log("ค่า1hfCheckPrdShtStart", hfCheckPrdShtStart);
@@ -138,6 +158,7 @@ function fn_ScanSheetMOTTime() {
             })
             .then((res) => {
             let data = res.data
+            console.log(data,'yyyyyynnn')
             for(let i =0;i<data.length;i++){
               if(i==0){
                 strStatus=data[i].P_STATUS
@@ -170,9 +191,13 @@ function fn_ScanSheetMOTTime() {
         setlblRemark(strError);
         // lblResult.ForeColor = Drawing.Color.Red
       }
+      settxtSheet("");
+      fctxtSheetNo.current.focus();
     }
     settxtSheet("");
+    fctxtSheetNo.current.focus();
   };
+
   const txtMCNo_TextChanged = async () => {
     // settxtMCNo(e.target.value)
     console.log("keyyyyy");
@@ -187,9 +212,9 @@ function fn_ScanSheetMOTTime() {
     // txtMCNo.Enabled = True
     // txtLotNo.Enabled = True
     // txtSheetNo.Enabled = False
-    // txtLotNo.Text = ""
-    // txtSheetNo.Text = ""
-    // txtLotNo.Focus()
+    settxtlot('')
+    settxtSheet('')
+    fctxtLotno.current.focus();
   };
 
   const BtClick_Cancel = async () => {
@@ -202,8 +227,16 @@ function fn_ScanSheetMOTTime() {
   };
 
   const BtClick_Replace = async () => {
-    // Dim strError As String = ""
-    // Dim strStatus As String = ""
+    let strError = ""
+    let strStatus = ""
+    axios.post("/api/CallFPCSheetLeadTimeResult", {
+      txtLotNo: txtlot,
+      txtSheetNo: txtSheet,
+      txtMCNo: txtMCNo,
+    })
+    .then((res) => {
+      
+    })
     // strError = BIZ_ScanSMTSerial.CallFPCSheetLeadTimeResult(txtLotNo.Text.Trim.ToUpper, lblSheet.Text.Trim.ToUpper, txtMCNo.Text.Trim.ToUpper, hfZPRNProcID.Value, "frm_ScanSheetMOTTime", strStatus)
     // lblSheet.Text = lblSheet.Text.Trim.ToUpper + " Replace"
     // lblRemark.Text = strError

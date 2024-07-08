@@ -56,16 +56,17 @@
     padding: 10px;
 }
 
-.divgvScan {
+.divgvScanResult {
     justify-content: center;
-    display: flex;
+    /* display: flex; */
+    flex-direction: column;
     max-width: 100%;
     overflow-x: auto;
     margin-left: 0px;
-    width: 950px;
+    width: 850px;
 }
 
-.divgvScan th {
+.divgvScanResult th {
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -80,15 +81,16 @@
     font-family: Arial;
 }
 
-.divgvScan td {
+.divgvScanResult td {
     padding: 10px;
 }
 
 .lblResult{
     margin: auto;
-    margin-left: 10px;
+    margin-left: 40px;
     margin-top: 15px !important;
     background-color: #FFFF99;
+    width: 715px;
 }
 
 

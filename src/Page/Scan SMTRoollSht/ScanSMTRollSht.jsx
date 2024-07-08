@@ -22,6 +22,7 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
 import Hearder from "../Header/Hearder";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
@@ -53,6 +54,8 @@ function ScanSMTRoollSht() {
     SettxtLeafNo,
     txtLeafNo,
     handleTextFieldChange,
+    ibtback_Click,
+    settxtOperator
   } = Fn_ScanSMTRollSht();
 
   return (
@@ -108,10 +111,9 @@ function ScanSMTRoollSht() {
                       ></TextField>
                     </TableCell>
                     <TableCell>
-                      <button className="BtLotno">
-                        {" "}
-                        <DeleteOutlined />
-                      </button>
+                      <Button onClick={ibtback_Click}>
+                        <BackspaceIcon />
+                      </Button>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -125,7 +127,7 @@ function ScanSMTRoollSht() {
                           value={sl_Product}
                           onChange={(e, value) => HandleSL_Product(value)}
                           options={Product.map(
-                            (item) => item.trc_001_getproductrollleafdata
+                            (item) => item.prd_name
                           )}
                           renderInput={(params) => (
                             <TextField
@@ -177,9 +179,11 @@ function ScanSMTRoollSht() {
                         size="small"
                         // label="Operator. :"
                         fullWidth
-                        disabled
-                        value={txtOperator}
-                        //
+                        // disabled
+                         value={txtOperator}
+                        onChange={(e) => {
+                          settxtOperator(e.target.value);
+                        }}
                       ></TextField>
                     </TableCell>
                   </TableRow>
@@ -219,7 +223,7 @@ function ScanSMTRoollSht() {
                           settxtRollLeaf(e.target.value);
                           // console.log("txtRollLeaf",e.target.value)
                         }}
-                        disabled
+                        // disabled
                         fullWidth
                       ></TextField>
                     </TableCell>
