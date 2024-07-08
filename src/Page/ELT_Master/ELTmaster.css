@@ -1,0 +1,16 @@
+.Head-ELT{
+    display: flex;
+    margin: auto;
+    width: 900px;
+    
+}
+.Head-Textshow{
+    width: 100%;
+    text-align: center;
+}
+
+.Head-Piece{
+    display: flex;
+    margin: auto;
+    width: 900px;  
+}

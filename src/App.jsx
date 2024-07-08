@@ -19,6 +19,7 @@ import ScanSMTSerialRecordTime from "./Page/ScanSMTSerialRecordTime/ScanSMTSeria
 import ScanSheetOvenTime from "./Page/ScanSheetOvenTime/ScanSheetOvenTime";
 import Reject from "./Page/Reject/Reject";
 import ScanSheetDispenserTime from "./Page/ScanSheetDispenserTime/ScanSheetDispenserTime";
+import ELTmaster from './Page/ELT_Master/ELTmaster'
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
@@ -37,7 +38,11 @@ const App = () => {
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
           <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
           <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
-          <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />          
+          <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
+
+          {/* View Data */}
+          <Route path='/ELTmaster' element={<ELTmaster />} />
+
 
           {/* Maintenance */}
           <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
