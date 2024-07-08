@@ -36,12 +36,18 @@ function ScanSheetDispenserTime() {
     txtCBnoState,
     txtSheetNoState,
     txtmcNoState,
+    txtMcno_change,
+    txtSheetno_change
   } = fn_ScanSheetDispenserTime();
   useEffect(() => {
     if (txtmcNo == "" && txtmcNoState.focused == true) {
       Fctxtmcno.current.focus();
+    }else if (txtSheetNo == "" && txtSheetNoState.focused == true) {
+      FctxtSheetNo.current.focus();
+    }else if(txtCBno == "" && txtCBnoState.focused == true) {
+      FctxtCBno.current.focus();
     }
-  }, [txtmcNoState,txtmcNo]);
+  }, [txtmcNoState,txtmcNo,txtSheetNoState,txtSheetNo,txtCBnoState,txtCBno]);
   return (
     <div>
       <Hearder />
@@ -63,7 +69,7 @@ function ScanSheetDispenserTime() {
                     disabled={txtmcNoState.disabled}
                     sx={txtmcNoState.styled}
                   inputRef={Fctxtmcno}
-                  //   onBlur={handleTxtMcNo}
+                    onBlur={txtMcno_change}
                   onChange={(e) => {
                     setTxtmcNo(e.target.value);
                   }}
@@ -83,9 +89,9 @@ function ScanSheetDispenserTime() {
                 <TextField
                   size="small"
                   className="DispensertxtField"
-                  //   disabled={txtSheetNoState.disabled}
-                  //   sx={txtSheetNoState.styled}
-                  //   onBlur={handleTxtSheetNo}
+                    disabled={txtSheetNoState.disabled}
+                    sx={txtSheetNoState.styled}
+                    onBlur={txtSheetno_change}
                   inputRef={FctxtSheetNo}
                   value={txtSheetNo}
                   onChange={(e) => {
@@ -96,16 +102,15 @@ function ScanSheetDispenserTime() {
 
               <TableCell></TableCell>
             </TableRow>
-            {console.log(txtCBnoState, "txtCBno")}
             {txtCBnoState.open  && <TableRow>
               <TableCell id="Dispenserlbltxt">CB No.</TableCell>
               <TableCell>
                 <TextField
                   size="small"
                   className="DispensertxtField"
-                  //   disabled={txtSheetNoState.disabled}
-                  //   onBlur={handleTxtSheetNo}
-                  //   sx={txtSheetNoState.styled}
+                    disabled={txtCBnoState.disabled}
+                    // onBlur={handleTxtSheetNo}
+                    sx={txtCBnoState.styled}
                   inputRef={FctxtCBno}
                   value={txtCBno}
                   onChange={(e) => {
