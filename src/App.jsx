@@ -18,6 +18,7 @@ import ScanSheetInspectXOut from "./Page/ScanSheetInspectXOut/ScanSheetInspectXO
 import ScanSMTSerialRecordTime from "./Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime";
 import ScanSheetOvenTime from "./Page/ScanSheetOvenTime/ScanSheetOvenTime";
 import Reject from "./Page/Reject/Reject";
+import ScanSheetDispenserTime from "./Page/ScanSheetDispenserTime/ScanSheetDispenserTime";
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
@@ -41,6 +42,7 @@ const App = () => {
           {/* Maintenance */}
           <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
+          <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
           <Route path="/Reject" element={<Reject />} />
         </Routes>
       </BrowserRouter>

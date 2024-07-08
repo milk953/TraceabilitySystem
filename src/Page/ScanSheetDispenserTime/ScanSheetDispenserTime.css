@@ -1,0 +1,52 @@
+.DispenserpnlMain {
+    display: flex;
+    margin: auto;
+    /* margin-top: 80px; */
+    width: 600px;
+    height: 300px;
+  }
+  #DispenserTableMain {
+    width: 600px !important;
+    margin: 0 auto;
+  }
+  #DispenserTableMain th {
+    text-align: center;
+    font-size: 38px;
+  }
+  
+  .DispenserpnlResult {
+    display: flex;
+    margin: auto;
+    width: 600px;
+    margin-top: 20px;
+  }
+  #DispenserTableResult {
+    height: 180px;
+  }
+  #DispenserTableResult td {
+    /* font-size: 80px; */
+    text-align: center;
+  }
+  .DispenserpnlSave {
+    display: flex;
+    margin: auto;
+    width: 600px;
+    margin-top: 20px;
+  }
+  #DispenserTableSave {
+    width: 600px;
+    margin: 0 auto;
+  }
+  #DispenserTableSave td {
+    text-align: center;
+  }
+  
+  #Dispenserlbltxt {
+    width: 150px;
+    text-align: right;
+  }
+  .DispensertxtField {
+    width: 300px;
+    padding: 1px;
+  }
+  
