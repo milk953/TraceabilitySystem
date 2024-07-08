@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import swal from "sweetalert";
 
 function fn_ScanSMTSerialRecordTime() {
     const [selectedrbt, setselectedrbt] = useState("");
@@ -7,8 +8,8 @@ function fn_ScanSMTSerialRecordTime() {
     const [txtOperator, settxtOperator] = useState("");
     const [txtTotalPcs, settxtTotalPcs] = useState("");
     const [selrbtPcsSht, setselrbtPcsSht] = useState("rbtPcs");
-    const [rbtPcs, setrbtPcs] = useState(false);
-    const [rbtSht, setrbtSht] = useState(false);
+    // const [rbtPcs, setrbtPcs] = useState(false);
+    // const [rbtSht, setrbtSht] = useState(false);
     const [txtLotNo, settxtLotNo] = useState("");
     const [selProduct, setselProduct] = useState("");
     const [Productdata, setProductdata] = useState([]);
@@ -22,6 +23,8 @@ function fn_ScanSMTSerialRecordTime() {
     const [pnlMachine, setpnlMachine] = useState(true);
     const [pnlRackNo, setpnlRackNo] = useState(false);
     const [eventArgument, setEventArgument] = useState("");
+    const [lblOP, setlblOP] = useState("");
+    const [pnlOP, setpnlOP] = useState(false);
 
     //hiddenfield
     const hfUserID = localStorage.getItem("hfUserID");
@@ -66,6 +69,8 @@ function fn_ScanSMTSerialRecordTime() {
     const [hfWeekCodeType, sethfWeekCodeType] = useState("");
     const [hfWeekCode, sethfWeekCode] = useState("");
     const [hfSerialStartCode, sethfSerialStartCode] = useState("");
+    const [hfSerialInfo, sethfSerialInfo] = useState("");
+    const [hfOP, sethfOP] = useState("");
 
     //Table
     const [pnlSerial, setpnlSerial] = useState(false);
@@ -105,11 +110,21 @@ function fn_ScanSMTSerialRecordTime() {
         localStorage.setItem("hfMode", "");
         getProductData();
         setselectedrbt("rbtRecordTime");
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const op = queryParams.get("OP");
+
+        if (op !== null) {
+            set(op);
+        } else {
+            sethfOP("");
+        }
+
         SetMode("RECORD");
     }, []);
 
     useEffect(() => {
-        if (eventArgument === 'Save') {
+        if (eventArgument === "Save") {
             setSerialDataTray();
         }
     }, [eventArgument]);
@@ -148,7 +163,28 @@ function fn_ScanSMTSerialRecordTime() {
         if (txtOperator !== "") {
             const Operator = txtOperator.toUpperCase();
             settxtOperator(Operator);
-            SetMode("PCS");
+            if (hfOP !== "") {
+                const strOPData = lblOP.toUpperCase().split(",");
+                for (let intRow = 0; intRow < strOPData.length; intRow++) {
+                    if (strOPData[intRow] === txtOperator) {
+                        setbolError(true);
+                        break;
+                    }
+                }
+                if (!bolError) {
+                    if (strOPData.length === parseInt(hfOP)) {
+                        setlblOP(lblOP + txtOperator);
+                        settxtOperator(lblOP + txtOperator);
+                        SetMode("PCS");
+                    } else {
+                        setlblOP(lblOP + txtOperator + ",");
+                        settxtOperator("");
+                        inputOperator.current.focus();
+                    }
+                }
+            } else {
+                SetMode("PCS");
+            }
         }
     };
 
@@ -350,6 +386,7 @@ function fn_ScanSMTSerialRecordTime() {
                     sethfCheckWeekCodeStart(dtPro.PRM_CHECK_WEEKCODE_START);
                     sethfCheckWeekCodeEnd(dtPro.PRM_CHECK_WEEKCODE_END);
                     sethfSerialStartCode(dtPro.PRM_SERIAL_START_CODE);
+                    sethfSerialInfo(dtPro.PRM_ADDITIONAL_INFO);
                 }
             })
     };
@@ -419,6 +456,11 @@ function fn_ScanSMTSerialRecordTime() {
             setpnlSerial(false);
             setgvSerialData([]);
             localStorage.setItem("hfMode", "OP");
+            if (hfOP != "") {
+                setpnlOP(true);
+            } else {
+                setpnlOP(false);
+            }
             inputOperator.current.focus();
         } else if (strType === "PCS") {
             setistxtMachineDisabled(true);
@@ -618,7 +660,18 @@ function fn_ScanSMTSerialRecordTime() {
         }
 
         if (!bolTrayError) {
-            //api GetSerialRecordTimeTrayTable
+
+            //ลองเทสไปก่อน
+            axios.post("/api/Common/getSerialRecordTimeTrayTable", {
+                data: dtSerial.drRow,
+                rec: drRow,
+                strPlantCode: plantCode,
+                SERIAL: drRow.SERIAL,
+                MACHINE: drRow.MACHINE
+            })
+                .then((res) => {
+                    console.log(res.data.row_count);
+                })
 
             if (hfCheckWeekCode === "Y" && selrbtPcsSht === "rbtPcs") {
                 axios.post("/api/Common/getWeekCodebyLot", {
@@ -876,6 +929,7 @@ function fn_ScanSMTSerialRecordTime() {
                             setlblLog(_strErrorUpdate);
                             setvisiblelog(true);
                         }
+                        swal("success", "You save data success", "success");
                     })
             }
         }
@@ -905,13 +959,24 @@ function fn_ScanSMTSerialRecordTime() {
         settxtgvSerial(newValue);
     };
 
+    const btnSaveClick = () => {
+        if (eventArgument !== "Save" && hfMode === "SERIAL") {
+            setSerialDataTray();
+        }
+    };
+
+    const btnCancelClick = () => {
+        SetMode("SERIAL");
+    };
+
     return {
         selectedrbt, txtMachine, settxtMachine, handleChangeMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtLotNo, settxtLotNo,
         selProduct, setselProduct, txtRackNo, settxtRackNo, lblLot, lblLotTotal, lblLog, visiblelog, lblResult, pnlSerial, gvScanResult, istxtOpDisabled,
         istxtTotalPcsDisabled, istxtLotDisabled, isselProDisabled, istxtMachineDisabled, handleChangerbt, istxtRackDisabled, isibtMCBackDisabled,
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
-        ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor
+        ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
+        btnSaveClick, btnCancelClick, pnlOP, lblOP
     }
 };
 
