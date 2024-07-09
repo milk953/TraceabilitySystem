@@ -101,8 +101,9 @@ function ELT_Master() {
               <input
                       style={{
                         width: "150px",
-                        border: "1px solid black",
+                        // border: "1px solid",
                         margin: "0px",
+                        backgroundColor: "#E2E3DC"
                         
                       }}
                       type="text"
