@@ -48,8 +48,6 @@ const App = () => {
 
           {/* View Data */}
           <Route path='/ELTmaster' element={<ELTmaster />} />
-
-
           <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
 
 

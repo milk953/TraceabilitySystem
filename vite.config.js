@@ -1,13 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-
+import dotenv from 'dotenv'
+dotenv.config()
 // https://vitejs.dev/config/
-// const port = import.meta.env.VITE_PORT
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    strictPort: true,
-    host: true,
-    port: 1234, //80
-  },
+export default defineConfig(({ command, mode }) => {
+  const port = parseInt(process.env.VITE_PORT,10) ;
+  
+  return {
+    plugins: [react()],
+    server: {
+      strictPort: true,
+      host: true,
+      port: port, 
+    },
+  };
 });
