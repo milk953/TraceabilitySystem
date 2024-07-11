@@ -58,7 +58,7 @@ function ScanSMTSerialRecordTime() {
                     maxWidth: "1400px",
                     marginTop: "50px",
                     height: "auto",
-                    maxHeight: "560px",
+                    maxHeight: "580px",
                     padding: "20px",
                     display: 'flex',
                 }}
@@ -68,10 +68,10 @@ function ScanSMTSerialRecordTime() {
                         component={Paper}
                         style={{
                             width: "450px",
-                            margin: "4px"
+                            margin: "4px",
                         }}
                     >
-                        <Table className="TbScanSMTSerail">
+                        <Table className="TbScanSMTSerial">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={5} align="center">
@@ -343,7 +343,7 @@ function ScanSMTSerialRecordTime() {
                                             }}
                                             value={selProduct}
                                             onChange={(e, value) => handleChangeProduct(value)}
-                                            options={Productdata.map((item) => item.prd_name)}
+                                            options={Productdata.map((item) => item.prd_name || null)}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
@@ -385,7 +385,7 @@ function ScanSMTSerialRecordTime() {
                         </Table>
                     </TableContainer>
                     <Paper
-                        elevation={3}
+                        elevation={2}
                         style={{
                             width: "450px",
                             margin: "auto",
@@ -402,20 +402,20 @@ function ScanSMTSerialRecordTime() {
                         </Typography>
                         <Typography
                             style={{
-                                fontSize: "20px",
-                                paddingRight: "170px",
+                                fontSize: "18px",
+                                paddingRight: "150px",
                             }}
                         >
                             {lblLot}
                         </Typography>
                         <Typography
-
+                            style={{ padding: "5px" }}
                         >
                             OK :
                         </Typography>
                         <Typography
                             style={{
-                                fontSize: "20px",
+                                fontSize: "18px",
                             }}
                         >
                             {lblLotTotal}
@@ -475,7 +475,7 @@ function ScanSMTSerialRecordTime() {
                                 style={{
                                     width: "100%",
                                     marginBottom: "10px",
-                                    height: "190px",
+                                    height: "180px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
@@ -502,7 +502,11 @@ function ScanSMTSerialRecordTime() {
                                     <TableBody>
                                         {Array.from({ length: hfSerialCount }, (_, index) => (
                                             <TableRow key={index}>
-                                                <TableCell>{index + 1}</TableCell>
+                                                <TableCell
+                                                    style={{ textAlign: "center" }}
+                                                >
+                                                    {index + 1}
+                                                </TableCell>
                                                 <TableCell>
                                                     <TextField
                                                         id="txtfield"
@@ -511,7 +515,7 @@ function ScanSMTSerialRecordTime() {
                                                         value={txtgvSerial[index]}
                                                         inputRef={inputgvSerial}
                                                         onChange={(e) => {
-                                                            settxtgvSerial(e.target.value);
+                                                            handleChangeSerial(index, e);
                                                         }}
                                                         onKeyDown={(e) => {
                                                             if (e.key === "Enter") {
