@@ -1,3 +1,4 @@
+import { CompassOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Swal from "sweetalert2";
@@ -10,7 +11,7 @@ function fn_ScanSheetOvenTime() {
   const [txtSheetNo, setTxtSheetNo] = useState("");
   const FctxtSheetNo = useRef(null);
   const [txtSheetNoState, setTxtSheetNoState] = useState({
-    styled: { disabled: true, backgroundColor: "#B2A8A8" },
+    styled: { disabled: true, backgroundColor: "#B2A8A9" },
   });
   const [lblSheet, setLblSheet] = useState({ text: "", styled: { color: "" } });
   const [lblResult, setLblResult] = useState({
@@ -82,6 +83,7 @@ function fn_ScanSheetOvenTime() {
         strError = "Invalid Sheet length";
       }
       if (strStatus !== 'F'){
+      console.log('in')
         const currentTime = new Date().toLocaleTimeString("en-US", {
           hour12: false,
         });
@@ -94,6 +96,7 @@ function fn_ScanSheetOvenTime() {
           strPlantCode:'5',
         })
         .then((res) => {
+          console.log(res, "res");
           strError = res.data.p_error;
           console.log(strError)
         })
