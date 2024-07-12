@@ -40,7 +40,6 @@ const App = () => {
           <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
           <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
           <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
-          <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
           <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
           <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
           <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
@@ -52,6 +51,7 @@ const App = () => {
 
 
           {/* Maintenance */}
+          <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
           <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
           <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
