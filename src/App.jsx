@@ -19,10 +19,12 @@ import ScanSMTSerialRecordTime from "./Page/ScanSMTSerialRecordTime/ScanSMTSeria
 import ScanSheetOvenTime from "./Page/ScanSheetOvenTime/ScanSheetOvenTime";
 import Reject from "./Page/Reject/Reject";
 import ScanSheetDispenserTime from "./Page/ScanSheetDispenserTime/ScanSheetDispenserTime";
+import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaStopStart";
+import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
 
 import ELTmaster from './Page/ELT_Master/ELTmaster'
 
-import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaStopStart";
+
 
 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -43,11 +45,12 @@ const App = () => {
           <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
           <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
           <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
-
+          <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />
+          <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} />   
+          
 
           {/* View Data */}
-          <Route path='/ELTmaster' element={<ELTmaster />} />
-          <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
+          <Route path='/ELTmaster' element={<ELTmaster />} />       
 
 
           {/* Maintenance */}

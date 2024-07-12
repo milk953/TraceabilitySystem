@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import swal from "sweetalert";
 
 function fn_ScanSMTSerialRecordTime() {
     const [selectedrbt, setselectedrbt] = useState("");
@@ -11,7 +10,7 @@ function fn_ScanSMTSerialRecordTime() {
     // const [rbtPcs, setrbtPcs] = useState(false);
     // const [rbtSht, setrbtSht] = useState(false);
     const [txtLotNo, settxtLotNo] = useState("");
-    const [selProduct, setselProduct] = useState("");
+    const [selProduct, setselProduct] = useState(null);
     const [Productdata, setProductdata] = useState([]);
     const [txtRackNo, settxtRackNo] = useState("");
     const [lblLot, setlblLot] = useState("");
@@ -77,7 +76,7 @@ function fn_ScanSMTSerialRecordTime() {
     const [gvSerialData, setgvSerialData] = useState([]);
     const [gvScanResult, setgvScanResult] = useState(false);
     const [gvScanData, setgvScanData] = useState([]);
-    const [txtgvSerial, settxtgvSerial] = useState("");
+    const [txtgvSerial, settxtgvSerial] = useState(Array(hfSerialCount).fill(""));
 
     //Disabled
     const [istxtMachineDisabled, setistxtMachineDisabled] = useState(false);
@@ -100,13 +99,13 @@ function fn_ScanSMTSerialRecordTime() {
     const inputgvSerial = useRef(null);
     const inputRackNo = useRef(null);
 
-    const plantCode = localStorage.getItem("PLANT_CODE");
+    const plantCode = import.meta.env.VITE_FAC;
 
     useEffect(() => {
-        localStorage.setItem("hfUserID", localStorage.getItem("ip"));
-        localStorage.setItem("hfUserStation", localStorage.getItem("ip"));
-        localStorage.setItem("PLANT_CODE", "5");
-        // hfProductKind.Value = Session("PRODUCT_KIND") //SMT
+        localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
+        localStorage.setItem("hfUserStation", localStorage.getItem("ipAddress"));
+        sethfPlantCode(import.meta.env.VITE_FAC);
+        sethfProductKind(import.meta.env.VITE_PRODUCT_KIND);
         localStorage.setItem("hfMode", "");
         getProductData();
         setselectedrbt("rbtRecordTime");
@@ -128,6 +127,12 @@ function fn_ScanSMTSerialRecordTime() {
             setSerialDataTray();
         }
     }, [eventArgument]);
+
+    useEffect(() => {
+        if (Productdata.length > 0) {
+          setselProduct(Productdata[0].prd_name);
+        }
+      }, [Productdata]);
 
     const getProductData = async () => {
         axios.get("/api/Common/GetProductData").then((res) => {
@@ -220,7 +225,7 @@ function fn_ScanSMTSerialRecordTime() {
             strLot: strLot,
         })
             .then((res) => {
-                strPrdName = res.data[0];
+                strPrdName = res.data.prdName[0];
                 console.log("PrdName:", strPrdName);
                 if (strPrdName !== "") {
                     setlblLog("");
@@ -291,9 +296,15 @@ function fn_ScanSMTSerialRecordTime() {
         }
     };
 
+    const [dtSerialCount, setdtSerailCount] = useState([]);
     const getCountDataBylot = (strLot) => {
-        const [dtSerialCount, setdtSerailCount] = useState([]);
+        let strType = "";
         setlblLotTotal("0");
+        if (selrbtPcsSht === "rbtPcs") {
+            strType = "PCS";
+        } else {
+            strType = "SHT";
+        }
         axios.post("/api/Common/getLotSerialRecordTimeData", {
             strLotNo: strLot,
             strPlantCode: plantCode
@@ -345,7 +356,7 @@ function fn_ScanSMTSerialRecordTime() {
         sethfWeekCodeType("");
         sethfSerialStartCode("");
 
-        axios.post("/api/GetSerialProductByProduct", {
+        axios.post("/api/Common/GetSerialProductByProduct", {
             prdName: strPrdName,
         })
             .then((res) => {
@@ -415,15 +426,18 @@ function fn_ScanSMTSerialRecordTime() {
         if (strType === "RECORD") {
             setpnlMachine(true);
             setpnlRackNo(false);
+            setpnlOP(false);
             SetMode("MC");
         } else if (strType === "PLASMA") {
             setpnlMachine(false);
             setpnlRackNo(true);
+            setpnlOP(false);
             SetMode("OP");
         } else if (strType === "MC") {
             settxtMachine("");
             setistxtMachineDisabled(false);
             setisibtMCBackDisabled(false);
+            setlblOP("");
             settxtOperator("");
             setistxtOpDisabled(true);
             setisibtOperatorDisabled(true);
@@ -442,6 +456,7 @@ function fn_ScanSMTSerialRecordTime() {
         } else if (strType === "OP") {
             setistxtMachineDisabled(true);
             setisibtMCBackDisabled(false);
+            setlblOP("");
             settxtOperator("");
             setistxtOpDisabled(false);
             setisibtOperatorDisabled(false);
@@ -475,6 +490,7 @@ function fn_ScanSMTSerialRecordTime() {
             setistxtRackDisabled(true);
             setisselProDisabled(true);
             setisibtPcsBackDisabled(false);
+            setlblOP("");
             setpnlSerial(false);
             setgvSerialData([]);
             localStorage.setItem("hfMode", "PCS");
@@ -489,6 +505,7 @@ function fn_ScanSMTSerialRecordTime() {
             setlblLot("");
             setlblLotTotal("");
             setvisiblelog(false);
+            setlblOP("");
             setpnlSerial(false);
             setgvSerialData([]);
             inputLot.current.focus();
@@ -630,14 +647,19 @@ function fn_ScanSMTSerialRecordTime() {
         return dtData;
     };
 
+    const [bolTrayError, setbolTrayError] = useState(false);
+    const [bolError, setbolError] = useState(false);
+
+    
+    const [bolScanDouble, setbolScanDouble] = useState(false);
+    const [bolScanDuplicate, setbolScanDuplicate] = useState(false);
+
     const setSerialDataTray = async () => {
         let _strFileError = "";
         let dtSerial = getInputSerial();
         let _strLot = lblLot.toUpperCase.trim();
         let _strPrdName = selProduct.toUpperCase.trim();
         let _strTray = " ";
-        const [bolTrayError, setbolTrayError] = useState(false);
-        const [bolError, setbolError] = useState(false);
         let _strScanResultAll = "OK";
         let _intRowSerial = 0;
 
@@ -695,8 +717,6 @@ function fn_ScanSMTSerialRecordTime() {
                         let _strError = "";
                         let _strSerial = drRow.SERIAL.toUpperCase.trim();
                         let _dtSerialAll = [];
-                        const [bolScanDouble, setbolScanDouble] = useState(false);
-                        const [bolScanDuplicate, setbolScanDuplicate] = useState(false);
                         let _strPrdNameOrg = "";
                         let _strLotOrg = "";
                         let _strTrayOrg = "";
@@ -929,7 +949,6 @@ function fn_ScanSMTSerialRecordTime() {
                             setlblLog(_strErrorUpdate);
                             setvisiblelog(true);
                         }
-                        swal("success", "You save data success", "success");
                     })
             }
         }
