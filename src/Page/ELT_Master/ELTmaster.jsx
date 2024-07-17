@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import {fn_ELTmaster} from "./fn_ELTmaster"
 function ELT_Master() {
-    const {lblUser1,lblResult,txtSerialNo_TextChanged,ddlReason1,selectddlReason1,setselectddlReason1,txtUpdateBy,settxtSerialNo_TextChanged,Search_Data,Submit} = fn_ELTmaster();
+    const {lblUser1,lblResult,txtSerialNo_TextChanged,ddlReason1,selectddlReason1,setselectddlReason1,txtUpdateBy,settxtSerialNo_TextChanged,Search_Data,Submit,FctxtSerial} = fn_ELTmaster();
   return (
     <>
       <Hearder />
@@ -49,10 +49,12 @@ function ELT_Master() {
         <TableCell  style={{ padding: '8px' }}>
             <Typography>PieceNo:</Typography>
           </TableCell>
-          <TableCell  style={{padding: '8px', width: '80%' }}>
+          <TableCell  style={{padding: '8px', width: '80%' }} >
             <TextField size="small" style={{width:'100%'}} value={txtSerialNo_TextChanged}
             onChange={(e) => settxtSerialNo_TextChanged(e.target.value)}
-            onBlur={Search_Data}> 
+            onBlur={Search_Data}
+            inputRef={FctxtSerial}
+            > 
             
             </TextField>
           </TableCell>

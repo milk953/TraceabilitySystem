@@ -1,0 +1,52 @@
+.Layout-All-Sheet{
+    display: flex;
+    margin: auto;
+    width: 900px;
+    border: 1px red solid;
+}
+.Layout-Show{
+    border: 1px red solid;
+}
+.pnlMain1 {
+  display: flex;
+  margin: auto;
+  /* margin-top: 80px; */
+  width: 600px;
+  /* height: 300px; */
+}
+#TableMain1 {
+  width: 600px !important;
+  margin: 0 auto;
+}
+#TableMain1 th {
+  text-align: center;
+  font-size: 38px;
+}
+
+.pnlResult1 {
+  display: flex;
+  margin: auto;
+  width: 600px;
+  margin-top: 20px;
+}
+#TableResult1 {
+  height: 180px;
+}
+#TableResult1 td {
+  /* font-size: 80px; */
+  text-align: center;
+}
+
+
+#TableSave1 td {
+  text-align: center;
+}
+
+#lbltxt1 {
+  width: 150px;
+  text-align: right;
+}
+.txtField1 {
+  width: 300px;
+  padding: 1px;
+}
