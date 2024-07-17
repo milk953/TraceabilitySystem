@@ -112,6 +112,7 @@ function fn_ScanSheetReflowTime() {
               ],
             })
             .then((res) => {
+              console.log(res.data,'error')
               strError = res.data.p_error;
               console.log(strError)
             })

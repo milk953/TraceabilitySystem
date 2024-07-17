@@ -538,7 +538,7 @@ function ConfirmBarcodeGrade() {
                               {gvScanResult[index].SERIAL_GRADE}
                             </TableCell>
                             <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" ,background:'#ff4d4f'}}
+                              sx={{ borderRight: "1px solid #d9d9d9" , background: gvScanResult[index].SCAN_RESULT !== '' ? '#ff4d4f' : 'defaultColor'}}
                             >
                               {gvScanResult[index].SCAN_RESULT}
                             </TableCell>

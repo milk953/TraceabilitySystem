@@ -114,49 +114,39 @@ function fn_ConfirmBarcodeGrade() {
   const [hfBarcodeGrade, setHfBarcodeGrade] = useState("");
   const [hfMode, setHfMode] = useState("");
   const [hfSerialCount, setHfSerialCount] = useState("");
-
+  const hfUserStation = localStorage.getItem("ipAddress");
   const CONNECT_SERIAL_ERROR = "999999";
   const hfBarcodeErrorValue = "NA";
   const AUTO_SCAN_CHECK_FLG = "0";
 
-  // --------------------------------------231175237;231175237;231175237
 
   useEffect(() => {
-    // console.log("เข้าง",hfCheckRollSht);
-    const fetchData = async () => {
-      await GetProductData();
-      SetMode("LOT");
-      setHfMode("");
-    };
-
     if (hfShtScan != "" && hfSerialCount != "") {
       console.log(hfShtScan, hfSerialCount, "getInitialSerial3");
-      // console.log('')
       getInitialSerial();
       console.log("x12");
     }
     if (fcGvBackSide_txtsideback_0.current) {
       fcGvBackSide_txtsideback_0.current.focus();
     }
+  }, [hfShtScan, hfSerialCount, fcGvBackSide_txtsideback_0, hfMode]);
 
-    if (txt_lotNo == "") {
-      fetchData();
-    }
-  }, [
-    hfShtScan,
-    hfSerialCount,
-    // visiblgvBackSide,
-    fcGvBackSide_txtsideback_0,
-    hfMode,
-    //hfCheckRollSht,
-  ]);
+  //Start pageload
+  useEffect(() => {
+    const fetchData = async () => {
+      await GetProductData();
+      SetMode("LOT");
+      setHfMode("");
+    };
+    fetchData();
+  }, []);
 
   const GetProductData = async () => {
     axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
       console.log(data[0].prd_name, "dataxxxxx");
       setProduct(data);
-      //  setSlProduct(data[0].prd_name);
+      setSlProduct(data[0].prd_name);
     });
   };
 
@@ -202,9 +192,9 @@ function fn_ConfirmBarcodeGrade() {
             const isInArray = Product.some(
               (item) => item.prd_name === strPrdName
             );
-            console.log("strPrdName", Product, strPrdName, SlProduct);
+            // console.log("strPrdName", Product, strPrdName, SlProduct);
             if (isInArray) {
-              console.log("เข้าis 1", strPrdName);
+              console.log("เข้า is 1", strPrdName);
               setSlProduct(strPrdName);
               getInitialSheet();
             } else {
@@ -215,9 +205,11 @@ function fn_ConfirmBarcodeGrade() {
               fcProduct.current.focus();
               return;
             }
+
             if (datagetPd.PRM_CONN_ROLL_SHT_FLG == "Y") {
               setvisibleRollLeaf("");
               settxtRollLeaf("");
+              SetMode("SERIAL");
               fcRollleaf.current.focus();
             } else {
               console.log("เข้าหรอ");
@@ -292,19 +284,19 @@ function fn_ConfirmBarcodeGrade() {
     }
   };
 
-  const getCountDataBylot = (strLot) => {
+  const getCountDataBylot = async(strLot) => {
     setlblTotalSht("0");
     setlblTotalPcs("0");
     axios
       .post("/api/Common/getlotserialcountdata", {
         dataList: {
           strLotNo: strLot,
-          strPlantCode: "G",
+          strPlantCode: "5",
         },
       })
       .then((res) => {
         if (res.data.length > 0) {
-          console.log(res.data[0], "count");
+          console.log(res.data, "count");
           setlblTotalPcs(res.data[0].count_pcs);
           setlblTotalSht(res.data[0].count_sht);
         }
@@ -350,76 +342,76 @@ function fn_ConfirmBarcodeGrade() {
     setHfSerialStartCode(""); //= ""
 
     await axios
-      .post("/api/GetSerialProductByProduct", {
+      .post("/api/common/GetSerialProductByProduct", {
         prdName: strPrdName,
       })
       .then((res) => {
-        data = res.data;
+        data = res.data[0];
         console.log(data, "data.PRM_REQ_CHECK_PRD_SHT");
         if (data != null) {
-          setHfSerialLength(data.SLM_SERIAL_LENGTH);
-          setHfSerialFixFlag(data.SLM_FIX_FLAG);
-          setHfSerialDigit(data.SLM_FIX_DIGIT);
-          setHfSerialStartDigit(data.SLM_FIX_START_DIGIT);
-          setHfSerialEndDigit(data.SLM_FIX_END_DIGIT);
-          setHfTrayFlag(data.SLM_TRAY_FLAG);
-          setHfTrayLength(data.SLM_TRAY_LENGTH);
-          setHfTestResultFlag(data.SLM_TEST_RESULT_FLAG);
-          setHfSerialCount(data.SLM_SERIAL_SHT);
-          setHfAutoScan(data.SLM_AUTO_SCAN);
-          setHfBarcodeSide(data.SLM_BARCODE_SIDE);
-          setHfShtScan(data.SLM_SHT_SCAN); //= dtProductSerial.Rows(data.0)(data."SLM_SHT_SCAN").ToString(data.)
-          setHfConfigCheck(data.PRM_BARCODE_REQ_CONFIG); //= dtProductSerial.Rows(data.0)(data."PRM_BARCODE_REQ_CONFIG").ToString(data.).Trim
-          setHfConfigCode(data.PRM_CONFIG_CODE); //= dtProductSerial.Rows(data.0)(data."PRM_CONFIG_CODE").ToString(data.).Trim
-          setHfConfigStart(data.PRM_START_CONFIG); //= dtProductSerial.Rows(data.0)(data."PRM_START_CONFIG").ToString(data.).Trim
-          setHfConfigEnd(data.PRM_END_CONFIG); // = dtProductSerial.Rows(data.0)(data."PRM_END_CONFIG").ToString(data.).Trim
-          setHfConfigRuning(data.PRM_RUNNING_REQ_CONFIG); //= dtProductSerial.Rows(data.0)(data."PRM_RUNNING_REQ_CONFIG").ToString(data.).Trim
-          setHfDuplicateStart(data.PRM_DUPLICATE_START); // = dtProductSerial.Rows(data.0)(data."PRM_DUPLICATE_START").ToString(data.).Trim
-          setHfDuplicateEnd(data.PRM_DUPLICATE_END); //= dtProductSerial.Rows(data.0)(data."PRM_DUPLICATE_END").ToString(data.).Trim
-          setHfCheckPrdSht(data.PRM_REQ_CHECK_PRD_SHT); //= dtProductSerial.Rows(data.0)(data."PRM_REQ_CHECK_PRD_SHT").ToString(data.).Trim
-          setHfCheckPrdShtStart(data.PRM_CHECK_PRD_SHT_START); //= dtProductSerial.Rows(data.0)(data."PRM_CHECK_PRD_SHT_START").ToString(data.).Trim
-          setHfCheckPrdShtEnd(data.PRM_CHECK_PRD_SHT_END); //= dtProductSerial.Rows(data.0)(data."PRM_CHECK_PRD_SHT_END").ToString(data.).Trim
-          setHfCheckPrdAbbr(data.PRM_ABBR); //= dtProductSerial.Rows(data.0)(data."PRM_ABBR").ToString(data.).Trim
-          setHfCheckLotSht(data.PRM_REQ_CHECK_LOT_SHT); //= dtProductSerial.Rows(0)("PRM_REQ_CHECK_LOT_SHT").ToString(data.).Trim
-          setHfCheckLotShtStart(data.PRM_CHECK_LOT_SHT_START); //= dtProductSerial.Rows(0)("PRM_CHECK_LOT_SHT_START").ToString(data.).Trim
-          setHfCheckLotShtEnd(data.PRM_CHECK_LOT_SHT_END); //= dtProductSerial.Rows(0)("PRM_CHECK_LOT_SHT_END").ToString(data.).Trim
-          setHfCheckStartSeq(data.PRM_REQ_START_SEQ_FLG); //= dtProductSerial.Rows(0)("PRM_REQ_START_SEQ_FLG").ToString(data.).Trim
-          setHfCheckStartSeqCode(data.PRM_START_SEQ_CODE); // = dtProductSerial.Rows(0)("PRM_START_SEQ_CODE").ToString(data.).Trim
-          setHfCheckStartSeqStart(data.PRM_START_SEQ_START); //= dtProductSerial.Rows(0)("PRM_START_SEQ_START").ToString(data.).Trim
-          setHfCheckStartSeqEnd(data.PRM_START_SEQ_END); //= dtProductSerial.Rows(0)("PRM_START_SEQ_END").ToString(data.).Trim
-          setHfCheckSheetELT(data.PRM_SHEET_ELT_FLG); //= dtProductSerial.Rows(0)("PRM_SHEET_ELT_FLG").ToString(data.).Trim
-          setHfCheckRollSht(data.PRM_CONN_ROLL_SHT_FLG); //= dtProductSerial.Rows(0)("PRM_CONN_ROLL_SHT_FLG").ToString(data.).Trim
-          setHfCheckRollShtDigit(data.PRM_CONN_ROLL_SHT_LENGTH); //= dtProductSerial.Rows(0)("PRM_CONN_ROLL_SHT_LENGTH").ToString(data.).Trim
-          setHfCheckDateInProc(data.PRM_DATE_INPROC_FLG); // = dtProductSerial.Rows(0)("PRM_DATE_INPROC_FLG").ToString(data.).Trim
-          setHfDateInProc(data.PRM_DATE_INPROC); //= dtProductSerial.Rows(0)("PRM_DATE_INPROC").ToString(data.).Trim
-          setHfWeekCodeType(data.PRM_DATE_TYPE); // = dtProductSerial.Rows(0)("PRM_DATE_TYPE").ToString(data.).Trim
-          setHfCheckWeekCode(data.PRM_CHECK_WEEKCODE_FLG); //= dtProductSerial.Rows(0)("PRM_CHECK_WEEKCODE_FLG").ToString(data.).Trim
-          setHfCheckWeekCodeStart(data.PRM_CHECK_WEEKCODE_START); //= dtProductSerial.Rows(0)("PRM_CHECK_WEEKCODE_START").ToString(data.).Trim
-          setHfCheckWeekCodeEnd(data.PRM_CHECK_WEEKCODE_END); //= dtProductSerial.Rows(0)("PRM_CHECK_WEEKCODE_END").ToString(data.).Trim
-          setHfCheckPreAOIF(data.PRM_SHT_PRE_AOI_F); //=// dtProductSerial.Rows(0)("PRM_SHT_PRE_AOI_F").ToString(data.).Trim
-          setHfCheckPreAOIB(data.PRM_SHT_PRE_AOI_B); // = dtProductSerial.Rows(0)("PRM_SHT_PRE_AOI_B").ToString(data.).Trim
-          setHfCheckAOIF(data.PRM_SHT_AOI_F); //= dtProductSerial.Rows(0)("PRM_SHT_AOI_F").ToString(data.).Trim
-          setHfCheckAOIB(data.PRM_SHT_AOI_B); //dtProductSerial.Rows(0)("PRM_SHT_AOI_B").ToString(data.).Trim
-          setHfCheckAOICoatF(data.PRM_SHT_AOI_COAT_F); // //May  = dtProductSerial.Rows(0)("PRM_SHT_AOI_COAT_F").ToString(data.).Trim
-          setHfCheckAOICoatB(data.PRM_SHT_AOI_COAT_B); // //May = dtProductSerial.Rows(0)("PRM_SHT_AOI_COAT_B").ToString(data.).Trim
-          setHfCheckSPIF(data.PRM_SHT_SPI_F); // = dtProductSerial.Rows(0)("PRM_SHT_SPI_F").ToString(data.).Trim
-          setHfCheckSPIB(data.PRM_SHT_SPI_B); // = dtProductSerial.Rows(0)("PRM_SHT_SPI_B").ToString(data.).Trim
-          setHfReqMachine(data.PRM_SHT_MACHINE_FLG); // = dtProductSerial.Rows(0)("PRM_SHT_MACHINE_FLG").ToString(data.).Trim
-          setHfBarcodeGrade(data.PRM_BARCODE_GRADE); // = dtProductSerial.Rows(0)("PRM_BARCODE_GRADE").ToString(data.).Trim
-          setHfConnRollLength(data.PRM_CONN_ROLL_LENGTH); //= dtProductSerial.Rows(0)("PRM_CONN_ROLL_LENGTH").ToString(data.).Trim
-          setHfConnLeafLength(data.PRM_CONN_LEAF_LENGTH); //= dtProductSerial.Rows(0)("PRM_CONN_LEAF_LENGTH").ToString(data.).Trim
-          setHfCheckRollPrdFlg(data.PRM_CONN_ROLL_PRD_FLG); // = dtProductSerial.Rows(0)("PRM_CONN_ROLL_PRD_FLG").ToString(data.).Trim
-          setHfCheckRollPrdStart(data.PRM_CONN_ROLL_PRD_START); // = dtProductSerial.Rows(0)("PRM_CONN_ROLL_PRD_START").ToString(data.).Trim
-          setHfCheckRollPrdEnd(data.PRM_CONN_ROLL_PRD_END); // = dtProductSerial.Rows(0)("PRM_CONN_ROLL_PRD_END").ToString(data.).Trim
-          setHfCheckRollPrd(data.PRM_CONN_ROLL_PRD_FIX); // = dtProductSerial.Rows(0)("PRM_CONN_ROLL_PRD_FIX").ToString(data.).Trim
-          setHfSerialStartCode(data.PRM_SERIAL_START_CODE); // = dtProductSerial.Rows(0)("PRM_SERIAL_START_CODE").ToString(data.).Trim
-          setHfSerialInfo(data.PRM_ADDITIONAL_INFO); // //May = dtProductSerial.Rows(0)("PRM_ADDITIONAL_INFO").ToString(data.).Trim
-          setHfCheckXrayF(data.PRM_SHT_XRAY_F); // = dtProductSerial.Rows(0)("PRM_SHT_XRAY_F").ToString(data.).Trim
-          setHfCheckXrayB(data.PRM_SHT_XRAY_B); // = dtProductSerial.Rows(0)("PRM_SHT_XRAY_B").ToString(data.).Trim
-          setHfCheckXrayOneTime(data.PRM_SHT_XRAY_1_TIME_FLG); // = dtProductSerial.Rows(0)("PRM_SHT_XRAY_1_TIME_FLG").ToString(data.).Trim
-          setHfCheckFinInspect(data.PRM_FIN_GATE_INSPECT_FLG); // = dtProductSerial.Rows(0)("PRM_FIN_GATE_INSPECT_FLG").ToString(data.).Trim
-          setHfCheckFinInspectProc(data.PRM_FIN_GATE_INSPECT_PROC); // = dtProductSerial.Rows(0)("PRM_FIN_GATE_INSPECT_PROC").ToString().Trim
-          console.log(data, "daaaa");
+          setHfSerialLength(data.slm_serial_length);
+          setHfSerialFixFlag(data.slm_fix_flag);
+          setHfSerialDigit(data.slm_fix_digit);
+          setHfSerialStartDigit(data.slm_fix_start_digit);
+          setHfSerialEndDigit(data.slm_fix_end_digit);
+          setHfTrayFlag(data.slm_tray_flag);
+          setHfTrayLength(data.slm_tray_length);
+          setHfTestResultFlag(data.slm_test_result_flag);
+          setHfSerialCount(data.slm_serial_sht);
+          setHfAutoScan(data.slm_auto_scan);
+          setHfBarcodeSide(data.slm_barcode_side);
+          setHfShtScan(data.slm_sht_scan);
+          setHfConfigCheck(data.prm_barcode_req_config);
+          setHfConfigCode(data.prm_config_code);
+          setHfConfigStart(data.prm_start_config);
+          setHfConfigEnd(data.prm_end_config);
+          setHfConfigRuning(data.prm_running_req_config);
+          setHfDuplicateStart(data.prm_duplicate_start);
+          setHfDuplicateEnd(data.prm_duplicate_end);
+          setHfCheckPrdSht(data.prm_req_check_prd_sht);
+          setHfCheckPrdShtStart(data.prm_check_prd_sht_start);
+          setHfCheckPrdShtEnd(data.prm_check_prd_sht_end);
+          setHfCheckPrdAbbr(data.prm_abbr);
+          setHfCheckLotSht(data.prm_req_check_lot_sht);
+          setHfCheckLotShtStart(data.prm_check_lot_sht_start);
+          setHfCheckLotShtEnd(data.prm_check_lot_sht_end);
+          setHfCheckStartSeq(data.prm_req_start_seq_flg);
+          setHfCheckStartSeqCode(data.prm_start_seq_code);
+          setHfCheckStartSeqStart(data.prm_start_seq_start);
+          setHfCheckStartSeqEnd(data.prm_start_seq_end);
+          setHfCheckSheetELT(data.prm_sheet_elt_flg);
+          setHfCheckRollSht(data.prm_conn_roll_sht_flg);
+          setHfCheckRollShtDigit(data.prm_conn_roll_sht_length);
+          setHfCheckDateInProc(data.prm_date_inproc_flg);
+          setHfDateInProc(data.prm_date_inproc);
+          setHfWeekCodeType(data.prm_date_type);
+          setHfCheckWeekCode(data.prm_check_weekcode_flg);
+          setHfCheckWeekCodeStart(data.prm_check_weekcode_start);
+          setHfCheckWeekCodeEnd(data.prm_check_weekcode_end);
+          setHfCheckPreAOIF(data.prm_sht_pre_aoi_f);
+          setHfCheckPreAOIB(data.prm_sht_pre_aoi_b);
+          setHfCheckAOIF(data.prm_sht_aoi_f);
+          setHfCheckAOIB(data.prm_sht_aoi_b);
+          setHfCheckAOICoatF(data.prm_sht_aoi_coat_f);
+          setHfCheckAOICoatB(data.prm_sht_aoi_coat_b);
+          setHfCheckSPIF(data.prm_sht_spi_f);
+          setHfCheckSPIB(data.prm_sht_spi_b);
+          setHfReqMachine(data.prm_sht_machine_flg);
+          setHfBarcodeGrade(data.prm_barcode_grade);
+          setHfConnRollLength(data.prm_conn_roll_length);
+          setHfConnLeafLength(data.prm_conn_leaf_length);
+          setHfCheckRollPrdFlg(data.prm_conn_roll_prd_flg);
+          setHfCheckRollPrdStart(data.prm_conn_roll_prd_start);
+          setHfCheckRollPrdEnd(data.prm_conn_roll_prd_end);
+          setHfCheckRollPrd(data.prm_conn_roll_prd_fix);
+          setHfSerialStartCode(data.prm_serial_start_code);
+          setHfSerialInfo(data.prm_additional_info);
+          setHfCheckXrayF(data.prm_sht_xray_f);
+          setHfCheckXrayB(data.prm_sht_xray_b);
+          setHfCheckXrayOneTime(data.prm_sht_xray_1_time_flg);
+          setHfCheckFinInspect(data.prm_fin_gate_inspect_flg);
+          setHfCheckFinInspectProc(data.prm_fin_gate_inspect_proc);
+           console.log(data, "daaaa");
         }
       });
 
@@ -446,7 +438,7 @@ function fn_ConfirmBarcodeGrade() {
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
       console.log("iiii", intSht);
       for (let intRow = 0; intRow < hfSerialCount; intRow++) {
-        console.log("jjjjj", intRow);
+       
         dtData.push({
           SHEET: intSht + 1,
           SEQ: intRow + 1,
@@ -474,7 +466,7 @@ function fn_ConfirmBarcodeGrade() {
     fcGvSerial_txtSerial_0.current.focus();
   };
 
-  const btnSave_Click = () => {
+  const btnSave_Click = async() => {
     console.log("Setmode2 save", hfMode);
     if (hfMode == "SERIAL") {
       setSerialData();
@@ -515,7 +507,8 @@ function fn_ConfirmBarcodeGrade() {
     console.log(
       hfReqMachine,
       "mamamam88",
-      txtRollLeaf.substring(hfCheckRollPrdStart - 1, hfCheckRollPrdEnd)
+      txtRollLeaf.substring(hfCheckRollPrdStart - 1, hfCheckRollPrdEnd
+        ),hfConnRollLength,hfConnRollLength
     );
     setvisibleLog(false);
     setlblLog("");
@@ -557,7 +550,7 @@ function fn_ConfirmBarcodeGrade() {
           fctMachchine.current.focus();
         } else {
           setvisibleMachine("none");
-          fcGvBackSide_txtsideback_0.current.focus();
+          // fcGvBackSide_txtsideback_0.current.focus();
         }
       }
     } else {
@@ -571,7 +564,7 @@ function fn_ConfirmBarcodeGrade() {
     }
   };
 
-  const handleTxt_LotRef = () => {
+  const handleTxt_LotRef = async() => {
     if (txtOperator != "") {
       const strLotData = txtLotRef.trim().toUpperCase().split(";");
       settxtLotRef(strLotData[0]);
@@ -646,7 +639,7 @@ function fn_ConfirmBarcodeGrade() {
               : "",
           SERIAL: txtSerial[intRow],
           GRADE_RESULT: "",
-          SCAN_RESULT: txtSerial[intSht],
+          SCAN_RESULT: '',
           REMARK: "",
           UPDATE_FLG: "N",
           MACHINE: txtMachineNo,
@@ -695,7 +688,7 @@ function fn_ConfirmBarcodeGrade() {
 
     if (txt_lotNo != "" && dtSerial.length > 0) {
       if (!Check_Master && hfCheckWeekCode == "Y") {
-        axios
+        await axios
           .post("/api/Common/getWeekCodebyLot", {
             STRLOT: _strLot,
             STRPROC: hfDateInProc,
@@ -896,6 +889,7 @@ function fn_ConfirmBarcodeGrade() {
                 dtSerial[i].UPDATE_FLG = "N";
                 console.log(_strMessageUpdate, "_strMessageUpdate2");
               }
+              console.log('_strResult3',_strScanResultUpdate)
               dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
               dtSerial[i].REMARK = _strMessageUpdate;
             }
@@ -909,7 +903,11 @@ function fn_ConfirmBarcodeGrade() {
       if (!Check_Master && hfWeekCodeType == "S" && _bolError == false) {
         console.log("เข้สมั้ยนะะะ", _strLotRef);
         let _strReturn = "";
-        _strReturn = GetShippingSerialNo(dtSerial, _strLotRef, hfWeekCodeType);
+        _strReturn = await GetShippingSerialNo(
+          dtSerial,
+          _strLotRef,
+          hfWeekCodeType
+        );
         console.log(dtSerial, "mmmmmmaaaaa");
         if (_strReturn != "") {
           _strScanResultAll = "NG";
@@ -924,7 +922,7 @@ function fn_ConfirmBarcodeGrade() {
         let _strReturn = "";
         for (let i = 0; i < dtSerial.length; i++) {
           console.log("mamama9", dtSerial[i]);
-          axios
+          await axios
             .post("/api/Common/setseriallotshtelttable", {
               dataList: {
                 strSheetNo: "",
@@ -952,6 +950,7 @@ function fn_ConfirmBarcodeGrade() {
       }
       for (let i = 0; i < dtSerial.length; i++) {
         if (!Check_Master) {
+          console.log('_strResult4',dtSerial[i].SCAN_RESULT)
           if (dtSerial[i].SERIAL != "" && dtSerial[i].SCAN_RESULT != "NG") {
             let _intCount = 0;
             let _intCountOK = 0;
@@ -989,21 +988,6 @@ function fn_ConfirmBarcodeGrade() {
                 _FrontSheetBarcode = dtSerial[i].BACK_SIDE;
                 _RearSheetBarcode = dtSerial[i].FRONT_SIDE;
               }
-              // axios
-              // .post("/api/Common/setseriallotshtelttable", {
-              //   dataList: {
-              //     strSheetNo: "",
-              //     strPrdName: dtSerial[i].PRODUCT,
-              //     strPlantCode: "G",
-              //     strSideF: dtSerial[i].FRONT_SIDE,
-              //     strSideB: dtSerial[i].BACK_SIDE,
-              //     strPcsno: dtSerial[i].SEQ,
-              //     strSerialNo: dtSerial[i].SERIAL,
-              //   },
-              // })
-              // .then((res) => {
-
-              // })
               // _Result = BIZ_ScanSMTSerial.Get_SPI_AOI_RESULT(Session("PLANT_CODE"), _intSeq, Session("PRODUCT_KIND"), _FrontSheetBarcode, _RearSheetBarcode, _strPrdName, _Message)
               if (_Result == "NG") {
                 _strScanResultUpdate = _Result;
@@ -1025,10 +1009,11 @@ function fn_ConfirmBarcodeGrade() {
               if (!hfBarcodeGrade.includes(serialGrade)) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = `Barcode grade ${dtSerial[i].SERIAL_GRADE} not accept/คุณภาพบาร์โค้ด ${dtSerial[i].SERIAL_GRADE} ไม่ผ่าน`;
-                // drRow("UPDATE_FLG") = "N"
+            
                 dtSerial[i].UPDATE_FLG = "N";
               }
             }
+            console.log('_strResult2',_strScanResultUpdate)
             dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
             dtSerial[i].REMARK = _strMessageUpdate;
           } else {
@@ -1053,11 +1038,11 @@ function fn_ConfirmBarcodeGrade() {
         }
       }
       if (!Check_Master && hfCheckRollSht == "Y") {
+        // PRM_CONN_ROLL_LENGTH = hfConnRollLength
         if (txtRollLeaf.length == parseInt(hfConnRollLength)) {
           if (txtRollLeaf) {
-           
             let dataRBMP = "";
-            axios
+            await axios
               .post("/api/GetRollLeafScrapRBMP", {
                 strRollNo: "",
               })
@@ -1071,14 +1056,14 @@ function fn_ConfirmBarcodeGrade() {
               _strUpdateError = "Problem sheet from RBMP";
               _strErrorAll = "Problem sheet from RBMP";
             } else {
-              let dtRowLeaf = getConnectRollSheetData(
+              let dtRowLeaf =await getConnectRollSheetData(
                 dtSerial,
                 SlProduct,
                 txtRollLeaf
               );
               let _intCount = 0;
               let _strRollLeaf = txtRollLeaf;
-              axios
+              await axios
                 .post("/api/Common/setseriallotshtelttable", {
                   strRollLeaf: _strRollLeaf,
                   _dtRollLeaf: dtRowLeaf,
@@ -1126,7 +1111,18 @@ function fn_ConfirmBarcodeGrade() {
                 dtRowLeaf.length > 0 &&
                 (_strBarcodeResultAll != "NG" || _bolConfirm)
               ) {
-                // _strUpdateError = BIZ_ScanSMTSerial.SetRollSheetTrayTable(Session("PLANT_CODE"), dtRowLeaf, txtOperator.Text.Trim, hfUserStation.Value, Session("PRODUCT_KIND"))
+                for (let i = 0; i < dtRowLeaf.length; i++) {
+                  dtRowLeaf[i].strPlantCode = "THA";
+                  dtRowLeaf[i]._strUserID = txtOperator;
+                  dtRowLeaf[i]._strStation = hfUserStation;
+                }
+                await axios
+                  .post("/api/Common/SetRollSheetTrayTable", {
+                    dataList: dtRowLeaf,
+                  })
+                  .then((res) => {
+                    _strUpdateError = res.data;
+                  });
               }
             }
           }
@@ -1144,11 +1140,34 @@ function fn_ConfirmBarcodeGrade() {
         (_strScanResultAll != "NG" && _strBarcodeResultAll != "NG") ||
         _bolConfirm
       ) {
-        // _strUpdateError = BIZ_ScanSMTSerial.SetSerialLotShtGradeTable(Session("PLANT_CODE"), _strLot, dtSerial, dtSerial.Rows(0)("FRONT_SIDE"), dtSerial.Rows(0)("BACK_SIDE"), _intSeq, "", txtOperator.Text.Trim, hfUserStation.Value, hfBarcodeSide.Value, Session("PRODUCT_KIND"), CInt(hfSerialLength.Value), ddlProduct.SelectedValue, hfCheckSheetELT.Value, _strMasterSheet)
-        if (_strUpdateError != "") {
-          _strScanResultAll = "NG";
-          _strErrorAll = _strUpdateError;
+        for (let i = 0; i < dtSerial.length; i++) {
+          dtSerial[i]._strLot = _strLot;
+          dtSerial[i]._strPlantCode = "5";
+          dtSerial[i].hfBarcodeSide = hfBarcodeSide;
+          dtSerial[i].hfSerialLength = hfSerialLength;
+          dtSerial[i]._strMasterSheet = _strMasterSheet;
+          dtSerial[i].hfUserStation = hfUserStation;
+          dtSerial[i].ddlPD = SlProduct;
+          dtSerial[i].hfUserStation = hfUserStation;
         }
+        console.log("maykubbbb1", dtSerial);
+        await axios
+          .post("/api/Common/SetSerialLotShtGradeTable", {
+            dataList: dtSerial,
+          })
+          .then((res) => {
+            console.log("maykubbbb2", res.data.SCAN_RESULT);
+
+            _strUpdateError = res.data.strError;
+            if (_strUpdateError != "") {
+              _strScanResultAll = "NG";
+              _strErrorAll = _strUpdateError;
+              for (let i = 0; i < dtSerial.length; i++) {
+                dtSerial[i].SCAN_RESULT = res.data.SCAN_RESULT;
+                dtSerial[i].REMARK = res.data.REMARK;
+              }
+            }
+          });
       }
       if (_strBarcodeResultAll == "NG") {
         _strScanResultAll = _strBarcodeResultAll;
@@ -1160,10 +1179,11 @@ function fn_ConfirmBarcodeGrade() {
         // lblResult.ForeColor = Drawing.Color.Green
       }
       if (_strErrorAll != "") {
+        console.log('maykubbbb3',_strErrorAll,'---',_strScanResultAll)
         setlblResult(_strScanResultAll + _strErrorAll);
       }
       if (_strBarcodeResultAll != "NG" || _bolConfirm) {
-        console.log("mamama7", hfCheckSheetELT);
+        console.log("mamama7", dtSerial);
         setgvScanResult(dtSerial);
         setvisiblegvScanResult(true);
         getInitialSheet();
@@ -1175,7 +1195,7 @@ function fn_ConfirmBarcodeGrade() {
 
           fctMachchine.current.focus();
         } else {
-          fcGvBackSide_txtsideback_0.current.focus();
+          // fcGvBackSide_txtsideback_0.current.focus();
         }
       } else {
         console.log("mamama8", _strBarcodeResultAll, _bolConfirm);
@@ -1199,7 +1219,7 @@ function fn_ConfirmBarcodeGrade() {
     }
   };
 
-  const getConnectRollSheetData = (_dtSerial, _strProduct, _strRollLeaf) => {
+  const getConnectRollSheetData = async (_dtSerial, _strProduct, _strRollLeaf) => {
     let _dtData = [];
     let _intRollRow = 1;
     let _intRow = 0;
@@ -1256,12 +1276,12 @@ function fn_ConfirmBarcodeGrade() {
     return _dtData;
   };
 
-  const ChangeBase34 = (num) => {
+  const ChangeBase34 = async (num) => {
     const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return chars[num];
   };
 
-  const ConvertBase34 = (lngNumber2) => {
+  const ConvertBase34 = async (lngNumber2) => {
     let shou;
     let Amari = [];
     let i = 0;
@@ -1283,17 +1303,17 @@ function fn_ConfirmBarcodeGrade() {
     } while (true);
 
     for (let j = i; j >= 0; j--) {
-      StrTemp += ChangeBase34(Amari[j]);
+      StrTemp += await ChangeBase34(Amari[j]);
     }
 
     return StrTemp;
   };
 
-  const Convert0000 = (strText) => {
+  const Convert0000 = async (strText) => {
     return ("0000" + strText).slice(-4);
   };
 
-  const GetShippingSerialNo = (dtSerial, strLotNo, strWeekType) => {
+  const GetShippingSerialNo = async (dtSerial, strLotNo, strWeekType) => {
     let _strReturn = "";
     let _intSeq = 1;
     console.log(
@@ -1301,14 +1321,14 @@ function fn_ConfirmBarcodeGrade() {
       parseInt(strLotNo.substring(2, 3)),
       parseInt(strLotNo.substring(3, 4))
     );
-    let _strLotBase34_1 = ConvertBase34(
+    let _strLotBase34_1 = await ConvertBase34(
       parseInt(strLotNo.substring(1, 2)) +
         parseInt(strLotNo.substring(2, 3)) +
         parseInt(strLotNo.substring(3, 4))
     );
 
-    let _strLotBase34_4 = Convert0000(
-      ConvertBase34(parseInt(strLotNo.substring(4, 10)))
+    let _strLotBase34_4 = await Convert0000(
+      await ConvertBase34(parseInt(strLotNo.substring(4, 10)))
     );
     for (let i = 0; i < dtSerial.length; i++) {
       let _strResult = "OK";
@@ -1344,6 +1364,7 @@ function fn_ConfirmBarcodeGrade() {
           }
         }
       }
+      console.log('_strResult1',_strResult)
       dtSerial[i].SCAN_RESULT = _strResult;
       dtSerial[i].REMARK = _strRemark;
       _intSeq += 1;
@@ -1372,21 +1393,21 @@ function fn_ConfirmBarcodeGrade() {
     }
   };
 
-  const handleFrontSideChange = (index, event) => {
+  const handleFrontSideChange = async (index, event) => {
     const newValues = [...txtSideFront];
     newValues[index] = event.target.value;
     settxtSideFront(newValues);
     console.log(newValues, "settxtSideFront");
   };
 
-  const handleBackSideChange = (index, event) => {
+  const handleBackSideChange =async (index, event) => {
     const newValues = [...txtSideBack];
     newValues[index] = event.target.value;
     settxtSideBack(newValues);
     console.log(newValues, "settxtSideFront");
   };
 
-  const handleSerialChange = (index, event) => {
+  const handleSerialChange =async (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value;
     settxtSerial(newValues);
@@ -1453,23 +1474,3 @@ function fn_ConfirmBarcodeGrade() {
 }
 
 export { fn_ConfirmBarcodeGrade };
-// _intRow += 1
-// _dtData[i].ROLL_SEQ=_intRollRow
-// _dtData[i].SHT_SEQ=_intRow
-// _dtData[i].ROLL_NO=_strRollNo
-// _dtData[i].ROLL_LEAF=_strRollLeaf
-// if (hfBarcodeSide=='F'){
-//   _dtData[i].SHT_NO=_dtSerial[i].FRONT_SIDE
-// }else{
-//   _dtData[i].SHT_NO=_dtSerial[i].BACK_SIDE
-// }
-// _dtData[i].SCAN_RESULT=""
-// _dtData[i].REMARK=""
-// _dtData[i].ROW_UPDATE="Y"
-// _dtData[i].UPDATE_FLG="N"
-// _dtData[i].MACHINE=txtMachineNo
-// _dtData[i].PRODUCT=_strProduct
-// _dtData[i].LOT_NO=txt_lotNo
-// if(_dtSerial[i].FRONT_SIDE!=_dtSerial[i].BACK_SIDE){
-//   _intRow += 1
-// }

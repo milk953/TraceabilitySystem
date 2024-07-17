@@ -27,6 +27,9 @@ import ScanSMTSerialSpotHeat from "./Page/ScanSMTSerialSpotHeat/ScanSMTSerialSpo
 
 
 
+
+
+
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
@@ -42,7 +45,6 @@ const App = () => {
           <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
           <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
           <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
-          <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
           <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
           <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
           <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
@@ -53,8 +55,10 @@ const App = () => {
           <Route path='/ELTmaster' element={<ELTmaster />} />
           <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
           <Route path='/SheetBincheking' element={<SheetBincheking />} />
+          <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} />   
 
           {/* Maintenance */}
+          <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
           <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
           <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          

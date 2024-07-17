@@ -156,24 +156,20 @@ function fn_Reject() {
     await SearchData();
   };
   const handleSubmit_Click = async () => {
-    setLblResult({ text: "", styled: { color: "black" } });
+    // Swal  confirm btn
     if (txtOperator != "" && cbSelected != "") {
-      console.log(selectedRows.length);
-      const filteredData = dtDataSearch.filter((item) =>
-        selectedRows.includes(item.rem_serial_no)
-      );
-      console.log(filteredData, "filteredData");
-      for (let i = 0; i < filteredData.length; i++) {
-        console.log(i, "i");
-        getData("SetSubmitData", {
-          strSerialNo: filteredData[i].rem_serial_no,
-          strTxtoperator: txtOperator,
-          strReason: cbSelected,
-          strInspectCount: filteredData[i].rej_inspect_count,
-          strIp: ip,
-          strPlantCode: Fac,
-        });
-      }
+      Swal.fire({
+        title: "Are you confirm submit?",
+        text: "Are you sure to submit this data",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          SubmitData();
+        }
+      });
     } else {
       if (txtOperator == "") {
         setLblResult({
@@ -190,6 +186,23 @@ function fn_Reject() {
       }
     }
   };
+  async function SubmitData() {
+    setLblResult({ text: "", styled: { color: "black" } });
+    const filteredData = dtDataSearch.filter((item) =>
+      selectedRows.includes(item.rem_serial_no)
+    );
+    for (let i = 0; i < filteredData.length; i++) {
+      console.log(i, "i");
+      getData("SetSubmitData", {
+        strSerialNo: filteredData[i].rem_serial_no,
+        strTxtoperator: txtOperator,
+        strReason: cbSelected,
+        strInspectCount: filteredData[i].rej_inspect_count,
+        strIp: ip,
+        strPlantCode: Fac,
+      });
+    }
+  }
 
   async function getData(Select, params) {
     if (Select == "GetCombo") {
@@ -207,9 +220,17 @@ function fn_Reject() {
         });
     } else if (Select == "GetSearchbySerialno") {
       await axios
-        .post("/api/reject/getsearchbyserial", {
-          strSerialNo: params.Serialno,
-        })
+        .post(
+          "/api/reject/getsearchbyserial",
+          {
+            strSerialNo: params.Serialno,
+          },
+          {
+            validateStatus: function (status) {
+              return true;
+            },
+          }
+        )
         .then((response) => {
           const updatedData = {
             ...response.data[0],
@@ -234,17 +255,30 @@ function fn_Reject() {
         });
     } else if (Select == "GetSearchbyLot") {
       await axios
-        .post("/api/reject/getsearchbylot", {
-          strLotNo: params.Lotno,
-        })
+        .post(
+          "/api/reject/getsearchbylot",
+          {
+            strLotNo: params.Lotno,
+          },
+          {
+            validateStatus: function (status) {
+              return true;
+            },
+          }
+        )
         .then((response) => {
-          setDtDataSearch(response.data);
-          setPnlTableDisplaySatate(true);
-          setLblResult({
-            text: "Data Read Complete",
-            styled: { color: "black" },
-          });
+          if (response.status == 200) {
+            setDtDataSearch(response.data);
+            setPnlTableDisplaySatate(true);
+            setLblResult({
+              text: "Data Read Complete",
+              styled: { color: "black" },
+            });
+          } else if (response.status == 404) {
+            Swal.fire("Not Found Data", "Please input lot again !", "error");
+          }
         })
+
         .catch((error) => {
           setLblResult({
             text: error.message,
@@ -253,6 +287,7 @@ function fn_Reject() {
           Swal.fire("Error", error.message, "error");
         });
     } else if (Select == "SetSubmitData") {
+      console.log(params);
       await axios
         .post(
           "/api/reject/setsubmitdata",
@@ -261,7 +296,7 @@ function fn_Reject() {
               strSerialNo: params.strSerialNo,
               strTxtoperator: params.strTxtoperator,
               strReason: params.strReason,
-              strInspectCount: params.strInspectCount,
+              strInspectCount: params.strInspectCount || 0,
               strIp: params.strIp,
               strPlantCode: params.strPlantCode,
             },
@@ -273,6 +308,7 @@ function fn_Reject() {
           }
         )
         .then((res) => {
+          console.log(res, "res")
           if (res.status === 200) {
             if (cbSelected == "DELETE") {
               setLblResult({

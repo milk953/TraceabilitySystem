@@ -49,7 +49,8 @@ function ScanSheetBakeTime() {
     //btn
     btnDelete,
     btnCancel,
-    btnReplace
+    btnReplace,
+    ibtback_click
   } = fn_ScanSheetBakeTime();
   useEffect(() => {
     if (txtmcState.Focus ==true && txtmc==""){
@@ -134,7 +135,7 @@ function ScanSheetBakeTime() {
               ></TextField>
             </TableCell>
             <TableCell>
-              <Button>
+              <Button onClick={ibtback_click}>
                 <BackspaceIcon />
               </Button>
             </TableCell>

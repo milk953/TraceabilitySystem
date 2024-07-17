@@ -1,4 +1,5 @@
 import axios from "axios";
+import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 
 function fn_ScanSheetBakeTime() {
@@ -78,7 +79,20 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "#dbdede" },
     });
   };
-
+  const ibtback_click = () => {
+    setTxtSheetNo("");
+    setTxtSheetNoState({
+      disabled: true,
+      styled: { backgroundColor: "#dbdede" },
+    });
+    setTxtLotNo('');
+    setTxtLotNoState({
+      disabled: false,
+      styled: { backgroundColor: "white" },
+      Focus: true,
+    });
+    FctxtLotNo.current.focus();
+  }
   const handleTxtProcess_Change = () => {
     if (txtProcess !== "") {
       setTxtmc("");
@@ -337,7 +351,7 @@ function fn_ScanSheetBakeTime() {
         .catch((error) => {
           alert(error);
         });
-    } else if (type == "getSerial") {   //ok
+    } else if (type == "getSerial") {   //ok FIN 995123423
       await axios
         .post(
           "/api/GetSerialProductByProduct",
@@ -395,7 +409,6 @@ function fn_ScanSheetBakeTime() {
           alert(error);
         });
     } else if (type == "CallSMTBakingRecordTimeResult") {
-      console.log(plantCode,'plantCode');
       await axios
         .post(
           "/api/CallSMTBakingRecordTimeResult",
@@ -487,6 +500,7 @@ function fn_ScanSheetBakeTime() {
     btnDelete,
     btnReplace,
     btnCancel
+    ,ibtback_click
   };
 }
 
