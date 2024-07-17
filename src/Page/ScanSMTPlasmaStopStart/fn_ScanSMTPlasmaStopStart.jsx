@@ -173,7 +173,7 @@ function fn_ScanSMTPlasmaStopStart() {
 
   const handleChangerbtStopStart = (event) => {
     setselectedrbt(event.target.value);
-};
+  };
 
   const handleChangePartial = async () => {
     if (txtPartialNo !== "") {
@@ -288,7 +288,7 @@ function fn_ScanSMTPlasmaStopStart() {
     }
 
     axios.post("/api/getStartStopRecordTimeByPackingNo", {
-      strPlantCode: 'THA',
+      strPlantCode: plantCode,
       strLotNo: txtLotNo,
       strPackingNo: _strPartialNo,
       strTimeType: _strTimeType
@@ -298,7 +298,7 @@ function fn_ScanSMTPlasmaStopStart() {
         console.log("มาเปล่า", intSerialCount);
         if (intSerialCount === 0) {
           axios.post("/api/getStartStopRecordTimeByPartialNo", {
-            strPlantCode: 'THA',
+            strPlantCode: plantCode,
             strPartialNo: _strPartialNo,
             strTimeType: _strTimeType
           })
@@ -312,7 +312,7 @@ function fn_ScanSMTPlasmaStopStart() {
         }
         if (intSerialCount > 0) {
           axios.post("/api/setStartStopRecordTimeByPartialNo", {
-            strPlantCode: 'THA',
+            strPlantCode: plantCode,
             strPartialNo: _strPartialNo,
             strLotNo: _strLotNo,
             strTimeType: _strTimeType,
@@ -320,8 +320,8 @@ function fn_ScanSMTPlasmaStopStart() {
             strUser: hfUserName
           })
             .then((res) => {
-              _strErrorUpdate = res.data;
-              console.log("มาไหม",_strErrorUpdate)
+              _strErrorUpdate = res.data.p_error;
+              console.log("มาไหม", _strErrorUpdate)
               if (_strErrorUpdate !== "") {
                 setlblLog(_strErrorUpdate);
                 setvisiblelog(true);
@@ -336,6 +336,9 @@ function fn_ScanSMTPlasmaStopStart() {
                 SetMode("PARTIAL_OK");
               }
             })
+            .catch((error) => {
+              alert(error);
+            });
         } else {
           setlblLog("Not found serial no. ");
           SetMode("PARTIAL_NG");
@@ -389,7 +392,7 @@ function fn_ScanSMTPlasmaStopStart() {
   return {
     txtLotNo, settxtLotNo, selProduct, Productdata, selectedrbt, txtPartialNo, settxtPartialNo, lblPatialNo, visiblelog, lblLog,
     pnlStatus, txtLotDisabled, selProductDisabled, txtPartialDisabled, inputLot, ddlProduct, inputPartial, handleChangeLot, ibtBackClick,
-    handleChangeProduct, handleChangePartial, lblStatus, handleChangerbtStopStart
+    handleChangeProduct, handleChangePartial, lblStatus, handleChangerbtStopStart, lblStatusColor
   }
 };
 

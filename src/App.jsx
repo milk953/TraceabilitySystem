@@ -23,11 +23,7 @@ import ELTmaster from './Page/ELT_Master/ELTmaster'
 import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaStopStart";
 import SheetBincheking from "./Page/SheetBinChecking/SheetBinCheck"
 import ScanSMTSerialSpotHeat from "./Page/ScanSMTSerialSpotHeat/ScanSMTSerialSpotHeat"
-
-
-
-
-
+import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
 
 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;

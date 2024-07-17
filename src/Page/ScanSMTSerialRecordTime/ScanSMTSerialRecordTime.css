@@ -85,12 +85,16 @@
     padding: 10px;
 }
 
-.lblResult{
+.lblResultRec{
     margin: auto;
     margin-left: 40px;
     margin-top: 15px !important;
     background-color: #FFFF99;
     width: 715px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
 }
 
 

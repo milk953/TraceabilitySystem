@@ -570,7 +570,7 @@ function ScanSMTSerialRecordTime() {
                     alt="Description of the image"
                 />
                 <div className="divgvScanResult" style={{ position: "relative" }}>
-                    <div className="lblResult"
+                    <div className="lblResultRec"
                         style={{
                             display: gvScanResult ? 'block' : 'none'
                         }}
