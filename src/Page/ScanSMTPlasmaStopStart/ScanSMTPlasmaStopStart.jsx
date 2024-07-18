@@ -38,7 +38,7 @@ function ScanSMTPlasmaStopStart() {
     const {
         txtLotNo, settxtLotNo, selProduct, Productdata, selectedrbt, txtPartialNo, settxtPartialNo, lblPatialNo, visiblelog, lblLog,
         pnlStatus, txtLotDisabled, selProductDisabled, txtPartialDisabled, inputLot, ddlProduct, inputPartial, handleChangeLot, ibtBackClick,
-        handleChangeProduct, handleChangePartial, lblStatus, handleChangerbtStopStart
+        handleChangeProduct, handleChangePartial, lblStatus, handleChangerbtStopStart, lblStatusColor
     } = fn_ScanSMTPlasmaStopStart();
 
     return (
@@ -289,7 +289,7 @@ function ScanSMTPlasmaStopStart() {
                         >
                             <Typography
                                 variant="h2"
-                                style={{ color: "green" }}
+                                color={lblStatusColor}
                             >
                                 {lblStatus} 
                             </Typography>

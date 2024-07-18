@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 function fn_ELTmaster() {
@@ -13,6 +13,9 @@ function fn_ELTmaster() {
   const [txtUpdateBy, settxtUpdateBy] = useState("");
   //const hfUsername
   const [hfUserName, sethfUserName] = useState("");
+
+  const FctxtSerial = useRef(null);
+
   let IP = "";
   let plant_code = import.meta.env.VITE_FAC;
 
@@ -35,6 +38,8 @@ function fn_ELTmaster() {
   };
 
   const Search_Data = async () => {
+    setselectddlReason1("")
+    settxtUpdateBy("")
     setlblResult({
       text: "",
       styled: { color: "" },
@@ -61,19 +66,20 @@ function fn_ELTmaster() {
             settxtUpdateBy(response.data[0].rej_operator_code);
             setlblResult({
               text: "Data Read Complete",
-              styled: { color: "black" },
+              styled: { color: "black" , fontSize:'50px' },
             });
           } else {
             setlblResult({
               text: "Data reject can not modify",
-              styled: { color: "red" },
+              styled: { color: "red" , fontSize:'50px' },
             });
             settxtSerialNo_TextChanged("");
+            FctxtSerial.current.focus();
           }
         } else {
           setlblResult({
             text: "Data Read Complete",
-            styled: { color: "black" },
+            styled: { color: "black"  , fontSize:'50px' },
           });
         }
       });
@@ -106,25 +112,24 @@ function fn_ELTmaster() {
           }
         )
         .then((res) => {
-          console.log(res.data, "datatatataat");
           if (res.status == 200) {
             if (selectddlReason1 == "DELETE") {
               setlblResult({
                 text: "Data Delete Complete.",
-                styled: { color: "blue" },
+                styled: { color: "blue" , fontSize:'50px' },
               });
               settxtUpdateBy("");
             } else {
               setlblResult({
                 text: "Data Update Complete.",
-                styled: { color: "blue" },
+                styled: { color: "blue" , fontSize:'50px' },
               });
               settxtUpdateBy(hfUserName);
             }
           } else {
             setlblResult({
               text: res.data.message,
-              styled: { color: "red" },
+              styled: { color: "red" , fontSize:'50px' },
             });
           }
         })
@@ -147,6 +152,7 @@ function fn_ELTmaster() {
     settxtSerialNo_TextChanged,
     Search_Data,
     Submit,
+    FctxtSerial
   };
 }
 

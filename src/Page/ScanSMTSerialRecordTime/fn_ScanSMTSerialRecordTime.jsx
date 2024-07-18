@@ -21,7 +21,7 @@ function fn_ScanSMTSerialRecordTime() {
     const [lblResultcolor, setlblResultcolor] = useState("green");
     const [pnlMachine, setpnlMachine] = useState(true);
     const [pnlRackNo, setpnlRackNo] = useState(false);
-    const [eventArgument, setEventArgument] = useState("");
+    let eventArgument = "";
     const [lblOP, setlblOP] = useState("");
     const [pnlOP, setpnlOP] = useState(false);
 
@@ -100,6 +100,7 @@ function fn_ScanSMTSerialRecordTime() {
     const inputRackNo = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
+    const _strTagNewLine = "\n";
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
@@ -130,9 +131,9 @@ function fn_ScanSMTSerialRecordTime() {
 
     useEffect(() => {
         if (Productdata.length > 0) {
-          setselProduct(Productdata[0].prd_name);
+            setselProduct(Productdata[0].prd_name);
         }
-      }, [Productdata]);
+    }, [Productdata]);
 
     const getProductData = async () => {
         axios.get("/api/Common/GetProductData").then((res) => {
@@ -154,7 +155,7 @@ function fn_ScanSMTSerialRecordTime() {
 
     const handleChangeMachine = () => {
         if (txtMachine !== "") {
-            const Machine = txtMachine.toUpperCase();
+            const Machine = txtMachine.toUpperCase().trim();
             settxtMachine(Machine);
             SetMode("OP");
         }
@@ -235,7 +236,7 @@ function fn_ScanSMTSerialRecordTime() {
                     getCountDataBylot(strLot);
                     try {
                         setselProduct(strPrdName);
-                        getProductSerialMaster(strPrdName);
+                        getProductSerialMaster();
                         SetMode("SERIAL");
                     } catch (error) {
                         const intProduct = strPrdName.indexOf('-', 12);
@@ -247,7 +248,7 @@ function fn_ScanSMTSerialRecordTime() {
                                     .trim();
                             try {
                                 setselProduct(strPrdName);
-                                getProductSerialMaster(strPrdName);
+                                getProductSerialMaster();
                                 SetMode("SERIAL");
                             } catch (error) {
                                 setlblLog("Product " + strPrdName + " not found.");
@@ -318,7 +319,7 @@ function fn_ScanSMTSerialRecordTime() {
         }
     };
 
-    const getProductSerialMaster = async (strPrdName) => {
+    const getProductSerialMaster = async () => {
         let dtPro = "";
         sethfSerialLength("0");
         sethfSerialFixFlag("N");
@@ -357,7 +358,7 @@ function fn_ScanSMTSerialRecordTime() {
         sethfSerialStartCode("");
 
         axios.post("/api/Common/GetSerialProductByProduct", {
-            prdName: strPrdName,
+            prdName: selProduct,
         })
             .then((res) => {
                 dtPro = res.data;
@@ -650,15 +651,15 @@ function fn_ScanSMTSerialRecordTime() {
     const [bolTrayError, setbolTrayError] = useState(false);
     const [bolError, setbolError] = useState(false);
 
-    
+
     const [bolScanDouble, setbolScanDouble] = useState(false);
     const [bolScanDuplicate, setbolScanDuplicate] = useState(false);
 
     const setSerialDataTray = async () => {
         let _strFileError = "";
         let dtSerial = getInputSerial();
-        let _strLot = lblLot.toUpperCase.trim();
-        let _strPrdName = selProduct.toUpperCase.trim();
+        let _strLot = lblLot.toUpperCase().trim();
+        let _strPrdName = selProduct;
         let _strTray = " ";
         let _strScanResultAll = "OK";
         let _intRowSerial = 0;
@@ -676,24 +677,23 @@ function fn_ScanSMTSerialRecordTime() {
                 setlblLot("");
                 setlblLotTotal("");
                 setlblResult("NG");
-                _strScanResultAll === "NG";
+                _strScanResultAll = "NG";
                 setbolTrayError(true);
             }
         }
 
         if (!bolTrayError) {
 
+            for (let i = 0; i < dtSerial.length; i++) {
             //ลองเทสไปก่อน
             axios.post("/api/Common/getSerialRecordTimeTrayTable", {
-                data: dtSerial.drRow,
-                rec: drRow,
+                data: dtSerial[i],
                 strPlantCode: plantCode,
-                SERIAL: drRow.SERIAL,
-                MACHINE: drRow.MACHINE
             })
                 .then((res) => {
                     console.log(res.data.row_count);
                 })
+            }
 
             if (hfCheckWeekCode === "Y" && selrbtPcsSht === "rbtPcs") {
                 axios.post("/api/Common/getWeekCodebyLot", {
@@ -706,9 +706,10 @@ function fn_ScanSMTSerialRecordTime() {
                     });
             }
 
-            dtSerial.forEach(drRow => {
+            for (let i = 0; i < dtSerial.length; i++) {
+                let drRow = dtSerial[i];
                 if (drRow.SERIAL.trim() !== "") {
-                    if (drRow.SERIAL.trim() !== CONNECT_SERIAL_ERROR && drRow.SERIAL.trim() !== CONNECT_SERIAL_NOT_FOUND) {
+                    if (drRow.SERIAL !== CONNECT_SERIAL_ERROR && drRow.SERIAL !== CONNECT_SERIAL_NOT_FOUND) {
                         let _intCount = 0;
                         let _intCountOK = 0;
                         let _intCountNG = 0;
@@ -740,7 +741,7 @@ function fn_ScanSMTSerialRecordTime() {
                             if (hfCheckPrdSht === "Y" && !bolError) {
                                 const start = parseInt(hfCheckPrdShtStart);
                                 const end = parseInt(hfCheckPrdShtEnd);
-                                const substring = _strSerial.substring(start, end + 1);
+                                const substring = _strSerial.substring(start, (end - start) + 1);
 
                                 if (hfCheckPrdAbbr !== substring) {
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับผลิตภัณฑ์อื่น";
@@ -778,7 +779,7 @@ function fn_ScanSMTSerialRecordTime() {
                                 if (hfSerialFixFlag === "Y") {
                                     const start = parseInt(hfSerialStartDigit);
                                     const end = parseInt(hfSerialEndDigit);
-                                    _strFixDigit = _strSerial.substring(start, end + 1);
+                                    _strFixDigit = _strSerial.substring(start, (end - start) + 1);
 
                                     if (_strFixDigit !== hfSerialDigit) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -797,7 +798,7 @@ function fn_ScanSMTSerialRecordTime() {
                                         let _strConfigDigit = "";
                                         const start = parseInt(hfConfigStart);
                                         const end = parseInt(hfConfigEnd);
-                                        _strConfigDigit = _strSerial.substring(start, end + 1);
+                                        _strConfigDigit = _strSerial.substring(start, (end - start) + 1);
                                         if (_strConfigDigit !== hfConfigCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
@@ -830,7 +831,7 @@ function fn_ScanSMTSerialRecordTime() {
                                     let _strStartSeq = "";
                                     const start = parseInt(hfCheckStartSeqStart);
                                     const end = parseInt(hfCheckStartSeqEnd);
-                                    _strStartSeq = _strSerial.substring(start, end + 1);
+                                    _strStartSeq = _strSerial.substring(start, (end - start) + 1);
                                     if (_strStartSeq !== hfCheckStartSeqCode) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                         _strRemark = "Serial barcode mix product";
@@ -848,7 +849,7 @@ function fn_ScanSMTSerialRecordTime() {
                                     let _strWeekCode = "";
                                     const start = parseInt(hfCheckWeekCodeStart);
                                     const end = parseInt(hfCheckWeekCodeEnd);
-                                    _strWeekCode = _strSerial.substring(start, end + 1);
+                                    _strWeekCode = _strSerial.substring(start, (end - start) + 1);
                                     if (_strWeekCode !== hfWeekCode) {
                                         _strMessageUpdate = "Serial barcode mix week code" + _strTagNewLine + "หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
                                         _strRemark = "Serial barcode mix week code";
@@ -916,7 +917,7 @@ function fn_ScanSMTSerialRecordTime() {
                     }
                 }
                 _intRowSerial = _intRowSerial + 1;
-            });
+            }
 
             setlblResult(_strScanResultAll);
 
@@ -928,15 +929,15 @@ function fn_ScanSMTSerialRecordTime() {
                 axios.post("/api/Common/setSerialRecordTimeTrayTable", {
                     dataList: [
                         {
-                            ROW_UPDATE: drRow.ROW_UPDATE,
-                            UPDATE_FLG: drRow.UPDATE_FLG,
-                            LOT: drRow.LOT,
-                            PRODUCT: drRow.PRODUCT,
-                            MACHINE: drRow.MACHINE,
+                            ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                            UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                            LOT: dtSerial[i].LOT,
+                            PRODUCT: dtSerial[i].PRODUCT,
+                            MACHINE: dtSerial[i].MACHINE,
                             OPERATER: txtOperator,
-                            Program: "ScanSMTSerialRecordTime",
-                            TYPE: drRow.DATA_TYPE,
-                            SERIAL: drRow.SERIAL
+                            Program: "frm_ScanSMTSerialRecordTime",
+                            TYPE: dtSerial[i].DATA_TYPE,
+                            SERIAL: dtSerial[i].SERIAL
                         },
                     ],
                 })
@@ -950,6 +951,9 @@ function fn_ScanSMTSerialRecordTime() {
                             setvisiblelog(true);
                         }
                     })
+                    .catch((error) => {
+                        alert(error);
+                    });
             }
         }
 

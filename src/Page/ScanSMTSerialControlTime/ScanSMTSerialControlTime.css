@@ -1,17 +1,17 @@
-.TbScanSMTSerial {
+.TbScanSMTSerialCon {
     margin: auto;
     width: 700px;
 }
 
-.TbScanSMTSerial th {
+.TbScanSMTSerialCon th {
     background-color: #8c8c8c;
     border-radius: 5px 5px 0 0;
     color: #fff;
     padding: 5px;
 }
 
-.TbScanSMTSerial td {
-    padding: 3px;
+.TbScanSMTSerialCon td {
+    padding: 4px;
 }
 
 #txtfield {
@@ -31,7 +31,7 @@
     min-width: 50px !important;
 }
 
-.divgvSerial {
+.divgvSerialCon {
     justify-content: center;
     display: flex;
     max-width: 100%;
@@ -39,7 +39,7 @@
     width: 502px;
 }
 
-.divgvSerial th {
+.divgvSerialCon th {
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -52,11 +52,11 @@
     padding: 9px;
 }
 
-.divgvSerial td {
+.divgvSerialCon td {
     padding: 10px;
 }
 
-.divgvScanResult {
+.divgvScanResultCon {
     justify-content: center;
     /* display: flex; */
     flex-direction: column;
@@ -66,7 +66,7 @@
     width: 850px;
 }
 
-.divgvScanResult th {
+.divgvScanResultCon th {
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -81,16 +81,20 @@
     font-family: Arial;
 }
 
-.divgvScanResult td {
+.divgvScanResultCon td {
     padding: 10px;
 }
 
-.lblResult{
+.lblResultCon{
     margin: auto;
     margin-left: 40px;
     margin-top: 15px !important;
     background-color: #FFFF99;
     width: 715px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
 }
 
 
