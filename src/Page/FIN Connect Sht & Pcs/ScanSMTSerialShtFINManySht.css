@@ -38,28 +38,14 @@
   margin-top: 100px;
   display: flex;
 }
-.lblResult {
+.lblResultFin{
   margin-left: 50px;
   width: 600px;
   text-align: center;
   font-size: 80px;
   height: 100px;
-  
-}
-#lblResult {
-  background-color: #ffff99;
-  color: rgb(108, 221, 3);
-}
-.pnlBackSide {
-  width: 400px !important;
-  margin: left;
 }
 
-.gvBackSide {
-  width: 400px !important;
-  margin: left;
-  /* margin-top: 20px; */
-}
 .gvBackSide td {
   padding: 3px;
   width: 100px;

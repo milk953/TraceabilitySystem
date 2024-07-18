@@ -202,7 +202,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const Getproduct = () => {
     try {
-      axios.get("/api/GetProductData").then((res) => {
+      axios.get("/api/ScanFin/GetProductData").then((res) => {
         setProduct(res.data);
       });
     } catch (error) {
@@ -242,7 +242,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     if (strLotData.length >= 2) {
       strLot = strLotData[0].trim();
       try {
-        const response = await axios.post("/api/GetProductDataByLot", {
+        const response = await axios.post("/api/ScanFin/GetProductDataByLot", {
           strLot: strLot,
         });
         if (response.data.PRDNAME != "") {
@@ -344,7 +344,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     if (lot != "") {
       setLblLogState(false);
       setlblLog("");
-      const response = await axios.post("/api/GetConnectShtMasterCheckResult", {
+      const response = await axios.post("/api/ScanFin/GetConnectShtMasterCheckResult", {
         strPrdname: prdName,
       });
       if (response.data != "" && response.data.prd_name == "OK") {
@@ -484,7 +484,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }).format(number);
     };
     axios
-      .post("/api/GetLotSerialCountData", {
+      .post("/api/ScanFin/GetLotSerialCountData", {
         dataList: {
           strLot: lot,
           strPlantCode: "G",
@@ -564,7 +564,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     sethfCheckFinInspect("N");
     sethfCheckFinInspectProc("");
     try {
-      const res = await axios.post("/api/GetSerialProductByProduct", {
+      const res = await axios.post("/api/common/GetSerialProductByProduct", {
         prdName: strPrdname,
       });
 
@@ -778,7 +778,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     if (lot.trim() !== "" && dtSerial !== "") {
       var _intRowSerial = 0;
       if (hfCheckWeekCode === "N") {
-        const res = await axios.post("/api/GetWeekCodebyLot", {
+        const res = await axios.post("/api/ScanFin/GetWeekCodebyLot", {
           strLot: lot,
           strProc: hfDateInProc,
         });
@@ -859,7 +859,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           parseInt(dtSerial[i].SEQ === 1) &&
           !_bolError
         ) {
-          const res2 = await axios.post("/api/GetConnectShtPlasmaTime", {
+          const res2 = await axios.post("/api/ScanFin/GetConnectShtPlasmaTime", {
             strSheetnoF: _strShtNoFront,
             strSheetnoB: _strShtNoBack,
             lot_no: txtLotRef,
@@ -874,7 +874,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         if (parseInt(dtSerial[i].SEQ === 1)) {
           let _inCountSeq = 0;
           let _strSerialNoDup = "";
-          const res = await axios.post("/api/GetSheetDuplicateConnectShtType", {
+          const res = await axios.post("/api/ScanFin/GetSheetDuplicateConnectShtType", {
             strSheetnoF: _strShtNoFront,
             strSheetnoB: _strShtNoBack,
             strSheetType: hfSheetType,
@@ -1001,7 +1001,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               var _inCountSeq = 0;
               var _strSerialNoDup = "";
               const res = await axios.post(
-                "/api/GetSerialDuplicateConnectSht",
+                "/api/ScanFin/GetSerialDuplicateConnectSht",
                 {
                   dataList: {
                     strLot: lot,
@@ -1053,7 +1053,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         var jsonData = JSON.stringify(dataSetSerialLotShtELTTable);
         jsonData = jsonData.replace("},{", ",");
         const res = await axios
-            .post("/api/SetSerialLotShtELTTable", jsonData, {
+            .post("/api/ScanFin/SetSerialLotShtELTTable", jsonData, {
               headers: {
                 "Content-Type": "application/json",
               },
@@ -1114,7 +1114,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 FrontSheetBarcode = dtSerial[i].BACK_SIDE;
                 RearSheetBarcode = dtSerial[i].FRONT_SIDE;
               }
-              Result = await axios.post("/api/Get_SPI_AOI_RESULT", {}); // ทำ api
+              Result = await axios.post("/api/ScanFin/Get_SPI_AOI_RESULT", {}); // ทำ api
               if (Result == "NG") {
                 strScanResultUpdate = Result;
               }
@@ -1134,7 +1134,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         var Rollleaf_fetch = "";
         if (!_bolError && hfCheckRollSht != "Y") {
           if ((txtRollLeaf.length = hfConnRollLength)) {
-            const res = await axios.post("/api/GetRollLeafScrapRBMP", {
+            const res = await axios.post("/api/ScanFin/GetRollLeafScrapRBMP", {
               strRollNo: txtRollLeaf,
             });
             if (res.data != "") {
@@ -1151,7 +1151,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               var intCount = 0;
               var rowCount = 0;
               var _strRollLeaf = txtRollLeaf;
-              const res = await axios.post("/api/GetRollLeafDuplicate", {
+              const res = await axios.post("/api/ScanFin/GetRollLeafDuplicate", {
                 strRollLeaf: _strRollLeaf,
               });
               rowCount = res.data.length;
@@ -1239,7 +1239,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           var jsonData = JSON.stringify(dataSetSerialRecordTimeTrayTable);
           jsonData = jsonData.replace("},{", ",");
           const res = await axios
-            .post("/api/SetSerialLotShtTable", jsonData, {
+            .post("/api/ScanFin/SetSerialLotShtTable", jsonData, {
               headers: {
                 "Content-Type": "application/json",
               },
@@ -1266,7 +1266,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             var jsonData = JSON.stringify(dataSetSerialRecordTimeTrayTable);
             jsonData = jsonData.replace("},{", ",");
             const res = await axios
-              .post("/api/SetSerialRecordTimeTrayTable", jsonData, {
+              .post("/api/ScanFin/SetSerialRecordTimeTrayTable", jsonData, {
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -1379,7 +1379,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       var _strSheetNo = dtRowLeaf[i].SHT_NO;
       var _strMachine = dtRowLeaf[i].MACHINE;
       var _strProduct = dtRowLeaf[i].PRODUCT;
-      const res = await axios.post("/api/SetRollLeafTrayTable", {
+      const res = await axios.post("/api/ScanFin/SetRollLeafTrayTable", {
         strOperator: _strOperator,
         strRowUpdate: dtRowLeaf[i].ROW_UPDATE,
         strUpdateFlg: dtRowLeaf[i].UPDATE_FLG,

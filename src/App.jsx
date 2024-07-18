@@ -21,7 +21,7 @@ import Reject from "./Page/Reject/Reject";
 import ScanSheetDispenserTime from "./Page/ScanSheetDispenserTime/ScanSheetDispenserTime";
 import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaStopStart";
 import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
-
+// import ScanFintest from "./Page/FIN Connect Sht & Pcs/ScanSMTSerialShtFINManyShtnewfunc";
 import ELTmaster from './Page/ELT_Master/ELTmaster'
 
 
@@ -50,8 +50,9 @@ const App = () => {
           
 
           {/* View Data */}
-          <Route path='/ELTmaster' element={<ELTmaster />} />       
-
+          <Route path='/ELTmaster' element={<ELTmaster />} />    
+          {/* <Route path='/ScanFintest' element={<ScanFintest />} />    ScanFintest    */}
+          
 
           {/* Maintenance */}
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
