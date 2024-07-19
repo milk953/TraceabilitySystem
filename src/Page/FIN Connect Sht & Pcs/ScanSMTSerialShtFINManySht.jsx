@@ -26,76 +26,85 @@ import "./ScanSMTSerialShtFINManySht.css";
 import Hearder from "../Header/Hearder";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
 import { Input } from "antd";
-import { DisplaySettings } from "@mui/icons-material";
 function ScanSMTSerialShtFINManySht() {
   const {
-    lot,
-    setLot,
-    product,
-    selectproduct,
-    setselectproduct,
-    dtData1,
+    productCombo,
+    productSelect,
+    setProductSelect,
+    lotValue,
+    setLotValue,
+    lotState,
+    btnBack_Click,
+    Fctxtlot,
+    ProductSelect_Change,
+    txtLot_Change,
+    pnlRollLeafState,
+    lblTotalSht,
     lblLog,
     lblLogState,
-    serialData,
-    panalSerialOpen,
-    pnlRollLeafOpen,
-    lblCheckRoll,
-    pnlMachineOpen,
-    lblTotalSht,
-    lblTotalPcs,
-    txtLottxtChange,
-    lblresult,
-    gvScanResult,
-    gvScanResultState,
-    lblresultState,
-    fctextFieldlot,
-    ibtBack,
-    fctextFieldMachine,
-    fctextFileRollLeaf,
-    fcddlProduct,
-    fctxtSideBack,
-    fcgvSerial,
-    fcOpertor,
-    txtRollLeaf,
     txtLotRef,
-    handleProductChange,
-    txtLotRef_TextChanged,
-    gvbacksideOpen,
-    lblresultOpen,
-    ShowTableResult,
-    imageSize,
-    gvBackSide_txtSideback_0,
-    gvBackSide_txtSideback_0_Change,
-    txtOperator_TextChanged,
-    txtRollLeaf_TextChanged,
+    setTxtLotRef,
+    lblTotalPcs,
+    lblCheckRoll,
+    gvBackSideState,
+    gvBackSide,
+    txtRollLeaf,
+    setTxtRollLeaf,
+    FCtxtRollleaf,
+    txtmcno,
+    setTxtmcno,
+    Fctxtmcno,
+    pnlMachineState,
+    FcgvBackside,
+    FcgvFrontside,
+    FcSelectproduct,
+    selectproductState,
+    pnlBoardState,
+    panalSerialState,
+    gvSerial,
+    txtRollLeaf_Change,
+    txtLotRef_Change,
     txtOperator,
-    handleFrontSideChange,
+    setTxtOperator,
+    FctxtOperator,
+    txtOperator_Change,
+    btnSave_Click,
+    btnCancel_Click,
     txtSideFront,
-    fctxtsideFront,
-    handleBackSideChange,
     txtSideBack,
-    handleFrontSide2Change,
-    txtSideFront2,
-    handleCancel,
+    handleBackSideChange,
+    handleFrontSideChange,
+    txtSerial,
+    handletxtSerialChange,
+    txtBoardNoB,
+    setTxtBoardNoB,
+    txtBoardNoF,
+    setTxtBoardNoF,
+    FctxtBoardnoB,
+    FctxtBoardnoF,
+    lblResultState,
+    lblResult,
+    gvScanResult,
+    hideImg,
   } = fn_ScanSMTSerialShtFINManySht();
   useEffect(() => {
-    if (gvbacksideOpen === true) {
-      fctxtSideBack.current.focus();
+    if (gvBackSideState === true) {
+      FcgvBackside.current.focus();
     }
-  }, [gvbacksideOpen]);
+  }, [gvBackSideState]);
   return (
     <div>
       <Hearder />
       <h1>ScanSMTRoollSht</h1>
+      {/* {console.log("gvBackSide", dtSer)} */}
       <Card
         component={Paper}
         style={{
           margin: "auto",
           width: "95%",
-          maxWidth: "1400px",
+          maxWidth: "1450px",
           marginTop: "50px",
-          maxHeight: "1200px",
+          // maxHeight: "5000px",
           minHeight: "200px",
           padding: "20px",
           overflow: "auto",
@@ -116,23 +125,23 @@ function ScanSMTSerialShtFINManySht() {
                   <TableRow>
                     <TableCell sx={{ width: "400px" }}>Lot No.:</TableCell>
                     <TableCell>
-                      <TextField
-                        size="small"
+                      <input
                         id="txtField"
-                        value={lot}
-                        inputRef={fctextFieldlot}
-                        onChange={(e) => {
-                          txtLottxtChange(e.target.value);
-                        }}
+                        value={lotValue}
+                        onChange={(e) => setLotValue(e.target.value)}
+                        disabled={lotState.styled.disabled}
+                        style={lotState.styled}
+                        ref={Fctxtlot}
+                        onBlur={txtLot_Change}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            txtLottxtChange(e.target.value);
+                            txtLot_Change();
                           }
                         }}
-                      ></TextField>
+                      ></input>
                     </TableCell>
                     <TableCell>
-                      <Button onClick={ibtBack}>
+                      <Button onClick={btnBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -141,21 +150,22 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>Product:</TableCell>
                     <TableCell>
                       <FormControl fullWidth>
-                        <Autocomplete
-                          id="ddlProduct"
-                          readOnly={false}
-                          options={product.map((item) => item.prd_name)}
-                          value={selectproduct}
-                          onInputChange={handleProductChange}
-                          getOptionLabel={(option) => option}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              size="small"
-                              inputRef={fcddlProduct}
-                            />
-                          )}
-                        />
+                        <select
+                          onInputChange={(e) =>
+                            ProductSelect_Change(e.target.value)
+                          }
+                          onChange={(e) => ProductSelect_Change(e.target.value)}
+                          // onBlur={ProductSelect_Change}
+                          value={productSelect}
+                          disabled={selectproductState}
+                          ref={FcSelectproduct}
+                        >
+                          {productCombo.map((option, index) => (
+                            <option key={index} value={`${option.prd_name}`}>
+                              {`${option.prd_name}`}
+                            </option>
+                          ))}
+                        </select>
                       </FormControl>
                     </TableCell>
                     <TableCell></TableCell>
@@ -163,27 +173,31 @@ function ScanSMTSerialShtFINManySht() {
                   <TableRow>
                     <TableCell>Lot Ref. No.:</TableCell>
                     <TableCell>
-                      <TextField
+                      <input
                         size="small"
                         id="txtField"
                         value={txtLotRef}
-                        onChange={txtLotRef_TextChanged}
-                      ></TextField>
+                        onChange={
+                          ((e) => setTxtLotRef(e.target.value),
+                          { txtLotRef_Change })
+                        }
+                      ></input>
                     </TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Operator:</TableCell>
                     <TableCell>
-                      <TextField
+                      <input
                         size="small"
                         id="txtField"
-                        inputRef={fcOpertor}
+                        ref={FctxtOperator}
                         value={txtOperator}
                         onChange={(e) => {
-                          txtOperator_TextChanged(e.target.value);
+                          setTxtOperator(e.target.value),
+                            { txtOperator_Change };
                         }}
-                      ></TextField>
+                      ></input>
                     </TableCell>
                     <TableCell></TableCell>
                   </TableRow>
@@ -197,40 +211,81 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>{lblTotalPcs}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
-                  {pnlRollLeafOpen && (
+                  {pnlRollLeafState && (
                     <>
                       <TableRow>
                         <TableCell>Roll Leaf No.:</TableCell>
                         <TableCell>
-                          <TextField
+                          <input
                             size="small"
                             id="txtField"
-                            inputRef={fctextFileRollLeaf}
+                            ref={FCtxtRollleaf}
                             value={txtRollLeaf}
                             onChange={(e) => {
-                              txtRollLeaf_TextChanged(e.target.value);
+                              setTxtRollLeaf(e.target.value);
                             }}
-                          ></TextField>
+                            onBlur={txtRollLeaf_Change}
+                          ></input>
                         </TableCell>
                         <TableCell></TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Check Roll:</TableCell>
-                        <TableCell>{lblCheckRoll}</TableCell>
+                        <TableCell style={lblCheckRoll.styled}>
+                          {lblCheckRoll.text}
+                        </TableCell>
                         <TableCell></TableCell>
                       </TableRow>
                     </>
                   )}
-                  {pnlMachineOpen && (
+                  {pnlMachineState && (
                     <>
                       <TableRow>
                         <TableCell>Machine No.:</TableCell>
                         <TableCell>
-                          <TextField
+                          <input
                             size="small"
                             id="txtField"
-                            inputRef={fctextFieldMachine}
-                          ></TextField>
+                            ref={Fctxtmcno}
+                            value={txtmcno}
+                            onChange={(e) => {
+                              setTxtmcno(e.target.value);
+                            }}
+                          ></input>
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    </>
+                  )}
+                  {pnlBoardState && (
+                    <>
+                      <TableRow>
+                        <TableCell>Bottom Fixture</TableCell>
+                        <TableCell>
+                          <input
+                            size="small"
+                            id="txtField"
+                            ref={FctxtBoardnoB}
+                            value={txtBoardNoB}
+                            onChange={(e) => {
+                              setTxtBoardNoB(e.target.value);
+                            }}
+                          ></input>
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Top Fixture:</TableCell>
+                        <TableCell>
+                          <input
+                            size="small"
+                            id="txtField"
+                            ref={FctxtBoardnoF}
+                            value={txtBoardNoF}
+                            onChange={(e) => {
+                              setTxtBoardNoF(e.target.value);
+                            }}
+                          ></input>
                         </TableCell>
                         <TableCell></TableCell>
                       </TableRow>
@@ -251,122 +306,126 @@ function ScanSMTSerialShtFINManySht() {
                 verticalAlign: "top",
               }}
             >
-              <img
-                style={imageSize}
-                src="src/assets/1.jpg"
-                alt="Description of the image"
-              />
-              {lblresultOpen && (
-                <div className="lblResult">
-                  {lblresultState && (
-                    <Paper
-                      className="lblResultCard"
-                      elevation={3}
+              {hideImg && (
+                <img
+                  style={{
+                    width: "320px",
+                    height: "250px",
+                    padding: "0",
+                    margin: "0",
+                    align: "center",
+                    margin: "auto",
+                  }}
+                  src="src/assets/1.jpg"
+                  alt="Description of the image"
+                />
+              )}
+              {lblResultState && (
+                <div className="lblResultFin">
+                  <Paper
+                    className="lblResultCard"
+                    elevation={3}
+                    style={{
+                      alignItems: "center",
+                      background: " #ff4d4f",
+                    }}
+                  >
+                    <Typography
+                      variant="h4"
                       style={{
-                        alignItems: "center",
-                        background: " #ff4d4f",
-                        display: gvScanResult,
+                        paddingTop: "5px",
+                        color: lblResult.styled.color,
                       }}
                     >
-                      <Typography
-                        variant="h4"
-                        style={{ paddingTop: "5px", color: "#fff" }}
-                      >
-                        {lblresult}
-                      </Typography>
-                    </Paper>
-                  )}
-                  {gvScanResultState && (
-                    <Table
-                      id="gvScanResult"
-                      component={Paper}
-                      style={{ width: "900px" ,margunBottom:"20px"}}
-                    >
-                      <TableHead sx={{ height: "20px" }}>
-                        <TableRow>
-                          <TableCell
-                            sx={{
-                              width: "50px",
-                              height: "10px",
-                              padding: "0px",
-                            }}
-                          >
-                            Sheet No.
+                      {lblResult.text}
+                    </Typography>
+                  </Paper>
+                  <Table
+                    id="gvScanResult"
+                    component={Paper}
+                    style={{ width: "900px", margunBottom: "20px" }}
+                  >
+                    <TableHead sx={{ height: "20px" }}>
+                      <TableRow>
+                        <TableCell
+                          sx={{
+                            width: "50px",
+                            height: "10px",
+                            padding: "0px",
+                          }}
+                        >
+                          Sheet No.
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: "70px",
+                            height: "10px",
+                            padding: "1px",
+                          }}
+                        >
+                          No.
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: "100px",
+                            height: "10px",
+                            padding: "1px",
+                          }}
+                        >
+                          Serial No.
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: "70px",
+                            height: "10px",
+                            padding: "0px",
+                          }}
+                        >
+                          Scan Result
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: "350px",
+                            height: "10px",
+                            padding: "0px",
+                          }}
+                        >
+                          Remark
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {gvScanResult.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell id="gvScanResultSheet">
+                            {row.SHEET}
                           </TableCell>
-                          <TableCell
-                            sx={{
-                              width: "70px",
-                              height: "10px",
-                              padding: "1px",
-                            }}
-                          >
-                            No.
+                          <TableCell id="gvScanResultSeq">{row.SEQ}</TableCell>
+                          <TableCell id="gvScanResultSerial">
+                            {row.SERIAL}
                           </TableCell>
-                          <TableCell
-                            sx={{
-                              width: "100px",
-                              height: "10px",
-                              padding: "1px",
-                            }}
-                          >
-                            Serial No.
+                          <TableCell id="gvScanResultScan">
+                            {row.SCAN_RESULT}
                           </TableCell>
-                          <TableCell
-                            sx={{
-                              width: "70px",
-                              height: "10px",
-                              padding: "0px",
-                            }}
-                          >
-                            Scan Result
-                          </TableCell>
-                          <TableCell
-                            sx={{
-                              width: "350px",
-                              height: "10px",
-                              padding: "0px",
-                            }}
-                          >
-                            Remark
+                          <TableCell id="gvScanResultRemark">
+                            {row.REMARK}
                           </TableCell>
                         </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {gvScanResult.map((row, index) => (
-                          <TableRow key={index}>
-                            <TableCell id="gvScanResultSheet">
-                              {row.SHEET}
-                            </TableCell>
-                            <TableCell id="gvScanResultSeq">
-                              {row.SEQ}
-                            </TableCell>
-                            <TableCell id="gvScanResultSerial">
-                              {row.SERIAL}
-                            </TableCell>
-                            <TableCell id="gvScanResultScan">
-                              {row.SCAN_RESULT}
-                            </TableCell>
-                            <TableCell id="gvScanResultRemark">
-                              {row.REMARK}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                     
-                  )}
-                   &nbsp; &nbsp;
+                      ))}
+                    </TableBody>
+                  </Table>
+                  &nbsp; &nbsp;
                 </div>
               )}
             </td>
           </tr>
           <tr>
             <td>
-              {gvbacksideOpen && (
+              {gvBackSideState && (
                 <div className="pnlBackside">
                   <Table component={Paper} className="gvBackSide">
                     <TableBody>
-                      {dtData1.map((row, index) => (
+                      {gvBackSide.map((row, index) => (
                         <TableRow
                           key={index}
                           style={{ backgroundColor: "White" }}
@@ -374,7 +433,7 @@ function ScanSMTSerialShtFINManySht() {
                           <TableCell>{row.SEQ}</TableCell>
                           <TableCell>{row.TITLE}</TableCell>
                           <TableCell>
-                            <Input
+                            <input
                               type="text"
                               style={{
                                 width: "98%",
@@ -382,21 +441,21 @@ function ScanSMTSerialShtFINManySht() {
                               }}
                               maxLength="30"
                               className="styleEnable"
-                              ref={fctxtSideBack}
+                              ref={FcgvBackside}
                               value={txtSideBack[index]}
                               onChange={(e) => handleBackSideChange(index, e)}
                             />
-                            <Input
+                            <input
                               type="text"
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
                               }}
                               maxLength="30"
-                              inputRef={fctxtsideFront}
+                              ref={FcgvFrontside}
                               className="styleEnable"
-                              value={txtSideFront2[index]}
-                              onChange={(e) => handleFrontSide2Change(index, e)}
+                              value={txtSideFront[index]}
+                              onChange={(e) => handleFrontSideChange(index, e)}
                             />
                           </TableCell>
                         </TableRow>
@@ -413,7 +472,7 @@ function ScanSMTSerialShtFINManySht() {
                 </div>
               )}
               <div className="panelgvSerial">
-                {panalSerialOpen && (
+                {panalSerialState && (
                   <Table classname="gvSerial" component={Paper}>
                     <TableHead className="gvSerialHead">
                       <TableRow>
@@ -425,7 +484,7 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {serialData.map((row, index) => (
+                      {gvSerial.map((row, index) => (
                         <TableRow
                           key={index}
                           style={{ padding: "4px 4px 4px 4px" }}
@@ -454,8 +513,8 @@ function ScanSMTSerialShtFINManySht() {
                               }}
                               maxLength="30"
                               className="styleEnable"
-                              value={txtSideFront[index]}
-                              onChange={(e) => handleFrontSideChange(index, e)}
+                              value={txtSerial[index]}
+                              onChange={(e) => handletxtSerialChange(index, e)}
                             />
                           </TableCell>
                         </TableRow>
@@ -469,11 +528,14 @@ function ScanSMTSerialShtFINManySht() {
                             gap: "10px",
                           }}
                         >
-                          <Button className="BtSave" onClick={ShowTableResult}>
-                            OK
+                          <Button className="BtSave" onClick={btnSave_Click}>
+                            SAVE
                           </Button>
                           &nbsp;&nbsp;
-                          <Button className="BtCancel" onClick={handleCancel}>
+                          <Button
+                            className="BtCancel"
+                            onClick={btnCancel_Click}
+                          >
                             {" "}
                             Cancel
                           </Button>
