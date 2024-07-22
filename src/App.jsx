@@ -25,8 +25,6 @@ import SheetBincheking from "./Page/SheetBinChecking/SheetBinCheck"
 import ScanSMTSerialSpotHeat from "./Page/ScanSMTSerialSpotHeat/ScanSMTSerialSpotHeat"
 import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
 
-import ELTmaster from './Page/ELT_Master/ELTmaster'
-
 
 
 
