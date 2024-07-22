@@ -129,16 +129,11 @@ function fn_ScanSMTSerialRecordTime() {
         }
     }, [eventArgument]);
 
-    useEffect(() => {
-        if (Productdata.length > 0) {
-            setselProduct(Productdata[0].prd_name);
-        }
-    }, [Productdata]);
-
     const getProductData = async () => {
         axios.get("/api/Common/GetProductData").then((res) => {
             let data = res.data.flat();
             setProductdata(data);
+            setselProduct(data[0].prd_name);
         });
     };
 
@@ -236,7 +231,7 @@ function fn_ScanSMTSerialRecordTime() {
                     getCountDataBylot(strLot);
                     try {
                         setselProduct(strPrdName);
-                        getProductSerialMaster();
+                        getProductSerialMaster(strPrdName);
                         SetMode("SERIAL");
                     } catch (error) {
                         const intProduct = strPrdName.indexOf('-', 12);
@@ -248,7 +243,7 @@ function fn_ScanSMTSerialRecordTime() {
                                     .trim();
                             try {
                                 setselProduct(strPrdName);
-                                getProductSerialMaster();
+                                getProductSerialMaster(strPrdName);
                                 SetMode("SERIAL");
                             } catch (error) {
                                 setlblLog("Product " + strPrdName + " not found.");
@@ -319,7 +314,7 @@ function fn_ScanSMTSerialRecordTime() {
         }
     };
 
-    const getProductSerialMaster = async () => {
+    const getProductSerialMaster = async (strPrdName) => {
         let dtPro = "";
         sethfSerialLength("0");
         sethfSerialFixFlag("N");
@@ -358,11 +353,11 @@ function fn_ScanSMTSerialRecordTime() {
         sethfSerialStartCode("");
 
         axios.post("/api/Common/GetSerialProductByProduct", {
-            prdName: selProduct,
+            prdName: strPrdName,
         })
             .then((res) => {
-                dtPro = res.data;
-                if (dtPro.length > 0) {
+                dtPro = res.data[0];
+                if (dtPro != null) {
                     sethfSerialLength(dtPro.SLM_SERIAL_LENGTH);
                     sethfSerialFixFlag(dtPro.SLM_FIX_FLAG);
                     sethfSerialDigit(dtPro.SLM_FIX_DIGIT);
@@ -637,7 +632,7 @@ function fn_ScanSMTSerialRecordTime() {
 
             if (drRow.SERIAL.trim() !== "") {
                 for (let intNo = 0; intNo < intRow - 1; intNo++) {
-                    if (drRow.SERIAL.trim() === gvSerial.rows[intNo].querySelector("#txtSerial").value.toUpperCase().trim()) {
+                    if (drRow.SERIAL.trim() === gvSerial.rows[intNo].txtgvSerial.toUpperCase().trim()) {
                         drRow.ROW_COUNT = 9;
                         break;
                     }
@@ -685,14 +680,14 @@ function fn_ScanSMTSerialRecordTime() {
         if (!bolTrayError) {
 
             for (let i = 0; i < dtSerial.length; i++) {
-            //ลองเทสไปก่อน
-            axios.post("/api/Common/getSerialRecordTimeTrayTable", {
-                data: dtSerial[i],
-                strPlantCode: plantCode,
-            })
-                .then((res) => {
-                    console.log(res.data.row_count);
+                //ลองเทสไปก่อน
+                axios.post("/api/Common/getSerialRecordTimeTrayTable", {
+                    data: dtSerial[i],
+                    strPlantCode: plantCode,
                 })
+                    .then((res) => {
+                        console.log(res.data.row_count);
+                    })
             }
 
             if (hfCheckWeekCode === "Y" && selrbtPcsSht === "rbtPcs") {
@@ -925,35 +920,41 @@ function fn_ScanSMTSerialRecordTime() {
             setvisiblelog(false);
             setlblLog("");
 
-            if (_strScanResultAll !== "NG") {
-                axios.post("/api/Common/setSerialRecordTimeTrayTable", {
-                    dataList: [
-                        {
-                            ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                            UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                            LOT: dtSerial[i].LOT,
-                            PRODUCT: dtSerial[i].PRODUCT,
-                            MACHINE: dtSerial[i].MACHINE,
-                            OPERATER: txtOperator,
-                            Program: "frm_ScanSMTSerialRecordTime",
-                            TYPE: dtSerial[i].DATA_TYPE,
-                            SERIAL: dtSerial[i].SERIAL
-                        },
-                    ],
-                })
-                    .then((res) => {
-                        _strErrorUpdate = res.data.p_error;
-                        if (_strErrorUpdate !== "") {
-                            _strScanResultAll = "NG";
-                            setlblResult(_strScanResultAll);
-                            setlblResultcolor("red");
-                            setlblLog(_strErrorUpdate);
-                            setvisiblelog(true);
-                        }
+            for (let i = 0; i < dtSerial.length; i++) {
+                if (_strScanResultAll !== "NG") {
+                    axios.post("/api/Common/setSerialRecordTimeTrayTable", {
+                        dataList: [
+                            {
+                                strUserID: txtOperator,
+                                strProgram: "frm_ScanSMTSerialRecordTime",
+                                strPlantCode: plantCode,
+                                strStation: hfUserStation,
+                                data: [{
+                                    SERIAL: dtSerial[i].SERIAL,
+                                    MACHINE: dtSerial[i].MACHINE,
+                                    PRODUCT: dtSerial[i].PRODUCT,
+                                    LOT: dtSerial[i].LOT,
+                                    DATA_TYPE: dtSerial[i].DATA_TYPE,
+                                    ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                                    UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                                }],
+                            },
+                        ],
                     })
-                    .catch((error) => {
-                        alert(error);
-                    });
+                        .then((res) => {
+                            _strErrorUpdate = res.data.p_error;
+                            if (_strErrorUpdate !== "") {
+                                _strScanResultAll = "NG";
+                                setlblResult(_strScanResultAll);
+                                setlblResultcolor("red");
+                                setlblLog(_strErrorUpdate);
+                                setvisiblelog(true);
+                            }
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                }
             }
         }
 
