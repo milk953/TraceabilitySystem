@@ -69,7 +69,7 @@ function fn_ScanSMTSerialControlTime() {
     const [gvSerialData, setgvSerialData] = useState([]);
     const [gvScanResult, setgvScanResult] = useState(false);
     const [gvScanData, setgvScanData] = useState([]);
-    const [txtgvSerial, settxtgvSerial] = useState(Array(hfSerialCount).fill(""));
+    const [txtgvSerial, settxtgvSerial] = useState("");
 
     //Disabled
     const [txtMachineDisabled, settxtMachineDisabled] = useState(false);
@@ -108,20 +108,15 @@ function fn_ScanSMTSerialControlTime() {
 
     useEffect(() => {
         if (eventArgument === "Save") {
-            // setSerialDataTray();
+            setSerialDataTray();
         }
     }, [eventArgument]);
-
-    useEffect(() => {
-        if (Productdata.length > 0) {
-            setselProduct(Productdata[0].prd_name);
-        }
-    }, [Productdata]);
 
     const getProductData = async () => {
         axios.get("/api/Common/GetProductData").then((res) => {
             let data = res.data.flat();
             setProductdata(data);
+            setselProduct(data[0].prd_name);
         });
     };
 
@@ -169,76 +164,82 @@ function fn_ScanSMTSerialControlTime() {
         let strPrdName = "";
         const strLotData = txtLotNo.toUpperCase().split(";");
         strLot = strLotData[0];
-        axios.post("/api/Common/getProductNameByLot", {
-            strLot: strLot,
-        })
-            .then((res) => {
-                strPrdName = res.data.prdName[0];
-                console.log("PrdName:", strPrdName);
 
-                if (strPrdName !== "") {
-                    setlblLog("");
-                    setvisiblelog(false);
-                    settxtLotNo(strLot);
-                    setlblLot(strLot);
-                    try {
-                        setselProduct(strPrdName);
-                        getProductSerialMaster();
-                        if (hfProcControlTimeCheck === "Y") {
-                            SetMode("SERIAL");
-                        } else {
-                            setlblLog("Product " + selProduct + " not control time!");
-                            setvisiblelog(true);
-                            setselProduct(Productdata[0].prd_name);
-                            SetMode("LOT");
-                        }
-                    } catch (error) {
-                        const intProduct = strPrdName.indexOf('-', 12);
-                        if (intProduct > -1) {
-                            strPrdName =
-                                strPrdName.substring(0, intProduct) +
-                                strPrdName
-                                    .substring(intProduct + 1, intProduct + 11)
-                                    .trim();
-                            try {
-                                setselProduct(strPrdName);
-                                getProductSerialMaster();
+        try {
+            const res = await axios.post("/api/Common/getProductNameByLot", {
+                strLot: strLot,
+            });
+            strPrdName = res.data.prdName[0];
+            console.log("PrdName:", strPrdName);
 
-                                if (hfProcControlTimeCheck === "Y") {
-                                    SetMode("SERIAL");
-                                } else {
-                                    setlblLog("Product " + selProduct + " not control time!");
-                                    setvisiblelog(true);
-                                    setselProduct(Productdata[0].prd_name);
-                                    SetMode("LOT");
-                                }
-                            } catch (error) {
-                                setlblLog("Product " + strPrdName + " not found.");
+            if (strPrdName !== "") {
+                setlblLog("");
+                setvisiblelog(false);
+                settxtLotNo(strLot);
+                setlblLot(strLot);
+                const datagetPd = await getProductSerialMaster(strPrdName);
+                console.log(datagetPd, "datagetPd");
+
+                try {
+
+                    setselProduct(strPrdName);
+
+                    if (datagetPd.prm_proc_control_time_flg === "Y") {
+                        SetMode("SERIAL");
+                    } else {
+                        setlblLog(`Product ${strPrdName} not control time!`);
+                        setvisiblelog(true);
+                        setselProduct(Productdata[0].prd_name);
+                        SetMode("LOT");
+                    }
+                } catch (error) {
+                    const intProduct = strPrdName.indexOf('-', 12);
+                    if (intProduct > -1) {
+                        strPrdName = strPrdName.substring(0, intProduct) + strPrdName.substring(intProduct + 1, intProduct + 11).trim();
+                        try {
+                            // const datagetPd = await getProductSerialMaster(strPrdName);
+                            // console.log("มายังงหลังเช็ค", datagetPd);
+
+                            setselProduct(strPrdName);
+
+                            if (datagetPd.prm_proc_control_time_flg === "Y") {
+                                SetMode("SERIAL");
+                            } else {
+                                setlblLog(`Product ${strPrdName} not control time!`);
                                 setvisiblelog(true);
-                                ddlProduct.current.focus();
+                                setselProduct(Productdata[0].prd_name);
+                                SetMode("LOT");
                             }
-                        } else {
-                            setlblLog("Product " + strPrdName + " not found.");
+                        } catch (error2) {
+                            setlblLog(`Product ${strPrdName} not found.`);
                             setvisiblelog(true);
                             ddlProduct.current.focus();
                         }
+                    } else {
+                        setlblLog(`Product ${strPrdName} not found.`);
+                        setvisiblelog(true);
+                        ddlProduct.current.focus();
                     }
-                } else {
-                    setselProduct(Productdata[0].prd_name);
-                    settxtLotNo("");
-                    setlblLot("");
-                    setgvSerialData([]);
-                    setlblLog("Invalid lot no.");
-                    setvisiblelog(true);
-                    sethfMode("LOT");
-                    inputLot.current.focus();
                 }
-            });
+            } else {
+                setselProduct(Productdata[0].prd_name);
+                settxtLotNo("");
+                setlblLot("");
+                setgvSerialData([]);
+                setlblLog("Invalid lot no.");
+                setvisiblelog(true);
+                sethfMode("LOT");
+                inputLot.current.focus();
+            }
+        } catch (error) {
+            alert(error);
+        }
     };
+
 
     const ibtBackClick = () => {
         settxtLotNo("");
-        setistxtLotDisabled(false);
+        settxtLotDisabled(false);
         setpnlSerial(false);
         setselProduct(Productdata[0].prd_name);
         SetMode("LOT");
@@ -253,7 +254,7 @@ function fn_ScanSMTSerialControlTime() {
             setvisiblelog(false);
             SetMode("SERIAL");
         } else if (hfProcControlTimeCheck === "N") {
-            setlblLog("Product " + ddlProduct.SelectedValue + " not control time!");
+            setlblLog("Product " + selProduct + " not control time!");
             setvisiblelog(true);
             setselProduct(Productdata[0].prd_name);
             SetMode("LOT");
@@ -295,7 +296,18 @@ function fn_ScanSMTSerialControlTime() {
 
         if (!bolTrayError) {
             if (hfProcControlTimeCheck === "Y") {
-                //api GetSerialProcControlTimeTable
+                try {
+                    const res = await axios.post("/api/getserialproccontroltimetable", {
+                        strPlantCode: plantCode,
+                        strProc: hfProcControl,
+                        strConnShtPcsFlg: hfConnShtPcsTime,
+                        dblTime: parseFloat(hfProcControlTime),
+                        data: dtSerial
+                    });
+                    console.log("SSSS", res.data.strresult);
+                } catch (error) {
+                    alert(error);
+                }
             }
 
             for (let i = 0; i < dtSerial.length; i++) {
@@ -463,19 +475,19 @@ function fn_ScanSMTSerialControlTime() {
                     strProc: hfProcControl,
                     data: dtSerial[i]
                 })
-                .then((res) => {
-                    _strErrorUpdate = res.data.p_error;
-                    if (_strErrorUpdate.trim() !== "") {
-                        _strScanResultAll = "NG";
-                        setlblResult(_strScanResultAll);
-                        setlblResultcolor("red");
-                        setlblLog(_strErrorUpdate);
-                        setvisiblelog(true);
-                    }
-                })
-                .catch((error) => {
-                    alert(error);
-                });
+                    .then((res) => {
+                        _strErrorUpdate = res.data.p_error;
+                        if (_strErrorUpdate.trim() !== "") {
+                            _strScanResultAll = "NG";
+                            setlblResult(_strScanResultAll);
+                            setlblResultcolor("red");
+                            setlblLog(_strErrorUpdate);
+                            setvisiblelog(true);
+                        }
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
             }
         }
 
@@ -496,7 +508,7 @@ function fn_ScanSMTSerialControlTime() {
         getInitialSerial();
     };
 
-    const getProductSerialMaster = async () => {
+    const getProductSerialMaster = async (strPrdName) => {
         let dtProductSerial = "";
         sethfSerialLength("0");
         sethfSerialFixFlag("N");
@@ -537,50 +549,56 @@ function fn_ScanSMTSerialControlTime() {
         sethfConnShtPcsTime("N");
         sethfSerialStartCode("");
 
-        axios.post("/api/Common/GetSerialProductByProduct", {
-            prdName: selProduct,
-        })
+        await axios
+            .post("/api/common/GetSerialProductByProduct", {
+                prdName: strPrdName,
+            })
             .then((res) => {
-                dtProductSerial = res.data;
-                if (dtProductSerial.length > 0) {
-                    sethfSerialLength(dtProductSerial.SLM_SERIAL_LENGTH);
-                    sethfSerialFixFlag(dtProductSerial.SLM_FIX_FLAG);
-                    sethfSerialDigit(dtProductSerial.SLM_FIX_DIGIT);
-                    sethfSerialStartDigit(dtProductSerial.SLM_FIX_START_DIGIT);
-                    sethfSerialEndDigit(dtProductSerial.SLM_FIX_END_DIGIT);
-                    sethfTrayFlag(dtProductSerial.SLM_TRAY_FLAG);
-                    sethfTrayLength(dtProductSerial.SLM_TRAY_LENGTH);
-                    sethfTestResultFlag(dtProductSerial.SLM_TEST_RESULT_FLAG);
+                dtProductSerial = res.data[0];
+                if (dtProductSerial != "") {
+                    sethfSerialLength(dtProductSerial.slm_serial_length);
+                    sethfSerialFixFlag(dtProductSerial.slm_fix_flag);
+                    sethfSerialDigit(dtProductSerial.slm_fix_digit);
+                    sethfSerialStartDigit(dtProductSerial.slm_fix_start_digit);
+                    sethfSerialEndDigit(dtProductSerial.slm_fix_end_digit);
+                    sethfTrayFlag(dtProductSerial.slm_tray_flag);
+                    sethfTrayLength(dtProductSerial.slm_tray_length);
+                    sethfTestResultFlag(dtProductSerial.slm_test_result_flag);
                     sethfSerialCount(txtTotalPcs);
-                    sethfAutoScan(dtProductSerial.SLM_AUTO_SCAN);
-                    sethfConfigCheck(dtProductSerial.PRM_BARCODE_REQ_CONFIG);
-                    sethfConfigCode(dtProductSerial.PRM_CONFIG_CODE);
-                    sethfConfigStart(dtProductSerial.PRM_START_CONFIG);
-                    sethfConfigEnd(dtProductSerial.PRM_END_CONFIG);
-                    sethfConfigRuning(dtProductSerial.PRM_RUNNING_REQ_CONFIG);
-                    sethfDuplicateStart(dtProductSerial.PRM_DUPLICATE_START);
-                    sethfDuplicateEnd(dtProductSerial.PRM_DUPLICATE_END);
-                    sethfChipIDCheck(dtProductSerial.PRM_CHECK_CHIP_ID_FLG);
-                    sethfCheckPrdSht(dtProductSerial.PRM_REQ_CHECK_PRD_SHT);
-                    sethfCheckPrdShtStart(dtProductSerial.PRM_CHECK_PRD_SHT_START);
-                    sethfCheckPrdShtEnd(dtProductSerial.PRM_CHECK_PRD_SHT_END);
-                    sethfCheckPrdAbbr(dtProductSerial.PRM_ABBR);
-                    sethfPlasmaCheck(dtProductSerial.PRM_PLASMA_TIME_FLG);
-                    sethfPlasmaTime(dtProductSerial.PRM_PLASMA_TIME);
-                    sethfCheckStartSeq(dtProductSerial.PRM_REQ_START_SEQ_FLG);
-                    sethfCheckStartSeqCode(dtProductSerial.PRM_START_SEQ_CODE);
-                    sethfCheckStartSeqStart(dtProductSerial.PRM_START_SEQ_START);
-                    sethfCheckStartSeqEnd(dtProductSerial.PRM_START_SEQ_END);
-                    sethfCheckDateInProc(dtProductSerial.PRM_DATE_INPROC_FLG);
-                    sethfDateInProc(dtProductSerial.PRM_DATE_INPROC);
-                    sethfWeekCodeType(dtProductSerial.PRM_DATE_TYPE);
-                    sethfCheckWeekCode(dtProductSerial.PRM_CHECK_WEEKCODE_FLG);
-                    sethfCheckWeekCodeStart(dtProductSerial.PRM_CHECK_WEEKCODE_START);
-                    sethfCheckWeekCodeEnd(dtProductSerial.PRM_CHECK_WEEKCODE_END);
-                    sethfSerialStartCode(dtProductSerial.PRM_SERIAL_START_CODE);
-                    sethfSerialInfo(dtProductSerial.PRM_ADDITIONAL_INFO);
+                    sethfAutoScan(dtProductSerial.slm_auto_scan);
+                    sethfConfigCheck(dtProductSerial.prm_barcode_req_config);
+                    sethfConfigCode(dtProductSerial.prm_config_code);
+                    sethfConfigStart(dtProductSerial.prm_start_config);
+                    sethfConfigEnd(dtProductSerial.prm_end_config);
+                    sethfConfigRuning(dtProductSerial.prm_running_req_config);
+                    sethfDuplicateStart(dtProductSerial.prm_duplicate_start);
+                    sethfDuplicateEnd(dtProductSerial.prm_duplicate_end);
+                    sethfChipIDCheck(dtProductSerial.prm_check_chip_id_flg);
+                    sethfCheckPrdSht(dtProductSerial.prm_req_check_prd_sht);
+                    sethfCheckPrdShtStart(dtProductSerial.prm_check_prd_sht_start);
+                    sethfCheckPrdShtEnd(dtProductSerial.prm_check_prd_sht_end);
+                    sethfCheckPrdAbbr(dtProductSerial.prm_abbr);
+                    sethfPlasmaCheck(dtProductSerial.prm_plasma_time_flg);
+                    sethfPlasmaTime(dtProductSerial.prm_plasma_time);
+                    sethfCheckStartSeq(dtProductSerial.prm_req_start_seq_flg);
+                    sethfCheckStartSeqCode(dtProductSerial.prm_start_seq_code);
+                    sethfCheckStartSeqStart(dtProductSerial.prm_start_seq_start);
+                    sethfCheckStartSeqEnd(dtProductSerial.prm_start_seq_end);
+                    sethfCheckDateInProc(dtProductSerial.prm_date_inproc_flg);
+                    sethfDateInProc(dtProductSerial.prm_date_inproc);
+                    sethfWeekCodeType(dtProductSerial.prm_date_type);
+                    sethfCheckWeekCode(dtProductSerial.prm_check_weekcode_flg);
+                    sethfCheckWeekCodeStart(dtProductSerial.prm_check_weekcode_start);
+                    sethfCheckWeekCodeEnd(dtProductSerial.prm_check_weekcode_end);
+                    sethfProcControlTimeCheck(dtProductSerial.prm_proc_control_time_flg);
+                    sethfProcControlTime(dtProductSerial.prm_proc_control_time);
+                    sethfConnShtPcsTime(dtProductSerial.prm_conn_sht_control_time_flg);
+                    sethfSerialStartCode(dtProductSerial.prm_serial_start_code);
+                    console.log("hfProcControlTimeCheck:", dtProductSerial.prm_proc_control_time_flg);
+
                 }
             });
+        return dtProductSerial;
     };
 
     const getInputSerial = () => {
@@ -749,11 +767,28 @@ function fn_ScanSMTSerialControlTime() {
         }
     };
 
+    const handleChangeSerial = (index, event) => {
+        const newValue = [...txtgvSerial];
+        newValue[index] = event.target.value;
+        settxtgvSerial(newValue);
+    };
+
+    const btnSaveClick = () => {
+        if (eventArgument !== "Save" && hfMode === "SERIAL") {
+            setSerialDataTray();
+        }
+    };
+
+    const btnCancelClick = () => {
+        SetMode("SERIAL");
+    };
+
     return {
         txtMachine, settxtMachine, handleChangeMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtLotNo, settxtLotNo, selProduct,
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick
     }
 };
 

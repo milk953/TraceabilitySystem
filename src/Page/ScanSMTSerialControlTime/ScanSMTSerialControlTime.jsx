@@ -40,6 +40,7 @@ function ScanSMTSerialControlTime() {
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick
     } = fn_ScanSMTSerialControlTime();
 
     return (
@@ -226,15 +227,15 @@ function ScanSMTSerialControlTime() {
                                             onChange={(e) => {
                                                 settxtLotNo(e.target.value);
                                             }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         handleChangeLot();
-                                        //     }
-                                        // }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleChangeLot();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon" >
+                                        <Button className="btIcon" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
                                                 <BackspaceIcon
                                                     style={{
@@ -251,7 +252,7 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                     <TableCell>
                                         <Autocomplete
-                                            id="select"
+                                            id="selectPdControl"
                                             disabled={selProDisabled}
                                             ref={ddlProduct}
                                             style={{
@@ -259,7 +260,7 @@ function ScanSMTSerialControlTime() {
                                             }}
                                             value={selProduct}
                                             onChange={(e, value) => handleChangeProduct(value)}
-                                            options={Productdata.map((item) => item.prd_name || null)}
+                                            options={Productdata.map((item) => item.prd_name)}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
@@ -299,140 +300,135 @@ function ScanSMTSerialControlTime() {
                         </Typography>
                     </Paper>
 
-                    {/* {visiblelog && ( */}
-                    <Card
-                        component={Paper}
-                        style={{
-                            width: "452px",
-                            height: "40px",
-                            margin: 'auto',
-                            textAlign: "center",
-                            background: "#BB2525",
-                            paddingTop: "16px",
-                            marginTop: "1px",
-                            marginLeft: "23px",
-                        }}
-                    >
-                        <Typography
-                            variant="h5"
-                            style={{ color: "yellow" }}
-                        >
-                            {lblLog}
-                        </Typography>
-                    </Card>
-                    {/* )} */}
-
-                    {/* {pnlSerial && ( */}
-                    <div className="divgvSerial" style={{ position: "relative" }}>
-                        <TableContainer
+                    {visiblelog && (
+                        <Card
                             component={Paper}
                             style={{
-                                width: "100%",
-                                marginBottom: "10px",
-                                height: "180px",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-between",
+                                width: "452px",
+                                height: "40px",
+                                margin: 'auto',
+                                textAlign: "center",
+                                background: "#BB2525",
+                                paddingTop: "16px",
+                                marginTop: "1px",
+                                marginLeft: "23px",
                             }}
                         >
-                            <Table
-                                sx={{
-                                    minWidth: 400,
-                                    '& .MuiTableHead-root': {
-                                        position: 'sticky',
-                                        top: 0,
-                                        zIndex: 1,
-                                        background: 'white',
-                                    },
+                            <Typography
+                                variant="h5"
+                                style={{ color: "yellow" }}
+                            >
+                                {lblLog}
+                            </Typography>
+                        </Card>
+                    )}
+
+                    {pnlSerial && (
+                        <div className="divgvSerial" style={{ position: "relative" }}>
+                            <TableContainer
+                                component={Paper}
+                                style={{
+                                    width: "100%",
+                                    marginBottom: "10px",
+                                    height: "180px",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
                                 }}
-                                aria-label="simple table"
                             >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>No.</TableCell>
-                                        <TableCell>Serial No.</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {/* {Array.from({ length: hfSerialCount }, (_, index) => ( */}
-                                    <TableRow>
-                                        <TableCell
-                                            style={{ textAlign: "center" }}
-                                        >
-                                            {/* {index + 1} */}
-                                        </TableCell>
-                                        <TableCell>
-                                            <TextField
-                                                id="txtfield"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtgvSerial[index]}
-                                                inputRef={inputgvSerial}
-                                            // onChange={(e) => {
-                                            //     handleChangeSerial(index, e);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeSerial(index, e)
-                                            //     }
-                                            // }}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    {/* ))} */}
-                                </TableBody>
-                            </Table>
-                            <div style={{
-                                marginTop: "auto",
-                                display: "flex",
-                                justifyContent: "center",
-                                gap: "10px",
-                                marginLeft: "70px",
-                                marginBottom: "2px"
-                            }}
-                            >
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    style={{ marginRight: "20px" }}
-                                // onClick={btnSaveClick}
+                                <Table
+                                    sx={{
+                                        minWidth: 400,
+                                        '& .MuiTableHead-root': {
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                            background: 'white',
+                                        },
+                                    }}
+                                    aria-label="simple table"
                                 >
-                                    Save
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    color="error"
-                                // onClick={btnCancelClick}
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>No.</TableCell>
+                                            <TableCell>Serial No.</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {gvSerialData.map((item, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell
+                                                    style={{ textAlign: "center" }}
+                                                >
+                                                    {item.SEQ}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <TextField
+                                                        id="txtfield"
+                                                        size="small"
+                                                        fullWidth
+                                                        value={txtgvSerial[index]}
+                                                        inputRef={inputgvSerial}
+                                                        onChange={(e) => {
+                                                            handleChangeSerial(index, e);
+                                                        }}
+                                                    />
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                                <div style={{
+                                    marginTop: "auto",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    gap: "10px",
+                                    marginLeft: "70px",
+                                    marginBottom: "2px"
+                                }}
                                 >
-                                    Cancel
-                                </Button>
-                            </div>
-                        </TableContainer>
-                    </div>
-                    {/* )} */}
+                                    <Button
+                                        variant="contained"
+                                        size="small"
+                                        style={{ marginRight: "20px" }}
+                                        onClick={btnSaveClick}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        size="small"
+                                        color="error"
+                                        onClick={btnCancelClick}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </div>
+                            </TableContainer>
+                        </div>
+                    )}
                 </Box>
 
-                {/* <img
+                <img
                     style={{
                         width: "320px",
                         height: "250px",
                         marginLeft: "280px",
-                        // display: gvScanResult ? 'none' : 'block'
+                        display: gvScanResult ? 'none' : 'block'
                     }}
                     src="src/assets/1.jpg" // Import the image
                     alt="Description of the image"
-                /> */}
+                />
 
                 <div className="divgvScanResultCon" style={{ position: "relative" }}>
                     <div className="lblResultCon"
                         style={{
-                            // display: gvScanResult ? 'block' : 'none'
+                            display: gvScanResult ? 'block' : 'none'
                         }}
                     >
                         <Typography
                             variant="h4"
-                        // color={lblResultcolor}
+                            color={lblResultcolor}
                         >
                             {lblResult} lblResult
                         </Typography>
@@ -443,7 +439,7 @@ function ScanSMTSerialControlTime() {
                             width: "87%",
                             marginBottom: "10px",
                             height: "250px",
-                            // display: gvScanResult ? 'block' : 'none'
+                            display: gvScanResult ? 'block' : 'none'
                         }}
                     >
                         <Table
@@ -467,35 +463,36 @@ function ScanSMTSerialControlTime() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {/* {Array.from(
-                                    { length: gvScanData.length }, (_, index) => ( */}
-                                <TableRow >
-                                    <TableCell
-                                        style={{ textAlign: 'center' }}
-                                    >
-                                        {/* {gvScanData[index].SEQ} */}
-                                    </TableCell>
-                                    <TableCell
-                                        style={{ textAlign: 'left' }}
-                                    >
-                                        {/* {gvScanData[index].SERIAL} */}
-                                    </TableCell>
-                                    <TableCell
-                                        style={{
-                                            textAlign: 'center',
-                                            // backgroundColor: gvScanData[index].SCAN_RESULT === 'NG' ? 'red' : 'inherit'
-                                        }}
-                                    >
-                                        {/* {gvScanData[index].SCAN_RESULT} */}
-                                    </TableCell>
-                                    <TableCell
-                                        style={{ textAlign: 'left' }}
-                                    >
-                                        {/* {gvScanData[index].REMARK} */}
-                                    </TableCell>
-                                </TableRow>
-                                {/* )
-                                )} */}
+                                {Array.from(
+                                    { length: gvScanData.length },
+                                    (_, index) => (
+                                        <TableRow >
+                                            <TableCell
+                                                style={{ textAlign: 'center' }}
+                                            >
+                                                {gvScanData[index].SEQ}
+                                            </TableCell>
+                                            <TableCell
+                                                style={{ textAlign: 'left' }}
+                                            >
+                                                {gvScanData[index].SERIAL}
+                                            </TableCell>
+                                            <TableCell
+                                                style={{
+                                                    textAlign: 'center',
+                                                    backgroundColor: gvScanData[index].SCAN_RESULT === 'NG' ? '#ff4d4f' : 'inherit'
+                                                }}
+                                            >
+                                                {gvScanData[index].SCAN_RESULT}
+                                            </TableCell>
+                                            <TableCell
+                                                style={{ textAlign: 'left' }}
+                                            >
+                                                {gvScanData[index].REMARK}
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                )}
                             </TableBody>
                         </Table>
                     </TableContainer>

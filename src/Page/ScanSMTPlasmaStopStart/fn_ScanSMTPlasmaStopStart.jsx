@@ -75,12 +75,6 @@ function fn_ScanSMTPlasmaStopStart() {
     PageLoad();
   }, []);
 
-  useEffect(() => {
-    if (Productdata.length > 0) {
-      setselProduct(Productdata[0].prd_name);
-    }
-  }, [Productdata]);
-
   const PageLoad = async () => {
     localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
     localStorage.setItem("hfUserStation", localStorage.getItem("ipAddress"));
@@ -96,6 +90,7 @@ function fn_ScanSMTPlasmaStopStart() {
     axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
       setProductdata(data);
+      setselProduct(data[0].prd_name);
     });
   };
 
@@ -226,8 +221,8 @@ function fn_ScanSMTPlasmaStopStart() {
       prdName: strPrdName,
     })
       .then((res) => {
-        dtPro = res.data;
-        if (dtPro.length > 0) {
+        dtPro = res.data[0];
+        if (dtPro !== "") {
           sethfSerialLength(dtPro.SLM_SERIAL_LENGTH);
           sethfSerialFixFlag(dtPro.SLM_FIX_FLAG);
           sethfSerialDigit(dtPro.SLM_FIX_DIGIT);

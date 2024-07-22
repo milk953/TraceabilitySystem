@@ -47,13 +47,13 @@ const App = () => {
           <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
           <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
           <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
+          <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
 
 
           {/* View Data */}
           <Route path='/ELTmaster' element={<ELTmaster />} />
           <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
-          <Route path='/SheetBincheking' element={<SheetBincheking />} />
-          <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} />   
+          <Route path='/SheetBincheking' element={<SheetBincheking />} />  
 
           {/* Maintenance */}
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
