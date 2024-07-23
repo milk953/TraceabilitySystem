@@ -133,7 +133,6 @@ function fn_ScanSMTSerialSpotHeat() {
           strPrdName = res.data.prdName[0];
         });
       if (strPrdName != null) {
-        console.log("strPrdName1", strPrdName);
         setlblLog("");
         setpnlLog(false);
         settxtLot((prevState) => ({ ...prevState, value: strLot }));
@@ -413,7 +412,6 @@ function fn_ScanSMTSerialSpotHeat() {
         break;
 
       case "SERIAL":
-        console.log(" เข้าจ้า ")
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
         setpnlLog(false);
         setvisiblepnlSerial(true);
@@ -481,7 +479,6 @@ function fn_ScanSMTSerialSpotHeat() {
           let _strScanResultUpdate = "OK";
           let _strSerialResult = "";
           if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
-            console.log("มาแล้ว");
             await axios
               .post("/api/SpotHeat/GetSerialSpotHeatResult", {
                 dataList: {
@@ -540,7 +537,6 @@ function fn_ScanSMTSerialSpotHeat() {
   };
 
   const getInitialSerial = async () => {
-    console.log("ก็มาแล้วจ้า")
     let dtData = [];
 
     for (let intRow = 0; intRow < txtTotalPCS.value; intRow++) {

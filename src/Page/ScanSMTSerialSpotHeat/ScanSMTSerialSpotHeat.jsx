@@ -62,7 +62,7 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell align="left">
                       <Typography>Lot No. :</Typography>
                     </TableCell>
-                    {console.log("txtLot.value",txtLot.value)}
+                  
                     <TableCell>
                       <TextField
                         id="txtfild"
@@ -296,7 +296,7 @@ function ScanSMTSerialSpotHeat() {
                     </TableRow>
                   </TableHead>
 
-                  {console.log(gvScanResult,"gvScanResult")}
+              
                   {Array.from(
                         { length: gvScanResult.length },
                         (_, index) => (
