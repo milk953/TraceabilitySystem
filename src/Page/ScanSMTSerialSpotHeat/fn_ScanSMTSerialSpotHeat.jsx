@@ -4,24 +4,15 @@ import Swal from "sweetalert2";
 
 function fn_ScanSMTSerialSpotHeat() {
   const [Product, setProduct] = useState([]);
-
-  const [txtLot, settxtLot] = useState({value:'' ,disbled:'',visble:'',style:''});;
-  // settxt_lotNo((prevState) =>({...prevState,disable:true, }));
+  const [visibledll_product, setvisibledll_product] = useState(true);
+  const [txtLot, settxtLot] = useState({value: "",disbled: "",visble: "",style: "",});
   const [SlProduct, setSlProduct] = useState("");
-  const [txtTotalPCS, settxtTotalPCS] = useState({value:'' ,disbled:'',visble:'',style:''});;
-  // const [txtTotalPCS, settxtTotalPCS] = useState("");
-  const [lblTotalPcs, setlblTotalPcs] = useState("");
-  const [txtMachineNo, settxtMachineNo] = useState("");
+  const [txtTotalPCS, settxtTotalPCS] = useState({value: "",disbled: "",visble: "",style: "",});
   const [lblLog, setlblLog] = useState("");
-  const [hfRollNo, sethfRollNo] = useState("");
-
   const [dataGvSerial, setdataGvSerial] = useState("");
   const [gvScanResult, setgvScanResult] = useState("");
-  const [txtSideFront, settxtSideFront] = useState("");
   const [txtSerial, settxtSerial] = useState("");
-  const [lblResult, setlblResult] = useState({ text: "", styled: {}});
- 
-  // settxt_lotNo((prevState) =>({...prevState,disable:true, }));
+  const [lblResult, setlblResult] = useState({ text: "", styled: {} });
   //ซ่อน
   const [pnlLog, setpnlLog] = useState(false);
   const [visiblpnlSerial, setvisiblepnlSerial] = useState(false);
@@ -33,7 +24,6 @@ function fn_ScanSMTSerialSpotHeat() {
   const fcProduct = useRef(null);
   const fcGvSerial_txtSerial_0 = useRef(null);
   const fcGvSerial = useRef(null);
-
   //hf
   const [hfSerialLength, setHfSerialLength] = useState("");
   const [hfSerialFixFlag, setHfSerialFixFlag] = useState("");
@@ -128,7 +118,6 @@ function fn_ScanSMTSerialSpotHeat() {
   };
 
   const handletxt_Lotno = async () => {
-   
     let strLot = "";
     let strPrdName = "";
     const strLotData = txtLot.value.toUpperCase().split(";");
@@ -141,15 +130,13 @@ function fn_ScanSMTSerialSpotHeat() {
           strLot: strLot,
         })
         .then((res) => {
-        // /  if(res.data)
           strPrdName = res.data.prdName[0];
         });
-        console.log("strPrdName4",strPrdName)
-      if ( strPrdName != null) {
-        console.log("strPrdName1",strPrdName)
+      if (strPrdName != null) {
+        console.log("strPrdName1", strPrdName);
         setlblLog("");
         setpnlLog(false);
-        settxtLot((prevState) =>({...prevState,value:strLot, }));
+        settxtLot((prevState) => ({ ...prevState, value: strLot }));
         const dataDT = await GetProductSerialMaster(strPrdName);
 
         try {
@@ -165,8 +152,10 @@ function fn_ScanSMTSerialSpotHeat() {
             return;
           }
           if (txtTotalPCS.value == "") {
-            settxtTotalPCS((prevState) =>({...prevState,value:dataDT.slm_serial_sht}));
-            // settxtTotalPCS(dataDT.slm_serial_sht);
+            settxtTotalPCS((prevState) => ({
+              ...prevState,
+              value: dataDT.slm_serial_sht,
+            }));
           } else {
             SetMode("SERIAL");
             fcGvSerial_txtSerial_0.current.focus();
@@ -179,12 +168,13 @@ function fn_ScanSMTSerialSpotHeat() {
               strPrdName.substring(intProduct + 1, intProduct + 11).trim();
             try {
               if (txtTotalPCS.value == "") {
-                settxtTotalPCS((prevState) =>({...prevState,value:dataDT.SLM_SERIAL_SHT}));
-                // settxtTotalPCS(dataDT.SLM_SERIAL_SHT);
-                fcGvSerial_txtSerial_0.current.focus();
+                settxtTotalPCS((prevState) => ({
+                  ...prevState,
+                  value: dataDT.SLM_SERIAL_SHT,
+                }));
               } else {
                 SetMode("SERIAL");
-                settxtMachineNo("");
+                fcGvSerial_txtSerial_0.current.focus();
               }
             } catch (error) {
               setlblLog(`Product ${strPrdName} not found.`);
@@ -198,7 +188,7 @@ function fn_ScanSMTSerialSpotHeat() {
         }
       } else {
         setSlProduct(Product[0].prd_name);
-        settxtLot((prevState) =>({...prevState,value:'', }));
+        settxtLot((prevState) => ({ ...prevState, value: "" }));
         setvisiblgvSerial(false);
         setlblLog("Invalid lot no.");
         setpnlLog(true);
@@ -207,7 +197,7 @@ function fn_ScanSMTSerialSpotHeat() {
       }
     } else {
       setSlProduct(Product[0].prd_name);
-      settxtLot((prevState) =>({...prevState,value:'', }));
+      settxtLot((prevState) => ({ ...prevState, value: "" }));
       setvisiblgvSerial(false);
       setlblLog("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด");
       setpnlLog(true);
@@ -217,13 +207,10 @@ function fn_ScanSMTSerialSpotHeat() {
   };
   const handleTotal_Sht = async (value) => {
     if (!isNaN(value)) {
-      settxtTotalPCS((prevState) =>({...prevState,value:value, }));
-      // settxtTotalPCS(value);
+      settxtTotalPCS((prevState) => ({ ...prevState, value: value }));
       SetMode("SERIAL");
-      // setFocus('gvSerial_txtSerial_0');
     } else {
-      settxtTotalPCS((prevState) =>({...prevState,value:'value', }));
-      // settxtTotalPCS("");
+      settxtTotalPCS((prevState) => ({ ...prevState, value: "value" }));
       fcTotalSht.current.focus();
     }
   };
@@ -351,7 +338,7 @@ function fn_ScanSMTSerialSpotHeat() {
   };
 
   const ibtBack_Click = async () => {
-    settxtLot((prevState) =>({...prevState,value:'', disbled:true}));
+    settxtLot((prevState) => ({ ...prevState, value: "", disbled: true }));
     setvisiblepnlSerial(false);
     setvisiblgvSerial(false);
     setvisiblegvScanResult(false);
@@ -386,8 +373,13 @@ function fn_ScanSMTSerialSpotHeat() {
   const SetMode = async (_strType) => {
     switch (_strType) {
       case "LOT":
-        settxtLot((prevState) =>({...prevState,value:'', disbled:false}));
-        settxtTotalPCS((prevState) =>({...prevState,value:'', disbled:false}));
+        setvisibledll_product(false);
+        settxtLot((prevState) => ({ ...prevState, value: "", disbled: false }));
+        settxtTotalPCS((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+        }));
         setpnlLog(false);
         setvisiblepnlSerial(false);
         setHfMode("LOT");
@@ -395,9 +387,12 @@ function fn_ScanSMTSerialSpotHeat() {
         break;
 
       case "LOT_ERROR":
-        settxtLot((prevState) =>({...prevState,value:'', disbled:false}));
-        settxtTotalPCS((prevState) =>({...prevState,value:'', disbled:false}));
-        // ("");
+        settxtLot((prevState) => ({ ...prevState, value: "", disbled: false }));
+        settxtTotalPCS((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+        }));
         setpnlLog(false);
         setvisiblepnlSerial(false);
         setHfMode("LOT");
@@ -405,7 +400,12 @@ function fn_ScanSMTSerialSpotHeat() {
         break;
 
       case "PCS":
-        settxtLot((prevState) =>({...prevState,value:'', disbled:true}));
+        settxtLot((prevState) => ({ ...prevState, value: "", disbled: true }));
+        settxtTotalPCS((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+        }));
         setpnlLog(false);
         setvisiblepnlSerial(true);
         setHfMode("PCS");
@@ -413,7 +413,8 @@ function fn_ScanSMTSerialSpotHeat() {
         break;
 
       case "SERIAL":
-        settxtLot((prevState) =>({...prevState, disbled:true}));
+        console.log(" เข้าจ้า ")
+        settxtLot((prevState) => ({ ...prevState, disbled: true }));
         setpnlLog(false);
         setvisiblepnlSerial(true);
         setHfMode("SERIAL");
@@ -421,20 +422,20 @@ function fn_ScanSMTSerialSpotHeat() {
         break;
 
       case "SERIAL_ERROR":
-        settxtLot((prevState) =>({...prevState, disbled:true}));
+        settxtLot((prevState) => ({ ...prevState, disbled: true }));
         setpnlLog(true);
         break;
 
       case "SERIAL_OK":
-        settxtLot((prevState) =>({...prevState, disbled:true}));
+        settxtLot((prevState) => ({ ...prevState, disbled: true }));
         setpnlLog(false);
         setvisiblepnlSerial(true);
         getInitialSerial();
-        fcGvSerial.current.focus()
+        fcGvSerial.current.focus();
         break;
 
       case "SERIAL_NG":
-        settxtLot((prevState) =>({...prevState, disbled:true}));
+        settxtLot((prevState) => ({ ...prevState, disbled: true }));
         setpnlLog(false);
       default:
         break;
@@ -480,6 +481,7 @@ function fn_ScanSMTSerialSpotHeat() {
           let _strScanResultUpdate = "OK";
           let _strSerialResult = "";
           if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
+            console.log("มาแล้ว");
             await axios
               .post("/api/SpotHeat/GetSerialSpotHeatResult", {
                 dataList: {
@@ -492,9 +494,8 @@ function fn_ScanSMTSerialSpotHeat() {
                 _strSerialResult = res.data;
                 if (_strSerialResult !== "OK") {
                   _strScanResultUpdate = _strSerialResult;
-                
+
                   if (_strSerialResult == "NG") {
-                    
                     _strMessageUpdate =
                       "No data Spot Heat /  ไม่พบข้อมูลเวลา Spot Heat";
                   } else {
@@ -529,77 +530,22 @@ function fn_ScanSMTSerialSpotHeat() {
         });
       }
       setgvScanResult(dtSerial);
-      setvisiblegvScanResult(true)
+      setvisiblegvScanResult(true);
       getInitialSerial();
     } else {
       setlblLog("Please input lot no. ");
       SetMode("SERIAL_ERROR");
     }
-  };
-
-  const getConnectRollSheetData = (_dtSerial, _strProduct, _strRollLeaf) => {
-    let _dtData = [];
-    let _intRollRow = 1;
-    let _intRow = 0;
-    let _strShtNoOld = "";
-    let _strRollNo = "";
-    _strRollNo = hfRollNo;
-    for (let i = 0; i < _dtSerial.length; i++) {
-      if (
-        _dtSerial[i].FRONT_SIDE != _strShtNoOld &&
-        _dtSerial[i].FRONT_SIDE != ""
-      ) {
-        let _drShtRow = {
-          ROLL_SEQ: _intRollRow,
-          SHT_SEQ: _intRow,
-          ROLL_NO: _strRollNo,
-          ROLL_LEAF: _strRollLeaf,
-          SHT_NO:
-            hfBarcodeSide === "F"
-              ? _dtSerial[i].FRONT_SIDE
-              : _dtSerial[i].BACK_SIDE,
-          SCAN_RESULT: "",
-          REMARK: "",
-          ROW_UPDATE: "Y",
-          UPDATE_FLG: "N",
-          MACHINE: txtMachineNo,
-          PRODUCT: _strProduct,
-          LOT_NO: txtLot.value,
-        };
-        _dtData.push(_drShtRow);
-        if (_dtSerial[i].FRONT_SIDE != _dtSerial[i].BACK_SIDE) {
-          _intRow += 1;
-          let _drShtRow2 = {
-            ROLL_SEQ: _intRollRow,
-            SHT_SEQ: _intRow,
-            ROLL_NO: _strRollNo,
-            ROLL_LEAF: _strRollLeaf,
-            SHT_NO:
-              hfBarcodeSide === "F"
-                ? _dtSerial[i].BACK_SIDE
-                : _dtSerial[i].FRONT_SIDE,
-            SCAN_RESULT: "",
-            REMARK: "",
-            ROW_UPDATE: "Y",
-            UPDATE_FLG: "N",
-            MACHINE: txtMachineNo,
-            PRODUCT: _strProduct,
-            LOT_NO: txtLot.value,
-          };
-          _dtData.push(_drShtRow2);
-        }
-      }
-      _strShtNoOld = _dtSerial[i].FRONT_SIDE;
-    }
-    return _dtData;
+    fcGvSerial_txtSerial_0.current.focus();
   };
 
   const getInitialSerial = async () => {
+    console.log("ก็มาแล้วจ้า")
     let dtData = [];
 
     for (let intRow = 0; intRow < txtTotalPCS.value; intRow++) {
       dtData.push({
-        SEQ: intRow + 1
+        SEQ: intRow + 1,
       });
     }
     setvisiblgvSerial(true);
@@ -639,7 +585,9 @@ function fn_ScanSMTSerialSpotHeat() {
     visiblgvSerial,
     btnCancel_Click,
     visiblpnlSerial,
-    fcGvSerial,visiblegvScanResult
+    fcGvSerial,
+    visiblegvScanResult,
+    visibledll_product,
   };
 }
 

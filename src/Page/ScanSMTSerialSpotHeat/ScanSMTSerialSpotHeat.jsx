@@ -33,7 +33,7 @@ function ScanSMTSerialSpotHeat() {
     settxtTotalPCS,
     fcGvSerial_txtSerial_0,handleTotal_Sht,fcTotalSht,
     fcProduct,fcLotNo,lblLog,pnlLog,ibtBack_Click,btnSave_Click,setSlProduct,hfMode,txtSerial,handleSerialChange,
-    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult
+    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product
   } = fn_ScanSMTSerialSpotHeat();
   return (
     <div>
@@ -97,6 +97,7 @@ function ScanSMTSerialSpotHeat() {
                             inputRef={fcProduct}
                           id="selectPdBarcode"
                           value={SlProduct}
+                          disabled={visibledll_product}
                           onChange={(e) => {
                             setSlProduct(e.target.value);
                             // handleddlProduct();
