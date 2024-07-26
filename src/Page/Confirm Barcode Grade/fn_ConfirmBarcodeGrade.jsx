@@ -15,7 +15,6 @@ function fn_ConfirmBarcodeGrade() {
   const [txtRollLeaf, settxtRollLeaf] = useState({value:'',disbled:'',visble:'none',style:''});
   const [txtMachineNo, settxtMachineNo] = useState({value:'',disbled:'',visble:'none',style:''});
   const [lblLog, setlblLog] = useState({value:'',disbled:'',visble:false,style:''});
-  const [tableData, setTableData] = useState([]);
   const [lblConfirm, setlblConfirm] = useState({value:'',disbled:'',visble:'none',style:''});
   const [lblResult, setlblResult] = useState("");
   const [dataGvSerial, setdataGvSerial] = useState({value:'',disbled:'',visble:false,style:''});
@@ -110,25 +109,25 @@ function fn_ConfirmBarcodeGrade() {
   const AUTO_SCAN_CHECK_FLG = "0";
 
 
-  useEffect(() => {
-    if (hfShtScan != "" && hfSerialCount != "" &&lblLog.visble==false) {
-      getInitialSerial();
-    }
-  }, [hfShtScan, hfSerialCount,lblLog]);
+  // useEffect(() => {
+  //   if (hfShtScan != "" && hfSerialCount != "") { //&&lblLog.visble==false
+  //     getInitialSerial();
+  //   }
+  // }, [hfShtScan, hfSerialCount,lblLog]);
   
 
   //Start pageload
   useEffect(() => {
     const fetchData = async () => {
       await GetProductData();
-      SetMode("LOT");
+      await SetMode("LOT");
       setHfMode("");
     };
     fetchData();
   }, []);
 
   const GetProductData = async () => {
-    axios.get("/api/Common/GetProductData").then((res) => {
+  await  axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
       setProduct(data);
       setSlProduct((prevState) =>({...prevState,value:data[0].prd_name, }));
@@ -139,18 +138,15 @@ function fn_ConfirmBarcodeGrade() {
   const handletxt_Lotno = async () => {
     let strLot = "";
     let strPrdName = "";
-    // setvisiblegvScanResult(false);
     setgvScanResult((prevState) =>({...prevState,visble:false}));
-    // setvisiblgvBackSide(false);
     settxtSideBack((prevState) =>({...prevState,visble:false}));
-    // setvisiblgvSerial(false);
     setdataGvSerial((prevState) =>({...prevState,visble:false}));
     setHfSerialCount(0);
 
     if (!Check_Master) {
      
       const strLotData = txt_lotNo.value.toUpperCase().split(";");
-
+      
       if (strLotData.length >= 2) {
         strLot = strLotData[0];
         console.log(strLot, "strLot");
@@ -159,7 +155,6 @@ function fn_ConfirmBarcodeGrade() {
             strLot: strLot,
           })
           .then((res) => {
-            // setvisibleRollLeaf("none");
             settxtRollLeaf((prevState) =>({...prevState,visble:'none', }));
             sethfRollNo("");
           
@@ -171,8 +166,6 @@ function fn_ConfirmBarcodeGrade() {
             }
           });
         if (strPrdName != "") {
-          // setlblLog("");
-          // setvisibleLog(false);
           setlblLog((prevState) =>({...prevState,value:'',visble:false }));
           settxt_lotNo((prevState) =>({...prevState,value:strLot, }));
           settxtLotRef((prevState) =>({...prevState,value:strLot, }));
@@ -189,16 +182,12 @@ function fn_ConfirmBarcodeGrade() {
               setSlProduct((prevState) =>({...prevState,value:strPrdName, }));
               getInitialSheet();
             } else {
-              // setSlProduct((prevState) =>({...prevState,value:strPrdName, }));
               setlblLog((prevState) =>({...prevState,value:`Product ${strPrdName} not found.`,visble:true }));
-              // setlblLog(`Product ${strPrdName} not found.`);
-              // setvisibleLog(true);
               fcProduct.current.focus();
               return;
             }
 
             if (datagetPd.prm_conn_roll_sht_flg == "Y") {
-              //setvisibleRollLeaf("");
               console.log('fcRollleaf',fcRollleaf)
               settxtRollLeaf((prevState) =>({...prevState,value:'',visble:''}));
               SetMode("SERIAL");
@@ -208,10 +197,8 @@ function fn_ConfirmBarcodeGrade() {
               settxtMachineNo((prevState) =>({...prevState,value:'', }));
               if (datagetPd.prm_sht_machine_flg == "Y") {
                 settxtMachineNo((prevState) =>({...prevState,visble:'',visble:'' }));
-                // setvisibleMachine("");
                 fctMachchine.current.focus();
               } else {
-                // setvisibleMachine("none");
                 settxtMachineNo((prevState) =>({...prevState,visble:'none', }));
               }
             }
@@ -224,32 +211,25 @@ function fn_ConfirmBarcodeGrade() {
                 strPrdName.substring(intProduct + 1, intProduct + 11).trim();
               try {
                 if (datagetPd.prm_conn_roll_sht_flg == "Y") {
-                  // setvisibleRollLeaf("");
                   settxtRollLeaf((prevState) =>({...prevState,value:'',visble:'' }));
                   fcRollleaf.current.focus();
                 } else {
                   SetMode("SERIAL");
                   settxtMachineNo((prevState) =>({...prevState,value:'', }));
                   if (datagetPd.prm_sht_machine_flg == "Y") {
-                    // setvisibleMachine("");
                     settxtMachineNo((prevState) =>({...prevState,visble:'', }));
                     fctMachchine.current.focus();
                   } else {
-                    // setvisibleMachine("none");
                     settxtMachineNo((prevState) =>({...prevState,visble:'none', }));
                     fcGvBackSide_txtsideback_0.current.focus();
                   }
                 }
               } catch (error) {
                 setlblLog((prevState) =>({...prevState,visble:true, value:`Product ${strPrdName} not found.`}));
-                // setlblLog(`Product ${strPrdName} not found.`);
-                // setvisibleLog(true);
                 fcProduct.current.focus();
               }
             } else {
               setlblLog((prevState) =>({...prevState,visble:true, value:`Product ${strPrdName} not found.`}));
-              // setlblLog("Product " + strPrdName + " not found.");
-              // setvisibleLog(true);
               fcProduct.current.focus();
             }
           }
@@ -257,11 +237,8 @@ function fn_ConfirmBarcodeGrade() {
          
           setSlProduct((prevState) =>({...prevState,value:Product[0].prd_name, }));
           settxt_lotNo((prevState) =>({...prevState,value:'', }));
-          // setvisiblgvSerial(false);
           setdataGvSerial((prevState) =>({...prevState,visble:false}));
           setlblLog((prevState) =>({...prevState,visble:true, value:`Invalid lot no.`}));
-          // setlblLog("Invalid lot no.");
-          // setvisibleLog(true);
           setHfMode("LOT");
           fcLotNo.current.focus();
         }
@@ -269,11 +246,8 @@ function fn_ConfirmBarcodeGrade() {
      
         setSlProduct((prevState) =>({...prevState,value:Product[0].prd_name, }));
         settxt_lotNo((prevState) =>({...prevState,value:'', }));
-        // setvisiblgvSerial(false);
         setdataGvSerial((prevState) =>({...prevState,visble:false}));
         setlblLog((prevState) =>({...prevState,visble:true, value:`Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด`}));
-        // setlblLog("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด");
-        // setvisibleLog(true);
         setHfMode("LOT");
         fcLotNo.current.focus();
       }
@@ -343,6 +317,7 @@ function fn_ConfirmBarcodeGrade() {
         prdName: strPrdName,
       })
       .then((res) => {
+        console.log('GetSerialProductByProduct',res.data)
         data = res.data[0];
         if (data != null) {
           setHfSerialLength(data.slm_serial_length);
@@ -421,9 +396,7 @@ function fn_ConfirmBarcodeGrade() {
       });
     }
 
-    // setvisiblgvBackSide(true);
     settxtSideBack((prevState) =>({...prevState,visble:true}));
-    // setdataGvBackSide(dtData);
     return dtData;
   };
 
@@ -439,16 +412,13 @@ function fn_ConfirmBarcodeGrade() {
         });
       }
     }
-    // setvisiblgvSerial(true);
     setdataGvSerial((prevState) =>({...prevState,visble:true,value:dtData}));
-    // setdataGvSerial(dtData);
 
     return dtData;
   };
 
   const ibtBack_Click = async () => {
     settxt_lotNo((prevState) =>({...prevState,value:'',disbled:false }));
-    // setvisiblgvSerial(true);
     setdataGvSerial((prevState) =>({...prevState,visble:true}));
     setSlProduct((prevState) =>({...prevState,value:Product[0].prd_name, }));
     await SetMode("LOT");
@@ -470,20 +440,16 @@ function fn_ConfirmBarcodeGrade() {
     setSlProduct((prevState) =>({...prevState,value:value, }));
     GetProductSerialMaster(value);
     if (txt_lotNo.value != "") {
-      // setlblLog("");
-      // setvisibleLog(false);
       setlblLog((prevState) =>({...prevState,value:'',visble:false }));
       getCountDataBylot(txt_lotNo.value);
       getInitialSheet();
       if (hfCheckRollSht == "Y") {
-        // setvisibleRollLeaf("");
         settxtRollLeaf((prevState) =>({...prevState,value:'',visble:'' }));
         fcRollleaf.current.focus();
       } else {
         await SetMode("SERIAL");
         settxtMachineNo((prevState) =>({...prevState,value:'', }));
         if (hfReqMachine == "Y") {
-          // setvisibleMachine("");
           settxtMachineNo((prevState) =>({...prevState,visble:'', }));
           fctMachchine.current.focus();
         } else {
@@ -497,8 +463,6 @@ function fn_ConfirmBarcodeGrade() {
   };
 
   const handleTxt_RollLeaf = async () => {
-    // setvisibleLog(false);
-    // setlblLog("");
     setlblLog((prevState) =>({...prevState,value:'',visble:false }));
     if (Check_Master || (txtRollLeaf.value !== "" && txtRollLeaf.value === hfConnRollLength) ) {
       const strRollProduct = hfRollNo + hfCheckRollPrd;
@@ -566,9 +530,7 @@ function fn_ConfirmBarcodeGrade() {
     if (_strType == "LOT") {
       setSlProduct((prevState) =>({...prevState,disbled:false,style:'' }));
       settxt_lotNo((prevState) =>({...prevState,value:'',disbled:false,style:''}));
-      // setvisibleLog(false);
       setlblLog((prevState) =>({...prevState,visble:false}));
-      // setvisiblgvSerial(false);
       setdataGvSerial((prevState) =>({...prevState,visble:false}));
       setHfMode("LOT");
       fcLotNo.current.focus();
@@ -1035,7 +997,7 @@ function fn_ConfirmBarcodeGrade() {
           if (txtRollLeaf.value) {
             let dataRBMP = "";
             await axios
-              .post("/api/GetRollLeafScrapRBMP", {
+              .post("/api/ScanFin/GetRollLeafScrapRBMP", {
                 strRollNo: "",
               })
               .then((res) => {
@@ -1055,7 +1017,7 @@ function fn_ConfirmBarcodeGrade() {
               let _intCount = 0;
               let _strRollLeaf = txtRollLeaf.value;
               await axios
-                .post("/api/GetRollLeafDuplicate", {
+                .post("/api/ScanFin/GetRollLeafDuplicate", {
                   strRollLeaf: _strRollLeaf,
                   _dtRollLeaf: dtRowLeaf,
                 })
@@ -1134,12 +1096,12 @@ function fn_ConfirmBarcodeGrade() {
         for (let i = 0; i < dtSerial.length; i++) {
           dtSerial[i]._strLot = _strLot;
           dtSerial[i]._strPlantCode = "5";
-          dtSerial[i].hfBarcodeSide = hfBarcodeSide;
-          dtSerial[i].hfSerialLength = hfSerialLength;
+          dtSerial[i]._strBarcodeSide = hfBarcodeSide;
+          dtSerial[i].intSerialLength = hfSerialLength;
           dtSerial[i]._strMasterSheet = _strMasterSheet;
-          dtSerial[i].hfUserStation = hfUserStation;
+          dtSerial[i]._strUserID = txtOperator.value;
           dtSerial[i].ddlPD = SlProduct.value;
-          dtSerial[i].hfUserStation = hfUserStation;
+          dtSerial[i]._strStation = hfUserStation;
         }
         await axios
           .post("/api/Common/SetSerialLotShtGradeTable", {
@@ -1385,7 +1347,6 @@ function fn_ConfirmBarcodeGrade() {
   const handleBackSideChange =async (index, event) => {
     const newValues = [...txtSideBack.value];
     newValues[index] = event.target.value;
-    settxtSideBack(newValues);
     settxtSideBack((prevState) =>({...prevState,value:newValues}));
   };
 

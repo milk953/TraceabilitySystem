@@ -433,7 +433,8 @@ useEffect(() => {
                 alignItems: "center",
               }}
             >
-              <img
+              {gvScanResult.visble == false && (
+                <> <img
                 style={{
                   width: "420px",
                   height: "350px",
@@ -441,7 +442,8 @@ useEffect(() => {
                 }}
                 src="src/assets/1.jpg" // Import the image
                 alt="Description of the image"
-              />
+              /></>)}
+             
               {/* visiblegvScanResult */}
               {gvScanResult.visble == true && (
                 <>
@@ -527,7 +529,15 @@ useEffect(() => {
                               {gvScanResult.value[index].SERIAL_GRADE}
                             </TableCell>
                             <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" , background: gvScanResult.value[index].SCAN_RESULT !== '' ? '#ff4d4f' : 'defaultColor'}}
+                            sx={{
+                              borderRight: "1px solid #d9d9d9",
+                              background: gvScanResult.value[index].SCAN_RESULT === '' 
+                                ? '' 
+                                : gvScanResult.value[index].SCAN_RESULT === 'OK' 
+                                ? 'green' 
+                                : '#ff4d4f'
+                            }}
+                            
                             >
                               {gvScanResult.value[index].SCAN_RESULT}
                             </TableCell>
