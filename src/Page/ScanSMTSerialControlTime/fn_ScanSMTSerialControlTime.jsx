@@ -285,28 +285,34 @@ function fn_ScanSMTSerialControlTime() {
 
         if (!bolTrayError) {
             if (hfProcControlTimeCheck === "Y") {
-                try {
-                    const res = await axios.post("/api/getserialproccontroltimetable", {
-                        strPlantCode: plantCode,
-                        strProc: hfProcControl,
-                        strConnShtPcsFlg: hfConnShtPcsTime,
-                        dblTime: hfProcControlTime,
-                        data: dtSerial
-                    });
-                    console.log("SSSS", res.data.strresult);
-                } catch (error) {
-                    alert(error);
-                    console.log(error);
+                for (let i = 0; i < dtSerial.length; i++) {
+                    try {
+                        const res = await axios.post("/api/getserialproccontroltimetable", {
+                            strPlantCode: plantCode,
+                            strProc: hfProcControl,
+                            strConnShtPcsFlg: hfConnShtPcsTime,
+                            dblTime: hfProcControlTime,
+                            data: [
+                                {
+                                    
+                                }
+                            ]
+                        });
+                        console.log("SSSS", res.data.strresult);
+                    } catch (error) {
+                        alert(error);
+                        console.log(error);
+                    }
                 }
             }
 
             for (let i = 0; i < dtSerial.length; i++) {
-                let drRow = dtSerial[i];
-                if (drRow.SERIAL !== "") {
+
+                if (dtSerial[i].SERIAL !== "") {
                     if (
-                        !CONNECT_SERIAL_ERROR.includes(drRow.SERIAL) &&
-                        !CONNECT_SERIAL_NOT_FOUND.includes(drRow.SERIAL) &&
-                        !hfBarcodeNotFound.includes(drRow.SERIAL)
+                        !CONNECT_SERIAL_ERROR.includes(dtSerial[i].SERIAL) &&
+                        !CONNECT_SERIAL_NOT_FOUND.includes(dtSerial[i].SERIAL) &&
+                        !hfBarcodeNotFound.includes(dtSerial[i].SERIAL)
                     ) {
                         let _intCount = 0;
                         let _intCountOK = 0;
@@ -314,7 +320,7 @@ function fn_ScanSMTSerialControlTime() {
                         let _intCountDup = 0;
                         let _strRemark = "";
                         let _strError = "";
-                        let _strSerial = drRow.SERIAL;
+                        let _strSerial = dtSerial[i].SERIAL;
                         let _dtSerialAll = [];
                         let _strPrdNameOrg = "";
                         let _strLotOrg = "";
@@ -322,8 +328,8 @@ function fn_ScanSMTSerialControlTime() {
                         let _strTestResultOrg = "";
                         let _strOK = "OK";
                         let _strNG = "NG";
-                        let _strScanResultUpdate = drRow.SCAN_RESULT;
-                        let _strMessageUpdate = drRow.REMARK;
+                        let _strScanResultUpdate = dtSerial[i].SCAN_RESULT;
+                        let _strMessageUpdate = dtSerial[i].REMARK;
                         let _strTestResultUpdate = "";
                         let _strTypeTestResult = "";
                         let _strRejectUpdate = "";
@@ -335,7 +341,7 @@ function fn_ScanSMTSerialControlTime() {
 
                         if (_strScanResultUpdate !== "NG") {
                             // Check format serial no
-                            if (_strSerial.length === parseInt(hfSerialLength)) {
+                            if (_strSerial.length === hfSerialLength) {
                                 let _strFixDigit = "";
 
                                 if (hfSerialFixFlag === "Y") {
@@ -344,6 +350,8 @@ function fn_ScanSMTSerialControlTime() {
                                         parseInt(hfSerialStartDigit),
                                         parseInt(hfSerialEndDigit) - parseInt(hfSerialStartDigit) + 1
                                     );
+
+                                    console.log("lll", _strFixDigit, hfSerialDigit);
 
                                     if (_strFixDigit !== hfSerialDigit) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -437,15 +445,15 @@ function fn_ScanSMTSerialControlTime() {
                             }
                         }
 
-                        drRow.SCAN_RESULT = _strScanResultUpdate;
-                        drRow.REMARK = _strMessageUpdate;
+                        dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
+                        dtSerial[i].REMARK = _strMessageUpdate;
 
                         if (_strScanResultUpdate === "NG") {
                             _strScanResultAll = "NG";
                         }
                     } else {
-                        drRow.SCAN_RESULT = "NG";
-                        drRow.REMARK = "Can not scan" + _strTagNewLine + "หมายเลขบาร์โค้ดสแกนไม่ได้";
+                        dtSerial[i].SCAN_RESULT = "NG";
+                        dtSerial[i].REMARK = "Can not scan" + _strTagNewLine + "หมายเลขบาร์โค้ดสแกนไม่ได้";
                         _strScanResultAll = "NG";
                         setbolError(true);
                     }
@@ -460,24 +468,33 @@ function fn_ScanSMTSerialControlTime() {
 
             if (_strScanResultAll === "OK") {
                 let _strErrorUpdate = "";
-                axios.post("/api/setSerialProcControlTimeTable", {
-                    strPlantCode: plantCode,
-                    strProc: hfProcControl,
-                    data: dtSerial[i]
-                })
-                    .then((res) => {
-                        _strErrorUpdate = res.data.p_error;
-                        if (_strErrorUpdate !== "") {
-                            _strScanResultAll = "NG";
-                            setlblResult(_strScanResultAll);
-                            setlblResultcolor("red");
-                            setlblLog(_strErrorUpdate);
-                            setvisiblelog(true);
-                        }
+                for (let i = 0; i < dtSerial.length; i++) {
+                    axios.post("/api/setSerialProcControlTimeTable", {
+                        strPlantCode: plantCode,
+                        strProc: hfProcControl,
+                        data: [
+                            {
+                                MACHINE: dtSerial[i].MACHINE,
+                                OP: dtSerial[i].OP,
+                                SEQ: dtSerial[i].SEQ,
+                                SERIAL: dtSerial[i].SERIAL
+                            }
+                        ]
                     })
-                    .catch((error) => {
-                        alert(error);
-                    });
+                        .then((res) => {
+                            _strErrorUpdate = res.data.p_error;
+                            if (_strErrorUpdate !== "") {
+                                _strScanResultAll = "NG";
+                                setlblResult(_strScanResultAll);
+                                setlblResultcolor("red");
+                                setlblLog(_strErrorUpdate);
+                                setvisiblelog(true);
+                            }
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                }
             }
         }
 
@@ -598,10 +615,10 @@ function fn_ScanSMTSerialControlTime() {
         for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
             let drRow = {
                 SEQ: intRow + 1,
-                SERIAL: gvSerialData[intSeq].txtgvSerial,
+                SERIAL: txtgvSerial[intSeq] || "",
                 SCAN_RESULT: "",
                 REMARK: "",
-                PRODUCT: ddlProduct,
+                PRODUCT: selProduct,
                 LOT: lblLot,
                 MACHINE: txtMachine,
                 OP: txtOperator
@@ -616,14 +633,14 @@ function fn_ScanSMTSerialControlTime() {
     const getInitialSerial = async () => {
         let dtData = [];
 
-        for (let intRow = 1; intRow <= parseInt(txtTotalPcs.trim(), 10); intRow++) {
+        for (let intRow = 1; intRow <= hfSerialCount; intRow++) {
             let drRow = {
-                SEQ: intRow 
+                SEQ: intRow
             };
             dtData.push(drRow);
         }
         setgvSerialData(dtData);
-    
+        console.log("gvserialdata:", dtData)
         return dtData;
     };
 

@@ -463,7 +463,7 @@ function fn_ScanSMTSerialShtConfirm() {
                                 let _strConfigDigit = "";
                                 const start = parseInt(hfConfigStart);
                                 const end = parseInt(hfConfigEnd);
-                                _strConfigDigit = _strSerial.substring(start, (end - start) + 1);
+                                _strConfigDigit = _strSerial.substring(start - 1, end);
                                 if (_strConfigDigit !== hfConfigCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -485,7 +485,7 @@ function fn_ScanSMTSerialShtConfirm() {
                                 let _strStartSeq = "";
                                 const start = parseInt(hfCheckStartSeqStart);
                                 const end = parseInt(hfCheckStartSeqEnd);
-                                _strStartSeq = _strSerial.substring(start, (end - start) + 1);
+                                _strStartSeq = _strSerial.substring(start - 1, end);
                                 if (_strStartSeq !== hfCheckStartSeqCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
