@@ -27,7 +27,6 @@ import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSer
 import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm";
 
 
-
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
