@@ -24,13 +24,16 @@ import { fn_ScanSMTSerialSpotHeat } from "./fn_ScanSMTSerialSpotHeat";
 function ScanSMTSerialSpotHeat() {
   const {
     handletxt_Lotno,
-    txt_lotNo,
-    settxt_lotNo,
+    txtLot,
+    settxtLot,
     handleddlProduct,
     Product,
     SlProduct,
     txtTotalPCS,
     settxtTotalPCS,
+    fcGvSerial_txtSerial_0,handleTotal_Sht,fcTotalSht,
+    fcProduct,fcLotNo,lblLog,pnlLog,ibtBack_Click,btnSave_Click,setSlProduct,hfMode,txtSerial,handleSerialChange,
+    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product
   } = fn_ScanSMTSerialSpotHeat();
   return (
     <div>
@@ -59,15 +62,17 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell align="left">
                       <Typography>Lot No. :</Typography>
                     </TableCell>
+                  
                     <TableCell>
                       <TextField
                         id="txtfild"
                         size="small"
                         fullWidth
-                        value={txt_lotNo}
-                        // inputRef={fcLotNo}
+                        disabled={txtLot.disbled} 
+                        value={txtLot.value}
+                        inputRef={fcLotNo}
                         onChange={(e) => {
-                          settxt_lotNo(e.target.value);
+                          settxtLot((prevState)=>({...prevState,value:e.target.value}));
                         }}
                         // disabled='false'
                         // onChange={(e) =>  settxt_lotNo(e.target.value)}
@@ -76,7 +81,7 @@ function ScanSMTSerialSpotHeat() {
                     </TableCell>
                     <TableCell>
                       <Button
-                      //   onClick={ibtBack_Click}
+                        onClick={ibtBack_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -89,10 +94,16 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          //   inputRef={fcProduct}
+                            inputRef={fcProduct}
                           id="selectPdBarcode"
                           value={SlProduct}
-                          onChange={(e, value) => handleddlProduct(value)}
+                          disabled={visibledll_product}
+                          onChange={(e) => {
+                            setSlProduct(e.target.value);
+                            // handleddlProduct();
+                          }}
+                       
+                          onInputChange={handleddlProduct}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
@@ -113,41 +124,42 @@ function ScanSMTSerialSpotHeat() {
                       <TextField
                         size="small"
                         id="txtfild"
-                        value={txtTotalPCS}
-                        // inputRef={fcLotNo}
+                        value={txtTotalPCS.value}
+                        inputRef={fcTotalSht}
                         onChange={(e) => {
-                          settxtTotalPCS(e.target.value);
+                          settxtTotalPCS((prevState)=>({...prevState,value:e.target.value}))
+                          handleTotal_Sht(e.target.value);
                         }}
+                        // onChange={handleTotal_Sht}
+                        
                       />
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
 
-              <Card
-                component={Paper}
-                style={{
-                  width: "400px",
-                  height: "40px",
-                  margin: "auto",
+              {pnlLog == true && (
+                <Card
+                  component={Paper}
+                  style={{
+                    width: "400px",
+                    height: "40px",
+                    margin: "auto",
 
-                  textAlign: "center",
-                  background: "#BB2525",
-                  paddingTop: "18px",
-                  color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
-                  fontWeight: "bold", // กำหนดความหนาของฟอนต์
-                  marginTop: "30px",
-                }}
-              ></Card>
-
-              <Table className="CSS-GvSerialBarcode" component={Card}>
+                    textAlign: "center",
+                    background: "#BB2525",
+                    paddingTop: "18px",
+                    color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
+                    fontWeight: "bold", // กำหนดความหนาของฟอนต์
+                    marginTop: "30px",
+                  }}
+                >
+                  {lblLog}
+                </Card>   )}
+                {visiblgvSerial == true && (
+              <Table className="CSS-GvSerialBarcode" component={Card}
+              inputRef={fcGvSerial}>
                 <TableHead>
-                  <TableCell
-                    sx={{ borderRight: "1px solid #d9d9d9" }}
-                    align="center"
-                  >
-                    Sheet
-                  </TableCell>
 
                   <TableCell
                     sx={{ borderRight: "1px solid #d9d9d9" }}
@@ -159,27 +171,32 @@ function ScanSMTSerialSpotHeat() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
+                {Array.from({ length: txtTotalPCS.value }, (_, index) => (
+                      <TableRow key={index}>
+                      
+                        <TableCell
+                          align="center"
+                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                        >
+                          {index + 1}
+                        </TableCell>
+                        <TableCell>
+                          {" "}
+                          <TextField
+                            id="txtfild"
+                            size="small"
+                            fullWidth
+                           inputRef={fcGvSerial_txtSerial_0}
+                            value={txtSerial[index]}
+                            onChange={(event) =>
+                              handleSerialChange(index, event)
+                            }
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   <TableRow>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                      align="center"
-                    ></TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                    ></TableCell>
-                    <TableCell>
-                      <TextField
-                        id="txtfild"
-                        size="small"
-                        fullWidth
-                        // inputRef={fcGvSerial_txtSerial_0}
-                        // value={txtSerial[index]}
-                        // onChange={(event) =>
-                        //   handleSerialChange(index, event)
-                        // }
-                      />
-                    </TableCell>
+                 
                   </TableRow>
 
                   <TableRow
@@ -194,23 +211,23 @@ function ScanSMTSerialSpotHeat() {
                       <Button
                         variant="contained"
                         size="small"
-                        //   onClick={btnSave_Click}
+                          onClick={btnSave_Click}
                       >
-                        Yes
+                        Save
                       </Button>{" "}
                       &nbsp;&nbsp;
                       <Button
                         variant="contained"
                         size="small"
                         color="error"
-                        //   onClick={btnCancel_Click}
+                          onClick={btnCancel_Click}
                       >
                         Cancel
                       </Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </Table>
+              </Table>)}
             </Grid>
             {/* border:'1PX SOLID green' */}
             <Grid
@@ -234,20 +251,19 @@ function ScanSMTSerialSpotHeat() {
                 src="src/assets/1.jpg" // Import the image
                 alt="Description of the image"
               />
-
+              {visiblegvScanResult == true && (
               <>
                 <Paper
                   className="Card-lblResult"
                   elevation={3}
-                  style={{
-                    background: " #ff4d4f",
-                    // display: gvScanResult,
-                  }}
+                  style={{ background: lblResult.text !=='OK'? "#ff4d4f":"green",}}
+                  
+                
                 >
                   <Typography
                     variant="h4"
                     style={{ paddingTop: "3px", color: "#fff" }}
-                  ></Typography>
+                  >{lblResult.text}</Typography>
                 </Paper>
                 <Table
                   className="CSS-GvScanResult"
@@ -256,12 +272,7 @@ function ScanSMTSerialSpotHeat() {
                 >
                   <TableHead>
                     <TableRow>
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                        width="50px"
-                      >
-                        SHEET
-                      </TableCell>
+                     
                       <TableCell
                         sx={{ borderRight: "1px solid #d9d9d9" }}
                         width="200px"
@@ -274,12 +285,7 @@ function ScanSMTSerialSpotHeat() {
                       >
                         Serial No.
                       </TableCell>
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                        width="150px"
-                      >
-                        Grade
-                      </TableCell>
+                      
                       <TableCell
                         sx={{ borderRight: "1px solid #d9d9d9" }}
                         width="150px"
@@ -289,34 +295,40 @@ function ScanSMTSerialSpotHeat() {
                       <TableCell width="300px">Remark</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell
-                        align="center"
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                      ></TableCell>
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                      ></TableCell>
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                      ></TableCell>
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                      ></TableCell>
-                      <TableCell
-                        sx={{
-                          borderRight: "1px solid #d9d9d9",
-                          background: "#ff4d4f",
-                        }}
-                      ></TableCell>
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                      ></TableCell>
-                    </TableRow>
-                  </TableBody>
+
+              
+                  {Array.from(
+                        { length: gvScanResult.length },
+                        (_, index) => (
+                          <TableRow key={index}>
+                        
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center'}}
+                            >
+                              {gvScanResult[index].SEQ}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' }}
+                            >
+                              {gvScanResult[index].SERIAL}
+                            </TableCell>
+                            
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center',background: gvScanResult[index].SCAN_RESULT  !=='OK'? "#ff4d4f":""
+                              }}
+                            >
+                              {gvScanResult[index].SCAN_RESULT}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' }}
+                            >
+                              {gvScanResult[index].REMARK}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
                 </Table>
-              </>
+              </>  )}
             </Grid>
           </Grid>
         </Box>

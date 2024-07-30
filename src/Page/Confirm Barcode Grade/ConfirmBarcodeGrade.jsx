@@ -21,13 +21,7 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-// import "/src/Page/ScanSheetMOTTime/ScanSheetMOTTime.css";
-// import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
-import {
-  ArrowRightOutlined,
-  DeleteOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
+
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
 import Hearder from "../Header/Hearder";
@@ -54,13 +48,10 @@ function ConfirmBarcodeGrade() {
     settxtMachineNo,
     ibtBack_Click,
     handleSL_Product,
-    visiblgvBackSide,
     hfBarcodeSide,
     hfShtScan,
     hfSerialCount,
-    visiblgvSerial,
     lblLog,
-    visibleLog,
     txtSerial,
     txtSideBack,
     txtSideFront,
@@ -74,7 +65,6 @@ function ConfirmBarcodeGrade() {
     handleTxt_RollLeaf,
     handleTxt_LotRef,
     handleTxt_Opreator,
-    visiblegvScanResult,
     fcRollleaf,
     fctMachchine,
     fcLotNo,
@@ -83,21 +73,23 @@ function ConfirmBarcodeGrade() {
     fcGvSerial,
     fcGvBackSide_txtsideback_0,
     fcGvSerial_txtSerial_0,
-    visibleRollLeaf,
-    visibleMachine,
-    visibleConfirm
+    lblConfirm,
+    dataGvSerial
   } = fn_ConfirmBarcodeGrade();
-  // inputRef={}
-  // console.log(
-  //   fcGvBackSide_txtsideback_0,fcRollleaf,
-  //   "fcGvBackSide_txtsideback_0fcGvBackSide_txtsideback_0"
-  // );
-  // useEffect(() => {
-  //   console.log(visiblgvBackSide, "visiblgvBackSide");
-  //   if (visiblgvBackSide == true) {
-  //     fcGvBackSide_txtsideback_0.current.focus();
-  //   }
-  // }, []);
+console.log(txtMachineNo,'tttttt',txtSideBack)
+
+useEffect(() => {
+ if(txtRollLeaf.visble!='none'){
+  fcRollleaf.current.focus();
+ }
+}, [txtRollLeaf]);
+
+useEffect(() => {
+  if(txtSideBack.visble==true){
+    fcGvBackSide_txtsideback_0.current.focus();
+  }
+}, [txtSideBack]);
+
   return (
     <div>
       <Hearder />
@@ -106,10 +98,7 @@ function ConfirmBarcodeGrade() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table
-                className="TableMot1"
-                component={Card}
-                sx={{ width: "100%" }}
+              <Table className="TableMot1"  component={Card}  sx={{ width: "100%" }}
               >
                 <TableHead>
                   <TableRow>
@@ -143,18 +132,14 @@ function ConfirmBarcodeGrade() {
                         id="txtfild"
                         size="small"
                         fullWidth
-                        value={txt_lotNo}
+                        value={txt_lotNo.value}
                         inputRef={fcLotNo}
                         onChange={(e) => {
-                          settxt_lotNo(e.target.value);
+                          settxt_lotNo((prevState) =>({...prevState,value:e.target.value, }));
                         }}
-                        // disabled='false'
-                        // onChange={(e) =>  settxt_lotNo(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handletxt_Lotno();
-                          }
-                        }}
+                        disabled={txt_lotNo.disbled} //true พิมไม่ได้
+                        style={{background:txt_lotNo.style}}
+                        onBlur={handletxt_Lotno}
                       />
                     </TableCell>
                     <TableCell>
@@ -172,7 +157,7 @@ function ConfirmBarcodeGrade() {
                         <Autocomplete
                           inputRef={fcProduct}
                           id="selectPdBarcode"
-                          value={SlProduct}
+                          value={SlProduct.value}
                           onChange={(e, value) => handleSL_Product(value)}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
@@ -193,13 +178,14 @@ function ConfirmBarcodeGrade() {
                     <TableCell colSpan={2}>
                       <TextField
                         id="txtfild"
-                        value={txtLotRef}
-                        onChange={(e) => settxtLotRef(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleTxt_LotRef();
-                          }
-                        }}
+                        value={txtLotRef.value}
+                        onChange={(e) => settxtLotRef((prevState) =>({...prevState,value:e.target.value, }))}
+                        onBlur={handleTxt_LotRef}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     handleTxt_LotRef();
+                        //   }
+                        // }}
                         size="small"
                         fullWidth
                       />
@@ -212,16 +198,17 @@ function ConfirmBarcodeGrade() {
                     <TableCell colSpan={2}>
                       <TextField
                         id="txtfild"
-                        value={txtOperator}
-                        onChange={(e) => settxtOperator(e.target.value)}
+                        value={txtOperator.value}
+                        onChange={(e) => settxtOperator((prevState) =>({...prevState,value:e.target.value, }))}
                         size="small"
                         fullWidth
                         inputRef={fcProduct}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleTxt_Opreator();
-                          }
-                        }}
+                        onBlur={handleTxt_Opreator}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     handleTxt_Opreator();
+                        //   }
+                        // }}
                       />
                     </TableCell>
                   </TableRow>
@@ -230,7 +217,7 @@ function ConfirmBarcodeGrade() {
                       <Typography>Total Sht :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      <Typography>{lblTotalSht}</Typography>
+                      <Typography>{lblTotalSht.value}</Typography>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -238,10 +225,10 @@ function ConfirmBarcodeGrade() {
                       <Typography>Total Pcs :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      <Typography>{lblTotalPcs}</Typography>
+                      <Typography>{lblTotalPcs.value}</Typography>
                     </TableCell>
                   </TableRow>
-                  <TableRow style={{ display: visibleRollLeaf }}>
+                  <TableRow style={{ display: txtRollLeaf.visble }}>
                     <TableCell align="left">
                       <Typography>Roll Leaf No. :</Typography>
                     </TableCell>
@@ -250,30 +237,31 @@ function ConfirmBarcodeGrade() {
                         id="txtfild"
                         size="small"
                         inputRef={fcRollleaf}
-                        value={txtRollLeaf}
+                        value={txtRollLeaf.value}
                         onChange={(e) => {
-                          settxtRollLeaf(e.target.value);
-                          
+                          // settxtRollLeaf(e.target.value);
+                          settxtRollLeaf((prevState) =>({...prevState,value:e.target.value, }))
                         }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleTxt_RollLeaf();
-                          }
-                        }}
+                        onBlur={handleTxt_RollLeaf}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     handleTxt_RollLeaf();
+                        //   }
+                        // }}
                         fullWidth
                       />
                     </TableCell>
                   </TableRow>
-                  <TableRow style={{ display: visibleMachine }}>
-                    <TableCell align="right">
+                  <TableRow style={{ display: txtMachineNo.visble }}>
+                    <TableCell align="left">
                       <Typography>Machine No. :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
                         id="txtfild"
                         size="small"
-                        value={txtMachineNo}
-                        onChange={(e) => settxtMachineNo(e.target.value)}
+                        value={txtMachineNo.value}
+                        onChange={(e) =>  settxtMachineNo((prevState) =>({...prevState,value:e.target.value, }))}
                         // onKeyDown={(e) => {
                         //   if (e.key === "Enter") {
                         //     handle();
@@ -285,8 +273,8 @@ function ConfirmBarcodeGrade() {
                   </TableRow>
                 </TableBody>
               </Table>
-
-              {visiblgvBackSide == true && (
+              {/* visiblgvBackSide */}
+              { txtSideBack.visble== true && (
                 <Table component={Paper} className="gvBackSideBarcode">
                   <TableBody>
                     {Array.from({ length: hfShtScan }, (_, index) => (
@@ -314,7 +302,7 @@ function ConfirmBarcodeGrade() {
                             id="txtfild"
                             size="small"
                             fullWidth
-                            value={txtSideBack[index]}
+                            value={txtSideBack.value[index]}
                             inputRef={fcGvBackSide_txtsideback_0}
                             onChange={(event) =>
                               handleBackSideChange(index, event)
@@ -335,14 +323,13 @@ function ConfirmBarcodeGrade() {
                   </TableBody>
                 </Table>
               )}
-              {visibleLog == true && (
+              {lblLog.visble  == true && (
                 <Card
                   component={Paper}
                   style={{
                     width: "400px",
                     height: "40px",
                     margin: "auto",
-
                     textAlign: "center",
                     background: "#BB2525",
                     paddingTop: "18px",
@@ -351,10 +338,10 @@ function ConfirmBarcodeGrade() {
                     marginTop: "30px",
                   }}
                 >
-                  {lblLog}
+                  {lblLog.value}
                 </Card>
               )}
-              {visiblgvSerial == true && (
+              {dataGvSerial.visble == true && (
                 <Table className="CSS-GvSerialBarcode" component={Card}>
                   <TableHead>
                     <TableCell
@@ -388,6 +375,7 @@ function ConfirmBarcodeGrade() {
                         >
                           {index + 1}
                         </TableCell>
+                       
                         <TableCell>
                           {" "}
                           <TextField
@@ -403,7 +391,7 @@ function ConfirmBarcodeGrade() {
                         </TableCell>
                       </TableRow>
                     ))}
-                    <TableRow style={{display:visibleConfirm}}>
+                    <TableRow style={{display:lblConfirm.visble}}>
                       <TableCell align="center" colSpan={3}>
                         Please be confirm to save?
                       </TableCell>
@@ -445,7 +433,8 @@ function ConfirmBarcodeGrade() {
                 alignItems: "center",
               }}
             >
-              <img
+              {gvScanResult.visble == false && (
+                <> <img
                 style={{
                   width: "420px",
                   height: "350px",
@@ -453,14 +442,16 @@ function ConfirmBarcodeGrade() {
                 }}
                 src="src/assets/1.jpg" // Import the image
                 alt="Description of the image"
-              />
-              {visiblegvScanResult == true && (
+              /></>)}
+             
+              {/* visiblegvScanResult */}
+              {gvScanResult.visble == true && (
                 <>
                   <Paper
                     className="Card-lblResult"
                     elevation={3}
                     style={{
-                      background: " #ff4d4f",
+                      background: lblResult !== 'OK' ? "#ff4d4f" : "green", 
                       // display: gvScanResult,
                     }}
                   >
@@ -513,39 +504,47 @@ function ConfirmBarcodeGrade() {
                     </TableHead>
                     <TableBody>
                       {Array.from(
-                        { length: gvScanResult.length },
+                        { length: gvScanResult.value.length },
                         (_, index) => (
                           <TableRow key={index}>
                             <TableCell
                               align="center"
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
-                              {gvScanResult[index].SHEET}
+                              {gvScanResult.value[index].SHEET}
                             </TableCell>
                             <TableCell
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
-                              {gvScanResult[index].SEQ}
+                              {gvScanResult.value[index].SEQ}
                             </TableCell>
                             <TableCell
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
-                              {gvScanResult[index].SERIAL}
+                              {gvScanResult.value[index].SERIAL}
                             </TableCell>
                             <TableCell
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
-                              {gvScanResult[index].SERIAL_GRADE}
+                              {gvScanResult.value[index].SERIAL_GRADE}
                             </TableCell>
                             <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" , background: gvScanResult[index].SCAN_RESULT !== '' ? '#ff4d4f' : 'defaultColor'}}
+                            sx={{
+                              borderRight: "1px solid #d9d9d9",
+                              background: gvScanResult.value[index].SCAN_RESULT === '' 
+                                ? '' 
+                                : gvScanResult.value[index].SCAN_RESULT === 'OK' 
+                                ? 'green' 
+                                : '#ff4d4f'
+                            }}
+                            
                             >
-                              {gvScanResult[index].SCAN_RESULT}
+                              {gvScanResult.value[index].SCAN_RESULT}
                             </TableCell>
                             <TableCell
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
-                              {gvScanResult[index].REMARK}
+                              {gvScanResult.value[index].REMARK}
                             </TableCell>
                           </TableRow>
                         )

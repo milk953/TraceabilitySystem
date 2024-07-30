@@ -33,8 +33,6 @@ function ScanSMTRoollSht() {
     handleLotxt_Lotno,
     sl_Product,
     Product,
-    StyleEneble,
-    StyleDisabled,
     HandleSL_Product,
     lbllog,
     visblelog,
@@ -55,7 +53,8 @@ function ScanSMTRoollSht() {
     txtLeafNo,
     handleTextFieldChange,
     ibtback_Click,
-    settxtOperator
+    settxtOperator,
+    dataGvBackSide
   } = Fn_ScanSMTRollSht();
 
   return (
@@ -95,10 +94,10 @@ function ScanSMTRoollSht() {
                         id="txtfild"
                         size="small"
                         fullWidth
-                        value={txt_lotNo}
-                        // onChange={handleLotxt_Lotno}
+                        value={txt_lotNo.value}
                         onChange={(e) => {
-                          settxt_lotNo(e.target.value);
+                      
+                          settxt_lotNo ((prevState) =>({...prevState,value:e.target.value, }));
                         }}
                         // onChange={(e) =>  settxt_lotNo(e.target.value)}
                         onKeyDown={(e) => {
@@ -106,6 +105,7 @@ function ScanSMTRoollSht() {
                             handleLotxt_Lotno();
                           }
                         }}
+                        onBlur={handleLotxt_Lotno}
                         // style={StyleEneble()}
                         // disabled ={StyleDisabled()}
                       ></TextField>
@@ -124,7 +124,7 @@ function ScanSMTRoollSht() {
                       <FormControl fullWidth>
                         <Autocomplete
                           id="selectPd"
-                          value={sl_Product}
+                          value={sl_Product.value}
                           onChange={(e, value) => HandleSL_Product(value)}
                           options={Product.map(
                             (item) => item.prd_name
@@ -147,12 +147,7 @@ function ScanSMTRoollSht() {
                     <TableCell colSpan={1}>
                       {" "}
                       <div
-                        style={
-                          lblCheckRoll === "ON"
-                            ? { backgroundColor: "#73d13d" }
-                            : lblCheckRoll === "OFF"
-                            ? { backgroundColor: "#f5222d" }
-                            : { backgroundColor: "" }
+                        style={lblCheckRoll.style
                         }
                       >
                         <Typography
@@ -163,7 +158,7 @@ function ScanSMTRoollSht() {
                             fontSize: "17px",
                           }}
                         >
-                          {lblCheckRoll}
+                          {lblCheckRoll.value}
                         </Typography>
                       </div>
                     </TableCell>
@@ -218,9 +213,9 @@ function ScanSMTRoollSht() {
                       <TextField
                         id="txtfild"
                         size="small"
-                        value={txtRollLeaf}
+                        value={txtRollLeaf.value}
                         onChange={(e) => {
-                          settxtRollLeaf(e.target.value);
+                          settxtRollLeaf((prevState) =>({...prevState,value:e.target.value}));
                           // console.log("txtRollLeaf",e.target.value)
                         }}
                         // disabled
@@ -232,7 +227,7 @@ function ScanSMTRoollSht() {
               </Table>
 
               {/* {console.log(visblelog,'visblelog')} */}
-              {visblelog && (
+              {lbllog.visble==true && (
                 <Paper
                   elevation={3}
                   style={{
@@ -248,7 +243,7 @@ function ScanSMTRoollSht() {
                     variant="h5"
                     style={{ paddingTop: "5px", color: "#fff" }}
                   >
-                    {lbllog}
+                    {lbllog.value}
                   </Typography>
                 </Paper>
               )}
@@ -268,7 +263,7 @@ function ScanSMTRoollSht() {
             <td>
               <Table
                 className="CSS-GvSerial"
-                style={{ display: GvSerial, marginTop: "55px" }}
+                style={{ display: GvSerial.visble, marginTop: "55px" }}
                 component={Card}
               >
                 <TableHead>
