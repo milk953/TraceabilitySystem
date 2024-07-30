@@ -24,7 +24,7 @@ import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaS
 import SheetBincheking from "./Page/SheetBinChecking/SheetBinCheck"
 import ScanSMTSerialSpotHeat from "./Page/ScanSMTSerialSpotHeat/ScanSMTSerialSpotHeat"
 import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
-
+import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm";
 
 
 
@@ -48,7 +48,7 @@ const App = () => {
           <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
           <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
           <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
-
+          <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
 
           {/* View Data */}
           <Route path='/ELTmaster' element={<ELTmaster />} />
