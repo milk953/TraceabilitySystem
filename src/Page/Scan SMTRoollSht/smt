@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import {
   TextField,
   Card,
@@ -16,10 +16,6 @@ import {
   FormControl,
   InputLabel,
   Autocomplete,
-  Box,
-  Checkbox,
-  Grid,
-  Input,
 } from "@mui/material";
 import {
   ArrowRightOutlined,
@@ -39,6 +35,7 @@ function ScanSMTRoollSht() {
     Product,
     HandleSL_Product,
     lbllog,
+
     settxtRollLeaf,
     txtRollLeaf,
     gvScanResult,
@@ -46,6 +43,7 @@ function ScanSMTRoollSht() {
     settxtTotalLeaf,
     lblCheckRoll,
     lbltotalSht,
+    // StyleCheckRoll,
     GvSerial,
     hfSerialCount,
     Bt_Save,
@@ -57,55 +55,29 @@ function ScanSMTRoollSht() {
     ibtback_Click,
     settxtOperator,
     dataGvBackSide,
-    lblResult,
-    fc_txtRollleaf,
-    fc_SlProduct,
-    fc_GvSerial,
-    fc_txtLotNo,
-    fc_txtOperator,
-    handletxtTotalLeaf
+    lblResult
   } = Fn_ScanSMTRollSht();
 console.log('gvScanResult',gvScanResult)
-
-useEffect(() => {
-  if(fc_txtRollleaf.current){
-    fc_txtRollleaf.current.focus();
-  }
- 
- }, [txtRollLeaf]);
-
-
- useEffect(() => {
-  if(fc_SlProduct.current){
-    fc_SlProduct.current.focus();
-  }
- 
-}, [sl_Product]);
-
-
-useEffect(() => {
-  if(fc_txtOperator.current){
-    fc_txtOperator.current.focus();
-  }
- 
-}, [txtOperator]);
-
-useEffect(() => {
-  if(fc_GvSerial.current){
-    fc_GvSerial.current.focus();
-  }
- 
-}, [GvSerial]);
-
   return (
     <div>
       <Hearder />
       <h1>ScanSMTRoollSht</h1>
-      <Card component={Paper} className="Card-ConfirmBarcode">
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={10} md={4}>
-            <Table className="ScanSMT" component={Paper}>
+      <Card
+        component={Paper}
+        style={{
+          margin: "auto",
+          width: "90%", // Use percentage for responsiveness
+          maxWidth: "1400px",
+          marginTop: "50px",
+          height: "auto", // Use auto for height to adapt to content
+          maxHeight: "550px", // Maximum height
+          padding: "20px",
+        }}
+      >
+        <table style={{}}>
+          <tr>
+            <td>
+              <Table className="ScanSMT" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={4} align="center">
                     <Typography variant="h6">
@@ -123,9 +95,6 @@ useEffect(() => {
                         id="txtfild"
                         size="small"
                         fullWidth
-                        disabled={txt_lotNo.disbled} //true พิมไม่ได้
-                        style={txt_lotNo.style}
-                        inputRef={fc_txtLotNo}
                         value={txt_lotNo.value}
                         onChange={(e) => {
                           settxt_lotNo((prevState) => ({
@@ -133,13 +102,15 @@ useEffect(() => {
                             value: e.target.value,
                           }));
                         }}
+                        // onChange={(e) =>  settxt_lotNo(e.target.value)}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             handleLotxt_Lotno();
                           }
                         }}
                         onBlur={handleLotxt_Lotno}
-                      
+                        // style={StyleEneble()}
+                        // disabled ={StyleDisabled()}
                       ></TextField>
                     </TableCell>
                     <TableCell>
@@ -156,10 +127,7 @@ useEffect(() => {
                       <FormControl fullWidth>
                         <Autocomplete
                           id="selectPd"
-                          inputRef={fc_SlProduct}
                           value={sl_Product.value}
-                          style={sl_Product.style}
-                          disabled={sl_Product.disbled} //true พิมไม่ได้
                           onChange={(e, value) => HandleSL_Product(value)}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
@@ -204,7 +172,6 @@ useEffect(() => {
                         size="small"
                         // label="Operator. :"
                         fullWidth
-                        inputRef={fc_txtOperator}
                         // disabled
                         value={txtOperator}
                         onChange={(e) => {
@@ -223,10 +190,6 @@ useEffect(() => {
                         size="small"
                         style={{ width: "70px" }}
                         value={txtTotalLeaf}
-                        onChange={(e) => {
-                          settxtTotalLeaf(e.target.value);
-                        }}
-                        onBlur={handletxtTotalLeaf}
                       ></TextField>
                     </TableCell>
                     <TableCell align="right">
@@ -248,16 +211,13 @@ useEffect(() => {
                       <TextField
                         id="txtfild"
                         size="small"
-                        inputRef={fc_txtRollleaf}
-                        disabled={txtRollLeaf.disbled} //true พิมไม่ได้
-                        style={txtRollLeaf.style}
                         value={txtRollLeaf.value}
                         onChange={(e) => {
                           settxtRollLeaf((prevState) => ({
                             ...prevState,
                             value: e.target.value,
                           }));
-                        
+                          // console.log("txtRollLeaf",e.target.value)
                         }}
                         fullWidth
                       ></TextField>
@@ -266,30 +226,44 @@ useEffect(() => {
                 </TableBody>
               </Table>
 
+              {/* {console.log(visblelog,'visblelog')} */}
               {lbllog.visble == true && (
                 <Paper
                   elevation={3}
                   style={{
-                    width: "400px",
-                    height: "40px",
+                    width: "450px",
                     margin: "auto",
+                    height: "40px",
                     textAlign: "center",
-                    background: "#BB2525",
-                    paddingTop: "18px",
-                    color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
-                    fontWeight: "bold", // กำหนดความหนาของฟอนต์
-                    marginTop: "30px",
+                    marginTop: "10px",
+                    backgroundColor: "#f5222d",
                   }}
                 >
-                
+                  <Typography
+                    variant="h5"
+                    style={{ paddingTop: "5px", color: "#fff" }}
+                  >
                     {lbllog.value}
-                
+                  </Typography>
                 </Paper>
               )}
-
+            </td>
+            <td style={{ textAlign: "center", width: "900px" }}>
+              <img
+                style={{
+                  width: "320px",
+                  height: "250px",
+                }}
+                src="src/assets/1.jpg" // Import the image
+                alt="Description of the image"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
               <Table
                 className="CSS-GvSerial"
-                style={{ display: GvSerial.visble, marginTop: "20px" }}
+                style={{ display: GvSerial.visble, marginTop: "55px" }}
                 component={Card}
               >
                 <TableHead>
@@ -319,7 +293,6 @@ useEffect(() => {
                           id="txtfild"
                           size="small"
                           fullWidth
-                          inputRef={fc_GvSerial}
                           value={txtLeafNo[index]}
                           onChange={(event) =>
                             handleTextFieldChange(index, event)
@@ -340,33 +313,10 @@ useEffect(() => {
                   </TableRow>
                 </TableBody>
               </Table>
-            </Grid>
-            {/* border:'1PX SOLID green' */}
-            <Grid
-              item
-              xs={10}
-              md={7}
-              style={{
-                margin: "auto",
-                marginTop: "10px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              {gvScanResult.visble == false && (
-                <> <img
-                style={{
-                  width: "420px",
-                  height: "350px",
-                  marginBottom: "30px",
-                }}
-                src="src/assets/1.jpg" // Import the image
-                alt="Description of the image"
-              /></>)}
-             
-              {/* visiblegvScanResult */}
-              {gvScanResult.visble == true && (
+            </td>
+
+            <td>
+            {gvScanResult.visble == true && (
                 <>
                               <Paper
                 className="Card-lblResult"
@@ -461,12 +411,12 @@ useEffect(() => {
               </Table>
                 </>
             )}
-            </Grid>
-          </Grid>
-        </Box>
+
+            </td>
+          </tr>
+        </table>
       </Card>
     </div>
   );
 }
-
 export default ScanSMTRoollSht;

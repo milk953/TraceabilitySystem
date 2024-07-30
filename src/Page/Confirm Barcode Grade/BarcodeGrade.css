@@ -32,7 +32,7 @@
     /* margin: auto; */
     margin-top: 30px;
     max-width: 400px !important;
-    width: 90% !important;
+    width: 100% !important;
 }
 
 .CSS-GvSerialBarcode th{
@@ -50,7 +50,7 @@
     /* margin: auto; */
     margin-top: 30px;
     max-width: 400px !important;
-    width: 90% !important;
+    width: 100% !important;
 }
 
 .CSS-GvSerialBarcode th{
@@ -81,4 +81,12 @@
 
 .CSS-GvScanResult td{
     padding: 4px 4px 4px 4px!important;
+}
+
+.Card-lblResult{
+    max-width: 700px;
+    width: 100%;
+    margin: auto;
+    height: 45px;
+    text-align: center;
 }
