@@ -549,7 +549,7 @@ function fn_ScanSMTSerialShtConfirm() {
 
             setlblResult(_strScanResultAll);
             if (_strScanResultAll === "NG") {
-                setlblResultcolor("red");
+                setlblResultcolor("#ff4d4f");
             } else {
                 setlblResultcolor("green");
             }

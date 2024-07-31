@@ -294,7 +294,9 @@ function fn_ScanSMTSerialControlTime() {
                             dblTime: hfProcControlTime,
                             data: [
                                 {
-                                    
+                                    serial: dtSerial[i].SERIAL,
+                                    product: dtSerial[i].PRODUCT,
+                                    lot: dtSerial[i].LOT
                                 }
                             ]
                         });
@@ -346,10 +348,9 @@ function fn_ScanSMTSerialControlTime() {
 
                                 if (hfSerialFixFlag === "Y") {
 
-                                    _strFixDigit = _strSerial.substring(
-                                        parseInt(hfSerialStartDigit),
-                                        parseInt(hfSerialEndDigit) - parseInt(hfSerialStartDigit) + 1
-                                    );
+                                    const start = parseInt(hfSerialStartDigit);
+                                    const end = parseInt(hfSerialEndDigit);
+                                    _strFixDigit = _strSerial.substring(start - 1, end);
 
                                     console.log("lll", _strFixDigit, hfSerialDigit);
 
@@ -365,7 +366,7 @@ function fn_ScanSMTSerialControlTime() {
                                         let _strConfigDigit = "";
                                         const start = parseInt(hfConfigStart);
                                         const end = parseInt(hfConfigEnd);
-                                        _strConfigDigit = _strSerial.substring(start, (end - start) + 1);
+                                        _strConfigDigit = _strSerial.substring(start - 1, end);
                                         if (_strConfigDigit !== hfConfigCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
@@ -392,7 +393,7 @@ function fn_ScanSMTSerialControlTime() {
                                     let _strStartSeq = "";
                                     const start = parseInt(hfCheckStartSeqStart);
                                     const end = parseInt(hfCheckStartSeqEnd);
-                                    _strStartSeq = _strSerial.substring(start, (end - start) + 1);
+                                    _strStartSeq = _strSerial.substring(start - 1, end);
                                     if (_strStartSeq !== hfCheckStartSeqCode) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                         _strRemark = "Serial barcode mix product";
@@ -407,7 +408,7 @@ function fn_ScanSMTSerialControlTime() {
                                     let _strWeekCode = "";
                                     const start = parseInt(hfCheckWeekCodeStart);
                                     const end = parseInt(hfCheckWeekCodeEnd);
-                                    _strWeekCode = _strSerial.substring(start, (end - start) + 1);
+                                    _strWeekCode = _strSerial.substring(start - 1, end);
                                     if (_strWeekCode !== hfWeekCode) {
                                         _strMessageUpdate = "Serial barcode mix week code" + _strTagNewLine + "หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
                                         _strRemark = "Serial barcode mix week code";
@@ -419,7 +420,7 @@ function fn_ScanSMTSerialControlTime() {
                                 }
 
                                 if (!bolError) {
-                                    for (let intRow = _intRowSerial + 1; intRow < dtSerial.drRow.length; intRow++) {
+                                    for (let intRow = _intRowSerial + 1; intRow < dtSerial.length; intRow++) {
                                         if (_strSerial === dtSerial[intRow].SERIAL) {
                                             _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                                             _strRemark = "Serial duplicate in tray  ";
@@ -486,7 +487,7 @@ function fn_ScanSMTSerialControlTime() {
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
-                                setlblResultcolor("red");
+                                setlblResultcolor("#ff4d4f");
                                 setlblLog(_strErrorUpdate);
                                 setvisiblelog(true);
                             }
@@ -499,7 +500,7 @@ function fn_ScanSMTSerialControlTime() {
         }
 
         if (_strScanResultAll === "NG") {
-            setlblResultcolor("red");
+            setlblResultcolor("#ff4d4f");
         } else {
             setlblResultcolor("green");
         }
