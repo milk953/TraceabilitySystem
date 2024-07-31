@@ -1,0 +1,25 @@
+.ELTETYPEPnlForm {
+    display: flex;
+    margin: auto;
+    width: 600px;
+    margin-top: 20px;
+}
+.ETYPEmasterTb {
+  height: 100px;
+}
+
+.ELTTYPEpnlResult {
+  display: flex;
+  margin: auto;
+  width: 600px;
+  margin-top: 20px;
+}
+#ELTTYPETableResult th{
+    text-align: center;
+    padding: 1%;
+}
+
+#ELTTYPETableResult td{
+  text-align: center;
+}
+
