@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -13,7 +13,7 @@ function Fn_ScanSMTRollSht() {
     value: "",
     disbled: "",
     visble: "",
-    style: "",
+    style: {},
   });
   const [Product, setProduct] = useState([]);
   const [lbllog, setlbllog] = useState({
@@ -26,7 +26,7 @@ function Fn_ScanSMTRollSht() {
     value: "",
     disbled: "",
     visble: "",
-    style: "",
+    style:{},
   });
   const [txtTotalLeaf, settxtTotalLeaf] = useState("");
   const [txtOperator, settxtOperator] = useState("");
@@ -45,22 +45,26 @@ function Fn_ScanSMTRollSht() {
   });
   const [txtLeafNo, SettxtLeafNo] = useState(Array(txtTotalLeaf).fill(""));
 
-  const [dataGvBackSide, setdataGvBackSide] = useState({
-    value: "",
-    disbled: "",
-    visble: "",
-    style: {},
-  });
-
   const [lblResult, setlblResult] = useState({
     value: "",
     disbled: "",
     visble: "",
     style: {},
   });
-  //ซ่อน
-  const [gvScanResult, setgvScanResult] = useState("none");
-  const [visblelog, setvisblelog] = useState(false); //falseซ่อน true โชว์
+
+  const [gvScanResult, setgvScanResult] = useState({
+    value: "",
+    disbled: "",
+    visble: false,
+    style: "",
+  });
+
+    //Focus
+    const fc_txtRollleaf = useRef(null);
+    const fc_SlProduct = useRef(null);
+    const fc_GvSerial= useRef(null);
+    const fc_txtLotNo= useRef(null);
+    const fc_txtOperator = useRef(null); 
   // --------------------------------------
   const [hfSerialLength, setHfSerialLength] = useState("");
   const [hfSerialFixFlag, setHfSerialFixFlag] = useState("");
@@ -134,10 +138,10 @@ function Fn_ScanSMTRollSht() {
   const [hfConnRollLeafFlg, setHfConnRollLeafFlg] = useState("");
   const [hfLeafSerialFlg, setHfLeafSerialFlg] = useState("");
   const [hfScanResult, setHfScanResult] = useState("");
-  
+
   const CONNECT_SERIAL_ERROR = "999999";
   const CONNECT_SERIAL_NOT_FOUND = "NOT FOUND CODE";
-  const hfAutoDownload='N'
+  const hfAutoDownload = "N";
   // --------------------------------------
   //Page loade
   useEffect(() => {
@@ -158,6 +162,9 @@ function Fn_ScanSMTRollSht() {
   };
 
   const handleLotxt_Lotno = async () => {
+    // 5-190617-001RGP021S048
+    SetGvSerial((prevState) => ({ ...prevState, value: "", visble: 'none' }));
+    setgvScanResult((prevState) => ({ ...prevState, value: "", visble: false }));
     setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
     let strLotData = "";
     let strLot = "";
@@ -199,7 +206,7 @@ function Fn_ScanSMTRollSht() {
           await getProductSerialMaster(strPrdName);
           await getInitialSheet();
           SetMode("ROLL");
-          // fnSetFocus("txtRollLeaf")
+          fc_txtRollleaf.current.focus();
         } else {
           console.log("not found1");
           setlbllog((prevState) => ({
@@ -216,7 +223,8 @@ function Fn_ScanSMTRollSht() {
           value: `Product ${strPrdName} not found.`,
           visble: true,
         }));
-        // fnSetFocus("ddlProduct")
+        fc_SlProduct.current.focus();
+      
       }
       await axios
         .post("/api/GetRollLeafTotalByLot", {
@@ -230,28 +238,28 @@ function Fn_ScanSMTRollSht() {
         ...prevState,
         value: Product[0].prd_name,
       }));
-      // gvSerial.DataSource = Nothing
-      // gvSerial.DataBind()
-      SetGvSerial({});
-      (prevState) => ({ ...prevState, value: "", visble: false });
+      settxt_lotNo((prevState) => ({ ...prevState, value: '' }));
+      // SetGvSerial((prevState) => ({ ...prevState, value: "", visble: true }));
       setlbllog((prevState) => ({
         ...prevState,
         value: `Invalid lot no.`,
         visble: true,
       }));
       setHfMode("LOT");
-      // fnSetFocus("txtLot")
+   
+      fc_txtLotNo.current.focus();
     }
   };
 
   const getInitialSheet = async () => {
+    console.log('>>>>>')
     let dtData = [];
     for (let intRow = 0; intRow < txtTotalLeaf; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
-    SetGvSerial((prevState) => ({ ...prevState, value: dtData, visble: true }));
+    SetGvSerial((prevState) => ({ ...prevState, value: dtData, visble: '' }));
     return dtData;
   };
 
@@ -340,7 +348,6 @@ function Fn_ScanSMTRollSht() {
           setHfCheckRollPrdStart(data.prm_conn_roll_prd_start);
           setHfCheckRollPrdEnd(data.prm_conn_roll_prd_end);
           setHfCheckRollPrd(data.prm_conn_roll_prd_fix);
-
           setHfCheckPrdSht(data.prm_conn_roll_req_prd_sht);
           setHfCheckPrdShtStart(data.prm_conn_roll_prd_sht_start);
           setHfCheckPrdShtEnd(data.prm_conn_roll_prd_sht_end);
@@ -360,9 +367,8 @@ function Fn_ScanSMTRollSht() {
           STRPROC: data.prm_date_inproc,
         })
         .then((res) => {
-          // console.log(res.data.flat().flat(), "getWeekCodebyLot");
           if (res.data.length > 0) {
-            setHfWeekCode(res.data[0].roll_leaf);
+            setHfWeekCode(data.roll_leaf);
           }
         });
     }
@@ -379,7 +385,6 @@ function Fn_ScanSMTRollSht() {
         style: { background: "#f5222d", color: "black" },
       }));
     }
-
     return data;
   };
 
@@ -404,9 +409,10 @@ function Fn_ScanSMTRollSht() {
         style: { background: "#EEEEEE" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
-      SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
+      SetGvSerial((prevState) => ({ ...prevState, visble: 'none' }));
       setHfMode("LOT");
-      // fnSetFocus("txtLot")
+     
+      fc_txtLotNo.current.focus();
     }
     if (_strType == "LOT_ERROR") {
       settxt_lotNo((prevState) => ({
@@ -429,7 +435,7 @@ function Fn_ScanSMTRollSht() {
       setlbllog((prevState) => ({ ...prevState, visble: true })); //falseโชว์ true ซ่อน
       SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
       setHfMode("LOT");
-      // fnSetFocus("txtLot")
+      fc_txtLotNo.current.focus();
     }
     if (_strType == "OP") {
       settxt_lotNo((prevState) => ({
@@ -447,7 +453,7 @@ function Fn_ScanSMTRollSht() {
       SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
       settxtOperator("");
       setHfMode("OP");
-      // fnSetFocus("txtOperator")
+      fc_txtOperator.current.focus();
     }
     if (_strType == "ROLL") {
       settxt_lotNo((prevState) => ({
@@ -455,11 +461,12 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#EEEEEE" },
       }));
-      setsl_Product((prevState) => ({ ...prevState, disbled: true }));
+      setsl_Product((prevState) => ({ ...prevState, disbled: true,style:{ background: "#EEEEEE"} }));
       settxtRollLeaf((prevState) => ({
         ...prevState,
         value: "",
         disbled: false,
+        style:{}
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
       SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
@@ -493,7 +500,7 @@ function Fn_ScanSMTRollSht() {
       setlbllog((prevState) => ({ ...prevState, visble: false }));
       SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
       await getInitialSheet();
-      // fnSetFocus("gvSerial")
+      fc_GvSerial.current.focus();
     }
     if (_strType == "SHEET_NG") {
       settxt_lotNo((prevState) => ({
@@ -509,7 +516,7 @@ function Fn_ScanSMTRollSht() {
     if (txt_lotNo.value != "") {
       await getInitialSheet();
       SetMode("ROLL");
-      // fnSetFocus("txtRollLeaf")
+      fc_txtRollleaf.current.focus();
     }
   };
 
@@ -520,12 +527,13 @@ function Fn_ScanSMTRollSht() {
       setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
       await getInitialSheet();
       SetMode("ROLL");
-      // fnSetFocus("txtRollLeaf")
+      fc_txtRollleaf.current.focus();
     }
   };
 
   const Bt_Save = async () => {
-    if (hfMode == "save") {
+    console.log('hfMode',hfMode)
+    if (hfMode == "SHEET") {
       await setRollSheetData();
     }
   };
@@ -549,9 +557,11 @@ function Fn_ScanSMTRollSht() {
     }
     return dtData;
   };
+
   const setRollSheetData = async () => {
     let _strFileError = "";
     let dtSheet = getInputSheet();
+    console.log(hfConnRollLength,'hfConnRollLength',txtRollLeaf.value.length)
     let _bolPrdError = false;
     let _bolError = false;
     let _strScanResultAll = "OK";
@@ -559,7 +569,7 @@ function Fn_ScanSMTRollSht() {
     let _intRow = 0;
     let _strLot = "";
 
-    let _strRollLeaf = txtRollLeaf;
+    let _strRollLeaf = txtRollLeaf.value;
     if (hfConnRollLength == txtRollLeaf.value.length) {
       if (txtOperator != "") {
         await axios
@@ -568,6 +578,7 @@ function Fn_ScanSMTRollSht() {
             _dtRollLeaf: dtSheet,
           })
           .then((res) => {
+            console.log('GetRollLeafDuplicate',res.data)
             _intCount = res.data;
           });
         if (_intCount == 1) {
@@ -589,6 +600,7 @@ function Fn_ScanSMTRollSht() {
             _dtRollLeaf: dtSheet,
           })
           .then((res) => {
+            console.log('GetRollLeafScrapRBMP',res.data)
             dataRBMP = res.data;
           });
         if (dataRBMP == "Y") {
@@ -606,6 +618,7 @@ function Fn_ScanSMTRollSht() {
           let strRollProduct = hfRollNo + hfCheckRollPrd;
           const start = parseInt(hfCheckRollPrdStart, 10);
           const end = parseInt(hfCheckRollPrdEnd, 10);
+          console.log('_strRollLeaf',_strRollLeaf)
           if (strRollProduct != _strRollLeaf.slice(start - 1, end)) {
             _bolError = true;
             _strScanResultAll = "NG";
@@ -627,7 +640,7 @@ function Fn_ScanSMTRollSht() {
             let _inSeq = dtSheet[i].SHT_SEQ;
             _strRollLeaf = dtSheet[i].ROLL_LEAF;
             _intRow += 1;
-  
+
             if (
               dtSheet[i].SHT_NO != "" &&
               dtSheet[i].SHT_NO != CONNECT_SERIAL_ERROR &&
@@ -641,7 +654,7 @@ function Fn_ScanSMTRollSht() {
               let _strScanResultUpdate = "";
               let _strMessageUpdate = "";
               _bolError = false;
-  
+
               for (let _intSeq = 0; _intSeq <= dtSheet.length - 1; _inSeq++) {
                 if (dtSheet[_intSeq].SHT_NO == _strShtNo) {
                   _bolError = true;
@@ -688,13 +701,13 @@ function Fn_ScanSMTRollSht() {
                 }
                 if (!_bolError && hfLeafSerialFlg === "Y") {
                   let _strFixDigit = "";
-  
+
                   if (hfSerialFixFlag === "Y") {
                     _strFixDigit = _strShtNo.substring(
                       parseInt(hfSerialStartDigit, 10),
                       parseInt(hfSerialEndDigit, 10) + 1
                     );
-  
+
                     if (_strFixDigit !== hfSerialDigit) {
                       _strScanResultAll = "NG";
                       _strScanResultUpdate = "NG";
@@ -702,8 +715,11 @@ function Fn_ScanSMTRollSht() {
                         "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                       _bolError = true;
                     }
-  
-                    if (hfConfigCheck === "Y" && _strScanResultUpdate !== "NG") {
+
+                    if (
+                      hfConfigCheck === "Y" &&
+                      _strScanResultUpdate !== "NG"
+                    ) {
                       let _strConfigDigit = "";
                       _strConfigDigit = _strShtNo.substring(
                         parseInt(hfConfigStart, 10),
@@ -718,7 +734,7 @@ function Fn_ScanSMTRollSht() {
                       }
                     }
                   }
-  
+
                   if (
                     hfSerialStartCode.trim() !== "" &&
                     _strScanResultUpdate !== "NG"
@@ -734,8 +750,11 @@ function Fn_ScanSMTRollSht() {
                       _bolError = true;
                     }
                   }
-  
-                  if (hfCheckStartSeq === "Y" && _strScanResultUpdate !== "NG") {
+
+                  if (
+                    hfCheckStartSeq === "Y" &&
+                    _strScanResultUpdate !== "NG"
+                  ) {
                     let _strStartSeq = "";
                     _strStartSeq = _strShtNo.substring(
                       parseInt(hfCheckStartSeqStart, 10),
@@ -749,8 +768,11 @@ function Fn_ScanSMTRollSht() {
                       _bolError = true;
                     }
                   }
-  
-                  if (hfCheckWeekCode === "Y" && _strScanResultUpdate !== "NG") {
+
+                  if (
+                    hfCheckWeekCode === "Y" &&
+                    _strScanResultUpdate !== "NG"
+                  ) {
                     let _strWeekCode = "";
                     _strWeekCode = _strShtNo.substring(
                       parseInt(hfCheckWeekCodeStart, 10),
@@ -779,6 +801,7 @@ function Fn_ScanSMTRollSht() {
                       },
                     })
                     .then((res) => {
+                      console.log('getleafduplicateconnectroll',res.data)
                       _intCountDup = res.data;
                     });
                   if (_intCountDup != 0) {
@@ -797,8 +820,10 @@ function Fn_ScanSMTRollSht() {
                   _strScanResultUpdate = "OK";
                   _strRemark = "";
                 }
-                dtSheet[i].ROW_UPDATE = _strScanResultUpdate;
-                dtSheet[i].ROW_UPDATE = _strRemark;
+                console.log('เข้าาาาาาาา111111')
+                dtSheet[i].SCAN_RESULT = _strScanResultUpdate;
+                dtSheet[i].REMARK = _strRemark;
+                _intCount += 1;
               }
             }
           }
@@ -812,7 +837,8 @@ function Fn_ScanSMTRollSht() {
           value: "Please input operator / กรุณาระบุพนักงาน",
         }));
       }
-    }else{
+    } else {
+      console.log('เข้าาาาาาาา222222')
       _bolError = true;
       _strScanResultAll = "NG";
       setlbllog((prevState) => ({
@@ -821,69 +847,72 @@ function Fn_ScanSMTRollSht() {
         value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
       }));
     }
-  setlblResult((prevState) => ({
-    ...prevState,
-    Visible: true,
-    value: _strScanResultAll,
-  }));
-  
-  setHfScanResult(_strScanResultAll)
-
-  await axios
-  .post("/api/GetRollLeafTotalByLot", {
-    LotNo: _strLot,
-  })
-  .then((res) => {
-    
-    setlbltotalSht( res.data)
-  });
-  if(_strScanResultAll== "NG" ){
     setlblResult((prevState) => ({
       ...prevState,
-      style: Red,
-    
+      Visible: true,
+      value: _strScanResultAll,
     }));
-  }else{
-    setlblResult((prevState) => ({
-      ...prevState,
-      style: Green,
-    
-    }));
-  }
 
-  if (!_bolPrdError){
-    // gvScanResult.DataSource = dtSheet
-    // gvScanResult.DataBind()
-  }else{
-    // gvScanResult.DataSource = Nothing
-    // gvScanResult.DataBind()
-  }
-  if(hfAutoDownload=='N'){
-    await  getInitialSheet()
-    if(lbllog.value!=''){
-      settxtRollLeaf.value((prevState) => ({
+    setHfScanResult(_strScanResultAll);
+
+    await axios
+      .post("/api/GetRollLeafTotalByLot", {
+        LotNo: _strLot,
+      })
+      .then((res) => {
+        console.log('GetRollLeafTotalByLot',res.data)
+        setlbltotalSht(res.data);
+      });
+    if (_strScanResultAll == "NG") {
+      setlblResult((prevState) => ({
         ...prevState,
-        value: '',
-        disbled:false,    
+        style: 'Red',
       }));
-      // pnlSerial.Visible = True
-      setHfMode('Sheet')
+    } else {
+      setlblResult((prevState) => ({
+        ...prevState,
+        style: 'Green',
+      }));
     }
-    else{
-      SetMode("ROLL")
+
+    if (!_bolPrdError) {
+      console.log(_bolPrdError,'_bolPrdError1')
+      setgvScanResult((prevState) => ({
+        ...prevState,
+        value: dtSheet,
+        visble: true,
+      }));
+    } else {
+      console.log(_bolPrdError,'_bolPrdError2')
+      setgvScanResult((prevState) => ({
+        ...prevState,
+        value: "",
+        visble: true,
+      }));
     }
-    // fnSetFocus("txtRollLeaf")
-    
-  }
-  else{
-    settxtRollLeaf.value((prevState) => ({
-      ...prevState,
-      value: '',
-      disbled:false,    
-    }));
-    getInitialSheet()
-  }
-  
+    if (hfAutoDownload == "N") {
+      await getInitialSheet();
+      if (lbllog.value != "") {
+        settxtRollLeaf((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+        }));
+        // pnlSerial.Visible = True
+        SetGvSerial((prevState) => ({ ...prevState,visble: false }));
+        setHfMode("SHEET");
+      } else {
+        SetMode("ROLL");
+      }
+      fc_txtRollleaf.current.focus();
+    } else {
+      settxtRollLeaf((prevState) => ({
+        ...prevState,
+        value: "",
+        disbled: false,
+      }));
+      getInitialSheet();
+    }
   };
 
   const handleTextFieldChange = (index, event) => {
@@ -905,7 +934,6 @@ function Fn_ScanSMTRollSht() {
 
     HandleSL_Product,
     lbllog,
-    visblelog,
     settxtRollLeaf,
     txtRollLeaf,
     gvScanResult,
@@ -924,6 +952,13 @@ function Fn_ScanSMTRollSht() {
     handleTextFieldChange,
     ibtback_Click,
     settxtOperator,
+    lblResult,
+    fc_txtRollleaf,
+    fc_SlProduct,
+    fc_GvSerial,
+    fc_txtLotNo,
+    fc_txtOperator,
+    handletxtTotalLeaf
   };
 }
 

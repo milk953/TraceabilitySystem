@@ -76,7 +76,7 @@ function ConfirmBarcodeGrade() {
     lblConfirm,
     dataGvSerial
   } = fn_ConfirmBarcodeGrade();
-console.log(txtMachineNo,'tttttt',txtSideBack)
+
 
 useEffect(() => {
  if(txtRollLeaf.visble!='none'){
@@ -158,6 +158,7 @@ useEffect(() => {
                           inputRef={fcProduct}
                           id="selectPdBarcode"
                           value={SlProduct.value}
+                          // style={{background:SlProduct.style}}
                           onChange={(e, value) => handleSL_Product(value)}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
@@ -477,29 +478,29 @@ useEffect(() => {
                         </TableCell>
                         <TableCell
                           sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="200px"
+                          width="50px"
                         >
                           No.
                         </TableCell>
                         <TableCell
                           sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="200px"
+                          width="250px"
                         >
                           Serial No.
                         </TableCell>
                         <TableCell
                           sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="150px"
+                          width="100px"
                         >
                           Grade
                         </TableCell>
                         <TableCell
                           sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="150px"
+                          width="100px"
                         >
                           Scan Result
                         </TableCell>
-                        <TableCell width="300px">Remark</TableCell>
+                        <TableCell width="380px">Remark</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -514,6 +515,7 @@ useEffect(() => {
                               {gvScanResult.value[index].SHEET}
                             </TableCell>
                             <TableCell
+                            align="center"
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
                               {gvScanResult.value[index].SEQ}
@@ -524,11 +526,13 @@ useEffect(() => {
                               {gvScanResult.value[index].SERIAL}
                             </TableCell>
                             <TableCell
+                            align="center"
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
                               {gvScanResult.value[index].SERIAL_GRADE}
                             </TableCell>
                             <TableCell
+                            align="center"
                             sx={{
                               borderRight: "1px solid #d9d9d9",
                               background: gvScanResult.value[index].SCAN_RESULT === '' 
