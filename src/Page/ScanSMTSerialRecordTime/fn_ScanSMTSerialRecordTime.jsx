@@ -21,7 +21,6 @@ function fn_ScanSMTSerialRecordTime() {
     const [lblResultcolor, setlblResultcolor] = useState("green");
     const [pnlMachine, setpnlMachine] = useState(true);
     const [pnlRackNo, setpnlRackNo] = useState(false);
-    let eventArgument = "";
     const [lblOP, setlblOP] = useState("");
     const [pnlOP, setpnlOP] = useState(false);
 
@@ -107,7 +106,7 @@ function fn_ScanSMTSerialRecordTime() {
         localStorage.setItem("hfUserStation", localStorage.getItem("ipAddress"));
         sethfPlantCode(import.meta.env.VITE_FAC);
         sethfProductKind(import.meta.env.VITE_PRODUCT_KIND);
-        localStorage.setItem("hfMode", "");
+        sethfMode("");
         getProductData();
         setselectedrbt("rbtRecordTime");
 
@@ -122,12 +121,6 @@ function fn_ScanSMTSerialRecordTime() {
 
         SetMode("RECORD");
     }, []);
-
-    useEffect(() => {
-        if (eventArgument === "Save") {
-            setSerialDataTray();
-        }
-    }, [eventArgument]);
 
     const getProductData = async () => {
         axios.get("/api/Common/GetProductData").then((res) => {
@@ -447,7 +440,7 @@ function fn_ScanSMTSerialRecordTime() {
             setisibtPcsBackDisabled(true);
             setpnlSerial(false);
             setgvSerialData([]);
-            localStorage.setItem("hfMode", "MC");
+            sethfMode("MC");
             inputMachine.current.focus();
         } else if (strType === "OP") {
             setistxtMachineDisabled(true);
@@ -466,7 +459,7 @@ function fn_ScanSMTSerialRecordTime() {
             setisibtPcsBackDisabled(true);
             setpnlSerial(false);
             setgvSerialData([]);
-            localStorage.setItem("hfMode", "OP");
+            sethfMode("OP");
             if (hfOP != "") {
                 setpnlOP(true);
             } else {
@@ -489,7 +482,7 @@ function fn_ScanSMTSerialRecordTime() {
             setlblOP("");
             setpnlSerial(false);
             setgvSerialData([]);
-            localStorage.setItem("hfMode", "PCS");
+            sethfMode("PCS");
             inputTotalPcs.current.focus();
         } else if (strType === "LOT") {
             settxtLotNo("");
@@ -514,27 +507,27 @@ function fn_ScanSMTSerialRecordTime() {
             setpnlSerial(false);
             settxtRackNo("");
             setistxtRackDisabled(true);
-            localStorage.setItem("hfMode", "LOT");
+            sethfMode("LOT");
             inputLot.current.focus();
         } else if (strType === "TRAY") {
             setistxtLotDisabled(true);
             setvisiblelog(false);
             setpnlSerial(true);
             getInitialSerial();
-            localStorage.setItem("hfMode", "TRAY");
+            sethfMode("TRAY");
             inputTray.current.focus();
         } else if (strType === "TRAY_ERROR") {
             setistxtLotDisabled(true);
             setvisiblelog(true);
             setpnlSerial(false);
-            localStorage.setItem("hfMode", "TRAY");
+            sethfMode("TRAY");
             inputTray.current.focus();
         } else if (strType === "SERIAL") {
             setisselProDisabled(true);
             setistxtLotDisabled(true);
             setvisiblelog(false);
             setpnlSerial(true);
-            localStorage.setItem("hfMode", "SERIAL");
+            sethfMode("SERIAL");
             getInitialSerial();
         } else if (strType === "SERIAL_ERROR") {
             setistxtLotDisabled(true);
@@ -652,7 +645,7 @@ function fn_ScanSMTSerialRecordTime() {
 
     const setSerialDataTray = async () => {
         let _strFileError = "";
-        let dtSerial = getInputSerial();
+        const dtSerial = await getInputSerial();
         let _strLot = lblLot.toUpperCase().trim();
         let _strPrdName = selProduct;
         let _strTray = " ";
@@ -984,7 +977,7 @@ function fn_ScanSMTSerialRecordTime() {
     };
 
     const btnSaveClick = () => {
-        if (eventArgument !== "Save" && hfMode === "SERIAL") {
+        if (hfMode === "SERIAL") {
             setSerialDataTray();
         }
     };

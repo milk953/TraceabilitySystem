@@ -24,8 +24,9 @@ import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaS
 import SheetBincheking from "./Page/SheetBinChecking/SheetBinCheck"
 import ScanSMTSerialSpotHeat from "./Page/ScanSMTSerialSpotHeat/ScanSMTSerialSpotHeat"
 import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
-
-
+import SerialTestType from "./Page/ELT_Type/SerialTestType";
+import AVIManualConfirm from "./Page/AVIConfirm/AVIManualConfirm";
+import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm";
 
 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -48,7 +49,8 @@ const App = () => {
           <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
           <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
           <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
-
+          <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
+          <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
 
           {/* View Data */}
           <Route path='/ELTmaster' element={<ELTmaster />} />
@@ -61,6 +63,8 @@ const App = () => {
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
           <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
           <Route path="/Reject" element={<Reject />} />
+          <Route path="/ELTType" element={<SerialTestType />} />
+
         </Routes>
       </BrowserRouter>
   );
