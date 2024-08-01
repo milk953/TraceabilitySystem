@@ -56,7 +56,7 @@
     padding: 10px;
 }
 
-.divgvScanResult {
+.divgvScanResultRec {
     justify-content: center;
     /* display: flex; */
     flex-direction: column;
@@ -66,7 +66,7 @@
     width: 850px;
 }
 
-.divgvScanResult th {
+.divgvScanResultRec th {
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -81,7 +81,7 @@
     font-family: Arial;
 }
 
-.divgvScanResult td {
+.divgvScanResultRec td {
     padding: 10px;
 }
 
@@ -89,12 +89,12 @@
     margin: auto;
     margin-left: 40px;
     margin-top: 15px !important;
-    background-color: #FFFF99;
-    width: 715px;
+    width: 655px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80px;
+    height: 40px;
+    padding: 20px;
 }
 
 

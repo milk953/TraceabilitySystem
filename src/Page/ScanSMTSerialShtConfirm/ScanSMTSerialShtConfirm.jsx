@@ -277,7 +277,7 @@ function ScanSMTSerialShtConfirm() {
                         className="lblResultSht"
                         elevation={3}
                         style={{
-                            background: lblResult !== 'OK' ? "#ff4d4f" : "green",
+                            background: lblResultcolor,
                             display: gvScanResult ? 'block' : 'none',
                             textAlign: "center",
                         }}

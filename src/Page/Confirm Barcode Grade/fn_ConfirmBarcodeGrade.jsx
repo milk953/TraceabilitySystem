@@ -537,25 +537,20 @@ function fn_ConfirmBarcodeGrade() {
     }
     if (_strType == "LOT_ERROR") {
       settxt_lotNo((prevState) =>({...prevState,value:'',disbled:false ,style:''}));
-      // setvisibleLog(true);
       setlblLog((prevState) =>({...prevState,visble:true}));
-      // setvisiblgvSerial(false);
       setdataGvSerial((prevState) =>({...prevState,visble:false}));
       setHfMode("LOT");
       fcLotNo.current.focus();
     }
     if (_strType == "SERIAL") {
       settxt_lotNo((prevState) =>({...prevState,disbled:true,style:'#EEEEEE' }));
-      // setvisibleLog(false);
       setlblLog((prevState) =>({...prevState,visble:false}));
-      // setvisiblgvSerial(true);
       setdataGvSerial((prevState) =>({...prevState,visble:true}));
       setHfMode("SERIAL");
       await getInitialSerial();
     }
     if (_strType == "SERIAL_ERROR") {
       settxt_lotNo((prevState) =>({...prevState,disbled:true,style:'#EEEEEE' }));
-      // setvisibleLog(true);
       setlblLog((prevState) =>({...prevState,visble:true}));
     }
     if (_strType == "SERIAL_OK") {
@@ -1065,7 +1060,7 @@ function fn_ConfirmBarcodeGrade() {
                 (_strBarcodeResultAll != "NG" || _bolConfirm)
               ) {
                 for (let i = 0; i < dtRowLeaf.length; i++) {
-                  dtRowLeaf[i].strPlantCode = "THA";
+                  dtRowLeaf[i].strPlantCode = "5";
                   dtRowLeaf[i]._strUserID = txtOperator.value;
                   dtRowLeaf[i]._strStation = hfUserStation;
                 }
@@ -1129,7 +1124,7 @@ function fn_ConfirmBarcodeGrade() {
         // lblResult.ForeColor = Drawing.Color.Green
       }
       if (_strErrorAll != "") {
-        setlblResult(_strScanResultAll + _strErrorAll);
+        setlblResult(_strScanResultAll +" "+ _strErrorAll);
       }
       if (_strBarcodeResultAll != "NG" || _bolConfirm) {
         setgvScanResult((prevState) =>({...prevState,value:dtSerial, }));

@@ -17,11 +17,7 @@ import {
   InputLabel,
   Autocomplete,
   Box,
-  Checkbox,
-  Grid,
-  Input,
 } from "@mui/material";
-
 import "/src/Page/ScanSheetMOTTime/ScanSheetMOTTime.css";
 import {
   ArrowRightOutlined,
@@ -63,19 +59,21 @@ function ScanSheetMOTTime() {
    
    
   }, []);
-
   return (
     <div>
       <Hearder />
       <h1>ScanSheetMOTTime</h1>
       <Card component={Paper} className="Card-ScanSheetMOTTime">
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2} >
-            <Grid item xs={10} md={4} style={{margin:'auto'}}>
-            <Table
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+          }}
+        >
+          <Table
             className="TableMot1"
             component={Card}
-            sx={{ width: "100%", maxWidth: "600px", minWidth:'600px'}}
+            sx={{ width: "100%", maxWidth: "600px", minWidth:'600px',margin:'auto'}}
           >
             <TableHead>
               <TableRow>
@@ -122,17 +120,17 @@ function ScanSheetMOTTime() {
                     id="txtfild"
                     size="small"
                     fullWidth
-                    value={txtlot.value}
+                    value={txtlot}
                     onChange={(e) => {
-                      settxtlot((prevState) =>({...prevState,value:e.target.value, }));
+                      settxtlot(e.target.value);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         txtLotNo_TextChanged();
                       }
                     }}
-                    // inputRef={fctxtLotno}
-                 onBlur={txtLotNo_TextChanged}
+                    inputRef={fctxtLotno}
+                    disabled={EnableLotNo}
                   />
                 </TableCell>
                 <TableCell>
@@ -174,7 +172,6 @@ function ScanSheetMOTTime() {
                       }
                     }}
                     inputRef={fctxtSheetNo}
-                    
                     // disabled={EnableSheetNo}
                   />
                 </TableCell>
@@ -250,19 +247,24 @@ function ScanSheetMOTTime() {
                   </Card>
                 </TableCell>
               </TableRow>
-              <TableRow >
+              <TableRow>
                 <TableCell colSpan={3} align="center">
                   <Button variant="contained">Replace</Button> &nbsp;
                   <Button variant="contained">Delete</Button>&nbsp;
                   <Button variant="contained">Cancel</Button>&nbsp;
-                
                 </TableCell>
               </TableRow>
-            
             </TableBody>
           </Table>
-            </Grid>
-          </Grid>
+          {/* <img
+            style={{
+              width: "540px",
+              height: "400px",
+              marginLeft: "10%",
+            }}
+            src="src/assets/1.jpg" // Import the image
+            alt="Description of the image"
+          /> */}
         </Box>
       </Card>
     </div>
