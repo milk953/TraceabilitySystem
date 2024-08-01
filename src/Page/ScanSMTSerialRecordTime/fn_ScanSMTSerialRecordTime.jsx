@@ -99,6 +99,8 @@ function fn_ScanSMTSerialRecordTime() {
     const inputRackNo = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
+    const CONNECT_SERIAL_ERROR = "999999";
+    const CONNECT_SERIAL_NOT_FOUND = "NOT FOUND CODE";
     const _strTagNewLine = "\n";
 
     useEffect(() => {
@@ -210,56 +212,58 @@ function fn_ScanSMTSerialRecordTime() {
         let strPrdName = "";
         const strLotData = txtLotNo.toUpperCase().split(";");
         strLot = strLotData[0];
-        axios.post("/api/Common/getProductNameByLot", {
+        await axios.post("/api/Common/getProductNameByLot", {
             strLot: strLot,
         })
             .then((res) => {
                 strPrdName = res.data.prdName[0];
-                console.log("PrdName:", strPrdName);
-                if (strPrdName !== "") {
-                    setlblLog("");
-                    setvisiblelog(false);
-                    settxtLotNo(strLot);
-                    setlblLot(strLot);
-                    getCountDataBylot(strLot);
+            });
+        console.log("PrdName:", strPrdName);
+        if (strPrdName !== "") {
+            setlblLog("");
+            setvisiblelog(false);
+            settxtLotNo(strLot);
+            setlblLot(strLot);
+            await getCountDataBylot(strLot);
+            try {
+                setselProduct(strPrdName);
+                await getProductSerialMaster(strPrdName);
+                SetMode("SERIAL");
+            } catch (error) {
+                console.log(error)
+                const intProduct = strPrdName.indexOf('-', 12);
+                if (intProduct > -1) {
+                    strPrdName =
+                        strPrdName.substring(0, intProduct) +
+                        strPrdName
+                            .substring(intProduct + 1, intProduct + 11)
+                            .trim();
                     try {
                         setselProduct(strPrdName);
                         getProductSerialMaster(strPrdName);
                         SetMode("SERIAL");
                     } catch (error) {
-                        const intProduct = strPrdName.indexOf('-', 12);
-                        if (intProduct > -1) {
-                            strPrdName =
-                                strPrdName.substring(0, intProduct) +
-                                strPrdName
-                                    .substring(intProduct + 1, intProduct + 11)
-                                    .trim();
-                            try {
-                                setselProduct(strPrdName);
-                                getProductSerialMaster(strPrdName);
-                                SetMode("SERIAL");
-                            } catch (error) {
-                                setlblLog("Product " + strPrdName + " not found.");
-                                setvisiblelog(true);
-                                ddlProduct.current.focus();
-                            }
-                        } else {
-                            setlblLog("Product " + strPrdName + " not found.");
-                            setvisiblelog(true);
-                            ddlProduct.current.focus();
-                        }
+                        setlblLog("Product " + strPrdName + " not found.");
+                        setvisiblelog(true);
+                        ddlProduct.current.focus();
                     }
                 } else {
-                    setselProduct(Productdata[0].prd_name);
-                    settxtLotNo("");
-                    setlblLot("");
-                    setgvSerialData([]);
-                    setlblLog("Invalid lot no.");
+                    setlblLog("Product " + strPrdName + " not found.");
                     setvisiblelog(true);
-                    sethfMode("LOT");
-                    inputLot.current.focus();
+                    ddlProduct.current.focus();
                 }
-            });
+            }
+        } else {
+            setselProduct(Productdata[0].prd_name);
+            settxtLotNo("");
+            setlblLot("");
+            setgvSerialData([]);
+            setlblLog("Invalid lot no.");
+            setvisiblelog(true);
+            sethfMode("LOT");
+            inputLot.current.focus();
+        }
+
     };
 
     const ibtBackClick = () => {
@@ -286,7 +290,7 @@ function fn_ScanSMTSerialRecordTime() {
     };
 
     const [dtSerialCount, setdtSerailCount] = useState([]);
-    const getCountDataBylot = (strLot) => {
+    const getCountDataBylot = async (strLot) => {
         let strType = "";
         setlblLotTotal("0");
         if (selrbtPcsSht === "rbtPcs") {
@@ -345,50 +349,51 @@ function fn_ScanSMTSerialRecordTime() {
         sethfWeekCodeType("");
         sethfSerialStartCode("");
 
-        axios.post("/api/Common/GetSerialProductByProduct", {
+        await axios.post("/api/Common/GetSerialProductByProduct", {
             prdName: strPrdName,
         })
             .then((res) => {
                 dtPro = res.data[0];
                 if (dtPro != null) {
-                    sethfSerialLength(dtPro.SLM_SERIAL_LENGTH);
-                    sethfSerialFixFlag(dtPro.SLM_FIX_FLAG);
-                    sethfSerialDigit(dtPro.SLM_FIX_DIGIT);
-                    sethfSerialStartDigit(dtPro.SLM_FIX_START_DIGIT);
-                    sethfSerialEndDigit(dtPro.SLM_FIX_END_DIGIT);
-                    sethfTrayFlag(dtPro.SLM_TRAY_FLAG);
-                    sethfTrayLength(dtPro.SLM_TRAY_LENGTH);
-                    sethfTestResultFlag(dtPro.SLM_TEST_RESULT_FLAG);
+                    sethfSerialLength(dtPro.slm_serial_length);
+                    sethfSerialFixFlag(dtPro.slm_fix_flag);
+                    sethfSerialDigit(dtPro.slm_fix_digit);
+                    sethfSerialStartDigit(dtPro.slm_fix_start_digit);
+                    sethfSerialEndDigit(dtPro.slm_fix_end_digit);
+                    sethfTrayFlag(dtPro.slm_tray_flag);
+                    sethfTrayLength(dtPro.slm_tray_length);
+                    sethfTestResultFlag(dtPro.slm_test_result_flag);
                     sethfSerialCount(txtTotalPcs);
-                    sethfAutoScan(dtPro.SLM_AUTO_SCAN);
-                    sethfConfigCheck(dtPro.PRM_BARCODE_REQ_CONFIG);
-                    sethfConfigCode(dtPro.PRM_CONFIG_CODE);
-                    sethfConfigStart(dtPro.PRM_START_CONFIG);
-                    sethfConfigEnd(dtPro.PRM_END_CONFIG);
-                    sethfConfigRuning(dtPro.PRM_RUNNING_REQ_CONFIG);
-                    sethfDuplicateStart(dtPro.PRM_DUPLICATE_START);
-                    sethfDuplicateEnd(dtPro.PRM_DUPLICATE_END);
-                    sethfChipIDCheck(dtPro.PRM_CHECK_CHIP_ID_FLG);
-                    sethfCheckPrdSht(dtPro.PRM_REQ_CHECK_PRD_SHT);
-                    sethfCheckPrdShtStart(dtPro.PRM_CHECK_PRD_SHT_START);
-                    sethfCheckPrdShtEnd(dtPro.PRM_CHECK_PRD_SHT_END);
-                    sethfCheckPrdAbbr(dtPro.PRM_ABBR);
-                    sethfPlasmaCheck(dtPro.PRM_PLASMA_TIME_FLG);
-                    sethfPlasmaTime(dtPro.PRM_PLASMA_TIME);
-                    sethfCheckStartSeq(dtPro.PRM_REQ_START_SEQ_FLG);
-                    sethfCheckStartSeqCode(dtPro.PRM_START_SEQ_CODE);
-                    sethfCheckStartSeqStart(dtPro.PRM_START_SEQ_START);
-                    sethfCheckStartSeqEnd(dtPro.PRM_START_SEQ_END);
-                    sethfCheckDateInProc(dtPro.PRM_DATE_INPROC_FLG);
-                    sethfDateInProc(dtPro.PRM_DATE_INPROC);
-                    sethfWeekCodeType(dtPro.PRM_DATE_TYPE);
-                    sethfCheckWeekCode(dtPro.PRM_CHECK_WEEKCODE_FLG);
-                    sethfCheckWeekCodeStart(dtPro.PRM_CHECK_WEEKCODE_START);
-                    sethfCheckWeekCodeEnd(dtPro.PRM_CHECK_WEEKCODE_END);
-                    sethfSerialStartCode(dtPro.PRM_SERIAL_START_CODE);
-                    sethfSerialInfo(dtPro.PRM_ADDITIONAL_INFO);
+                    sethfAutoScan(dtPro.slm_auto_scan);
+                    sethfConfigCheck(dtPro.prm_barcode_req_config);
+                    sethfConfigCode(dtPro.prm_config_code);
+                    sethfConfigStart(dtPro.prm_start_config);
+                    sethfConfigEnd(dtPro.prm_end_config);
+                    sethfConfigRuning(dtPro.prm_running_req_config);
+                    sethfDuplicateStart(dtPro.prm_duplicate_start);
+                    sethfDuplicateEnd(dtPro.prm_duplicate_end);
+                    sethfChipIDCheck(dtPro.prm_check_chip_id_flg);
+                    sethfCheckPrdSht(dtPro.prm_req_check_prd_sht);
+                    sethfCheckPrdShtStart(dtPro.prm_check_prd_sht_start);
+                    sethfCheckPrdShtEnd(dtPro.prm_check_prd_sht_end);
+                    sethfCheckPrdAbbr(dtPro.prm_abbr);
+                    sethfPlasmaCheck(dtPro.prm_plasma_time_flg);
+                    sethfPlasmaTime(dtPro.prm_plasma_time);
+                    sethfCheckStartSeq(dtPro.prm_req_start_seq_flg);
+                    sethfCheckStartSeqCode(dtPro.prm_start_seq_code);
+                    sethfCheckStartSeqStart(dtPro.prm_start_seq_start);
+                    sethfCheckStartSeqEnd(dtPro.prm_start_seq_end);
+                    sethfCheckDateInProc(dtPro.prm_date_inproc_flg);
+                    sethfDateInProc(dtPro.prm_date_inproc);
+                    sethfWeekCodeType(dtPro.prm_date_type);
+                    sethfCheckWeekCode(dtPro.prm_check_weekcode_flg);
+                    sethfCheckWeekCodeStart(dtPro.prm_check_weekcode_start);
+                    sethfCheckWeekCodeEnd(dtPro.prm_check_weekcode_end);
+                    sethfSerialStartCode(dtPro.prm_serial_start_code);
+                    sethfSerialInfo(dtPro.prm_additional_info);
                 }
-            })
+            });
+        return dtPro;
     };
 
     useEffect(() => {
@@ -404,11 +409,18 @@ function fn_ScanSMTSerialRecordTime() {
         if (!istxtLotDisabled) {
             inputLot.current.focus();
         }
+        if (!isselProDisabled) {
+            ddlProduct.current.focus();
+        }
+        if (hfMode === "SERIAL" && inputgvSerial.current) {
+            inputgvSerial.current.focus();
+        }
     }, [
         istxtMachineDisabled,
         istxtOpDisabled,
         istxtTotalPcsDisabled,
-        istxtLotDisabled
+        istxtLotDisabled,
+        isselProDisabled
     ]);
 
     const SetMode = (strType) => {
@@ -543,7 +555,7 @@ function fn_ScanSMTSerialRecordTime() {
         }
     };
 
-    const getInitialSerial = () => {
+    const getInitialSerial = async () => {
         let dtData = [];
         for (let intRow = 1; intRow <= hfSerialCount; intRow++) {
             dtData.push({ SEQ: intRow });
@@ -552,48 +564,30 @@ function fn_ScanSMTSerialRecordTime() {
 
         if (dtData.length > 0) {
             if (selectedrbt === "rbtRecordTime") {
-                inputgvSerial.current.focus();
+                if (inputgvSerial.current) {
+                    inputgvSerial.current.focus();
+                }
             } else {
                 settxtRackNo("");
                 setistxtRackDisabled(false);
                 inputRackNo.current.focus();
             }
         }
+        console.log("gvserialdata:", dtData)
+        return dtData;
     };
 
     const getInputSerial = async () => {
         let dtData = [];
         let intRow = 0;
 
-        dtData.push({
-            SEQ: null,
-            SERIAL: "",
-            REJECT: "",
-            TOUCH_UP: "",
-            REJECT2: "",
-            REJECT_CODE: "",
-            TEST_RESULT: "",
-            TYPE_TEST_RESULT: "",
-            SCAN_RESULT: "",
-            REMARK: "",
-            REMARK_UPDATE: "",
-            ROW_COUNT: null,
-            ROW_UPDATE: "",
-            UPDATE_FLG: "",
-            MACHINE: "",
-            PRODUCT: "",
-            LOT: "",
-            DATA_TYPE: "",
-        });
-
         for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
-            let drRow = gvSerialData[intSeq];
             intRow = intRow + 1
 
             // เพิ่ม drRow ลงใน dtData
-            drRow = {
+            let drRow = {
                 SEQ: intRow,
-                SERIAL: gvSerialData[intSeq].txtgvSerial.toUpperCase().trim(),
+                SERIAL: txtgvSerial[intSeq] || "",
                 REJECT: "",
                 TOUCH_UP: "",
                 REJECT2: "",
@@ -611,7 +605,7 @@ function fn_ScanSMTSerialRecordTime() {
             if (selectedrbt === "rbtRecordTime") {
                 drRow.MACHINE = txtMachine;
             } else {
-                drRow.MACHINE = txtRackNo.toUpperCase().trim();
+                drRow.MACHINE = txtRackNo;
             }
 
             drRow.PRODUCT = selProduct;
@@ -623,9 +617,9 @@ function fn_ScanSMTSerialRecordTime() {
                 drRow.DATA_TYPE = "SHT";
             }
 
-            if (drRow.SERIAL.trim() !== "") {
+            if (drRow.SERIAL !== "") {
                 for (let intNo = 0; intNo < intRow - 1; intNo++) {
-                    if (drRow.SERIAL.trim() === gvSerial.rows[intNo].txtgvSerial.toUpperCase().trim()) {
+                    if (drRow.SERIAL === txtgvSerial[intNo]) {
                         drRow.ROW_COUNT = 9;
                         break;
                     }
@@ -638,10 +632,6 @@ function fn_ScanSMTSerialRecordTime() {
 
     const [bolTrayError, setbolTrayError] = useState(false);
     const [bolError, setbolError] = useState(false);
-
-
-    const [bolScanDouble, setbolScanDouble] = useState(false);
-    const [bolScanDuplicate, setbolScanDuplicate] = useState(false);
 
     const setSerialDataTray = async () => {
         let _strFileError = "";
@@ -674,9 +664,10 @@ function fn_ScanSMTSerialRecordTime() {
 
             for (let i = 0; i < dtSerial.length; i++) {
                 //ลองเทสไปก่อน
-                axios.post("/api/Common/getSerialRecordTimeTrayTable", {
-                    data: dtSerial[i],
+                await axios.post("/api/Common/getSerialRecordTimeTrayTable", {
                     strPlantCode: plantCode,
+                    SERIAL: dtSerial[i].SERIAL,
+                    MACHINE: dtSerial[i].MACHINE
                 })
                     .then((res) => {
                         console.log(res.data.row_count);
@@ -695,16 +686,16 @@ function fn_ScanSMTSerialRecordTime() {
             }
 
             for (let i = 0; i < dtSerial.length; i++) {
-                let drRow = dtSerial[i];
-                if (drRow.SERIAL.trim() !== "") {
-                    if (drRow.SERIAL !== CONNECT_SERIAL_ERROR && drRow.SERIAL !== CONNECT_SERIAL_NOT_FOUND) {
+
+                if (dtSerial[i].SERIAL !== "") {
+                    if (dtSerial[i].SERIAL !== CONNECT_SERIAL_ERROR && dtSerial[i].SERIAL !== CONNECT_SERIAL_NOT_FOUND) {
                         let _intCount = 0;
                         let _intCountOK = 0;
                         let _intCountNG = 0;
                         let _intCountDup = 0;
                         let _strRemark = "";
                         let _strError = "";
-                        let _strSerial = drRow.SERIAL.toUpperCase.trim();
+                        let _strSerial = dtSerial[i].SERIAL;
                         let _dtSerialAll = [];
                         let _strPrdNameOrg = "";
                         let _strLotOrg = "";
@@ -725,11 +716,11 @@ function fn_ScanSMTSerialRecordTime() {
 
                         let _strTestResult = "NO";
 
-                        if (drRow.DATA_TYPE === "SHT") {
+                        if (dtSerial[i].DATA_TYPE === "SHT") {
                             if (hfCheckPrdSht === "Y" && !bolError) {
                                 const start = parseInt(hfCheckPrdShtStart);
                                 const end = parseInt(hfCheckPrdShtEnd);
-                                const substring = _strSerial.substring(start, (end - start) + 1);
+                                const substring = _strSerial.substring(start - 1, end);
 
                                 if (hfCheckPrdAbbr !== substring) {
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับผลิตภัณฑ์อื่น";
@@ -737,8 +728,8 @@ function fn_ScanSMTSerialRecordTime() {
                                     _strScanResultUpdate = "NG";
                                     _strTestResultUpdate = _strTestResult;
 
-                                    drRow.REMARK_UPDATE = _strRemark;
-                                    drRow.ROW_UPDATE = "Y";
+                                    dtSerial[i].REMARK_UPDATE = _strRemark;
+                                    dtSerial[i].ROW_UPDATE = "Y";
 
                                     setbolError(true);
                                 } else {
@@ -746,8 +737,8 @@ function fn_ScanSMTSerialRecordTime() {
                                     _strRemark = "";
                                     _strScanResultUpdate = "OK";
                                     _strTestResultUpdate = "";
-                                    drRow.REMARK_UPDATE = _strRemark;
-                                    drRow.ROW_UPDATE = "Y";
+                                    dtSerial[i].REMARK_UPDATE = _strRemark;
+                                    dtSerial[i].ROW_UPDATE = "Y";
                                 }
                             } else {
                                 _strMessageUpdate = "Req. check sheet product" + _strTagNewLine + "ไม่ได้กำหนดการตรวจสอบชื่อผลิตภัณฑ์";
@@ -755,19 +746,20 @@ function fn_ScanSMTSerialRecordTime() {
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
 
-                                drRow.REMARK_UPDATE = _strRemark;
-                                drRow.ROW_UPDATE = "Y";
+                                dtSerial[i].REMARK_UPDATE = _strRemark;
+                                dtSerial[i].ROW_UPDATE = "Y";
 
                                 setbolError(true);
                             }
                         } else {
                             // Check format serial no
-                            if (_strSerial.length === parseInt(hfSerialLength)) {
+                            console.log("มาาา", hfSerialLength, _strSerial)
+                            if (_strSerial.length === hfSerialLength) {
                                 let _strFixDigit = "";
                                 if (hfSerialFixFlag === "Y") {
                                     const start = parseInt(hfSerialStartDigit);
                                     const end = parseInt(hfSerialEndDigit);
-                                    _strFixDigit = _strSerial.substring(start, (end - start) + 1);
+                                    _strFixDigit = _strSerial.substring(start - 1, end);
 
                                     if (_strFixDigit !== hfSerialDigit) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -775,8 +767,8 @@ function fn_ScanSMTSerialRecordTime() {
                                         _strScanResultUpdate = "NG";
                                         _strTestResultUpdate = _strTestResult;
 
-                                        drRow.REMARK_UPDATE = _strRemark;
-                                        drRow.ROW_UPDATE = "Y";
+                                        dtSerial[i].REMARK_UPDATE = _strRemark;
+                                        dtSerial[i].ROW_UPDATE = "Y";
 
                                         _intCountNG = 1;
                                         setbolError(true);
@@ -786,14 +778,14 @@ function fn_ScanSMTSerialRecordTime() {
                                         let _strConfigDigit = "";
                                         const start = parseInt(hfConfigStart);
                                         const end = parseInt(hfConfigEnd);
-                                        _strConfigDigit = _strSerial.substring(start, (end - start) + 1);
+                                        _strConfigDigit = _strSerial.substring(start - 1, end);
                                         if (_strConfigDigit !== hfConfigCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
                                             _strScanResultUpdate = "NG";
                                             _strTestResultUpdate = _strTestResult;
-                                            drRow.REMARK_UPDATE = _strRemark;
-                                            drRow.ROW_UPDATE = "Y";
+                                            dtSerial[i].REMARK_UPDATE = _strRemark;
+                                            dtSerial[i].ROW_UPDATE = "Y";
 
                                             _intCountNG = 1;
                                             setbolError(true);
@@ -806,8 +798,8 @@ function fn_ScanSMTSerialRecordTime() {
                                             _strRemark = "Serial barcode mix product";
                                             _strScanResultUpdate = "NG";
                                             _strTestResultUpdate = _strTestResult;
-                                            drRow.REMARK_UPDATE = _strRemark;
-                                            drRow.ROW_UPDATE = "Y";
+                                            dtSerial[i].REMARK_UPDATE = _strRemark;
+                                            dtSerial[i].ROW_UPDATE = "Y";
 
                                             _intCountNG = 1;
                                             setbolError(true);
@@ -819,14 +811,14 @@ function fn_ScanSMTSerialRecordTime() {
                                     let _strStartSeq = "";
                                     const start = parseInt(hfCheckStartSeqStart);
                                     const end = parseInt(hfCheckStartSeqEnd);
-                                    _strStartSeq = _strSerial.substring(start, (end - start) + 1);
+                                    _strStartSeq = _strSerial.substring(start - 1, end);
                                     if (_strStartSeq !== hfCheckStartSeqCode) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                         _strRemark = "Serial barcode mix product";
                                         _strScanResultUpdate = "NG";
                                         _strTestResultUpdate = _strTestResult;
-                                        drRow.REMARK_UPDATE = _strRemark;
-                                        drRow.ROW_UPDATE = "Y";
+                                        dtSerial[i].REMARK_UPDATE = _strRemark;
+                                        dtSerial[i].ROW_UPDATE = "Y";
 
                                         _intCountNG = 1;
                                         setbolError(true);
@@ -837,14 +829,14 @@ function fn_ScanSMTSerialRecordTime() {
                                     let _strWeekCode = "";
                                     const start = parseInt(hfCheckWeekCodeStart);
                                     const end = parseInt(hfCheckWeekCodeEnd);
-                                    _strWeekCode = _strSerial.substring(start, (end - start) + 1);
+                                    _strWeekCode = _strSerial.substring(start - 1, end);
                                     if (_strWeekCode !== hfWeekCode) {
                                         _strMessageUpdate = "Serial barcode mix week code" + _strTagNewLine + "หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
                                         _strRemark = "Serial barcode mix week code";
                                         _strScanResultUpdate = "NG";
                                         _strTestResultUpdate = _strTestResult;
-                                        drRow.REMARK_UPDATE = _strRemark;
-                                        drRow.ROW_UPDATE = "Y";
+                                        dtSerial[i].REMARK_UPDATE = _strRemark;
+                                        dtSerial[i].ROW_UPDATE = "Y";
 
                                         _intCountNG = 1;
                                         setbolError(true);
@@ -853,13 +845,13 @@ function fn_ScanSMTSerialRecordTime() {
 
                                 if (!bolError) {
                                     for (let intRow = _intRowSerial + 1; intRow < dtSerial.length; intRow++) {
-                                        if (_strSerial.toUpperCase() === dtSerial[intRow].SERIAL.toUpperCase()) {
+                                        if (_strSerial === dtSerial[intRow].SERIAL) {
                                             _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                                             _strRemark = "Serial duplicate in tray  ";
                                             _strScanResultUpdate = "NG";
                                             _strTestResultUpdate = _strTestResult;
-                                            drRow.REMARK_UPDATE = _strRemark;
-                                            drRow.ROW_UPDATE = "N";
+                                            dtSerial[i].REMARK_UPDATE = _strRemark;
+                                            dtSerial[i].ROW_UPDATE = "N";
 
                                             _intCountNG = 1;
                                             setbolError(true);
@@ -872,34 +864,34 @@ function fn_ScanSMTSerialRecordTime() {
                                     _strRemark = "";
                                     _strScanResultUpdate = "OK";
                                     _strTestResultUpdate = "";
-                                    drRow.REMARK_UPDATE = _strRemark;
-                                    drRow.ROW_UPDATE = "Y";
+                                    dtSerial[i].REMARK_UPDATE = _strRemark;
+                                    dtSerial[i].ROW_UPDATE = "Y";
                                 }
                             } else {
                                 _strMessageUpdate = "Serial not matching product" + _strTagNewLine + "หมายเลขบาร์โค้ดไม่ตรงตามที่กำหนดไว้";
                                 _strRemark = "Serial barcode not matching product";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
-                                drRow.REMARK_UPDATE = _strRemark;
-                                drRow.ROW_UPDATE = "Y";
+                                dtSerial[i].REMARK_UPDATE = _strRemark;
+                                dtSerial[i].ROW_UPDATE = "Y";
 
                                 setbolError(true);
                             }
                         }
 
-                        drRow.REJECT = _strReject1;
-                        drRow.TOUCH_UP = _strTouchUp;
-                        drRow.REJECT2 = _strReject2;
-                        drRow.SCAN_RESULT = _strScanResultUpdate;
-                        drRow.TEST_RESULT = _strTestResultUpdate;
-                        drRow.REMARK = _strMessageUpdate;
+                        dtSerial[i].REJECT = _strReject1;
+                        dtSerial[i].TOUCH_UP = _strTouchUp;
+                        dtSerial[i].REJECT2 = _strReject2;
+                        dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
+                        dtSerial[i].TEST_RESULT = _strTestResultUpdate;
+                        dtSerial[i].REMARK = _strMessageUpdate;
 
                         if (_strScanResultUpdate === "NG") {
                             _strScanResultAll = "NG";
                         }
                     } else {
-                        drRow.SCAN_RESULT = "NG";
-                        drRow.ROW_UPDATE = "N";
+                        dtSerial[i].SCAN_RESULT = "NG";
+                        dtSerial[i].ROW_UPDATE = "N";
                         _strScanResultAll = "NG";
                         setbolError(true);
                     }
@@ -916,30 +908,29 @@ function fn_ScanSMTSerialRecordTime() {
             for (let i = 0; i < dtSerial.length; i++) {
                 if (_strScanResultAll !== "NG") {
                     axios.post("/api/Common/setSerialRecordTimeTrayTable", {
-                        dataList: [
-                            {
-                                strUserID: txtOperator,
-                                strProgram: "frm_ScanSMTSerialRecordTime",
-                                strPlantCode: plantCode,
-                                strStation: hfUserStation,
-                                data: [{
-                                    SERIAL: dtSerial[i].SERIAL,
-                                    MACHINE: dtSerial[i].MACHINE,
-                                    PRODUCT: dtSerial[i].PRODUCT,
-                                    LOT: dtSerial[i].LOT,
-                                    DATA_TYPE: dtSerial[i].DATA_TYPE,
-                                    ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                                    UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                                }],
-                            },
-                        ],
+                        dataList:
+                        {
+                            strUserID: txtOperator,
+                            strProgram: "frm_ScanSMTSerialRecordTime",
+                            strPlantCode: plantCode,
+                            strStation: hfUserStation,
+                            data: [{
+                                SERIAL: dtSerial[i].SERIAL,
+                                MACHINE: dtSerial[i].MACHINE,
+                                PRODUCT: dtSerial[i].PRODUCT,
+                                LOT: dtSerial[i].LOT,
+                                DATA_TYPE: dtSerial[i].DATA_TYPE,
+                                ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                                UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                            }],
+                        },
                     })
                         .then((res) => {
                             _strErrorUpdate = res.data.p_error;
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
-                                setlblResultcolor("red");
+                                setlblResultcolor("#ff4d4f");
                                 setlblLog(_strErrorUpdate);
                                 setvisiblelog(true);
                             }
@@ -952,7 +943,7 @@ function fn_ScanSMTSerialRecordTime() {
         }
 
         if (_strScanResultAll === "NG") {
-            setlblResultcolor("red");
+            setlblResultcolor("#ff4d4f");
         } else {
             setlblResultcolor("green");
         }

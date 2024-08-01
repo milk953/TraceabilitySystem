@@ -57,7 +57,7 @@ function fn_ScanSMTPlasmaStopStart() {
   const [hfCheckWeekCodeEnd, sethfCheckWeekCodeEnd] = useState("");
   const [hfWeekCodeType, sethfWeekCodeType] = useState("");
   const [hfWeekCode, sethfWeekCode] = useState("");
-  const [hfUserName, sethfUserName] = useState("Thitaporn.P");
+  const [hfUserName, sethfUserName] = useState("");
 
   //Disabled
   const [txtLotDisabled, settxtLotDisabled] = useState(false);
@@ -70,9 +70,15 @@ function fn_ScanSMTPlasmaStopStart() {
   const inputPartial = useRef(null);
 
   const plantCode = import.meta.env.VITE_FAC;
+  const name = localStorage.getItem("Username");
+  const surname = localStorage.getItem("Lastname");
+
+  const initialSurname = surname ? surname.charAt(0) : '';
+  const Username = `${name}.${initialSurname}`;
 
   useEffect(() => {
     PageLoad();
+    sethfUserName(Username);
   }, []);
 
   const PageLoad = async () => {

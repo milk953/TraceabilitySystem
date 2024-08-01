@@ -357,7 +357,7 @@ function ScanSMTSerialRecordTime() {
                                 {pnlRackNo && (
                                     <TableRow>
                                         <TableCell>
-                                            <Typography>Rack No. :</Typography>
+                                            <Typography>Rack/Machine :</Typography>
                                         </TableCell>
                                         <TableCell colSpan={3}>
                                             <TextField
@@ -512,15 +512,10 @@ function ScanSMTSerialRecordTime() {
                                                         id="txtfield"
                                                         size="small"
                                                         fullWidth
-                                                        value={txtgvSerial[index]}
+                                                        value={txtgvSerial[index] || ""}
                                                         inputRef={inputgvSerial}
                                                         onChange={(e) => {
                                                             handleChangeSerial(index, e);
-                                                        }}
-                                                        onKeyDown={(e) => {
-                                                            if (e.key === "Enter") {
-                                                                handleChangeSerial(index, e)
-                                                            }
                                                         }}
                                                     />
                                                 </TableCell>
@@ -569,23 +564,27 @@ function ScanSMTSerialRecordTime() {
                     src="src/assets/1.jpg" // Import the image
                     alt="Description of the image"
                 />
-                <div className="divgvScanResult" style={{ position: "relative" }}>
-                    <div className="lblResultRec"
+                <div className="divgvScanResultRec" style={{ position: "relative" }}>
+                    <Paper
+                        className="lblResultRec"
+                        elevation={3}
                         style={{
-                            display: gvScanResult ? 'block' : 'none'
+                            background: lblResultcolor,
+                            display: gvScanResult ? 'block' : 'none',
+                            textAlign: "center",
                         }}
                     >
                         <Typography
                             variant="h4"
-                            color={lblResultcolor}
+                            style={{ paddingTop: "3px", color: "#fff" }}
                         >
                             {lblResult}
                         </Typography>
-                    </div>
+                    </Paper>
                     <TableContainer
                         component={Paper}
                         style={{
-                            width: "85%",
+                            width: "84%",
                             marginBottom: "10px",
                             height: "250px",
                             display: gvScanResult ? 'block' : 'none'
@@ -616,25 +615,35 @@ function ScanSMTSerialRecordTime() {
                                     { length: gvScanData.length }, (_, index) => (
                                         <TableRow key={index}>
                                             <TableCell
-                                                style={{ textAlign: 'center' }}
+                                                style={{
+                                                    textAlign: 'center',
+                                                    borderRight: "1px solid #d9d9d9"
+                                                }}
                                             >
                                                 {gvScanData[index].SEQ}
                                             </TableCell>
                                             <TableCell
-                                                style={{ textAlign: 'left' }}
+                                                style={{
+                                                    textAlign: 'left',
+                                                    borderRight: "1px solid #d9d9d9"
+                                                }}
                                             >
                                                 {gvScanData[index].SERIAL}
                                             </TableCell>
                                             <TableCell
                                                 style={{
                                                     textAlign: 'center',
-                                                    backgroundColor: gvScanData[index].SCAN_RESULT === 'NG' ? 'red' : 'inherit'
+                                                    backgroundColor: gvScanData[index].SCAN_RESULT === 'OK' ? 'green' : '#ff4d4f',
+                                                    borderRight: "1px solid #d9d9d9"
                                                 }}
                                             >
                                                 {gvScanData[index].SCAN_RESULT}
                                             </TableCell>
                                             <TableCell
-                                                style={{ textAlign: 'left' }}
+                                                style={{
+                                                    textAlign: 'left',
+                                                    borderRight: "1px solid #d9d9d9"
+                                                }}
                                             >
                                                 {gvScanData[index].REMARK}
                                             </TableCell>
