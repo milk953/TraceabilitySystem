@@ -30,6 +30,7 @@ import {
 } from "@ant-design/icons";
 
 import Hearder from "../Header/Hearder";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import { fn_ScanSheetMOTTime } from "./fn_ScanSheetMOTTime";
 function ScanSheetMOTTime() {
   const {
@@ -56,217 +57,266 @@ function ScanSheetMOTTime() {
     BtClick_Cancel,
     BtClick_Delete,
     BtClick_Replace,
+    txtCBNo,
+    txtSUSNo,
+    fctxtCBNo,
+    fctxtSUSNo,
+    settxtCBNo,
+    settxtSUSNo,
+    txtCBNo_TextChanged,
+    txtSUSNo_TextChanged
   } = fn_ScanSheetMOTTime();
+  console.log("fctxtLotno", txtlot.focus);
+  useEffect(() => {
+    if(txtlot.focus==true){
+      fctxtLotno.current.focus();
+    }
+  }, [txtlot]);
 
   useEffect(() => {
+    if(txtMCNo.focus==true){
+      fctxtMcNo.current.focus();
+    }
+  }, [txtMCNo]);
 
-   
-   
-  }, []);
+  useEffect(() => {
+    if(txtSheet.focus==true){
+      fctxtSheetNo.current.focus();
+    }
+  }, [txtSheet]);
 
+  useEffect(() => {
+    if(txtSUSNo.focus==true){
+      fctxtSUSNo.current.focus();
+    }
+  }, [txtSUSNo]);
+
+  useEffect(() => {
+    if(txtCBNo.focus==true){
+      fctxtCBNo.current.focus();
+    }
+  }, [txtCBNo]);
   return (
     <div>
       <Hearder />
-      <h1>ScanSheetMOTTime</h1>
+      ScanSheetMOTTime
       <Card component={Paper} className="Card-ScanSheetMOTTime">
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2} >
-            <Grid item xs={10} md={4} style={{margin:'auto'}}>
-            <Table
-            className="TableMot1"
-            component={Card}
-            sx={{ width: "100%", maxWidth: "600px", minWidth:'600px'}}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={3} align="center">
-                  <Typography variant="h5">
-                    <b>
-                      Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
-                    </b>
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell align="right" style={{ width: "150px" }}>
-                  <Typography>MOT Machine/Line :</Typography>
-                </TableCell>
-                <TableCell colSpan={2}>
-                  <TextField
-                    size="small"
-                    id="txtfild"
-                    fullWidth
-                    value={txtMCNo}
-                    inputRef={fctxtMcNo}
-                    disabled={EnableMCNo}
-                    onChange={(e) => {
-                      settxtMCNo(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        txtMCNo_TextChanged();
-                      }
-                    }}
-                    onBlur={txtMCNo_TextChanged}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align="right">
-                  <Typography>Lot No. :</Typography>
-                </TableCell>
-                <TableCell>
-                  <TextField
-                    id="txtfild"
-                    size="small"
-                    fullWidth
-                    value={txtlot.value}
-                    onChange={(e) => {
-                      settxtlot((prevState) =>({...prevState,value:e.target.value, }));
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        txtLotNo_TextChanged();
-                      }
-                    }}
-                    // inputRef={fctxtLotno}
-                 onBlur={txtLotNo_TextChanged}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button
-                    onClick={BtClick_back}
-                    variant="contained"
-                    style={{ background: "#D04848" }}
-                    size="small"
-                  >
-                    <DeleteOutlined /> | Cancel
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align="right">
-                  <Typography>Product Name :</Typography>
-                </TableCell>
-                <TableCell colSpan={2}>
-                  <Typography>lblProductName</Typography>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Typography align="right">Sheet No. :</Typography>
-                </TableCell>
-                
-                <TableCell colSpan={2}>
-                  <TextField
-                    id="txtfild"
-                    size="small"
-                    fullWidth
-                    value={txtSheet}
-                    onChange={(e) => {
-                      settxtSheet(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        txtSheetNo_TextChanged();
-                      }
-                    }}
-                    inputRef={fctxtSheetNo}
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Grid container spacing={2} style={{justifyContent: 'center' }}>
+            <Grid >
+              <Table
+                className="TableMot1"
+                component={Card}
+                sx={{ width: "100%", maxWidth: "800px", minWidth: "800px" }}
+               
+              >
+                <TableHead style={{ height: '60px' }}>
+                  <TableRow>
+                    <TableCell colSpan={3} align="center" style={{fontSize:'30px'}}>
                     
-                    // disabled={EnableSheetNo}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Typography align="right">CB No. :</Typography>
-                </TableCell>
-                
-                <TableCell colSpan={2}>
-                  <TextField
-                    id="txtfild"
-                    size="small"
-                    fullWidth
-                    // value={txtSheet}
-                    // onChange={(e) => {
-                    //   settxtSheet(e.target.value);
-                    // }}
-                    // onKeyDown={(e) => {
-                    //   if (e.key === "Enter") {
-                    //     txtSheetNo_TextChanged();
-                    //   }
-                    // }}
-                    // inputRef={fctxtSheetNo}
-                    // disabled={EnableSheetNo}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Typography align="right">SUS No. :</Typography>
-                </TableCell>
-                
-                <TableCell colSpan={2}>
-                  <TextField
-                    id="txtfild"
-                    size="small"
-                    fullWidth
-                    // value={txtSheet}
-                    // onChange={(e) => {
-                    //   settxtSheet(e.target.value);
-                    // }}
-                    // onKeyDown={(e) => {
-                    //   if (e.key === "Enter") {
-                    //     txtSheetNo_TextChanged();
-                    //   }
-                    // }}
-                    // inputRef={fctxtSheetNo}
-                    // disabled={EnableSheetNo}
-                  />
-                </TableCell>
-              </TableRow>
-              {/* <TableRow style={{ display: lblSheet === "" ? "table-row" : "" }}> */}
-                  <TableRow >
-                <TableCell colSpan={3} align="center">
-                  <Card style={{ background: "#DAD3BE",height:'30px',padding:'5px' ,fontSize:'20px'}}>
-                   lblSheet
-                  </Card>
-                </TableCell>
-              </TableRow>
-              <TableRow style={{ height: "180px" }}>
-                <TableCell colSpan={3}>
-                  <Card style={{ background: "#EFBC9B", height: "180px" }}>
-                    <Typography
-                      align="center"
-                      style={{ marginTop: "40px", fontSize: "60px" }}
-                    >
-                      lblResult
-                    </Typography>
-                    <Typography align="center" style={{ fontSize: "20px" }}>
-                      lblRemark
-                    </Typography>
-                  </Card>
-                </TableCell>
-              </TableRow>
-              <TableRow >
-                <TableCell colSpan={3} align="center">
-                  <Button variant="contained">Replace</Button> &nbsp;
-                  <Button variant="contained">Delete</Button>&nbsp;
-                  <Button variant="contained">Cancel</Button>&nbsp;
-                
-                </TableCell>
-              </TableRow>
-            
-            </TableBody>
-          </Table>
+                        Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
+                      
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="right" style={{ width: "150px" }}>
+                      <Typography>MOT Machine/Line :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        value={txtMCNo.value}
+                        inputRef={fctxtMcNo}
+                        disabled={txtMCNo.disbled}
+                        style={txtMCNo.style}
+                        onChange={(e) => {
+                          settxtMCNo((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtMCNo_TextChanged();
+                          }
+                        }}
+                        onBlur={txtMCNo_TextChanged}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="right">
+                      <Typography>Lot No. :</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        value={txtlot.value}
+                        style={txtlot.style}
+                        disabled={txtlot.disbled}
+                        onChange={(e) => {
+                          settxtlot((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtLotNo_TextChanged();
+                          }
+                        }}
+                        inputRef={fctxtLotno}
+                        onBlur={txtLotNo_TextChanged}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Button onClick={BtClick_back}>
+                        <BackspaceIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="right" style={{ height: '40px' }}>
+                      <Typography>Product Name :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      <Typography>{lblProductName}</Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Typography align="right">Sheet No. :</Typography>
+                    </TableCell>
+  
+                    <TableCell colSpan={2}>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        value={txtSheet.value}
+                        style={txtSheet.style}
+                        disabled={txtSheet.disbled}
+                        onChange={(e) => {
+                          settxtSheet((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtSheetNo_TextChanged();
+                          }
+                        }}
+                        inputRef={fctxtSheetNo}
+                        onBlur={txtSheetNo_TextChanged}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow style={{ display: txtCBNo.visble }}>
+                    <TableCell>
+                      <Typography align="right">CB No. :</Typography>
+                    </TableCell>
+  
+                    <TableCell colSpan={2}>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        value={txtCBNo.value}
+                        style={txtCBNo.style}
+                        disabled={txtCBNo.disbled}
+                        inputRef={fctxtCBNo} 
+                        onChange={(e) => {
+                          settxtCBNo((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtCBNo_TextChanged();
+                          }
+                        }} 
+                        onBlur={txtCBNo_TextChanged}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow style={{ display: txtSUSNo.visble }}>
+                    <TableCell>
+                      <Typography align="right">SUS No. :</Typography>
+                    </TableCell>
+  
+                    <TableCell colSpan={2}>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        value={txtSUSNo.value}
+                        disabled={txtSUSNo.disbled}
+                        style={txtSUSNo.style}
+                        inputRef={fctxtSUSNo}
+                        onChange={(e) => {
+                          settxtSUSNo((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtSUSNo_TextChanged();
+                          }
+                        }} 
+                        onBlur={txtSUSNo_TextChanged}
+                      />
+                    </TableCell>
+                  </TableRow>
+  
+                  <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
+                    <TableCell colSpan={3} align="center">
+                      <Card
+                        style={{
+                          background: "#DAD3BE",
+                          height: "40px",
+                          paddingTop: "6px",
+                          fontSize: "23px",
+                        }}
+                      >
+                        {lblSheet}
+                      </Card>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow style={{ height: "180px" }}>
+                    <TableCell colSpan={3}>
+                      <Card style={{ background: "#EFBC9B", height: "230px" }}>
+                        <Typography
+                          align="center"
+                          style={{ marginTop: "40px", fontSize: "90px" }}
+                        >
+                          {lblResult.value}
+                        </Typography>
+                        <Typography align="center" style={{ fontSize: "20px" }}>
+                          {lblRemark}
+                        </Typography>
+                      </Card>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell colSpan={3} align="center">
+                      <Button variant="contained">Replace</Button>&nbsp;
+                      <Button variant="contained">Delete</Button>&nbsp;
+                      <Button variant="contained">Cancel</Button>&nbsp;
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
             </Grid>
           </Grid>
         </Box>
       </Card>
     </div>
   );
+  
 }
 
 export default ScanSheetMOTTime;
