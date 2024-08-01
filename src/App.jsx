@@ -27,6 +27,7 @@ import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSer
 import SerialTestType from "./Page/ELT_Type/SerialTestType";
 import AVIManualConfirm from "./Page/AVIConfirm/AVIManualConfirm";
 import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm";
+import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
 
 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -55,7 +56,8 @@ const App = () => {
           {/* View Data */}
           <Route path='/ELTmaster' element={<ELTmaster />} />
           <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
-          <Route path='/SheetBincheking' element={<SheetBincheking />} />  
+          <Route path='/SheetBincheking' element={<SheetBincheking />} />
+          <Route path='/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />  
 
           {/* Maintenance */}
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
