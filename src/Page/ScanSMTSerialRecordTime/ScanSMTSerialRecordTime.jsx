@@ -357,7 +357,7 @@ function ScanSMTSerialRecordTime() {
                                 {pnlRackNo && (
                                     <TableRow>
                                         <TableCell>
-                                            <Typography>Rack No. :</Typography>
+                                            <Typography>Rack/Machine :</Typography>
                                         </TableCell>
                                         <TableCell colSpan={3}>
                                             <TextField

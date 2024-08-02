@@ -107,6 +107,7 @@ function fn_ConfirmBarcodeGrade() {
   const CONNECT_SERIAL_ERROR = "999999";
   const hfBarcodeErrorValue = "NA";
   const AUTO_SCAN_CHECK_FLG = "0";
+  
 
 
   // useEffect(() => {
