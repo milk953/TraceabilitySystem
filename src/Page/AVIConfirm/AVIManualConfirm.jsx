@@ -8,6 +8,7 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 import "./AVIManualConfirm.css";
 import { fn_AVIManualConfirm } from "./fn_AVIManualConfirm";
@@ -37,7 +38,9 @@ function AVIManualConfirm() {
 
       <h1>AVIConfirm</h1>
       <h3 style={{ display: "flex", justifyContent: "center" ,color: lblResult === 'update complete.' ? 'blue' : 'red'}}>{lblResult}</h3>
-      <div className="DAVITableFirst">
+      <Card classNmae="AVIMainCard">
+        <div className="DAVITableFirst">
+      
         <Table className="AVITableFirst" component={Paper}>
           <TableBody>
             <TableRow>
@@ -154,6 +157,8 @@ function AVIManualConfirm() {
           </Table>
         </div>
       )}
+      <br></br>
+    </Card>  
     </>
   );
 }

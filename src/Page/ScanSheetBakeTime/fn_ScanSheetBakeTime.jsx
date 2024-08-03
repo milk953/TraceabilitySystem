@@ -441,10 +441,9 @@ function fn_ScanSheetBakeTime() {
           "/api/DeleteBakingRecordTimeData",
           {
             dataList: {
-              strPlantCode: hfFactory,
               strSheetNo: params.strSheetNo,
               strProcId: params.strProcId,
-               strPlantCode :plantCode
+              strPlantCode :plantCode
             },
           },
           {
