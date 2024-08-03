@@ -189,12 +189,14 @@ function fn_ScanSheetMOTTime() {
         setlblProductName(_strPrdName);
         await axios
           .post("/api/common/GetSerialProductByProduct", {
-            prdName: _strPrdName,
+            prdName: _strPrdName[0],
           })
           .then((res) => {
             dtProductSerial = res.data[0];
+            console.log(dtProductSerial,'dtProductSerial1')
           });
         if (dtProductSerial != null) {
+          console.log(dtProductSerial,'dtProductSerial2')
           sethfCheckPrdSht(dtProductSerial.prm_req_check_prd_sht); //PRM_REQ_CHECK_PRD_SHT
           sethfCheckPrdShtStart(dtProductSerial.prm_check_prd_sht_start); //PRM_CHECK_PRD_SHT_START
           sethfCheckPrdShtEnd(dtProductSerial.prm_check_prd_sht_end); //PRM_CHECK_PRD_SHT_END
@@ -259,7 +261,11 @@ function fn_ScanSheetMOTTime() {
   };
 
   const txtSheetNo_TextChanged = async () => {
+    console.log(txtSheet.value,'txtcbno')
+
+  
     if (txtSheet.value != "") {
+      console.log('เข้าtxtCBNo',hfCheckPrdSht)
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
@@ -275,17 +281,20 @@ function fn_ScanSheetMOTTime() {
           strError = "Sheet product mix";
         }
       }
+     
       const connLeafLength = parseInt(hfConnLeafLength);
       const sheetLength = txtSheet.value.trim().toUpperCase().length;
+      console.log('connLeafLength',connLeafLength,sheetLength)
       if (
         connLeafLength > 0 &&
         connLeafLength !== sheetLength &&
-        strStatus !== "F"
+        strStatus == "F"
       ) {
         strStatus = "F";
         strError = "Invalid sheet length";
       }
       if (strStatus != "F") {
+        console.log('strStatus != "F"',strStatus)
         if (txtCBNo.visble=='') {
           //ถ้าโชว์
           settxtCBNo((prevState) => ({
@@ -309,18 +318,19 @@ function fn_ScanSheetMOTTime() {
           // txtSUSNo.Focus()
           fctxtSUSNo.current.focus();
         } else {
+          console.log('else')
           await axios
             .post("/api/GetMOTRecordTimeData", {
-              SheetNo: txtSheet,
+              SheetNo: txtSheet.value,
             })
             .then((res) => {
-              rowCount = res.data.flat();
-              console.log(rowCount, "rowCount");
+              rowCount = res.data[0].row_count              ;
+              console.log(res.data[0].row_count, "rowCount");
             });
 
           if (rowCount == 0) {
             // strError = BIZ_ScanSMTSerial.CallFPCSheetLeadTimeResult(txtLotNo.Text.Trim.ToUpper, txtSheetNo.Text.Trim.ToUpper, txtMCNo.Text.Trim.ToUpper, hfZPRNProcID.Value, "frm_ScanSheetMOTTime", "", "", strStatus)
-            setlblSheet(txtSheet + " " + currentTime);
+            setlblSheet(txtSheet.value + " " + currentTime);
             setlblRemark(strError);
             if (strStatus == "P") {
               setlblResult((prevState) => ({
@@ -336,7 +346,7 @@ function fn_ScanSheetMOTTime() {
               }));
             }
           } else {
-            setlblSheet(txtSheet);
+            setlblSheet(txtSheet.value);
             setpnlSave("โชว์มั้ยนะ"); // pnlSave.Visible = True
             // pnlMain.Enabled = False
             setlblRemark("Exists record time, please be confirm.");
@@ -364,7 +374,9 @@ function fn_ScanSheetMOTTime() {
   };
 
   const txtCBNo_TextChanged = async () => {
-    if (txtSheet != "" && txtCBNo != "") {
+    console.log(txtCBNo.value,'txtcbno')
+    if (txtSheet != "" && txtCBNo.value != "") {
+      console.log('เข้าtxtCBNo',hfCheckPrdSht)
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
@@ -394,16 +406,7 @@ function fn_ScanSheetMOTTime() {
         strError = "Invalid sheet length";
       }
       if (strStatus != "F") {
-        if (txtCBNo.visble=='') {
-          //ถ้าโชว์
-          settxtCBNo((prevState) => ({
-            ...prevState,
-            disbled: false,
-            style: { background: "" },
-            value: "",
-          }));
-          //  txtCBNo.Focus()
-        } else if (txtSUSNo.visble=='') {
+         if (txtSUSNo.visble=='') {
           //ถ้าโชว์
           settxtSUSNo((prevState) => ({
             ...prevState,
@@ -419,8 +422,8 @@ function fn_ScanSheetMOTTime() {
               SheetNo: txtSheet,
             })
             .then((res) => {
-              rowCount = res.data.flat();
-              console.log(rowCount, "rowCount");
+              rowCount = res.data[0].row_count ;
+              console.log(res.data[0].row_count, "rowCount");
             });
 
           if (rowCount == 0) {
@@ -499,35 +502,14 @@ function fn_ScanSheetMOTTime() {
         strError = "Invalid sheet length";
       }
       if (strStatus != "F") {
-        if (txtCBNo.visble=='') {
-          //ถ้าโชว์
-          settxtCBNo((prevState) => ({
-            ...prevState,
-            disbled: false,
-            style: { background: "" },
-            value: "",
-            focus:true
-          }));
-          //  txtCBNo.Focus()
-          fctxtCBNo.current.focus();
-        } else if (txtSUSNo.visble=='') {
-          //ถ้าโชว์
-          settxtSUSNo((prevState) => ({
-            ...prevState,
-            disbled: false,
-            value: "",
-            style: { background: "" },
-          }));
-          // txtSUSNo.Focus()
-          fctxtSUSNo.current.focus();
-        } else {
+       
           await axios
             .post("/api/GetMOTRecordTimeData", {
               SheetNo: txtSheet,
             })
             .then((res) => {
-              rowCount = res.data.flat();
-              console.log(rowCount, "rowCount");
+              rowCount = res.data[0].row_count ;
+              console.log(res.data[0].row_count, "rowCount");
             });
 
           if (rowCount == 0) {
@@ -556,7 +538,7 @@ function fn_ScanSheetMOTTime() {
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
           // txtSheetNo.Focus()
           fctxtSheetNo.current.focus();
-        }
+        
       } else {
         setlblResult((prevState) => ({
           ...prevState,

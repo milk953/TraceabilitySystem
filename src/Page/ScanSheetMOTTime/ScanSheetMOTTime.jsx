@@ -66,7 +66,7 @@ function ScanSheetMOTTime() {
     txtCBNo_TextChanged,
     txtSUSNo_TextChanged
   } = fn_ScanSheetMOTTime();
-  console.log("fctxtLotno", txtlot.focus);
+
   useEffect(() => {
     if(txtlot.focus==true){
       fctxtLotno.current.focus();

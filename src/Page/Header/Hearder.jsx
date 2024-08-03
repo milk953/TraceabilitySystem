@@ -18,7 +18,8 @@ function Hearder() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const user = localStorage.getItem("Username");
   const surname = localStorage.getItem("Lastname");
-
+  // const params = new URLSearchParams(window.location.search);
+  // console.log(params,'webbbb')
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -29,6 +30,7 @@ function Hearder() {
     location.reload();
     openLoginModal();
   };
+
   const loginBtn = () => {
     if (window.location.pathname !== "/") {
       const goHome = () => {
