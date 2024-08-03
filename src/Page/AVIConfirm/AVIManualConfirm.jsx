@@ -8,6 +8,7 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 import "./AVIManualConfirm.css";
 import { fn_AVIManualConfirm } from "./fn_AVIManualConfirm";
@@ -15,21 +16,31 @@ function AVIManualConfirm() {
   const {
     eltType,
     username,
-    pieceNo, setPieceNo,
+    pieceNo,
+    setPieceNo,
     btnRetrieveClick,
     handlePieceChange,
     eltTypeState,
     eltTypeSelect,
     setEltTypeSelect,
-    result
+    result,
+    resultState,
+    lblResult,
+    pieceNoRef,
+    resultSelect,
+    handleResultSelect,
+    btnSubmitClick,
+    dataNotfound
   } = fn_AVIManualConfirm();
   return (
     <>
       <Hearder />
-      {console.log(result,'result')}
+
       <h1>AVIConfirm</h1>
-      <h3 style={{ display: "flex", justifyContent: "center" }}>lblMassage</h3>
-      <div className="DAVITableFirst">
+      <h3 style={{ display: "flex", justifyContent: "center" ,color: lblResult === 'update complete.' ? 'blue' : 'red'}}>{lblResult}</h3>
+      <Card classNmae="AVIMainCard">
+        <div className="DAVITableFirst">
+      
         <Table className="AVITableFirst" component={Paper}>
           <TableBody>
             <TableRow>
@@ -71,6 +82,7 @@ function AVIManualConfirm() {
               {/* <TableCell></TableCell> */}
               <TableCell sx={{ width: "300px" }}>
                 <input
+                  ref={pieceNoRef}
                   onChange={(e) => setPieceNo(e.target.value)}
                   onBlur={handlePieceChange}
                   value={pieceNo}
@@ -84,7 +96,7 @@ function AVIManualConfirm() {
         <Table className="AVITableSecond" component={Paper}>
           <TableHead>
             <TableRow>
-              <TableCell>Reason</TableCell>
+              <TableCell>Result</TableCell>
               <TableCell>Operator</TableCell>
               <TableCell colSpan={2}></TableCell>
             </TableRow>
@@ -92,7 +104,7 @@ function AVIManualConfirm() {
           <TableBody>
             <TableRow>
               <TableCell sx={{ width: "200px" }}>
-                <select>
+                <select value={resultSelect} onChange={handleResultSelect}>
                   <option value=" "> </option>
                   <option value="OK">OK</option>
                   <option value="NG">NG</option>
@@ -112,7 +124,7 @@ function AVIManualConfirm() {
                   variant="contained"
                   color="primary"
                   sx={{ width: "100px" }}
-                  // onClick={handleSubmit_Click}
+                  onClick={btnSubmitClick}
                 >
                   Submit
                 </Button>
@@ -121,18 +133,32 @@ function AVIManualConfirm() {
           </TableBody>
         </Table>
       </div>
-      <div className="ELTTYPEpnlResult">
-        <Table id="ELTTYPETableResult" component={Paper}>
-          <TableHead sx={{ height: "30px" }}>
-            <TableCell>No.</TableCell>
-            <TableCell>Serial No</TableCell>
-            <TableCell>Result</TableCell>
-            <TableCell>Inspec Count</TableCell>
-            <TableCell>Inspec Date</TableCell>
-          </TableHead>
-          <TableBody sx={{ height: "40px" }}></TableBody>
-        </Table>
-      </div>
+      {resultState && (
+        <div className="ELTTYPEpnlResult">
+          <Table id="ELTTYPETableResult" component={Paper}>
+            <TableHead sx={{ height: "30px" }}>
+              <TableCell>No.</TableCell>
+              <TableCell>Serial No</TableCell>
+              <TableCell>Result</TableCell>
+              <TableCell>Inspec Count</TableCell>
+              <TableCell>Inspec Date</TableCell>
+            </TableHead>
+            <TableBody sx={{ height: "40px" }}>
+              {result.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>{row.SEQ}</TableCell>
+                  <TableCell>{row.CHE_SERIAL_NO}</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
+      <br></br>
+    </Card>  
     </>
   );
 }

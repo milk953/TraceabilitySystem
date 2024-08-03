@@ -28,6 +28,9 @@ import SerialTestType from "./Page/ELT_Type/SerialTestType";
 import AVIManualConfirm from "./Page/AVIConfirm/AVIManualConfirm";
 import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm";
 import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
+import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
+
+
 
 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -67,6 +70,7 @@ const App = () => {
           <Route path="/Reject" element={<Reject />} />
           <Route path="/ELTType" element={<SerialTestType />} />
 
+          <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
         </Routes>
       </BrowserRouter>
   );

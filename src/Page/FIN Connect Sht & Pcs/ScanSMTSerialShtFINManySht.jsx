@@ -312,7 +312,6 @@ function ScanSMTSerialShtFINManySht() {
                     width: "320px",
                     height: "250px",
                     padding: "0",
-                    margin: "0",
                     align: "center",
                     margin: "auto",
                   }}
