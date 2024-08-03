@@ -24,6 +24,10 @@ import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaS
 import SheetBincheking from "./Page/SheetBinChecking/SheetBinCheck"
 import ScanSMTSerialSpotHeat from "./Page/ScanSMTSerialSpotHeat/ScanSMTSerialSpotHeat"
 import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
+import SerialTestType from "./Page/ELT_Type/SerialTestType";
+import AVIManualConfirm from "./Page/AVIConfirm/AVIManualConfirm";
+import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm";
+import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
 import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
 
 
@@ -49,12 +53,14 @@ const App = () => {
           <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
           <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
           <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
-
+          <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
+          <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
 
           {/* View Data */}
           <Route path='/ELTmaster' element={<ELTmaster />} />
           <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
-          <Route path='/SheetBincheking' element={<SheetBincheking />} />  
+          <Route path='/SheetBincheking' element={<SheetBincheking />} />
+          <Route path='/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />  
 
           {/* Maintenance */}
           <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
@@ -62,6 +68,8 @@ const App = () => {
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
           <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
           <Route path="/Reject" element={<Reject />} />
+          <Route path="/ELTType" element={<SerialTestType />} />
+
           <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
         </Routes>
       </BrowserRouter>

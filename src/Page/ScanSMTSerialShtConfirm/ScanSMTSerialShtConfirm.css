@@ -1,16 +1,16 @@
-.TbScanSMTSerialCon {
+.TbScanSMTSerialSht {
     margin: auto;
     width: 700px;
 }
 
-.TbScanSMTSerialCon th {
+.TbScanSMTSerialSht th {
     background-color: #8c8c8c;
     border-radius: 5px 5px 0 0;
     color: #fff;
     padding: 5px;
 }
 
-.TbScanSMTSerialCon td {
+.TbScanSMTSerialSht td {
     padding: 4px;
 }
 
@@ -20,26 +20,26 @@
     padding-left: 5px;
 }
 
-#selectPdControl {
+#selectPdShtCon {
     padding: 0;
     font-size: 14px;
     padding-left: 5px;
 }
 
-.btIcon {
+.btIconSerialSht {
     padding: 0px !important;
     min-width: 50px !important;
 }
 
-.divgvSerialCon {
+.divgvSerialSht {
     justify-content: center;
     display: flex;
     max-width: 100%;
     overflow-x: auto;
-    width: 502px;
+    width: 450px;
 }
 
-.divgvSerialCon th {
+.divgvSerialSht th {
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -52,11 +52,11 @@
     padding: 9px;
 }
 
-.divgvSerialCon td {
+.divgvSerialSht td {
     padding: 10px;
 }
 
-.divgvScanResultCon {
+.divgvScanResultSht {
     justify-content: center;
     /* display: flex; */
     flex-direction: column;
@@ -66,7 +66,7 @@
     width: 850px;
 }
 
-.divgvScanResultCon th {
+.divgvScanResultSht th {
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -81,15 +81,15 @@
     font-family: Arial;
 }
 
-.divgvScanResultCon td {
+.divgvScanResultSht td {
     padding: 10px;
 }
 
-.lblResultCon{
+.lblResultSht{
     margin: auto;
-    margin-left: 40px;
+    margin-left: 42px;
     margin-top: 15px !important;
-    width: 678px;
+    width: 700px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -13,7 +13,6 @@ function fn_ScanSMTSerialControlTime() {
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
     const [lblResultcolor, setlblResultcolor] = useState("green");
-    let eventArgument = "";
 
     //hiddenfield
     const hfUserID = localStorage.getItem("hfUserID");
@@ -91,8 +90,8 @@ function fn_ScanSMTSerialControlTime() {
     const inputgvSerial = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
-    const CONNECT_SERIAL_ERROR = import.meta.env.REACT_APP_CONNECT_SERIAL_ERROR;
-    const CONNECT_SERIAL_NOT_FOUND = import.meta.env.CONNECT_SERIAL_NOT_FOUND;
+    const CONNECT_SERIAL_ERROR = "999999";
+    const CONNECT_SERIAL_NOT_FOUND = "NOT FOUND CODE";
     const _strTagNewLine = "\n";
 
     useEffect(() => {
@@ -100,17 +99,11 @@ function fn_ScanSMTSerialControlTime() {
         localStorage.setItem("hfUserStation", localStorage.getItem("ipAddress"));
         sethfPlantCode(import.meta.env.VITE_FAC);
         sethfProductKind(import.meta.env.VITE_PRODUCT_KIND);
-        localStorage.setItem("hfMode", "");
+        sethfMode("");
         getProductData();
 
         SetMode("MC");
     }, []);
-
-    useEffect(() => {
-        if (eventArgument === "Save") {
-            setSerialDataTray();
-        }
-    }, [eventArgument]);
 
     const getProductData = async () => {
         axios.get("/api/Common/GetProductData").then((res) => {
@@ -165,76 +158,72 @@ function fn_ScanSMTSerialControlTime() {
         const strLotData = txtLotNo.toUpperCase().split(";");
         strLot = strLotData[0];
 
-        try {
-            const res = await axios.post("/api/Common/getProductNameByLot", {
-                strLot: strLot,
+        await axios.post("/api/Common/getProductNameByLot", {
+            strLot: strLot,
+        })
+            .then((res) => {
+                strPrdName = res.data.prdName[0];
             });
-            strPrdName = res.data.prdName[0];
-            console.log("PrdName:", strPrdName);
+        console.log("PrdName2:", strPrdName);
+        if (strPrdName !== "") {
+            setlblLog("");
+            setvisiblelog(false);
+            settxtLotNo(strLot);
+            setlblLot(strLot);
+            const datagetPd = await getProductSerialMaster(strPrdName);
+            try {
+                setselProduct(strPrdName);
+                console.log("datagetpd", datagetPd.prm_proc_control_time_flg);
 
-            if (strPrdName !== "") {
-                setlblLog("");
-                setvisiblelog(false);
-                settxtLotNo(strLot);
-                setlblLot(strLot);
-                const datagetPd = await getProductSerialMaster(strPrdName);
-                console.log(datagetPd, "datagetPd");
+                if (datagetPd.prm_proc_control_time_flg === "Y") {
+                    SetMode("SERIAL");
+                } else {
+                    setlblLog(`Product ${strPrdName} not control time!`);
+                    setvisiblelog(true);
+                    setselProduct(Productdata[0].prd_name);
+                    SetMode("LOT");
+                }
+            } catch (error) {
+                console.error("try-catch error:", error);
+                const intProduct = strPrdName.indexOf('-', 12);
+                if (intProduct > -1) {
+                    strPrdName = strPrdName.substring(0, intProduct) + strPrdName.substring(intProduct + 1, intProduct + 11).trim();
+                    try {
+                        setselProduct(strPrdName);
 
-                try {
-
-                    setselProduct(strPrdName);
-
-                    if (datagetPd.prm_proc_control_time_flg === "Y") {
-                        SetMode("SERIAL");
-                    } else {
-                        setlblLog(`Product ${strPrdName} not control time!`);
-                        setvisiblelog(true);
-                        setselProduct(Productdata[0].prd_name);
-                        SetMode("LOT");
-                    }
-                } catch (error) {
-                    const intProduct = strPrdName.indexOf('-', 12);
-                    if (intProduct > -1) {
-                        strPrdName = strPrdName.substring(0, intProduct) + strPrdName.substring(intProduct + 1, intProduct + 11).trim();
-                        try {
-                            // const datagetPd = await getProductSerialMaster(strPrdName);
-                            // console.log("มายังงหลังเช็ค", datagetPd);
-
-                            setselProduct(strPrdName);
-
-                            if (datagetPd.prm_proc_control_time_flg === "Y") {
-                                SetMode("SERIAL");
-                            } else {
-                                setlblLog(`Product ${strPrdName} not control time!`);
-                                setvisiblelog(true);
-                                setselProduct(Productdata[0].prd_name);
-                                SetMode("LOT");
-                            }
-                        } catch (error2) {
-                            setlblLog(`Product ${strPrdName} not found.`);
+                        if (datagetPd.prm_proc_control_time_flg === "Y") {
+                            SetMode("SERIAL");
+                        } else {
+                            setlblLog(`Product ${strPrdName} not control time!`);
                             setvisiblelog(true);
-                            ddlProduct.current.focus();
+                            setselProduct(Productdata[0].prd_name);
+                            SetMode("LOT");
                         }
-                    } else {
+                    } catch (error) {
+                        console.error("Second inner try-catch error:", error);
                         setlblLog(`Product ${strPrdName} not found.`);
                         setvisiblelog(true);
                         ddlProduct.current.focus();
                     }
+                } else {
+                    setlblLog(`Product ${strPrdName} not found.`);
+                    setvisiblelog(true);
+                    ddlProduct.current.focus();
                 }
-            } else {
-                setselProduct(Productdata[0].prd_name);
-                settxtLotNo("");
-                setlblLot("");
-                setgvSerialData([]);
-                setlblLog("Invalid lot no.");
-                setvisiblelog(true);
-                sethfMode("LOT");
-                inputLot.current.focus();
             }
-        } catch (error) {
-            alert(error);
+        } else {
+            setselProduct(Productdata[0].prd_name);
+            settxtLotNo("");
+            setlblLot("");
+            setgvSerialData([]);
+            setlblLog("Invalid lot no.");
+            setvisiblelog(true);
+            sethfMode("LOT");
+            inputLot.current.focus();
         }
     };
+
+
 
 
     const ibtBackClick = () => {
@@ -296,27 +285,36 @@ function fn_ScanSMTSerialControlTime() {
 
         if (!bolTrayError) {
             if (hfProcControlTimeCheck === "Y") {
-                try {
-                    const res = await axios.post("/api/getserialproccontroltimetable", {
-                        strPlantCode: plantCode,
-                        strProc: hfProcControl,
-                        strConnShtPcsFlg: hfConnShtPcsTime,
-                        dblTime: parseFloat(hfProcControlTime),
-                        data: dtSerial
-                    });
-                    console.log("SSSS", res.data.strresult);
-                } catch (error) {
-                    alert(error);
+                for (let i = 0; i < dtSerial.length; i++) {
+                    try {
+                        const res = await axios.post("/api/getserialproccontroltimetable", {
+                            strPlantCode: plantCode,
+                            strProc: hfProcControl,
+                            strConnShtPcsFlg: hfConnShtPcsTime,
+                            dblTime: hfProcControlTime,
+                            data: [
+                                {
+                                    serial: dtSerial[i].SERIAL,
+                                    product: dtSerial[i].PRODUCT,
+                                    lot: dtSerial[i].LOT
+                                }
+                            ]
+                        });
+                        console.log("SSSS", res.data.strresult);
+                    } catch (error) {
+                        alert(error);
+                        console.log(error);
+                    }
                 }
             }
 
             for (let i = 0; i < dtSerial.length; i++) {
-                let drRow = dtSerial[i];
-                if (drRow.SERIAL.trim() !== "") {
+
+                if (dtSerial[i].SERIAL !== "") {
                     if (
-                        !CONNECT_SERIAL_ERROR.includes(drRow.SERIAL.trim()) &&
-                        !CONNECT_SERIAL_NOT_FOUND.includes(drRow.SERIAL.trim()) &&
-                        !hfBarcodeNotFound.includes(drRow.SERIAL.trim())
+                        !CONNECT_SERIAL_ERROR.includes(dtSerial[i].SERIAL) &&
+                        !CONNECT_SERIAL_NOT_FOUND.includes(dtSerial[i].SERIAL) &&
+                        !hfBarcodeNotFound.includes(dtSerial[i].SERIAL)
                     ) {
                         let _intCount = 0;
                         let _intCountOK = 0;
@@ -324,7 +322,7 @@ function fn_ScanSMTSerialControlTime() {
                         let _intCountDup = 0;
                         let _strRemark = "";
                         let _strError = "";
-                        let _strSerial = drRow.SERIAL.toUpperCase.trim();
+                        let _strSerial = dtSerial[i].SERIAL;
                         let _dtSerialAll = [];
                         let _strPrdNameOrg = "";
                         let _strLotOrg = "";
@@ -332,8 +330,8 @@ function fn_ScanSMTSerialControlTime() {
                         let _strTestResultOrg = "";
                         let _strOK = "OK";
                         let _strNG = "NG";
-                        let _strScanResultUpdate = drRow.SCAN_RESULT;
-                        let _strMessageUpdate = drRow.REMARK;
+                        let _strScanResultUpdate = dtSerial[i].SCAN_RESULT;
+                        let _strMessageUpdate = dtSerial[i].REMARK;
                         let _strTestResultUpdate = "";
                         let _strTypeTestResult = "";
                         let _strRejectUpdate = "";
@@ -345,15 +343,16 @@ function fn_ScanSMTSerialControlTime() {
 
                         if (_strScanResultUpdate !== "NG") {
                             // Check format serial no
-                            if (_strSerial.length === parseInt(hfSerialLength, 10)) {
+                            if (_strSerial.length === hfSerialLength) {
                                 let _strFixDigit = "";
 
                                 if (hfSerialFixFlag === "Y") {
 
-                                    _strFixDigit = _strSerial.substring(
-                                        parseInt(hfSerialStartDigit),
-                                        parseInt(hfSerialEndDigit) - parseInt(hfSerialStartDigit) + 1
-                                    );
+                                    const start = parseInt(hfSerialStartDigit);
+                                    const end = parseInt(hfSerialEndDigit);
+                                    _strFixDigit = _strSerial.substring(start - 1, end);
+
+                                    console.log("lll", _strFixDigit, hfSerialDigit);
 
                                     if (_strFixDigit !== hfSerialDigit) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -367,7 +366,7 @@ function fn_ScanSMTSerialControlTime() {
                                         let _strConfigDigit = "";
                                         const start = parseInt(hfConfigStart);
                                         const end = parseInt(hfConfigEnd);
-                                        _strConfigDigit = _strSerial.substring(start, (end - start) + 1);
+                                        _strConfigDigit = _strSerial.substring(start - 1, end);
                                         if (_strConfigDigit !== hfConfigCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
@@ -394,7 +393,7 @@ function fn_ScanSMTSerialControlTime() {
                                     let _strStartSeq = "";
                                     const start = parseInt(hfCheckStartSeqStart);
                                     const end = parseInt(hfCheckStartSeqEnd);
-                                    _strStartSeq = _strSerial.substring(start, (end - start) + 1);
+                                    _strStartSeq = _strSerial.substring(start - 1, end);
                                     if (_strStartSeq !== hfCheckStartSeqCode) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                         _strRemark = "Serial barcode mix product";
@@ -409,7 +408,7 @@ function fn_ScanSMTSerialControlTime() {
                                     let _strWeekCode = "";
                                     const start = parseInt(hfCheckWeekCodeStart);
                                     const end = parseInt(hfCheckWeekCodeEnd);
-                                    _strWeekCode = _strSerial.substring(start, (end - start) + 1);
+                                    _strWeekCode = _strSerial.substring(start - 1, end);
                                     if (_strWeekCode !== hfWeekCode) {
                                         _strMessageUpdate = "Serial barcode mix week code" + _strTagNewLine + "หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
                                         _strRemark = "Serial barcode mix week code";
@@ -421,8 +420,8 @@ function fn_ScanSMTSerialControlTime() {
                                 }
 
                                 if (!bolError) {
-                                    for (let intRow = _intRowSerial + 1; intRow < dtSerial.drRow.length; intRow++) {
-                                        if (_strSerial.toUpperCase() === dtSerial[intRow].SERIAL.toUpperCase()) {
+                                    for (let intRow = _intRowSerial + 1; intRow < dtSerial.length; intRow++) {
+                                        if (_strSerial === dtSerial[intRow].SERIAL) {
                                             _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                                             _strRemark = "Serial duplicate in tray  ";
                                             _strScanResultUpdate = "NG";
@@ -447,15 +446,15 @@ function fn_ScanSMTSerialControlTime() {
                             }
                         }
 
-                        drRow.SCAN_RESULT = _strScanResultUpdate;
-                        drRow.REMARK = _strMessageUpdate;
+                        dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
+                        dtSerial[i].REMARK = _strMessageUpdate;
 
                         if (_strScanResultUpdate === "NG") {
                             _strScanResultAll = "NG";
                         }
                     } else {
-                        drRow.SCAN_RESULT = "NG";
-                        drRow.REMARK = "Can not scan" + _strTagNewLine + "หมายเลขบาร์โค้ดสแกนไม่ได้";
+                        dtSerial[i].SCAN_RESULT = "NG";
+                        dtSerial[i].REMARK = "Can not scan" + _strTagNewLine + "หมายเลขบาร์โค้ดสแกนไม่ได้";
                         _strScanResultAll = "NG";
                         setbolError(true);
                     }
@@ -470,29 +469,38 @@ function fn_ScanSMTSerialControlTime() {
 
             if (_strScanResultAll === "OK") {
                 let _strErrorUpdate = "";
-                axios.post("/api/setSerialProcControlTimeTable", {
-                    strPlantCode: plantCode,
-                    strProc: hfProcControl,
-                    data: dtSerial[i]
-                })
-                    .then((res) => {
-                        _strErrorUpdate = res.data.p_error;
-                        if (_strErrorUpdate.trim() !== "") {
-                            _strScanResultAll = "NG";
-                            setlblResult(_strScanResultAll);
-                            setlblResultcolor("red");
-                            setlblLog(_strErrorUpdate);
-                            setvisiblelog(true);
-                        }
+                for (let i = 0; i < dtSerial.length; i++) {
+                    axios.post("/api/setSerialProcControlTimeTable", {
+                        strPlantCode: plantCode,
+                        strProc: hfProcControl,
+                        data: [
+                            {
+                                MACHINE: dtSerial[i].MACHINE,
+                                OP: dtSerial[i].OP,
+                                SEQ: dtSerial[i].SEQ,
+                                SERIAL: dtSerial[i].SERIAL
+                            }
+                        ]
                     })
-                    .catch((error) => {
-                        alert(error);
-                    });
+                        .then((res) => {
+                            _strErrorUpdate = res.data.p_error;
+                            if (_strErrorUpdate !== "") {
+                                _strScanResultAll = "NG";
+                                setlblResult(_strScanResultAll);
+                                setlblResultcolor("#ff4d4f");
+                                setlblLog(_strErrorUpdate);
+                                setvisiblelog(true);
+                            }
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                }
             }
         }
 
         if (_strScanResultAll === "NG") {
-            setlblResultcolor("red");
+            setlblResultcolor("#ff4d4f");
         } else {
             setlblResultcolor("green");
         }
@@ -505,7 +513,7 @@ function fn_ScanSMTSerialControlTime() {
             setgvScanResult(false);
         }
 
-        getInitialSerial();
+        await getInitialSerial();
     };
 
     const getProductSerialMaster = async (strPrdName) => {
@@ -608,13 +616,13 @@ function fn_ScanSMTSerialControlTime() {
         for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
             let drRow = {
                 SEQ: intRow + 1,
-                SERIAL: gvSerialData[intSeq].txtgvSerial.trim().toUpperCase(),
+                SERIAL: txtgvSerial[intSeq] || "",
                 SCAN_RESULT: "",
                 REMARK: "",
-                PRODUCT: ddlProduct,
+                PRODUCT: selProduct,
                 LOT: lblLot,
-                MACHINE: txtMachine.trim().toUpperCase(),
-                OP: txtOperator.trim().toUpperCase()
+                MACHINE: txtMachine,
+                OP: txtOperator
             };
             dtData.push(drRow);
             intRow++;
@@ -623,20 +631,18 @@ function fn_ScanSMTSerialControlTime() {
         return dtData;
     };
 
-    const getInitialSerial = () => {
+    const getInitialSerial = async () => {
         let dtData = [];
 
-        for (let intRow = 1; intRow <= parseInt(txtTotalPcs.trim(), 10); intRow++) {
+        for (let intRow = 1; intRow <= hfSerialCount; intRow++) {
             let drRow = {
                 SEQ: intRow
             };
             dtData.push(drRow);
         }
         setgvSerialData(dtData);
-
-        if (dtData.length > 0) {
-            inputgvSerial.current.focus();
-        }
+        console.log("gvserialdata:", dtData)
+        return dtData;
     };
 
     useEffect(() => {
@@ -652,7 +658,7 @@ function fn_ScanSMTSerialControlTime() {
         if (!txtLotDisabled) {
             inputLot.current.focus();
         }
-        if (gvScanResult === "true") {
+        if (gvSerialData.length > 0 && inputgvSerial.current) {
             inputgvSerial.current.focus();
         }
     }, [
@@ -660,7 +666,7 @@ function fn_ScanSMTSerialControlTime() {
         txtOpDisabled,
         txtTotalPcsDisabled,
         txtLotDisabled,
-        gvScanResult
+        gvSerialData
     ]);
 
     const SetMode = (strType) => {
@@ -680,7 +686,7 @@ function fn_ScanSMTSerialControlTime() {
             setibtPcsBackDisabled(true);
             setpnlSerial(false);
             setgvSerialData([]);
-            localStorage.setItem("hfMode", "MC");
+            sethfMode("MC");
             inputMachine.current.focus();
         } else if (strType === "OP") {
             settxtMachineDisabled(true);
@@ -697,7 +703,7 @@ function fn_ScanSMTSerialControlTime() {
             setpnlSerial(false);
             setpnlSerial(false);
             setgvSerialData([]);
-            localStorage.setItem("hfMode", "OP");
+            sethfMode("OP");
             inputOperator.current.focus();
         } else if (strType === "PCS") {
             settxtMachineDisabled(true);
@@ -713,7 +719,7 @@ function fn_ScanSMTSerialControlTime() {
             setpnlSerial(false);
             setvisiblelog(false);
             setgvSerialData([]);
-            localStorage.setItem("hfMode", "PCS");
+            sethfMode("PCS");
             inputTotalPcs.current.focus();
         } else if (strType === "LOT") {
             settxtLotNo("");
@@ -730,27 +736,27 @@ function fn_ScanSMTSerialControlTime() {
             setlblLot("");
             setvisiblelog(true);
             setpnlSerial(false);
-            localStorage.setItem("hfMode", "LOT");
+            sethfMode("LOT");
             inputLot.current.focus();
         } else if (strType === "TRAY") {
             settxtLotDisabled(true);
             setvisiblelog(false);
             setpnlSerial(true);
             getInitialSerial();
-            localStorage.setItem("hfMode", "TRAY");
+            sethfMode("TRAY");
             inputTray.current.focus();
         } else if (strType === "TRAY_ERROR") {
             settxtLotDisabled(true);
             setvisiblelog(true);
             setpnlSerial(false);
-            localStorage.setItem("hfMode", "TRAY");
+            sethfMode("TRAY");
             inputTray.current.focus();
         } else if (strType === "SERIAL") {
             setselProDisabled(true);
             settxtLotDisabled(true);
             setvisiblelog(false);
             setpnlSerial(true);
-            localStorage.setItem("hfMode", "SERIAL");
+            sethfMode("SERIAL");
             getInitialSerial();
         } else if (strType === "SERIAL_ERROR") {
             settxtLotDisabled(true);
@@ -774,7 +780,8 @@ function fn_ScanSMTSerialControlTime() {
     };
 
     const btnSaveClick = () => {
-        if (eventArgument !== "Save" && hfMode === "SERIAL") {
+        console.log(hfMode)
+        if (hfMode === "SERIAL") {
             setSerialDataTray();
         }
     };
