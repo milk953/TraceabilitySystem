@@ -24,6 +24,7 @@ import ScanSMTPlasmaStopStart from "./Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaS
 import SheetBincheking from "./Page/SheetBinChecking/SheetBinCheck"
 import ScanSMTSerialSpotHeat from "./Page/ScanSMTSerialSpotHeat/ScanSMTSerialSpotHeat"
 import ScanSMTSerialControlTime from "./Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime";
+import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
 
 
 
@@ -61,6 +62,7 @@ const App = () => {
           <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
           <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
           <Route path="/Reject" element={<Reject />} />
+          <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
         </Routes>
       </BrowserRouter>
   );
