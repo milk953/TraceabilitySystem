@@ -18,17 +18,19 @@ function Hearder() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const user = localStorage.getItem("Username");
   const surname = localStorage.getItem("Lastname");
-
+  // const params = new URLSearchParams(window.location.search);
+  // console.log(params,'webbbb')
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   const navigate = useNavigate();
   const Logout = () => {
     localStorage.clear();
-    navigate("/");
-    location.reload();
+  window.location.href = "/"
+ 
     openLoginModal();
   };
+
   const loginBtn = () => {
     if (window.location.pathname !== "/") {
       const goHome = () => {

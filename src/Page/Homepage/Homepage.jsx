@@ -35,7 +35,8 @@ const { Search } = Input;
 import Hearder from "../Header/Hearder";
 import { fn_Homepage } from "./fn_Homepage";
 function ScanSheetMOTTime() {
-  const { Showmenu, menu, SelectMenu, setSL_menu, SL_menu, HandleSL_Menu } =
+
+  const { Showmenu, menu, OpenMenu, setSL_menu, SL_menu, HandleSL_Menu } =
     fn_Homepage();
   return (
     <div>
@@ -64,28 +65,30 @@ function ScanSheetMOTTime() {
         </Grid>
         <Grid item>
         <FormControl style={{ width: 400 }} fullWidth>
-            <Autocomplete
-              id="selectPd"
-              value={SL_menu}
-              onChange={(e, value) => HandleSL_Menu(value)}
-              options={menu.map((item, index) => menu[index][1])}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  size="small"
-                  sx={{ textAlign: "left" }}
-                  placeholder="Search Menu.."
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              )}
-            />
+        <Autocomplete
+  id="selectPd"
+  value={SL_menu.url}
+  onChange={(e, value) => HandleSL_Menu(value.url)}
+  options={menu.map((item) => ({ name: item.menu_name, url: item.url }))}
+  getOptionLabel={(option) => option.name}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      size="small"
+      sx={{ textAlign: "left" }}
+      placeholder="Search Menu.."
+      InputProps={{
+        ...params.InputProps,
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
+  )}
+/>
+
           </FormControl>
         </Grid>
       </Grid>
@@ -100,8 +103,7 @@ function ScanSheetMOTTime() {
                   justifyContent: "space-between",
                 }}
               >
-                <div className="Head-Menu1" onClick={() => SelectMenu("W")}>
-                  {" "}
+                <div className="Head-Menu1" onClick={() => OpenMenu("W")}>
                   <Typography
                     variant="h5"
                     style={{ margin: "auto", marginTop: "70px" }}
@@ -109,9 +111,9 @@ function ScanSheetMOTTime() {
                     <HighlightOutlined /> <br></br> Work
                   </Typography>
                   <br></br>
-                  <div className="count-Menu1">10 </div>
+                  <div className="count-Menu1">{menu[0].count_work}</div>
                 </div>
-                <div className="Head-Menu2" onClick={() => SelectMenu("M")}>
+                <div className="Head-Menu2" onClick={() => OpenMenu("M")}>
                   <Typography
                     variant="h5"
                     style={{ margin: "auto", marginTop: "70px" }}
@@ -119,10 +121,10 @@ function ScanSheetMOTTime() {
                     <ScheduleOutlined /> <br></br> Maintain
                   </Typography>
                   <br></br>
-                  <div className="count-Menu2">18 </div>
+                  <div className="count-Menu2">{menu[0].count_maintain}</div>
                 </div>
 
-                <div className="Head-Menu3" onClick={() => SelectMenu("V")}>
+                <div className="Head-Menu3" onClick={() => OpenMenu("V")}>
                   <Typography
                     variant="h5"
                     style={{ margin: "auto", marginTop: "70px" }}
@@ -130,7 +132,7 @@ function ScanSheetMOTTime() {
                     <AreaChartOutlined /> <br></br> View Data
                   </Typography>
                   <br></br>
-                  <div className="count-Menu3">9</div>
+                  <div className="count-Menu3">{menu[0].count_viewdata}</div>
                 </div>
               </td>
               <td
@@ -177,7 +179,7 @@ function ScanSheetMOTTime() {
                     <TableBody>
                       <TableRow align="center">
                         {menu
-                          .filter((item) => item[0] === "0928")
+                          .filter((item,index) => menu[index].parent_id === "0928")
                           .map((item, index) => (
                             <div
                               key={index}
@@ -191,9 +193,9 @@ function ScanSheetMOTTime() {
                                 transition: "background 0.3s ease",
                               }}
                               className="hoverable"
-                              onClick={() => HandleSL_Menu(item[1])}
+                              onClick={() => HandleSL_Menu(item.url)}
                             >
-                              {item[1]}
+                              {item.menu_name}
                             </div>
                           ))}
                       </TableRow>
@@ -228,7 +230,7 @@ function ScanSheetMOTTime() {
                       <TableBody>
                         <TableRow align="center">
                           {menu
-                            .filter((item) => item[0] === "0929")
+                            .filter((item,index) => menu[index].parent_id === "0929")
                             .map((item, index) => (
                               <div
                                 key={index}
@@ -242,8 +244,9 @@ function ScanSheetMOTTime() {
                                   transition: "background 0.3s ease",
                                 }}
                                 className="hoverable"
+                                onClick={() => HandleSL_Menu(item.url)}
                               >
-                                {item[1]}
+                                {item.menu_name}
                               </div>
                             ))}
                         </TableRow>
@@ -279,7 +282,7 @@ function ScanSheetMOTTime() {
                     <TableBody>
                       <TableRow align="center">
                         {menu
-                          .filter((item) => item[0] === "0930")
+                          .filter((item,index) =>  menu[index].parent_id === "0930")
                           .map((item, index) => (
                             <div
                               key={index}
@@ -293,8 +296,9 @@ function ScanSheetMOTTime() {
                                 transition: "background 0.3s ease",
                               }}
                               className="hoverable"
+                              onClick={() => HandleSL_Menu(item.url)}
                             >
-                              {item[1]}
+                             {item.menu_name}
                             </div>
                           ))}
                       </TableRow>

@@ -1,0 +1,76 @@
+.Card-BendingTime{
+    margin: auto;
+    width: 95%;
+    max-width: 1400px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+}
+.Serial-Bending{
+    width: 100%;
+    max-width: 400px;
+    /* margin-top: 20px; */
+    padding: 20px;
+    text-align: center;
+   
+}
+.Css-Table-Serial-Bending td{
+    /* text-align: center; */
+    width: 100%;
+    border: 1px red solid;
+}
+.pnlDetail{
+   
+        display: flex;
+        margin: auto;
+        width: 600px;
+        margin-top: 20px; 
+        /* border: 1px black solid; */
+     
+}
+.pnlDetail th{
+   
+ background-color: #2ea3f1;
+    padding: 5px;
+    border: 1px black solid;
+   
+}
+.pnlDetail td{
+    border: 1px black solid;
+    padding: 5px;
+}
+
+.TableSave{
+ 
+        width: 600px;
+        margin: 10px auto;
+        /* height: 10px; */
+   
+    
+}
+.pnlResult-Auto{
+    width: 600px;
+    margin: 0px auto;
+    height: 200px;
+}
+.gvBending{
+    display: flex;
+    margin: auto;
+    width: 400px; 
+}
+.gvBending th {
+  
+    padding: 5px;
+    border: 1px black solid;
+   
+}
+.gvBending td {
+    border: 1px black solid;
+    padding: 5px;
+}
+.custom-input {
+    width: 80%;
+    height: 8px;
+  }

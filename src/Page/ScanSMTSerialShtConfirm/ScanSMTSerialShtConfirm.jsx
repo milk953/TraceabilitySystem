@@ -209,7 +209,10 @@ function ScanSMTSerialShtConfirm() {
                                         {Array.from({ length: hfShtScan }, (_, index) => (
                                             <TableRow key={index}>
                                                 <TableCell
-                                                    style={{ textAlign: "center" }}
+                                                    style={{
+                                                        textAlign: "center",
+                                                        borderRight: "1px solid #d9d9d9"
+                                                    }}
                                                 >
                                                     {index + 1}
                                                 </TableCell>
