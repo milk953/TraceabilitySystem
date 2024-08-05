@@ -6,7 +6,7 @@ import { Password } from "@mui/icons-material";
 function fn_Homepage() {
   const [Showmenu, setShowmenu] = useState("img");
   const [menu, setmenu] = useState([{}]);
-  const [SL_menu, setSL_menu] = useState([]);
+  const [SL_menu, setSL_menu] = useState([{}]);
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [date, setDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -184,7 +184,7 @@ function fn_Homepage() {
     return () => clearTimeout(timeout);
   };
 
-  const SelectMenu = (menuID) => {
+  const OpenMenu = (menuID) => {
     if (menuID == "W") {
       setShowmenu("Work");
     } else if (menuID == "M") {
@@ -194,27 +194,19 @@ function fn_Homepage() {
   };
 
   const HandleSL_Menu = (Menu_Select) => {
-    if (Menu_Select == "Connect Roll Leaf") {
-      window.location.href = "/ScanSMTRollSht";
-    }
-    if (Menu_Select == "SMT Connect Sht&Pcs") {
-      window.location.href = "/ScanSMTSerialShtFINManySht";
-    }
-
-    // if(menuID=='W'){
-    //     setShowmenu('Work')
-    // }
-    // else if (menuID=='M'){
-    //     setShowmenu('Maintain')
-    // }
-    // else if(menuID=='V')
-    // setShowmenu('View')
+      window.location.href = Menu_Select;
   };
+
+//   const Search_Menu = (Menu_Select) => {
+//     window.location.href = Menu_Select;
+// };
+
+
 
   return {
     Showmenu,
     menu,
-    SelectMenu,
+    OpenMenu,
     setSL_menu,
     SL_menu,
     HandleSL_Menu,
