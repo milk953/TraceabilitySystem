@@ -105,9 +105,6 @@ function fn_Homepage() {
     axios.get("/api/getIPaddress").then((res) => {
       setIpAddress(res.data.ip);
     });
-    axios.post("/api/MenuHome", {}).then((res) => {
-      setmenu(res.data);
-    });
     localStorage.setItem("Fac", import.meta.env.VITE_FAC);
     const newDate = new Date();
     // setDate(newDate)
@@ -196,12 +193,6 @@ function fn_Homepage() {
   const HandleSL_Menu = (Menu_Select) => {
       window.location.href = Menu_Select;
   };
-
-//   const Search_Menu = (Menu_Select) => {
-//     window.location.href = Menu_Select;
-// };
-
-
 
   return {
     Showmenu,

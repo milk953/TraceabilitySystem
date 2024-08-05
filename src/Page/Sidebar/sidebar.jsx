@@ -20,6 +20,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 // import moment from "moment";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import SensorsOutlinedIcon from "@mui/icons-material/SensorsOutlined";
+import { Menu } from "antd";
 function sidebar({ isOpen, onClose }) {
   const {
     subMenuOpen1,
@@ -63,54 +64,52 @@ function sidebar({ isOpen, onClose }) {
           <ListItemIcon>
             <AssignmentOutlinedIcon color="primary" />
           </ListItemIcon>
-          <ListItemText primary={menu[0]} onClick={Home} />
+          <ListItemText primary={'Home'} onClick={'/'} />
         </ListItem>
 
         {/*Menu2  Work*/}
-        <ListItem className="ListItem" onClick={toggleSubMenu2}>
+         <ListItem className="ListItem" onClick={toggleSubMenu2}>
           <ListItemIcon>
             <SensorsOutlinedIcon color="success" />
           </ListItemIcon>
-          <ListItemText primary={menu[1]} />
-          {/* {menuID.map(
-            (item, index) =>
-              menuID[index] === menuMain[1] && */}
+          <ListItemText primary={'Work'} />
               {Icondrop2 ? <UpOutlined /> : <DownOutlined />}
-          {/* )} */}
-        </ListItem>
-        {subMenuOpen2 && (
+      </ListItem>
+       {subMenuOpen2 && (
           <>
-            {menuID.map(
+            { menu.map(
               (item, index) =>
-                menuID[index] === menuMain[1] && (
+                 menu[index].parent_id== '0929' && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
                       onClose();
-                      GoNavigate(menuPath[index]);
+                      // GoNavigate(menuPath[index]);
                     }}
                     key={index}
                   >
                     <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
-                    <ListItemText primary={menu[index]} />
+                    <ListItemText primary={item.menu_name} />
                   </ListItem>
                 )
             )}
           </>
         )}
+
+        
         {/*Menu3 */}
-        <ListItem className="ListItem" onClick={toggleSubMenu3}>
+        {/* <ListItem className="ListItem" onClick={toggleSubMenu3}>
           <ListItemIcon>
             <BuildIcon color="secondary" />
           </ListItemIcon>
-          <ListItemText primary={menu[2]} />
+          <ListItemText primary={'Work'} />
           {Icondrop3 ? <UpOutlined /> : <DownOutlined />}
         </ListItem>
         {subMenuOpen3 && (
           <>
-            {menuID.map(
+            {menu.map(
               (item, index) =>
-                menuID[index] === menuMain[2] && (
+               menu[index].parent_id== '0928' && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
@@ -125,9 +124,10 @@ function sidebar({ isOpen, onClose }) {
                 )
             )}
           </>
-        )}
+        )} */}
+
         {/*Menu4 */}
-        <ListItem className="ListItem" onClick={toggleSubMenu4}>
+        {/* <ListItem className="ListItem" onClick={toggleSubMenu4}>
           <ListItemIcon>
             <SourceIcon style={{ color: "orange" }} />
           </ListItemIcon>
@@ -153,16 +153,18 @@ function sidebar({ isOpen, onClose }) {
                 )
             )}
           </>
-        )}
+        )} */}
+
+
         {/*Menu5 */}
-        <footer style={{ position: 'fixed', bottom: 0, width: '100%' }}>
+        {/* <footer style={{ position: 'fixed', bottom: 0, width: '100%' }}>
         <ListItem className="ListItem1" onClick={toggleSubMenu5}>
           <ListItemIcon>
             <LogoutIcon style={{ color: 'gray' }} />
           </ListItemIcon>
           <ListItemText primary={menu[4]} onClick={Logout} />
         </ListItem>
-      </footer>
+      </footer> */}
       </List>
     </Drawer>
   );

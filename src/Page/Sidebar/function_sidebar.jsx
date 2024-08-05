@@ -11,7 +11,7 @@ function sidebarT() {
     const [subMenuOpen3, setSubMenuOpen3] = useState(false);
     const [subMenuOpen4, setSubMenuOpen4] = useState(false);
     const [subMenuOpen5, setSubMenuOpen5] = useState(false);
-    const [menu, setmenu] = useState([]);
+    const [menu, setmenu] = useState([{}]);
     const [menuID, setmenuID] = useState([]);
     const [menuMain, setmenuMain] = useState([]);
     const [menuPath, setmenuPath] = useState([]);
@@ -19,33 +19,35 @@ function sidebarT() {
     const [Icondrop2, setIcondrop2] = useState(false);
     const [Icondrop3, setIcondrop3] = useState(false);
     const [Icondrop4, setIcondrop4] = useState(false);
-    const Login_ID = localStorage.getItem("UserLogin");
-  
+   
+    var UserLogin = localStorage.getItem("UserLogin") 
     const Menu = async () => {
-      axios.post("/api/MenuName", {
-        login_id: Login_ID,
-      }).then((res) => {
-        let datamenu = [];
-        let datamenuid = [];
-        let main = [];
-        let Path = [];
-        for (let i = 0; i < res.data.length; i++) {
-          datamenu.push(res.data[i][1]);
-          datamenuid.push(res.data[i][6]);
-          main.push(res.data[i][0]);
-          Path.push(res.data[i][2]);
-        }
-        setmenu(datamenu);
-        setmenuID(datamenuid);
-        setmenuMain(main);
-        setmenuPath(Path)
-      })
+      console.log(UserLogin,'UserLogin')
+      if(UserLogin==''||UserLogin==null){
+        // openLoginModal()
+        await axios
+         .post("/api/menuHome", {})
+         .then((res) => {
+           console.log(res.data,'menuHome1',UserLogin)
+           setmenu(res.data)
+          })
+     }
+     else{
+      await axios
+       .post("/api/Menuname", {
+        login_id:UserLogin
+       })
+       .then((res) => {
+        setmenu(res.data)
+        console.log(res.data,'menuHome2',UserLogin)
+       })
+     }
     };
+
     useEffect(() => {
       Menu()
     }, []);
   
-    const navigate = useNavigate();
     const toggleSubMenu1 = () => {
       setIcondrop1(!Icondrop1);
       setSubMenuOpen1(!subMenuOpen1);
@@ -77,10 +79,8 @@ function sidebarT() {
     };
   
     const Logout = () => {
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("Username");
-      localStorage.removeItem("Lastname");
-      navigate("/");
+    localStorage.clear();
+    window.location.href = "/"
     }
 
     return {
