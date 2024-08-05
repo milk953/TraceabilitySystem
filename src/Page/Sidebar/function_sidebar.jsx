@@ -74,7 +74,7 @@ function sidebarT() {
       window.location.href = '/';
     };
   
-    const GoNavigate = (path) => {
+    const ChangPage = (path) => {
       window.location.href = path;
     };
   
@@ -87,7 +87,7 @@ function sidebarT() {
         subMenuOpen1, subMenuOpen2, subMenuOpen3, subMenuOpen4, subMenuOpen5,
         menu, menuID, menuMain, Icondrop1, Icondrop2, Icondrop3, Icondrop4,
         Menu, toggleSubMenu1, toggleSubMenu2, toggleSubMenu3, toggleSubMenu4,
-        toggleSubMenu5, Home, Logout,GoNavigate,menuPath,setmenuPath
+        toggleSubMenu5, Home, Logout,ChangPage,menuPath,setmenuPath
     }
 
 }

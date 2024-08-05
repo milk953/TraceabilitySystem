@@ -42,7 +42,7 @@ function sidebar({ isOpen, onClose }) {
     toggleSubMenu5,
     Home,
     Logout,
-    GoNavigate,
+    ChangPage,
     menuPath,
     setmenuPath
   } = sidebarT();
@@ -79,12 +79,12 @@ function sidebar({ isOpen, onClose }) {
           <>
             { menu.map(
               (item, index) =>
-                 menu[index].parent_id== '0929' && (
+                 menu[index].parent_id== '0928' && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
                       onClose();
-                      // GoNavigate(menuPath[index]);
+                      ChangPage(item.url);
                     }}
                     key={index}
                   >
@@ -98,73 +98,73 @@ function sidebar({ isOpen, onClose }) {
 
         
         {/*Menu3 */}
-        {/* <ListItem className="ListItem" onClick={toggleSubMenu3}>
+        <ListItem className="ListItem" onClick={toggleSubMenu3}>
           <ListItemIcon>
             <BuildIcon color="secondary" />
           </ListItemIcon>
-          <ListItemText primary={'Work'} />
+          <ListItemText primary={'Maintain'} />
           {Icondrop3 ? <UpOutlined /> : <DownOutlined />}
         </ListItem>
         {subMenuOpen3 && (
           <>
             {menu.map(
               (item, index) =>
-               menu[index].parent_id== '0928' && (
+               menu[index].parent_id== '0929' && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
                       onClose();
-                      GoNavigate(menuPath[index]);
+                      ChangPage(item.url);
                     }}
                     key={index}
                   >
                     <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
-                    <ListItemText primary={menu[index]} />
+                    <ListItemText primary={item.menu_name} />
                   </ListItem>
                 )
             )}
           </>
-        )} */}
+        )}
 
         {/*Menu4 */}
-        {/* <ListItem className="ListItem" onClick={toggleSubMenu4}>
+         <ListItem className="ListItem" onClick={toggleSubMenu4}>
           <ListItemIcon>
             <SourceIcon style={{ color: "orange" }} />
           </ListItemIcon>
-          <ListItemText primary={menu[3]} />
+          <ListItemText primary={'View Data'} />
           {Icondrop4 ? <UpOutlined /> : <DownOutlined />}
         </ListItem>
-        {subMenuOpen4 && (
+       {subMenuOpen4 && (
           <>
-            {menuID.map(
+            {menu.map(
               (item, index) =>
-                menuID[index] === menuMain[3] && (
+                menu[index].parent_id== '0930'  && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
                       onClose();
-                      GoNavigate(menuPath[index]);
+                      ChangPage(item.url);
                     }}
                     key={index}
                   >
                     <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
-                    <ListItemText primary={menu[index]} />
+                    <ListItemText primary={item.menu_name} />
                   </ListItem>
                 )
             )}
           </>
-        )} */}
+        )}
 
 
         {/*Menu5 */}
-        {/* <footer style={{ position: 'fixed', bottom: 0, width: '100%' }}>
+        <footer style={{ position: 'fixed', bottom: 0, width: '100%' }}>
         <ListItem className="ListItem1" onClick={toggleSubMenu5}>
           <ListItemIcon>
             <LogoutIcon style={{ color: 'gray' }} />
           </ListItemIcon>
-          <ListItemText primary={menu[4]} onClick={Logout} />
+          <ListItemText primary={'Logout'} onClick={Logout} />
         </ListItem>
-      </footer> */}
+      </footer>
       </List>
     </Drawer>
   );
