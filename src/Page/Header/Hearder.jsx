@@ -41,14 +41,14 @@ function Hearder() {
       };
       return (
         <Tooltip title="LogOut">
-        <LockOpenIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} />
+        <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} />
       </Tooltip>
         
       );
     }
     return (
     <Tooltip title="Login">
-     <LockOpenIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  />
+     <LoginIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  />
     </Tooltip>
     
     );
@@ -112,7 +112,10 @@ function Hearder() {
               Username : {user}  {surname} &nbsp;&nbsp;
               <br />
             </Button></>:<> 
-         
+            <Avatar
+              sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}
+            >G</Avatar>
+            
             <Button
               className="btnDate"
               color="inherit"
@@ -120,12 +123,12 @@ function Hearder() {
                 display: "contents",
                 alignItems: "start",
                 justifyContent: "start",
-                fontSize: "15px",
+                fontSize: "12px",
                 fontFamily: "Roboto, sans-serif",
               }}
               onClick={openLoginModal} 
             >
-              Login : 
+              Username : Guess &nbsp;&nbsp;
             </Button>
            </>}
            
