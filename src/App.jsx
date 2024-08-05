@@ -29,7 +29,7 @@ import AVIManualConfirm from "./Page/AVIConfirm/AVIManualConfirm";
 import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm";
 import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
 import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
-
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -37,40 +37,72 @@ const backendUrl = import.meta.env.VITE_SERVICE_URL;
 
 axios.defaults.baseURL = backendUrl;
 const App = () => {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    checkToken(token);
+  });
+  const checkToken = async (token) => {
+    await axios
+      .post(
+        "/api/VerifyToken",
+        {
+          token: token,
+        },
+        {
+          validateStatus: function (status) {
+            return true;
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.status);
+        if (res.status == 200) {
+          return;
+        } else if (res.status == 401) {
+          localStorage.removeItem("Username");
+          localStorage.removeItem("Lastname");
+          localStorage.removeItem("UserLogin");
+          localStorage.removeItem("IDCode");
+          localStorage.removeItem("token");
+        }
+      });
+  };
   return (
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<Homepage />} />
-          <Route path="/SheetMaster" element={<Sheet_Master />} />
-          <Route path="/SerialMaster" element={<Serial_Master />} />
-          <Route path="/ProductMaster" element={<Product_master />} />
-          <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
-          <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
-          <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
-          <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
-          <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
-          <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
-          <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
-          <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
-          <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
-          <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
-          <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
+          <Route element={<PrivateRoute />}>
+            <Route path="/SheetMaster" element={<Sheet_Master />} />
+            <Route path="/SerialMaster" element={<Serial_Master />} />
+            <Route path="/ProductMaster" element={<Product_master />} />
+            <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
+            <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
+            <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
+            <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
+            <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
+            <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
+            <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
+            <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
+            <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
+            <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
+            <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
 
-          {/* View Data */}
-          <Route path='/ELTmaster' element={<ELTmaster />} />
-          <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
-          <Route path='/SheetBincheking' element={<SheetBincheking />} />
-          <Route path='/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />  
+            {/* View Data */}
+            <Route path='/ELTmaster' element={<ELTmaster />} />
+            <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
+            <Route path='/SheetBincheking' element={<SheetBincheking />} />
+            <Route path='/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />  
 
-          {/* Maintenance */}
-          <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
-          <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
-          <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
-          <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
-          <Route path="/Reject" element={<Reject />} />
-          <Route path="/ELTType" element={<SerialTestType />} />
+            {/* Maintenance */}
+            <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
+            <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
+            <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
+            <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
+            <Route path="/Reject" element={<Reject />} />
+            <Route path="/ELTType" element={<SerialTestType />} />
 
-          <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
+            <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
+          </Route>
         </Routes>
       </BrowserRouter>
   );
