@@ -17,7 +17,7 @@ import {
   InputLabel,
   Autocomplete,
   InputAdornment,
-  Grid
+  Grid,
 } from "@mui/material";
 
 import {
@@ -35,7 +35,6 @@ const { Search } = Input;
 import Hearder from "../Header/Hearder";
 import { fn_Homepage } from "./fn_Homepage";
 function ScanSheetMOTTime() {
-
   const { Showmenu, menu, OpenMenu, setSL_menu, SL_menu, HandleSL_Menu } =
     fn_Homepage();
   return (
@@ -54,45 +53,49 @@ function ScanSheetMOTTime() {
           padding: "20px",
         }}
       >
-        
-      
-        <div style={{  }}>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: '#3D3B40' }}>
-            Traceability System
-          </Typography>
-        </Grid>
-        <Grid item>
-        <FormControl style={{ width: 400 }} fullWidth>
-        <Autocomplete
-  id="selectPd"
-  value={SL_menu.url}
-  onChange={(e, value) => HandleSL_Menu(value.url)}
-  options={menu.map((item) => ({ name: item.menu_name, url: item.url }))}
-  getOptionLabel={(option) => option.name}
-  renderInput={(params) => (
-    <TextField
-      {...params}
-      size="small"
-      sx={{ textAlign: "left" }}
-      placeholder="Search Menu.."
-      InputProps={{
-        ...params.InputProps,
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-    />
-  )}
-/>
-
-          </FormControl>
-        </Grid>
-      </Grid>
-    </div>
+        <div style={{}}>
+          <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item>
+              <Typography
+                variant="h4"
+                component="h1"
+                sx={{ fontWeight: "bold", color: "#3D3B40" }}
+              >
+                Traceability System
+              </Typography>
+            </Grid>
+            <Grid item>
+              <FormControl style={{ width: 400 }} fullWidth>
+                <Autocomplete
+                  id="selectPd"
+                  value={SL_menu.url}
+                  onChange={(e, value) => HandleSL_Menu(value.url)}
+                  options={menu.map((item) => ({
+                    name: item.menu_name,
+                    url: item.url,
+                  }))}
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      size="small"
+                      sx={{ textAlign: "left" }}
+                      placeholder="Search Menu.."
+                      InputProps={{
+                        ...params.InputProps,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </div>
         <table style={{ marginTop: "25px", maxWidth: "1400px", width: "100%" }}>
           <tbody>
             <tr>
@@ -111,7 +114,13 @@ function ScanSheetMOTTime() {
                     <HighlightOutlined /> <br></br> Work
                   </Typography>
                   <br></br>
-                  <div className="count-Menu1">{menu[0].count_work}</div>
+                  <div className="count-Menu1">
+                    {menu && menu[0] && menu[0].count_work ? (
+                      <span>{menu[0].count_work}</span>
+                    ) : (
+                      <span>0</span>
+                    )}
+                  </div>
                 </div>
                 <div className="Head-Menu2" onClick={() => OpenMenu("M")}>
                   <Typography
@@ -121,7 +130,13 @@ function ScanSheetMOTTime() {
                     <ScheduleOutlined /> <br></br> Maintain
                   </Typography>
                   <br></br>
-                  <div className="count-Menu2">{menu[0].count_maintain}</div>
+                  <div className="count-Menu2">
+                    {menu && menu[0] && menu[0].count_maintain ? (
+                      <span>{menu[0].count_maintain}</span>
+                    ) : (
+                      <span>0</span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="Head-Menu3" onClick={() => OpenMenu("V")}>
@@ -132,7 +147,13 @@ function ScanSheetMOTTime() {
                     <AreaChartOutlined /> <br></br> View Data
                   </Typography>
                   <br></br>
-                  <div className="count-Menu3">{menu[0].count_viewdata}</div>
+                  <div className="count-Menu3">
+                    {menu && menu[0] && menu[0].count_viewdata ? (
+                      <span>{menu[0].count_viewdata}</span>
+                    ) : (
+                      <span>0</span>
+                    )}
+                  </div>
                 </div>
               </td>
               <td
@@ -179,7 +200,9 @@ function ScanSheetMOTTime() {
                     <TableBody>
                       <TableRow align="center">
                         {menu
-                          .filter((item,index) => menu[index].parent_id === "0928")
+                          .filter(
+                            (item, index) => menu[index].parent_id === "0928"
+                          )
                           .map((item, index) => (
                             <div
                               key={index}
@@ -230,7 +253,9 @@ function ScanSheetMOTTime() {
                       <TableBody>
                         <TableRow align="center">
                           {menu
-                            .filter((item,index) => menu[index].parent_id === "0929")
+                            .filter(
+                              (item, index) => menu[index].parent_id === "0929"
+                            )
                             .map((item, index) => (
                               <div
                                 key={index}
@@ -282,7 +307,9 @@ function ScanSheetMOTTime() {
                     <TableBody>
                       <TableRow align="center">
                         {menu
-                          .filter((item,index) =>  menu[index].parent_id === "0930")
+                          .filter(
+                            (item, index) => menu[index].parent_id === "0930"
+                          )
                           .map((item, index) => (
                             <div
                               key={index}
@@ -298,7 +325,7 @@ function ScanSheetMOTTime() {
                               className="hoverable"
                               onClick={() => HandleSL_Menu(item.url)}
                             >
-                             {item.menu_name}
+                              {item.menu_name}
                             </div>
                           ))}
                       </TableRow>

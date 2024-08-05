@@ -31,7 +31,7 @@ function Hearder() {
   const Logout = () => {
     localStorage.clear();
     window.location.href = "/"
-    openLoginModal();
+    // openLoginModal();
   };
 
   const loginBtn = () => {
