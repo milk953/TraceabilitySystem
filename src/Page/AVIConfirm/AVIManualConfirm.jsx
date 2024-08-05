@@ -142,15 +142,18 @@ function AVIManualConfirm() {
               <TableCell>Result</TableCell>
               <TableCell>Inspec Count</TableCell>
               <TableCell>Inspec Date</TableCell>
+              <TableCell>Remark</TableCell>
             </TableHead>
             <TableBody sx={{ height: "40px" }}>
               {result.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>{row.SEQ}</TableCell>
-                  <TableCell>{row.CHE_SERIAL_NO}</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
+                <TableRow key={index} >
+                  <TableCell sx={{color:row.color}} >{row.SEQ}</TableCell>
+                  <TableCell sx={{color:row.color}}>{row.CHE_SERIAL_NO}</TableCell>
+                  <TableCell sx={{color:row.color}}>{row.result}</TableCell>
+                  <TableCell sx={{color:row.color}}></TableCell>
+                  <TableCell sx={{color:row.color}}></TableCell>
+                  <TableCell sx={{color:row.color}}>{row.remark}</TableCell>
+
                 </TableRow>
               ))}
             </TableBody>
