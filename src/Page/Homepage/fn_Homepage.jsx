@@ -5,14 +5,17 @@ import { Password } from "@mui/icons-material";
 
 function fn_Homepage() {
   const [Showmenu, setShowmenu] = useState("img");
-  const [menu, setmenu] = useState([]);
+  const [menu, setmenu] = useState([{}]);
   const [SL_menu, setSL_menu] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [date, setDate] = useState();
   const [endDate, setEndDate] = useState();
   //Login Region
   const [ipAddress, setIpAddress] = useState("");
+
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
+  var UserLogin = localStorage.getItem("UserLogin") 
+
   const openLoginModal = () => {
     if (window.location.pathname === "/" && LoginStatus === false) {
       Swal.fire({
@@ -111,11 +114,38 @@ function fn_Homepage() {
     // setEndDate(newDate.setDate(newDate.getDate() + 7));
   };
   useEffect(() => {
-    page_load();
-    if (ipAddress != ''){
-      localStorage.setItem("ipAddress", ipAddress);
-    }
+      MenuHome()
+      page_load();
+      if (ipAddress != ''){
+        localStorage.setItem("ipAddress", ipAddress);
+      }
+    
+
   }, [ipAddress]);
+
+  const MenuHome = async () => {
+   
+    console.log(UserLogin,'UserLogin')
+    if(UserLogin==''||UserLogin==null){
+      // openLoginModal()
+      await axios
+       .post("/api/menuHome", {})
+       .then((res) => {
+         console.log(res.data,'menuHome1',UserLogin)
+         setmenu(res.data)
+        })
+   }
+   else{
+    await axios
+     .post("/api/Menuname", {
+      login_id:UserLogin
+     })
+     .then((res) => {
+      setmenu(res.data)
+      console.log(res.data,'menuHome2',UserLogin)
+     })
+   }
+  }
   // const checkDate = () => {
   //   const newDate = new Date();
   //   setDate(newDate)
@@ -159,7 +189,8 @@ function fn_Homepage() {
       setShowmenu("Work");
     } else if (menuID == "M") {
       setShowmenu("Maintain");
-    } else if (menuID == "V") setShowmenu("View");
+    } else if (menuID == "V") 
+      setShowmenu("View");
   };
 
   const HandleSL_Menu = (Menu_Select) => {
@@ -169,6 +200,7 @@ function fn_Homepage() {
     if (Menu_Select == "SMT Connect Sht&Pcs") {
       window.location.href = "/ScanSMTSerialShtFINManySht";
     }
+
     // if(menuID=='W'){
     //     setShowmenu('Work')
     // }
