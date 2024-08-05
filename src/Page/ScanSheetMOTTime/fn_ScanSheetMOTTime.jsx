@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { TableSortLabel } from "@mui/material";
+import { color } from "framer-motion";
 
 function fn_ScanSheetMOTTime() {
   //txt
@@ -42,12 +43,12 @@ function fn_ScanSheetMOTTime() {
   }); //visible 'none'ซ่อน//''โชว์
 
   //lbl
-  const [lblProductName, setlblProductName] = useState("xxxxxx");
+  const [lblProductName, setlblProductName] = useState("");
   const [lblResult, setlblResult] = useState({
     value: "",
     disbled: "",
     visble: "",
-    style: {},
+    style: {  },
   });
   const [lblSheet, setlblSheet] = useState("");
   const [lblRemark, setlblRemark] = useState("");
@@ -93,9 +94,9 @@ function fn_ScanSheetMOTTime() {
       style: { background: "#EEEEEE" },
     }));
 
-    setlblRemark("xxxx");
-    setlblSheet("xxxx");
-    setlblResult((prevState) => ({ ...prevState, value: "OK" }));
+    setlblRemark("");
+    setlblSheet("");
+    setlblResult((prevState) => ({ ...prevState, value: ""}));
     // pnlMain.Enabled = True
     // pnlSave.Visible = False
     if (CB == "Y") {
@@ -336,13 +337,13 @@ function fn_ScanSheetMOTTime() {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { background: "Green" },
+                style: { color: "Green" }, 
               }));
             } else {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "NG",
-                style: { background: "Red" },
+                style: { color: "Red" },
               }));
             }
           } else {
@@ -359,7 +360,7 @@ function fn_ScanSheetMOTTime() {
         setlblResult((prevState) => ({
           ...prevState,
           value: "NG",
-          style: { background: "Red" },
+          style: { color: "Red" },
         }));
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "" , focus:true}));
@@ -434,13 +435,13 @@ function fn_ScanSheetMOTTime() {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { background: "Green" },
+                style: { color: "Green" },
               }));
             } else {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "NG",
-                style: { background: "Red" },
+                style: { color: "Red" },
               }));
             }
           } else {
@@ -457,7 +458,7 @@ function fn_ScanSheetMOTTime() {
         setlblResult((prevState) => ({
           ...prevState,
           value: "NG",
-          style: { background: "Red" },
+          style: { color: "Red" },
         }));
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "" }));
@@ -520,13 +521,13 @@ function fn_ScanSheetMOTTime() {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { background: "Green" },
+                style: { color: "Green" },
               }));
             } else {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "NG",
-                style: { background: "Red" },
+                style: { color: "Red" },
               }));
             }
           } else {
@@ -642,13 +643,13 @@ function fn_ScanSheetMOTTime() {
     if (strStatus == "P") {
       setlblResult((prevState) => ({
         ...prevState,
-        style: { background: "Green" },
+        style: { color: "Green" },
         value: "OK",
       }));
     } else {
       setlblResult((prevState) => ({
         ...prevState,
-        style: { background: "Red" },
+        style: { color: "Red" },
         value: "NG",
       }));
     }

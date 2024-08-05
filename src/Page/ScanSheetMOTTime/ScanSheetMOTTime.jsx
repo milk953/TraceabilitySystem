@@ -291,7 +291,8 @@ function ScanSheetMOTTime() {
                       <Card style={{ background: "#EFBC9B", height: "230px" }}>
                         <Typography
                           align="center"
-                          style={{ marginTop: "40px", fontSize: "90px" }}
+                          style={{ ...lblResult.style, marginTop: "40px", fontSize: "90px"  }}
+                          // { }
                         >
                           {lblResult.value}
                         </Typography>
