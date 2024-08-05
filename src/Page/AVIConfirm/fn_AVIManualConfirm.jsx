@@ -1,4 +1,5 @@
 import axios from "axios";
+import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 function fn_AVIManualConfirm() {
@@ -20,6 +21,7 @@ function fn_AVIManualConfirm() {
   const [ip, setIp] = useState("");
   const [resultSelect, setResultSelect] = useState("");
   const [getSearchData, setGetSearchData] = useState([]);
+  const [updateFlg, setUpdateFlg] = useState(false);
   // const [dataNotfound, setDataNotfound] = useState([]);
   let dataNotfound = [];
   let SearchDataTest = [];
@@ -54,6 +56,22 @@ function fn_AVIManualConfirm() {
     for (let x = 0; x < result.length; x++) {
       await getData("getData", { serial: result[x].CHE_SERIAL_NO });
     }
+    for (let i = 0; i < result.length; i++) {
+      const updatedData = result.map((item) => {
+        const match = dataNotfound.find(
+          (element) => element.dataNotfound === item.CHE_SERIAL_NO
+        );
+        return match
+          ? { ...item, remark: "Not Found Data", color: "red" }
+          : {
+              ...item,
+              result: resultSelect,
+              remark: "Update complete.",
+              color: "green",
+            };
+      });
+      setResult(updatedData);
+    }
     setPieceNo("");
     setEltTypeState({
       styled: { disable: false, backgroundColor: "white" },
@@ -68,15 +86,14 @@ function fn_AVIManualConfirm() {
     } else {
       let isDuplicate = false;
       for (let i = 0; i < result.length; i++) {
-        if (result[i].CHE_SERIAL_NO === pieceNo) {
+        if (result[i].CHE_SERIAL_NO === pieceNo && updateFlg == false) {
           setLblResult("Dupplicate serial no.");
           isDuplicate = true;
           pieceNoRef.current.focus();
           break;
         }
       }
-
-      if (!isDuplicate) {
+      if (!isDuplicate && updateFlg == false) {
         const newSeq =
           result.length > 0 ? result[result.length - 1].SEQ + 1 : 1;
         const newData = {
@@ -85,6 +102,17 @@ function fn_AVIManualConfirm() {
         };
         const updatedData = [...result, newData];
         setResult(updatedData);
+      } else if (updateFlg == true) {
+        setResult([]);
+        const newSeq =
+          result.length > 0 ? result[result.length - 1].SEQ + 1 : 1;
+        const newData = {
+          SEQ: newSeq,
+          CHE_SERIAL_NO: pieceNo,
+        };
+        const updatedData = [newData];
+        setResult(updatedData);
+        setUpdateFlg(false);
       }
     }
 
@@ -154,39 +182,13 @@ function fn_AVIManualConfirm() {
           },
         })
         .then((res) => {
-          if (res.status == 200) {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: "update complete.",
-            }).then(() => {
-              if (dataNotfound != "") {
-                const dataNotfoundText = dataNotfound.map(item => item.dataNotfound).join(', ');
-                console.log(dataNotfoundText);
-                Swal.fire({
-                  icon: "error",
-                  title: "Error",
-                  text: `Piece No Error: ${dataNotfoundText}`,
-                });
-              }
-            });
-            return;
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Data has not been updated.",
-            });
-          }
-          if (dataNotfound != "") {
-            const dataNotfoundText = dataNotfound.map(item => item.dataNotfound).join(', ');
-            console.log(dataNotfoundText);
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: `Piece No Error: ${dataNotfoundText}`,
-            });
-          }
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "update complete.",
+          }).then(() => {
+            setUpdateFlg(true);
+          });
         })
         .catch((error) => {
           console.log(error);
