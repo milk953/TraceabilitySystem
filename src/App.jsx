@@ -30,7 +30,7 @@ import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSeria
 import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
 import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
 import PrivateRoute from "./PrivateRoute";
-import ScanSMTConnectRollConfirm from "./Page/ScanSMTConnectRollConfirm/ScanSMTConnectRollConfirm";
+import ScanSMTSerialPcsChrome from "./Page/ScanSMTSerialPcsChrome/ScanSMTSerialPcsChrome";
 
 
 
@@ -101,7 +101,7 @@ const App = () => {
           <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
           <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
           <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
-          <Route path='/ScanSMTConnectRollConfirm' element = {<ScanSMTConnectRollConfirm />} /> 
+          <Route path='/ScanSMTSerialPcsChrome' element = {<ScanSMTSerialPcsChrome />} /> 
 
             {/* View Data */}
             <Route path='/ELTmaster' element={<ELTmaster />} />
