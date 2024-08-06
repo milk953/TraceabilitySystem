@@ -11,14 +11,14 @@ import Avatar from "@mui/material/Avatar";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from '@mui/icons-material/Login';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LoginIcon from "@mui/icons-material/Login";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 import HomeIcon from "@mui/icons-material/Home";
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from "@mui/material/Tooltip";
 import { LoginOutlined } from "@mui/icons-material";
 function Hearder() {
-  const { openLoginModal } = fn_Homepage();
+  const { openLoginModal, menuName } = fn_Homepage();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const user = localStorage.getItem("Username");
   const surname = localStorage.getItem("Lastname");
@@ -30,7 +30,7 @@ function Hearder() {
   const navigate = useNavigate();
   const Logout = () => {
     localStorage.clear();
-    window.location.href = "/"
+    window.location.href = "/";
     // openLoginModal();
   };
 
@@ -41,25 +41,27 @@ function Hearder() {
       };
       return (
         <Tooltip title="LogOut">
-        <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} />
-      </Tooltip>
-        
+          <LoginIcon
+            style={{ color: "", cursor: "pointer" }}
+            onClick={goHome}
+          />
+        </Tooltip>
       );
     }
     return (
-    <Tooltip title="Login">
-     <LoginIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  />
-    </Tooltip>
-    
+      <Tooltip title="Login">
+        <LoginIcon
+          style={{ color: "", cursor: "pointer" }}
+          onClick={openLoginModal}
+        />
+      </Tooltip>
     );
   };
   const logOut = () => {
     return (
-
       <Tooltip title="LogOut">
-      <LogoutIcon style={{ color: '' }} onClick={Logout} />
-    </Tooltip>
-  
+        <LogoutIcon style={{ color: "" }} onClick={Logout} />
+      </Tooltip>
     );
   };
   // const RandomColour =()=>{
@@ -92,46 +94,54 @@ function Hearder() {
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              TRACEABILITY SYSTEM
+              TRACEABILITY SYSTEM : {menuName}
             </Typography>
 
-            {user ? <> <Avatar
-              sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}
-            >{user.charAt(0)}{surname.charAt(0)}</Avatar>
-            <Button
-              className="btnDate"
-              color="inherit"
-              style={{
-                display: "contents",
-                alignItems: "start",
-                justifyContent: "start",
-                fontSize: "12px",
-                fontFamily: "Roboto, sans-serif",
-              }}
-            >
-              Username : {user}  {surname} &nbsp;&nbsp;
-              <br />
-            </Button></>:<> 
-            <Avatar
-              sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}
-            >G</Avatar>
-            
-            <Button
-              className="btnDate"
-              color="inherit"
-              style={{
-                display: "contents",
-                alignItems: "start",
-                justifyContent: "start",
-                fontSize: "12px",
-                fontFamily: "Roboto, sans-serif",
-              }}
-              onClick={openLoginModal} 
-            >
-              Username : Guess &nbsp;&nbsp;
-            </Button>
-           </>}
-           
+            {user ? (
+              <>
+                {" "}
+                <Avatar sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}>
+                  {user.charAt(0)}
+                  {surname.charAt(0)}
+                </Avatar>
+                <Button
+                  className="btnDate"
+                  color="inherit"
+                  style={{
+                    display: "contents",
+                    alignItems: "start",
+                    justifyContent: "start",
+                    fontSize: "12px",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
+                >
+                  Username : {user} {surname} &nbsp;&nbsp;
+                  <br />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Avatar sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}>
+                  G
+                </Avatar>
+
+                <Button
+                  className="btnDate"
+                  color="inherit"
+                  style={{
+                    display: "contents",
+                    alignItems: "start",
+                    justifyContent: "start",
+                    fontSize: "12px",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
+                  onClick={openLoginModal}
+                >
+                  Username : Guess &nbsp;&nbsp;
+                </Button>
+              </>
+            )}
+
             {user ? logOut() : loginBtn()}
           </Toolbar>
         </AppBar>

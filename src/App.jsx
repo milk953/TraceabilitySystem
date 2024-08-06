@@ -30,6 +30,7 @@ import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSeria
 import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
 import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
 import PrivateRoute from "./PrivateRoute";
+import ReJudgement from "./Page/ReJudgement/ReJudgement";
 
 
 
@@ -55,7 +56,6 @@ const App = () => {
         }
       )
       .then((res) => {
-        console.log(res.status);
         if (res.status == 200) {
           return;
         } else if (res.status == 401) {
@@ -100,6 +100,7 @@ const App = () => {
             <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
             <Route path="/Reject" element={<Reject />} />
             <Route path="/ELTType" element={<SerialTestType />} />
+            <Route path="/ReJudgement" element={<ReJudgement />} />
 
             <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
           </Route>

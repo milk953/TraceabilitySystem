@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Password } from "@mui/icons-material";
+import { set } from "lodash";
 
 function fn_Homepage() {
   const [Showmenu, setShowmenu] = useState("img");
@@ -10,6 +11,7 @@ function fn_Homepage() {
   const [isLoggedIn, setIsLoggedIn] = useState();
   //Login Region
   const [ipAddress, setIpAddress] = useState("");
+  const [menuName , setMenuName] = useState("");
 
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
   var UserLogin = localStorage.getItem("UserLogin");
@@ -112,6 +114,7 @@ function fn_Homepage() {
     if (ipAddress != "") {
       localStorage.setItem("ipAddress", ipAddress);
     }
+    getMenuname();
   }, [ipAddress]);
  
   const MenuHome = async () => {
@@ -129,6 +132,12 @@ function fn_Homepage() {
         });
     }
   };
+  function getMenuname (){
+    const url = window.location.pathname;
+    const urlSplit = url.split("/");
+    const menu = urlSplit[1];
+    setMenuName(menu);
+  } 
 
   const OpenMenu = (menuID) => {
     if (menuID == "W") {
@@ -151,6 +160,7 @@ function fn_Homepage() {
     HandleSL_Menu,
     openLoginModal,
     isLoggedIn,
+    menuName
   };
 }
 
