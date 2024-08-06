@@ -41,14 +41,14 @@ function Hearder() {
       };
       return (
         <Tooltip title="LogOut">
-        <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} />
+        <LockOpenIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} />
       </Tooltip>
         
       );
     }
     return (
     <Tooltip title="Login">
-     <LoginIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  />
+     <LockOpenIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  />
     </Tooltip>
     
     );
@@ -115,7 +115,6 @@ function Hearder() {
             <Avatar
               sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}
             >G</Avatar>
-            
             <Button
               className="btnDate"
               color="inherit"
