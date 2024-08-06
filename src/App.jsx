@@ -101,7 +101,7 @@ const App = () => {
           <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
           <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
           <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
-          <Route path='/ScanSMTSerialPcsChrome' element = {<ScanSMTSerialPcsChrome />} /> 
+          <Route path='/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} /> 
 
             {/* View Data */}
             <Route path='/ELTmaster' element={<ELTmaster />} />

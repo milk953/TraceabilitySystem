@@ -27,7 +27,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-// import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
+import "./SerialPcs.css";
 import Hearder from "../Header/Hearder";
 // import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
 function ScanSMTRoollSht() {
@@ -41,29 +41,29 @@ function ScanSMTRoollSht() {
   return (
     <div>
       <Hearder />
-      <h1>ScanSMTConnectRollConfirm</h1>
-      <Card component={Paper} >
+      <h1>Final Gate</h1>
+      <Card component={Paper} className="Card-FinalGate" >
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-            <Table className="ScanSMT" component={Paper}>
+            <Table className="FinalGate" component={Paper}>
                 <TableHead>
-                  <TableCell colSpan={4} align="center">
+                  <TableCell colSpan={5} align="center">
                     <Typography variant="h6">
-                      Connect Roll/Sht & Leaf
+                      Final Gate
                     </Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
                   <TableRow>
                     <TableCell align="right">
-                      <Typography> LotNo. :</Typography>
+                      <Typography> Scan Lot. :</Typography>
                     </TableCell>
-                    <TableCell colSpan={2}>
+                    <TableCell colSpan={4}>
                       <TextField
                         id="txtfild"
                         size="small"
-                        fullWidth
+                        style={{width:'80%'}}
                         // disabled={txt_lotNo.disbled} //true พิมไม่ได้
                         // style={txt_lotNo.style}
                         // inputRef={fc_txtLotNo}
@@ -82,18 +82,17 @@ function ScanSMTRoollSht() {
                         // onBlur={handleLotxt_Lotno}
                       
                       ></TextField>
-                    </TableCell>
-                    <TableCell>
-                      <Button >
+                       <Button id="txtfild" >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
+              
                   </TableRow>
                   <TableRow>
                     <TableCell align="right">
                       <Typography>Product :</Typography>
                     </TableCell>
-                    <TableCell colSpan={3}>
+                    <TableCell colSpan={4}>
                       <FormControl fullWidth>
                         <Autocomplete
                           id="selectPd"
@@ -116,94 +115,63 @@ function ScanSMTRoollSht() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="right">
-                      <Typography>Check Roll :</Typography>
+                      <Typography>Packing No :</Typography>
                     </TableCell>
-                    <TableCell colSpan={1}>
-                      {" "}
-                      <div >
-                        <Typography
-                          variant="button"
-                          style={{
-                            marginLeft: "15px",
-                            color: "#FFF",
-                            fontSize: "17px",
-                          }}
-                        >
-                          {/* {lblCheckRoll.value} */}
-                        </Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell colSpan={2}></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="right">
-                      <Typography>Operator :</Typography>
-                    </TableCell>
-                    <TableCell colSpan={3}>
+                    <TableCell colSpan={4}>
                       <TextField
                         id="txtfild"
                         size="small"
                         // label="Operator. :"
-                        fullWidth
+                       style={{width:'80%'}}
                         // inputRef={fc_txtOperator}
                         // // disabled
                         // value={txtOperator}
                         // onChange={(e) => {
                         //   settxtOperator(e.target.value);
                         // }}
-                      ></TextField>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="right">
-                      <Typography>Total Leaf :</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <TextField
-                        id="txtfild"
-                        size="small"
-                        style={{ width: "70px" }}
-                        // value={txtTotalLeaf}
-                        // onChange={(e) => {
-                        //   settxtTotalLeaf(e.target.value);
-                        // }}
-                        // onBlur={handletxtTotalLeaf}
-                      ></TextField>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography>Total Sht. :</Typography>
-                    </TableCell>
-                    <TableCell style={{ width: "70px" }}>
-                      <TextField
-                        id="txtfild"
-                        size="small"
-                        // value={lbltotalSht}
-                      ></TextField>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="right">
-                      <Typography>Roll/Sht No. :</Typography>
-                    </TableCell>
-                    <TableCell colSpan={3}>
-                      <TextField
-                        id="txtfild"
-                        size="small"
-                        // inputRef={fc_txtRollleaf}
-                        // disabled={txtRollLeaf.disbled} //true พิมไม่ได้
-                        // style={txtRollLeaf.style}
-                        // value={txtRollLeaf.value}
-                        // onChange={(e) => {
-                        //   settxtRollLeaf((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
                         
-                        // }}
-                        fullWidth
                       ></TextField>
+                       <Button id="txtfild" >
+                        <BackspaceIcon />
+                      </Button>
+                    </TableCell>
+                   
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="right">
+                      <Typography>Lot :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={1}>
+                    lbllog
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography>Ok :</Typography>
+                    </TableCell>
+                    <TableCell style={{ width: "70px" }} colSpan={2}>
+                      lblLotTotal
                     </TableCell>
                   </TableRow>
+                  <TableRow>
+                    <TableCell align="right" style={{width:'100px'}}>
+                      <Typography>Pcs/Tray</Typography>
+                    </TableCell>
+                    <TableCell  style={{ width: "130px", }}>
+                      <TextField
+                        id="txtfild"
+                        size="small"
+                        style={{ width: "60px", }}
+                      ></TextField>
+                     &nbsp; Not Use
+                    </TableCell>
+                    {/* <TableCell style={{ width: "70px",}}></TableCell> */}
+                    <TableCell align="right" style={{ width:'40px'}}>
+                      <Typography >NG :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                     lblSerialNG
+                    </TableCell>
+                  </TableRow>
+
                 </TableBody>
               </Table>
 
@@ -299,8 +267,8 @@ function ScanSMTRoollSht() {
                 <> */}
                  <img
                 style={{
-                  width: "420px",
-                  height: "350px",
+                  width: "360px",
+                  height: "300px",
                   marginBottom: "30px",
                 }}
                 src="src/assets/1.jpg" // Import the image
