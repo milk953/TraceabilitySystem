@@ -41,11 +41,9 @@ function Hearder() {
       };
       return (
         <Tooltip title="LogOut">
-          <LoginIcon
-            style={{ color: "", cursor: "pointer" }}
-            onClick={goHome}
-          />
-        </Tooltip>
+        <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} />
+      </Tooltip>
+        
       );
     }
     return (
