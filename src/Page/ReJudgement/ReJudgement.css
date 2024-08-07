@@ -38,3 +38,7 @@
 .ReJudgementTableSecond th {
   padding: 5px;
 }
+
+.ReJudgementTableThird th{
+  text-align: center;
+}

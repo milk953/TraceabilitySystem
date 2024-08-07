@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ReJudgement.css";
 import Hearder from "../Header/Hearder";
 import { fn_ReJudgement } from "./fn_ReJudgement";
@@ -18,10 +18,6 @@ function ReJudgement() {
     setLblResult,
     rdSelect,
     setRdSelect,
-    selectAll,
-    setSelectAll,
-    selectedRows,
-    setSelectedRows,
     handleRDChange,
     txtSerialno,
     setTxtSerialno,
@@ -29,7 +25,28 @@ function ReJudgement() {
     setLot,
     txtSerialnoChange,
     pnlTableDisplaySatate,
+    resultCombo,
+    resultComboSelected,
+    setResultComboSelected,
+    btnRetrieveClick,
+    dtDataSearch,
+    txtQualified,
+    setTxtQualified,
+    txtOperator,
+    setTxtOperator,
+    cbReJustment,
+    setCbReJustment,
+    btnSubmitClick,
+    serialState,
+    FcSerial,
+    handleExport
   } = fn_ReJudgement();
+  useEffect(() => {
+    if (serialState == true) {
+      FcSerial.current.focus();
+    }
+    console.log(serialState,'serialState');
+  },[]);
   return (
     <>
       <Hearder />
@@ -62,6 +79,7 @@ function ReJudgement() {
                   value={txtSerialno}
                   onChange={(e) => setTxtSerialno(e.target.value)}
                   onBlur={txtSerialnoChange}
+                  ref ={FcSerial}
                 ></textarea>
               </TableCell>
               <TableCell
@@ -71,7 +89,7 @@ function ReJudgement() {
                 <Button
                   variant="contained"
                   color="primary"
-                  // onClick={handleRetrice_Click}
+                  onClick={btnRetrieveClick}
                 >
                   Retrieve
                 </Button>
@@ -115,12 +133,12 @@ function ReJudgement() {
           <td>Reason</td>
           <td>Operator</td>
           <td rowSpan={5} style={{ verticalAlign: "middle", width: "60px" }}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={btnSubmitClick}>
               Submit
             </Button>
           </td>
           <td rowSpan={5} style={{ verticalAlign: "middle", width: "60px" }}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={handleExport}>
               Export
             </Button>
           </td>
@@ -128,16 +146,22 @@ function ReJudgement() {
         <tr>
           <td style={{ width: "550px" }}>
             <select
-            // onChange={(e) => setCbSelected(e.target.value)}
-            // value={cbSelected}
+              onChange={(e) => setResultComboSelected(e.target.value)}
+              value={resultComboSelected}
             >
-              <option value="1">1</option>
+              {resultCombo.map((item, index) => (
+                <option key={index} value={`${item.rejcet_code}`}>
+                  {item.rejcet_code === " "
+                    ? ""
+                    : `${item.rejcet_code} : ${item.rejcet_name}`}
+                </option>
+              ))}
             </select>
           </td>
           <td style={{ padding: "10px" }}>
             <input
-              // value={txtOperator}
-              // onChange={(e) => setTxtOperator(e.target.value)}
+              value={txtOperator}
+              onChange={(e) => setTxtOperator(e.target.value)}
               style={{
                 width: "120px",
                 border: "1px solid black",
@@ -155,20 +179,19 @@ function ReJudgement() {
         <tr>
           <td>
             <select
-            // onChange={(e) => setCbSelected(e.target.value)}
-            // value={cbSelected}
+              onChange={(e) => setCbReJustment(e.target.value)}
+              value={cbReJustment}
             >
               <option value=" "> </option>
               <option value="OK">OK</option>
               <option value="NG">NG</option>
               <option value="DELETE">DELETE</option>
-
             </select>
           </td>
           <td style={{ padding: "10px" }}>
             <input
-              // value={txtOperator}
-              // onChange={(e) => setTxtOperator(e.target.value)}
+              value={txtQualified}
+              onChange={(e) => setTxtQualified(e.target.value)}
               style={{
                 width: "120px",
                 border: "1px solid black",
@@ -182,8 +205,8 @@ function ReJudgement() {
       </Table>
       <br />
       {pnlTableDisplaySatate && (
-        <div className="DRejectTableThird">
-          <Table className="RejectTableThird" component={Paper}>
+        <div className="DReJudgementTableThird">
+          <Table className="ReJudgementTableThird" component={Paper}>
             <TableHead>
               <TableRow>
                 <TableCell> Serial No</TableCell>
@@ -199,26 +222,24 @@ function ReJudgement() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {dtDataSearch.map((row, index) => (
+              {dtDataSearch.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell>
-                    <Checkbox
-                      {...label}
-                      onChange={(e) =>
-                        handleCheckboxChange(e, row.rem_serial_no)
-                      }
-                      checked={selectedRows.includes(row.rem_serial_no)}
-                    />
-                  </TableCell>
-                  <TableCell>{row.rem_serial_no}</TableCell>
+                  <TableCell>{row.rej_serial_no}</TableCell>
                   <TableCell>{row.rem_reject_name}</TableCell>
-                  <TableCell>{row.rej_inspect_count}</TableCell>
-                  <TableCell>{row.front_no}</TableCell>
-                  <TableCell>{row.back_no}</TableCell>
-                  <TableCell>{row.pcs_no}</TableCell>
-                  <TableCell>{row.mpe_result}</TableCell>
+                  <TableCell>{row.rej_operator_code}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {row.rej_inspect_count}
+                  </TableCell>
+                  <TableCell>{row.sht_front_no}</TableCell>
+                  <TableCell>{row.sht_back_no}</TableCell>
+                  <TableCell>{row.sht_pcs_no}</TableCell>
+                  <TableCell>{row.tou_touch_up_result}</TableCell>
+                  <TableCell>{row.tou_operator_code}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {row.tou_touch_up_count}
+                  </TableCell>
                 </TableRow>
-              ))} */}
+              ))}
             </TableBody>
           </Table>
         </div>
