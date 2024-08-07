@@ -87,21 +87,21 @@ const App = () => {
             <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
             <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
             <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
-          <Route path="/SheetMaster" element={<Sheet_Master />} />
-          <Route path="/SerialMaster" element={<Serial_Master />} />
-          <Route path="/ProductMaster" element={<Product_master />} />
-          <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
-          <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
-          <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
-          <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
-          <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
-          <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
-          <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
-          <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
-          <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
-          <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
-          <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
-          <Route path='/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} /> 
+            <Route path="/SheetMaster" element={<Sheet_Master />} />
+            <Route path="/SerialMaster" element={<Serial_Master />} />
+            <Route path="/ProductMaster" element={<Product_master />} />
+            <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
+            <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
+            <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
+            <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
+            <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
+            <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
+            <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
+            <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
+            <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
+            <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
+            <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
+            <Route path='/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} /> 
 
             {/* View Data */}
             <Route path='/ELTmaster' element={<ELTmaster />} />
