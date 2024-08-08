@@ -9,15 +9,15 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../ScanAutoBendingTime/ScanAutoBendingTime.css"
 import {fn_ScanAutoBendingTime} from './fn_ScanAutoBendingTime'
-import { Height } from "@mui/icons-material";
 function ScanAutoBendingTime() {
 const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemark,handletxtMCNo_TextChanged
-  ,handletxtLotNo_TextChanged,fcLotNo,fcMCno
-} = fn_ScanAutoBendingTime()
+  ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,pnlDetail,pnlResult,gvBending,gvBendingVisible
+,btnCancel} = fn_ScanAutoBendingTime()
   return (
     <>
       <Hearder />
@@ -34,9 +34,9 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
             <TableCell>
               <TextField
                 size="small"
-                className="txtFieldBaking"
-                style={{ width: "350px" }}
-                // disabled={txtProcessState.disabled}
+                // className="txtFieldbending"
+                style={{ width: "350px" ,padding:'0px'}}
+                disabled={txtMCNo.disbled}
                 // autoFocus
                 // sx={txtProcessState.styled}
                 onChange={(e) => {
@@ -54,7 +54,6 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
             <TableCell>
               <TextField
                 size="small"
-                className="txtField"
                 style={{ width: "350px" }}
                 disabled={txtLotNo.disbled}
                 // sx={txtmcState.styled}
@@ -67,14 +66,14 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
               ></TextField>
             </TableCell>
             <TableCell>
-              <Button >
-                <BackspaceIcon />
+              <Button  onClick={ibtback_Click} >
+                <BackspaceIcon  />
               </Button>
             </TableCell>
           </TableRow>
         <TableRow>
             <TableCell id="lbltxtBaking">Product Name:</TableCell>
-            <TableCell colSpan={3}>
+            <TableCell colSpan={3} sx={{fontSize:'20px',fontWeight:'bold'}}>
                 {lblProductName.value}
 
             </TableCell>
@@ -87,40 +86,73 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
           </TableRow>
         </TableBody>
       </Table>
-      <div className="pnlDetail" style={{ marginBottom: '20px' }}>
+ 
+        <div className="pnlDetail" style={{ marginBottom: '20px' }}>
+        {pnlDetail &&(
         <Table component={Paper}>
           <TableHead>
             <TableRow>
+            <TableCell sx={{ width: '10%' }} align="center">No.</TableCell>
               <TableCell sx={{ width: '30%' }} align="center">Bending No.</TableCell>
               <TableCell align="center">Serial No.</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {[...Array(5)].map((_, index) => (
-              <TableRow key={index}>
-                <TableCell align="center">Ex.</TableCell>
-                <TableCell align="center">
-                  <input className="custom-input" />
-                </TableCell>
-              </TableRow>
-            ))}
+         
+          {Array.from(
+                        { length: gvSerial.length },
+                        (_, index) => (
+                          <TableRow key={index}>
+                        
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center'}}
+                            >
+                              {gvSerial[index].SEQ}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' }}
+                            >
+                              {gvSerial[index].BENDING_NO}
+                            </TableCell>
+                            
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center' }}
+                            >
+                              <TextField
+                            id="txtfild"
+                            size="small"
+                            fullWidth
+                          //  inputRef={fcGvSerial_txtSerial_0}
+                            value={txtSerial[index]}
+                            onChange={(event) =>
+                              handleSerialChange(index, event)
+                            }
+                          />
+                            </TableCell>
+                          
+                          </TableRow>
+                        )
+                      )}
           </TableBody>
         </Table>
+         )}  
       </div>
-      
-      <div className="TableSave" style={{ marginBottom: '20px' }}>
-        <Table component={Paper}>
-          <TableRow>
-            <TableCell align="center">
-              <Button sx={{ border: '1px red solid' }} size="small">Save</Button>
-            </TableCell>
-            <TableCell align="center">
-              <Button sx={{ border: '1px red solid' }} size="small">Cancel</Button>
-            </TableCell>
-          </TableRow>
+      {pnlDetail&&(
+      <div className="TableSave-bending" >
+        <Table  >
+          <tr>
+            <td align="center">
+              <Button variant="contained" onClick={btnSave_Click}  >Save</Button>
+            </td>
+            <td align="center">
+              <Button variant="contained" onClick={btnCancel} >Cancel</Button>
+            </td>
+          </tr>
         </Table>
       </div>
-      
+      )}  
+    
+      {pnlResult &&(
       <div className="pnlResult-Auto">
         <Table component={Paper}  >
           <TableRow>
@@ -135,6 +167,8 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
           </TableRow>
         </Table>
       </div>
+     )} 
+      {gvBendingVisible &&(
       <div className="gvBending" style={{ marginBottom: '20px' }}>
         <Table component={Paper}>
           <TableHead>
@@ -144,17 +178,36 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
             </TableRow>
           </TableHead>
           <TableBody>
-            {[...Array(5)].map((_, index) => (
+          {Array.from(
+                        { length: gvBending.length },
+                        (_, index) => (
+                          <TableRow key={index}>
+                        
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center',height:'20px'}}
+                            >
+                              {gvBending[index].seq}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center',height:'20px' }}
+                            >
+                              {gvBending[index].bending_no}
+                            </TableCell>
+                          
+                          </TableRow>
+                        )
+                      )}
+            {/* {[...Array(5)].map((_, index) => (
               <TableRow key={index}>
                 <TableCell align="center">Ex.</TableCell>
                 <TableCell align="center">
                 <input className="custom-input" />
                 </TableCell>
               </TableRow>
-            ))}
+            ))} */}
           </TableBody>
         </Table>
-      </div>
+      </div>)}
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
       >

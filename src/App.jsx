@@ -32,6 +32,8 @@ import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime"
 import PrivateRoute from "./PrivateRoute";
 import ScanSMTSerialPcsChrome from "./Page/ScanSMTSerialPcsChrome/ScanSMTSerialPcsChrome";
 import ReJudgement from "./Page/ReJudgement/ReJudgement";
+import ScanSMTSerialPcsBoxOnlyGood from "./Page/PackingGateOnlyGood/PackingGateOnlyGood"
+
 
 
 
@@ -102,6 +104,7 @@ const App = () => {
             <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
             <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
             <Route path='/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} /> 
+            <Route path='/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} /> 
 
             {/* View Data */}
             <Route path='/ELTmaster' element={<ELTmaster />} />
