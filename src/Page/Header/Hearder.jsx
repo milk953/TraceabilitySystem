@@ -22,8 +22,7 @@ function Hearder() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const user = localStorage.getItem("Username");
   const surname = localStorage.getItem("Lastname");
-  // const params = new URLSearchParams(window.location.search);
-  // console.log(params,'webbbb')
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -90,7 +89,7 @@ function Hearder() {
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              TRACEABILITY SYSTEM : {menuName}
+              TRACEABILITY SYSTEM  {menuName}
             </Typography>
 
             {user ? <> <Avatar

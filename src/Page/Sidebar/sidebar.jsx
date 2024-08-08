@@ -2,7 +2,7 @@ import React, { useEffect, useState, StrictMode } from "react";
 
 import ListItemIcon from "@mui/material/ListItemIcon";
 
-import { Drawer, List, ListItem, ListItemText} from "@mui/material";
+import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./sidebar.css";
@@ -44,42 +44,43 @@ function sidebar({ isOpen, onClose }) {
     Logout,
     ChangPage,
     menuPath,
-    setmenuPath
+    setmenuPath,
   } = sidebarT();
 
   return (
-    <Drawer
-      anchor="left"
-      open={isOpen}
-      onClose={onClose}
-      sx={{ border: "10" }}
-    >
+    <Drawer anchor="left" open={isOpen} onClose={onClose} sx={{ border: "10" }}>
       <List sx={{ width: "300px" }}>
         <ListItem className="Headslide" onClick={onClose}>
           <ListItemText style={{ marginLeft: "10px" }} primary="Welcome" />
           <ArrowBackIcon onClick={onClose} />
         </ListItem>
         {/*Menu1 Home*/}
-        <ListItem className="ListItem" onClick={toggleSubMenu1}>
+        <ListItem
+          className="ListItem"
+          onClick={() => {
+            onClose();
+            ChangPage("/");
+          }}
+        >
           <ListItemIcon>
             <AssignmentOutlinedIcon color="primary" />
           </ListItemIcon>
-          <ListItemText primary={'Home'} onClick={'/'} />
+          <ListItemText primary={"Home"} />
         </ListItem>
 
         {/*Menu2  Work*/}
-         <ListItem className="ListItem" onClick={toggleSubMenu2}>
+        <ListItem className="ListItem" onClick={toggleSubMenu2}>
           <ListItemIcon>
             <SensorsOutlinedIcon color="success" />
           </ListItemIcon>
-          <ListItemText primary={'Work'} />
-              {Icondrop2 ? <UpOutlined /> : <DownOutlined />}
-      </ListItem>
-       {subMenuOpen2 && (
+          <ListItemText primary={"Work"} />
+          {Icondrop2 ? <UpOutlined /> : <DownOutlined />}
+        </ListItem>
+        {subMenuOpen2 && (
           <>
-            { menu.map(
+            {menu.map(
               (item, index) =>
-                 menu[index].parent_id== '0928' && (
+                menu[index].parent_id == "0928" && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
@@ -96,20 +97,19 @@ function sidebar({ isOpen, onClose }) {
           </>
         )}
 
-        
         {/*Menu3 */}
         <ListItem className="ListItem" onClick={toggleSubMenu3}>
           <ListItemIcon>
             <BuildIcon color="secondary" />
           </ListItemIcon>
-          <ListItemText primary={'Maintain'} />
+          <ListItemText primary={"Maintain"} />
           {Icondrop3 ? <UpOutlined /> : <DownOutlined />}
         </ListItem>
         {subMenuOpen3 && (
           <>
             {menu.map(
               (item, index) =>
-               menu[index].parent_id== '0929' && (
+                menu[index].parent_id == "0929" && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
@@ -127,18 +127,18 @@ function sidebar({ isOpen, onClose }) {
         )}
 
         {/*Menu4 */}
-         <ListItem className="ListItem" onClick={toggleSubMenu4}>
+        <ListItem className="ListItem" onClick={toggleSubMenu4}>
           <ListItemIcon>
             <SourceIcon style={{ color: "orange" }} />
           </ListItemIcon>
-          <ListItemText primary={'View Data'} />
+          <ListItemText primary={"View Data"} />
           {Icondrop4 ? <UpOutlined /> : <DownOutlined />}
         </ListItem>
-       {subMenuOpen4 && (
+        {subMenuOpen4 && (
           <>
             {menu.map(
               (item, index) =>
-                menu[index].parent_id== '0930'  && (
+                menu[index].parent_id == "0930" && (
                   <ListItem
                     className="SubMenuItem"
                     onClick={() => {
@@ -155,16 +155,15 @@ function sidebar({ isOpen, onClose }) {
           </>
         )}
 
-
         {/*Menu5 */}
-        <footer style={{ position: 'fixed', bottom: 0, width: '100%' }}>
-        <ListItem className="ListItem1" onClick={toggleSubMenu5}>
-          <ListItemIcon>
-            <LogoutIcon style={{ color: 'gray' }} />
-          </ListItemIcon>
-          <ListItemText primary={'Logout'} onClick={Logout} />
-        </ListItem>
-      </footer>
+        <footer style={{ position: "fixed", bottom: 0, width: "100%" }}>
+          <ListItem className="ListItem1" onClick={toggleSubMenu5}>
+            <ListItemIcon>
+              <LogoutIcon style={{ color: "gray" }} />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} onClick={Logout} />
+          </ListItem>
+        </footer>
       </List>
     </Drawer>
   );

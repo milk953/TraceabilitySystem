@@ -124,8 +124,6 @@ function ScanSMTRoollSht() {
                           onChange={(e, value) =>
                             ddlProduct_SelectedIndexChanged(value)
                           }
-                         
-                         
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
@@ -148,7 +146,6 @@ function ScanSMTRoollSht() {
                         id="txtfild"
                         size="small"
                         inputRef={(el) => (fc_txtPackingNo.current = el)}
-
                         value={txtPackingNo.value}
                         onChange={(e) => {
                           settxtPackingNo((prevState) => ({
@@ -277,10 +274,7 @@ function ScanSMTRoollSht() {
                           value={txtSerial[index]}
                           onBlur={(event) => {
                             handleSerialChange(index, event);
-                            // event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
-                            // if (index < gvSerial.value.length - 1) {
-                            //   fc_txtSerial.current[index + 1].focus();
-                            // }
+
                           }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {

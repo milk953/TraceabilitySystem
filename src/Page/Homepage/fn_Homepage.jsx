@@ -71,7 +71,6 @@ function fn_Homepage() {
           localStorage.setItem("UserLogin", res.data.Datainfo.user_login);
           localStorage.setItem("IDCode", res.data.Datainfo.id_code);
           localStorage.setItem("token", res.data.token);
-          console.log(res.data, "res.data");
           Swal.close();
           Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
             (result) => {
@@ -114,12 +113,13 @@ function fn_Homepage() {
     if (ipAddress != "") {
       localStorage.setItem("ipAddress", ipAddress);
     }
-    getMenuname();
   }, [ipAddress]);
  
   const MenuHome = async () => {
+    let dataMenu
     if (UserLogin == "" || UserLogin == null) {
       await axios.post("/api/menuHome", {}).then((res) => {
+        dataMenu=res.data
         setmenu(res.data);
       });
     } else {
@@ -128,16 +128,24 @@ function fn_Homepage() {
           login_id: UserLogin,
         })
         .then((res) => {
+          dataMenu=res.data
           setmenu(res.data);
         });
     }
-  };
-  function getMenuname (){
     const url = window.location.pathname;
     const urlSplit = url.split("/");
-    const menu = urlSplit[1];
-    setMenuName(menu);
-  } 
+    const currentPath = `/${urlSplit[1]}`;
+    
+    // if (dataMenu && dataMenu.length > 0) {
+      for (let i = 0; i < dataMenu.length; i++) {
+        if (currentPath === dataMenu[i].url) {
+          setMenuName(':'+' '+dataMenu[i].page_title);
+          break; 
+        }
+      }
+    // }
+
+  };
 
   const OpenMenu = (menuID) => {
     if (menuID == "W") {
