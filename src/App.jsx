@@ -30,6 +30,8 @@ import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSeria
 import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
 import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
 import PrivateRoute from "./PrivateRoute";
+import ScanSMTSerialPcsBoxOnlyGood from "./Page/PackingGateOnlyGood/PackingGateOnlyGood"
+
 
 
 
@@ -86,6 +88,7 @@ const App = () => {
             <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
             <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
             <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
+            <Route path='/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} /> 
 
             {/* View Data */}
             <Route path='/ELTmaster' element={<ELTmaster />} />

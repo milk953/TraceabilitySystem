@@ -26,23 +26,24 @@
         display: flex;
         margin: auto;
         width: 600px;
-        margin-top: 20px; 
+        margin-top: 10px;
+        
         /* border: 1px black solid; */
      
 }
 .pnlDetail th{
    
- background-color: #2ea3f1;
-    padding: 5px;
-    border: 1px black solid;
+ background-color: #8acdf9;
+    padding: 10px;
+    border-radius: 1px;
    
 }
 .pnlDetail td{
-    border: 1px black solid;
-    padding: 5px;
+    padding: 10px;
+    border-radius: 1px;
 }
 
-.TableSave{
+.TableSave-bending{
  
         width: 600px;
         margin: 10px auto;
@@ -70,7 +71,16 @@
     border: 1px black solid;
     padding: 5px;
 }
-.custom-input {
+/* .custom-input {
     width: 80%;
     height: 8px;
+  } */
+  /* .txtFieldbending {
+    width: 300px;
+    padding: 10px;
+  } */
+
+  #lbltxtBaking {
+    width: 150px;
+    text-align: right;
   }
