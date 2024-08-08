@@ -1,0 +1,44 @@
+.ReJudgementResult {
+  display: flex;
+  justify-content: center;
+  background-color: #f5f5f5;
+  font-family: "popins", sans-serif;
+  font-weight: 100;
+}
+
+.DReJudgementTableFirst {
+  display: flex;
+  margin: auto;
+  width: 730px;
+}
+
+.ReJudgementTableFirst {
+  margin: auto;
+  width: 700px;
+}
+.ReJudgementTableFirst td {
+  /* border: 1px solid #000; */
+  padding: 5px;
+}
+
+.DReJudgementTableSecond {
+  display: flex;
+  margin: auto;
+  width: 1200px;
+}
+
+.ReJudgementTableSecond {
+  margin: auto;
+  width: 900px !important;
+  /* width: 70% !important; */
+}
+.ReJudgementTableSecond td {
+  padding: 1px;
+}
+.ReJudgementTableSecond th {
+  padding: 5px;
+}
+
+.ReJudgementTableThird th{
+  text-align: center;
+}

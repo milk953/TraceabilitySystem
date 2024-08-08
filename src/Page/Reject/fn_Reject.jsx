@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { color } from "framer-motion";
-import styled from "styled-components";
-import { set } from "lodash";
-import { WatchOutlined } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 function fn_Reject() {

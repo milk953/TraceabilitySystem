@@ -30,6 +30,8 @@ import ScanSMTSerialShtConfirm from "./Page/ScanSMTSerialShtConfirm/ScanSMTSeria
 import ScanSMTSerialBackendConfirm from "./Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm";
 import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime";
 import PrivateRoute from "./PrivateRoute";
+import ScanSMTSerialPcsChrome from "./Page/ScanSMTSerialPcsChrome/ScanSMTSerialPcsChrome";
+import ReJudgement from "./Page/ReJudgement/ReJudgement";
 import ScanSMTSerialPcsBoxOnlyGood from "./Page/PackingGateOnlyGood/PackingGateOnlyGood"
 
 
@@ -57,7 +59,6 @@ const App = () => {
         }
       )
       .then((res) => {
-        console.log(res.status);
         if (res.status == 200) {
           return;
         } else if (res.status == 401) {
@@ -88,6 +89,21 @@ const App = () => {
             <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
             <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
             <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
+            <Route path="/SheetMaster" element={<Sheet_Master />} />
+            <Route path="/SerialMaster" element={<Serial_Master />} />
+            <Route path="/ProductMaster" element={<Product_master />} />
+            <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
+            <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
+            <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
+            <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
+            <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
+            <Route path='/ScanSheetInspectXOut' element={<ScanSheetInspectXOut />} />
+            <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
+            <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
+            <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
+            <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
+            <Route path='/AVIConfirm' element = {<AVIManualConfirm />} /> 
+            <Route path='/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} /> 
             <Route path='/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} /> 
 
             {/* View Data */}
@@ -103,6 +119,7 @@ const App = () => {
             <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
             <Route path="/Reject" element={<Reject />} />
             <Route path="/ELTType" element={<SerialTestType />} />
+            <Route path="/ReJudgement" element={<ReJudgement />} />
 
             <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
           </Route>
