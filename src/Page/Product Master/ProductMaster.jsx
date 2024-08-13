@@ -3,7 +3,7 @@ import "../Product Master/Style.css";
 // import "./master.css";
 import Popup from "./ProductPopup.jsx";
 import { Empty } from "antd";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header.jsx";
 import {
     TextField,
     Card,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import "../Reject/Reject.css";
 import './ELTmaster.css'
 import Checkbox from "@mui/material/Checkbox";

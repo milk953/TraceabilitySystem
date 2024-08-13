@@ -30,7 +30,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialRecordTime } from "./fn_ScanSMTSerialRecordTime";
 import { green } from "@mui/material/colors";
 

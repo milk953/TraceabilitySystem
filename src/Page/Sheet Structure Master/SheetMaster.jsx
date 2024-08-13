@@ -3,7 +3,7 @@ import "../Sheet Structure Master/Style.css";
 // import "./master.css";
 import Popup from "./Popup";
 import { Empty } from "antd";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import {
   TextField,
   Card,
