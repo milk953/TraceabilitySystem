@@ -30,7 +30,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialControlTime } from "./fn_ScanSMTSerialControlTime";
 
 function ScanSMTSerialControlTime() {

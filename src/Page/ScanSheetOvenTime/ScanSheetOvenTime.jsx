@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fn_ScanSheetOvenTime } from "./fn_ScanSheetOvenTime";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import {
   TextField,
   Table,

@@ -10,7 +10,7 @@ import {
   Paper,
 } from "@mui/material";
 import  './SheetBinCheck.css'
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import {fn_SheetBinCheck} from "./fn_SheetBinCheck"
 function ScanBinCheck() {
 const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht} =fn_SheetBinCheck()

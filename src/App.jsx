@@ -32,8 +32,8 @@ import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime"
 import PrivateRoute from "./PrivateRoute";
 import ScanSMTSerialPcsChrome from "./Page/ScanSMTSerialPcsChrome/ScanSMTSerialPcsChrome";
 import ReJudgement from "./Page/ReJudgement/ReJudgement";
-import ScanSMTSerialPcsBoxOnlyGood from "./Page/ScanSMTSerialPcsBoxOnlyGood/ScanSMTSerialPcsBoxOnlyGood"
-
+import ScanSMTSerialPcsBoxOnlyGood from "./Page/PackingGateOnlyGood/PackingGateOnlyGood"
+import ScanSMTSerialPcsNG from "./Page/Master Final Gate/ScanSMTSerialPcsNG";
 
 
 
@@ -120,6 +120,7 @@ const App = () => {
             <Route path="/Reject" element={<Reject />} />
             <Route path="/ELTType" element={<SerialTestType />} />
             <Route path="/ReJudgement" element={<ReJudgement />} />
+            <Route path="/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
 
             <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
           </Route>

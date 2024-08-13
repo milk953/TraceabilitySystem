@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_SerialTestType } from "./fn_SerialTestType";
 import {
   Table,

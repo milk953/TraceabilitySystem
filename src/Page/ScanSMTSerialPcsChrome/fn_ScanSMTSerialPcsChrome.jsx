@@ -643,7 +643,7 @@ function fn_ScanSMTSerialPcsChrome() {
   const btnSave_Click = async () => {
     if (hfMode == "SERIAL") {
       console.log('setSerialDataTray')
-      // setSerialDataTray()
+      setSerialDataTray()
     }
   };
 

@@ -29,7 +29,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { fn_ScanSheetMOTTime } from "./fn_ScanSheetMOTTime";
 function ScanSheetMOTTime() {
