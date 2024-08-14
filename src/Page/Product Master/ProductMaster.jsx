@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../Product Master/Style.css";
-import Hearder from "../Header/Hearder";
+// import Hearder from "../Header/Hearder";
 // import "./master.css";
 import Popup from "./ProductPopup.jsx";
 import { Empty } from "antd";
