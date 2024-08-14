@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../Serial Structure Master/Style.css";
 import Popup from "./SerialPopup";
 import { Empty } from "antd";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import {
     TextField,
     Card,

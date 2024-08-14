@@ -21,48 +21,14 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-import {
-  ArrowRightOutlined,
-  DeleteOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "./SerialPcs.css";
-import Hearder from "../Header/Header";
-import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsChrome";
+// import "./SerialPcs.css";
+import Hearder from "../Header/Hearder";
+import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
 function ScanSMTRoollSht() {
-  const {
-    txtLot,
-    settxtLot,
-    lblLog,
-    Product,
-    Sl_Product,
-    txtLot_TextChanged,
-    lblLot,
-    ddlProduct_SelectedIndexChanged,
-    txtPackingNo,
-    settxtPackingNo,
-    txtPackingNo_TextChanged,
-    lblLotTotal,
-    txtPcsTray,
-    settxtPcsTray,
-    lblSerialNG,
-    txtPcsTray_TextChanged,
-    ibtBack_Click,
-    ibtPackingBack_Click,
-    lblLastTray,
-    gvSerial,
-    handleSerialChange,
-    settxtSerial,
-    txtSerial,
-    fc_txtSerial,
-    fc_txtLotNo,
-    fc_txtPackingNo, 
-    fc_txtTray,
-    fc_SlProduct,
-    btnSave_Click,
-    btnCancel_Click
-  } = fn_ScanSMTSerialPcsChrome();
+const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlProduct,ddlProduct_SelectedIndexChanged,
+  ddlProduct
+} = fn_ScanSMTSerialPcsBoxOnlyGood()
 
   return (
     <div>
@@ -75,7 +41,7 @@ function ScanSMTRoollSht() {
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Final Gate</Typography>
+                    <Typography variant="h6">Packing Gate Only Good</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -89,7 +55,7 @@ function ScanSMTRoollSht() {
                         size="small"
                         style={{ ...txtLot.style, width: "80%" }}
                         disabled={txtLot.disbled} //true พิมไม่ได้
-                        inputRef={(el) => (fc_txtLotNo.current = el)}
+                        // inputRef={(el) => (fc_txtLotNo.current = el)}
                         value={txtLot.value}
                         onChange={(e) => {
                           settxtLot((prevState) => ({
@@ -104,7 +70,9 @@ function ScanSMTRoollSht() {
                         }}
                         onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtBack_Click}>
+                      <Button id="txtfild" 
+                      // onClick={ibtBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -117,17 +85,19 @@ function ScanSMTRoollSht() {
                       <FormControl fullWidth>
                         <Autocomplete
                           id="selectPd"
-                          //   inputRef={fc_SlProduct}
-                          value={Sl_Product.value}
-                          style={Sl_Product.style}
-                          disabled={Sl_Product.disbled} //true พิมไม่ได้
+                            // inputRef={fc_SlProduct}
+                          value={selectddlProduct.value}
+                          // style={Sl_Product.style}
+                          // disabled={Sl_Product.disbled} //true พิมไม่ได้
                           onChange={(e, value) =>
                             ddlProduct_SelectedIndexChanged(value)
                           }
-                          options={Product.map((item) => item.prd_name)}
+                         
+                         
+                          options={ddlProduct.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
-                            inputRef={(el) => (fc_SlProduct.current = el)}
+                            // inputRef={(el) => (fc_SlProduct.current = el)}
                               {...params}
                               size="small"
                               sx={{ textAlign: "left" }}
@@ -139,31 +109,136 @@ function ScanSMTRoollSht() {
                   </TableRow>
                   <TableRow style={{display:''}}>
                     <TableCell align="right">
+                      <Typography>Machine No :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={4}>
+                      <TextField
+                        id="txtfild"
+                        size="small"
+                        // inputRef={(el) => (fc_txtPackingNo.current = el)}
+
+                        // value={txtPackingNo.value}
+                        // onChange={(e) => {
+                        //   settxtPackingNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
+                        // style={{ ...txtPackingNo.style, width: "80%" }}
+                        // disabled={txtPackingNo.disbled} //true พิมไม่ได้
+                        // inputRef={fc_txtLotNo}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtPackingNo_TextChanged();
+                        //   }
+                        // }}
+                        // onBlur={txtPackingNo_TextChanged}
+                      ></TextField>
+                      <Button id="txtfild" 
+                      // onClick={ibtPackingBack_Click}
+                      >
+                        <BackspaceIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow style={{display:''}}>
+                    <TableCell align="right">
+                      <Typography>OP/Partial No. :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={4}>
+                      <TextField
+                        id="txtfild"
+                        size="small"
+                        // inputRef={(el) => (fc_txtPackingNo.current = el)}
+
+                        // value={txtPackingNo.value}
+                        // onChange={(e) => {
+                        //   settxtPackingNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
+                        // style={{ ...txtPackingNo.style, width: "80%" }}
+                        // disabled={txtPackingNo.disbled} //true พิมไม่ได้
+                        // inputRef={fc_txtLotNo}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtPackingNo_TextChanged();
+                        //   }
+                        // }}
+                        // onBlur={txtPackingNo_TextChanged}
+                      ></TextField>
+                      <Button id="txtfild" 
+                      // onClick={ibtPackingBack_Click}
+                      >
+                        <BackspaceIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow style={{display:''}}>
+                    <TableCell align="right">
+                      <Typography>Box No.:</Typography>
+                    </TableCell>
+                    <TableCell colSpan={4}>
+                      <TextField
+                        id="txtfild"
+                        size="small"
+                        // inputRef={(el) => (fc_txtPackingNo.current = el)}
+
+                        // value={txtPackingNo.value}
+                        // onChange={(e) => {
+                        //   settxtPackingNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
+                        // style={{ ...txtPackingNo.style, width: "80%" }}
+                        // disabled={txtPackingNo.disbled} //true พิมไม่ได้
+                        // inputRef={fc_txtLotNo}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtPackingNo_TextChanged();
+                        //   }
+                        // }}
+                        // onBlur={txtPackingNo_TextChanged}
+                      ></TextField>
+                      <Button id="txtfild" 
+                      // onClick={ibtPackingBack_Click}
+                      >
+                        <BackspaceIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow style={{display:''}}>
+                    <TableCell align="right">
                       <Typography>Packing No :</Typography>
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
                         id="txtfild"
                         size="small"
-                        inputRef={(el) => (fc_txtPackingNo.current = el)}
-                        value={txtPackingNo.value}
-                        onChange={(e) => {
-                          settxtPackingNo((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
-                        style={{ ...txtPackingNo.style, width: "80%" }}
-                        disabled={txtPackingNo.disbled} //true พิมไม่ได้
+                        // inputRef={(el) => (fc_txtPackingNo.current = el)}
+
+                        // value={txtPackingNo.value}
+                        // onChange={(e) => {
+                        //   settxtPackingNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
+                        // style={{ ...txtPackingNo.style, width: "80%" }}
+                        // disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtPackingNo_TextChanged();
-                          }
-                        }}
-                        onBlur={txtPackingNo_TextChanged}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtPackingNo_TextChanged();
+                        //   }
+                        // }}
+                        // onBlur={txtPackingNo_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtPackingBack_Click}>
+                      <Button id="txtfild" 
+                      // onClick={ibtPackingBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -172,12 +247,14 @@ function ScanSMTRoollSht() {
                     <TableCell align="right">
                       <Typography>Lot :</Typography>
                     </TableCell>
-                    <TableCell colSpan={1}>{lblLot}</TableCell>
+                    <TableCell colSpan={1}>
+                      {/* {lblLot} */}
+                      </TableCell>
                     <TableCell align="right">
                       <Typography>OK :</Typography>
                     </TableCell>
                     <TableCell style={{ width: "70px" }} colSpan={2}>
-                      {lblLotTotal}
+                      {/* {lblLotTotal} */}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -188,31 +265,34 @@ function ScanSMTRoollSht() {
                       <TextField
                         id="txtfild"
                         size="small"
-                        inputRef={(el) => (fc_txtTray.current = el)}
-                        value={txtPcsTray.value}
-                        onChange={(e) => {
-                          settxtPcsTray((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
-                        style={{ ...txtPcsTray.style, width: "60px" }}
-                        disabled={txtPcsTray.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtPcsTray_TextChanged();
-                          }
-                        }}
-                        onBlur={txtPcsTray_TextChanged}
+                        // inputRef={(el) => (fc_txtTray.current = el)}
+                        // value={txtPcsTray.value}
+                        // onChange={(e) => {
+                        //   settxtPcsTray((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
+                        // style={{ ...txtPcsTray.style, width: "60px" }}
+                        // disabled={txtPcsTray.disbled} //true พิมไม่ได้
+                        // // inputRef={fc_txtLotNo}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtPcsTray_TextChanged();
+                        //   }
+                        // }}
+                        // onBlur={txtPcsTray_TextChanged}
                       ></TextField>
-                      &nbsp; {lblLastTray}
+                      &nbsp; 
+                      {/* {lblLastTray} */}
                     </TableCell>
                     {/* <TableCell style={{ width: "70px",}}></TableCell> */}
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography>NG :</Typography>
                     </TableCell>
-                    <TableCell colSpan={2}>{lblSerialNG}</TableCell>
+                    <TableCell colSpan={2}>
+                      {/* {lblSerialNG} */}
+                      </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -230,16 +310,18 @@ function ScanSMTRoollSht() {
                   color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
                   fontWeight: "bold", // กำหนดความหนาของฟอนต์
                   marginTop: "30px",
-                  display:lblLog.visble
+                  // display:lblLog.visble
                 }}
               >
-                {lblLog.value}
+                {/* {lblLog.value} */}
               </Paper>
               {/* )} */}
               {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
               <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px", display: gvSerial.visble }}
+                style={{ marginTop: "20px",
+                  //  display: gvSerial.visble
+                   }}
                 component={Card}
               >
                 <TableHead>
@@ -255,7 +337,7 @@ function ScanSMTRoollSht() {
                 <TableBody >
                   {/* <TableRow> */}
 
-                  {Array.from({ length: gvSerial.value.length }, (_, index) => (
+                  {/* {Array.from({ length: gvSerial.value.length }, (_, index) => (
                     
                       <TableRow key={index}>
                       <TableCell
@@ -274,7 +356,10 @@ function ScanSMTRoollSht() {
                           value={txtSerial[index]}
                           onBlur={(event) => {
                             handleSerialChange(index, event);
-
+                            // event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
+                            // if (index < gvSerial.value.length - 1) {
+                            //   fc_txtSerial.current[index + 1].focus();
+                            // }
                           }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
@@ -288,12 +373,16 @@ function ScanSMTRoollSht() {
                         />
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))} */}
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={btnSave_Click}>Save</Button> &nbsp;&nbsp;
-                      <Button className="BtCancel" onClick={btnCancel_Click}>Cancel</Button>
+                      <Button className="BtSave"
+                      // onClick={btnSave_Click}
+                      >Save</Button> &nbsp;&nbsp;
+                      <Button className="BtCancel" 
+                      // onClick={btnCancel_Click}
+                      >Cancel</Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>

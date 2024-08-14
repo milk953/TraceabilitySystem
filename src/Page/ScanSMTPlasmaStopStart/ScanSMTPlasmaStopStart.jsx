@@ -30,7 +30,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaStopStart.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_ScanSMTPlasmaStopStart } from "./fn_ScanSMTPlasmaStopStart";
 
 function ScanSMTPlasmaStopStart() {

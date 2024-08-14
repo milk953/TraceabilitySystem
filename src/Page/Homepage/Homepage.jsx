@@ -32,7 +32,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "/src/Page/Homepage/Homepage.css";
 import { Input, Space } from "antd";
 const { Search } = Input;
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_Homepage } from "./fn_Homepage";
 function ScanSheetMOTTime() {
   const { Showmenu, menu, OpenMenu, setSL_menu, SL_menu, HandleSL_Menu } =

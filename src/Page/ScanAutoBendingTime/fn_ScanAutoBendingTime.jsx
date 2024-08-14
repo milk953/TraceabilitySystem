@@ -18,7 +18,7 @@ function fn_ScanAutoBendingTime() {
     // focus
     const fcMCno = useRef(null);
     const fcLotNo = useRef(null);
-    const fcGvSerial_txtSerial_0 = useRef(null);
+    const fcGvSerial_txtSerial_0 = useRef([]);
 
     const [pnlResult,setpnlResult] =useState(true)
     const [pnlDetail,setpnlDetail] =useState(true)
@@ -51,11 +51,17 @@ function fn_ScanAutoBendingTime() {
       
       if(gvBending !== ""){
         if (gvBending.length > 0 && fcLotNo.current) {
-        console.log("เข้าเพื่อไป Lot ต่อ11 : ");
         fcLotNo.current.focus();
       } 
       }
-    }, [gvBending]);
+      // if(gvSerial !== "") {
+      //   console.log("เข้ามาจ้า")
+        if(gvSerial.length >0 ){
+        fcGvSerial_txtSerial_0.current[0].focus();
+      } 
+      // }
+     
+    }, [gvBending,gvSerial.length]);
 
 
     const handletxtMCNo_TextChanged = async () => {
@@ -76,14 +82,13 @@ function fn_ScanAutoBendingTime() {
       dtBending  =res.data
         });
         if(dtBending.length > 0){
-          console.log("เข้าเพื่อไป Lot ต่อ : ")
           setgvBending(dtBending);
           sethfSerialCount(dtBending.length)
           settxtLotNo((prevState) => ({ ...prevState, value: "",disbled:false}));
           fcLotNo.current.focus();
         }else{
           setpnlResult(true)
-          setlblResult((prevState) => ({ ...prevState, value: "NG", style: { backgroundColor: 'red' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
+          setlblResult((prevState) => ({ ...prevState, value: "NG", style: { backgroundColor: 'yellow' , color:'red', fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
           setlblRemark((prevState) => ({ ...prevState, value:`Machine ${txtMCNo.value} not found in master!`,style: { fontSize: '30px', padding: '0px' ,textAlign: 'center'}}));
           fcMCno.current.focus();
         }
@@ -92,7 +97,7 @@ function fn_ScanAutoBendingTime() {
     const handletxtLotNo_TextChanged = async() => {  
       let  dtProductSerial =[]
       setlblProductName((prevState) => ({ ...prevState, value: ""}));
-      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'green' }}));
+      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'yellow',color:'green' }}));
       setlblRemark((prevState) => ({ ...prevState, value: ""}));
       setpnlResult(false)
       if(txtLotNo.value.trim().toUpperCase() !== ""){
@@ -117,7 +122,7 @@ function fn_ScanAutoBendingTime() {
           getInitialSerial()
         }else{
           setpnlResult(true)
-          setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
+          setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'Yellow',color:"red" ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
           setlblRemark((prevState) => ({ ...prevState, value: 'LOT   '+txtLotNo.value+'  not found!' }));
           settxtLotNo((prevState) => ({ ...prevState, value: '' }));
           fcLotNo.current.focus();
@@ -137,10 +142,12 @@ function fn_ScanAutoBendingTime() {
         });
       }
       // setvisiblgvSerial(true);
-      setgvSerial(dtData);
-      if(dtData.length >0){
+      setgvSerial(dtData); 
+      if(dtData.length>0){
         setpnlDetail(true)
-        // fcGvSerial_txtSerial_0.current.focus();
+      }
+      if(gvSerial.length >0){
+        fcGvSerial_txtSerial_0.current[0].focus();
       }
       return 0;
     };
@@ -205,17 +212,17 @@ function fn_ScanAutoBendingTime() {
     }
     setpnlResult(true)
     if(strError !== ""){
-      setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
+      setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'yellow' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'red'}}));
       setlblRemark((prevState) => ({ ...prevState, value:strError}));
     }
-    else{ setlblResult((prevState) => ({ ...prevState, value:"OK",  disbled: false , style: { backgroundColor: 'Green' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
+    else{ setlblResult((prevState) => ({ ...prevState, value:"OK",  disbled: false , style: { backgroundColor: 'Yellow' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'green'}}));
     setlblRemark((prevState) => ({ ...prevState, value:currentTime , style: { fontSize: '40px', padding: '0px' ,  textAlign: 'center' } }));}
     getInitialSerial();
     }
 
   return {
     txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemark,handletxtMCNo_TextChanged
-    ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,btnCancel,pnlDetail,pnlResult,gvBending,gvBendingVisible,gvBendingVisible
+    ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,btnCancel,pnlDetail,pnlResult,gvBending,gvBendingVisible,gvBendingVisible,fcGvSerial_txtSerial_0
   }
 }
 

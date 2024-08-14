@@ -24,7 +24,7 @@ import {
 
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_ConfirmBarcodeGrade } from "./fn_ConfirmBarcodeGrade";
 function ConfirmBarcodeGrade() {
   const {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./ReJudgement.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_ReJudgement } from "./fn_ReJudgement";
 import {
   Button,

@@ -30,7 +30,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialBackendConfirm } from "./fn_ScanSMTSerialBackendConfirm";
 
 function ScanSMTSerialBackendConfirm() {
