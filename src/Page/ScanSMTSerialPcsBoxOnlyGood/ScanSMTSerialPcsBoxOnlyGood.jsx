@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 // import "./SerialPcs.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
 function ScanSMTRoollSht() {
 const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlProduct,ddlProduct_SelectedIndexChanged,

@@ -32,7 +32,7 @@ import ScanAutoBendingTime from "./Page/ScanAutoBendingTime/ScanAutoBendingTime"
 import PrivateRoute from "./PrivateRoute";
 import ScanSMTSerialPcsChrome from "./Page/ScanSMTSerialPcsChrome/ScanSMTSerialPcsChrome";
 import ReJudgement from "./Page/ReJudgement/ReJudgement";
-import ScanSMTSerialPcsBoxOnlyGood from "./Page/PackingGateOnlyGood/PackingGateOnlyGood"
+import ScanSMTSerialPcsBoxOnlyGood from "./Page/ScanSMTSerialPcsBoxOnlyGood/ScanSMTSerialPcsBoxOnlyGood"
 import ScanSMTSerialPcsNG from "./Page/Master Final Gate/ScanSMTSerialPcsNG";
 
 

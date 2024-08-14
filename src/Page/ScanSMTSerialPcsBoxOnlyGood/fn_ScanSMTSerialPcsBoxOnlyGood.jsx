@@ -2,13 +2,20 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { color } from "framer-motion";
 
-function fn_ScanSMTSerialPcsBoxOnlyGood() {
+function fn_ScanSMTSerialPcsBoxOnlyGood() {  
+  const [disabledState, setDisabledState] = useState({
+    styled: { disabled: true, backgroundColor: "#B2A8A8" },
+  });
+  const [enableState, setEnableState] = useState({
+    styled: { backgroundColor: "" },
+  });
   const [txtLot, settxtLot] = useState({
     value: "",
     disbled: "",
     visble: "",
-    style: {},
+    style: {enableState},
   });
   const [ddlProduct, setddlProduct] = useState([]);
   const [selectddlProduct, setselectddlProduct] = useState({
@@ -43,6 +50,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   });
   lblLog;
 
+
+
   const [txtBox, settxtBox] = useState({ value: "",disbled: "",visble: "", style: {}, });
   const [txtPack, settxtPack] = useState({ value: "",disbled: "",visble: "", style: {}, });
   const [txtMachine, settxtMachine] = useState({ value: "",disbled: "",visble: "", style: {}, });
@@ -76,7 +85,10 @@ const [pnlOP, setpnlOP] = useState(true);
   const fntxtLot = useRef([])
   const fntxtMachine = useRef([])
 
+
+
   const FAC = import.meta.env.VITE_FAC;
+
 
   //hf
   const hfLotLength = 9;
@@ -148,9 +160,10 @@ const [pnlOP, setpnlOP] = useState(true);
 
   // const [hfFQC, setHfFQC] = useState("");
 
+
+
   const params = new URLSearchParams(window.location.search);
   const hfFQC = params.get("FQC");
-  console.log(hfFQC, "น้องเมย์โวยวายแล้ว");
 
   useEffect(() => {
     let ID = localStorage.getItem("ipAddress");
@@ -195,6 +208,7 @@ const [pnlOP, setpnlOP] = useState(true);
               dtLotPassCount = res.data.lotcount;
               setlblLotTotal((prevState) => ({ ...prevState, value: "0" }));
               setlblSerialNG((prevState) => ({ ...prevState, value: "0" }));
+              console.log("dtLotPassCount1234: ",dtLotPassCount)
               if (dtLotPassCount.length > 0) {
                 setlblLotTotal((prevState) => ({
                   ...prevState,
@@ -504,7 +518,7 @@ const [pnlOP, setpnlOP] = useState(true);
   const SetMode = (_strType) =>{
     switch (_strType) {
       case "LOT":
-        settxtLot((prevState) => ({ ...prevState, value: "",disbled:true }));
+        settxtLot((prevState) => ({ ...prevState, value: "",disbled:true ,style:{enableState}}));
         settxtBox((prevState) => ({ ...prevState, value: "",disbled:false }));
         settxtPack((prevState) => ({ ...prevState, value: "",disbled:false }));
         setlblLot((prevState) => ({ ...prevState, value: ""}));
@@ -537,7 +551,7 @@ const [pnlOP, setpnlOP] = useState(true);
         // fntxtLot.current.focus()
         break;
       case "LOT_ERROR":
-        settxtLot((prevState) => ({ ...prevState, value: "",disbled:true }));
+        settxtLot((prevState) => ({ ...prevState, value: "",disbled:true ,style:{enableState} }));
         settxtBox((prevState) => ({ ...prevState, value: "",disbled:false }));
         settxtPack((prevState) => ({ ...prevState, value: "",disbled:false }));
         setlblLot((prevState) => ({ ...prevState, value: ""}));
@@ -590,7 +604,7 @@ const [pnlOP, setpnlOP] = useState(true);
           setpnlSerial(false);
 
           setpnlOP(false);
-          settxtMachine((prevState) => ({ ...prevState, value: "",disbled:true}));
+          settxtMachine((prevState) => ({ ...prevState, value: "",disbled:true , style:{enableState}}));
           settxtOP((prevState) => ({ ...prevState, value: "", disbled: false}));
           setlblOP((prevState) => ({ ...prevState, value: ""}));
           setibtMachineBack(true);
@@ -621,7 +635,7 @@ const [pnlOP, setpnlOP] = useState(true);
   
             setpnlOP(true);
             settxtMachine((prevState) => ({ ...prevState, value: "",disbled:false}));
-            settxtOP((prevState) => ({ ...prevState, value: "", disbled: true}));
+            settxtOP((prevState) => ({ ...prevState, value: "", disbled: true,style:{enableState}}));
             setlblOP((prevState) => ({ ...prevState, value: ""}));
             setibtMachineBack(true);
             setibtOPBack(false);
@@ -630,7 +644,37 @@ const [pnlOP, setpnlOP] = useState(true);
             // fntxtMachine.current.focus();
         
             break;
-            
+      case "TRAY":
+              settxtLot((prevState) => ({ ...prevState,disbled:false }));
+              settxtBox((prevState) => ({ ...prevState, value: "",disbled:false }));
+              settxtPack((prevState) => ({ ...prevState, value: "",disbled:false }));
+              setlblLot((prevState) => ({ ...prevState, value: ""}));
+              setlblLotTotal((prevState) => ({ ...prevState, value: ""}));
+              setlblSerialNG((prevState) => ({ ...prevState, value: ""}));
+              setlblBox((prevState) => ({ ...prevState, value: "" }));
+              setlblBoxFull((prevState) => ({ ...prevState, value: ""}));
+              setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
+              setlblBoxStatus((prevState) => ({ ...prevState, value: ""}));
+              setlblPacking((prevState) => ({ ...prevState, value: ""}));
+              setlblPackingTotal((prevState) => ({ ...prevState, value: ""}));
+              setibtback(false);
+              setibtBox(false);
+              seibtPack(false);
+              setpnlLog(false);
+              setpnlSerial(false);
+    
+              setpnlOP(true);
+              settxtMachine((prevState) => ({ ...prevState, value: "",disbled:false}));
+              settxtOP((prevState) => ({ ...prevState, value: "", disbled: true,style:{enableState}}));
+              setlblOP((prevState) => ({ ...prevState, value: ""}));
+              setibtMachineBack(true);
+              setibtOPBack(false);
+              setHfMode("MACHINE");
+    
+              // fntxtMachine.current.focus();
+          
+              break;
+                    
       // เพิ่ม case อื่นๆ ได้ตามต้องการ
       default:
         // คำสั่งที่จะทำถ้า expression ไม่ตรงกับค่าใน case ใดๆ
