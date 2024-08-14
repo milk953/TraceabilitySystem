@@ -27,7 +27,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSheetInspectXOut/ScanSheetInspectXOut.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header.jsx";
 import { fn_ScanSheetInspectXOut } from "./fn_ScanSheetInspectXOut.jsx";
 
 function ScanSheetInspectXOut() {

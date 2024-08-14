@@ -674,6 +674,7 @@ function fn_ScanSMTSerialPcsChrome() {
       await axios
         .post("/api/Common/GetFinalGateMasterCheckResult", {
           strProduct: lblLot,
+          
         })
         .then(async (res) => {
           let GetFinalGateMasterCheckResult = res.data;

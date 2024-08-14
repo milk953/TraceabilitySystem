@@ -28,7 +28,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
 function ScanSMTRoollSht() {
   const {

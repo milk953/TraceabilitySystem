@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import "./ScanSheetReflowTime.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import { fn_ScanSheetReflowTime } from "./fn_ScanSheetReflowTime";
 import HomeIcon from "@mui/icons-material/Home";
 function ScanSheetReflowTime() {

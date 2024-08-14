@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Hearder from "../Header/Hearder";
+import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetDispenserTime.css";
 import { fn_ScanSheetDispenserTime } from "./fn_ScanSheetDispenserTime";
