@@ -61,7 +61,8 @@ function ScanSMTRoollSht() {
     fc_txtTray,
     fc_SlProduct,
     btnSave_Click,
-    btnCancel_Click
+    btnCancel_Click,
+    gvScanResult
   } = fn_ScanSMTSerialPcsChrome();
 
   return (
@@ -137,7 +138,8 @@ function ScanSMTRoollSht() {
                       </FormControl>
                     </TableCell>
                   </TableRow>
-                  <TableRow style={{display:''}}>
+                  
+                  <TableRow style={{display:txtPackingNo.visble}}>
                     <TableCell align="right">
                       <Typography>Packing No :</Typography>
                     </TableCell>
@@ -274,7 +276,6 @@ function ScanSMTRoollSht() {
                           value={txtSerial[index]}
                           onBlur={(event) => {
                             handleSerialChange(index, event);
-
                           }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
@@ -282,6 +283,11 @@ function ScanSMTRoollSht() {
                               event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
                               if (index < gvSerial.value.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
+                                console.log(index,'---',gvSerial.value.length - 1)
+                              }
+                              else{
+                                btnSave_Click()
+                                event.target.blur();
                               }
                             }
                           }}
@@ -310,10 +316,11 @@ function ScanSMTRoollSht() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                
               }}
             >
-              {/* {gvScanResult.visble == false && (
-                <> */}
+              {gvScanResult.visble == false && (
+                <>
               <img
                 style={{
                   width: "360px",
@@ -323,104 +330,81 @@ function ScanSMTRoollSht() {
                 src="src/assets/1.jpg" // Import the image
                 alt="Description of the image"
               />
-              {/* </>)} */}
+              </>)}
 
               {/* visiblegvScanResult */}
-              {/* {gvScanResult.visble == true && (
+              {gvScanResult.visble == true && (
                 <>
                               <Paper
                 className="Card-lblResult"
                 elevation={3}
                 style={{
                   background: " #ff4d4f",
-                  display: gvScanResult,
+                  // display: gvScanResult,
                 }}
               >
                 <Typography
                   variant="h4"
                   style={{ paddingTop: "5px", color: "#fff" }}
                 >
-                  {lblResult.value}
+                  lblResult.value
                 </Typography>
               </Paper>
               <Table
-                className="CSS-GvScanResult"
-                style={{ display: gvScanResult }}
+                className="CSS-GvScanResult-FinalGate"
+                // style={{ display: gvScanResult }}
                 component={Card}
               >
                 <TableHead>
                   <TableRow>
                     <TableCell
                       sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="50px"
+                     
                     >
                       No.
                     </TableCell>
                     <TableCell
                       sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="200px"
                     >
-                      Roll/Sheet No.
+                      Serial No.
                     </TableCell>
                     <TableCell
                       sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="200px"
+                     
                     >
-                      Leaf No.
+                      Re-Judgement 1
                     </TableCell>
                     <TableCell
                       sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="150px"
+                     
                     >
-                      Scan Result
+                       Result
                     </TableCell>
-                    <TableCell width="300px">Remark</TableCell>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                    
+                    >
+                      Re-Judgement 2
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                     
+                    >
+                       Test Result
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                     
+                    >
+                       Scan Result
+                    </TableCell>
+                    <TableCell >Remark </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
-                  {Array.from(
-                    { length: gvScanResult.value.length },
-                    (_, index) => (
-                      <TableRow key={index}>
-                        <TableCell
-                          align="center"
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                        >
-                          {gvScanResult.value[index].SHT_SEQ}
-                        </TableCell>
-
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          {gvScanResult.value[index].ROLL_LEAF}
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                        >
-                          {gvScanResult.value[index].SHT_NO}
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            borderRight: "1px solid #d9d9d9",
-                            background: gvScanResult.value[index].SCAN_RESULT === ''
-                              ? ''
-                              : gvScanResult.value[index].SCAN_RESULT === 'OK'
-                              ? 'green'
-                              : '#ff4d4f'
-                          }}
-                        >
-                          {gvScanResult.value[index].SCAN_RESULT}
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          {gvScanResult.value[index].REMARK}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  )}
-                </TableBody>
+                  {/* TableBody */}
               </Table>
                 </>
-            )} */}
+            )} 
             </Grid>
           </Grid>
         </Box>
