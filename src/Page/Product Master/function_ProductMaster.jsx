@@ -45,7 +45,7 @@ function fn_ProductMaster() {
   const [cbxReqCheckLotSht, setcbxReqCheckLotSht] = useState("");
   const [txtCheckLotShtFrom, settxtCheckLotShtFrom] = useState("");
   const [txtCheckLotShtTo, settxtCheckLotShtTo] = useState("");
-  const [selStatus, setselStatus] = useState("");
+  const [selStatus, setselStatus] = useState("ACTIVE");
   const [selCheckIC, setselCheckIC] = useState("");
   const [cbxReqControlPlasma, setcbxReqControlPlasma] = useState("");
   const [txtPlasmaTime, settxtPlasmaTime] = useState("");
@@ -179,7 +179,6 @@ function fn_ProductMaster() {
   const [ReqReflowBCheck, setReqReflowBCheck] = useState(false);
 
   //Disabled
-  const [cbxReqPrdShtDisabled, setcbxReqPrdShtDisabled] = useState(false);
   const [txtCheckPrdShtDisabled, settxtCheckPrdShtFromDisabled] = useState(false);
   const [txtCheckPrdShtToDisabled, settxtCheckPrdShtToDisabled] = useState(false);
   const [txtProcControlTimeDisabled, settxtProcControlTimeDisabled] = useState(false);
@@ -248,14 +247,14 @@ function fn_ProductMaster() {
       sethfUserName("");
 
       if (FIX_CHECK_PRODUCT_MIX === "Y") {
-        setcbxReqPrdShtDisabled(true);
+        setcbxReqCheckPrdShtDisabled(true);
         setReqCheckPrdShtCheck(true);
         settxtCheckPrdShtFrom(FIX_CHECK_PRODUCT_MIX_START);
         settxtCheckPrdShtTo(FIX_CHECK_PRODUCT_MIX_END);
         settxtCheckPrdShtFromDisabled(false);
         settxtCheckPrdShtToDisabled(false);
       } else {
-        setcbxReqPrdShtDisabled(false);
+        setcbxReqCheckPrdShtDisabled(false);
         setReqCheckPrdShtCheck(false);
         settxtCheckPrdShtFrom("");
         settxtCheckPrdShtTo("");
@@ -350,9 +349,299 @@ function fn_ProductMaster() {
 
   const handleselSheettype = (value) => {
     setselSheetType(value);
+    // setErrorPrdName(false);
   };
 
+  const handlekeySerialLength = (event) => {
+    const txtSerialLength = event.target.value;
+    settxtSerialLength(txtSerialLength);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyPcsScan = (event) => {
+    const txtPcsScan = event.target.value;
+    settxtPcsScan(txtPcsScan);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyEngCode = (event) => {
+    const txtEngCode = event.target.value;
+    settxtEngCode(txtEngCode);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyPcsTray = (event) => {
+    const txtPcsTray = event.target.value;
+    settxtPcsTray(txtPcsTray);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyRevision = (event) => {
+    const txtRevision = event.target.value;
+    settxtRevision(txtRevision);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeySerialFormat = (event) => {
+    const txtSerialFormat = event.target.value;
+    settxtSerialFormat(txtSerialFormat);
+    // setErrorPrdName(false);
+  };
+
+  const handleselLaminationSide = (value) => {
+    setselLaminationSide(value);
+    // setErrorPrdName(false);
+  };
   
+  const handlekeySheetFormat = (event) => {
+    const txtSheetFormat = event.target.value;
+    settxtSheetFormat(txtSheetFormat);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyShtScan = (event) => {
+    const txtShtScan = event.target.value;
+    settxtShtScan(txtShtScan);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyShtLaser = (event) => {
+    const txtShtLaser = event.target.value;
+    settxtShtLaser(txtShtLaser);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyConfigWord = (event) => {
+    const txtConfigWord = event.target.value;
+    settxtConfigWord(txtConfigWord);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyConfigStart = (event) => {
+    const txtConfigStart = event.target.value;
+    settxtConfigStart(txtConfigStart);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyConfigEnd = (event) => {
+    const txtConfigEnd = event.target.value;
+    settxtConfigEnd(txtConfigEnd);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyDupStart = (event) => {
+    const txtDupStart = event.target.value;
+    settxtDupStart(txtDupStart);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyDupEnd = (event) => {
+    const txtDupEnd = event.target.value;
+    settxtDupEnd(txtDupEnd);
+    // setErrorPrdName(false);
+  };
+
+  const handlekeyAddInfo = (event) => {
+    const txtAddInfo = event.target.value;
+    settxtAddInfo(txtAddInfo);
+    // setErrorAddInfo(false);
+  };
+
+  const handlekeyPassWord = (event) => {
+    const txtPassWord = event.target.value;
+    settxtPassWord(txtPassWord);
+    // setErrorPassWord(false);
+  };
+
+  const handlekeyAbbr = (event) => {
+    const txtAbbr = event.target.value;
+    settxtAbbr(txtAbbr);
+    // setErrorAbbr(false);
+  };
+
+  const handlekeySerialStartCode = (event) => {
+    const txtSerialStartCode = event.target.value;
+    settxtSerialStartCode(txtSerialStartCode);
+    // setErrorSerialStartCode(false);
+  };
+
+  const handlekeyCheckPrdShtFrom = (event) => {
+    const txtCheckPrdShtFrom = event.target.value;
+    settxtCheckPrdShtFrom(txtCheckPrdShtFrom);
+    // setErrorCheckPrdShtFrom(false);
+  };
+
+  const handlekeyCheckPrdShtTo = (event) => {
+    const txtCheckPrdShtTo = event.target.value;
+    settxtCheckPrdShtTo(txtCheckPrdShtTo);
+    // setErrorCheckPrdShtTo(false);
+  };
+
+  const handlekeyCheckLotShtFrom = (event) => {
+    const txtCheckLotShtFrom = event.target.value;
+    settxtCheckLotShtFrom(txtCheckLotShtFrom);
+    // setErrorCheckLotShtFrom(false);
+  };
+
+  const handlekeyCheckLotShtTo = (event) => {
+    const txtCheckLotShtTo = event.target.value;
+    settxtCheckLotShtTo(txtCheckLotShtTo);
+    // setErrorCheckLotShtTo(false);
+  };
+
+  const handleselStatus = (value) => {
+    setselStatus(value);
+    // setErrorselStatus(false);
+  };
+
+  const handleselCheckIC = (value) => {
+    setselCheckIC(value);
+    // setErrorselCheckIC(false);
+  };
+
+  const handlekeyPlasmaTime = (event) => {
+    const txtPlasmaTime = event.target.value;
+    settxtPlasmaTime(txtPlasmaTime);
+    // setErrorPlasmaTime(false);
+  };
+
+  const handlekeyStartSeqCode = (event) => {
+    const txtStartSeqCode = event.target.value;
+    settxtStartSeqCode(txtStartSeqCode);
+    // setErrorStartSeqCode(false);
+  };
+
+  const handlekeyStartSeqDigitFrom = (event) => {
+    const txtStartSeqDigitFrom = event.target.value;
+    settxtStartSeqDigitFrom(txtStartSeqDigitFrom);
+    // setErrorStartSeqDigitFrom(false);
+  };
+
+  const handlekeyStartSeqDigitTo = (event) => {
+    const txtStartSeqDigitTo = event.target.value;
+    settxtStartSeqDigitTo(txtStartSeqDigitTo);
+    // setErrorStartSeqDigitTo(false);
+  };
+
+  const handlekeyVendorLotLength = (event) => {
+    const txtVendorLotLength = event.target.value;
+    settxtVendorLotLength(txtVendorLotLength);
+    // setErrorVendorLotLength(false);
+  };
+
+  const handlekeyDateFromProc = (event) => {
+    const txtDateFromProc = event.target.value;
+    settxtDateFromProc(txtDateFromProc);
+    // setErrorDateFromProc(false);
+  };
+
+  const handlekeyWeekCodeStart = (event) => {
+    const txtWeekCodeStart = event.target.value;
+    settxtWeekCodeStart(txtWeekCodeStart);
+    // setErrorWeekCodeStart(false);
+  };
+  
+  const handlekeyWeekCodeEnd = (event) => {
+    const txtWeekCodeEnd = event.target.value;
+    settxtWeekCodeEnd(txtWeekCodeEnd);
+    // setErrorWeekCodeEnd(false);
+  };
+
+  const handlekeyLeafScan = (event) => {
+    const txtLeafScan = event.target.value;
+    settxtLeafScan(txtLeafScan);
+    // setErrorLeafScan(false);
+  };
+
+  const handlekeyRollNoLength = (event) => {
+    const txtRollNoLength = event.target.value;
+    settxtRollNoLength(txtRollNoLength);
+    // setErrorRollNoLength(false);
+  };
+
+  const handlekeyLeafNoLength = (event) => {
+    const txtLeafNoLength = event.target.value;
+    settxtLeafNoLength(txtLeafNoLength);
+    // setErrorLeafNoLength(false);
+  };
+
+  const handlekeyCheckRollPrdFrom = (event) => {
+    const txtCheckRollPrdFrom = event.target.value;
+    settxtCheckRollPrdFrom(txtCheckRollPrdFrom);
+    // setErrorCheckRollPrdFrom(false);
+  };
+
+  const handlekeyCheckRollPrdTo = (event) => {
+    const txtCheckRollPrdTo = event.target.value;
+    txtCheckRollPrdTo(txtCheckRollPrdTo);
+    // setErrorCheckRollPrdTo(false);
+  };
+
+  const handlekeyCheckRollPrdWord = (event) => {
+    const txtCheckRollPrdWord = event.target.value;
+    settxtCheckRollPrdWord(txtCheckRollPrdWord);
+    // setErrorCheckRollPrdWord(false);
+  };
+
+  const handlekeyRollCheckPrdLeafFrom = (event) => {
+    const txtRollCheckPrdLeafFrom = event.target.value;
+    settxtRollCheckPrdLeafFrom(txtRollCheckPrdLeafFrom);
+    // setErrorRollCheckPrdLeafFrom(false);
+  };
+
+  const handlekeyRollCheckPrdLeafTo = (event) => {
+    const txtRollCheckPrdLeafTo = event.target.value;
+    settxtRollCheckPrdLeafTo(txtRollCheckPrdLeafTo);
+    // setErrorRollCheckPrdLeafTo(false);
+  };
+
+  const handlekeyRollCheckLotLeafFrom = (event) => {
+    const txtRollCheckLotLeafFrom = event.target.value;
+    settxtRollCheckLotLeafFrom(txtRollCheckLotLeafFrom);
+    // setErrorRollCheckLotLeafFrom(false);
+  };
+
+  const handlekeyRollCheckLotLeafTo = (event) => {
+    const txtRollCheckLotLeafTo = event.target.value;
+    settxtRollCheckLotLeafTo(txtRollCheckLotLeafTo);
+    // setErrorRollCheckLotLeafTo(false);
+  };
+
+  const handlekeyProcControlTime = (event) => {
+    const txtProcControlTime = event.target.value;
+    settxtProcControlTime(txtProcControlTime);
+    // setErrorProcControlTime(false);
+  };
+
+  const handlekeyFinInspectProc = (event) => {
+    const txtFinInspectProc = event.target.value;
+    settxtFinInspectProc(txtFinInspectProc);
+    // setErrorFinInspectProc(false);
+  };
+
+  const handlekeyShtPlasmaTime = (event) => {
+    const txtShtPlasmaTime = event.target.value;
+    settxtShtPlasmaTime(txtShtPlasmaTime);
+    // setErrorShtPlasmaTime(false);
+  };
+
+  const handlekeyBarcodeGrade = (event) => {
+    const txtBarcodeGrade = event.target.value;
+    settxtBarcodeGrade(txtBarcodeGrade);
+    // setErrorBarcodeGrade(false);
+  };
+
+  const handlekeyUpdateBy = (event) => {
+    const txtUpdateBy = event.target.value;
+    settxtUpdateBy(txtUpdateBy);
+    // setErrorUpdateBy(false);
+  };
+
+  const handlekeyUpdateDate = (event) => {
+    const txtUpdateDate = event.target.value;
+    settxtUpdateDate(txtUpdateDate);
+    // setErrorUpdateDate(false);
+  };
 
   const handlerbtLotRollChange = (event) => {
     setrbtselLotRoll(event.target.value);
@@ -1452,7 +1741,9 @@ function fn_ProductMaster() {
     }
   };
 
-  const ReqFinInspectCheckChanged = () => {
+  const ReqFinInspectCheckChanged = (event) => {
+    const ReqFinInspectCheck = event.target.checked;
+    setReqFinInspectCheck(ReqFinInspectCheck);
     if (ReqFinInspectCheck) {
       settxtFinInspectProcDisabled(false);
       settxtFinInspectProc("");
@@ -1460,6 +1751,11 @@ function fn_ProductMaster() {
       settxtFinInspectProc("");
       settxtFinInspectProcDisabled(true);
     }
+  };
+
+  const chk_DelFlgCheckChanged = (event) => {
+    const chk_DelFlgCheck = event.target.checked;
+    setchk_DelFlgCheck(chk_DelFlgCheck);
   };
 
   const btnSubmitClick = () => {
@@ -1483,21 +1779,29 @@ function fn_ProductMaster() {
   return {
     txtCheckPrdShtFrom, txtCheckPrdShtTo, selCheckIC, txtPlasmaTime, txtProcControlTime, txtShtPlasmaTime, txtBarcodeGrade, ReqCheckPrdShtCheck, ReqCheckPrdShtCheckChanged, ReqConShtPcsRollCheck, setReqConShtPcsRollCheck,
     ReqProcControlTimeCheck, ReqProcControlTimeCheckChanged, ReqConnShtPcsTimeCheck, setReqConnShtPcsTimeCheck, ReqFinalPackingGroupCheck, setReqFinalPackingGroupCheck, ReqShtControlPlasmaCheck, ReqShtControlPlasmaCheckChanged,
-    PlasmaConnShtPcsCheck, setPlasmaConnShtPcsCheck, ConnShtReqBoardFlg, setConnShtReqBoardFlg, AutoPressFCheck, setAutoPressFCheck, AutoPressBCheck, setAutoPressBCheck, cbxReqPrdShtDisabled, txtCheckPrdShtDisabled,
+    PlasmaConnShtPcsCheck, setPlasmaConnShtPcsCheck, ConnShtReqBoardFlg, setConnShtReqBoardFlg, AutoPressFCheck, setAutoPressFCheck, AutoPressBCheck, setAutoPressBCheck, txtCheckPrdShtDisabled, txtStartSeqDigitFromDisabled,
     txtCheckPrdShtToDisabled, txtProcControlTimeDisabled, cbxReqConnShtPcsTimeDisabled, txtPlasmaTimeDisabled, rbtPlasmaTimePCSDisabled, rbtPlasmaTimeSHTDisabled, rbtPlasmaTimeGRPDisabled, cbxReqUpdatePlasmaDisabled,
     cbxPlasmaNotStartELTDisabled, cbxPlasmaNotShowTimeDisabled, visiblePassWord, visibletxtPassWord, txtProduct, handleKeyProductName, btnRetriveClick, ErrorPrdName, txtUpdateCount, txtChkStartDig, txtShtLot, txtChkEndDig,
-    txtPcsSht, txtChkWord, selSheetType, txtSerialLength, selDateType, selDateTypeselChanged, txtPcsScan, txtEngCode, txtPcsTray, txtRevision, txtSerialFormat, selLaminationSide, txtSheetFormat, txtShtScan, txtShtLaser, ReqLotCheck, ReqVendorCheck,
-    ReqConfigCheck, txtConfigWord, txtConfigStart, txtConfigEnd, ReqConfigRunCheck, txtDupStart, txtDupEnd, txtAddInfo, txtPassWord, txtAbbr, txtSerialStartCode, rbtselLotRoll, ReqCheckLotShtCheck, txtCheckLotShtFrom,
+    txtPcsSht, txtChkWord, selSheetType, txtSerialLength, selDateType, selDateTypeselChanged, txtPcsScan, txtEngCode, txtPcsTray, txtRevision, txtSerialFormat, selLaminationSide, txtSheetFormat, txtShtScan, txtShtLaser, ReqLotCheck,
+    ReqConfigCheck, txtConfigWord, txtConfigStart, txtConfigEnd, ReqConfigRunCheck, txtDupStart, txtDupEnd, txtAddInfo, txtPassWord, txtAbbr, txtSerialStartCode, rbtselLotRoll, ReqCheckLotShtCheck, txtCheckLotShtFrom, ReqVendorCheck,
     txtCheckLotShtTo, selStatus, ReqControlPlasmaCheck, rbtPlasmaTime, ReqUpdatePlasmaCheck, PlasmaNotStartELTCheck, PlasmaNotShowTimeCheck, ReqStartSeqCodeCheck, ReqCheckWeekCodeCheck, ReqSheetMCCheck, txtWeekCodeStart,
     txtStartSeqCode, txtStartSeqDigitFrom, txtStartSeqDigitTo, ReqShtELTCheck, ReqSPIAOICheck, ReqVendorLotCheck, txtVendorLotLength, ReqDateProcCheck, txtDateFromProc, txtCheckRollPrdWord, RollReqCheckPrdLeafCheck, txtRollCheckPrdLeafFrom,
-    txtWeekCodeEnd, ReqConRollLeafCheck, txtLeafScan, txtRollNoLength, txtLeafNoLength, LeafReqSerialCheck, ReqCheckPrdRollCheck, txtCheckRollPrdFrom, txtCheckRollPrdTo, ReqSPIBCheck, ReqAOICoatFCheck, ReqAOICoatBCheck,
+    txtWeekCodeEnd, ReqConRollLeafCheck, txtLeafScan, txtRollNoLength, txtLeafNoLength, LeafReqSerialCheck, ReqCheckPrdRollCheck, txtCheckRollPrdFrom, txtCheckRollPrdTo, ReqSPIBCheck, ReqAOICoatFCheck, ReqAOICoatBCheck, 
     txtRollCheckPrdLeafTo, RollReqCheckLotLeafCheck, txtRollCheckLotLeafFrom, txtRollCheckLotLeafTo, ReqPreAOIFCheck, ReqPreAOIBCheck, ReqAOIFCheck, ReqAOIBCheck, ReqSPIFCheck, ReqEFPCAVICheck, txtUpdateBy, txtUpdateDate, chk_DelFlgCheck,
-    ReqReflowFCheck, ReqReflowBCheck, ReqXrayFCheck, ReqXrayBCheck, ReqXrayOneTimeCheck, ReqFinInspectCheck, txtFinInspectProc, ReqEFPCAOMCheck, ReqEFPCAOICheck, ReqEFPCOSTCheck, cbxReqCheckPrdShtDisabled, txtStartSeqCodeDisabled, txtStartSeqDigitFromDisabled,
-    txtStartSeqDigitToDisabled, txtVendorLotLengthDisabled, txtRollNoLengthDisabled, txtLeafNoLengthDisabled, txtLeafScanDisabled, cbxLeafReqSerialDisabled, cbxReqCheckPrdRollDisabled, txtCheckRollPrdFromDisabled, txtCheckRollPrdToDisabled, 
-    setReqLotCheck, setReqVendorCheck, ReqConfigCheckChanged, setReqConfigRunCheck, handlerbtLotRollChange, ReqCheckLotShtCheckChanged, ReqControlPlasmaCheckChanged, handlerbtPlasmaTimeChange, setReqEFPCAVICheck, setReqSPIFCheck, setReqSPIBCheck,
+    ReqReflowFCheck, ReqReflowBCheck, ReqXrayFCheck, ReqXrayBCheck, ReqXrayOneTimeCheck, ReqFinInspectCheck, txtFinInspectProc, ReqEFPCAOMCheck, ReqEFPCAOICheck, ReqEFPCOSTCheck, cbxReqCheckPrdShtDisabled, txtStartSeqCodeDisabled,
+    txtStartSeqDigitToDisabled, txtVendorLotLengthDisabled, txtRollNoLengthDisabled, txtLeafNoLengthDisabled, txtLeafScanDisabled, cbxLeafReqSerialDisabled, cbxReqCheckPrdRollDisabled, txtCheckRollPrdFromDisabled, txtCheckRollPrdToDisabled,
+    txtCheckRollPrdWordDisabled, cbxRollReqCheckPrdLeafDisabled, txtRollCheckPrdLeafFromDisabled, txtRollCheckPrdLeafToDisabled, cbxRollReqCheckLotLeafDisabled, txtRollCheckLotLeafFromDisabled, txtRollCheckLotLeafToDisabled, txtDateFromProcDisabled,
+    cbxReqCheckWeekCodeDisabled, txtWeekCodeStartDisabled, txtWeekCodeEndDisabled, txtShtPlasmaTimeDisabled, txtFinInspectProcDisabled, cbxReqVendorDisabled, cbxReqStartSeqCodeDisabled, txtConfigWordDisabled, txtConfigStartDisabled, txtConfigEndDisabled,
+    cbxReqConfigRunDisabled, txtCheckLotShtFromDisabled, txtCheckLotShtToDisabled, handleKeyUpdateCount, handleKeyCheckDigitFrom, handleKeyShtLot, handleKeyCheckDigitTo, handleKeyPcsSht, handleKeyCheckWord, handleselSheettype, handlerbtLotRollChange,
+    setReqLotCheck, setReqVendorCheck, ReqConfigCheckChanged, setReqConfigRunCheck, ReqCheckLotShtCheckChanged, ReqControlPlasmaCheckChanged, handlerbtPlasmaTimeChange, setReqEFPCAVICheck, setReqSPIFCheck, setReqSPIBCheck, setReqAOICoatBCheck,
     setReqUpdatePlasmaCheck, setPlasmaNotStartELTCheck, setPlasmaNotShowTimeCheck, ReqStartSeqCodeCheckChanged, setReqShtELTCheck, setReqSPIAOICheck, ReqVendorLotCheckChanged, ReqDateProcCheckChanged, ReqCheckWeekCodeCheckChanged, setReqAOICoatFCheck,
-    setReqSheetMCCheck, ReqConnectRollCheckChanged, setLeafReqSerialCheck, ReqCheckPrdRollCheckChanged, RollReqCheckPrdLeafCheckChanged, RollReqCheckLotLeafCheckChanged, setReqPreAOIFCheck, setReqPreAOIBCheck, setReqAOIFCheck, setReqAOIBCheck, setReqAOICoatBCheck,
-    setReqReflowFCheck, setReqReflowBCheck, setReqXrayFCheck, setReqXrayBCheck, setReqXrayOneTimeCheck, ReqFinInspectCheckChanged, setReqEFPCAOMCheck, setReqEFPCAOICheck, setReqEFPCOSTCheck,  
+    setReqSheetMCCheck, ReqConnectRollCheckChanged, setLeafReqSerialCheck, ReqCheckPrdRollCheckChanged, RollReqCheckPrdLeafCheckChanged, RollReqCheckLotLeafCheckChanged, setReqPreAOIFCheck, setReqPreAOIBCheck, setReqAOIFCheck, setReqAOIBCheck,
+    setReqReflowFCheck, setReqReflowBCheck, setReqXrayFCheck, setReqXrayBCheck, setReqXrayOneTimeCheck, ReqFinInspectCheckChanged, setReqEFPCAOMCheck, setReqEFPCAOICheck, setReqEFPCOSTCheck, handlekeySerialLength, handlekeyPcsScan, handlekeyEngCode,
+    handlekeyPcsTray, handlekeyRevision, handlekeySerialFormat, handleselLaminationSide, handlekeySheetFormat, handlekeyShtScan, handlekeyShtLaser, handlekeyConfigWord, handlekeyConfigStart, handlekeyConfigEnd, handlekeyDupStart, handlekeyDupEnd, 
+    handlekeyAddInfo, handlekeyPassWord, handlekeyAbbr, handlekeySerialStartCode, handlekeyCheckPrdShtFrom, handlekeyCheckPrdShtTo, handlekeyCheckLotShtFrom, handlekeyCheckLotShtTo, handleselStatus, handleselCheckIC, handlekeyPlasmaTime, handlekeyStartSeqCode,
+    handlekeyStartSeqDigitFrom, handlekeyStartSeqDigitTo, handlekeyVendorLotLength, handlekeyDateFromProc, handlekeyWeekCodeStart, handlekeyWeekCodeEnd, handlekeyLeafScan, handlekeyRollNoLength, handlekeyLeafNoLength, handlekeyCheckRollPrdFrom, 
+    handlekeyCheckRollPrdTo, handlekeyCheckRollPrdWord, handlekeyRollCheckPrdLeafFrom, handlekeyRollCheckPrdLeafTo, handlekeyRollCheckLotLeafFrom, handlekeyRollCheckLotLeafTo, handlekeyProcControlTime, handlekeyFinInspectProc, handlekeyShtPlasmaTime,
+    handlekeyBarcodeGrade, handlekeyUpdateBy, handlekeyUpdateDate, chk_DelFlgCheckChanged 
   }
 };
 
