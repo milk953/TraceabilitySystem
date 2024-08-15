@@ -17,7 +17,7 @@ import {fn_ScanAutoBendingTime} from './fn_ScanAutoBendingTime'
 function ScanAutoBendingTime() {
 const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemark,handletxtMCNo_TextChanged
   ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,pnlDetail,pnlResult,gvBending,gvBendingVisible
-,btnCancel} = fn_ScanAutoBendingTime()
+,btnCancel,fcGvSerial_txtSerial_0 } = fn_ScanAutoBendingTime()
   return (
     <>
       <Hearder />
@@ -123,10 +123,19 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
                             size="small"
                             fullWidth
                           //  inputRef={fcGvSerial_txtSerial_0}
+                          inputRef={(el) => (fcGvSerial_txtSerial_0.current[index] = el)}
                             value={txtSerial[index]}
                             onChange={(event) =>
                               handleSerialChange(index, event)
                             }
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
+                                if (index < gvSerial.length - 1) {
+                                  fcGvSerial_txtSerial_0.current[index + 1].focus();
+                                }
+                              }
+                            }}
                           />
                             </TableCell>
                           
