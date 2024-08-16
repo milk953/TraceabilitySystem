@@ -30,6 +30,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./SerialPcs.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsChrome";
+import Pageimg from "/src/assets/1.jpg";
 function ScanSMTRoollSht() {
   const {
     txtLot,
@@ -327,7 +328,7 @@ function ScanSMTRoollSht() {
                   height: "300px",
                   marginBottom: "30px",
                 }}
-                src="src/assets/1.jpg" // Import the image
+                src={Pageimg} // Import the image
                 alt="Description of the image"
               />
               </>)}

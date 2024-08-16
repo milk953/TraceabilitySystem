@@ -26,6 +26,7 @@ import "./ScanSMTSerialShtFINManySht.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
 import { Input } from "antd";
+import Pageimg from "/src/assets/1.jpg";
 function ScanSMTSerialShtFINManySht() {
   const {
     productCombo,
@@ -315,7 +316,7 @@ function ScanSMTSerialShtFINManySht() {
                     align: "center",
                     margin: "auto",
                   }}
-                  src="src/assets/1.jpg"
+                  src={Pageimg}
                   alt="Description of the image"
                 />
               )}

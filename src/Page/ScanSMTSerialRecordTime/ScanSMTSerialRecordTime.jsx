@@ -28,6 +28,7 @@ import {
     ArrowLeftOutlined,
     FileExcelFilled
 } from "@ant-design/icons";
+import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime.css";
 import Hearder from "../Header/Header";
@@ -561,7 +562,7 @@ function ScanSMTSerialRecordTime() {
                         marginLeft: "280px",
                         display: gvScanResult ? 'none' : 'block'
                     }}
-                    src="src/assets/1.jpg" // Import the image
+                    src={Pageimg} // Import the image
                     alt="Description of the image"
                 />
                 <div className="divgvScanResultRec" style={{ position: "relative" }}>

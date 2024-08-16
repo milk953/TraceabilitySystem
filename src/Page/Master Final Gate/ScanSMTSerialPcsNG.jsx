@@ -14,6 +14,7 @@ import {
 import "./ScanSMTSerialPcsNG.css";
 import { Typography } from "antd";
 import { fn_ScanSMTSerialPcsNG } from "./fn_ScanSMTSerialPcsNG";
+import Pageimg from "/src/assets/1.jpg";
 function ScanSMTSerialPcsNG() {
   const {
     hideImg,
@@ -270,7 +271,7 @@ function ScanSMTSerialPcsNG() {
                     align: "center",
                     margin: "auto",
                   }}
-                  src="src/assets/1.jpg"
+                  src={Pageimg}
                   alt="Description of the image"
                 />
               )}

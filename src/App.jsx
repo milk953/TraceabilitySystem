@@ -72,40 +72,40 @@ const App = () => {
   return (
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/TraceabilitySystem" element={<Homepage />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/SheetMaster" element={<Sheet_Master />} />
-            <Route path="/SerialMaster" element={<Serial_Master />} />
-            <Route path="/ProductMaster" element={<Product_master />} />
-            <Route path="/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
-            <Route path="/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
-            <Route path="/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
-            <Route path="/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
-            <Route path='/ScanSheetInspect' element={<ScanSheetInspect />} />
-            <Route path='/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
-            <Route path='/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
-            <Route path='/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
-            <Route path='/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
-            <Route path='/AVIConfirm' element = {<AVIManualConfirm />} />
-            <Route path='/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} /> 
-            <Route path='/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} /> 
+            <Route path="/TraceabilitySystem/SheetMaster" element={<Sheet_Master />} />
+            <Route path="/TraceabilitySystem/SerialMaster" element={<Serial_Master />} />
+            <Route path="/TraceabilitySystem/ProductMaster" element={<Product_master />} />
+            <Route path="/TraceabilitySystem/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
+            <Route path="/TraceabilitySystem/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
+            <Route path="/TraceabilitySystem/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
+            <Route path='/TraceabilitySystem/ScanSheetInspect' element={<ScanSheetInspect />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} /> 
+            <Route path='/TraceabilitySystem/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
+            <Route path='/TraceabilitySystem/AVIConfirm' element = {<AVIManualConfirm />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} /> 
+            <Route path='/TraceabilitySystem/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} /> 
 
             {/* View Data */}
-            <Route path='/ELTmaster' element={<ELTmaster />} />
-            <Route path='/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
-            <Route path='/SheetBincheking' element={<SheetBincheking />} />
-            <Route path='/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />  
+            <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
+            <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
+            <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />  
 
             {/* Maintenance */}
-            <Route path='/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
-            <Route path='/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
-            <Route path="/ScanSheetReflowTime" element={<ReflowControlTime />} />
-            <Route path="/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
-            <Route path="/Reject" element={<Reject />} />
-            <Route path="/ELTType" element={<SerialTestType />} />
-            <Route path="/ReJudgement" element={<ReJudgement />} />
-            <Route path="/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
-            <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
+            <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
+            <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
+            <Route path="/TraceabilitySystem/ScanSheetReflowTime" element={<ReflowControlTime />} />
+            <Route path="/TraceabilitySystem/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
+            <Route path="/TraceabilitySystem/Reject" element={<Reject />} />
+            <Route path="/TraceabilitySystem/ELTType" element={<SerialTestType />} />
+            <Route path="/TraceabilitySystem/ReJudgement" element={<ReJudgement />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
+            <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
           </Route>
         </Routes>
       </BrowserRouter>

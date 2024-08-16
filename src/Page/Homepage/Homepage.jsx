@@ -28,6 +28,7 @@ import {
   AreaChartOutlined,
   ScheduleOutlined,
 } from "@ant-design/icons";
+import Homeimg from "/src/assets/2.png";
 import SearchIcon from "@mui/icons-material/Search";
 import "/src/Page/Homepage/Homepage.css";
 import { Input, Space } from "antd";
@@ -170,7 +171,7 @@ function ScanSheetMOTTime() {
                       width: "400px",
                       height: "400px",
                     }}
-                    src="src/assets/2.png" // Import the image
+                    src={Homeimg} // Import the image
                     alt="Description of the image"
                   />
                 )}
