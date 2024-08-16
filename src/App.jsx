@@ -106,7 +106,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/ReJudgement" element={<ReJudgement />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
             <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
-            <Route path="/Prdmaster" element={<Prdmaster/>} />
+            <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} />
           </Route>
         </Routes>
       </BrowserRouter>
