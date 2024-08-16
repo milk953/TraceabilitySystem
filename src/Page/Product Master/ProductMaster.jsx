@@ -74,7 +74,15 @@ function ProductMaster() {
         handlekeyAddInfo, handlekeyPassWord, handlekeyAbbr, handlekeySerialStartCode, handlekeyCheckPrdShtFrom, handlekeyCheckPrdShtTo, handlekeyCheckLotShtFrom, handlekeyCheckLotShtTo, handleselStatus, handleselCheckIC, handlekeyPlasmaTime, handlekeyStartSeqCode,
         handlekeyStartSeqDigitFrom, handlekeyStartSeqDigitTo, handlekeyVendorLotLength, handlekeyDateFromProc, handlekeyWeekCodeStart, handlekeyWeekCodeEnd, handlekeyLeafScan, handlekeyRollNoLength, handlekeyLeafNoLength, handlekeyCheckRollPrdFrom,
         handlekeyCheckRollPrdTo, handlekeyCheckRollPrdWord, handlekeyRollCheckPrdLeafFrom, handlekeyRollCheckPrdLeafTo, handlekeyRollCheckLotLeafFrom, handlekeyRollCheckLotLeafTo, handlekeyProcControlTime, handlekeyFinInspectProc, handlekeyShtPlasmaTime,
-        handlekeyBarcodeGrade, handlekeyUpdateBy, handlekeyUpdateDate, chk_DelFlgCheckChanged
+        handlekeyBarcodeGrade, handlekeyUpdateBy, handlekeyUpdateDate, chk_DelFlgCheckChanged, btnSubmitClick, ErrorPrdNameMessage, lblMessage, lblMessageColor, ErrorShtLot, ErrorShtLotMessage, ErrorPcsSht, ErrorPcsShtMessage, ErrorShtScan, ErrorShtScanMessage,
+        ErrorShtLaser, ErrorShtLaserMessage, ErrorConfigWord, ErrorConfigWordMessage, ErrorConfigStart, ErrorConfigStartMessage, ErrorConfigEnd, ErrorConfigEndMessage, ErrorDupStart, ErrorDupStartMessage, ErrorDupEnd, ErrorDupEndMessage, ErrorCheckPrdShtFrom,
+        ErrorCheckPrdShtFromMessage, ErrorCheckPrdShtTo, ErrorCheckPrdShtToMessage, ErrorCheckLotShtFrom, ErrorCheckLotShtFromMessage, ErrorCheckLotShtTo, ErrorCheckLotShtToMessage, ErrorPlasmaTime, ErrorPlasmaTimeMessage, ErrorStartSeqCode, ErrorStartSeqCodeMessage,
+        ErrorStartSeqDigitFrom, ErrorStartSeqDigitFromMessage, ErrorStartSeqDigitTo, ErrorStartSeqDigitToMessage, ErrorVendorLotLength, ErrorVendorLotLengthMessage, ErrorRollNoLength, ErrorRollNoLengthMessage, ErrorLeafNoLength, ErrorLeafNoLengthMessage, ErrorLeafScan,
+        ErrorLeafScanMessage, ErrorCheckRollPrdFrom, ErrorCheckRollPrdFromMessage, ErrorCheckRollPrdTo, ErrorCheckRollPrdToMessage, ErrorCheckRollPrdWord, ErrorCheckRollPrdWordMessage, ErrorRollCheckPrdLeafFrom, ErrorRollCheckPrdLeafFromMessage, ErrorRollCheckPrdLeafTo,
+        ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
+        ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
+        ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
+        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage
 
     } = fn_ProductMaster();
 
@@ -98,6 +106,21 @@ function ProductMaster() {
                     justifyContent: "center"
                 }}
             >
+                <Paper
+                    className="lblMessage"
+                    elevation={1}
+                    style={{
+                        background: lblMessageColor,
+                        textAlign: "center",
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        style={{ color: "#fff" }}
+                    >
+                        {lblMessage}
+                    </Typography>
+                </Paper>
                 <Box justifyContent="space-between"
                     sx={{
                         textAlign: "center",
@@ -158,8 +181,8 @@ function ProductMaster() {
                                 <TableRow>
                                     <TableCell></TableCell>
                                     <TableCell>
-                                        <Typography style={{ fontSize: "small", color: "red" }}>
-                                            {ErrorPrdName ? "Please input product name." : null}
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPrdNameMessage}
                                         </Typography>
                                     </TableCell>
                                     <TableCell></TableCell>
@@ -191,7 +214,19 @@ function ProductMaster() {
                                                 width: "360px"
                                             }}
                                             onChange={handleKeyCheckDigitFrom}
+                                            error={ErrorChkStartDig}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorChkStartDigMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -206,6 +241,7 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtShtLot}
                                             onChange={handleKeyShtLot}
+                                            error={ErrorShtLot}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -218,7 +254,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtChkEndDig}
                                             onChange={handleKeyCheckDigitTo}
+                                            error={ErrorChkEndDig}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtLotMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorChkEndDigMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -233,6 +285,7 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtPcsSht}
                                             onChange={handleKeyPcsSht}
+                                            error={ErrorPcsSht}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -245,7 +298,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtChkWord}
                                             onChange={handleKeyCheckWord}
+                                            error={ErrorChkWord}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPcsShtMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorChkWordMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -270,6 +339,7 @@ function ProductMaster() {
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
+                                                    error={ErrorselSheetType}
                                                 />
                                             )}
                                         />
@@ -284,7 +354,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtSerialLength}
                                             onChange={handlekeySerialLength}
+                                            error={ErrorSerialLength}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorselSheetTypeMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorSerialLengthMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -320,6 +406,7 @@ function ProductMaster() {
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
+                                                    error={ErrorselDateType}
                                                 />
                                             )}
                                         />
@@ -334,7 +421,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtPcsScan}
                                             onChange={handlekeyPcsScan}
+                                            error={ErrorPcsScan}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorselDateTypeMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPcsScanMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -349,6 +452,7 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtEngCode}
                                             onChange={handlekeyEngCode}
+                                            error={ErrorEngCode}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -361,7 +465,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtPcsTray}
                                             onChange={handlekeyPcsTray}
+                                            error={ErrorPcsTray}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorEngCodeMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPcsTrayMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -376,6 +496,7 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtRevision}
                                             onChange={handlekeyRevision}
+                                            error={ErrorRevision}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -388,7 +509,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtSerialFormat}
                                             onChange={handlekeySerialFormat}
+                                            error={ErrorSerialFormat}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRevisionMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorSerialFormatMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -413,6 +550,7 @@ function ProductMaster() {
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
+                                                    error={ErrorLaminationSide}
                                                 />
                                             )}
                                         />
@@ -432,6 +570,17 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorLaminationSideMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+
+                                <TableRow>
                                     <TableCell>
                                         <Typography>SHT/SCAN :</Typography>
                                     </TableCell>
@@ -442,6 +591,7 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtShtScan}
                                             onChange={handlekeyShtScan}
+                                            error={ErrorShtScan}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -454,7 +604,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtShtLaser}
                                             onChange={handlekeyShtLaser}
+                                            error={ErrorShtLaser}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtScanMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtLaserMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -513,7 +679,19 @@ function ProductMaster() {
                                                 backgroundColor: txtConfigWordDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyConfigWord}
+                                            error={ErrorConfigWord}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorConfigWordMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -532,6 +710,7 @@ function ProductMaster() {
                                                 backgroundColor: txtConfigStartDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyConfigStart}
+                                            error={ErrorConfigStart}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -548,7 +727,23 @@ function ProductMaster() {
                                                 backgroundColor: txtConfigEndDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyConfigEnd}
+                                            error={ErrorConfigEnd}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorConfigStartMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorConfigEndMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -579,6 +774,7 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtDupStart}
                                             onChange={handlekeyDupStart}
+                                            error={ErrorDupStart}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -591,7 +787,23 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtDupEnd}
                                             onChange={handlekeyDupEnd}
+                                            error={ErrorDupEnd}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorDupStartMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorDupEndMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -624,6 +836,7 @@ function ProductMaster() {
                                                 fullWidth
                                                 value={txtPassWord}
                                                 onChange={handlekeyPassWord}
+                                                error={ErrorPassWord}
                                             />
                                         </TableCell>
                                     )}
@@ -639,6 +852,17 @@ function ProductMaster() {
                                             onChange={handlekeyAbbr}
                                         />
                                     </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPassWordMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
 
                                 <TableRow>
@@ -685,6 +909,7 @@ function ProductMaster() {
                                                 backgroundColor: txtCheckPrdShtDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyCheckPrdShtFrom}
+                                            error={ErrorCheckPrdShtFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -701,7 +926,23 @@ function ProductMaster() {
                                                 backgroundColor: txtCheckPrdShtToDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyCheckPrdShtTo}
+                                            error={ErrorCheckPrdShtTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckPrdShtFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckPrdShtToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -773,6 +1014,7 @@ function ProductMaster() {
                                                 backgroundColor: txtCheckLotShtFromDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyCheckLotShtFrom}
+                                            error={ErrorCheckLotShtFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -789,7 +1031,23 @@ function ProductMaster() {
                                                 backgroundColor: txtCheckLotShtToDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyCheckLotShtTo}
+                                            error={ErrorCheckLotShtTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckLotShtFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckLotShtToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -822,6 +1080,10 @@ function ProductMaster() {
                                             id="selectProductMst"
                                             value={selCheckIC}
                                             onChange={(e, value) => handleselCheckIC(value)}
+                                            disabled={selCheckIC === "N"}
+                                            style={{
+                                                backgroundColor: selCheckIC === "N" ? "#EEEEEE" : "inherit",
+                                            }}
                                             options={["N", "Y"]}
                                             getOptionLabel={(option) => (option === "N" ? "No" : "Yes")}
                                             isOptionEqualToValue={(option, value) => option === value}
@@ -863,7 +1125,19 @@ function ProductMaster() {
                                                 backgroundColor: txtPlasmaTimeDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyPlasmaTime}
+                                            error={ErrorPlasmaTime}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPlasmaTimeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1001,7 +1275,19 @@ function ProductMaster() {
                                                 backgroundColor: txtStartSeqCodeDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyStartSeqCode}
+                                            error={ErrorStartSeqCode}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorStartSeqCodeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1020,6 +1306,7 @@ function ProductMaster() {
                                                 backgroundColor: txtStartSeqDigitFromDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyStartSeqDigitFrom}
+                                            error={ErrorStartSeqDigitFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1036,7 +1323,23 @@ function ProductMaster() {
                                                 backgroundColor: txtStartSeqDigitToDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyStartSeqDigitTo}
+                                            error={ErrorStartSeqDigitTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorStartSeqDigitFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorStartSeqDigitToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1094,7 +1397,19 @@ function ProductMaster() {
                                                 backgroundColor: txtVendorLotLengthDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyVendorLotLength}
+                                            error={ErrorVendorLotLength}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorVendorLotLengthMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1125,7 +1440,19 @@ function ProductMaster() {
                                                 backgroundColor: txtDateFromProcDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyDateFromProc}
+                                            error={ErrorDateFromProc}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorDateFromProcMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1172,6 +1499,7 @@ function ProductMaster() {
                                                 backgroundColor: txtWeekCodeStartDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyWeekCodeStart}
+                                            error={ErrorWeekCodeStart}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1188,7 +1516,23 @@ function ProductMaster() {
                                                 backgroundColor: txtWeekCodeEndDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyWeekCodeEnd}
+                                            error={ErrorWeekCodeEnd}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorWeekCodeStartMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorWeekCodeEndMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1219,7 +1563,19 @@ function ProductMaster() {
                                                 backgroundColor: txtLeafScanDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyLeafScan}
+                                            error={ErrorLeafScan}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorLeafScanMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1238,6 +1594,7 @@ function ProductMaster() {
                                                 backgroundColor: txtRollNoLengthDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyRollNoLength}
+                                            error={ErrorRollNoLength}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1254,7 +1611,23 @@ function ProductMaster() {
                                                 backgroundColor: txtLeafNoLengthDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyLeafNoLength}
+                                            error={ErrorLeafNoLength}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollNoLengthMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorLeafNoLengthMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1302,6 +1675,7 @@ function ProductMaster() {
                                                 backgroundColor: txtCheckRollPrdFromDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyCheckRollPrdFrom}
+                                            error={ErrorCheckRollPrdFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1318,7 +1692,23 @@ function ProductMaster() {
                                                 backgroundColor: txtCheckRollPrdToDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyCheckRollPrdTo}
+                                            error={ErrorCheckRollPrdTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckRollPrdFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckRollPrdToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1337,6 +1727,7 @@ function ProductMaster() {
                                                 backgroundColor: txtCheckRollPrdWordDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyCheckRollPrdWord}
+                                            error={ErrorCheckRollPrdWord}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1355,6 +1746,17 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckRollPrdWordMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+
+                                <TableRow>
                                     <TableCell>
                                         <Typography>Leaf PRD. Digit (From) :</Typography>
                                     </TableCell>
@@ -1369,6 +1771,7 @@ function ProductMaster() {
                                                 backgroundColor: txtRollCheckPrdLeafFromDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyRollCheckPrdLeafFrom}
+                                            error={ErrorRollCheckPrdLeafFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1385,7 +1788,23 @@ function ProductMaster() {
                                                 backgroundColor: txtRollCheckPrdLeafToDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyRollCheckPrdLeafTo}
+                                            error={ErrorRollCheckPrdLeafTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckPrdLeafFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckPrdLeafToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1417,7 +1836,19 @@ function ProductMaster() {
                                                 backgroundColor: txtRollCheckLotLeafFromDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyRollCheckLotLeafFrom}
+                                            error={ErrorRollCheckLotLeafFrom}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckLotLeafFromMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1436,6 +1867,7 @@ function ProductMaster() {
                                                 backgroundColor: txtRollCheckLotLeafToDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyRollCheckLotLeafTo}
+                                            error={ErrorRollCheckLotLeafTo}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1450,6 +1882,17 @@ function ProductMaster() {
                                             onChange={(e) => setReqConShtPcsRollCheck(e.target.checked)}
                                         />
                                     </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckLotLeafToMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
 
                                 <TableRow>
@@ -1701,7 +2144,19 @@ function ProductMaster() {
                                                 backgroundColor: txtProcControlTimeDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyProcControlTime}
+                                            error={ErrorProcControlTime}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorProcControlTimeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1762,7 +2217,19 @@ function ProductMaster() {
                                                 backgroundColor: txtFinInspectProcDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyFinInspectProc}
+                                            error={ErrorFinInspectProc}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorFinInspectProcMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1793,7 +2260,19 @@ function ProductMaster() {
                                                 backgroundColor: txtShtPlasmaTimeDisabled ? "#EEEEEE" : "inherit",
                                             }}
                                             onChange={handlekeyShtPlasmaTime}
+                                            error={ErrorShtPlasmaTime}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtPlasmaTimeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1994,7 +2473,7 @@ function ProductMaster() {
                         size="small"
                         color="success"
                         sx={{ marginTop: "20px" }}
-                    // onClick={btnSubmit}
+                        onClick={btnSubmitClick}
                     >
                         Submit
                     </Button>
