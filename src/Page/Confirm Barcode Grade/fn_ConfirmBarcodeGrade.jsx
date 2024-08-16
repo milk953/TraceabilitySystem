@@ -197,7 +197,7 @@ function fn_ConfirmBarcodeGrade() {
               SetMode("SERIAL");
               settxtMachineNo((prevState) =>({...prevState,value:'', }));
               if (datagetPd.prm_sht_machine_flg == "Y") {
-                settxtMachineNo((prevState) =>({...prevState,visble:'',visble:'' }));
+                settxtMachineNo((prevState) =>({...prevState,visble:'' }));
                 fctMachchine.current.focus();
               } else {
                 settxtMachineNo((prevState) =>({...prevState,visble:'none', }));
