@@ -21,7 +21,7 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-
+import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
 import Hearder from "../Header/Header";
@@ -441,7 +441,7 @@ useEffect(() => {
                   height: "350px",
                   marginBottom: "30px",
                 }}
-                src="src/assets/1.jpg" // Import the image
+                src={Pageimg} // Import the image
                 alt="Description of the image"
               /></>)}
              

@@ -17,7 +17,7 @@ function fn_Homepage() {
   var UserLogin = localStorage.getItem("UserLogin");
 
   const openLoginModal = () => {
-    if (window.location.pathname === "/" && LoginStatus === false) {
+    if (window.location.pathname === "/TraceabilitySystem" && LoginStatus === false) {
       Swal.fire({
         title: "เข้าสู่ระบบ",
         html:

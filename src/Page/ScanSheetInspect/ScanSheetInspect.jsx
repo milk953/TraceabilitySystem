@@ -30,7 +30,7 @@ import "/src/Page/ScanSheetInspect/ScanSheetInspect.css";
 import Hearder from "../Header/Header.jsx";
 import { green } from "@mui/material/colors";
 import { fn_ScanSheetInspect } from "./function_ScanSheetInspect.jsx";
-
+import Pageimg from "/src/assets/1.jpg";
 function ScanSheetInspect() {
     const {
         txtLotNo, settxtLotNo, ClearLot, txtProduct, settxtProduct, txtRollNo, settxtRollNo, txtScanBy, settxtScanBy,
@@ -459,7 +459,7 @@ function ScanSheetInspect() {
                         marginLeft: "280px",
                         display: gvScanResult ? 'none' : 'block'
                     }}
-                    src="src/assets/1.jpg" // Import the image
+                    src={Pageimg}// Import the image
                     alt="Description of the image"
                 />
                 <div className="divgvScan" style={{ position: "relative" }}>
