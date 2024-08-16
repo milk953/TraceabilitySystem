@@ -33,6 +33,7 @@ import ScanSMTSerialPcsChrome from "./Page/ScanSMTSerialPcsChrome/ScanSMTSerialP
 import ReJudgement from "./Page/ReJudgement/ReJudgement";
 import ScanSMTSerialPcsBoxOnlyGood from "./Page/ScanSMTSerialPcsBoxOnlyGood/ScanSMTSerialPcsBoxOnlyGood"
 import ScanSMTSerialPcsNG from "./Page/Master Final Gate/ScanSMTSerialPcsNG";
+import Prdmaster from "./Page/ProductMasterMay/prdmaster";
 
 
 
@@ -106,6 +107,7 @@ const App = () => {
             <Route path="/ReJudgement" element={<ReJudgement />} />
             <Route path="/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
             <Route path="/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
+            <Route path="/Prdmaster" element={<Prdmaster/>} />
           </Route>
         </Routes>
       </BrowserRouter>
