@@ -1124,7 +1124,10 @@ function fn_ScanSMTSerialPcsNG() {
     }
     return StrTemp;
   }
-
+  function ChangeBase34(intnumber) {
+    const strChange = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+    return strChange[intnumber];
+  }
   function convertBase34to10(strText) {
     const strChange = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
     let result = 0;
@@ -1214,8 +1217,7 @@ function fn_ScanSMTSerialPcsNG() {
     handletxtSerialChange,
     txtmasterCode_Change,
     gvSerialResult,
-    lblResult,
-    gvSerialResult
+    lblResult
   };
 }
 
