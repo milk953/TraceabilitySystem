@@ -1,8 +1,8 @@
 .divTbSheet{
-    justify-content: center;
-    display: flex;
-    max-width: 100%;
-    overflow-x: auto;
+  justify-content: center;
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 
@@ -17,7 +17,8 @@
 
 .TbProductMstmay td {
   padding: 3px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  border: none;
 }
 
 #txtfield {
