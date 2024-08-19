@@ -27,9 +27,10 @@ import Hearder from "../Header/Header";
 import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
 function ScanSMTRoollSht() {
 const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlProduct,ddlProduct_SelectedIndexChanged,
-  ddlProduct
+  ddlProduct,    txtMachine_TextChanged  ,txtMachine,settxtMachine,ibtMachineBack_Click,txtOP_TextChanged,txtOP,settxtOP,ibtOPBack_Click,txtBox_TextChanged,
+  txtBox,settxtBox
 } = fn_ScanSMTSerialPcsBoxOnlyGood()
-
+// console.log(txtBox.value," eiei")
   return (
     <div>
       <Hearder />
@@ -117,25 +118,25 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
-                        // value={txtPackingNo.value}
-                        // onChange={(e) => {
-                        //   settxtPackingNo((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        value={txtMachine.value}
+                        onChange={(e) => {
+                          settxtMachine((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
                         // style={{ ...txtPackingNo.style, width: "80%" }}
                         // disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtPackingNo_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtPackingNo_TextChanged}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtMachine_TextChanged();
+                          }
+                        }}
+                        onBlur={txtMachine_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
-                      // onClick={ibtPackingBack_Click}
+                      onClick={ibtMachineBack_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -151,25 +152,25 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
-                        // value={txtPackingNo.value}
-                        // onChange={(e) => {
-                        //   settxtPackingNo((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        value={txtOP.value}
+                        onChange={(e) => {
+                          settxtOP((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
                         // style={{ ...txtPackingNo.style, width: "80%" }}
                         // disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtPackingNo_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtPackingNo_TextChanged}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtOP_TextChanged();
+                          }
+                        }}
+                        onBlur={txtOP_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
-                      // onClick={ibtPackingBack_Click}
+                      onClick={ibtOPBack_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -185,22 +186,22 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
-                        // value={txtPackingNo.value}
-                        // onChange={(e) => {
-                        //   settxtPackingNo((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        value={txtBox.value}
+                        onChange={(e) => {
+                          settxtBox((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
                         // style={{ ...txtPackingNo.style, width: "80%" }}
                         // disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtPackingNo_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtPackingNo_TextChanged}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtBox_TextChanged();
+                          }
+                        }}
+                        onBlur={txtBox_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
                       // onClick={ibtPackingBack_Click}
@@ -209,7 +210,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                       </Button>
                     </TableCell>
                   </TableRow>
-                  <TableRow style={{display:''}}>
+                  <TableRow style={{display:''}}>   
                     <TableCell align="right">
                       <Typography>Packing No :</Typography>
                     </TableCell>
