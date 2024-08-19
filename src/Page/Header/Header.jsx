@@ -17,6 +17,9 @@ import { fn_Homepage } from "../Homepage/fn_Homepage";
 import HomeIcon from "@mui/icons-material/Home";
 import Tooltip from "@mui/material/Tooltip";
 import { LoginOutlined } from "@mui/icons-material";
+import ImgLoging from "../Header/login.png"
+import ImgLogOut from "../Header/logout.png"
+
 function Hearder() {
   const { openLoginModal, menuName } = fn_Homepage();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -40,14 +43,27 @@ function Hearder() {
       };
       return (
         <Tooltip title="LogOut">
-        <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} />
+          <Avatar 
+  shape="square" 
+  size={64} 
+  src={ImgLoging}  
+  onClick={goHome} 
+  style={{ cursor: 'pointer' }} 
+/>
+        {/* <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} /> */}
       </Tooltip>
         
       );
     }
     return (
     <Tooltip title="Login">
-     <LoginIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  />
+                <Avatar 
+  shape="square" 
+  size={64} 
+  src={ImgLoging}  
+  onClick={openLoginModal} 
+  style={{ cursor: 'pointer' }} />
+     {/* <LoginIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  /> */}
     </Tooltip>
     
     );
@@ -55,7 +71,12 @@ function Hearder() {
   const logOut = () => {
     return (
       <Tooltip title="LogOut">
-        <LogoutIcon style={{ color: "" }} onClick={Logout} />
+                      <Avatar 
+  shape="square" 
+  size={64} 
+  src={ImgLogOut}  
+  onClick={Logout} 
+  style={{ cursor: 'pointer' }} />
       </Tooltip>
     );
   };
