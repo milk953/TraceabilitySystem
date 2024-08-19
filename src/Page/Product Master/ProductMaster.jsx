@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../Product Master/Style.css";
-import Hearder from "../Header/Hearder";
 // import "./master.css";
 import Popup from "./ProductPopup.jsx";
 import { Empty } from "antd";
@@ -53,20 +52,37 @@ function ProductMaster() {
     const {
         txtCheckPrdShtFrom, txtCheckPrdShtTo, selCheckIC, txtPlasmaTime, txtProcControlTime, txtShtPlasmaTime, txtBarcodeGrade, ReqCheckPrdShtCheck, ReqCheckPrdShtCheckChanged, ReqConShtPcsRollCheck, setReqConShtPcsRollCheck,
         ReqProcControlTimeCheck, ReqProcControlTimeCheckChanged, ReqConnShtPcsTimeCheck, setReqConnShtPcsTimeCheck, ReqFinalPackingGroupCheck, setReqFinalPackingGroupCheck, ReqShtControlPlasmaCheck, ReqShtControlPlasmaCheckChanged,
-        PlasmaConnShtPcsCheck, setPlasmaConnShtPcsCheck, ConnShtReqBoardFlg, setConnShtReqBoardFlg, AutoPressFCheck, setAutoPressFCheck, AutoPressBCheck, setAutoPressBCheck, cbxReqPrdShtDisabled, txtCheckPrdShtDisabled,
+        PlasmaConnShtPcsCheck, setPlasmaConnShtPcsCheck, ConnShtReqBoardFlg, setConnShtReqBoardFlg, AutoPressFCheck, setAutoPressFCheck, AutoPressBCheck, setAutoPressBCheck, txtCheckPrdShtDisabled, txtStartSeqDigitFromDisabled,
         txtCheckPrdShtToDisabled, txtProcControlTimeDisabled, cbxReqConnShtPcsTimeDisabled, txtPlasmaTimeDisabled, rbtPlasmaTimePCSDisabled, rbtPlasmaTimeSHTDisabled, rbtPlasmaTimeGRPDisabled, cbxReqUpdatePlasmaDisabled,
         cbxPlasmaNotStartELTDisabled, cbxPlasmaNotShowTimeDisabled, visiblePassWord, visibletxtPassWord, txtProduct, handleKeyProductName, btnRetriveClick, ErrorPrdName, txtUpdateCount, txtChkStartDig, txtShtLot, txtChkEndDig,
-        txtPcsSht, txtChkWord, selSheetType, txtSerialLength, selDateType, selDateTypeselChanged, txtPcsScan, txtEngCode, txtPcsTray, txtRevision, txtSerialFormat, selLaminationSide, txtSheetFormat, txtShtScan, txtShtLaser, ReqLotCheck, ReqVendorCheck,
-        ReqConfigCheck, txtConfigWord, txtConfigStart, txtConfigEnd, ReqConfigRunCheck, txtDupStart, txtDupEnd, txtAddInfo, txtPassWord, txtAbbr, txtSerialStartCode, rbtselLotRoll, ReqCheckLotShtCheck, txtCheckLotShtFrom,
+        txtPcsSht, txtChkWord, selSheetType, txtSerialLength, selDateType, selDateTypeselChanged, txtPcsScan, txtEngCode, txtPcsTray, txtRevision, txtSerialFormat, selLaminationSide, txtSheetFormat, txtShtScan, txtShtLaser, ReqLotCheck,
+        ReqConfigCheck, txtConfigWord, txtConfigStart, txtConfigEnd, ReqConfigRunCheck, txtDupStart, txtDupEnd, txtAddInfo, txtPassWord, txtAbbr, txtSerialStartCode, rbtselLotRoll, ReqCheckLotShtCheck, txtCheckLotShtFrom, ReqVendorCheck,
         txtCheckLotShtTo, selStatus, ReqControlPlasmaCheck, rbtPlasmaTime, ReqUpdatePlasmaCheck, PlasmaNotStartELTCheck, PlasmaNotShowTimeCheck, ReqStartSeqCodeCheck, ReqCheckWeekCodeCheck, ReqSheetMCCheck, txtWeekCodeStart,
         txtStartSeqCode, txtStartSeqDigitFrom, txtStartSeqDigitTo, ReqShtELTCheck, ReqSPIAOICheck, ReqVendorLotCheck, txtVendorLotLength, ReqDateProcCheck, txtDateFromProc, txtCheckRollPrdWord, RollReqCheckPrdLeafCheck, txtRollCheckPrdLeafFrom,
         txtWeekCodeEnd, ReqConRollLeafCheck, txtLeafScan, txtRollNoLength, txtLeafNoLength, LeafReqSerialCheck, ReqCheckPrdRollCheck, txtCheckRollPrdFrom, txtCheckRollPrdTo, ReqSPIBCheck, ReqAOICoatFCheck, ReqAOICoatBCheck,
         txtRollCheckPrdLeafTo, RollReqCheckLotLeafCheck, txtRollCheckLotLeafFrom, txtRollCheckLotLeafTo, ReqPreAOIFCheck, ReqPreAOIBCheck, ReqAOIFCheck, ReqAOIBCheck, ReqSPIFCheck, ReqEFPCAVICheck, txtUpdateBy, txtUpdateDate, chk_DelFlgCheck,
-        ReqReflowFCheck, ReqReflowBCheck, ReqXrayFCheck, ReqXrayBCheck, ReqXrayOneTimeCheck, ReqFinInspectCheck, txtFinInspectProc, ReqEFPCAOMCheck, ReqEFPCAOICheck, ReqEFPCOSTCheck,
-        setReqLotCheck, setReqVendorCheck, ReqConfigCheckChanged, setReqConfigRunCheck, handlerbtLotRollChange, ReqCheckLotShtCheckChanged, ReqControlPlasmaCheckChanged, handlerbtPlasmaTimeChange, setReqEFPCAVICheck, setReqSPIFCheck, setReqSPIBCheck,
+        ReqReflowFCheck, ReqReflowBCheck, ReqXrayFCheck, ReqXrayBCheck, ReqXrayOneTimeCheck, ReqFinInspectCheck, txtFinInspectProc, ReqEFPCAOMCheck, ReqEFPCAOICheck, ReqEFPCOSTCheck, cbxReqCheckPrdShtDisabled, txtStartSeqCodeDisabled,
+        txtStartSeqDigitToDisabled, txtVendorLotLengthDisabled, txtRollNoLengthDisabled, txtLeafNoLengthDisabled, txtLeafScanDisabled, cbxLeafReqSerialDisabled, cbxReqCheckPrdRollDisabled, txtCheckRollPrdFromDisabled, txtCheckRollPrdToDisabled,
+        txtCheckRollPrdWordDisabled, cbxRollReqCheckPrdLeafDisabled, txtRollCheckPrdLeafFromDisabled, txtRollCheckPrdLeafToDisabled, cbxRollReqCheckLotLeafDisabled, txtRollCheckLotLeafFromDisabled, txtRollCheckLotLeafToDisabled, txtDateFromProcDisabled,
+        cbxReqCheckWeekCodeDisabled, txtWeekCodeStartDisabled, txtWeekCodeEndDisabled, txtShtPlasmaTimeDisabled, txtFinInspectProcDisabled, cbxReqVendorDisabled, cbxReqStartSeqCodeDisabled, txtConfigWordDisabled, txtConfigStartDisabled, txtConfigEndDisabled,
+        cbxReqConfigRunDisabled, txtCheckLotShtFromDisabled, txtCheckLotShtToDisabled, handleKeyUpdateCount, handleKeyCheckDigitFrom, handleKeyShtLot, handleKeyCheckDigitTo, handleKeyPcsSht, handleKeyCheckWord, handleselSheettype, handlerbtLotRollChange,
+        setReqLotCheck, setReqVendorCheck, ReqConfigCheckChanged, setReqConfigRunCheck, ReqCheckLotShtCheckChanged, ReqControlPlasmaCheckChanged, handlerbtPlasmaTimeChange, setReqEFPCAVICheck, setReqSPIFCheck, setReqSPIBCheck, setReqAOICoatBCheck,
         setReqUpdatePlasmaCheck, setPlasmaNotStartELTCheck, setPlasmaNotShowTimeCheck, ReqStartSeqCodeCheckChanged, setReqShtELTCheck, setReqSPIAOICheck, ReqVendorLotCheckChanged, ReqDateProcCheckChanged, ReqCheckWeekCodeCheckChanged, setReqAOICoatFCheck,
-        setReqSheetMCCheck, ReqConnectRollCheckChanged, setLeafReqSerialCheck, ReqCheckPrdRollCheckChanged, RollReqCheckPrdLeafCheckChanged, RollReqCheckLotLeafCheckChanged, setReqPreAOIFCheck, setReqPreAOIBCheck, setReqAOIFCheck, setReqAOIBCheck, setReqAOICoatBCheck,
-        setReqReflowFCheck, setReqReflowBCheck, setReqXrayFCheck, setReqXrayBCheck, setReqXrayOneTimeCheck, ReqFinInspectCheckChanged, setReqEFPCAOMCheck, setReqEFPCAOICheck, setReqEFPCOSTCheck,
+        setReqSheetMCCheck, ReqConnectRollCheckChanged, setLeafReqSerialCheck, ReqCheckPrdRollCheckChanged, RollReqCheckPrdLeafCheckChanged, RollReqCheckLotLeafCheckChanged, setReqPreAOIFCheck, setReqPreAOIBCheck, setReqAOIFCheck, setReqAOIBCheck,
+        setReqReflowFCheck, setReqReflowBCheck, setReqXrayFCheck, setReqXrayBCheck, setReqXrayOneTimeCheck, ReqFinInspectCheckChanged, setReqEFPCAOMCheck, setReqEFPCAOICheck, setReqEFPCOSTCheck, handlekeySerialLength, handlekeyPcsScan, handlekeyEngCode,
+        handlekeyPcsTray, handlekeyRevision, handlekeySerialFormat, handleselLaminationSide, handlekeySheetFormat, handlekeyShtScan, handlekeyShtLaser, handlekeyConfigWord, handlekeyConfigStart, handlekeyConfigEnd, handlekeyDupStart, handlekeyDupEnd,
+        handlekeyAddInfo, handlekeyPassWord, handlekeyAbbr, handlekeySerialStartCode, handlekeyCheckPrdShtFrom, handlekeyCheckPrdShtTo, handlekeyCheckLotShtFrom, handlekeyCheckLotShtTo, handleselStatus, handleselCheckIC, handlekeyPlasmaTime, handlekeyStartSeqCode,
+        handlekeyStartSeqDigitFrom, handlekeyStartSeqDigitTo, handlekeyVendorLotLength, handlekeyDateFromProc, handlekeyWeekCodeStart, handlekeyWeekCodeEnd, handlekeyLeafScan, handlekeyRollNoLength, handlekeyLeafNoLength, handlekeyCheckRollPrdFrom,
+        handlekeyCheckRollPrdTo, handlekeyCheckRollPrdWord, handlekeyRollCheckPrdLeafFrom, handlekeyRollCheckPrdLeafTo, handlekeyRollCheckLotLeafFrom, handlekeyRollCheckLotLeafTo, handlekeyProcControlTime, handlekeyFinInspectProc, handlekeyShtPlasmaTime,
+        handlekeyBarcodeGrade, handlekeyUpdateBy, handlekeyUpdateDate, chk_DelFlgCheckChanged, btnSubmitClick, ErrorPrdNameMessage, lblMessage, lblMessageColor, ErrorShtLot, ErrorShtLotMessage, ErrorPcsSht, ErrorPcsShtMessage, ErrorShtScan, ErrorShtScanMessage,
+        ErrorShtLaser, ErrorShtLaserMessage, ErrorConfigWord, ErrorConfigWordMessage, ErrorConfigStart, ErrorConfigStartMessage, ErrorConfigEnd, ErrorConfigEndMessage, ErrorDupStart, ErrorDupStartMessage, ErrorDupEnd, ErrorDupEndMessage, ErrorCheckPrdShtFrom,
+        ErrorCheckPrdShtFromMessage, ErrorCheckPrdShtTo, ErrorCheckPrdShtToMessage, ErrorCheckLotShtFrom, ErrorCheckLotShtFromMessage, ErrorCheckLotShtTo, ErrorCheckLotShtToMessage, ErrorPlasmaTime, ErrorPlasmaTimeMessage, ErrorStartSeqCode, ErrorStartSeqCodeMessage,
+        ErrorStartSeqDigitFrom, ErrorStartSeqDigitFromMessage, ErrorStartSeqDigitTo, ErrorStartSeqDigitToMessage, ErrorVendorLotLength, ErrorVendorLotLengthMessage, ErrorRollNoLength, ErrorRollNoLengthMessage, ErrorLeafNoLength, ErrorLeafNoLengthMessage, ErrorLeafScan,
+        ErrorLeafScanMessage, ErrorCheckRollPrdFrom, ErrorCheckRollPrdFromMessage, ErrorCheckRollPrdTo, ErrorCheckRollPrdToMessage, ErrorCheckRollPrdWord, ErrorCheckRollPrdWordMessage, ErrorRollCheckPrdLeafFrom, ErrorRollCheckPrdLeafFromMessage, ErrorRollCheckPrdLeafTo,
+        ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
+        ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
+        ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
+        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage
 
     } = fn_ProductMaster();
 
@@ -90,6 +106,21 @@ function ProductMaster() {
                     justifyContent: "center"
                 }}
             >
+                <Paper
+                    className="lblMessage"
+                    elevation={1}
+                    style={{
+                        background: lblMessageColor,
+                        textAlign: "center",
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        style={{ color: "#fff" }}
+                    >
+                        {lblMessage}
+                    </Typography>
+                </Paper>
                 <Box justifyContent="space-between"
                     sx={{
                         textAlign: "center",
@@ -132,10 +163,6 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtProduct}
-                                            // disabled={txtLotDisabled}
-                                            // style={{
-                                            //     width: "80px"
-                                            // }}
                                             onChange={handleKeyProductName}
                                             error={ErrorPrdName}
                                         />
@@ -154,8 +181,8 @@ function ProductMaster() {
                                 <TableRow>
                                     <TableCell></TableCell>
                                     <TableCell>
-                                        <Typography style={{ fontSize: "small", color: "red" }}>
-                                            {ErrorPrdName ? "Please input product name." : null}
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPrdNameMessage}
                                         </Typography>
                                     </TableCell>
                                     <TableCell></TableCell>
@@ -171,13 +198,7 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtUpdateCount}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handleKeyUpdateCount}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -189,14 +210,23 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtChkStartDig}
-                                            // disabled={txtLotDisabled}
                                             style={{
                                                 width: "360px"
                                             }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handleKeyCheckDigitFrom}
+                                            error={ErrorChkStartDig}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorChkStartDigMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -210,13 +240,8 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtShtLot}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handleKeyShtLot}
+                                            error={ErrorShtLot}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -228,14 +253,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtChkEndDig}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handleKeyCheckDigitTo}
+                                            error={ErrorChkEndDig}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtLotMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorChkEndDigMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -249,13 +284,8 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtPcsSht}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handleKeyPcsSht}
+                                            error={ErrorPcsSht}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -267,14 +297,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtChkWord}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handleKeyCheckWord}
+                                            error={ErrorChkWord}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPcsShtMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorChkWordMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -285,12 +325,8 @@ function ProductMaster() {
                                     <TableCell>
                                         <Autocomplete
                                             id="selectProductMst"
-                                            // disabled={selProDisabled}
-                                            // style={{
-                                            //     backgroundColor: selProDisabled ? "#EEEEEE" : "inherit",
-                                            // }}
                                             value={selSheetType}
-                                            // onChange={(e, value) => handleChangeProduct(value)}
+                                            onChange={(e, value) => handleselSheettype(value)}
                                             options={["", "S", "D"]}
                                             getOptionLabel={(option) => {
                                                 if (option === "S") return "Single";
@@ -303,6 +339,7 @@ function ProductMaster() {
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
+                                                    error={ErrorselSheetType}
                                                 />
                                             )}
                                         />
@@ -316,14 +353,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtSerialLength}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeySerialLength}
+                                            error={ErrorSerialLength}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorselSheetTypeMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorSerialLengthMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -334,10 +381,6 @@ function ProductMaster() {
                                     <TableCell>
                                         <Autocomplete
                                             id="selectProductMst"
-                                            // disabled={selProDisabled}
-                                            // style={{
-                                            //     backgroundColor: selProDisabled ? "#EEEEEE" : "inherit",
-                                            // }}
                                             value={selDateType}
                                             onChange={(e, value) => selDateTypeselChanged(value)}
                                             options={["", "Y", "W", "R", "J", "B", "I", "M", "N", "U", "C", "S", "D", "O"]}
@@ -363,6 +406,7 @@ function ProductMaster() {
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
+                                                    error={ErrorselDateType}
                                                 />
                                             )}
                                         />
@@ -376,14 +420,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtPcsScan}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyPcsScan}
+                                            error={ErrorPcsScan}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorselDateTypeMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPcsScanMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -397,13 +451,8 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtEngCode}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyEngCode}
+                                            error={ErrorEngCode}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -415,14 +464,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtPcsTray}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyPcsTray}
+                                            error={ErrorPcsTray}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorEngCodeMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPcsTrayMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -436,13 +495,8 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtRevision}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyRevision}
+                                            error={ErrorRevision}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -454,14 +508,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtSerialFormat}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeySerialFormat}
+                                            error={ErrorSerialFormat}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRevisionMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorSerialFormatMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -472,12 +536,8 @@ function ProductMaster() {
                                     <TableCell>
                                         <Autocomplete
                                             id="selectProductMst"
-                                            // disabled={selProDisabled}
-                                            // style={{
-                                            //     backgroundColor: selProDisabled ? "#EEEEEE" : "inherit",
-                                            // }}
                                             value={selLaminationSide}
-                                            // onChange={(e, value) => handleChangeProduct(value)}
+                                            onChange={(e, value) => handleselLaminationSide(value)}
                                             options={["", "F", "B"]}
                                             getOptionLabel={(option) => {
                                                 if (option === "F") return "F";
@@ -490,6 +550,7 @@ function ProductMaster() {
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
+                                                    error={ErrorLaminationSide}
                                                 />
                                             )}
                                         />
@@ -503,15 +564,20 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtSheetFormat}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeySheetFormat}
                                         />
                                     </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorLaminationSideMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
 
                                 <TableRow>
@@ -524,13 +590,8 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtShtScan}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyShtScan}
+                                            error={ErrorShtScan}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -542,14 +603,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtShtLaser}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyShtLaser}
+                                            error={ErrorShtLaser}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtScanMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtLaserMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -574,6 +645,7 @@ function ProductMaster() {
                                             size="small"
                                             id="checkboxReqLots"
                                             style={{ padding: "0" }}
+                                            disabled={cbxReqVendorDisabled}
                                             checked={ReqVendorCheck}
                                             onChange={(e) => setReqVendorCheck(e.target.checked)}
                                         />
@@ -602,14 +674,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtConfigWord}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtConfigWordDisabled}
+                                            style={{
+                                                backgroundColor: txtConfigWordDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyConfigWord}
+                                            error={ErrorConfigWord}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorConfigWordMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -623,13 +705,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtConfigStart}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtConfigStartDisabled}
+                                            style={{
+                                                backgroundColor: txtConfigStartDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyConfigStart}
+                                            error={ErrorConfigStart}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -641,14 +722,28 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtConfigEnd}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtConfigEndDisabled}
+                                            style={{
+                                                backgroundColor: txtConfigEndDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyConfigEnd}
+                                            error={ErrorConfigEnd}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorConfigStartMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorConfigEndMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -661,6 +756,7 @@ function ProductMaster() {
                                             size="small"
                                             id="checkboxReqLots"
                                             style={{ padding: "0" }}
+                                            disabled={cbxReqConfigRunDisabled}
                                             checked={ReqConfigRunCheck}
                                             onChange={(e) => setReqConfigRunCheck(e.target.checked)}
                                         />
@@ -677,13 +773,8 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtDupStart}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyDupStart}
+                                            error={ErrorDupStart}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -695,14 +786,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtDupEnd}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyDupEnd}
+                                            error={ErrorDupEnd}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorDupStartMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorDupEndMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -716,13 +817,7 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtAddInfo}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyAddInfo}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -740,13 +835,8 @@ function ProductMaster() {
                                                 size="small"
                                                 fullWidth
                                                 value={txtPassWord}
-                                            // disabled={txtLotDisabled}
-                                            // style={{
-                                            //     width: "80px"
-                                            // }}
-                                            // onChange={(e) => {
-                                            //     settxtLotNo(e.target.value);
-                                            // }}
+                                                onChange={handlekeyPassWord}
+                                                error={ErrorPassWord}
                                             />
                                         </TableCell>
                                     )}
@@ -759,15 +849,20 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtAbbr}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyAbbr}
                                         />
                                     </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPassWordMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
 
                                 <TableRow>
@@ -780,13 +875,7 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtSerialStartCode}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeySerialStartCode}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -796,7 +885,7 @@ function ProductMaster() {
                                         <Checkbox
                                             size="small"
                                             checked={ReqCheckPrdShtCheck}
-                                            disabled={cbxReqPrdShtDisabled}
+                                            disabled={cbxReqCheckPrdShtDisabled}
                                             style={{
                                                 padding: "0",
                                             }}
@@ -819,9 +908,8 @@ function ProductMaster() {
                                             style={{
                                                 backgroundColor: txtCheckPrdShtDisabled ? "#EEEEEE" : "inherit",
                                             }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyCheckPrdShtFrom}
+                                            error={ErrorCheckPrdShtFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -837,10 +925,24 @@ function ProductMaster() {
                                             style={{
                                                 backgroundColor: txtCheckPrdShtToDisabled ? "#EEEEEE" : "inherit",
                                             }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyCheckPrdShtTo}
+                                            error={ErrorCheckPrdShtTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckPrdShtFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckPrdShtToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -907,13 +1009,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtCheckLotShtFrom}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtCheckLotShtFromDisabled}
+                                            style={{
+                                                backgroundColor: txtCheckLotShtFromDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyCheckLotShtFrom}
+                                            error={ErrorCheckLotShtFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -925,14 +1026,28 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtCheckLotShtTo}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtCheckLotShtToDisabled}
+                                            style={{
+                                                backgroundColor: txtCheckLotShtToDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyCheckLotShtTo}
+                                            error={ErrorCheckLotShtTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckLotShtFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckLotShtToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -943,18 +1058,10 @@ function ProductMaster() {
                                     <TableCell>
                                         <Autocomplete
                                             id="selectProductMst"
-                                            // disabled={selProDisabled}
-                                            // style={{
-                                            //     backgroundColor: selProDisabled ? "#EEEEEE" : "inherit",
-                                            // }}
                                             value={selStatus}
-                                            // onChange={(e, value) => handleChangeProduct(value)}
+                                            onChange={(e, value) => handleselStatus(value)}
                                             options={["ACTIVE", "INACTIVE"]}
-                                            getOptionLabel={(option) => {
-                                                if (option === "ACTIVE") return "ACTIVE";
-                                                if (option === "INACTIVE") return "INACTIVE";
-                                                return "";
-                                            }}
+                                            getOptionLabel={(option) => option}
                                             isOptionEqualToValue={(option, value) => option === value}
                                             renderInput={(params) => (
                                                 <TextField
@@ -971,12 +1078,12 @@ function ProductMaster() {
                                     <TableCell>
                                         <Autocomplete
                                             id="selectProductMst"
-                                            // disabled={selProDisabled}
-                                            // style={{
-                                            //     backgroundColor: selProDisabled ? "#EEEEEE" : "inherit",
-                                            // }}
                                             value={selCheckIC}
-                                            // onChange={(e, value) => handleChangeProduct(value)}
+                                            onChange={(e, value) => handleselCheckIC(value)}
+                                            disabled={selCheckIC === "N"}
+                                            style={{
+                                                backgroundColor: selCheckIC === "N" ? "#EEEEEE" : "inherit",
+                                            }}
                                             options={["N", "Y"]}
                                             getOptionLabel={(option) => (option === "N" ? "No" : "Yes")}
                                             isOptionEqualToValue={(option, value) => option === value}
@@ -1017,10 +1124,20 @@ function ProductMaster() {
                                             style={{
                                                 backgroundColor: txtPlasmaTimeDisabled ? "#EEEEEE" : "inherit",
                                             }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyPlasmaTime}
+                                            error={ErrorPlasmaTime}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorPlasmaTimeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1139,6 +1256,7 @@ function ProductMaster() {
                                             size="small"
                                             id="checkboxReqSt"
                                             style={{ padding: "0" }}
+                                            disabled={cbxReqStartSeqCodeDisabled}
                                             checked={ReqStartSeqCodeCheck}
                                             onChange={ReqStartSeqCodeCheckChanged}
                                         />
@@ -1152,14 +1270,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtStartSeqCode}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtStartSeqCodeDisabled}
+                                            style={{
+                                                backgroundColor: txtStartSeqCodeDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyStartSeqCode}
+                                            error={ErrorStartSeqCode}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorStartSeqCodeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1173,13 +1301,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtStartSeqDigitFrom}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtStartSeqDigitFromDisabled}
+                                            style={{
+                                                backgroundColor: txtStartSeqDigitFromDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyStartSeqDigitFrom}
+                                            error={ErrorStartSeqDigitFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1191,14 +1318,28 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtStartSeqDigitTo}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtStartSeqDigitToDisabled}
+                                            style={{
+                                                backgroundColor: txtStartSeqDigitToDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyStartSeqDigitTo}
+                                            error={ErrorStartSeqDigitTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorStartSeqDigitFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorStartSeqDigitToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1251,14 +1392,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtVendorLotLength}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtVendorLotLengthDisabled}
+                                            style={{
+                                                backgroundColor: txtVendorLotLengthDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyVendorLotLength}
+                                            error={ErrorVendorLotLength}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorVendorLotLengthMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1284,14 +1435,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtDateFromProc}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtDateFromProcDisabled}
+                                            style={{
+                                                backgroundColor: txtDateFromProcDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyDateFromProc}
+                                            error={ErrorDateFromProc}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorDateFromProcMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1304,6 +1465,7 @@ function ProductMaster() {
                                             size="small"
                                             id="cbxReqCheckWeekCode"
                                             style={{ padding: "0" }}
+                                            disabled={cbxReqCheckWeekCodeDisabled}
                                             checked={ReqCheckWeekCodeCheck}
                                             onChange={ReqCheckWeekCodeCheckChanged}
                                         />
@@ -1332,13 +1494,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtWeekCodeStart}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtWeekCodeStartDisabled}
+                                            style={{
+                                                backgroundColor: txtWeekCodeStartDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyWeekCodeStart}
+                                            error={ErrorWeekCodeStart}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1350,14 +1511,28 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtWeekCodeEnd}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtWeekCodeEndDisabled}
+                                            style={{
+                                                backgroundColor: txtWeekCodeEndDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyWeekCodeEnd}
+                                            error={ErrorWeekCodeEnd}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorWeekCodeStartMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorWeekCodeEndMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1383,14 +1558,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtLeafScan}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtLeafScanDisabled}
+                                            style={{
+                                                backgroundColor: txtLeafScanDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyLeafScan}
+                                            error={ErrorLeafScan}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorLeafScanMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1404,10 +1589,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtRollNoLength}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtRollNoLengthDisabled}
+                                            style={{
+                                                backgroundColor: txtRollNoLengthDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyRollNoLength}
+                                            error={ErrorRollNoLength}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1419,11 +1606,28 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtLeafNoLength}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtLeafNoLengthDisabled}
+                                            style={{
+                                                backgroundColor: txtLeafNoLengthDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyLeafNoLength}
+                                            error={ErrorLeafNoLength}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollNoLengthMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorLeafNoLengthMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1436,6 +1640,7 @@ function ProductMaster() {
                                             size="small"
                                             id="cbxLeafReqSerial"
                                             style={{ padding: "0" }}
+                                            disabled={cbxLeafReqSerialDisabled}
                                             checked={LeafReqSerialCheck}
                                             onChange={(e) => setLeafReqSerialCheck(e.target.checked)}
                                         />
@@ -1448,6 +1653,7 @@ function ProductMaster() {
                                             size="small"
                                             id="cbxReqCheckPrdRoll"
                                             style={{ padding: "0" }}
+                                            disabled={cbxReqCheckPrdRollDisabled}
                                             checked={ReqCheckPrdRollCheck}
                                             onChange={ReqCheckPrdRollCheckChanged}
                                         />
@@ -1464,10 +1670,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtCheckRollPrdFrom}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtCheckRollPrdFromDisabled}
+                                            style={{
+                                                backgroundColor: txtCheckRollPrdFromDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyCheckRollPrdFrom}
+                                            error={ErrorCheckRollPrdFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1479,11 +1687,28 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtCheckRollPrdTo}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtCheckRollPrdToDisabled}
+                                            style={{
+                                                backgroundColor: txtCheckRollPrdToDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyCheckRollPrdTo}
+                                            error={ErrorCheckRollPrdTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckRollPrdFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckRollPrdToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1497,10 +1722,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtCheckRollPrdWord}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtCheckRollPrdWordDisabled}
+                                            style={{
+                                                backgroundColor: txtCheckRollPrdWordDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyCheckRollPrdWord}
+                                            error={ErrorCheckRollPrdWord}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1511,10 +1738,22 @@ function ProductMaster() {
                                             size="small"
                                             id="cbxRollReqCheckPrdLeaf"
                                             style={{ padding: "0" }}
+                                            disabled={cbxRollReqCheckPrdLeafDisabled}
                                             checked={RollReqCheckPrdLeafCheck}
                                             onChange={RollReqCheckPrdLeafCheckChanged}
                                         />
                                     </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorCheckRollPrdWordMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
 
                                 <TableRow>
@@ -1527,10 +1766,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckPrdLeafFrom}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtRollCheckPrdLeafFromDisabled}
+                                            style={{
+                                                backgroundColor: txtRollCheckPrdLeafFromDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyRollCheckPrdLeafFrom}
+                                            error={ErrorRollCheckPrdLeafFrom}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1542,11 +1783,28 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckPrdLeafTo}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtRollCheckPrdLeafToDisabled}
+                                            style={{
+                                                backgroundColor: txtRollCheckPrdLeafToDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyRollCheckPrdLeafTo}
+                                            error={ErrorRollCheckPrdLeafTo}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckPrdLeafFromMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckPrdLeafToMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1559,6 +1817,7 @@ function ProductMaster() {
                                             size="small"
                                             id="cbxRollReqCheckLotLeaf"
                                             style={{ padding: "0" }}
+                                            disabled={cbxRollReqCheckLotLeafDisabled}
                                             checked={RollReqCheckLotLeafCheck}
                                             onChange={RollReqCheckLotLeafCheckChanged}
                                         />
@@ -1572,14 +1831,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckLotLeafFrom}
-                                        // disabled={txtLotDisabled}
-                                        // style={{
-                                        //     width: "80px"
-                                        // }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtRollCheckLotLeafFromDisabled}
+                                            style={{
+                                                backgroundColor: txtRollCheckLotLeafFromDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyRollCheckLotLeafFrom}
+                                            error={ErrorRollCheckLotLeafFrom}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckLotLeafFromMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1593,10 +1862,12 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckLotLeafTo}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtRollCheckLotLeafToDisabled}
+                                            style={{
+                                                backgroundColor: txtRollCheckLotLeafToDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyRollCheckLotLeafTo}
+                                            error={ErrorRollCheckLotLeafTo}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1614,6 +1885,17 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckLotLeafToMessage}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+
+                                <TableRow>
                                     <TableCell>
                                         <Typography>Sheet Check PRE-AOI :</Typography>
                                     </TableCell>
@@ -1623,7 +1905,7 @@ function ProductMaster() {
                                         >
                                             <FormControlLabel
                                                 control={
-                                                    <Checkbox 
+                                                    <Checkbox
                                                         size="small"
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqPreAOIFCheck}
@@ -1635,7 +1917,7 @@ function ProductMaster() {
                                             />
                                             <FormControlLabel
                                                 control={
-                                                    <Checkbox 
+                                                    <Checkbox
                                                         size="small"
                                                         style={{ padding: "0" }}
                                                         checked={ReqPreAOIBCheck}
@@ -1656,7 +1938,7 @@ function ProductMaster() {
                                         >
                                             <FormControlLabel
                                                 control={
-                                                    <Checkbox 
+                                                    <Checkbox
                                                         size="small"
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqAOIFCheck}
@@ -1668,7 +1950,7 @@ function ProductMaster() {
                                             />
                                             <FormControlLabel
                                                 control={
-                                                    <Checkbox 
+                                                    <Checkbox
                                                         size="small"
                                                         style={{ padding: "0" }}
                                                         checked={ReqAOIBCheck}
@@ -1692,7 +1974,7 @@ function ProductMaster() {
                                         >
                                             <FormControlLabel
                                                 control={
-                                                    <Checkbox 
+                                                    <Checkbox
                                                         size="small"
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqSPIFCheck}
@@ -1704,7 +1986,7 @@ function ProductMaster() {
                                             />
                                             <FormControlLabel
                                                 control={
-                                                    <Checkbox 
+                                                    <Checkbox
                                                         size="small"
                                                         style={{ padding: "0" }}
                                                         checked={ReqSPIBCheck}
@@ -1861,10 +2143,20 @@ function ProductMaster() {
                                             style={{
                                                 backgroundColor: txtProcControlTimeDisabled ? "#EEEEEE" : "inherit",
                                             }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyProcControlTime}
+                                            error={ErrorProcControlTime}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorProcControlTimeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1920,11 +2212,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtFinInspectProc}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtFinInspectProcDisabled}
+                                            style={{
+                                                backgroundColor: txtFinInspectProcDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyFinInspectProc}
+                                            error={ErrorFinInspectProc}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorFinInspectProcMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1950,11 +2255,24 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtShtPlasmaTime}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            disabled={txtShtPlasmaTimeDisabled}
+                                            style={{
+                                                backgroundColor: txtShtPlasmaTimeDisabled ? "#EEEEEE" : "inherit",
+                                            }}
+                                            onChange={handlekeyShtPlasmaTime}
+                                            error={ErrorShtPlasmaTime}
                                         />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorShtPlasmaTimeMessage}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
 
@@ -1980,10 +2298,7 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             value={txtBarcodeGrade}
-                                        // disabled={txtLotDisabled}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyBarcodeGrade}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -2112,9 +2427,7 @@ function ProductMaster() {
                                             style={{
                                                 backgroundColor: "#EEEEEE",
                                             }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyUpdateBy}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -2132,9 +2445,7 @@ function ProductMaster() {
                                             style={{
                                                 backgroundColor: "#EEEEEE",
                                             }}
-                                        // onChange={(e) => {
-                                        //     settxtLotNo(e.target.value);
-                                        // }}
+                                            onChange={handlekeyUpdateDate}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -2152,7 +2463,7 @@ function ProductMaster() {
                                     color: "#ff4d4f"
                                 }}
                                 checked={chk_DelFlgCheck}
-                            // onChange={(e) => setchk_DelFlgCheck(e.target.checked)}
+                                onChange={chk_DelFlgCheckChanged}
                             />
                         }
                         label="Delete Flag"
@@ -2162,7 +2473,7 @@ function ProductMaster() {
                         size="small"
                         color="success"
                         sx={{ marginTop: "20px" }}
-                    // onClick={btnSubmit}
+                        onClick={btnSubmitClick}
                     >
                         Submit
                     </Button>

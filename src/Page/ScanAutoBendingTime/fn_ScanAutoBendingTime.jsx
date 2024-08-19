@@ -222,7 +222,7 @@ function fn_ScanAutoBendingTime() {
 
   return {
     txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemark,handletxtMCNo_TextChanged
-    ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,btnCancel,pnlDetail,pnlResult,gvBending,gvBendingVisible,gvBendingVisible,fcGvSerial_txtSerial_0
+    ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,btnCancel,pnlDetail,pnlResult,gvBending,gvBendingVisible,fcGvSerial_txtSerial_0
   }
 }
 

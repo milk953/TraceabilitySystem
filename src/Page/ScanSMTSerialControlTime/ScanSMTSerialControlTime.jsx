@@ -32,7 +32,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialControlTime } from "./fn_ScanSMTSerialControlTime";
-
+import Pageimg from "/src/assets/1.jpg";
 function ScanSMTSerialControlTime() {
 
     const {
@@ -416,7 +416,7 @@ function ScanSMTSerialControlTime() {
                         marginLeft: "280px",
                         display: gvScanResult ? 'none' : 'block'
                     }}
-                    src="src/assets/1.jpg" // Import the image
+                    src={Pageimg} // Import the image
                     alt="Description of the image"
                 />
 

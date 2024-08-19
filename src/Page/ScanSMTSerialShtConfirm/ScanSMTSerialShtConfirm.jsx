@@ -22,6 +22,7 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
+import Pageimg from "/src/assets/1.jpg";
 import {
     ArrowRightOutlined,
     DeleteOutlined,
@@ -270,7 +271,7 @@ function ScanSMTSerialShtConfirm() {
                         marginLeft: "280px",
                         display: gvScanResult ? 'none' : 'block'
                     }}
-                    src="src/assets/1.jpg" // Import the image
+                    src={Pageimg} // Import the image
                     alt="Description of the image"
                 />
 

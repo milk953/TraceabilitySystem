@@ -29,14 +29,14 @@ function Hearder() {
   const navigate = useNavigate();
   const Logout = () => {
     localStorage.clear();
-    window.location.href = "/";
+    window.location.href = "/TraceabilitySystem";
     // openLoginModal();
   };
 
   const loginBtn = () => {
-    if (window.location.pathname !== "/") {
+    if (window.location.pathname !== "/TraceabilitySystem") {
       const goHome = () => {
-        navigate("/");
+        navigate("/TraceabilitySystem");
       };
       return (
         <Tooltip title="LogOut">
@@ -89,7 +89,8 @@ function Hearder() {
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              TRACEABILITY SYSTEM  {menuName}
+              {/* TRACEABILITY SYSTEM  {menuName} */}
+              TRACEABILITY SYSTEM
             </Typography>
 
             {user ? <> <Avatar

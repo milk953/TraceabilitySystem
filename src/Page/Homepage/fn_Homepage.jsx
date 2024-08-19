@@ -3,8 +3,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Password } from "@mui/icons-material";
 import { set } from "lodash";
-
+import { useNavigate } from 'react-router-dom';
 function fn_Homepage() {
+  const navigate = useNavigate();
   const [Showmenu, setShowmenu] = useState("img");
   const [menu, setmenu] = useState([{}]);
   const [SL_menu, setSL_menu] = useState([{}]);
@@ -12,12 +13,13 @@ function fn_Homepage() {
   //Login Region
   const [ipAddress, setIpAddress] = useState("");
   const [menuName , setMenuName] = useState("");
+  const [menuUrl , setMenuUrl] = useState("");
 
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
   var UserLogin = localStorage.getItem("UserLogin");
 
   const openLoginModal = () => {
-    if (window.location.pathname === "/" && LoginStatus === false) {
+    if (window.location.pathname === "/TraceabilitySystem" && LoginStatus === false) {
       Swal.fire({
         title: "เข้าสู่ระบบ",
         html:
@@ -134,11 +136,14 @@ function fn_Homepage() {
     }
     const url = window.location.pathname;
     const urlSplit = url.split("/");
-    const currentPath = `/${urlSplit[1]}`;
-    
+    const currentPath = `/${urlSplit[1]}/${urlSplit[2]}`;
+    console.log()
     // if (dataMenu && dataMenu.length > 0) {
       for (let i = 0; i < dataMenu.length; i++) {
+        
         if (currentPath === dataMenu[i].url) {
+          setMenuUrl(dataMenu[i].url)
+          // console.log(dataMenu[i].url)
           setMenuName(':'+' '+dataMenu[i].page_title);
           break; 
         }
@@ -158,6 +163,18 @@ function fn_Homepage() {
   const HandleSL_Menu = (Menu_Select) => {
     window.location.href = Menu_Select;
   };
+  const handleClickPath = (url) => {
+    console.log(url)
+    if(url!='HOME'){
+      window.location.href = url;
+    }
+    else{
+      window.location.href = `/TraceabilitySystem`;
+    }
+    // if (window.location.pathname !== `/${url}`) {
+    //   navigate(`/${url}`);
+    // }
+  };
 
   return {
     Showmenu,
@@ -168,7 +185,9 @@ function fn_Homepage() {
     HandleSL_Menu,
     openLoginModal,
     isLoggedIn,
-    menuName
+    menuName,
+    menuUrl,
+    handleClickPath
   };
 }
 

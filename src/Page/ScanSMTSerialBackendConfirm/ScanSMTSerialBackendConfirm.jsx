@@ -32,7 +32,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialBackendConfirm } from "./fn_ScanSMTSerialBackendConfirm";
-
+import Pageimg from "/src/assets/1.jpg";
 function ScanSMTSerialBackendConfirm() {
 
     const {
@@ -301,7 +301,7 @@ function ScanSMTSerialBackendConfirm() {
                         marginLeft: "280px",
                         display: gvScanResult ? 'none' : 'block'
                     }}
-                    src="src/assets/1.jpg" // Import the image
+                    src={Pageimg} // Import the image
                     alt="Description of the image"
                 />
 

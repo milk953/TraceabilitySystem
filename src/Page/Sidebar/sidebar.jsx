@@ -59,7 +59,7 @@ function sidebar({ isOpen, onClose }) {
           className="ListItem"
           onClick={() => {
             onClose();
-            ChangPage("/");
+            ChangPage("/TraceabilitySystem");
           }}
         >
           <ListItemIcon>

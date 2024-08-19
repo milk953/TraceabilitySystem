@@ -1,0 +1,31 @@
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .slider-wrapper {
+    display: flex;
+    overflow: hidden;
+    width: 300px; /* กำหนดความกว้างให้พอเหมาะสำหรับการแสดง 3 สี่เหลี่ยม */
+    height: 100px;
+    position: relative;
+    transition: transform 2s ease; /* เพิ่มระยะเวลาในการเลื่อน */
+  }
+  
+  .square {
+    width: 100px;
+    height: 100px;
+    margin: 0 5px;
+    flex-shrink: 0; /* ทำให้ขนาดของแต่ละสี่เหลี่ยมคงที่ */
+  }
+  
+  .slider-button {
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #ddd;
+    border: none;
+  }
+  

@@ -21,6 +21,7 @@ import {
   Grid,
   Input,
 } from "@mui/material";
+import Pageimg from "/src/assets/1.jpg";
 import {
   ArrowRightOutlined,
   DeleteOutlined,
@@ -361,7 +362,7 @@ useEffect(() => {
                   height: "350px",
                   marginBottom: "30px",
                 }}
-                src="src/assets/1.jpg" // Import the image
+                src={Pageimg} // Import the image
                 alt="Description of the image"
               /></>)}
              

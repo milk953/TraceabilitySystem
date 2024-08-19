@@ -22,6 +22,7 @@ import {
   Input,
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
+import Pageimg from "/src/assets/1.jpg";
 // import "./SerialPcs.css";
 import Hearder from "../Header/Header";
 import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
@@ -410,7 +411,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                   height: "300px",
                   marginBottom: "30px",
                 }}
-                src="src/assets/1.jpg" // Import the image
+                src={Pageimg}// Import the image
                 alt="Description of the image"
               />
               {/* </>)} */}

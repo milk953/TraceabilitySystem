@@ -1,20 +1,24 @@
 .divTbSheet{
-    justify-content: center;
-    display: flex;
-    max-width: 100%;
-    overflow-x: auto;
+  justify-content: center;
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 
-.TbProductMst th {
-  background-color: #8c8c8c;
-  border-radius: 5px 5px 0 0;
-  color: #fff;
+.TbProductMstmay th {
+  /* background-color: #8c8c8c;
+  border-radius: 5px 5px 0 0; */
+  /* color: black; */
+  border: none;
   padding: 5px;
+
 }
 
-.TbProductMst td {
+.TbProductMstmay td {
   padding: 3px;
+  /* border: 1px solid red; */
+  border: none;
 }
 
 #txtfield {
