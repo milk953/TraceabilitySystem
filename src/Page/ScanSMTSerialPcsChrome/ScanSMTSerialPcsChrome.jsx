@@ -63,7 +63,8 @@ function ScanSMTRoollSht() {
     fc_SlProduct,
     btnSave_Click,
     btnCancel_Click,
-    gvScanResult
+    gvScanResult,
+    lblResult
   } = fn_ScanSMTSerialPcsChrome();
 
   return (
@@ -348,7 +349,7 @@ function ScanSMTRoollSht() {
                   variant="h4"
                   style={{ paddingTop: "5px", color: "#fff" }}
                 >
-                  lblResult.value
+                {lblResult.value}
                 </Typography>
               </Paper>
               <Table
@@ -402,7 +403,66 @@ function ScanSMTRoollSht() {
                     <TableCell >Remark </TableCell>
                   </TableRow>
                 </TableHead>
-                  {/* TableBody */}
+                {/* {console.log(gvScanResult.value.flat(),'gvScanResult')} */}
+                {Array.from(
+                        { length: gvScanResult.value.length },
+                        (_, index) => (
+                          <TableRow key={index}>
+                            <TableCell
+                              align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].SEQ}
+                            </TableCell>
+                            <TableCell
+                            align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].SERIAL}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].REJECT}
+                            </TableCell>
+                            <TableCell
+                            align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].TOUCH_UP}
+                            </TableCell>
+                            <TableCell
+                            align="center"
+                            sx={{
+                              // borderRight: "1px solid #d9d9d9",
+                              // background: gvScanResult.value[index].SCAN_RESULT === '' 
+                              //   ? '' 
+                              //   : gvScanResult.value[index].SCAN_RESULT === 'OK' 
+                              //   ? 'green' 
+                              //   : '#ff4d4f'
+                            }}
+                            
+                            >
+                              {gvScanResult.value[index].REJECT2}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].TEST_RESULT}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].SCAN_RESULT}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].REMARK}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
               </Table>
                 </>
             )} 

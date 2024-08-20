@@ -34,8 +34,8 @@
   /* สไตล์สำหรับรายการรายการย่อย */
   .SubMenuItem {
     cursor: pointer;
-    margin-left: 20px;
-    width: 50%;
+    padding-left: 30px !important;
+    /* width: 100%; */
   }
   
   .SubMenuItem:hover {
@@ -43,7 +43,7 @@
     border-radius: 10px;
     color: #40a9ff;
     width: 90%;
-    margin-left: 5px;
+    margin-left: 10px;
   }
   
   .MuiBox-root.css-1b9mqa5 {

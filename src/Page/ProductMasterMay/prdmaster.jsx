@@ -2220,7 +2220,7 @@ function ProductMaster() {
                       </FormGroup>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                                   <TableRow>
                     <TableCell>
                       <Typography>Sheet Check Reflow :</Typography>
                     </TableCell>
@@ -2734,11 +2734,7 @@ function ProductMaster() {
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                   </TableRow>
-
-                 
-                </TableRow>
-                <TableRow style={{ display:VisPage5}}>
-                <TableRow>
+                  <TableRow>
                     <TableCell style={{width:'250px'}}>
                       <Typography>Leaf PRD. Digit (From) :</Typography>
                     </TableCell>
@@ -2778,26 +2774,6 @@ function ProductMaster() {
                       />
                     </TableCell>
                   </TableRow>
-
-                  <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell>
-                      <Typography
-                        style={{ fontSize: "small", color: "#ff4d4f" }}
-                      >
-                        {ErrorRollCheckPrdLeafFromMessage}
-                      </Typography>
-                    </TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>
-                      <Typography
-                        style={{ fontSize: "small", color: "#ff4d4f" }}
-                      >
-                        {ErrorRollCheckPrdLeafToMessage}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-
                   <TableRow>
                     <TableCell>
                       <Typography>Req. Check Leaf Lot :</Typography>
@@ -2845,6 +2821,13 @@ function ProductMaster() {
                       </Typography>
                     </TableCell>
                   </TableRow>
+                </TableRow>
+                <TableRow style={{ display:VisPage5}}>
+
+
+                
+
+
 
                   <TableRow>
                     <TableCell>
@@ -3290,20 +3273,45 @@ function ProductMaster() {
       <div style={{ width: '1440px', margin: 'auto', paddingTop: '5px' }}>
   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
   {/* <src src={ImgNext}/> */}
-  <Avatar 
-  shape="square" 
-  size={64} 
-  src={ImgBack}  
-  onClick={BackPage} 
-  style={{ cursor: 'pointer' }} 
-/>
+  <Avatar
+    shape="square"
+    size={64}
+    src={ImgBack}
+    onClick={BackPage}
+    style={{
+      cursor: 'pointer',
+      transition: 'transform 0.3s ease-in-out',
+      visibility: Page === '1' ? 'hidden' : 'visible', // ซ่อนเมื่อ Page == 1
+    }}
+    onMouseEnter={(e) => {
+      if (Page !== '1') {
+        e.currentTarget.style.transform = 'scale(1.2)';
+      }
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'scale(1)';
+    }}
+  />
+
 
 <Avatar 
   shape="square" 
   size={64} 
   src={ImgNext}  
   onClick={NextPage} 
-  style={{ cursor: 'pointer' }} 
+  style={{ 
+    cursor: 'pointer', 
+    transition: 'transform 0.3s ease-in-out',
+    visibility: Page === '5' ? 'hidden' : 'visible', 
+  }}
+   onMouseEnter={(e) => {
+      if (Page !== '5') {
+        e.currentTarget.style.transform = 'scale(1.2)';
+      }
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'scale(1)';
+    }}
 />
 
   </div>
