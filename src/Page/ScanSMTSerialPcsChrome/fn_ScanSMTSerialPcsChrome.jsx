@@ -204,6 +204,7 @@ function fn_ScanSMTSerialPcsChrome() {
       let _strPrdName = "";
       let _strLot = "";
       let _strLotAll = txtLot.value.toUpperCase().split(";");
+
       setHfLotAll("");
       if (_strLotAll.length - 1 >= 2) {
         _strLot = _strLotAll[0];
@@ -787,12 +788,12 @@ function fn_ScanSMTSerialPcsChrome() {
         REMARK: "",
         REMARK_UPDATE: "",
         ROW_COUNT: 0,
-        ROW_UPDATE: "",
-        UPDATE_FLG: "",
+        ROW_UPDATE: "N",
+        UPDATE_FLG: "N",
         PACKING_NO: txtPackingNo.value,
         MASTER_NO: "",
         FRONT_SHEET_NO: "",
-        BACK_SHEET_NO: "N",
+        BACK_SHEET_NO: "",
         SHEET_PCS_NO: 0,
         ROLL_LEAF_NO: "",
       });
@@ -817,7 +818,9 @@ function fn_ScanSMTSerialPcsChrome() {
   const setSerialDataTray = async () => {
     let dtSerial = getInputSerial();
     console.log(dtSerial, "dtSerial");
-    let _strLot = lblLot.trim().toUpperCase;
+    // let xxxx = '';
+    let _strLot =lblLot.trim().toUpperCase();
+    console.log('_strLot ',lblLot,lblLot.trim(),lblLot.trim().toUpperCase())
     let _strPrdName = Sl_Product.value;
     let _strTray;
     let _bolTrayError = false;
@@ -828,12 +831,25 @@ function fn_ScanSMTSerialPcsChrome() {
     let dblPlasmaRemain = parseFloat(hfPlasmaTime);
 
     if (!_bolTrayError) {
-      //เก็บไว้ถามมมมมพรุ่งนี้
-      // console.log('เข้ามั้ยจ้ะ',!_bolTrayError,_bolTrayError)
-
-      // BIZ_ScanSMTSerial.GetSerialTestResultManyTable(Session("PLANT_CODE"), _strPrdName, dtSerial, Session("PRODUCT_KIND"), hfWeekCodeType.Value)
+      for(let i=0;i<dtSerial.length;i++){
+        await axios
+        .post("/api/common/GetSerialTestResultManyTable", {
+          dataList: [{strPlantCode:'5',strPrdname:_strPrdName,strWeekCodeType:hfWeekCodeType,strSerial:dtSerial[i].SERIAL}],dtSerial:dtSerial
+        })
+        .then((res) => {
+          dtSerial[i]=res.data
+        })
+      }
+     console.log(hfCheckWeekCode,'hfCheckWeekCode')
       if (hfCheckWeekCode == "Y") {
-        // hfWeekCode.Value = BIZ_ScanSMTSerial.GetWeekCodebyLot(_strLot, hfDateInProc.Value, hfWeekCodeType.Value, hfSerialInfo.Value)
+        await axios
+        .post("/api/common/GetWeekCodebyLot", {
+          _strLot:_strLot, _strProc:hfDateInProc,_strWeekType:hfWeekCodeType ,_strSerialInfo:hfSerialInfo
+        })
+        .then((res) => {
+         console.log(res.data,'hfWeekCodehfWeekCode')
+         setHfWeekCode(res.data)
+        })
       }
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         if (dtSerial[drRow].SERIAL) {
@@ -1398,7 +1414,7 @@ function fn_ScanSMTSerialPcsChrome() {
     if (hfCheckPackingNo == "Y") {
       await axios
         .post("/api/Common/getSerialPassByLot", {
-          strLotNo: dtSerial[0].SERIAL,
+          strLotNo: dtSerial.SERIAL,
           strPlantCode: "5",
         })
         .then((res) => {
@@ -1412,18 +1428,22 @@ function fn_ScanSMTSerialPcsChrome() {
           strPlantCode: "5",
         })
         .then((res) => {
-          dtPackPassCount = res.data.lotcount;
+          console.log( res.data,'dtPackPassCountxx')
+          dtPackPassCount = res.data.lot_count;
+          console.log(dtPackPassCount,'dtPackPassCount')
         });
-      if (dtLotPassCount.length > 0) {
+      if (dtLotPassCount.length > 0 ) {
         setlblLotTotal(dtLotPassCount);
       }
-      if (dtPackPassCount.length > 0) {
+      console.log(dtPackPassCount,'dtPackPassCount.')
+      if (dtPackPassCount.length > 0 ) {
         setlblLotTotal(dtPackPassCount);
       } else {
-        setlblLotTotal("0/" + lblLotTotal);
+        setlblLotTotal("0 / " + lblLotTotal);
       }
     }
     else{
+
       await axios
       .post("/api/Common/getSerialPassByLot", {
         strLotNo: dtSerial[0].SERIAL,
@@ -1437,18 +1457,17 @@ function fn_ScanSMTSerialPcsChrome() {
       }
     }
     if(!_bolTrayError){
-      // gvScanResult.DataSource = dtSerial
-      // gvScanResult.DataBind()
+      console.log('มีแวรู่ ',dtSerial)
+      setgvScanResult((prevState) => ({ ...prevState, visble: true,value :dtSerial.flat()})); 
     }
     else{
-      // gvScanResult.DataSource = Nothing
-      // gvScanResult.DataBind()
+      console.log('ไม่มีแวรู่ ',dtSerial)
+      setgvScanResult((prevState) => ({ ...prevState, visble: true,value :{}}));
     }
     settxtPcsTray((prevState) => ({ ...prevState,value:hfSerialCountOriginal }));
     setHfserialcount(hfSerialCountOriginal)
     getInitialSerial()
     setlblLastTray("Not Use")
-    setgvScanResult((prevState) => ({ ...prevState, visble: true })); //ยังไม่ถูกนะ
   };
 
   return {
@@ -1483,6 +1502,7 @@ function fn_ScanSMTSerialPcsChrome() {
     btnSave_Click,
     btnCancel_Click,
     gvScanResult,
+    lblResult
   };
 }
 
