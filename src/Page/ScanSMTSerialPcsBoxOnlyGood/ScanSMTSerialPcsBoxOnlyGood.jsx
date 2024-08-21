@@ -29,7 +29,8 @@ import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
 function ScanSMTRoollSht() {
 const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlProduct,ddlProduct_SelectedIndexChanged,
   ddlProduct,    txtMachine_TextChanged  ,txtMachine,settxtMachine,ibtMachineBack_Click,txtOP_TextChanged,txtOP,settxtOP,ibtOPBack_Click,txtBox_TextChanged,
-  txtBox,settxtBox
+  txtBox,settxtBox,txtPack_TextChanged, txtPack,settxtPack ,lblLot,lblLotTotal,txtPcsTray,settxtPcsTray,txtPcsTray_TextChanged,lblSerialNG,ibtBack_Click
+  ,gvSerial,pnlMachine,lblLastTray
 } = fn_ScanSMTSerialPcsBoxOnlyGood()
 // console.log(txtBox.value," eiei")
   return (
@@ -73,7 +74,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         onBlur={txtLot_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
-                      // onClick={ibtBack_Click}
+                      onClick={ibtBack_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -109,6 +110,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                       </FormControl>
                     </TableCell>
                   </TableRow>
+                  {pnlMachine &&( <>
                   <TableRow style={{display:''}}>
                     <TableCell align="right">
                       <Typography>Machine No :</Typography>
@@ -176,7 +178,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
-                  </TableRow>
+                  </TableRow></>)}
                   <TableRow style={{display:''}}>
                     <TableCell align="right">
                       <Typography>Box No.:</Typography>
@@ -221,22 +223,22 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
-                        // value={txtPackingNo.value}
-                        // onChange={(e) => {
-                        //   settxtPackingNo((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        value={txtPack.value}
+                        onChange={(e) => {
+                          settxtPack((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
                         // style={{ ...txtPackingNo.style, width: "80%" }}
                         // disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtPackingNo_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtPackingNo_TextChanged}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtPack_TextChanged();
+                          }
+                        }}
+                        onBlur={txtPack_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
                       // onClick={ibtPackingBack_Click}
@@ -250,50 +252,50 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                       <Typography>Lot :</Typography>
                     </TableCell>
                     <TableCell colSpan={1}>
-                      {/* {lblLot} */}
+                      {lblLot.value}
                       </TableCell>
                     <TableCell align="right">
                       <Typography>OK :</Typography>
                     </TableCell>
                     <TableCell style={{ width: "70px" }} colSpan={2}>
-                      {/* {lblLotTotal} */}
+                      {lblLotTotal.value}
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="right" style={{ width: "100px" }}>
-                      <Typography>Pcs/Tray</Typography>
+                      <Typography>Pcs/Tray :</Typography>
                     </TableCell>
                     <TableCell style={{ width: "130px" }}>
                       <TextField
                         id="txtfild"
                         size="small"
                         // inputRef={(el) => (fc_txtTray.current = el)}
-                        // value={txtPcsTray.value}
-                        // onChange={(e) => {
-                        //   settxtPcsTray((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
-                        // style={{ ...txtPcsTray.style, width: "60px" }}
+                        value={txtPcsTray.value}
+                        onChange={(e) => {
+                          settxtPcsTray((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        style={{ ...txtPcsTray.style, width: "60px" }}
                         // disabled={txtPcsTray.disbled} //true พิมไม่ได้
                         // // inputRef={fc_txtLotNo}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtPcsTray_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtPcsTray_TextChanged}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtPcsTray_TextChanged();
+                          }
+                        }}
+                        onBlur={txtPcsTray_TextChanged}
                       ></TextField>
                       &nbsp; 
-                      {/* {lblLastTray} */}
+                      {lblLastTray.value}
                     </TableCell>
                     {/* <TableCell style={{ width: "70px",}}></TableCell> */}
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography>NG :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      {/* {lblSerialNG} */}
+                      {lblSerialNG.value}
                       </TableCell>
                   </TableRow>
                 </TableBody>
@@ -339,7 +341,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                 <TableBody >
                   {/* <TableRow> */}
 
-                  {/* {Array.from({ length: gvSerial.value.length }, (_, index) => (
+                  {Array.from({ length: gvSerial.length }, (_, index) => (
                     
                       <TableRow key={index}>
                       <TableCell
@@ -375,7 +377,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         />
                       </TableCell>
                     </TableRow>
-                  ))} */}
+                  ))}
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
