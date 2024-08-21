@@ -3304,14 +3304,14 @@ function ProductMaster() {
     transition: 'transform 0.3s ease-in-out',
     visibility: Page === '5' ? 'hidden' : 'visible', 
   }}
-  onMouseEnter={(e) => {
-    if (Page !== '5') {
-      e.currentTarget.style.transform = 'scale(1.2)';
-    }
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.transform = 'scale(1)';
-  }}
+   onMouseEnter={(e) => {
+      if (Page !== '5') {
+        e.currentTarget.style.transform = 'scale(1.2)';
+      }
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'scale(1)';
+    }}
 />
 
   </div>

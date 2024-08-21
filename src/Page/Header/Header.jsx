@@ -44,12 +44,12 @@ function Hearder() {
       return (
         <Tooltip title="LogOut">
           <Avatar 
-  shape="square" 
-  size={64} 
-  src={ImgLoging}  
-  onClick={goHome} 
-  style={{ cursor: 'pointer' }} 
-/>
+            shape="square" 
+            size={64} 
+            src={ImgLoging}  
+            onClick={goHome} 
+            style={{ cursor: 'pointer' }} 
+          />
         {/* <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} /> */}
       </Tooltip>
         
