@@ -116,6 +116,8 @@ function fn_ProductMaster() {
   const [txtUpdateBy, settxtUpdateBy] = useState("");
   const [txtUpdateDate, settxtUpdateDate] = useState("");
   const [chk_DelFlg, setchk_DelFlg] = useState("");
+
+  const [pnlMessage, setpnlMessage] = useState(false);
   const [lblMessage, setlblMessage] = useState("");
   const [lblMessageColor, setlblMessageColor] = useState("");
   const [rbtselLotRoll, setrbtselLotRoll] = useState("");
@@ -1288,6 +1290,7 @@ function fn_ProductMaster() {
       setAutoPressBCheck(false);
 
       if (Data === "") {
+        setpnlMessage(true);
         setlblMessageColor("#ff4d4f");
         setlblMessage("Not found");
       } else {
@@ -1865,12 +1868,13 @@ function fn_ProductMaster() {
           setAutoPressBCheck(false);
         }
 
-
+        setpnlMessage(true);
         setlblMessageColor("darkblue");
         setlblMessage("Data read complete.");
       }
 
     } catch (error) {
+      setpnlMessage(true);
       setlblMessageColor("#ff4d4f");
       setlblMessage(error);
     }
@@ -1905,6 +1909,7 @@ function fn_ProductMaster() {
     if (result.isConfirmed) {
       let BeginTransFlg = false;
 
+      setpnlMessage(true);
       setlblMessageColor("black");
       setlblMessage("exec...");
 
@@ -2459,6 +2464,7 @@ function fn_ProductMaster() {
               swal("success", "You update data success", "success");
               setlblMessageColor("darkblue");
               setlblMessage("Data Update complete.");
+              setpnlMessage(true);
             })
             .catch((error) => {
               console.error("เกิดข้อผิดพลาด =", error);
@@ -2587,6 +2593,7 @@ function fn_ProductMaster() {
               swal("success", "You summit data success", "success");
               setlblMessageColor("darkblue");
               setlblMessage("Data Insert complete.");
+              setpnlMessage(true);
             })
             .catch((error) => {
               console.error("เกิดข้อผิดพลาด =", error);
@@ -2596,6 +2603,7 @@ function fn_ProductMaster() {
       } catch (error) {
         lblMessageColor("#ff4d4f");
         lblMessage(`Error: ${error.message}`);
+        setpnlMessage(true);
       }
 
       GetDataProductMaster();
@@ -2639,7 +2647,7 @@ function fn_ProductMaster() {
     ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
     ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
     ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage
+    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage
   }
 };
 

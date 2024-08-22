@@ -39,7 +39,8 @@ function ScanSMTSerialShtConfirm() {
     const {
         txtLotNo, settxtLotNo, selProduct, Productdata, lblTotalSht, visiblelog, lblLog, pnlSerial, txtLotDisabled, selProDisabled,
         gvScanResult, inputLot, ddlProduct, lblResultcolor, gvScanData, txtgvSerial, settxtgvSerial, handleChangeLot, ibtBackClick,
-        handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, hfShtScan, gvSerialData, inputgvSerial, lblResult
+        handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, hfShtScan, gvSerialData, inputgvSerial, lblResult,
+        handleKeygvSerial
     } = fn_ScanSMTSerialShtConfirm();
 
     return (
@@ -223,10 +224,11 @@ function ScanSMTSerialShtConfirm() {
                                                         size="small"
                                                         fullWidth
                                                         value={txtgvSerial[index] || ""}
-                                                        inputRef={inputgvSerial}
+                                                        inputRef={(el) => (inputgvSerial.current[index] = el)}
                                                         onChange={(e) => {
                                                             handleChangeSerial(index, e);
                                                         }}
+                                                        onKeyDown={(e) => handleKeygvSerial(e, index)}
                                                     />
                                                 </TableCell>
                                             </TableRow>

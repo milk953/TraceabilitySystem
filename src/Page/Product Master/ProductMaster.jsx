@@ -82,7 +82,7 @@ function ProductMaster() {
         ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
         ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
         ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage
+        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage
 
     } = fn_ProductMaster();
 
@@ -106,6 +106,7 @@ function ProductMaster() {
                     justifyContent: "center",
                 }}
             >
+                {pnlMessage && (
                 <Paper
                     className="lblMessage"
                     elevation={1}
@@ -121,6 +122,8 @@ function ProductMaster() {
                         {lblMessage}
                     </Typography>
                 </Paper>
+                )}
+                
                 <Box justifyContent="space-between"
                     sx={{
                         textAlign: "center",

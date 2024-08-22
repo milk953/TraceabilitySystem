@@ -20,11 +20,11 @@
 
 .TbProductMst tr.special-row td:nth-child(1),
 .TbProductMst tr.special-row td:nth-child(3) {
-  background-color: #dbf3e5;
+  background-color: #D2F3E0 ;
 }
 
 .TbProductMst tr.specialrow td:nth-child(1) {
-  background-color: #dbf3e5;
+  background-color: #D2F3E0;
 }
 
 #txtfield {

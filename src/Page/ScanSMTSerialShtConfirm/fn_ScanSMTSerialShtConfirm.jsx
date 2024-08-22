@@ -82,7 +82,7 @@ function fn_ScanSMTSerialShtConfirm() {
     //inputRef
     const inputLot = useRef(null);
     const ddlProduct = useRef(null);
-    const inputgvSerial = useRef(null);
+    const inputgvSerial = useRef([]);
     const fcGvBackSide_txtsideback_0 = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
@@ -136,7 +136,7 @@ function fn_ScanSMTSerialShtConfirm() {
                     await getProductSerialMaster(strPrdName);
 
                     SetMode("SERIAL");
-                    inputgvSerial.current?.focus();
+                    inputgvSerial.current[0]?.focus();
                 } catch (error) {
                     console.error("try-catch error:", error);
                     const intProduct = strPrdName.indexOf('-', 12);
@@ -147,7 +147,7 @@ function fn_ScanSMTSerialShtConfirm() {
                             getProductSerialMaster(strPrdName);
 
                             SetMode("SERIAL");
-                            inputgvSerial.current.focus();
+                            inputgvSerial.current[0].focus();
                         } catch (error) {
                             setlblLog(`Product ${strPrdName} not found.`);
                             setvisiblelog(true);
@@ -340,7 +340,7 @@ function fn_ScanSMTSerialShtConfirm() {
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
-        inputgvSerial.current.focus();
+        inputgvSerial.current[0].focus();
     };
 
     const SetMode = async (strType) => {
@@ -373,7 +373,7 @@ function fn_ScanSMTSerialShtConfirm() {
             setvisiblelog(false);
             setpnlSerial(true);
             await getInitialSerial();
-            inputgvSerial.current.focus();
+            inputgvSerial.current[0].focus();
         } else if (strType === "SERIAL_NG") {
             settxtLotDisabled(true);
             setvisiblelog(false);
@@ -569,7 +569,7 @@ function fn_ScanSMTSerialShtConfirm() {
 
         getCountDataBylot(_strLot);
 
-        inputgvSerial.current.focus();
+        inputgvSerial.current[0].focus();
     };
 
     const getInputSerial = async () => {
@@ -607,8 +607,8 @@ function fn_ScanSMTSerialShtConfirm() {
         if (!selProDisabled) {
             ddlProduct.current.focus();
         }
-        if (hfMode === "SERIAL" && inputgvSerial.current) {
-            inputgvSerial.current.focus();
+        if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
+            inputgvSerial.current[0].focus();
         }
     }, [
         txtLotDisabled,
@@ -616,10 +616,25 @@ function fn_ScanSMTSerialShtConfirm() {
         gvSerialData
     ]);
 
+    const handleKeygvSerial = (e, index) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            const nextIndex = index + 1;
+            if (nextIndex < hfShtScan && inputgvSerial.current[nextIndex]) {
+                inputgvSerial.current[nextIndex].focus();
+                console.log('Calling btnSaveClick',nextIndex);
+            } else if (nextIndex === nextIndex) {
+                
+                btnSaveClick();
+            }
+        }
+    };
+
     return {
         txtLotNo, settxtLotNo, selProduct, Productdata, lblTotalSht, visiblelog, lblLog, pnlSerial, txtLotDisabled, selProDisabled,
         gvScanResult, inputLot, ddlProduct, lblResultcolor, gvScanData, txtgvSerial, settxtgvSerial, handleChangeLot, ibtBackClick,
-        handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, hfShtScan, gvSerialData, inputgvSerial, lblResult
+        handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, hfShtScan, gvSerialData, inputgvSerial, lblResult,
+        handleKeygvSerial
     }
 };
 

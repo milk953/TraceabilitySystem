@@ -39,7 +39,7 @@ function ScanSMTSerialBackendConfirm() {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtTotalPCS, settxtTotalPCS, lblLog, visiblelog, lblResultcolor, lblResult,
         pnlSerial, gvScanResult, txtgvSerial, txtLotDisabled, selProDisabled, txtTotalDisabled, gvScanData, handleChangeLot,
         handleChangeProduct, handleChangeTotalPCS, hfSerialCount, ibtBackClick, btnSaveClick, btnCancelClick, handleChangeSerial, inputLot,
-        ddlProduct, inputTotal, inputgvSerial
+        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial
     } = fn_ScanSMTSerialBackendConfirm();
 
     return (
@@ -257,6 +257,7 @@ function ScanSMTSerialBackendConfirm() {
                                                         onChange={(e) => {
                                                             handleChangeSerial(index, e);
                                                         }}
+                                                        onKeyDown={(e) => handleKeygvSerial(e, index)}
                                                     />
                                                 </TableCell>
                                             </TableRow>

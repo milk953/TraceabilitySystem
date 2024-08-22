@@ -95,7 +95,7 @@ function fn_ScanSMTSerialRecordTime() {
     const inputLot = useRef(null);
     const inputTray = useRef(null);
     const ddlProduct = useRef(null);
-    const inputgvSerial = useRef(null);
+    const inputgvSerial = useRef([]);
     const inputRackNo = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
@@ -412,8 +412,8 @@ function fn_ScanSMTSerialRecordTime() {
         if (!isselProDisabled) {
             ddlProduct.current.focus();
         }
-        if (hfMode === "SERIAL" && inputgvSerial.current) {
-            inputgvSerial.current.focus();
+        if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
+            inputgvSerial.current[0].focus();
         }
     }, [
         istxtMachineDisabled,
@@ -422,6 +422,20 @@ function fn_ScanSMTSerialRecordTime() {
         istxtLotDisabled,
         isselProDisabled
     ]);
+
+    const handleKeygvSerial = (e, index) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            const nextIndex = index + 1;
+            if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
+                inputgvSerial.current[nextIndex].focus();
+                console.log('Calling btnSaveClick',nextIndex);
+            } else if (nextIndex === nextIndex) {
+                
+                btnSaveClick();
+            }
+        }
+    };
 
     const SetMode = (strType) => {
         if (strType === "RECORD") {
@@ -564,7 +578,7 @@ function fn_ScanSMTSerialRecordTime() {
 
         if (dtData.length > 0) {
             if (selectedrbt === "rbtRecordTime") {
-                if (inputgvSerial.current) {
+                if (inputgvSerial.current[0]) {
                     inputgvSerial.current.focus();
                 }
             } else {
@@ -984,7 +998,7 @@ function fn_ScanSMTSerialRecordTime() {
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
         ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
-        btnSaveClick, btnCancelClick, pnlOP, lblOP
+        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial
     }
 };
 
