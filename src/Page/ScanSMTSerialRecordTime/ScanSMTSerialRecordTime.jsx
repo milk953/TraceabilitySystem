@@ -44,7 +44,7 @@ function ScanSMTSerialRecordTime() {
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
         ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
-        btnSaveClick, btnCancelClick, pnlOP, lblOP
+        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial
     } = fn_ScanSMTSerialRecordTime();
 
     return (
@@ -514,10 +514,11 @@ function ScanSMTSerialRecordTime() {
                                                         size="small"
                                                         fullWidth
                                                         value={txtgvSerial[index] || ""}
-                                                        inputRef={inputgvSerial}
+                                                        inputRef={(el) => (inputgvSerial.current[index] = el)}
                                                         onChange={(e) => {
                                                             handleChangeSerial(index, e);
                                                         }}
+                                                        onKeyDown={(e) => handleKeygvSerial(e, index)}
                                                     />
                                                 </TableCell>
                                             </TableRow>

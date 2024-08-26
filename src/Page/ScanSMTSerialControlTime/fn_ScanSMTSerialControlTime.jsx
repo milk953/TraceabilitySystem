@@ -87,7 +87,7 @@ function fn_ScanSMTSerialControlTime() {
     const inputLot = useRef(null);
     const inputTray = useRef(null);
     const ddlProduct = useRef(null);
-    const inputgvSerial = useRef(null);
+    const inputgvSerial = useRef([]);
 
     const plantCode = import.meta.env.VITE_FAC;
     const CONNECT_SERIAL_ERROR = "999999";
@@ -658,8 +658,8 @@ function fn_ScanSMTSerialControlTime() {
         if (!txtLotDisabled) {
             inputLot.current.focus();
         }
-        if (gvSerialData.length > 0 && inputgvSerial.current) {
-            inputgvSerial.current.focus();
+        if (gvSerialData.length > 0 && inputgvSerial.current[0]) {
+            inputgvSerial.current[0].focus();
         }
     }, [
         txtMachineDisabled,
@@ -668,6 +668,20 @@ function fn_ScanSMTSerialControlTime() {
         txtLotDisabled,
         gvSerialData
     ]);
+
+    const handleKeygvSerial = (e, index) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            const nextIndex = index + 1;
+            if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
+                inputgvSerial.current[nextIndex].focus();
+                console.log('Calling btnSaveClick',nextIndex);
+            } else if (nextIndex === nextIndex) {
+                
+                btnSaveClick();
+            }
+        }
+    };
 
     const SetMode = (strType) => {
 
@@ -766,7 +780,7 @@ function fn_ScanSMTSerialControlTime() {
             setvisiblelog(false);
             setpnlSerial(true);
             getInitialSerial();
-            inputgvSerial.current.focus();
+            inputgvSerial.current[0].focus();
         } else if (strType === "SERIAL_NG") {
             settxtLotDisabled(true);
             setvisiblelog(false);
@@ -795,7 +809,7 @@ function fn_ScanSMTSerialControlTime() {
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
-        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial
     }
 };
 

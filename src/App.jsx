@@ -33,7 +33,8 @@ import ScanSMTSerialPcsChrome from "./Page/ScanSMTSerialPcsChrome/ScanSMTSerialP
 import ReJudgement from "./Page/ReJudgement/ReJudgement";
 import ScanSMTSerialPcsBoxOnlyGood from "./Page/ScanSMTSerialPcsBoxOnlyGood/ScanSMTSerialPcsBoxOnlyGood"
 import ScanSMTSerialPcsNG from "./Page/Master Final Gate/ScanSMTSerialPcsNG";
-import Prdmaster from "./Page/ProductMasterMay/prdmaster";
+import ScanSMTSerialPcsAutoTray from "./Page/ScanSMTSerialPcsAutoTray/ScanSMTSerialPcsAutoTray";
+// import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -89,6 +90,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/AVIConfirm' element = {<AVIManualConfirm />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTray' element = {<ScanSMTSerialPcsAutoTray />} />
+            {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
  
             {/* View Data */}
             <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
@@ -106,7 +109,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/ReJudgement" element={<ReJudgement />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
             <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
-            <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} />
+            
           </Route>
         </Routes>
       </BrowserRouter>

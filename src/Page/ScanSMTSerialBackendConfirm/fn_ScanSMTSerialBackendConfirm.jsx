@@ -553,11 +553,25 @@ function fn_ScanSMTSerialBackendConfirm() {
         selProDisabled
     ]);
 
+    const handleKeygvSerial = (e, index) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            const nextIndex = index + 1;
+            if (nextIndex < txtTotalPCS && inputgvSerial.current[nextIndex]) {
+                inputgvSerial.current[nextIndex].focus();
+                console.log('Calling btnSaveClick',nextIndex);
+            } else if (nextIndex === nextIndex) {
+                
+                btnSaveClick();
+            }
+        }
+    };
+
     return {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtTotalPCS, settxtTotalPCS, lblLog, visiblelog, lblResultcolor, lblResult,
         pnlSerial, gvScanResult, txtgvSerial, txtLotDisabled, selProDisabled, txtTotalDisabled, gvScanData, handleChangeLot,
         handleChangeProduct, handleChangeTotalPCS, hfSerialCount, ibtBackClick, btnSaveClick, btnCancelClick, handleChangeSerial, inputLot,
-        ddlProduct, inputTotal, inputgvSerial
+        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial
     }
 
 };

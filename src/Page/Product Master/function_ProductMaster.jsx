@@ -116,6 +116,8 @@ function fn_ProductMaster() {
   const [txtUpdateBy, settxtUpdateBy] = useState("");
   const [txtUpdateDate, settxtUpdateDate] = useState("");
   const [chk_DelFlg, setchk_DelFlg] = useState("");
+
+  const [pnlMessage, setpnlMessage] = useState(false);
   const [lblMessage, setlblMessage] = useState("");
   const [lblMessageColor, setlblMessageColor] = useState("");
   const [rbtselLotRoll, setrbtselLotRoll] = useState("");
@@ -331,6 +333,7 @@ function fn_ProductMaster() {
   const FIX_CHECK_PRODUCT_MIX_START = "11";
   const FIX_CHECK_PRODUCT_MIX_END = "16";
   const plantCode = import.meta.env.VITE_FAC;
+  const ip = localStorage.getItem("ipAddress");
 
   useEffect(() => {
     PageLoad();
@@ -1287,6 +1290,7 @@ function fn_ProductMaster() {
       setAutoPressBCheck(false);
 
       if (Data === "") {
+        setpnlMessage(true);
         setlblMessageColor("#ff4d4f");
         setlblMessage("Not found");
       } else {
@@ -1863,12 +1867,14 @@ function fn_ProductMaster() {
         } else {
           setAutoPressBCheck(false);
         }
+
+        setpnlMessage(true);
+        setlblMessageColor("darkblue");
+        setlblMessage("Data read complete.");
       }
 
-      setlblMessageColor("darkblue");
-      setlblMessage("Data read complete.");
-
     } catch (error) {
+      setpnlMessage(true);
       setlblMessageColor("#ff4d4f");
       setlblMessage(error);
     }
@@ -1891,7 +1897,7 @@ function fn_ProductMaster() {
     setchk_DelFlgCheck(chk_DelFlgCheck);
   };
 
-  const btnSubmitClick = async (event) => {
+  const btnSubmitClick = async () => {
     const result = await Swal.fire({
       title: 'Are you sure you want to submit?',
       showCancelButton: true,
@@ -1903,6 +1909,7 @@ function fn_ProductMaster() {
     if (result.isConfirmed) {
       let BeginTransFlg = false;
 
+      setpnlMessage(true);
       setlblMessageColor("black");
       setlblMessage("exec...");
 
@@ -1920,7 +1927,6 @@ function fn_ProductMaster() {
         setErrorShtLot(true);
         setErrorShtLotMessage("Please input Sheet/Lot with numbers.")
       } else {
-        let txtShtLot = String(parseInt(event.target.value)).trim();
         settxtShtLot(txtShtLot);
       }
 
@@ -1931,7 +1937,6 @@ function fn_ProductMaster() {
         setErrorPcsSht(true);
         setErrorPcsShtMessage("Please input Piece/Sheet with numbers.");
       } else {
-        let txtPcsSht = String(parseInt(event.target.value)).trim();
         settxtPcsSht(txtPcsSht);
       }
 
@@ -1942,7 +1947,6 @@ function fn_ProductMaster() {
         setErrorShtScan(true);
         setErrorShtScanMessage("Please input Sheet/Scan with numbers.");
       } else {
-        let txtShtScan = String(parseInt(event.target.value)).trim();
         settxtShtScan(txtShtScan);
       }
 
@@ -1952,7 +1956,6 @@ function fn_ProductMaster() {
         setErrorShtLaser(true);
         setErrorShtLaserMessage("Please input Sheet/Laser with numbers.");
       } else {
-        let txtShtLaser = String(parseInt(event.target.value)).trim();
         settxtShtLaser(txtShtLaser);
       }
 
@@ -1989,7 +1992,6 @@ function fn_ProductMaster() {
         setErrorDupStart(true);
         setErrorDupStartMessage("Please input duplicate start digit with numbers.");
       } else {
-        let txtDupStart = String(parseInt(event.target.value)).trim();
         settxtDupStart(txtDupStart);
       }
 
@@ -2000,7 +2002,6 @@ function fn_ProductMaster() {
         setErrorDupEnd(true);
         setErrorDupEndMessage("Please input duplicate end digit with numbers.");
       } else {
-        let txtDupEnd = String(parseInt(event.target.value)).trim();
         settxtDupEnd(txtDupEnd);
       }
 
@@ -2341,14 +2342,271 @@ function fn_ProductMaster() {
         const dt = res.data.p_prm_update_count;
         console.log("kkkk", dt);
 
-        if (dt !== 0) {
+        if (dt > 0) {
           BeginTransFlg = true;
-          const updatedCount = String(parseInt(dt) + 1).trim();
-          settxtUpdateCount(updatedCount);
+          const txtUpdateCount = String(parseInt(dt) + 1).trim();
+          settxtUpdateCount(txtUpdateCount);
+          await axios.post("/api/updateProductMst", {
+            strUpdateCount: txtUpdateCount,
+            strShtLot: txtShtLot,
+            strPcsSht: txtPcsSht,
+            ddlSheetType: selSheetType,
+            ddlDateType: selDateType,
+            strEngCode: txtEngCode,
+            strRevision: txtRevision,
+            strPcsTray: txtPcsTray,
+            strPcsScan: txtPcsScan,
+            strChkStartDig: txtChkStartDig,
+            strChkEndDig: txtChkEndDig,
+            strChkWord: txtChkWord,
+            strSerialLength: txtSerialLength,
+            strSerialFormat: txtSerialFormat,
+            strSheetFormat: txtSheetFormat,
+            ddlLaminationSide: selLaminationSide,
+            strUserName: hfUserName,
+            ipAddress: ip,
+            chk_DelFlg: chk_DelFlgCheck,
+            strAbbr: txtAbbr,
+            strShtScan: txtShtScan,
+            strShtLaser: txtShtLaser,
+            cbxReqLot: ReqLotCheck,
+            cbxReqVendor: ReqVendorCheck,
+            cbxReqConfig: ReqConfigCheck,
+            strConfigWord: txtConfigWord,
+            strConfigStart: ReqConfigCheck ? txtConfigStart : null,
+            strConfigEnd: ReqConfigCheck ? txtConfigEnd : null,
+            cbxReqConfigRun: ReqConfigRunCheck,
+            strDupStart: txtDupStart,
+            strDupEnd: txtDupEnd,
+            strAddInfo: txtAddInfo,
+            strSerialStartCode: txtSerialStartCode,
+            cbxReqCheckPrdSht: ReqCheckPrdShtCheck,
+            strCheckPrdShtFrom: ReqCheckPrdShtCheck ? txtCheckPrdShtFrom : null,
+            strCheckPrdShtTo: ReqCheckPrdShtCheck ? txtCheckPrdShtTo : null,
+            cbxReqCheckLotSht: ReqCheckLotShtCheck,
+            strCheckLotShtFrom: ReqCheckLotShtCheck ? txtCheckLotShtFrom : null,
+            strCheckLotShtTo: ReqCheckLotShtCheck ? txtCheckLotShtTo : null,
+            rbtRoll: rbtselLotRoll,
+            ddlStatus: selStatus,
+            cbxReqControlPlasma: ReqControlPlasmaCheck,
+            strPlasmaTime: ReqControlPlasmaCheck ? txtPlasmaTime : null,
+            rbtPlasmaTimePCS: rbtPlasmaTime,
+            rbtPlasmaTimeSHT: rbtPlasmaTime,
+            rbtPlasmaTimeGRP: rbtPlasmaTime,
+            cbxReqUpdatePlasma: ReqUpdatePlasmaCheck,
+            cbxReqStartSeqCode: ReqStartSeqCodeCheck,
+            strStartSeqCode: txtStartSeqCode,
+            strStartSeqDigitFrom: ReqStartSeqCodeCheck ? txtStartSeqDigitFrom : null,
+            strStartSeqDigitTo: ReqStartSeqCodeCheck ? txtStartSeqDigitTo : null,
+            cbxReqSheetELT: ReqShtELTCheck,
+            cbxReqSPIAOI: ReqSPIAOICheck,
+            cbxReqVendorLot: ReqVendorCheck,
+            strVendorLotLength: txtVendorLotLength,
+            cbxReqConRollLeaf: ReqConRollLeafCheck,
+            strRollNoLength: txtRollNoLength,
+            strLeafNoLength: txtLeafNoLength,
+            cbxReqDateProc: ReqDateProcCheck,
+            strDateFromProc: txtDateFromProc,
+            cbxReqCheckWeekCode: ReqCheckWeekCodeCheck,
+            strWeekCodeStart: ReqCheckWeekCodeCheck ? txtWeekCodeStart : null,
+            strWeekCodeEnd: ReqCheckWeekCodeCheck ? txtWeekCodeEnd : null,
+            cbxReqPreAOIF: ReqPreAOIFCheck,
+            cbxReqPreAOIB: ReqPreAOIBCheck,
+            cbxReqAOIF: ReqAOIFCheck,
+            cbxReqAOIB: ReqAOIBCheck,
+            cbxReqAOICoatF: ReqAOICoatFCheck,
+            cbxReqAOICoatB: ReqAOICoatBCheck,
+            cbxReqSPIF: ReqSPIFCheck,
+            cbxReqSPIB: ReqSPIBCheck,
+            strLeafScan: ReqConRollLeafCheck ? txtLeafScan : null,
+            cbxLeafReqSerial: LeafReqSerialCheck,
+            cbxReqCheckPrdRoll: ReqCheckPrdRollCheck,
+            strCheckRollPrdFrom: ReqCheckPrdRollCheck ? txtCheckRollPrdFrom : null,
+            strCheckRollPrdTo: ReqCheckPrdRollCheck ? txtCheckRollPrdTo : null,
+            strCheckRollPrdWord: txtCheckRollPrdWord,
+            cbxRollReqCheckPrdLeaf: RollReqCheckPrdLeafCheck,
+            strRollCheckPrdLeafFrom: RollReqCheckPrdLeafCheck ? txtRollCheckPrdLeafFrom : null,
+            strRollCheckPrdLeafTo: RollReqCheckPrdLeafCheck ? txtRollCheckPrdLeafTo : null,
+            cbxRollReqCheckLotLeaf: RollReqCheckLotLeafCheck,
+            strRollCheckLotLeafFrom: RollReqCheckLotLeafCheck ? txtRollCheckLotLeafFrom : null,
+            strRollCheckLotLeafTo: RollReqCheckLotLeafCheck ? txtRollCheckLotLeafTo : null,
+            cbxReqSheetMC: ReqSheetMCCheck,
+            cbxReqProcControlTime: ReqProcControlTimeCheck,
+            strProcControlTime: ReqProcControlTimeCheck ? txtProcControlTime : null,
+            cbxReqConnShtPcsTime: ReqConnShtPcsTimeCheck,
+            cbxReqFinalPackingGroup: ReqFinalPackingGroupCheck,
+            cbxReqConShtPcsRoll: ReqConShtPcsRollCheck,
+            strBarcodeGrade: txtBarcodeGrade,
+            cbxReqShtControlPlasma: ReqShtControlPlasmaCheck,
+            strShtPlasmaTime: txtShtPlasmaTime,
+            cbxPlasmaNotStartELT: PlasmaNotStartELTCheck,
+            cbxPlasmaNotShowTime: PlasmaNotShowTimeCheck,
+            cbxReqEFPCAOM: ReqEFPCAOMCheck,
+            cbxReqEFPCAOI: ReqEFPCAOICheck,
+            cbxReqEFPCOST: ReqEFPCOSTCheck,
+            cbxReqEFPCAVI: ReqEFPCAVICheck,
+            cbxPlasmaConnShtPcs: PlasmaConnShtPcsCheck,
+            cbxReqXrayF: ReqXrayFCheck,
+            cbxReqXrayB: ReqXrayBCheck,
+            cbxReqXrayOneTime: ReqXrayOneTimeCheck,
+            cbxReqFinInspect: ReqFinInspectCheck,
+            strFinInspectProc: txtFinInspectProc,
+            cbxReqReflowF: ReqReflowFCheck,
+            cbxReqReflowB: ReqReflowBCheck,
+            cbxConnShtReqBoardFlg: ConnShtReqBoardFlg,
+            cbxAutoPressF: AutoPressFCheck,
+            cbxAutoPressB: AutoPressBCheck,
+            strplantcode: plantCode,
+            strprdname: txtProduct
+          })
+            .then((res) => {
+              console.log("แก้ไขข้อมูลสำเร็จ =", res);
+              swal("success", "You update data success", "success");
+              setlblMessageColor("darkblue");
+              setlblMessage("Data Update complete.");
+              setpnlMessage(true);
+            })
+            .catch((error) => {
+              console.error("เกิดข้อผิดพลาด =", error);
+              swal("Error", error.response.data.message, "error");
+            });
+        } else {
+          BeginTransFlg = true;
+          const txtUpdateCount = 1;
+          settxtUpdateCount(txtUpdateCount);
+
+          await axios.post("/api/insertProductMst", {
+            strplantcode: plantCode,
+            strprdname: txtProduct,
+            strUpdateCount: txtUpdateCount,
+            strShtLot: txtShtLot,
+            strPcsSht: txtPcsSht,
+            ddlSheetType: selSheetType,
+            ddlDateType: selDateType,
+            strEngCode: txtEngCode,
+            strRevision: txtRevision,
+            strPcsTray: txtPcsTray,
+            strPcsScan: txtPcsScan,
+            strChkStartDig: txtChkStartDig,
+            strChkEndDig: txtChkEndDig,
+            strChkWord: txtChkWord,
+            strSerialLength: txtSerialLength,
+            strSerialFormat: txtSerialFormat,
+            strSheetFormat: txtSheetFormat,
+            ddlLaminationSide: selLaminationSide,
+            strUserName: hfUserName,
+            ipAddress: ip,
+            chk_DelFlg: chk_DelFlgCheck,
+            strAbbr: txtAbbr,
+            strShtScan: txtShtScan,
+            strShtLaser: txtShtLaser,
+            cbxReqLot: ReqLotCheck,
+            cbxReqVendor: ReqVendorCheck,
+            cbxReqConfig: ReqConfigCheck,
+            strConfigWord: txtConfigWord,
+            strConfigStart: ReqConfigCheck ? txtConfigStart : null,
+            strConfigEnd: ReqConfigCheck ? txtConfigEnd : null,
+            cbxReqConfigRun: ReqConfigRunCheck,
+            strDupStart: txtDupStart,
+            strDupEnd: txtDupEnd,
+            strAddInfo: txtAddInfo,
+            strSerialStartCode: txtSerialStartCode,
+            cbxReqCheckPrdSht: ReqCheckPrdShtCheck,
+            strCheckPrdShtFrom: ReqCheckPrdShtCheck ? txtCheckPrdShtFrom : null,
+            strCheckPrdShtTo: ReqCheckPrdShtCheck ? txtCheckPrdShtTo : null,
+            cbxReqCheckLotSht: ReqCheckLotShtCheck,
+            strCheckLotShtFrom: ReqCheckLotShtCheck ? txtCheckLotShtFrom : null,
+            strCheckLotShtTo: ReqCheckLotShtCheck ? txtCheckLotShtTo : null,
+            rbtRoll: rbtselLotRoll,
+            ddlStatus: selStatus,
+            cbxReqControlPlasma: ReqControlPlasmaCheck,
+            strPlasmaTime: ReqControlPlasmaCheck ? txtPlasmaTime : null,
+            rbtPlasmaTimePCS: rbtPlasmaTime,
+            rbtPlasmaTimeSHT: rbtPlasmaTime,
+            rbtPlasmaTimeGRP: rbtPlasmaTime,
+            cbxReqUpdatePlasma: ReqUpdatePlasmaCheck,
+            cbxReqStartSeqCode: ReqStartSeqCodeCheck,
+            strStartSeqCode: txtStartSeqCode,
+            strStartSeqDigitFrom: ReqStartSeqCodeCheck ? txtStartSeqDigitFrom : null,
+            strStartSeqDigitTo: ReqStartSeqCodeCheck ? txtStartSeqDigitTo : null,
+            cbxReqSheetELT: ReqShtELTCheck,
+            cbxReqSPIAOI: ReqSPIAOICheck,
+            cbxReqVendorLot: ReqVendorCheck,
+            strVendorLotLength: txtVendorLotLength,
+            cbxReqConRollLeaf: ReqConRollLeafCheck,
+            strRollNoLength: txtRollNoLength,
+            strLeafNoLength: txtLeafNoLength,
+            cbxReqDateProc: ReqDateProcCheck,
+            strDateFromProc: txtDateFromProc,
+            cbxReqCheckWeekCode: ReqCheckWeekCodeCheck,
+            strWeekCodeStart: ReqCheckWeekCodeCheck ? txtWeekCodeStart : null,
+            strWeekCodeEnd: ReqCheckWeekCodeCheck ? txtWeekCodeEnd : null,
+            cbxReqPreAOIF: ReqPreAOIFCheck,
+            cbxReqPreAOIB: ReqPreAOIBCheck,
+            cbxReqAOIF: ReqAOIFCheck,
+            cbxReqAOIB: ReqAOIBCheck,
+            cbxReqAOICoatF: ReqAOICoatFCheck,
+            cbxReqAOICoatB: ReqAOICoatBCheck,
+            cbxReqSPIF: ReqSPIFCheck,
+            cbxReqSPIB: ReqSPIBCheck,
+            strLeafScan: ReqConRollLeafCheck ? txtLeafScan : null,
+            cbxLeafReqSerial: LeafReqSerialCheck,
+            cbxReqCheckPrdRoll: ReqCheckPrdRollCheck,
+            strCheckRollPrdFrom: ReqCheckPrdRollCheck ? txtCheckRollPrdFrom : null,
+            strCheckRollPrdTo: ReqCheckPrdRollCheck ? txtCheckRollPrdTo : null,
+            strCheckRollPrdWord: txtCheckRollPrdWord,
+            cbxRollReqCheckPrdLeaf: RollReqCheckPrdLeafCheck,
+            strRollCheckPrdLeafFrom: RollReqCheckPrdLeafCheck ? txtRollCheckPrdLeafFrom : null,
+            strRollCheckPrdLeafTo: RollReqCheckPrdLeafCheck ? txtRollCheckPrdLeafTo : null,
+            cbxRollReqCheckLotLeaf: RollReqCheckLotLeafCheck,
+            strRollCheckLotLeafFrom: RollReqCheckLotLeafCheck ? txtRollCheckLotLeafFrom : null,
+            strRollCheckLotLeafTo: RollReqCheckLotLeafCheck ? txtRollCheckLotLeafTo : null,
+            cbxReqSheetMC: ReqSheetMCCheck,
+            cbxReqProcControlTime: ReqProcControlTimeCheck,
+            strProcControlTime: ReqProcControlTimeCheck ? txtProcControlTime : null,
+            cbxReqConnShtPcsTime: ReqConnShtPcsTimeCheck,
+            cbxReqFinalPackingGroup: ReqFinalPackingGroupCheck,
+            cbxReqConShtPcsRoll: ReqConShtPcsRollCheck,
+            strBarcodeGrade: txtBarcodeGrade,
+            cbxReqShtControlPlasma: ReqShtControlPlasmaCheck,
+            strShtPlasmaTime: txtShtPlasmaTime,
+            cbxPlasmaNotStartELT: PlasmaNotStartELTCheck,
+            cbxPlasmaNotShowTime: PlasmaNotShowTimeCheck,
+            cbxReqEFPCAOM: ReqEFPCAOMCheck,
+            cbxReqEFPCAOI: ReqEFPCAOICheck,
+            cbxReqEFPCOST: ReqEFPCOSTCheck,
+            cbxReqEFPCAVI: ReqEFPCAVICheck,
+            cbxPlasmaConnShtPcs: PlasmaConnShtPcsCheck,
+            cbxReqXrayF: ReqXrayFCheck,
+            cbxReqXrayB: ReqXrayBCheck,
+            cbxReqXrayOneTime: ReqXrayOneTimeCheck,
+            cbxReqFinInspect: ReqFinInspectCheck,
+            strFinInspectProc: txtFinInspectProc,
+            cbxReqReflowF: ReqReflowFCheck,
+            cbxReqReflowB: ReqReflowBCheck,
+            cbxConnShtReqBoardFlg: ConnShtReqBoardFlg,
+            cbxAutoPressF: AutoPressFCheck,
+            cbxAutoPressB: AutoPressBCheck
+          })
+            .then((res2) => {
+              console.log("บันทึกข้อมูลสำเร็จ =", res2);
+              swal("success", "You summit data success", "success");
+              setlblMessageColor("darkblue");
+              setlblMessage("Data Insert complete.");
+              setpnlMessage(true);
+            })
+            .catch((error) => {
+              console.error("เกิดข้อผิดพลาด =", error);
+              swal("Error", error.response.data.message, "error");
+            });
         }
       } catch (error) {
-
+        lblMessageColor("#ff4d4f");
+        lblMessage(`Error: ${error.message}`);
+        setpnlMessage(true);
       }
+
+      GetDataProductMaster();
 
     } else {
       // User clicked 'No'
@@ -2389,7 +2647,7 @@ function fn_ProductMaster() {
     ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
     ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
     ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage
+    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage
   }
 };
 

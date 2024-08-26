@@ -241,10 +241,7 @@ function fn_ScanSMTSerialPcsChrome() {
             .then((res) => {
               // console.log(res.data,'dtLotProductdtLotProductdtLotProductdtLotProduct')
               dtLotProduct = res.data.flat().flat();
-              console.log(
-                dtLotProduct,
-                "dtLotProductdtLotProductdtLotProductdtLotProduct"
-              );
+              
             });
           if (dtLotProduct > 0) {
             if (dtLotProduct[0][2] == "Y") {

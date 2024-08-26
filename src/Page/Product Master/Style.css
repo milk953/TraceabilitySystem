@@ -7,7 +7,7 @@
 
 
 .TbProductMst th {
-  background-color: #8c8c8c;
+  background-color: #5d8f7c;
   border-radius: 5px 5px 0 0;
   color: #fff;
   padding: 5px;
@@ -15,6 +15,16 @@
 
 .TbProductMst td {
   padding: 3px;
+  border: none;
+}
+
+.TbProductMst tr.special-row td:nth-child(1),
+.TbProductMst tr.special-row td:nth-child(3) {
+  background-color: #D2F3E0 ;
+}
+
+.TbProductMst tr.specialrow td:nth-child(1) {
+  background-color: #D2F3E0;
 }
 
 #txtfield {

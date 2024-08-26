@@ -82,7 +82,7 @@ function ProductMaster() {
         ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
         ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
         ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage
+        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage
 
     } = fn_ProductMaster();
 
@@ -94,18 +94,19 @@ function ProductMaster() {
                 component={Paper}
                 style={{
                     margin: "auto",
-                    width: "95%",
-                    maxWidth: "1400px",
+                    width: "93%",
+                    maxWidth: "1380px",
                     marginTop: "30px",
                     height: "auto",
-                    maxHeight: "600px",
+                    maxHeight: "3000px",
                     padding: "20px",
                     display: 'flex',
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                 }}
             >
+                {pnlMessage && (
                 <Paper
                     className="lblMessage"
                     elevation={1}
@@ -121,16 +122,18 @@ function ProductMaster() {
                         {lblMessage}
                     </Typography>
                 </Paper>
+                )}
+                
                 <Box justifyContent="space-between"
                     sx={{
                         textAlign: "center",
                         marginRight: "0px",
-                        width: "100%"
+                        width: "100%",
                     }}
                 >
                     <TableContainer
                         style={{
-                            height: "540px",
+                            height: "auto",
                         }}
                     >
                         <Table className="TbProductMst"
@@ -153,7 +156,7 @@ function ProductMaster() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
+                                <TableRow className="specialrow">
                                     <TableCell>
                                         <Typography>Product Name :</Typography>
                                     </TableCell>
@@ -188,7 +191,7 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Update Count :</Typography>
                                     </TableCell>
@@ -211,7 +214,7 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtChkStartDig}
                                             style={{
-                                                width: "360px"
+                                                width: "370px"
                                             }}
                                             onChange={handleKeyCheckDigitFrom}
                                             error={ErrorChkStartDig}
@@ -230,7 +233,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet/Lot :</Typography>
                                     </TableCell>
@@ -274,7 +277,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Pcs/Sheet :</Typography>
                                     </TableCell>
@@ -318,7 +321,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Type :</Typography>
                                     </TableCell>
@@ -374,7 +377,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Serial Date Type :</Typography>
                                     </TableCell>
@@ -441,7 +444,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Serial Engineer Code :</Typography>
                                     </TableCell>
@@ -485,7 +488,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Serial Revision :</Typography>
                                     </TableCell>
@@ -529,7 +532,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Lamination Side :</Typography>
                                     </TableCell>
@@ -580,7 +583,7 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>SHT/SCAN :</Typography>
                                     </TableCell>
@@ -624,7 +627,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Lot :</Typography>
                                     </TableCell>
@@ -653,6 +656,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Config :</Typography>
                                     </TableCell>
@@ -695,7 +702,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Config. Digit (From) :</Typography>
                                     </TableCell>
@@ -747,7 +754,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Config Running :</Typography>
                                     </TableCell>
@@ -764,6 +771,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Check Dup. Digit (From) :</Typography>
                                     </TableCell>
@@ -807,7 +818,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Addition Info. :</Typography>
                                     </TableCell>
@@ -823,6 +834,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     {visiblePassWord && (
                                         <TableCell>
                                             <Typography>PASSWORD :</Typography>
@@ -865,7 +880,7 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Serial Start Code :</Typography>
                                     </TableCell>
@@ -895,6 +910,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet PRD. Digit (From) :</Typography>
                                     </TableCell>
@@ -946,7 +965,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Control By :</Typography>
                                     </TableCell>
@@ -1000,6 +1019,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Lot Digit (From) :</Typography>
                                     </TableCell>
@@ -1051,7 +1074,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Final Gate Status :</Typography>
                                     </TableCell>
@@ -1099,6 +1122,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Pcs Control Plasma Time :</Typography>
                                     </TableCell>
@@ -1141,7 +1168,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Record PDS Time By :</Typography>
                                     </TableCell>
@@ -1215,6 +1242,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Not apply start PDS Time from ELT :</Typography>
                                     </TableCell>
@@ -1248,6 +1279,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Start Seq. Code :</Typography>
                                     </TableCell>
@@ -1291,7 +1326,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Start Seq. Digit (From) :</Typography>
                                     </TableCell>
@@ -1343,7 +1378,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Sheet ELT :</Typography>
                                     </TableCell>
@@ -1371,6 +1406,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Serial Req. Vendor Lot :</Typography>
                                     </TableCell>
@@ -1413,7 +1452,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Date by Process :</Typography>
                                     </TableCell>
@@ -1456,7 +1495,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Check Week Code :</Typography>
                                     </TableCell>
@@ -1485,6 +1524,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Week Code Digit (From) :</Typography>
                                     </TableCell>
@@ -1536,7 +1579,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Connect Roll & Leaf :</Typography>
                                     </TableCell>
@@ -1579,7 +1622,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Roll No. Length :</Typography>
                                     </TableCell>
@@ -1631,7 +1674,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Leaf Req. Serial Condition :</Typography>
                                     </TableCell>
@@ -1661,6 +1704,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Roll PRD. Digit (From) :</Typography>
                                     </TableCell>
@@ -1712,7 +1759,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Roll Check PRD. Word :</Typography>
                                     </TableCell>
@@ -1756,7 +1803,7 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Leaf PRD. Digit (From) :</Typography>
                                     </TableCell>
@@ -1808,7 +1855,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Check Leaf Lot :</Typography>
                                     </TableCell>
@@ -1852,7 +1899,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Leaf Lot Digit (To) :</Typography>
                                     </TableCell>
@@ -1895,7 +1942,7 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Check PRE-AOI :</Typography>
                                     </TableCell>
@@ -1965,6 +2012,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Check SPI :</Typography>
                                     </TableCell>
@@ -2034,6 +2085,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Check Reflow :</Typography>
                                     </TableCell>
@@ -2070,6 +2125,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Check Xray :</Typography>
                                     </TableCell>
@@ -2118,6 +2177,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Process Control Time :</Typography>
                                     </TableCell>
@@ -2160,7 +2223,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Include Connect Sht&Pcs Time :</Typography>
                                     </TableCell>
@@ -2191,6 +2254,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Req. Final Inspection :</Typography>
                                     </TableCell>
@@ -2233,7 +2300,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Sheet Control Plasma Time :</Typography>
                                     </TableCell>
@@ -2276,7 +2343,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Combine Plasma Time&Connect Sht&Pcs :</Typography>
                                     </TableCell>
@@ -2304,6 +2371,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Final Gate Req. EFPC: AOM,AOI,OST,AVI :</Typography>
                                     </TableCell>
@@ -2364,6 +2435,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Connect Sht&PCS Req Board No :</Typography>
                                     </TableCell>
@@ -2412,6 +2487,10 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
                                     <TableCell>
                                         <Typography>Update By :</Typography>
                                     </TableCell>
@@ -2477,6 +2556,10 @@ function ProductMaster() {
                     >
                         Submit
                     </Button>
+
+                    <div style={{marginTop: "40px"}}>
+                        <a href="/TraceabilitySystem">Return To Menu</a>
+                    </div>
                 </Box>
             </Card>
         </div>
