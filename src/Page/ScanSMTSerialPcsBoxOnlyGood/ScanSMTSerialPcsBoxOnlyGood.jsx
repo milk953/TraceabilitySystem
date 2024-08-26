@@ -30,8 +30,9 @@ function ScanSMTRoollSht() {
 const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlProduct,ddlProduct_SelectedIndexChanged,
   ddlProduct,    txtMachine_TextChanged  ,txtMachine,settxtMachine,ibtMachineBack_Click,txtOP_TextChanged,txtOP,settxtOP,ibtOPBack_Click,txtBox_TextChanged,
   txtBox,settxtBox,txtPack_TextChanged, txtPack,settxtPack ,lblLot,lblLotTotal,txtPcsTray,settxtPcsTray,txtPcsTray_TextChanged,lblSerialNG,ibtBack_Click
-  ,gvSerial,pnlMachine,lblLastTray
-} = fn_ScanSMTSerialPcsBoxOnlyGood()
+  ,gvSerial,pnlMachine,lblLastTray,lblBox,lblBoxTotal,lblPacking,lblPackingTotal,lblBoxStatus,lblLog
+,lblBoxFull,btnSave_Click,ibtBox_Click,ibtPack_Click,pnlSerial,txtSerial
+,pnlLog,pnlOP,handleSerialChange,lblResult,fntxtLot,fntxtMachine,fntxtTray,fntxtBox,fntxtPack,fc_txtSerial,fntxtOP} = fn_ScanSMTSerialPcsBoxOnlyGood()
 // console.log(txtBox.value," eiei")
   return (
     <div>
@@ -58,6 +59,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         size="small"
                         style={{ ...txtLot.style, width: "80%" }}
                         disabled={txtLot.disbled} //true พิมไม่ได้
+                          inputRef={fntxtLot}
                         // inputRef={(el) => (fc_txtLotNo.current = el)}
                         value={txtLot.value}
                         onChange={(e) => {
@@ -111,7 +113,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                     </TableCell>
                   </TableRow>
                   {pnlMachine &&( <>
-                  <TableRow style={{display:''}}>
+                  <TableRow >
                     <TableCell align="right">
                       <Typography>Machine No :</Typography>
                     </TableCell>
@@ -179,7 +181,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                       </Button>
                     </TableCell>
                   </TableRow></>)}
-                  <TableRow style={{display:''}}>
+                  <TableRow >
                     <TableCell align="right">
                       <Typography>Box No.:</Typography>
                     </TableCell>
@@ -198,7 +200,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         }}
                         // style={{ ...txtPackingNo.style, width: "80%" }}
                         // disabled={txtPackingNo.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
+                        inputRef={fntxtBox}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtBox_TextChanged();
@@ -207,7 +209,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         onBlur={txtBox_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
-                      // onClick={ibtPackingBack_Click}
+                      onClick={ibtBox_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -232,7 +234,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         }}
                         // style={{ ...txtPackingNo.style, width: "80%" }}
                         // disabled={txtPackingNo.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
+                        inputRef={fntxtPack}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtPack_TextChanged();
@@ -241,7 +243,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                         onBlur={txtPack_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
-                      // onClick={ibtPackingBack_Click}
+                      onClick={ibtPack_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -255,7 +257,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                       {lblLot.value}
                       </TableCell>
                     <TableCell align="right">
-                      <Typography>OK :</Typography>
+                      <Typography style={{color:'green'}}>OK :</Typography>
                     </TableCell>
                     <TableCell style={{ width: "70px" }} colSpan={2}>
                       {lblLotTotal.value}
@@ -292,16 +294,37 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                     </TableCell>
                     {/* <TableCell style={{ width: "70px",}}></TableCell> */}
                     <TableCell align="right" style={{ width: "40px" }}>
-                      <Typography>NG :</Typography>
+                      <Typography style={{color:'red'}}>NG :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       {lblSerialNG.value}
                       </TableCell>
                   </TableRow>
+                 
+              
                 </TableBody>
               </Table>
+              <Card sx={{ marginTop: '10px' ,width:'100%' }}>
+  <Table >
+    <TableRow>
+      <TableCell   id="txtfild" align="right" sx={{width:'15%',textAlign: "center"}} >Box :</TableCell>
+      <TableCell   id="txtfild"sx={{ width:'25%',textAlign:'center'}}>{lblBox.value}</TableCell>
+      <TableCell   id="txtfild"sx={{ width:'10%',textAlign: "center"}}>{lblBoxFull.value}</TableCell>
+      <TableCell   id="txtfild"sx={{ width:'10%',textAlign: "center"}}>{lblBoxTotal.value}</TableCell>
+      <TableCell   id="txtfild"rowSpan={2} sx={{ textAlign:'center',width:'15%' ,color:lblBoxStatus.value == 'OK' ? 'green' : 'red'  }} >{lblBoxStatus.value}</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell   id="txtfild"align="right" sx={{width:'15%',textAlign:'center'}}>Packing :</TableCell>
+      <TableCell   id="txtfild"sx={{ width:'15%',textAlign: "center"}}>{lblPacking.value}</TableCell>
+      <TableCell   id="txtfild"sx={{ textAlign:'center',width:'15%'}} colSpan={2}>{lblPackingTotal.value}</TableCell>
+    </TableRow>
+  </Table>
+</Card>
 
-              {/* {lbllog.visble == true && ( */}
+            
+
+              
+{pnlOP && (
               <Paper
                 elevation={3}
                 style={{
@@ -317,10 +340,30 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                   // display:lblLog.visble
                 }}
               >
-                {/* {lblLog.value} */}
+                {lblLog.value}
               </Paper>
-              {/* )} */}
+              )} 
+              {pnlLog && (
+              <Paper
+                elevation={3}
+                style={{
+                  width: "400px",
+                  height: "40px",
+                  margin: "auto",
+                  textAlign: "center",
+                  background: "#BB2525",
+                  paddingTop: "18px",
+                  color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
+                  fontWeight: "bold", // กำหนดความหนาของฟอนต์
+                  marginTop: "10px",
+                  // display:lblLog.visble
+                }}
+              >
+                {lblLog.value}
+              </Paper>
+              )} 
               {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
+              {pnlSerial && (
               <Table
                 className="CSS-GvSerial"
                 style={{ marginTop: "20px",
@@ -360,17 +403,17 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                           value={txtSerial[index]}
                           onBlur={(event) => {
                             handleSerialChange(index, event);
-                            // event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
-                            // if (index < gvSerial.value.length - 1) {
-                            //   fc_txtSerial.current[index + 1].focus();
-                            // }
+                           
                           }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
-                              if (index < gvSerial.value.length - 1) {
+                              if (index < gvSerial.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
+                              } else{
+                                btnSave_Click()
+                                event.target.blur();
                               }
                             }
                           }}
@@ -382,7 +425,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
                       <Button className="BtSave"
-                      // onClick={btnSave_Click}
+                      onClick={btnSave_Click}
                       >Save</Button> &nbsp;&nbsp;
                       <Button className="BtCancel" 
                       // onClick={btnCancel_Click}
@@ -390,7 +433,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </Table>
+              </Table>)}
             </Grid>
             {/* border:'1PX SOLID green' */}
             <Grid
