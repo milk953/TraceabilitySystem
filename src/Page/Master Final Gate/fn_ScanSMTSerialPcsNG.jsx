@@ -93,11 +93,8 @@ function fn_ScanSMTSerialPcsNG() {
   const FINAL_GATE_SPECIAL_SERIAL_VAR = ":P_SERIAL_NO";
   const FINAL_GATE_SPECIAL_MESSAGE = "Csig value less then 3000";
   const FINAL_GATE_SPECIAL_OK = "OK";
-  const FINAL_GATE_SPECIAL_QUERY =
-    "SELECT CASE WHEN NVL(MAX(TO_NUMBER(D.CHD_INSPECT_RESULT)),0) &gt;= 3000 THEN 'OK' ELSE 'NG' END  FROM SMT_CHECKER_DETAIL D WHERE D.CHD_PLANT_CODE = 'THA' AND D.CHD_TEST_TYPE = 'ELT_SAMAR_2' AND D.CHD_SERIAL_NO = :P_SERIAL_NO AND D.CHD_SEQ = 19";
   const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
   const Fac = import.meta.env.VITE_FAC;
- 
 
   //lable
   const [lblError, setLblError] = useState("");
@@ -130,7 +127,6 @@ function fn_ScanSMTSerialPcsNG() {
 
   useEffect(() => {
     Pageload();
-    // SetFocus("txtLot");
     setMode("LOT");
   }, []);
   async function Pageload() {
@@ -471,6 +467,53 @@ function fn_ScanSMTSerialPcsNG() {
           response = res.data.plasma_time;
         });
         return response;
+    } else if (type == "Get_Spi_aoi_result"){
+      let result = "";
+      await axios.post('/api/Common/Get_Spi_aoi_result',{
+        dataList: {
+          _strPlantCode: Fac,
+          _pcsPosition: params.intShtSeq,
+          _frontSheetNumber: params.FrontSheetBarcode,
+          _rearSheetNumber: params.RearSheetBarcode,
+          _strProduct: params.RearSheetBarcode,
+          _Message:  params.Message,         
+        },
+      }).then((res) => {
+        result = res.data;
+      })
+      return result;
+    } else if (type =="GetCheckChipDuplicate"){
+      let result = "";
+      await axios.post('/api/Common/GetCheckChipDuplicate',{
+        dataList: {
+          _strPlantCode: Fac,
+          _strSerial: params.strSerial,
+          _strPrdName: params.strPrdName,
+        },
+      }).then((res) => {
+        result = res.data;
+      })
+      return result;
+    } else if (type == "GetSerialFinInspectResult"){
+      let  result ='';
+      await axios.post('/api/Common/GetSerialFinInspectResult',{
+        dataList: {
+          _strPlantCode: Fac,
+          _strSerialNo: params.strSerialNo,
+          _strProc: params.strProc,
+        },
+      }).then((res) => {
+        result = res.data;
+      })
+      return result;
+    } else if (type == "GetCheckSpecialBySerial"){
+      let result = "";
+      await axios("/api/Common/getcheckspecialbyserial",{strSerialno:params.strSerialno,strPlantCode:Fac}
+      ).then((res) => {
+        result = res.data;
+      }
+      )
+      return result;
     }
   }
   function SetFocus(txtField) {
@@ -585,7 +628,11 @@ function fn_ScanSMTSerialPcsNG() {
     setTxtSerial(newValues);
 
     if (event.key === "Enter") {
-      SetFocus(`txtSerial_${index + 1}`);
+      try {
+        SetFocus(`txtSerial_${index + 1}`);
+      } catch (error) {
+        handle_Save_Click();
+      }
     }
   };
   async function getInputSerial() {
@@ -925,23 +972,27 @@ function fn_ScanSMTSerialPcsNG() {
                     _bolError = true;
                   }
                 }
-                console.log(hfCheckSPIAOI,'hfCheckSPIAOI')
-                if (!_bolError && hfCheckSPIAOI == "N") {
+                if (!_bolError && hfCheckSPIAOI == "Y") { 
                   let _Result = "";
                   let _FrontSheetBarcode = "";
                   let _RearSheetBarcode = "";
                   let _strMessage = "";
                   let _intShtSeq = "";
-                  let _dtShtData = await getData(
-                    "GetSheetDataBySerialNo",
-                    _strSerial
-                  );
+                  let _dtShtData = await getData("GetSheetDataBySerialNo",_strSerial);
+                  console.log(_dtShtData,'_dtShtData')
                   if (_dtShtData != "") {
-                    console.log('check front')
                     _FrontSheetBarcode = _dtShtData.sheet_no_front;
                     _RearSheetBarcode = _dtShtData.sheet_no_back;
                     _intShtSeq = _dtShtData.pcs_no;
-                    // _Result =  BIZ_ScanSMTSerial.Get_SPI_AOI_RESULT(Session("PLANT_CODE"), _intShtSeq, Session("PRODUCT_KIND"), _FrontSheetBarcode, _RearSheetBarcode, _strPrdName, _strMessage) ทำ api
+                    _Result = await getData("Get_Spi_aoi_result",
+                      {
+                        intShtSeq:_intShtSeq,
+                        FrontSheetBarcode:_FrontSheetBarcode,
+                        RearSheetBarcode:_RearSheetBarcode,
+                        strPrdName:_strPrdName,
+                        Message:_strMessage
+                      });
+                      console.log(_Result,'_Result')
                     if (_Result == "NG") {
                       _strScanResultUpdate = _Result;
                       _strMessageUpdate = _strMessage;
@@ -1081,7 +1132,9 @@ function fn_ScanSMTSerialPcsNG() {
                 }
                 if (hfChipIDCheck == "Y" && _bolError == false) {
                   let _intCheckPass;
-                  // Dim _intCheckPass As Integer = BIZ_ScanSMTSerial.GetCheckChipDuplicate(Session("PLANT_CODE"), Session("PRODUCT_KIND"), _strPrdName, _strSerial) ทำ api
+                  
+                  let result = await getData("GetCheckChipDuplicate", {strPrdname:_strPrdName,strSerial:_strSerial}); //api
+                  _intCheckPass = parseInt(result)
                   if (_intCheckPass == 0) {
                     _strMessageUpdate = "USER SKIP TEST ELT2";
                     _strRemark = "USER SKIP TEST ELT2";
@@ -1094,12 +1147,7 @@ function fn_ScanSMTSerialPcsNG() {
                     _bolError = true;
                   }
                 }
-                if (
-                  hfCheckEFPCAOM == "Y" ||
-                  hfCheckEFPCAOI == "Y" ||
-                  hfCheckEFPCOST == "Y" ||
-                  hfCheckEFPCAVI == "Y"
-                ) {
+                if (hfCheckEFPCAOM == "Y" ||hfCheckEFPCAOI == "Y" ||hfCheckEFPCOST == "Y" ||hfCheckEFPCAVI == "Y") {
                   let _strEFPCResult = "";
                   let _strEFPCRemark;
                   //  Dim _strEFPCRemark As String = BIZ_ScanSMTSerial.GetEFPCSheetInspectionResult(Session("PLANT_CODE"), Session("PRODUCT_KIND"), _strPrdName, drRow("FRONT_SHEET_NO"), drRow("BACK_SHEET_NO"), CInt(drRow("SHEET_PCS_NO").ToString), hfCheckEFPCAOM.Value, hfCheckEFPCAOI.Value, hfCheckEFPCOST.Value, hfCheckEFPCAVI.Value, _strEFPCResult) ทำ api
@@ -1116,8 +1164,7 @@ function fn_ScanSMTSerialPcsNG() {
                   }
                 }
                 if (hfCheckFinInspect == "Y" && _bolError == false) {
-                  let _strInspResult = "";
-                  // Dim _strInspResult As String = BIZ_ScanSMTSerial.GetSerialFinInspectResult(Session("PLANT_CODE"), _strSerial, hfCheckFinInspectProc.Value, Session("PRODUCT_KIND")) ทำ api
+                  let _strInspResult = await getData("/GetSerialFinInspectResult",{strSerialNo:_strSerial,strProc:hfCheckFinInspectProc,strPrdName:_strPrdName}); //api ใหม่
                   if (_strInspResult == "NG") {
                     _strMessageUpdate = _strMessageUpdate + _strInspResult;
                     _strRemark = _strInspResult;
@@ -1136,7 +1183,8 @@ function fn_ScanSMTSerialPcsNG() {
                   _bolError == false
                 ) {
                   let _intCheckPass;
-                  // Dim _intCheckPass As Integer = BIZ_ScanSMTSerial.GetCheckSpecialBySerial(Session("PLANT_CODE"), Session("PRODUCT_KIND"), _strSerial, FINAL_GATE_SPECIAL_SERIAL_VAR, FINAL_GATE_SPECIAL_OK, FINAL_GATE_SPECIAL_QUERY) ทำ api
+                  let resultCheckpass = await getData("GetCheckSpecialBySerial", {strSerialno:_strSerial}); //api ใหม่
+                  _intCheckPass = parseInt(resultCheckpass)
                   if (_intCheckPass == 0) {
                     _strMessageUpdate = FINAL_GATE_SPECIAL_MESSAGE;
                     _strRemark = FINAL_GATE_SPECIAL_MESSAGE;
