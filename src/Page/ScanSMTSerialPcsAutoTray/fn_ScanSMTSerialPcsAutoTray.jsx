@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import * as XLSX from 'xlsx';
 
 function fn_ScanSMTSerialPcsAutoTray() {
 
@@ -212,7 +213,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         await axios.post("/api/Common/GetFinalGateMasterCheckResult", {
                             strProduct: _strPrdName
                         })
-                            .then(async(res) => {
+                            .then(async (res) => {
                                 let dtgetfinal = res.data;
                                 console.log("เข้าไหม", dtgetfinal);
                                 if (dtgetfinal === "OK") {
@@ -527,13 +528,13 @@ function fn_ScanSMTSerialPcsAutoTray() {
                     }
 
                     if (DUPLICATE_CHECK_FLG === "1") {
-                        // let _strSerialSegment = "";
-                        // const start = parseInt(hfDuplicateStart);
-                        // const end = parseInt(hfDuplicateEnd);
-                        // _strSerialSegment  = _strSerial.substring(start - 1, end);
+                        let _strSerialSegment = "";
+                        const start = parseInt(hfDuplicateStart);
+                        const end = parseInt(hfDuplicateEnd);
+                        _strSerialSegment = _strSerial.substring(start - 1, end);
                         if (dtSerial[i].ROW_COUNT === 0) {
                             await axios.post("/api/Common/getSerialDuplicate", {
-                                strFghSerialNo: _strSerial,
+                                strFghSerialNo: _strSerialSegment,
                                 strPlantCode: plantCode
                             })
                                 .then((res) => {
@@ -556,7 +557,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             .then((res) => {
                                 dtchecksumserial = res.data;
                             });
-                            console.log("dtchecksumserial:",dtchecksumserial)
+                        console.log("dtchecksumserial:", dtchecksumserial)
 
                         if (!dtchecksumserial) {
                             _strMessageUpdate = "Serial invalid check sum\nหมายเลขบาร์โค้ดมีค่าตรวจสอบไม่ถูกค้อง";
@@ -1169,11 +1170,13 @@ function fn_ScanSMTSerialPcsAutoTray() {
             }
         }
 
-        if (_bolTrayError === false) {
+        if (!_bolTrayError) {
             setgvScanResult(true);
             setgvScanData(dtSerial);
 
-            //ExportGridToCSV();
+            if (gvScanData.length > 0) {
+                ExportGridToCSV();
+            }
         } else {
             setgvScanData([]);
         }
@@ -1353,7 +1356,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
             });
         settxtPcsTray(dtProductSerial?.prm_pcs_tray);
         sethfSerialCountOriginal(dtProductSerial?.prm_pcs_tray);
-        console.log(dtProductSerial.prm_final_packing_group_flg);
         return dtProductSerial;
     };
 
@@ -1391,13 +1393,55 @@ function fn_ScanSMTSerialPcsAutoTray() {
         }
     };
 
+    const btnHiddenClick = () => {
+        ExportGridToCSV();
+    };
+
+    const dataTableexport = [...gvScanData];
+    const ExportGridToCSV = async () => {
+        const ScanResult = [
+            [
+                "No.",
+                "Serial No.",
+                "Re-Judgement 1",
+                "Result",
+                "Re-Judgement 2",
+                "Test Result",
+                "Scan Result",
+                "Remark",
+            ],
+            ...dataTableexport.map((item) => [
+                item.SEQ,
+                item.SERIAL,
+                item.REJECT,
+                item.TOUCH_UP,
+                item.REJECT2,
+                item.TEST_RESULT,
+                item.SCAN_RESULT,
+                item.REMARK,
+            ])
+        ];
+
+        const ws = XLSX.utils.aoa_to_sheet(ScanResult);
+        const csvContent = XLSX.utils.sheet_to_csv(ws);
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.setAttribute('download', 'ELTResult.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
     return {
         txtLot, selProduct, Productdata, txtPackingNo, lblLot, lblLotTotal, txtPcsTray, lblSerialNG, lblLog, visiblelog,
         lblResult, lblResultcolor, lblTime, pnlPackingGroup, pnlSerial, hfSerialCount, txtgvSerial, txtLotDisabled, selProDisabled,
         txtPackingNoDisabled, inputLot, ddlProduct, inputPackingNo, inputgvSerial, inputTray, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangePackingNo, ibtPackingBackClick, handleChangePcsTray, settxtLot, settxtPackingNo,
         settxtPcsTray, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick, gvScanData, gvScanResult, lblTimecolor,
-        lblLastTray
+        lblLastTray, btnHiddenClick
     }
 };
 

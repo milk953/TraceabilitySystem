@@ -28,7 +28,6 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import "/src/Page/ScanSMTSerialPcsAutoTray/ScanSMTSerialPcsAutoTray.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsAutoTray } from "./fn_ScanSMTSerialPcsAutoTray";
-import { Flex } from "antd";
 
 function ScanSMTSerialPcsAutoTray() {
 
@@ -38,7 +37,7 @@ function ScanSMTSerialPcsAutoTray() {
         txtPackingNoDisabled, inputLot, ddlProduct, inputPackingNo, inputgvSerial, inputTray, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangePackingNo, ibtPackingBackClick, handleChangePcsTray, settxtLot, settxtPackingNo,
         settxtPcsTray, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick, gvScanData, gvScanResult, lblTimecolor,
-        lblLastTray
+        lblLastTray, btnHiddenClick
     } = fn_ScanSMTSerialPcsAutoTray();
 
     return (
@@ -351,8 +350,7 @@ function ScanSMTSerialPcsAutoTray() {
                             height: '1px',
                             padding: "0px"
                          }}
-                        // onKeyDown={handleKeyDown}
-                        // onClick={onExport}
+                        onClick={btnHiddenClick}
                     >
                        <FileDownloadOutlinedIcon/>
                     </Button>
@@ -520,6 +518,6 @@ function ScanSMTSerialPcsAutoTray() {
             </Card>
         </div>
     )
-}
+};
 
-export default ScanSMTSerialPcsAutoTray
+export default ScanSMTSerialPcsAutoTray;
