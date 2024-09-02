@@ -1,3 +1,13 @@
+.Card-ScanSMTSerialCon{
+    margin: auto;
+    width: 95%;
+    max-width: 1400px;
+    margin-top: 50px;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+}
+
 .TbScanSMTSerialCon {
     margin: auto;
     width: 700px;
@@ -41,9 +51,6 @@
 
 .divgvSerialCon th {
     white-space: nowrap;
-    position: sticky;
-    top: 0;
-    z-index: 1;
     text-align: center;
     font-size: 16px;
     background-color: #12422e !important ;
@@ -53,7 +60,7 @@
 }
 
 .divgvSerialCon td {
-    padding: 10px;
+    padding: 4px 4px 4px 4px!important;
 }
 
 .divgvScanResultCon {
@@ -68,9 +75,6 @@
 
 .divgvScanResultCon th {
     white-space: nowrap;
-    position: sticky;
-    top: 0;
-    z-index: 1;
     text-align: center;
     font-size: 16px;
     background-color: #378CE7 !important ;
@@ -82,7 +86,7 @@
 }
 
 .divgvScanResultCon td {
-    padding: 10px;
+    padding: 4px 4px 4px 4px!important;
 }
 
 .lblResultCon{
