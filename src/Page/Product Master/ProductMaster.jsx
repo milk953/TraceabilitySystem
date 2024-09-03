@@ -107,23 +107,23 @@ function ProductMaster() {
                 }}
             >
                 {pnlMessage && (
-                <Paper
-                    className="lblMessage"
-                    elevation={1}
-                    style={{
-                        background: lblMessageColor,
-                        textAlign: "center",
-                    }}
-                >
-                    <Typography
-                        variant="h6"
-                        style={{ color: "#fff" }}
+                    <Paper
+                        className="lblMessage"
+                        elevation={1}
+                        style={{
+                            background: lblMessageColor,
+                            textAlign: "center",
+                        }}
                     >
-                        {lblMessage}
-                    </Typography>
-                </Paper>
+                        <Typography
+                            variant="h6"
+                            style={{ color: "#fff" }}
+                        >
+                            {lblMessage}
+                        </Typography>
+                    </Paper>
                 )}
-                
+
                 <Box justifyContent="space-between"
                     sx={{
                         textAlign: "center",
@@ -168,6 +168,11 @@ function ProductMaster() {
                                             value={txtProduct}
                                             onChange={handleKeyProductName}
                                             error={ErrorPrdName}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    btnRetriveClick();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -202,6 +207,9 @@ function ProductMaster() {
                                             fullWidth
                                             value={txtUpdateCount}
                                             onChange={handleKeyUpdateCount}
+                                            InputProps={{
+                                                readOnly: true,
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -2557,7 +2565,7 @@ function ProductMaster() {
                         Submit
                     </Button>
 
-                    <div style={{marginTop: "40px"}}>
+                    <div style={{ marginTop: "40px" }}>
                         <a href="/TraceabilitySystem">Return To Menu</a>
                     </div>
                 </Box>

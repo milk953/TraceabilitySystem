@@ -53,16 +53,7 @@ function ScanSMTSerialRecordTime() {
             <h1>Serial/Sheet Record Time</h1>
             <Card
                 component={Paper}
-                style={{
-                    margin: "auto",
-                    width: "90%",
-                    maxWidth: "1400px",
-                    marginTop: "50px",
-                    height: "auto",
-                    maxHeight: "580px",
-                    padding: "20px",
-                    display: 'flex',
-                }}
+                className="Card-ScanSMTSerial"
             >
                 <Box justifyContent="space-between">
                     <TableContainer
@@ -476,7 +467,6 @@ function ScanSMTSerialRecordTime() {
                                 style={{
                                     width: "100%",
                                     marginBottom: "10px",
-                                    height: "180px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
@@ -504,7 +494,7 @@ function ScanSMTSerialRecordTime() {
                                         {Array.from({ length: hfSerialCount }, (_, index) => (
                                             <TableRow key={index}>
                                                 <TableCell
-                                                    style={{ textAlign: "center" }}
+                                                    style={{ textAlign: "center", borderRight: "1px solid #d9d9d9" }}
                                                 >
                                                     {index + 1}
                                                 </TableCell>
@@ -588,19 +578,13 @@ function ScanSMTSerialRecordTime() {
                         style={{
                             width: "84%",
                             marginBottom: "10px",
-                            height: "250px",
+                            height: "auto",
                             display: gvScanResult ? 'block' : 'none'
                         }}
                     >
                         <Table
                             sx={{
                                 minWidth: 710,
-                                '& .MuiTableHead-root': {
-                                    position: 'sticky',
-                                    top: 0,
-                                    zIndex: 1,
-                                    background: 'white',
-                                },
                             }}
                             aria-label="simple table"
                         >

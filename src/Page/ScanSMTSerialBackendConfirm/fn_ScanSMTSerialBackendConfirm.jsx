@@ -318,7 +318,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                     PLANT_CODE: plantCode
                 })
                     .then((res) => {
-                        _strReturn = res.data[0];
+                        _strReturn = res.data;
                     });
                 dtSerial[i].FRONT_SHEET_NO = _strReturn.FRONT_SHEET_NO;
                 dtSerial[i].BACK_SHEET_NO = _strReturn.BACK_SHEET_NO;

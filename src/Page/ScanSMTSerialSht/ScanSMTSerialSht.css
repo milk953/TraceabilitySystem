@@ -1,4 +1,4 @@
-.Card-ScanSMTSerialCon{
+.Card-ScanSMTSerialShtPcs{
     margin: auto;
     width: 95%;
     max-width: 1400px;
@@ -8,19 +8,19 @@
     display: flex;
 }
 
-.TbScanSMTSerialCon {
+.TbScanSMTSerialShtPcs {
     margin: auto;
     width: 700px;
 }
 
-.TbScanSMTSerialCon th {
+.TbScanSMTSerialShtPcs th {
     background-color: #8c8c8c;
     border-radius: 5px 5px 0 0;
     color: #fff;
     padding: 5px;
 }
 
-.TbScanSMTSerialCon td {
+.TbScanSMTSerialShtPcs td {
     padding: 4px;
 }
 
@@ -30,26 +30,26 @@
     padding-left: 5px;
 }
 
-#selectPdControl {
+#selectPdShtPcsAuto {
     padding: 0;
     font-size: 14px;
     padding-left: 5px;
 }
 
-.btIcon {
+.btIconSerialShtPcs {
     padding: 0px !important;
     min-width: 50px !important;
 }
 
-.divgvSerialCon {
+.divgvSerialShtPcs {
     justify-content: center;
     display: flex;
     max-width: 100%;
     overflow-x: auto;
-    width: 502px;
+    width: 482px;
 }
 
-.divgvSerialCon th {
+.divgvSerialShtPcs th {
     white-space: nowrap;
     text-align: center;
     font-size: 16px;
@@ -59,46 +59,46 @@
     padding: 9px;
 }
 
-.divgvSerialCon td {
+.divgvSerialShtPcs td {
     padding: 4px 4px 4px 4px!important;
 }
 
-.divgvScanResultCon {
-    justify-content: center;
-    /* display: flex; */
+.divgvScanResultShtPcs {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     flex-direction: column;
     max-width: 100%;
-    overflow-x: auto;
-    margin-left: 0px;
-    width: 850px;
+    width: 900px;
+    margin-left: -20px;
 }
 
-.divgvScanResultCon th {
-    white-space: nowrap;
+.divgvScanResultShtPcs th {
+    /* white-space: nowrap; */
     text-align: center;
     font-size: 16px;
     background-color: #378CE7 !important ;
     color: #fff;
     border-right: 1px solid rgb(221, 219, 219);
-    padding: 9px;
+    padding: 7px;
     font-weight: bold; 
     font-family: Arial;
 }
 
-.divgvScanResultCon td {
+.divgvScanResultShtPcs td {
     padding: 4px 4px 4px 4px!important;
 }
 
-.lblResultCon{
+
+.lblResultShtPcs{
     margin: auto;
-    margin-left: 40px;
+    margin-left: 42px;
     margin-top: 15px !important;
-    width: 678px;
+    width: 620px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
     padding: 20px;
 }
-
 

@@ -8,6 +8,7 @@ export default defineConfig(({ command, mode }) => {
   
   return {
     plugins: [react()],
+    base: '/TraceabilitySystem',
     server: {
       strictPort: true,
       host: true,
