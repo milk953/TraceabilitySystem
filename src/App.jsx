@@ -34,6 +34,7 @@ import ReJudgement from "./Page/ReJudgement/ReJudgement";
 import ScanSMTSerialPcsBoxOnlyGood from "./Page/ScanSMTSerialPcsBoxOnlyGood/ScanSMTSerialPcsBoxOnlyGood"
 import ScanSMTSerialPcsNG from "./Page/Master Final Gate/ScanSMTSerialPcsNG";
 import ScanSMTSerialPcsAutoTray from "./Page/ScanSMTSerialPcsAutoTray/ScanSMTSerialPcsAutoTray";
+import PackingGate from "./Page/ScanSMTSerialPcsBox/ScanSMTSerialPcsBox"
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
  
@@ -91,6 +92,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTray' element = {<ScanSMTSerialPcsAutoTray />} />
+            <Route path='/TraceabilitySystem/PackingGate' element = {<PackingGate />} />
+            
             {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
  
             {/* View Data */}
