@@ -165,7 +165,7 @@ function fn_ScanSMTSerialPcsChrome() {
   const FINAL_GATE_MASTER_CODE = "T999999999";
   const FINAL_GATE_SPECIAL_FLG ='1'
   const FINAL_GATE_SPECIAL_PRD='RGPZ-098ML-6A,RGPZ-098ML-7A'
-  //PageLoad
+  //PageLoad----------
   useEffect(() => {
     const fetchData = async () => {
       setHfMode("");
@@ -175,6 +175,7 @@ function fn_ScanSMTSerialPcsChrome() {
     };
     fetchData();
   }, []);
+  //-------------------
 
   useEffect(() => {
     if (gvSerial.visble == "") {
@@ -184,12 +185,10 @@ function fn_ScanSMTSerialPcsChrome() {
       }
     }
   }, [gvSerial.visble, gvSerial.value.length]);
-
+  
   useEffect(() => {
-    if (txtPackingNo.visble == "") {
-      fc_txtPackingNo.current.focus();
-    }
-  }, [txtPackingNo.visble]);
+    getInitialSerial();
+  }, [hfserialcount]);
 
   const GetProductData = async () => {
     await axios.get("/api/Common/GetProductData").then(async (res) => {
@@ -289,7 +288,10 @@ function fn_ScanSMTSerialPcsChrome() {
                 value: `Product ${_strPrdName} not found.`,
                 visble: "",
               }));
-              fc_SlProduct.current.focus();
+              setTimeout(() => {
+                fc_SlProduct.current.focus();
+              }, 300);
+           
               return;
             }
           } catch (error) {
@@ -332,7 +334,9 @@ function fn_ScanSMTSerialPcsChrome() {
                   visble: "",
                 }));
                 await getProductSerialMaster(_strPrdName);
-                fc_SlProduct.current.focus();
+                setTimeout(() => {
+                  fc_SlProduct.current.focus();
+                }, 300);
               }
             } else {
               setlblLog((prevState) => ({
@@ -341,7 +345,9 @@ function fn_ScanSMTSerialPcsChrome() {
                 visble: "",
               }));
               await getProductSerialMaster(_strPrdName);
-              fc_SlProduct.current.focus();
+              setTimeout(() => {
+                fc_SlProduct.current.focus();
+              }, 300);
             }
           }
         } else {
@@ -368,7 +374,10 @@ function fn_ScanSMTSerialPcsChrome() {
       }
     } else {
       setlblLot("");
-      fc_txtLotNo.current.focus();
+      setTimeout(() => {
+        fc_txtLotNo.current.focus();
+      }, 300);
+     
     }
   };
 
@@ -517,18 +526,21 @@ function fn_ScanSMTSerialPcsChrome() {
         ...prevState,
         value: "",
         visble: "none",
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
       settxtSerial("");
-      fc_txtLotNo.current.focus();
+      setTimeout(() => {
+        fc_txtLotNo.current.focus();
+      }, 300);
+   
     } else if (mode == "LOT_ERROR") {
       settxtLot((prevState) => ({
         ...prevState,
         value: "",
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblLot("");
       setlblLotTotal("");
@@ -541,12 +553,15 @@ function fn_ScanSMTSerialPcsChrome() {
       setlblLog((prevState) => ({ ...prevState, visble: "" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none" }));
       setHfMode("LOT");
-      fc_txtLotNo.current.focus();
+      setTimeout(() => {
+        fc_txtLotNo.current.focus();
+      }, 300);
+   
     } else if (mode == "TRAY") {
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblSerialNG("");
       settxtPackingNo((prevState) => ({
@@ -558,12 +573,15 @@ function fn_ScanSMTSerialPcsChrome() {
       setHfMode("LOT");
       getInitialSerial();
       setHfMode("TRAY");
-      fc_txtTray.current.focus();
+      setTimeout(() => {
+        fc_txtTray.current.focus();
+      }, 300);
+    
     } else if (mode == "TRAY_ERROR") {
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblSerialNG("");
       settxtPackingNo((prevState) => ({
@@ -574,12 +592,15 @@ function fn_ScanSMTSerialPcsChrome() {
       setlblLog((prevState) => ({ ...prevState, visble: "" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none" }));
       setHfMode("TRAY");
-      fc_txtTray.current.focus();
+      setTimeout(() => {
+        fc_txtTray.current.focus();
+      }, 300);
+    
     } else if (mode == "PACK") {
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       settxtPackingNo((prevState) => ({
         ...prevState,
@@ -591,17 +612,20 @@ function fn_ScanSMTSerialPcsChrome() {
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
       settxtSerial("");
-      fc_txtPackingNo.current.focus();
+   
+      setTimeout(() => {
+        fc_txtPackingNo.current.focus();
+      }, 300);
     } else if (mode == "SERIAL") {
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       settxtPackingNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setHfMode("SERIAL");
@@ -611,24 +635,27 @@ function fn_ScanSMTSerialPcsChrome() {
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "" }));
     } else if (mode == "SERIAL_OK") {
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "" }));
       getInitialSerial();
-      fc_txtSerial.current[0].focus();
+     
+      setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+      }, 300);
     } else if (mode == "SERIAL_NG") {
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#eeeeee" },
+        style: { background: "#e0e0e0" },
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "" }));
     }
@@ -636,14 +663,18 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const getInitialSerial = async () => {
     let dtData = [];
-    for (let intRow = 0; intRow < txtPcsTray.value; intRow++) {
+    for (let intRow = 0; intRow < hfserialcount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
+     
     }
     setgvSerial((prevState) => ({ ...prevState, value: dtData }));
+    settxtSerial( Array(gvSerial.value.length).fill(""))
     if (gvSerial.value.length > 0) {
-      fc_txtSerial.current[0].focus();
+      setTimeout(() => {
+        fc_txtSerial.current[0].focus();   
+        }, 300);
     }
     return dtData;
   };
@@ -658,7 +689,10 @@ function fn_ScanSMTSerialPcsChrome() {
     }));
     setgvSerial((prevState) => ({ ...prevState, visble: "none" }));
     SetMode("LOT");
-    fc_txtLotNo.current.focus();
+    setTimeout(() => {
+      fc_txtLotNo.current.focus();
+    }, 300);
+ 
   };
 
   const btnCancel_Click = async () => {
@@ -786,6 +820,9 @@ function fn_ScanSMTSerialPcsChrome() {
         ROLL_LEAF_NO: "",
       });
       if (dtData[intSht].SERIAL != "") {
+        for(intNo=0;i>intRow - 2;intNo++){
+          // 
+        }
         //      For intNo As Integer = 0 To intRow - 2
         //           If drRow("SERIAL").ToString.Trim = CType(gvSerial.Rows(intNo).FindControl("txtSerial"), TextBox).Text.Trim.ToUpper Then
         //               drRow("ROW_COUNT") = 9
@@ -805,7 +842,6 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const setSerialDataTray = async () => {
     let dtSerial = getInputSerial();
-    // let xxxx = '';
     let _strLot = lblLot.trim().toUpperCase();
     let _strPrdName = Sl_Product.value;
     let _strTray;
@@ -1564,7 +1600,8 @@ function fn_ScanSMTSerialPcsChrome() {
       }
     }
 
-    setlblLotTotal(0);
+    
+    let datalblLotTotal=0
     let dtLotPassCount;
     let dtPackPassCount;
     if (hfCheckPackingNo == "Y") {
@@ -1589,14 +1626,16 @@ function fn_ScanSMTSerialPcsChrome() {
           console.log(dtPackPassCount, "dtPackPassCount");
         });
       if (dtLotPassCount.length > 0) {
-        setlblLotTotal(dtLotPassCount);
+        datalblLotTotal=dtLotPassCount
       }
-      console.log(dtPackPassCount, "dtPackPassCount.");
+    
       if (dtPackPassCount.length > 0) {
-        setlblLotTotal(dtPackPassCount);
-      } else {
-        setlblLotTotal("0 / " + lblLotTotal);
+        datalblLotTotal=dtPackPassCount+"/"+datalblLotTotal
+      } 
+      else {
+         datalblLotTotal="0 / " + datalblLotTotal
       }
+      setlblLotTotal(datalblLotTotal);
     } else {
       await axios
         .post("/api/Common/getSerialPassByLot", {
@@ -1611,14 +1650,14 @@ function fn_ScanSMTSerialPcsChrome() {
       }
     }
     if (!_bolTrayError) {
-      console.log("มีแวรู่ ", dtSerial);
+    
       setgvScanResult((prevState) => ({
         ...prevState,
         visble: true,
         value: dtSerial,
       }));
     } else {
-      console.log("ไม่มีแวรู่ ", dtSerial);
+     
       setgvScanResult((prevState) => ({
         ...prevState,
         visble: true,
@@ -1630,7 +1669,7 @@ function fn_ScanSMTSerialPcsChrome() {
       value: hfSerialCountOriginal,
     }));
     setHfserialcount(hfSerialCountOriginal);
-    getInitialSerial();
+   await getInitialSerial();
     setlblLastTray("Not Use");
   };
 
