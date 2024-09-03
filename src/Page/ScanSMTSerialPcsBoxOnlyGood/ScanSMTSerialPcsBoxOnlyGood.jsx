@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Pageimg from "/src/assets/1.jpg";
-import "../ScanSMTSerialPcsChrome/SerialPcs.css";
+import "../Final Gate/SerialPcs.css";
 import Hearder from "../Header/Header";
 import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
 function ScanSMTRoollSht() {
@@ -204,7 +204,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                       <TextField
                         id="txtfild"
                         size="small"
-                        // inputRef={(el) => (fc_txtPackingNo.current = el)}
+                        inputRef={(el) => (fntxtBox.current = el)}
 
                         value={txtBox.value}
                         onChange={(e) => {
@@ -214,8 +214,8 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                           }));
                         }}
                         style={{ backgroundColor: txtBox.disbled ? '#e0e0e0' : 'inherit',width: "80%" }}
-                       disabled={txtBox.disbled} //true พิมไม่ได้
-                        inputRef={fntxtBox}
+                        disabled={txtBox.disbled} //true พิมไม่ได้
+                        // inputRef={fntxtBox}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtBox_TextChanged();

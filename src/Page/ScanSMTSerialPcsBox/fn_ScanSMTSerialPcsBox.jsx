@@ -518,6 +518,23 @@ function fn_ScanSMTSerialPcsBox() {
       const ibtOPBack_Click = () => {
         SetMode("OP")
       };
+      const txtPcsTray_TextChanged = () => {
+        if (!isNaN(txtPcsTray.value)) {
+          setHfserialcount(txtPcsTray.value);
+          if (parseInt(txtPcsTray.value) !== parseInt(hfSerialCountOriginal)) {
+            setlblLastTray((prevState) => ({
+              ...prevState,
+              value: "USE",
+            }));
+          } else {
+            setlblLastTray((prevState) => ({
+              ...prevState,
+              value: "Not Use",
+            }));
+          }
+          SetMode("SERIAL");
+        }
+      };
     
   return {
 
