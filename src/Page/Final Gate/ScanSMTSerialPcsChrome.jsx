@@ -64,9 +64,10 @@ function ScanSMTRoollSht() {
     btnSave_Click,
     btnCancel_Click,
     gvScanResult,
-    lblResult
+    lblResult,
+    lblTime
   } = fn_ScanSMTSerialPcsChrome();
-
+  console.log('lblTime',lblTime,)
   return (
     <div>
       <Hearder />
@@ -340,8 +341,9 @@ function ScanSMTRoollSht() {
                               <Paper
                 className="Card-lblResult"
                 elevation={3}
+                width='25%'
                 style={{
-                  background: " #ff4d4f",
+                  background: lblResult.value === 'OK' ? '#52c41a' : '#ff4d4f',
                   // display: gvScanResult,
                 }}
               >
@@ -350,6 +352,22 @@ function ScanSMTRoollSht() {
                   style={{ paddingTop: "5px", color: "#fff" }}
                 >
                 {lblResult.value}
+                </Typography>
+              </Paper>
+             
+              <Paper
+                className="Card-lblResult"
+                elevation={3}
+                style={
+                  lblTime.style
+                }
+                width='25%'
+              >
+                <Typography
+                  variant="h4"
+                  style={{ paddingTop: "5px", color: "#fff" }}
+                >
+                {lblTime.value}
                 </Typography>
               </Paper>
               <Table
@@ -434,12 +452,7 @@ function ScanSMTRoollSht() {
                             <TableCell
                             align="center"
                             sx={{
-                              // borderRight: "1px solid #d9d9d9",
-                              // background: gvScanResult.value[index].SCAN_RESULT === '' 
-                              //   ? '' 
-                              //   : gvScanResult.value[index].SCAN_RESULT === 'OK' 
-                              //   ? 'green' 
-                              //   : '#ff4d4f'
+                              borderRight: "1px solid #d9d9d9",
                             }}
                             
                             >
@@ -451,7 +464,13 @@ function ScanSMTRoollSht() {
                               {gvScanResult.value[index].TEST_RESULT}
                             </TableCell>
                             <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                              sx={{ borderRight: "1px solid #d9d9d9" ,
+                                  background: gvScanResult.value[index].SCAN_RESULT === '' 
+                                ? '' 
+                                : gvScanResult.value[index].SCAN_RESULT === 'OK' 
+                                ? '#52c41a' 
+                                : '#ff4d4f'
+                              }}
                             >
                               {gvScanResult.value[index].SCAN_RESULT}
                             </TableCell>

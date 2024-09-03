@@ -1,3 +1,13 @@
+.Card-ScanSMTPlasma{
+    margin: auto;
+    width: 95%;
+    max-width: 1400px;
+    margin-top: 50px;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+}
+
 .TbScanSMTPlasma {
     margin: auto;
     width: 700px;
@@ -31,7 +41,7 @@
     min-width: 50px !important;
 }
 
-.divgvSerial {
+/* .divgvSerial {
     justify-content: center;
     display: flex;
     max-width: 100%;
@@ -53,6 +63,6 @@
 }
 
 .divgvSerial td {
-    padding: 10px;
-}
+    padding: 4px 4px 4px 4px!important;
+} */
 

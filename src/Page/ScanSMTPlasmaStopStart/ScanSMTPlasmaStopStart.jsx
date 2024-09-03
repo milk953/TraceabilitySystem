@@ -47,16 +47,7 @@ function ScanSMTPlasmaStopStart() {
             <h1>Start/Stop Record Time</h1>
             <Card
                 component={Paper}
-                style={{
-                    margin: "auto",
-                    width: "90%",
-                    maxWidth: "1400px",
-                    marginTop: "50px",
-                    height: "auto",
-                    maxHeight: "560px",
-                    padding: "20px",
-                    display: 'flex',
-                }}
+                className="Card-ScanSMTSerialSht"
             >
                 <Box justifyContent="space-between">
                     <TableContainer

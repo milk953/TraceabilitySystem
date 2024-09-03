@@ -2206,7 +2206,7 @@ function fn_ProductMaster() {
           setErrorWeekCodeStartMessage("Please input week code start digit.");
         } else if (isNaN(txtWeekCodeEnd)) {
           setErrorWeekCodeEnd(true);
-          setErrorWeekCodeEndMessage("Please input week code start digit.");
+          setErrorWeekCodeEndMessage("Please input week code end digit.");
         } else if (isNaN(txtWeekCodeEnd) && isNaN(txtWeekCodeStart) && parseInt(txtWeekCodeStart) > parseInt(txtWeekCodeEnd)) {
           setErrorWeekCodeStart(true);
           setErrorWeekCodeStartMessage("Please input week code start less than end digit.");
@@ -2605,8 +2605,6 @@ function fn_ProductMaster() {
         lblMessage(`Error: ${error.message}`);
         setpnlMessage(true);
       }
-
-      GetDataProductMaster();
 
     } else {
       // User clicked 'No'
