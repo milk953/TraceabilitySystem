@@ -34,14 +34,15 @@ import ReJudgement from "./Page/ReJudgement/ReJudgement";
 import ScanSMTSerialPcsBoxOnlyGood from "./Page/ScanSMTSerialPcsBoxOnlyGood/ScanSMTSerialPcsBoxOnlyGood"
 import ScanSMTSerialPcsNG from "./Page/Master Final Gate/ScanSMTSerialPcsNG";
 import ScanSMTSerialPcsAutoTray from "./Page/ScanSMTSerialPcsAutoTray/ScanSMTSerialPcsAutoTray";
+import ScanSMTConnectRollConfirm from "./Page/ScanSMTConnectRollConfirm/ScanSMTConnectRollConfirm";
 import ScanSMTSerialSht from "./Page/ScanSMTSerialSht/ScanSMTSerialSht";
 import PackingGate from "./Page/ScanSMTSerialPcsBox/ScanSMTSerialPcsBox"
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
- 
 axios.defaults.baseURL = backendUrl;
+
 const App = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -113,6 +114,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/ReJudgement" element={<ReJudgement />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
             <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
+
+            <Route path="/TraceabilitySystem/ScanSMTConnectRollConfirm" element={<ScanSMTConnectRollConfirm />} />
             
           </Route>
         </Routes>
