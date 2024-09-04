@@ -89,7 +89,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     <TableCell align="right">
                       <Typography>Product :</Typography>
                     </TableCell>
-                    {console.log(dis_ddlProduct,"dis_ddlProduct")}
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
                         <Autocomplete

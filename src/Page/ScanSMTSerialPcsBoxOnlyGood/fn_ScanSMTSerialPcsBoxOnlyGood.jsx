@@ -66,8 +66,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const FAC = import.meta.env.VITE_FAC;
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env
-    .VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
 
   //hf
   const hfLotLength = 9;
@@ -982,99 +981,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     }, 300);
   };
 
-  // const txtOP_TextChanged = () => {
-  //   let OP = txtOP.value.trim().toUpperCase();
-  //   if (txtOP.value !== "") {
-  //     settxtOP((prevState) => ({ ...prevState, value: OP }));
-  //     if (hfOP !== "") {
-  //       let strOPData;
-  //       let bolError = false;
-
-  //       strOPData = txtOP.value.toUpperCase().split(";");
-  //       console.log(strOPData,"ตัดค่า",strOPData.length,"///",hfOP)
-  //       if(hfOP == 1 || strOPData.length == hfOP){
-  //         console.log(strOPData.length," HF OP",strOPData.length )
-
-  //       for (let intRow = 0; intRow < strOPData.length - 1; intRow++) {
-  //         if (strOPData[intRow] == txtOP.value) {
-  //           bolError = true;
-  //         }
-  //       }}
-  //       if (!bolError) {
-  //         if (strOPData.length == hfOP) {
-  //           setlblLot((prevState) => ({
-  //             ...prevState,
-  //             value: lblOP.value + txtOP.value,
-  //           }));
-  //           settxtOP((prevState) => ({ ...prevState, value: lblOP.value }));
-  //           SetMode("BOX");
-  //         } else {
-  //           setlblLot((prevState) => ({
-  //             ...prevState,
-  //             value: lblOP.value + txtOP.value + ",",
-  //           }));
-  //           settxtOP((prevState) => ({ ...prevState, value: "" }));
-  //           // fntxtOP.current.focus();
-  //         }
-  //       }
-  //     } else {
-  //       SetMode("BOX");
-  //     }
-  //   }
-  // };
-
-  // const txtOP_TextChanged = () => {
-  //   let OP = txtOP.value.trim().toUpperCase();
-
-  //   if (txtOP.value !== "") {
-  //     settxtOP((prevState) => ({ ...prevState, value: OP }));
-
-  //     if (hfOP !== "") {
-  //       let strOPData = OP.split(","); // แยกค่าโดยใช้คอมม่า
-  //       let bolError = false;
-  //       let trimmedValues = strOPData.map((item) => item.trim()); // ตัดค่า FFFFF ทีละตัวและเก็บในอาเรย์ใหม่
-
-  //       console.log("แยกค่า:", trimmedValues); // ตรวจสอบค่าที่แยกได้
-
-  //       // ตรวจสอบค่าที่แยกได้ว่าตรงตามเงื่อนไขหรือไม่
-
-  //         for (let intRow = 0; intRow < trimmedValues.length-1; intRow++) {
-  //           console.log(trimmedValues[intRow],"-------------",OP,"--------INTROW",intRow)
-  //           if (trimmedValues[intRow] === OP) {
-
-  //             bolError = true;
-  //             console.log("ออก")
-  //             break;
-
-  //           }
-  //         }
-
-  //       // ทำงานถ้าไม่มี Error
-  //       if (!bolError) {
-  //         if (trimmedValues.length == hfOP) {
-  //           console.log()
-  //           setlblLot((prevState) => ({
-  //             ...prevState,
-  //             value: trimmedValues+ txtOP.value,
-  //           }));
-  //           settxtOP((prevState) => ({ ...prevState, value: trimmedValues }));
-  //           SetMode("BOX");
-  //         } else {
-  //           setlblLot((prevState) => ({
-  //             ...prevState,
-  //             value: trimmedValues+ txtOP.value + ",",
-  //           }));
-  //           settxtOP((prevState) => ({ ...prevState, value: "" }));
-  //           // fntxtOP.current.focus();
-  //         }
-
-  //       }
-  //     } else {
-  //       SetMode("BOX");
-  //       console.log(lblOP,"LBL ----- OP")
-  //     }
-  //   }
-  // };
+ 
   const txtOP_TextChanged = () => {
     let OP = txtOP.value.trim().toUpperCase(); // ตัดช่องว่างและแปลงเป็นตัวพิมพ์ใหญ่
     let lbl = "";
