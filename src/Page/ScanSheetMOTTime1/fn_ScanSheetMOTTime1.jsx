@@ -44,17 +44,17 @@ function fn_ScanSheetMOTTime() {
 
   //lbl
   const [lblProductName, setlblProductName] = useState("");
+  const [lblSheet, setlblSheet] = useState("");
+  const [lblRemark, setlblRemark] = useState("");
   const [lblResult, setlblResult] = useState({
     value: "",
     disbled: "",
     visble: "",
-    style: {  },
+    style: {color:"#EFBC9B"},
   });
-  const [lblSheet, setlblSheet] = useState("");
-  const [lblRemark, setlblRemark] = useState("");
 
   //Button
-  const [pnlSave, setpnlSave] = useState("");
+  const [pnlSave, setpnlSave] = useState("none");
 
   //hf
   const [hfCheckPrdSht, sethfCheckPrdSht] = useState("");
@@ -67,17 +67,18 @@ function fn_ScanSheetMOTTime() {
   const currentTime = new Date().toLocaleTimeString("en-GB", { hour12: false });
 
   //Focus
-  let fctxtMcNo = useRef(null);
-  let fctxtLotno = useRef(null);
-  let fctxtSheetNo = useRef(null);
-  let fctxtSUSNo = useRef(null);
-  let fctxtCBNo = useRef(null);
+  let fctxtMcNo = useRef([]);
+  let fctxtLotno = useRef([]);
+  let fctxtSheetNo = useRef([]);
+  let fctxtSUSNo = useRef([]);
+  let fctxtCBNo = useRef([]);
 
   //link
   const params = new URLSearchParams(window.location.search);
   const CB = params.get("CB");
   const SUS = params.get("SUS");
-  console.log(CB, "---", SUS);
+  let hfZPRNProcID='1840'
+
 
   useEffect(() => {
     settxtMCNo((prevState) => ({ ...prevState, value: "", disbled: false,focus:true }));
@@ -85,30 +86,28 @@ function fn_ScanSheetMOTTime() {
       ...prevState,
       value: "",
       disbled: true,
-      style: { background: "#EEEEEE" },
+      style: { color: "#EEEEEE" },
     }));
     settxtSheet((prevState) => ({
       ...prevState,
       value: "",
       disbled: true,
-      style: { background: "#EEEEEE" },
+      style: { color: "#EEEEEE" },
     }));
 
     setlblRemark("");
     setlblSheet("");
     setlblResult((prevState) => ({ ...prevState, value: ""}));
-    // pnlMain.Enabled = True
-    // pnlSave.Visible = False
+    /// pnlMain.Enabled = True
+ 
+    setpnlSave("none");
     if (CB == "Y") {
-      // pnlCB.Visible = True
-      // txtCBNo.Text = ""
-      // txtCBNo.Enabled = False
       settxtCBNo((prevState) => ({
         ...prevState,
         value: "",
         disbled: true,
         visble: "",
-        style: { background: "#EEEEEE" },
+        style: { color: "#EEEEEE" },
       }));
     } else {
       settxtCBNo((prevState) => ({ ...prevState, visble: "none" }));
@@ -120,12 +119,15 @@ function fn_ScanSheetMOTTime() {
         value: "",
         disbled: true,
         visble: "",
-        style: { background: "#EEEEEE" },
+        style: { color: "#EEEEEE" },
       }));
     } else {
       settxtSUSNo((prevState) => ({ ...prevState, visble: "none" }));
     }
-    fctxtMcNo.current.focus();
+    setTimeout(() => {
+      fctxtMcNo.current.focus();
+    }, 300);
+  
   }, []);
 
   const txtMCNo_TextChanged = async () => {
@@ -134,35 +136,37 @@ function fn_ScanSheetMOTTime() {
       ...prevState,
       value: "",
       disbled: true,
-      style: { background: "#eeeeee" },
+      style: { color: "#eeeeee" },
     }));
     settxtlot((prevState) => ({
       ...prevState,
       disbled: false,
-      style: { background: "" },
-      focus:true
+      style: { color: "" },
+   
     }));
     if (txtCBNo.visble) {
-      //ถ้าโชว์
+   
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: true,
         value: "",
-        style: { background: "#EEEEEE" },
+        style: { color: "#EEEEEE" },
       }));
     }
     if (txtSUSNo.visble=='') {
-      //ถ้าโชว์
+    
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: true,
         value: "",
-        style: { background: "#EEEEEE" },
+        style: { color: "#EEEEEE" },
       }));
       
     }
-    fctxtLotno.current.focus();
    
+    setTimeout(() => {
+      fctxtLotno.current.focus();
+    }, 300);
   };
 
   const txtLotNo_TextChanged = async () => {
@@ -198,46 +202,48 @@ function fn_ScanSheetMOTTime() {
           });
         if (dtProductSerial != null) {
           console.log(dtProductSerial,'dtProductSerial2')
-          sethfCheckPrdSht(dtProductSerial.prm_req_check_prd_sht); //PRM_REQ_CHECK_PRD_SHT
-          sethfCheckPrdShtStart(dtProductSerial.prm_check_prd_sht_start); //PRM_CHECK_PRD_SHT_START
-          sethfCheckPrdShtEnd(dtProductSerial.prm_check_prd_sht_end); //PRM_CHECK_PRD_SHT_END
-          sethfCheckPrdAbbr(dtProductSerial.prm_abbr); //PRM_ABBR
-          sethfConnLeafLength(dtProductSerial.prm_conn_leaf_length); //PRM_CONN_LEAF_LENGTH
+          sethfCheckPrdSht(dtProductSerial.prm_req_check_prd_sht); 
+          sethfCheckPrdShtStart(dtProductSerial.prm_check_prd_sht_start);
+          sethfCheckPrdShtEnd(dtProductSerial.prm_check_prd_sht_end); 
+          sethfCheckPrdAbbr(dtProductSerial.prm_abbr);
+          sethfConnLeafLength(dtProductSerial.prm_conn_leaf_length); 
         }
 
         settxtlot((prevState) => ({
           ...prevState,
           value: _strLot,
           disbled: true,
-          style: { background: "#EEEEEE" },
+          style: { color: "#EEEEEE" },
         }));
 
         settxtMCNo((prevState) => ({
           ...prevState,
           disbled: true,
-          style: { background: "#EEEEEE" },
+          style: { color: "#EEEEEE" },
         }));
+
         settxtSheet((prevState) => ({
           ...prevState,
           disbled: false,
-          style: { background: "" },
+          style: { color: "" },
           value: "",
         }));
+
         if (txtCBNo.visble=='') {
-          //ถ้าโชว์
+       
           settxtCBNo((prevState) => ({
             ...prevState,
             disbled: false,
-            style: { background: "" },
+            style: { color: "" },
             value: "",
           }));
         }
         if (txtSUSNo.visble=='') {
-          //ถ้าโชว์
+    
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,
-            style: { background: "" },
+            style: { color: "" },
           }));
         }
         settxtSUSNo((prevState) => ({
@@ -248,30 +254,33 @@ function fn_ScanSheetMOTTime() {
           ...prevState,
           focus: true,
         }));
-        fctxtSheetNo.current.focus();
+      
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       } else {
         settxtlot((prevState) => ({ ...prevState, value: "",focus:true }));
-        // txtLotNo.Focus()
-        fctxtLotno.current.focus();
+       
+        setTimeout(() => {
+          fctxtLotno.current.focus();
+        }, 300);
       }
     } else {
       settxtlot((prevState) => ({ ...prevState, value: "",focus:true }));
-      // txtLotNo.Focus()
-      fctxtLotno.current.focus();
+      setTimeout(() => {
+        fctxtLotno.current.focus();
+      }, 300);
     }
   };
 
   const txtSheetNo_TextChanged = async () => {
-    console.log(txtSheet.value,'txtcbno')
-
   
     if (txtSheet.value != "") {
-      console.log('เข้าtxtCBNo',hfCheckPrdSht)
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
       setlblRemark("");
-      setpnlSave("ซ่อนfalse");
+      setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
         const sheetNo = txtSheet.value.trim().toUpperCase();
         const start = parseInt(hfCheckPrdShtStart);
@@ -297,26 +306,26 @@ function fn_ScanSheetMOTTime() {
       if (strStatus != "F") {
         console.log('strStatus != "F"',strStatus)
         if (txtCBNo.visble=='') {
-          //ถ้าโชว์
+        
           settxtCBNo((prevState) => ({
             ...prevState,
             disbled: false,
-            style: { background: "" },
+            style: { color: "" },
             value: "",
-            focus:true
+           
           }));
-          //  txtCBNo.Focus()
+         
           fctxtCBNo.current.focus();
         } else if (txtSUSNo.visble=='') {
-          //ถ้าโชว์
+         
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,
             value: "",
-            style: { background: "" },
-            focus:true
+            style: { color: "" },
+         
           }));
-          // txtSUSNo.Focus()
+         
           fctxtSUSNo.current.focus();
         } else {
           console.log('else')
@@ -325,12 +334,26 @@ function fn_ScanSheetMOTTime() {
               SheetNo: txtSheet.value,
             })
             .then((res) => {
-              rowCount = res.data[0].row_count              ;
-              console.log(res.data[0].row_count, "rowCount");
+              rowCount = res.data;
             });
 
           if (rowCount == 0) {
-            // strError = BIZ_ScanSMTSerial.CallFPCSheetLeadTimeResult(txtLotNo.Text.Trim.ToUpper, txtSheetNo.Text.Trim.ToUpper, txtMCNo.Text.Trim.ToUpper, hfZPRNProcID.Value, "frm_ScanSheetMOTTime", "", "", strStatus)
+            await axios
+            .post("/api/CallFPCSheetLeadTimeResult", {
+              LotNo:txtlot.value, 
+              PROC_ID:hfZPRNProcID,
+              SHT_NO:txtSheet.value,
+              MACHINE_NO:txtMCNo.value,
+              PROGRAM:"frm_ScanSheetMOTTime",
+              CB_NO:"",
+              SUS_NO:"",
+              strStatus:strStatus
+            })
+            .then((res) => {
+              strError=res.data.strError
+              strStatus=res.data.strStatus
+            });
+           
             setlblSheet(txtSheet.value + " " + currentTime);
             setlblRemark(strError);
             if (strStatus == "P") {
@@ -348,13 +371,15 @@ function fn_ScanSheetMOTTime() {
             }
           } else {
             setlblSheet(txtSheet.value);
-            setpnlSave("โชว์มั้ยนะ"); // pnlSave.Visible = True
-            // pnlMain.Enabled = False
+            setpnlSave(""); 
+            /// pnlMain.Enabled = False
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" , focus:true}));
-          // txtSheetNo.Focus()
-          fctxtSheetNo.current.focus();
+         
+          setTimeout(() => {
+            fctxtSheetNo.current.focus();
+          }, 300);
         }
       } else {
         setlblResult((prevState) => ({
@@ -364,13 +389,17 @@ function fn_ScanSheetMOTTime() {
         }));
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "" , focus:true}));
-        // txtSheetNo.Focus()
-        fctxtSheetNo.current.focus();
+        
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       }
     } else {
       settxtSheet((prevState) => ({ ...prevState, value: "", focus:true }));
-      // txtSheetNo.Focus()
-      fctxtSheetNo.current.focus();
+      
+      setTimeout(() => {
+        fctxtSheetNo.current.focus();
+      }, 300);
     }
   };
 
@@ -382,8 +411,8 @@ function fn_ScanSheetMOTTime() {
       let strStatus = "";
       let rowCount = 0;
       setlblRemark("");
-      // pnlSave.Visible = False
-
+      
+      setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
         const sheetNo = txtSheet.value.trim().toUpperCase();
         const start = parseInt(hfCheckPrdShtStart, 10);
@@ -408,12 +437,12 @@ function fn_ScanSheetMOTTime() {
       }
       if (strStatus != "F") {
          if (txtSUSNo.visble=='') {
-          //ถ้าโชว์
+          
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,
             value: "",
-            style: { background: "" },
+            style: { color: "" },
           }));
           
           fctxtSUSNo.current.focus();
@@ -423,13 +452,28 @@ function fn_ScanSheetMOTTime() {
               SheetNo: txtSheet,
             })
             .then((res) => {
-              rowCount = res.data[0].row_count ;
-              console.log(res.data[0].row_count, "rowCount");
+              rowCount = res.data;
+              console.log(res.data, "rowCount");
             });
 
           if (rowCount == 0) {
-            // strError = BIZ_ScanSMTSerial.CallFPCSheetLeadTimeResult(txtLotNo.Text.Trim.ToUpper, txtSheetNo.Text.Trim.ToUpper, txtMCNo.Text.Trim.ToUpper, hfZPRNProcID.Value, "frm_ScanSheetMOTTime", "", "", strStatus)
-            setlblSheet(txtSheet + " " + currentTime);
+            await axios
+            .post("/api/CallFPCSheetLeadTimeResult", {
+              LotNo:txtlot.value, 
+              PROC_ID:hfZPRNProcID,
+              SHT_NO:txtSheet.value,
+              MACHINE_NO:txtMCNo.value,
+              PROGRAM:"frm_ScanSheetMOTTime",
+              CB_NO:txtCBNo.value,
+              SUS_NO:"",
+              strStatus:strStatus
+            })
+            .then((res) => {
+              strError=res.data.strError
+              strStatus=res.data.strStatus
+            });
+           
+            setlblSheet(txtSheet.value + " " + currentTime);
             setlblRemark(strError);
             if (strStatus == "P") {
               setlblResult((prevState) => ({
@@ -445,14 +489,16 @@ function fn_ScanSheetMOTTime() {
               }));
             }
           } else {
-            setlblSheet(txtSheet);
-            setpnlSave("โชว์มั้ยนะ"); // pnlSave.Visible = True
-            // pnlMain.Enabled = False
+            setlblSheet(txtSheet.value);
+            setpnlSave(""); 
+            /// pnlMain.Enabled = False
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
-          // txtSheetNo.Focus()
-          fctxtSheetNo.current.focus();
+         
+          setTimeout(() => {
+            fctxtSheetNo.current.focus();
+          }, 300);
         }
       } else {
         setlblResult((prevState) => ({
@@ -462,13 +508,17 @@ function fn_ScanSheetMOTTime() {
         }));
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "" }));
-        // txtSheetNo.Focus()
-        fctxtSheetNo.current.focus();
+      
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       }
     } else {
       settxtSheet((prevState) => ({ ...prevState, value: "" }));
-      // txtSheetNo.Focus()
-      fctxtSheetNo.current.focus();
+   
+      setTimeout(() => {
+        fctxtSheetNo.current.focus();
+      }, 300);
     }
   };
 
@@ -478,8 +528,7 @@ function fn_ScanSheetMOTTime() {
       let strStatus = "";
       let rowCount = 0;
       setlblRemark("");
-      // pnlSave.Visible = False
-
+      setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
         const sheetNo = txtSheet.value.trim().toUpperCase();
         const start = parseInt(hfCheckPrdShtStart, 10);
@@ -509,13 +558,28 @@ function fn_ScanSheetMOTTime() {
               SheetNo: txtSheet,
             })
             .then((res) => {
-              rowCount = res.data[0].row_count ;
-              console.log(res.data[0].row_count, "rowCount");
+              rowCount = res.data;
+              console.log(res.data, "rowCount");
             });
 
           if (rowCount == 0) {
-            // strError = BIZ_ScanSMTSerial.CallFPCSheetLeadTimeResult(txtLotNo.Text.Trim.ToUpper, txtSheetNo.Text.Trim.ToUpper, txtMCNo.Text.Trim.ToUpper, hfZPRNProcID.Value, "frm_ScanSheetMOTTime", "", "", strStatus)
-            setlblSheet(txtSheet + " " + currentTime);
+            await axios
+            .post("/api/CallFPCSheetLeadTimeResult", {
+              LotNo:txtlot.value, 
+              PROC_ID:hfZPRNProcID,
+              SHT_NO:txtSheet.value,
+              MACHINE_NO:txtMCNo.value,
+              PROGRAM:"frm_ScanSheetMOTTime",
+              CB_NO:txtCBNo.value,
+              SUS_NO:txtSUSNo.value,
+              strStatus:strStatus
+            })
+            .then((res) => {
+              strError=res.data.strError
+              strStatus=res.data.strStatus
+            });
+         
+            setlblSheet(txtSheet.value + " " + currentTime);
             setlblRemark(strError);
             if (strStatus == "P") {
               setlblResult((prevState) => ({
@@ -531,115 +595,139 @@ function fn_ScanSheetMOTTime() {
               }));
             }
           } else {
-            setlblSheet(txtSheet);
-            setpnlSave("โชว์มั้ยนะ"); // pnlSave.Visible = True
-            // pnlMain.Enabled = False
+            setlblSheet(txtSheet.value);
+            setpnlSave(""); 
+            /// pnlMain.Enabled = False
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
-          // txtSheetNo.Focus()
-          fctxtSheetNo.current.focus();
+          settxtCBNo((prevState) => ({ ...prevState, value: "" }));
+          setTimeout(() => {
+            fctxtSheetNo.current.focus();
+          }, 300);
         
       } else {
         setlblResult((prevState) => ({
           ...prevState,
           value: "NG",
-          style: { background: "Red" },
+          style: { color: "Red" },
         }));
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "" }));
-        // txtSheetNo.Focus()
-        fctxtSheetNo.current.focus();
+        settxtCBNo((prevState) => ({ ...prevState, value: "" }));
+        settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       }
     } else {
       settxtSheet((prevState) => ({ ...prevState, value: "" }));
-      // txtSheetNo.Focus()
-      fctxtSheetNo.current.focus();
+      settxtCBNo((prevState) => ({ ...prevState, value: "" }));
+      settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
+      setTimeout(() => {
+        fctxtSheetNo.current.focus();
+      }, 300);
     }
   };
-
-
 
   const BtClick_back = async () => {
     settxtlot((prevState) => ({
       ...prevState,
       disbled: false,
-      style: { background: "" },
+      style: { color: "" },
     }));
 
     settxtMCNo((prevState) => ({
       ...prevState,
       disbled: false,
-      style: { background: "" },
+      style: { color: "" },
       value: "",
     }));
 
     settxtSheet((prevState) => ({
       ...prevState,
       disbled: true,
-      style: { background: "#EEEEEE" },
+      style: { color: "#EEEEEE" },
       value: "",
     }));
 
     if (txtCBNo.visble=='') {
-      //ถ้าโชว์
+     
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { color: "#EEEEEE" },
         value: "",
       }));
     }
     if (txtSUSNo.visble=='') {
-      //ถ้าโชว์
+     
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { color: "#EEEEEE" },
       }));
     }
-    // txtLotNo.Focus()
-    fctxtLotno.current.focus();
+   
+    setTimeout(() => {
+      fctxtLotno.current.focus();
+    }, 300);
   };
 
   const BtClick_Cancel = async () => {
-    // pnlSave.Visible = False
-    // pnlMain.Enabled = True
+    setpnlSave('none')
+    /// pnlMain.Enabled = True
     setlblSheet("");
     setlblRemark("");
     settxtSheet((prevState) => ({ ...prevState, value: "" }));
     setlblResult((prevState) => ({ ...prevState, value: "" }));
 
     if (txtCBNo.visble=='') {
-      //ถ้าโชว์
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { background: "" },
+        style: { color: "" },
         value: "",
       }));
     }
     if (txtSUSNo.visble=='') {
-      //ถ้าโชว์
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { background: "" },
+        style: { color: "" },
         value: "",
       }));
     }
-    // txtSheetNo.Focus()
-    fctxtSheetNo.current.focus();
+    setTimeout(() => {
+      fctxtSheetNo.current.focus();
+    }, 300);
   };
 
   const BtClick_Replace = async () => {
     let strError = "";
     let strStatus = "";
-    // strError = BIZ_ScanSMTSerial.CallFPCSheetLeadTimeResult(txtLotNo.Text.Trim.ToUpper, lblSheet.Text.Trim.ToUpper, txtMCNo.Text.Trim.ToUpper, hfZPRNProcID.Value, "frm_ScanSheetMOTTime", "", "", strStatus)
+    console.log('lblSheet',lblSheet)
+    await axios
+    .post("/api/CallFPCSheetLeadTimeResult", {
+      LotNo:txtlot.value, 
+      PROC_ID:hfZPRNProcID,
+      SHT_NO:lblSheet,
+      MACHINE_NO:txtMCNo.value,
+      PROGRAM:"frm_ScanSheetMOTTime",
+      CB_NO:"",
+      SUS_NO:"",
+      strStatus:strStatus
+    })
+    .then((res) => {
+      strError=res.data.strError
+      strStatus=res.data.strStatus
+    });
+   
     setlblSheet(lblSheet + "Replace");
     setlblRemark(strError);
-    // pnlSave.Visible = False
-    // pnlMain.Enabled = True
+    
+    setpnlSave("none");
+    /// pnlMain.Enabled = True
     if (strStatus == "P") {
       setlblResult((prevState) => ({
         ...prevState,
@@ -653,79 +741,92 @@ function fn_ScanSheetMOTTime() {
         value: "NG",
       }));
     }
-    // pnlSave.Visible = False
-    // pnlMain.Enabled = True
+    setpnlSave("none");
+    /// pnlMain.Enabled = True
     settxtSheet((prevState) => ({
       ...prevState,
       value: "",
     }));
     if (txtCBNo.visble=='') {
-      //ถ้าโชว์
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { background: "" },
+        style: { color: "" },
         value: "",
       }));
     }
     if (txtSUSNo.visble=='') {
-      //ถ้าโชว์
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { background: "" },
+        style: { color: "" },
         value: "",
       }));
     }
-    // txtSheetNo.Focus()
-    fctxtSheetNo.current.focus();
+ 
+    setTimeout(() => {
+      fctxtSheetNo.current.focus();
+    }, 300);
   };
 
   const BtClick_Delete = async () => {
     let strError = "";
     let strStatus = "";
-    // strError = BIZ_ScanSMTSerial.DeleteMOTRecordTimeData(Session("PLANT_CODE"), lblSheet.Text.Trim.ToUpper, hfZPRNProcID.Value, Session("PRODUCT_KIND"))
+    
+    await axios
+    .post("/api/DeleteMOTRecordTimeData", {
+      data: {
+        _strPlantCode:"5",
+        _strSheetNo:lblSheet,
+        _strProcID:hfZPRNProcID
+      },
+    })
+    .then((res) => {
+      strError=res.data.p_error
+    });
     setlblSheet(lblSheet + "Delete");
     setlblRemark(strError);
     if (strStatus == "P") {
       setlblResult((prevState) => ({
         ...prevState,
-        style: { background: "Green" },
+        style: { color: "Green" },
         value: "OK",
       }));
     } else {
       setlblResult((prevState) => ({
         ...prevState,
-        style: { background: "Red" },
+        style: { color: "Red" },
         value: "NG",
       }));
     }
-    // pnlSave.Visible = False
-    // pnlMain.Enabled = True
+    setpnlSave("none"); 
+
     settxtSheet((prevState) => ({
       ...prevState,
       value: "",
     }));
     if (txtCBNo.visble=='') {
-      //ถ้าโชว์
+    
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { background: "" },
+        style: { color: "" },
         value: "",
       }));
     }
     if (txtSUSNo.visble=='') {
-      //ถ้าโชว์
+   
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { background: "" },
+        style: { color: "" },
         value: "",
       }));
     }
-    // txtSheetNo.Focus()
-    fctxtSheetNo.current.focus();
+    
+    setTimeout(() => {
+      fctxtSheetNo.current.focus();
+    }, 300);
   };
 
   return {
@@ -756,7 +857,8 @@ function fn_ScanSheetMOTTime() {
     settxtCBNo,
     settxtSUSNo,
     txtCBNo_TextChanged,
-    txtSUSNo_TextChanged
+    txtSUSNo_TextChanged,
+    pnlSave
   };
 }
 

@@ -110,8 +110,8 @@ function Hearder() {
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {/* TRACEABILITY SYSTEM  {menuName} */}
-              TRACEABILITY SYSTEM
+              TRACEABILITY SYSTEM  {menuName}
+              {/* TRACEABILITY SYSTEM */}
             </Typography>
 
             {user ? <> <Avatar

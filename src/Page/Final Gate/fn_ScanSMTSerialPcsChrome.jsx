@@ -819,17 +819,18 @@ function fn_ScanSMTSerialPcsChrome() {
         SHEET_PCS_NO: 0,
         ROLL_LEAF_NO: "",
       });
-      if (dtData[intSht].SERIAL != "") {
-        for(intNo=0;i>intRow - 2;intNo++){
-          // 
-        }
+      // if (dtData[intSht].SERIAL != "") {
+      //   for( let intNo=0;intNo>intRow - 2;intNo++){
+          
+      //   }
+      // }
         //      For intNo As Integer = 0 To intRow - 2
         //           If drRow("SERIAL").ToString.Trim = CType(gvSerial.Rows(intNo).FindControl("txtSerial"), TextBox).Text.Trim.ToUpper Then
         //               drRow("ROW_COUNT") = 9
         //               Exit For
         //           End If
         //       Next
-      }
+      
     }
     return dtData;
   };

@@ -7,7 +7,7 @@ import Product_master from "./Page/Product Master/ProductMaster";
 import FINConncetSht from './Page/FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht'
 import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRollSht";
 import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
-import ScanSheetMOTTime from "./Page/ScanSheetMOTTime/ScanSheetMOTTime";
+import ScanSheetMOTTime1 from "./Page/ScanSheetMOTTime1/ScanSheetMOTTime1";
 import Homepage from "./Page/Homepage/Homepage";
 import ConfirmBarcodeGrade from "./Page/Confirm Barcode Grade/ConfirmBarcodeGrade";
 // import TestApi from "./testApi";
@@ -37,6 +37,7 @@ import ScanSMTSerialPcsAutoTray from "./Page/ScanSMTSerialPcsAutoTray/ScanSMTSer
 import ScanSMTConnectRollConfirm from "./Page/ScanSMTConnectRollConfirm/ScanSMTConnectRollConfirm";
 import ScanSMTSerialSht from "./Page/ScanSMTSerialSht/ScanSMTSerialSht";
 import PackingGate from "./Page/ScanSMTSerialPcsBox/ScanSMTSerialPcsBox"
+import ScanSheetMOTTime2 from "./Page/ScanSheetMOTTime2/ScanSheetMOTTime2";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
  
@@ -83,7 +84,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/ProductMaster" element={<Product_master />} />
             <Route path="/TraceabilitySystem/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
-            <Route path="/TraceabilitySystem/ScanSheetMOTTime" element={<ScanSheetMOTTime />} />          
+            <Route path="/TraceabilitySystem/ScanSheetMOTTime" element={<ScanSheetMOTTime1 />} />          
             <Route path="/TraceabilitySystem/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
             <Route path='/TraceabilitySystem/ScanSheetInspect' element={<ScanSheetInspect />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
@@ -97,6 +98,7 @@ const App = () => {
             <Route path='/TraceabilitySystem/PackingGate' element = {<PackingGate />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
             {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
+            <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />     
  
             {/* View Data */}
             <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
