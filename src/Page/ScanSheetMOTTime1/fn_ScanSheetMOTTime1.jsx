@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { TableSortLabel } from "@mui/material";
 import { color } from "framer-motion";
 
+
 function fn_ScanSheetMOTTime() {
   //txt
   const [txtlot, settxtlot] = useState({
@@ -78,7 +79,7 @@ function fn_ScanSheetMOTTime() {
   const CB = params.get("CB");
   const SUS = params.get("SUS");
   let hfZPRNProcID='1840'
-
+  const Fac = import.meta.env.VITE_FAC;
 
   useEffect(() => {
     settxtMCNo((prevState) => ({ ...prevState, value: "", disbled: false,focus:true }));
@@ -86,13 +87,13 @@ function fn_ScanSheetMOTTime() {
       ...prevState,
       value: "",
       disbled: true,
-      style: { color: "#EEEEEE" },
+      style: { background: "#EEEEEE" },
     }));
     settxtSheet((prevState) => ({
       ...prevState,
       value: "",
       disbled: true,
-      style: { color: "#EEEEEE" },
+      style: { background: "#EEEEEE" },
     }));
 
     setlblRemark("");
@@ -107,7 +108,7 @@ function fn_ScanSheetMOTTime() {
         value: "",
         disbled: true,
         visble: "",
-        style: { color: "#EEEEEE" },
+        style: { background: "#EEEEEE" },
       }));
     } else {
       settxtCBNo((prevState) => ({ ...prevState, visble: "none" }));
@@ -119,7 +120,7 @@ function fn_ScanSheetMOTTime() {
         value: "",
         disbled: true,
         visble: "",
-        style: { color: "#EEEEEE" },
+        style: { background: "#EEEEEE" },
       }));
     } else {
       settxtSUSNo((prevState) => ({ ...prevState, visble: "none" }));
@@ -136,12 +137,12 @@ function fn_ScanSheetMOTTime() {
       ...prevState,
       value: "",
       disbled: true,
-      style: { color: "#eeeeee" },
+      style: { background: "#eeeeee" },
     }));
     settxtlot((prevState) => ({
       ...prevState,
       disbled: false,
-      style: { color: "" },
+      style: { background: "" },
    
     }));
     if (txtCBNo.visble) {
@@ -150,7 +151,7 @@ function fn_ScanSheetMOTTime() {
         ...prevState,
         disbled: true,
         value: "",
-        style: { color: "#EEEEEE" },
+        style: { background: "#EEEEEE" },
       }));
     }
     if (txtSUSNo.visble=='') {
@@ -159,7 +160,7 @@ function fn_ScanSheetMOTTime() {
         ...prevState,
         disbled: true,
         value: "",
-        style: { color: "#EEEEEE" },
+        style: { background: "#EEEEEE" },
       }));
       
     }
@@ -213,19 +214,19 @@ function fn_ScanSheetMOTTime() {
           ...prevState,
           value: _strLot,
           disbled: true,
-          style: { color: "#EEEEEE" },
+          style: { background: "#EEEEEE" },
         }));
 
         settxtMCNo((prevState) => ({
           ...prevState,
           disbled: true,
-          style: { color: "#EEEEEE" },
+          style: { background: "#EEEEEE" },
         }));
 
         settxtSheet((prevState) => ({
           ...prevState,
           disbled: false,
-          style: { color: "" },
+          style: { background: "" },
           value: "",
         }));
 
@@ -234,7 +235,7 @@ function fn_ScanSheetMOTTime() {
           settxtCBNo((prevState) => ({
             ...prevState,
             disbled: false,
-            style: { color: "" },
+            style: { background: "" },
             value: "",
           }));
         }
@@ -243,7 +244,7 @@ function fn_ScanSheetMOTTime() {
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,
-            style: { color: "" },
+            style: { background: "" },
           }));
         }
         settxtSUSNo((prevState) => ({
@@ -310,7 +311,7 @@ function fn_ScanSheetMOTTime() {
           settxtCBNo((prevState) => ({
             ...prevState,
             disbled: false,
-            style: { color: "" },
+            style: { background: "" },
             value: "",
            
           }));
@@ -322,7 +323,7 @@ function fn_ScanSheetMOTTime() {
             ...prevState,
             disbled: false,
             value: "",
-            style: { color: "" },
+            style: { background: "" },
          
           }));
          
@@ -442,7 +443,7 @@ function fn_ScanSheetMOTTime() {
             ...prevState,
             disbled: false,
             value: "",
-            style: { color: "" },
+            style: { background: "" },
           }));
           
           fctxtSUSNo.current.focus();
@@ -634,20 +635,20 @@ function fn_ScanSheetMOTTime() {
     settxtlot((prevState) => ({
       ...prevState,
       disbled: false,
-      style: { color: "" },
+      style: { background: "" },
     }));
 
     settxtMCNo((prevState) => ({
       ...prevState,
       disbled: false,
-      style: { color: "" },
+      style: { background: "" },
       value: "",
     }));
 
     settxtSheet((prevState) => ({
       ...prevState,
       disbled: true,
-      style: { color: "#EEEEEE" },
+      style: { background: "#EEEEEE" },
       value: "",
     }));
 
@@ -656,7 +657,7 @@ function fn_ScanSheetMOTTime() {
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { color: "#EEEEEE" },
+        style: { background: "#EEEEEE" },
         value: "",
       }));
     }
@@ -665,7 +666,7 @@ function fn_ScanSheetMOTTime() {
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { color: "#EEEEEE" },
+        style: { background: "#EEEEEE" },
       }));
     }
    
@@ -686,7 +687,7 @@ function fn_ScanSheetMOTTime() {
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { color: "" },
+        style: { background: "" },
         value: "",
       }));
     }
@@ -694,7 +695,7 @@ function fn_ScanSheetMOTTime() {
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { color: "" },
+        style: { background: "" },
         value: "",
       }));
     }
@@ -751,7 +752,7 @@ function fn_ScanSheetMOTTime() {
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { color: "" },
+        style: { background: "" },
         value: "",
       }));
     }
@@ -759,7 +760,7 @@ function fn_ScanSheetMOTTime() {
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { color: "" },
+        style: { background: "" },
         value: "",
       }));
     }
@@ -776,7 +777,7 @@ function fn_ScanSheetMOTTime() {
     await axios
     .post("/api/DeleteMOTRecordTimeData", {
       data: {
-        _strPlantCode:"5",
+        _strPlantCode:Fac,
         _strSheetNo:lblSheet,
         _strProcID:hfZPRNProcID
       },
@@ -810,7 +811,7 @@ function fn_ScanSheetMOTTime() {
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { color: "" },
+        style: { background: "" },
         value: "",
       }));
     }
@@ -819,7 +820,7 @@ function fn_ScanSheetMOTTime() {
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
-        style: { color: "" },
+        style: { background: "" },
         value: "",
       }));
     }

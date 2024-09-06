@@ -153,6 +153,8 @@ function fn_ScanSMTSerialPcsChrome() {
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
 
+  const Fac = import.meta.env.VITE_FAC;
+
   //Focus
   const fc_txtSerial = useRef([]);
   const fc_txtLotNo = useRef([]);
@@ -165,7 +167,6 @@ function fn_ScanSMTSerialPcsChrome() {
   const FINAL_GATE_MASTER_CODE = "T999999999";
   const FINAL_GATE_SPECIAL_FLG ='1'
   const FINAL_GATE_SPECIAL_PRD='RGPZ-098ML-6A,RGPZ-098ML-7A'
-  const Fac = import.meta.env.VITE_FAC;
   //PageLoad----------
   useEffect(() => {
     const fetchData = async () => {
