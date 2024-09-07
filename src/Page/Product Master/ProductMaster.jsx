@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../Product Master/Style.css";
-// import "./master.css";
-import Popup from "./ProductPopup.jsx";
-import { Empty } from "antd";
-import Hearder from "../Header/Header.jsx";
+import Header from "../Header/Header";
 import {
     TextField,
     Card,
@@ -88,7 +85,7 @@ function ProductMaster() {
 
     return (
         <div>
-            <Hearder />
+            <Header />
             <h1>Product Master</h1>
             <Card
                 component={Paper}
