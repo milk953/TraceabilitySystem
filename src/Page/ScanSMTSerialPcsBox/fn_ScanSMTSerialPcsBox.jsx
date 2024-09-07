@@ -522,19 +522,305 @@ function fn_ScanSMTSerialPcsBox() {
         if (!isNaN(txtPcsTray.value)) {
           setHfserialcount(txtPcsTray.value);
           if (parseInt(txtPcsTray.value) !== parseInt(hfSerialCountOriginal)) {
-            setlblLastTray((prevState) => ({
-              ...prevState,
-              value: "USE",
-            }));
+            setlblLastTray((prevState) => ({...prevState,value: "USE",}));
           } else {
-            setlblLastTray((prevState) => ({
-              ...prevState,
-              value: "Not Use",
-            }));
+            setlblLastTray((prevState) => ({...prevState,value: "Not Use", }));
           }
           SetMode("SERIAL");
         }
       };
+      const SetMode = (_strType) => {
+        switch (_strType) {
+          case "LOT":
+            settxtLot((prevState) => ({...prevState,value: "",disbled: false,}));
+            settxtBox((prevState) => ({ ...prevState, value: "", disbled: true }));
+            settxtPack((prevState) => ({...prevState,value: "",disbled: true,}));
+            setlblLot((prevState) => ({ ...prevState, value: "" }));
+            setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+            setlblBox((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxFull((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxStatus((prevState) => ({ ...prevState, value: "" }));
+            setlblPacking((prevState) => ({ ...prevState, value: "" }));
+            setlblPackingTotal((prevState) => ({ ...prevState, value: "" }));
+            setibtback(false);
+            setibtBox(false);
+            seibtPack(false);
+            setpnlLog(false);
+            setpnlSerial(false);
+            settxtMachine((prevState) => ({ ...prevState, value: "" }));
+            settxtOP((prevState) => ({ ...prevState, value: "" }));
+            setlblOP((prevState) => ({ ...prevState, value: "" }));
+            setibtMachineBack(false);
+            setibtOPBack(false);
+            if (FQC == "Y") {
+              setpnlMachine(true);
+              settxtMachine((prevState) => ({ ...prevState, disbled: true }));
+              settxtOP((prevState) => ({ ...prevState, disbled: true }));
+            } else {
+              setpnlMachine(false);
+              setpnlOP(false);
+            }
+            setTimeout(() => {
+              fntxtLot.current.focus();
+            }, 300);
+            break;
+          case "LOT_ERROR":
+            settxtLot((prevState) => ({...prevState,value: "",disbled: false}));
+            settxtBox((prevState) => ({...prevState, value: "", disbled: true }));
+            settxtPack((prevState) => ({...prevState, value: "",disbled: true, }));
+            setlblLot((prevState) => ({ ...prevState, value: "" }));
+            setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+            setlblBox((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxFull((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxStatus((prevState) => ({ ...prevState, value: "" }));
+            setlblPacking((prevState) => ({ ...prevState, value: "" }));
+            setlblPackingTotal((prevState) => ({ ...prevState, value: "" }));
+            setibtback(false);
+            setibtBox(false);
+            seibtPack(false);
+            setpnlLog(true);
+            setpnlSerial(false);
+            setHfMode("LOT");
+            settxtMachine((prevState) => ({ ...prevState, value: "" }));
+            settxtOP((prevState) => ({ ...prevState, value: "" }));
+            setlblOP((prevState) => ({ ...prevState, value: "" }));
+            setibtMachineBack(false);
+            setibtOPBack(false);
+            if (hfFQC == "Y") {
+              setpnlMachine(true);
+              settxtMachine((prevState) => ({ ...prevState, disbled: true }));
+              settxtOP((prevState) => ({ ...prevState, disbled: true }));
+            } else {
+              setpnlMachine(false);
+              setpnlOP(false);
+            }
+            setTimeout(() => {
+              fntxtLot.current.focus();
+            }, 300);
+            break;
+          case "MACHINE":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            settxtBox((prevState) => ({ ...prevState, value: "", disbled: true }));
+            settxtPack((prevState) => ({...prevState,value: "",disbled: true,}));
+            setlblLot((prevState) => ({ ...prevState, value: "" }));
+            setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+            setlblBox((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxFull((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxStatus((prevState) => ({ ...prevState, value: "" }));
+            setlblPacking((prevState) => ({ ...prevState, value: "" }));
+            setlblPackingTotal((prevState) => ({ ...prevState, value: "" }));
+            setibtback(false);
+            setibtBox(false);
+            seibtPack(false);
+            setpnlLog(false);
+            setpnlSerial(false);
+    
+            setpnlOP(false);
+            settxtMachine((prevState) => ({...prevState,value: "",disbled: false,}));
+            settxtOP((prevState) => ({ ...prevState, value: "", disbled: true }));
+            setlblOP((prevState) => ({ ...prevState, value: "" }));
+            setibtMachineBack(true);
+            setibtOPBack(false);
+            setHfMode("MACHINE");
+            setTimeout(() => {
+              fntxtMachine.current.focus();
+            }, 300);
+    
+            break;
+          case "OP":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            settxtBox((prevState) => ({ ...prevState, value: "", disbled: true }));
+            settxtPack((prevState) => ({...prevState,value: "", disbled: true,}));
+            setlblLot((prevState) => ({ ...prevState, value: "" }));
+            setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+            setlblBox((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxFull((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxStatus((prevState) => ({ ...prevState, value: "" }));
+            setlblPacking((prevState) => ({ ...prevState, value: "" }));
+            setlblPackingTotal((prevState) => ({ ...prevState, value: "" }));
+            setibtback(false);
+            setibtBox(false);
+            seibtPack(false);
+            setpnlLog(false);
+            setpnlSerial(false);
+    
+            setpnlOP(true);
+            settxtMachine((prevState) => ({...prevState, disbled: true,}));
+            settxtOP((prevState) => ({...prevState,disbled: false, }));
+            setlblOP((prevState) => ({ ...prevState, value: "" }));
+            setibtMachineBack(true);
+            setibtOPBack(false);
+            setHfMode("OP");
+            setTimeout(() => {
+              fntxtOP.current.focus();
+            }, 300);
+    
+            break;
+          case "TRAY":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+            setpnlLog(false);
+            setpnlSerial(true);
+            getInitialSerial();
+            setHfMode("TRAY");
+            setTimeout(() => {
+              fntxtTray.current.focus();
+            }, 300);
+            break;
+          case "TRAY_ERROR":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+            setpnlLog(true);
+            setpnlSerial(false);
+            setHfMode("TRAY");
+            setTimeout(() => {
+              fntxtTray.current.focus();
+            }, 300);
+         
+            break;
+          case "BOX":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            settxtBox((prevState) => ({...prevState,value: "", disbled: false,style: { enableState }, }));
+            settxtPack((prevState) => ({...prevState,value: "",disbled: true,}));
+            setlblBox((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxFull((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxStatus((prevState) => ({ ...prevState, value: "" }));
+            setlblPacking((prevState) => ({ ...prevState, value: "" }));
+            setlblPackingTotal((prevState) => ({ ...prevState, value: "" }));
+            setibtback(true);
+            setibtBox(false);
+            seibtPack(false);
+            setpnlLog(false);
+            setpnlSerial(false);
+            setpnlOP(false);
+            if (hfFQC == "Y") {
+              settxtMachine((prevState) => ({ ...prevState, disbled: true }));
+              settxtOP((prevState) => ({ ...prevState, disbled: true }));
+              setibtMachineBack(true);
+              setibtOPBack(true);
+            } else {
+              setpnlMachine(false);
+            }
+            setHfMode("BOX");
+            setTimeout(() => {
+              fntxtBox.current.focus();
+            }, 300); 
+            break;
+          case "BOX_ERROR":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            settxtBox((prevState) => ({...prevState,value: "",disbled: false,style: { enableState },}));
+            settxtPack((prevState) => ({...prevState,value: "",disbled: true, }));
+            setlblLot((prevState) => ({ ...prevState, value: "" }));
+            setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+            setlblBox((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxFull((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
+            setlblBoxStatus((prevState) => ({ ...prevState, value: "" }));
+            setlblPacking((prevState) => ({ ...prevState, value: "" }));
+            setlblPackingTotal((prevState) => ({ ...prevState, value: "" }));
+            setibtback(true);
+            setibtBox(false);
+            seibtPack(false);
+            setpnlLog(true);
+            setpnlSerial(false);
+            setpnlOP(false);
+            if (hfFQC == "Y") {
+              settxtMachine((prevState) => ({ ...prevState, disbled: true }));
+              settxtOP((prevState) => ({ ...prevState, disbled: true }));
+              setibtMachineBack(true);
+              setibtOPBack(true);
+            } else {
+              setpnlMachine(false);
+            }
+            setHfMode("BOX");
+            setTimeout(() => {
+              fntxtBox.current.focus();
+            }, 300);
+            break;
+          case "PACKING":
+            setdis_ddlProduct(true);
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            settxtBox((prevState) => ({ ...prevState, disbled: true }));
+            settxtPack((prevState) => ({
+              ...prevState,
+              value: "",
+              disbled: false,
+            }));
+            setlblPacking((prevState) => ({ ...prevState, value: "" }));
+            setlblPackingTotal((prevState) => ({ ...prevState, value: "" }));
+            setibtback(true);
+            setibtBox(true);
+            seibtPack(false);
+            setpnlLog(false);
+            setpnlSerial(false);
+            setpnlOP(false);
+            if (hfFQC == "Y") {
+              settxtMachine((prevState) => ({ ...prevState, disbled: true }));
+              settxtOP((prevState) => ({ ...prevState, disbled: true }));
+              setibtMachineBack(true);
+              setibtOPBack(true);
+            } else {
+              setpnlMachine(false);
+            }
+            setHfMode("PACK");
+            setTimeout(() => {
+              fntxtPack.current.focus();
+            }, 300);
+            break;
+          case "SERIAL":
+            setdis_ddlProduct(true);
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            settxtBox((prevState) => ({ ...prevState, disbled: true }));
+            settxtPack((prevState) => ({...prevState,disbled: true, }));
+            setibtback(true);
+            setibtBox(true);
+            seibtPack(true);
+            setpnlLog(false);
+            setpnlSerial(true);
+            setpnlOP(false);
+            if (hfFQC == "Y") {
+              settxtMachine((prevState) => ({ ...prevState, disbled: true }));
+              settxtOP((prevState) => ({ ...prevState, disbled: true }));
+              setibtMachineBack(true);
+              setibtOPBack(true);
+            } else {
+              setpnlMachine(false);
+            }
+            setHfMode("SERIAL");
+            getInitialSerial();
+            break;
+          case "SERIAL_ERROR":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            setpnlLog(true);
+            break;
+          case "SERIAL_OK":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            setpnlLog(false);
+            setpnlSerial(true);
+            getInitialSerial();
+            // fngvSerial.current.focus(); // focus Serial
+            break;
+          case "SERIAL_NG":
+            settxtLot((prevState) => ({ ...prevState, disbled: true }));
+            setpnlLog(false);
+    
+            break;
+    
+          default:
+        }
+      };
+      
+
     
   return {
 

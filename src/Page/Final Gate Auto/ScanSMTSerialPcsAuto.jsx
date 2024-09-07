@@ -27,9 +27,9 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "./SerialPcs.css";
+import "./SerialPcsAuto.css";
 import Hearder from "../Header/Header";
-import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsChrome";
+import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsAuto";
 import Pageimg from "/src/assets/1.jpg";
 function ScanSMTRoollSht() {
   const {
@@ -79,7 +79,7 @@ function ScanSMTRoollSht() {
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Final Gate</Typography>
+                    <Typography variant="h6">Final Gate Auto</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -187,10 +187,10 @@ function ScanSMTRoollSht() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="right" style={{ width: "100px" }}>
-                      <Typography>Pcs/Tray</Typography>
+                      {/* <Typography>Pcs/Tray</Typography> */}
                     </TableCell>
                     <TableCell style={{ width: "130px" }}>
-                      <TextField
+                      {/* <TextField
                         id="txtfild"
                         size="small"
                         inputRef={(el) => (fc_txtTray.current = el)}
@@ -211,7 +211,7 @@ function ScanSMTRoollSht() {
                         }}
                         onBlur={txtPcsTray_TextChanged}
                       ></TextField>
-                      &nbsp; {lblLastTray}
+                      &nbsp; {lblLastTray} */}
                     </TableCell>
                     {/* <TableCell style={{ width: "70px",}}></TableCell> */}
                     <TableCell align="right" style={{ width: "40px" }}>
