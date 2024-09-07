@@ -94,4 +94,15 @@
     font-size: 14px !important;
     padding-left: 5px !important;
   }
+
+  [id^="gvSerial_txtSerial_"] {
+    padding: 1px !important;
+    font-size: 16px;
+    padding-left: 5px !important;
+}
+
+
+
+
+
   
