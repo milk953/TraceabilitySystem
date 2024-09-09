@@ -17,7 +17,10 @@ import {
   Grid,
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
+import { Table as AntTable } from 'antd';
 import Pageimg from "/src/assets/1.jpg";
+import "../Common/StyleCommon.css";
+import "../Final Gate/SerialPcs.css";
 import {fn_ScanSMTSerialPcsBox} from './fn_ScanSMTSerialPcsBox'
 function ScanSMTSerialPcsBox() {
   const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlProduct,ddlProduct_SelectedIndexChanged,
@@ -26,12 +29,12 @@ function ScanSMTSerialPcsBox() {
     ,gvSerial,pnlMachine,lblLastTray,lblBox,lblBoxTotal,lblPacking,lblPackingTotal,lblBoxStatus,lblLog
   ,lblBoxFull,btnSave_Click,ibtBox_Click,ibtPack_Click,pnlSerial,txtSerial
   ,pnlLog,pnlOP,handleSerialChange,lblResult,fntxtLot,fntxtMachine,fntxtTray,fntxtBox,fntxtPack,fc_txtSerial,fntxtOP,btnCancel_Click,
-  gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcsBox()
+  gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTSerialPcsBox()
   return (
     <div>
       <Hearder />
       <h1>Final Gate</h1>
-      <Card component={Paper} className="Card-FinalGate">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -50,7 +53,7 @@ function ScanSMTSerialPcsBox() {
                       <TextField
                         id="txtfild"
                         size="small"
-                        style={{ ...txtLot.style, width: "80%" , backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit', // สีพื้นหลังเมื่อ disabled
+                        style={{ ...txtLot.style, backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit', // สีพื้นหลังเมื่อ disabled
                           }}
                         disabled={txtLot.disbled} //true พิมไม่ได้
                         //inputRef={fntxtLot}
@@ -135,7 +138,7 @@ function ScanSMTSerialPcsBox() {
                           }));
                         }}
 
-                        style={{ width: "80%", backgroundColor: txtMachine.disbled ? '#e0e0e0' : 'inherit', }}
+                        style={{  backgroundColor: txtMachine.disbled ? '#e0e0e0' : 'inherit', }}
                         disabled={txtMachine.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
                         onKeyDown={(e) => {
@@ -169,7 +172,7 @@ function ScanSMTSerialPcsBox() {
                             value: e.target.value,
                           }));
                         }}
-                        style={{backgroundColor: txtOP.disbled ? '#e0e0e0' : 'inherit', width: "80%" }}
+                        style={{backgroundColor: txtOP.disbled ? '#e0e0e0' : 'inherit' }}
                         disabled={txtOP.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
                         onKeyDown={(e) => {
@@ -203,7 +206,7 @@ function ScanSMTSerialPcsBox() {
                             value: e.target.value,
                           }));
                         }}
-                        style={{ backgroundColor: txtBox.disbled ? '#e0e0e0' : 'inherit',width: "80%" }}
+                        style={{ backgroundColor: txtBox.disbled ? '#e0e0e0' : 'inherit'}}
                         disabled={txtBox.disbled} //true พิมไม่ได้
                         // inputRef={fntxtBox}
                         onKeyDown={(e) => {
@@ -237,7 +240,7 @@ function ScanSMTSerialPcsBox() {
                             value: e.target.value,
                           }));
                         }}
-                        style={{backgroundColor: txtPack.disbled ? '#e0e0e0' : 'inherit', width: "80%" }}
+                        style={{backgroundColor: txtPack.disbled ? '#e0e0e0' : 'inherit' }}
                         disabled={txtPack.disbled} //true พิมไม่ได้
                         inputRef={fntxtPack}
                         onKeyDown={(e) => {
@@ -444,10 +447,10 @@ function ScanSMTSerialPcsBox() {
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
+            
+              
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -471,16 +474,14 @@ function ScanSMTSerialPcsBox() {
               {/* visiblegvScanResult */}
               {pnlgvScanResult && (
                 <>
-                <table>
-                  <tr>
-                    <td>
+                        <div style={{ display: "flex", gap: "10px", width: "100%" }}>
               <Paper
                  className="Card-lblResult"
                 elevation={3}
                 style={{
                   background: 
-                  lblResult.value == "NG" ?  "#ff4d4f":"green",
-                  width:'200px'
+                  lblResult.value == "NG" ?  "#BA0900":"#059212",
+                
                 }}
               >
                 <Typography variant="h4" style={{ paddingTop: "5px", color:  "#fff", }}>
@@ -488,10 +489,9 @@ function ScanSMTSerialPcsBox() {
                 </Typography>
                
               </Paper>
-                    </td>
-                    <td>
+               
               <Paper
-                 className="Card-lblResult"
+                className="Card-lblTime"
                 elevation={3}
                 style={{...lblTime.style,}}
               >
@@ -500,12 +500,10 @@ function ScanSMTSerialPcsBox() {
                 </Typography>
                
               </Paper>
-                    </td>
-                  </tr>
-                </table>
+              </div>
                 
               
-              <Table
+              {/* <Table
                 className="CSS-GvScanResult-FinalGate"
                 // style={{ display: gvScanResult }}
                 component={Card}
@@ -556,7 +554,7 @@ function ScanSMTSerialPcsBox() {
                     <TableCell >Remark </TableCell>
                   </TableRow>
                 </TableHead>
-                {/* {console.log(gvScanResult.value.flat(),'gvScanResult')} */}
+            
                 {Array.from(
                         { length: gvScanResult.length },
                         (_, index) => (
@@ -614,8 +612,17 @@ function ScanSMTSerialPcsBox() {
                           </TableRow>
                         )
                       )}
-              </Table>
-              
+              </Table> */}
+              <br/>
+                      <AntTable 
+                columns={columns}
+                dataSource={gvScanResult}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                // bordered
+                className="tableGvResult"
+                />
                 </>
               )} 
             </Grid>
