@@ -27,51 +27,16 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "./SerialPcs.css";
+import "../Final Gate/SerialPcs.css";
 import Hearder from "../Header/Header";
-// import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsChrome";
 import Pageimg from "/src/assets/1.jpg";
-function ScanSMTRoollSht() {
-  const {
-    txtLot,
-    settxtLot,
-    lblLog,
-    Product,
-    Sl_Product,
-    txtLot_TextChanged,
-    lblLot,
-    ddlProduct_SelectedIndexChanged,
-    txtPackingNo,
-    settxtPackingNo,
-    txtPackingNo_TextChanged,
-    lblLotTotal,
-    txtPcsTray,
-    settxtPcsTray,
-    lblSerialNG,
-    txtPcsTray_TextChanged,
-    ibtBack_Click,
-    ibtPackingBack_Click,
-    lblLastTray,
-    gvSerial,
-    handleSerialChange,
-    settxtSerial,
-    txtSerial,
-    fc_txtSerial,
-    fc_txtLotNo,
-    fc_txtPackingNo,
-    fc_txtTray,
-    fc_SlProduct,
-    btnSave_Click,
-    btnCancel_Click,
-    gvScanResult,
-    lblResult,
-    lblTime,
-  } = fn_ScanSMTSerialPcsChrome();
-  console.log("lblTime", lblTime);
+import {fn_ScanSMTPackingConfirm} from '../ScanSMTPackingConfirm/fn_ScanSMTPackingConfirm'
+function ScanSMTPackingConfirm() {
+const {}=fn_ScanSMTPackingConfirm();
   return (
     <div>
       <Hearder />
-      <h1>Final Gate</h1>
+      <h1>Packing Confirm Sheet</h1>
       <Card component={Paper} className="Card-FinalGate">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
@@ -79,36 +44,38 @@ function ScanSMTRoollSht() {
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Final Gate</Typography>
+                    <Typography variant="h6">Packing Confirm Sheet</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
                   <TableRow>
                     <TableCell align="right">
-                      <Typography> Scan Lot. :</Typography>
+                      <Typography>  Lot No. :</Typography>
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
                         id="txtfild"
                         size="small"
-                        style={{ ...txtLot.style, width: "80%" }}
-                        disabled={txtLot.disbled} //true พิมไม่ได้
-                        inputRef={(el) => (fc_txtLotNo.current = el)}
-                        value={txtLot.value}
-                        onChange={(e) => {
-                          settxtLot((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtLot_TextChanged();
-                          }
-                        }}
-                        onBlur={txtLot_TextChanged}
+                        //style={{ ...txtLot.style, width: "80%" }}
+                        //disabled={txtLot.disbled} //true พิมไม่ได้
+                       // inputRef={(el) => (fc_txtLotNo.current = el)}
+                       // value={txtLot.value}
+                        // onChange={(e) => {
+                        //   settxtLot((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtLot_TextChanged();
+                        //   }
+                        // }}
+                        // onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtBack_Click}>
+                      <Button id="txtfild" 
+                    //  onClick={ibtBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -119,30 +86,32 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
-                        <Autocomplete
+                        {/* <Autocomplete
                           id="selectPd"
-                          value={Sl_Product.value}
+                          // value={Sl_Product.value}
                           // , background:'#e0e0e0'
-                          style={{ ...Sl_Product.style }}
-                          disabled={Sl_Product.disbled} //true พิมไม่ได้
-                          onChange={(e, value) =>
-                            ddlProduct_SelectedIndexChanged(value)
-                          }
-                          options={Product.map((item) => item.prd_name)}
+                          // style={{ ...Sl_Product.style }}
+                          // disabled={Sl_Product.disbled} //true พิมไม่ได้
+                          // onChange={(e, value) =>
+                          //   ddlProduct_SelectedIndexChanged(value)
+                          // }
+                          // options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
-                              inputRef={(el) => (fc_SlProduct.current = el)}
-                              {...params}
-                              size="small"
-                              sx={{ textAlign: "left" }}
+                              // inputRef={(el) => (fc_SlProduct.current = el)}
+                              // {...params}
+                              // size="small"
+                              // sx={{ textAlign: "left" }}
                             />
                           )}
-                        />
+                        /> */}
                       </FormControl>
                     </TableCell>
                   </TableRow>
 
-                  <TableRow style={{ display: txtPackingNo.visble }}>
+                  <TableRow 
+                  // style={{ display: txtPackingNo.visble }}
+                  >
                     <TableCell align="right">
                       <Typography>Packing No :</Typography>
                     </TableCell>
@@ -150,74 +119,45 @@ function ScanSMTRoollSht() {
                       <TextField
                         id="txtfild"
                         size="small"
-                        inputRef={(el) => (fc_txtPackingNo.current = el)}
-                        value={txtPackingNo.value}
-                        onChange={(e) => {
-                          settxtPackingNo((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
-                        style={{ ...txtPackingNo.style, width: "80%" }}
-                        disabled={txtPackingNo.disbled} //true พิมไม่ได้
+                     //   inputRef={(el) => (fc_txtPackingNo.current = el)}
+                       // value={txtPackingNo.value}
+                        // onChange={(e) => {
+                        //   settxtPackingNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
+                        // style={{ ...txtPackingNo.style, width: "80%" }}
+                        // disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtPackingNo_TextChanged();
-                          }
-                        }}
-                        onBlur={txtPackingNo_TextChanged}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtPackingNo_TextChanged();
+                        //   }
+                        // }}
+                        // onBlur={txtPackingNo_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtPackingBack_Click}>
+                      <Button id="txtfild" 
+                      // onClick={ibtPackingBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="right">
-                      <Typography>Lot :</Typography>
+                      <Typography>Total Sheet. :</Typography>
                     </TableCell>
-                    <TableCell colSpan={1}>{lblLot}</TableCell>
-                    <TableCell align="right">
-                      <Typography>OK :</Typography>
+                    {/* <TableCell colSpan={1}>{lblLot}</TableCell> */}
+                    <TableCell align="center" sx={{border:'1px solid red'}}>
+                    [lblTotalSht]
                     </TableCell>
-                    <TableCell style={{ width: "70px" }} colSpan={2}>
-                      {lblLotTotal}
+                    <TableCell align="center" sx={{border:'1px solid red'}}>
+                    [lblShtCount]
                     </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="right" style={{ width: "100px" }}>
-                      <Typography>Pcs/Tray</Typography>
+                    <TableCell style={{ width: "70px" }}>
+                      {/* {lblLotTotal} */}
                     </TableCell>
-                    <TableCell style={{ width: "130px" }}>
-                      <TextField
-                        id="txtfild"
-                        size="small"
-                        inputRef={(el) => (fc_txtTray.current = el)}
-                        value={txtPcsTray.value}
-                        onChange={(e) => {
-                          settxtPcsTray((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
-                        style={{ ...txtPcsTray.style, width: "60px" }}
-                        disabled={txtPcsTray.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtPcsTray_TextChanged();
-                          }
-                        }}
-                        onBlur={txtPcsTray_TextChanged}
-                      ></TextField>
-                      &nbsp; {lblLastTray}
-                    </TableCell>
-                    {/* <TableCell style={{ width: "70px",}}></TableCell> */}
-                    <TableCell align="right" style={{ width: "40px" }}>
-                      <Typography>NG :</Typography>
-                    </TableCell>
-                    <TableCell colSpan={2}>{lblSerialNG}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -235,16 +175,18 @@ function ScanSMTRoollSht() {
                   color: "yellow", 
                   fontWeight: "bold",
                   marginTop: "30px",
-                  display: lblLog.visble,
+                  // display: lblLog.visble,
                 }}
               >
-                {lblLog.value}
+                {/* {lblLog.value} */}
               </Paper>
               {/* )} */}
               {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
               <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px", display: gvSerial.visble }}
+                style={{ marginTop: "20px", 
+                // display: gvSerial.visble
+               }}
                 component={Card}
               >
                 <TableHead>
@@ -259,7 +201,7 @@ function ScanSMTRoollSht() {
                 </TableHead>
                 <TableBody>
                   {/* <TableRow> */}
-
+{/* 
                   {Array.from({ length: gvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
@@ -299,15 +241,19 @@ function ScanSMTRoollSht() {
                         />
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))} */}
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={btnSave_Click}>
+                      <Button className="BtSave"
+                      //  onClick={btnSave_Click}
+                       >
                         Save
                       </Button>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel" onClick={btnCancel_Click}>
+                      <Button className="BtCancel" 
+                      // onClick={btnCancel_Click}
+                      >
                         Cancel
                       </Button>
                     </TableCell>
@@ -328,7 +274,7 @@ function ScanSMTRoollSht() {
                 alignItems: "center",
               }}
             >
-              {gvScanResult.visble == false && (
+              {/* {gvScanResult.visble == false && ( */}
                 <>
                   <img
                     style={{
@@ -340,17 +286,17 @@ function ScanSMTRoollSht() {
                     alt="Description of the image"
                   />
                 </>
-              )}
+              {/* )} */}
 
               {/* visiblegvScanResult */}
-              {gvScanResult.visble == true && (
+              {/* {gvScanResult.visble == true && ( */}
                 <>
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                     <Paper
                       className="Card-lblResult"
                       style={{
-                        background:
-                          lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
+                        // background:
+                          // lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
                         width: "70%", // ควบคุมขนาดของ Paper
                       }}
                     >
@@ -358,14 +304,14 @@ function ScanSMTRoollSht() {
                         variant="h4"
                         style={{ paddingTop: "5px", color: "#fff" }}
                       >
-                        {lblResult.value}
+                        {/* {lblResult.value} */}
                       </Typography>
                     </Paper>
 
                     <Paper
                       className="Card-lblResult"
                       style={{
-                        ...lblTime.style,
+                        // ...lblTime.style,
                         width: "30%", // ควบคุมขนาดของ Paper
                       }}
                     >
@@ -373,7 +319,7 @@ function ScanSMTRoollSht() {
                         variant="h4"
                         style={{ paddingTop: "5px", color: "#fff" }}
                       >
-                        {lblTime.value}
+                        {/* {lblTime.value} */}
                       </Typography>
                     </Paper>
                   </div>
@@ -408,7 +354,7 @@ function ScanSMTRoollSht() {
                       </TableRow>
                     </TableHead>
                     {/* {console.log(gvScanResult.value.flat(),'gvScanResult')} */}
-                    {Array.from(
+                    {/* {Array.from(
                       { length: gvScanResult.value.length },
                       (_, index) => (
                         <TableRow key={index}>
@@ -464,10 +410,10 @@ function ScanSMTRoollSht() {
                           </TableCell>
                         </TableRow>
                       )
-                    )}
+                    )} */}
                   </Table>
                 </>
-              )}
+              {/* )} */}
             </Grid>
           </Grid>
         </Box>
@@ -476,4 +422,5 @@ function ScanSMTRoollSht() {
   );
 }
 
-export default ScanSMTRoollSht;
+export default ScanSMTPackingConfirm;
+
