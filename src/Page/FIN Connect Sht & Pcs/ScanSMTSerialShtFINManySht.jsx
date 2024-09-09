@@ -97,7 +97,6 @@ function ScanSMTSerialShtFINManySht() {
     <div>
       <Hearder />
       <h1>ScanSMTRoollSht</h1>
-      {/* {console.log("gvBackSide", dtSer)} */}
       <Card
         component={Paper}
         style={{
@@ -105,7 +104,6 @@ function ScanSMTSerialShtFINManySht() {
           width: "95%",
           maxWidth: "1450px",
           marginTop: "50px",
-          // maxHeight: "5000px",
           minHeight: "200px",
           padding: "20px",
           overflow: "auto",
@@ -127,13 +125,14 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell sx={{ width: "400px" }}>Lot No.:</TableCell>
                     <TableCell>
                       <input
-                        id="txtField"
+                        className ="txtField"
+                        id = 'txtlot'
                         value={lotValue}
                         onChange={(e) => setLotValue(e.target.value)}
                         disabled={lotState.styled.disabled}
                         style={lotState.styled}
                         ref={Fctxtlot}
-                        onBlur={txtLot_Change}
+                        // onBlur={txtLot_Change}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtLot_Change();
@@ -176,7 +175,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>
                       <input
                         size="small"
-                        id="txtField"
+                        className ="txtField"
                         value={txtLotRef}
                         onChange={
                           ((e) => setTxtLotRef(e.target.value),
@@ -191,7 +190,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>
                       <input
                         size="small"
-                        id="txtField"
+                        className ="txtField"
                         ref={FctxtOperator}
                         value={txtOperator}
                         onChange={(e) => {
@@ -219,7 +218,7 @@ function ScanSMTSerialShtFINManySht() {
                         <TableCell>
                           <input
                             size="small"
-                            id="txtField"
+                            className ="txtField"
                             ref={FCtxtRollleaf}
                             value={txtRollLeaf}
                             onChange={(e) => {
@@ -246,7 +245,7 @@ function ScanSMTSerialShtFINManySht() {
                         <TableCell>
                           <input
                             size="small"
-                            id="txtField"
+                            className ="txtField"
                             ref={Fctxtmcno}
                             value={txtmcno}
                             onChange={(e) => {
@@ -258,40 +257,7 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </>
                   )}
-                  {pnlBoardState && (
-                    <>
-                      <TableRow>
-                        <TableCell>Bottom Fixture</TableCell>
-                        <TableCell>
-                          <input
-                            size="small"
-                            id="txtField"
-                            ref={FctxtBoardnoB}
-                            value={txtBoardNoB}
-                            onChange={(e) => {
-                              setTxtBoardNoB(e.target.value);
-                            }}
-                          ></input>
-                        </TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Top Fixture:</TableCell>
-                        <TableCell>
-                          <input
-                            size="small"
-                            id="txtField"
-                            ref={FctxtBoardnoF}
-                            value={txtBoardNoF}
-                            onChange={(e) => {
-                              setTxtBoardNoF(e.target.value);
-                            }}
-                          ></input>
-                        </TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                    </>
-                  )}
+                 
                 </TableBody>
               </Table>
             </td>
@@ -435,6 +401,7 @@ function ScanSMTSerialShtFINManySht() {
                           <TableCell>
                             <input
                               type="text"
+                              id='gvBackside_1'
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
@@ -442,17 +409,30 @@ function ScanSMTSerialShtFINManySht() {
                               maxLength="30"
                               className="styleEnable"
                               ref={FcgvBackside}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  FcgvFrontside.current.focus();
+                                }
+                              }}
                               value={txtSideBack[index]}
                               onChange={(e) => handleBackSideChange(index, e)}
                             />
                             <input
                               type="text"
+                              id = 'gvBackside_2'
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
                               }}
                               maxLength="30"
                               ref={FcgvFrontside}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  document.getElementById(`txtSerial_0`).focus();
+                                  handleFrontSideChange(index,e)
+                                }
+
+                              }}
                               className="styleEnable"
                               value={txtSideFront[index]}
                               onChange={(e) => handleFrontSideChange(index, e)}
@@ -462,6 +442,42 @@ function ScanSMTSerialShtFINManySht() {
                       ))}
                     </TableBody>
                   </Table>
+                  {pnlBoardState && (
+                    <>
+                    <Table component={Paper} sx={{marginTop:2}}>
+                      <TableRow>
+                        <TableCell>Bottom Fixture</TableCell>
+                        <TableCell>
+                          <input
+                            size="small"
+                            className ="txtField"
+                            ref={FctxtBoardnoB}
+                            value={txtBoardNoB}
+                            onChange={(e) => {
+                              setTxtBoardNoB(e.target.value);
+                            }}
+                          ></input>
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Top Fixture:</TableCell>
+                        <TableCell>
+                          <input
+                            size="small"
+                            className ="txtField"
+                            ref={FctxtBoardnoF}
+                            value={txtBoardNoF}
+                            onChange={(e) => {
+                              setTxtBoardNoF(e.target.value);
+                            }}
+                          ></input>
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                      </Table>
+                    </>
+                  )}
                 </div>
               )}
               {lblLogState && (
@@ -505,7 +521,8 @@ function ScanSMTSerialShtFINManySht() {
                             className="gvSerialCell"
                             style={{ width: "70%", paddingRight: "10px" }}
                           >
-                            <Input
+                            <input
+                              id={`txtSerial_${index}`}
                               type="text"
                               style={{
                                 width: "98%",
@@ -514,7 +531,14 @@ function ScanSMTSerialShtFINManySht() {
                               maxLength="30"
                               className="styleEnable"
                               value={txtSerial[index]}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  document.getElementById(`txtSerial_0`).focus();
+                                  handletxtSerialChange(index, e);
+                                }
+                              }}
                               onChange={(e) => handletxtSerialChange(index, e)}
+
                             />
                           </TableCell>
                         </TableRow>

@@ -26,7 +26,7 @@ import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import "/src/Page/ScanSMTSerialPcsAutoTray/ScanSMTSerialPcsAutoTray.css";
-import Hearder from "../Header/Header";
+import Header from "../Header/Header";
 import { fn_ScanSMTSerialPcsAutoTray } from "./fn_ScanSMTSerialPcsAutoTray";
 
 function ScanSMTSerialPcsAutoTray() {
@@ -42,7 +42,7 @@ function ScanSMTSerialPcsAutoTray() {
 
     return (
         <div>
-            <Hearder />
+            <Header />
             <h1>Final Gate Only Good</h1>
             <Card
                 component={Paper}
@@ -90,6 +90,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                     handleChangeLot();
                                                 }
                                             }}
+                                            onBlur={handleChangeLot}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -154,6 +155,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                         handleChangePackingNo();
                                                     }
                                                 }}
+                                                // onBlur={handleChangePackingNo}
                                             />
                                         </TableCell>
                                         <TableCell>
@@ -214,6 +216,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                         handleChangePcsTray();
                                                     }
                                                 }}
+                                                onBlur={handleChangePcsTray}
                                             />
                                             <Typography style={{ marginLeft: "10px" }}>
                                                 {lblLastTray}
@@ -345,14 +348,14 @@ function ScanSMTSerialPcsAutoTray() {
                         </div>
                     )}
                     <Button
-                        style={{ 
-                            width: '1px', 
+                        style={{
+                            width: '1px',
                             height: '1px',
                             padding: "0px"
-                         }}
+                        }}
                         onClick={btnHiddenClick}
                     >
-                       <FileDownloadOutlinedIcon/>
+                        <FileDownloadOutlinedIcon />
                     </Button>
                 </Box>
 
@@ -486,6 +489,7 @@ function ScanSMTSerialPcsAutoTray() {
                                             <TableCell
                                                 style={{
                                                     textAlign: 'left',
+                                                    borderRight: "1px solid #d9d9d9"
                                                 }}
                                             >
                                                 {gvScanData[index].TEST_RESULT}
@@ -493,7 +497,11 @@ function ScanSMTSerialPcsAutoTray() {
                                             <TableCell
                                                 style={{
                                                     textAlign: 'center',
-                                                    backgroundColor: gvScanData[index].SCAN_RESULT === 'OK' ? 'green' : '#ff4d4f',
+                                                    background: gvScanData[index].SCAN_RESULT === ''
+                                                        ? ''
+                                                        : gvScanData[index].SCAN_RESULT === 'OK'
+                                                            ? 'green'
+                                                            : '#ff4d4f',
                                                     borderRight: "1px solid #d9d9d9"
                                                 }}
                                             >
@@ -502,7 +510,7 @@ function ScanSMTSerialPcsAutoTray() {
                                             <TableCell
                                                 style={{
                                                     textAlign: 'left',
-                                                    borderRight: "1px solid #d9d9d9"
+                                                    borderRight: "1px solid #d9d9d9",
                                                 }}
                                             >
                                                 {gvScanData[index].REMARK}

@@ -19,6 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { LoginOutlined } from "@mui/icons-material";
 import ImgLoging from "../Header/login.png"
 import ImgLogOut from "../Header/logout.png"
+import "../StyleCommon.css"
 
 function Hearder() {
   const { openLoginModal, menuName } = fn_Homepage();
@@ -94,8 +95,9 @@ function Hearder() {
         <AppBar
           position="fixed"
           style={{
-            background: "#92C7CF",
+            background: "#454545",
           }}
+          className="Header_CommonBG"
         >
           <Toolbar>
             <IconButton
@@ -110,8 +112,8 @@ function Hearder() {
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {/* TRACEABILITY SYSTEM  {menuName} */}
-              TRACEABILITY SYSTEM
+              TRACEABILITY SYSTEM  {menuName}
+              {/* TRACEABILITY SYSTEM */}
             </Typography>
 
             {user ? <> <Avatar

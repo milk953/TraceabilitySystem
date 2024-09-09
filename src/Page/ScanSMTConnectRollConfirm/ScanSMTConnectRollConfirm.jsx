@@ -41,12 +41,25 @@ function ScanSMTConnectRollConfirm() {
     setDdlProduct,
     ddlProduct_SelectedIndexChanged,
     Product,
+    lblTotalSht,
+    lblShtCount,
+    lblpnlLog,
+    getInputSerial,
+    ibtBack_Click,
+    gvSerial,
+    txtSerial,
+    gvScanResult,
+    gvSerialRefs,
+    handleSerialChange,
+    btnCancel_Click,
+    lblResult,
+    pnlSerial,
+    btnSave_Click,
   } = fn_ScanSMTConnectRollConfirm();
-
   return (
     <div>
       <Hearder />
-      <h1>ScanSMTRoollSht</h1>
+      <h1> Confirm Connect Roll&Leaf</h1>
       <Card component={Paper} className="Card-ConfirmBarcode">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
@@ -64,13 +77,12 @@ function ScanSMTConnectRollConfirm() {
                     <TableCell align="right">
                       <Typography> LotNo. :</Typography>
                     </TableCell>
-
                     <TableCell colSpan={2}>
                       <TextField
                         id="txtLot"
                         size="small"
                         fullWidth
-                        // disabled={txtLot.disbled}
+                        disabled={txtLot.disbled}
                         style={txtLot.style}
                         value={txtLot.value}
                         onChange={(e) => {
@@ -84,11 +96,10 @@ function ScanSMTConnectRollConfirm() {
                             txtLot_TextChanged();
                           }
                         }}
-                        onBlur={txtLot_TextChanged}
                       ></TextField>
                     </TableCell>
                     <TableCell>
-                      <Button>
+                      <Button onClick={ibtBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -127,16 +138,30 @@ function ScanSMTConnectRollConfirm() {
                     </TableCell>
                     <TableCell>
                       <TextField
-                        id="txtfild"
+                        id="txtLot"
                         size="small"
-                        style={{ width: "70px" }}
+                        value={lblTotalSht}
+                        style={{ width: "95%" }}
                       ></TextField>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      <Typography
+                        variant="body1"
+                        style={{
+                          width: "100%",
+                          color: "#FF0066",
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {lblShtCount}
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
 
-              {/* {lbllog.visble == true && (
+              {lblpnlLog.visble == true && (
                 <Paper
                   elevation={3}
                   style={{
@@ -146,67 +171,92 @@ function ScanSMTConnectRollConfirm() {
                     textAlign: "center",
                     background: "#BB2525",
                     paddingTop: "18px",
-                    color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
-                    fontWeight: "bold", // กำหนดความหนาของฟอนต์
+                    color: "yellow",
+                    fontWeight: "bold",
                     marginTop: "30px",
                   }}
                 >
-                
-                    {lbllog.value}
-                
+                  {lblpnlLog.value}
                 </Paper>
-              )} */}
+              )}
 
               <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px" }}
+                style={{
+                  display: pnlSerial.visble ? "" : "none",
+                  marginTop: "20px",
+                }}
                 component={Card}
               >
                 <TableHead>
-                  <TableCell
-                    sx={{ borderRight: "1px solid #d9d9d9" }}
-                    align="center"
-                  >
-                    No.
-                  </TableCell>
-                  <TableCell align="center">Leaf No.</TableCell>
-                  <TableRow></TableRow>
+                  <TableRow>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      align="center"
+                    >
+                      No.
+                    </TableCell>
+                    <TableCell align="center">Leaf No.</TableCell>
+                  </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {Array.from({ length: txtTotalLeaf }, (_, index) => (
-                    <TableRow key={index}>
-                      <TableCell
-                        align="center"
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                      >
-                        {index + 1}
-                      </TableCell>
-                      <TableCell>
-                        {" "}
-                        <TextField
-                          id="txtfild"
-                          size="small"
-                          fullWidth
-                          inputRef={fc_GvSerial}
-                          value={txtLeafNo[index]}
-                          onChange={(event) =>
-                            handleTextFieldChange(index, event)
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))} */}
+                  {Array.isArray(gvSerial.value) &&
+                    Array.from(
+                      { length: gvSerial.value.length },
+                      (_, index) => (
+                        <TableRow key={index}>
+                          <TableCell
+                            align="center"
+                            sx={{ borderRight: "1px solid #d9d9d9" }}
+                          >
+                            {index + 1}
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              //  key={`text_${index}`}
+                              key={index}
+                              size="small"
+                              fullWidth
+                              id={`gvSerial_txtSerial_${index}`}
+                              value={txtSerial[index]}
+                              onChange={(event) =>
+                                handleSerialChange(index, event)
+                              }
 
+                              // inputRef={(el) => (gvSerialRefs.current[index] = el)}
+                              // onBlur={(event) => {
+                              //   handleSerialChange(index, event);
+                              // }}
+                              // onChange={(event) => handleSerialChange(index, event)}
+                              // onKeyDown={(event) => {
+                              //   if (event.key === "Enter") {
+                              //     event.preventDefault();
+                              //     if (index < gvSerial.length - 1) {
+                              //       fc_txtSerial.current[index + 1].focus();
+                              //     } else {
+                              //       btnSave_Click();
+                              //       event.target.blur();
+                              //     }
+                              //   }
+                              // }}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      )
+                    )}
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave">Save</Button> &nbsp;&nbsp;
-                      <Button className="BtCancel">Cancel</Button>
+                      <Button className="BtSave" onClick={btnSave_Click}>Save</Button> &nbsp;&nbsp;
+                      <Button className="BtCancel" onClick={btnCancel_Click}>
+                        Cancel
+                      </Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </Grid>
 
+            {/* Result */}
             <Grid
               item
               xs={10}
@@ -218,7 +268,127 @@ function ScanSMTConnectRollConfirm() {
                 flexDirection: "column",
                 alignItems: "center",
               }}
-            ></Grid>
+            >
+              {gvScanResult.visble == false && (
+                <>
+                  {" "}
+                  <img
+                    style={{
+                      width: "420px",
+                      height: "350px",
+                      marginBottom: "30px",
+                    }}
+                    src={Pageimg}
+                    alt="Description of the image"
+                  />
+                </>
+              )}
+
+              {gvScanResult.visble == true && (
+                <>
+                  {lblResult.value !== "" && (
+                    <Paper
+                      className="Card-lblResult"
+                      elevation={3}
+                      style={{
+                        background: "#ff4d4f",
+                        display: gvScanResult,
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        style={{ paddingTop: "5px", color: "#fff" }}
+                      >
+                        {lblResult.value}
+                      </Typography>
+                    </Paper>
+                  )}
+
+                  <Table
+                    className="CSS-GvScanResult"
+                    style={{ display: gvScanResult }}
+                    component={Card}
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                          width="50px"
+                        >
+                          No.
+                        </TableCell>
+                        <TableCell
+                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                          width="200px"
+                        >
+                          Roll No.
+                        </TableCell>
+                        <TableCell
+                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                          width="200px"
+                        >
+                          Leaf No.
+                        </TableCell>
+                        <TableCell
+                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                          width="150px"
+                        >
+                          Scan Result
+                        </TableCell>
+                        <TableCell width="300px">Remark</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {Array.from(
+                        { length: gvScanResult.value.length },
+                        (_, index) => (
+                          <TableRow key={index}>
+                            <TableCell
+                              align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].seq}
+                            </TableCell>
+
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].roll_leaf_no}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].sheet_no}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{
+                                borderRight: "1px solid #d9d9d9",
+                                background:
+                                  gvScanResult.value[index].scan_result === ""
+                                    ? ""
+                                    : gvScanResult.value[index].scan_result ===
+                                      "OK"
+                                    ? "green"
+                                    : "#ff4d4f",
+                              }}
+                            >
+                              {gvScanResult.value[index].scan_result}
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvScanResult.value[index].date_remark}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
+                    </TableBody>
+                  </Table>
+                </>
+              )}
+            </Grid>
           </Grid>
         </Box>
       </Card>

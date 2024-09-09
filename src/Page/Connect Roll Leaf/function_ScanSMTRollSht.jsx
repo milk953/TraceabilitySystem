@@ -28,7 +28,7 @@ function Fn_ScanSMTRollSht() {
     visble: "",
     style:{},
   });
-  const [txtTotalLeaf, settxtTotalLeaf] = useState("");
+  const [txtTotalLeaf, settxtTotalLeaf] = useState("4");
   const [txtOperator, settxtOperator] = useState("");
   const [lblCheckRoll, setlblCheckRoll] = useState({
     value: "",
@@ -60,11 +60,11 @@ function Fn_ScanSMTRollSht() {
   });
 
     //Focus
-    const fc_txtRollleaf = useRef(null);
-    const fc_SlProduct = useRef(null);
-    const fc_GvSerial= useRef(null);
-    const fc_txtLotNo= useRef(null);
-    const fc_txtOperator = useRef(null); 
+    const fc_txtRollleaf = useRef([]);
+    const fc_SlProduct = useRef([]);
+    const fc_GvSerial= useRef([]);
+    const fc_txtLotNo= useRef([]);
+    const fc_txtOperator = useRef([]); 
   // --------------------------------------
   const [hfSerialLength, setHfSerialLength] = useState("");
   const [hfSerialFixFlag, setHfSerialFixFlag] = useState("");
@@ -206,7 +206,10 @@ function Fn_ScanSMTRollSht() {
           await getProductSerialMaster(strPrdName);
           await getInitialSheet();
           SetMode("ROLL");
-          fc_txtRollleaf.current.focus();
+          setTimeout(() => {
+            fc_txtRollleaf.current.focus();
+          }, 300);
+         
         } else {
           console.log("not found1");
           setlbllog((prevState) => ({
@@ -214,6 +217,9 @@ function Fn_ScanSMTRollSht() {
             value: `Product ${strPrdName} not found.`,
             visble: true,
           }));
+          setTimeout(() => {
+            fc_SlProduct.current.focus();
+          }, 300);
           return;
         }
       } catch (error) {
@@ -223,7 +229,10 @@ function Fn_ScanSMTRollSht() {
           value: `Product ${strPrdName} not found.`,
           visble: true,
         }));
-        fc_SlProduct.current.focus();
+        setTimeout(() => {
+          fc_SlProduct.current.focus();
+        }, 300);
+       
       
       }
       await axios
@@ -231,6 +240,7 @@ function Fn_ScanSMTRollSht() {
           LotNo: strLot,
         })
         .then((res) => {
+          console.log(res.data,'mmmmmm')
           setlbltotalSht(res.data);
         });
     } else {
@@ -246,20 +256,30 @@ function Fn_ScanSMTRollSht() {
         visble: true,
       }));
       setHfMode("LOT");
-   
-      fc_txtLotNo.current.focus();
+      setTimeout(() => {
+        fc_txtLotNo.current.focus();
+      }, 300);
+     
     }
   };
 
+  useEffect(() => {
+  // GvSerial
+  if(GvSerial.visble==''){
+    getInitialSheet();
+  }
+  }, [hfSerialCount]);
+
   const getInitialSheet = async () => {
-    console.log('>>>>>')
+    console.log('>>>>>',txtTotalLeaf)
     let dtData = [];
-    for (let intRow = 0; intRow < txtTotalLeaf; intRow++) {
+    setHfSerialCount(txtTotalLeaf)
+    for (let intRow = 0; intRow < hfSerialCount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
-    SetGvSerial((prevState) => ({ ...prevState, value: dtData, visble: '' }));
+    SetGvSerial((prevState) => ({ ...prevState, value: dtData }));
     return dtData;
   };
 
@@ -406,13 +426,15 @@ function Fn_ScanSMTRollSht() {
         ...prevState,
         value: "",
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
       SetGvSerial((prevState) => ({ ...prevState, visble: 'none' }));
       setHfMode("LOT");
      
-      fc_txtLotNo.current.focus();
+      setTimeout(() => {
+        fc_txtLotNo.current.focus();
+      }, 300);
     }
     if (_strType == "LOT_ERROR") {
       settxt_lotNo((prevState) => ({
@@ -430,18 +452,20 @@ function Fn_ScanSMTRollSht() {
         ...prevState,
         value: "",
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: true })); //falseโชว์ true ซ่อน
       SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
       setHfMode("LOT");
-      fc_txtLotNo.current.focus();
+      setTimeout(() => {
+        fc_txtLotNo.current.focus();
+      }, 300);
     }
     if (_strType == "OP") {
       settxt_lotNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
       setsl_Product((prevState) => ({ ...prevState, disbled: true }));
       settxtRollLeaf((prevState) => ({
@@ -453,15 +477,18 @@ function Fn_ScanSMTRollSht() {
       SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
       settxtOperator("");
       setHfMode("OP");
-      fc_txtOperator.current.focus();
+      setTimeout(() => {
+        fc_txtOperator.current.focus();
+      }, 300);
+    
     }
     if (_strType == "ROLL") {
       settxt_lotNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
-      setsl_Product((prevState) => ({ ...prevState, disbled: true,style:{ background: "#EEEEEE"} }));
+      setsl_Product((prevState) => ({ ...prevState, disbled: true,style:{ background: "#e0e0e0"} }));
       settxtRollLeaf((prevState) => ({
         ...prevState,
         value: "",
@@ -476,7 +503,7 @@ function Fn_ScanSMTRollSht() {
       settxt_lotNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
       SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
@@ -487,7 +514,7 @@ function Fn_ScanSMTRollSht() {
       settxt_lotNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: true }));
     }
@@ -495,18 +522,22 @@ function Fn_ScanSMTRollSht() {
       settxt_lotNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
       SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
       await getInitialSheet();
-      fc_GvSerial.current.focus();
+      setTimeout(() => {
+        fc_GvSerial.current.focus();
+      }, 300);
+     
+      
     }
     if (_strType == "SHEET_NG") {
       settxt_lotNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
     }
@@ -516,7 +547,9 @@ function Fn_ScanSMTRollSht() {
     if (txt_lotNo.value != "") {
       await getInitialSheet();
       SetMode("ROLL");
-      fc_txtRollleaf.current.focus();
+      setTimeout(() => {
+        fc_txtRollleaf.current.focus();
+      }, 300);
     }
   };
 
@@ -527,7 +560,9 @@ function Fn_ScanSMTRollSht() {
       setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
       await getInitialSheet();
       SetMode("ROLL");
-      fc_txtRollleaf.current.focus();
+      setTimeout(() => {
+        fc_txtRollleaf.current.focus();
+      }, 300);
     }
   };
 
@@ -904,7 +939,9 @@ function Fn_ScanSMTRollSht() {
       } else {
         SetMode("ROLL");
       }
-      fc_txtRollleaf.current.focus();
+      setTimeout(() => {
+        fc_txtRollleaf.current.focus();
+      }, 300);
     } else {
       settxtRollLeaf((prevState) => ({
         ...prevState,

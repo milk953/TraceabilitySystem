@@ -1,5 +1,5 @@
 /* style={{margin: 'auto',width:'400px' }} */
-.FinalGate{
+.FinalGateAuto{
     margin: auto;
     max-width:  450px;
     width:  450px;
@@ -7,7 +7,7 @@
    
 }
 
-.FinalGate th{
+.FinalGateAuto th{
     padding: 3px !important;
     background-color: #8c8c8c !important ;
     border-radius: 5px  5px 0 0!important;
@@ -15,7 +15,7 @@
 }
 
 
-.FinalGate td{
+.FinalGateAuto td{
 
     padding: 4px 4px 4px 4px!important;
     /* margin: 10px !important; */
@@ -24,31 +24,32 @@
 }
 
 
-.Card-FinalGate{
+.Card-FinalGateAuto{
     margin: auto;
     width: 95%;
-    max-width: 1400px;
+
     margin-top: 50px;
   
     height: 100%;
     padding: 20px;
 }
 
-.CSS-GvScanResult-FinalGate{
-    width: 900px !important;
+.CSS-GvScanResult-FinalGateAuto{
+ 
+    width: 100% !important;
     margin-top: 10px;
     padding: 0;
 }
 
-.CSS-GvScanResult-FinalGate th{
+.CSS-GvScanResult-FinalGateAuto th{
   
     padding: 2px !important;
-    background-color: #1f2d8d !important ;
+    background-color: #378CE7 !important ;
      color: #fff;
     padding: 5px;
     font-weight: bold; 
 }
 
-.CSS-GvScanResult-FinalGate td{
+.CSS-GvScanResult-FinalGateAuto td{
     padding: 4px 4px 4px 4px!important;
 }

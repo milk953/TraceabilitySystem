@@ -27,9 +27,9 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "./SerialPcs.css";
+import "./SerialPcsAuto.css";
 import Hearder from "../Header/Header";
-import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsChrome";
+import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsAuto";
 import Pageimg from "/src/assets/1.jpg";
 function ScanSMTRoollSht() {
   const {
@@ -48,7 +48,6 @@ function ScanSMTRoollSht() {
     txtPcsTray,
     settxtPcsTray,
     lblSerialNG,
-    txtPcsTray_TextChanged,
     ibtBack_Click,
     ibtPackingBack_Click,
     lblLastTray,
@@ -69,17 +68,18 @@ function ScanSMTRoollSht() {
   } = fn_ScanSMTSerialPcsChrome();
   console.log("lblTime", lblTime);
   return (
-    <div>
+    // <div>
+      <>
       <Hearder />
-      <h1>Final Gate</h1>
-      <Card component={Paper} className="Card-FinalGate">
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2} >
-            <Grid item xs={10} md={4} >
-              <Table className="FinalGate" component={Paper}>
+      <h1>Final Gate Auto</h1>
+      <Card component={Paper} className="Card-FinalGateAuto">
+        <Box sx={{ display: "flex", alignItems: "flex-start"}}>
+          <Grid container spacing={2}>
+            <Grid item xs={10} md={4}>
+              <Table className="FinalGateAuto" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Final Gate</Typography>
+                    <Typography variant="h6">Final Gate Auto</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -160,7 +160,7 @@ function ScanSMTRoollSht() {
                         }}
                         style={{ ...txtPackingNo.style, width: "80%" }}
                         disabled={txtPackingNo.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
+                       
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtPackingNo_TextChanged();
@@ -187,33 +187,12 @@ function ScanSMTRoollSht() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="right" style={{ width: "100px" }}>
-                      <Typography>Pcs/Tray</Typography>
+                   
                     </TableCell>
                     <TableCell style={{ width: "130px" }}>
-                      <TextField
-                        id="txtfild"
-                        size="small"
-                        inputRef={(el) => (fc_txtTray.current = el)}
-                        value={txtPcsTray.value}
-                        onChange={(e) => {
-                          settxtPcsTray((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
-                        style={{ ...txtPcsTray.style, width: "60px" }}
-                        disabled={txtPcsTray.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtPcsTray_TextChanged();
-                          }
-                        }}
-                        onBlur={txtPcsTray_TextChanged}
-                      ></TextField>
-                      &nbsp; {lblLastTray}
+                   
                     </TableCell>
-                    {/* <TableCell style={{ width: "70px",}}></TableCell> */}
+                 
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography>NG :</Typography>
                     </TableCell>
@@ -318,23 +297,22 @@ function ScanSMTRoollSht() {
             {/* border:'1PX SOLID green' */}
             <Grid
               item
-              xs={10}
-              md={7}
+           
               style={{
                 margin: "auto",
                 marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                // border:'1px solid red'
+                border: "1px solid red"
               }}
             >
               {gvScanResult.visble == false && (
                 <>
                   <img
                     style={{
-                      width: "300px",
-                      height: "260px",
+                      width: "360px",
+                      height: "300px",
                       marginBottom: "30px",
                     }}
                     src={Pageimg} // Import the image
@@ -351,8 +329,8 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#059212" : "#BA0900",
-                        width: "100%", // ควบคุมขนาดของ Paper
+                          lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
+                        width: "70%", // ควบคุมขนาดของ Paper
                       }}
                     >
                       <Typography
@@ -366,9 +344,8 @@ function ScanSMTRoollSht() {
                     <Paper
                       className="Card-lblResult"
                       style={{
-                        // ...lblTime.style,
-                        width: "10%", // ควบคุมขนาดของ Paper
-                        background:'#BA0900'
+                        ...lblTime.style,
+                        width: "30%", // ควบคุมขนาดของ Paper
                       }}
                     >
                       <Typography
@@ -380,7 +357,7 @@ function ScanSMTRoollSht() {
                     </Paper>
                   </div>
                   <Table
-                    className="CSS-GvScanResult-FinalGate"
+                    className="CSS-GvScanResult-FinalGateAuto"
                     component={Card}
                   >
                     <TableHead>
@@ -456,8 +433,7 @@ function ScanSMTRoollSht() {
                                   : gvScanResult.value[index].SCAN_RESULT ===
                                     "OK"
                                   ? "#52c41a"
-                                  : "#BA0900",
-                                  color:'#fff'
+                                  : "#ff4d4f",
                             }}
                           >
                             {gvScanResult.value[index].SCAN_RESULT}
@@ -475,7 +451,7 @@ function ScanSMTRoollSht() {
           </Grid>
         </Box>
       </Card>
-    </div>
+   </>
   );
 }
 

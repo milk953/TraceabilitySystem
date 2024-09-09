@@ -1,0 +1,18 @@
+.txtfield-disable{
+background-color: #e0e0e0;
+}
+
+.Status-On{
+    background: green;
+    color: #ffffff;
+}
+
+.Status-Off{
+    background: red;
+    color: #ffffff;
+}
+
+.Header_CommonBG{
+    background: #454545;
+    color: #ffffff;
+}

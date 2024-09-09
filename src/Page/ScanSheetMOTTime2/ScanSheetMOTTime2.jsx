@@ -22,16 +22,15 @@ import {
   Input,
 } from "@mui/material";
 
-import "/src/Page/ScanSheetMOTTime/ScanSheetMOTTime.css";
 import {
   ArrowRightOutlined,
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-
+import "../ScanSheetMOTTime1/ScanSheetMOTTime1.css"
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import { fn_ScanSheetMOTTime } from "./fn_ScanSheetMOTTime";
+import { fn_ScanSheetMOTTime } from "../ScanSheetMOTTime1/fn_ScanSheetMOTTime1";
 function ScanSheetMOTTime() {
   const {
     txtLotNo_TextChanged,
@@ -64,42 +63,43 @@ function ScanSheetMOTTime() {
     settxtCBNo,
     settxtSUSNo,
     txtCBNo_TextChanged,
-    txtSUSNo_TextChanged
+    txtSUSNo_TextChanged,
+    pnlSave
   } = fn_ScanSheetMOTTime();
 
-  useEffect(() => {
-    if(txtlot.focus==true){
-      fctxtLotno.current.focus();
-    }
-  }, [txtlot]);
+  // useEffect(() => {
+  //   if(txtlot.focus==true){
+  //     fctxtLotno.current.focus();
+  //   }
+  // }, [txtlot]);
 
-  useEffect(() => {
-    if(txtMCNo.focus==true){
-      fctxtMcNo.current.focus();
-    }
-  }, [txtMCNo]);
+  // useEffect(() => {
+  //   if(txtMCNo.focus==true){
+  //     fctxtMcNo.current.focus();
+  //   }
+  // }, [txtMCNo]);
 
-  useEffect(() => {
-    if(txtSheet.focus==true){
-      fctxtSheetNo.current.focus();
-    }
-  }, [txtSheet]);
+  // useEffect(() => {
+  //   if(txtSheet.focus==true){
+  //     fctxtSheetNo.current.focus();
+  //   }
+  // }, [txtSheet]);
 
-  useEffect(() => {
-    if(txtSUSNo.focus==true){
-      fctxtSUSNo.current.focus();
-    }
-  }, [txtSUSNo]);
+  // useEffect(() => {
+  //   if(txtSUSNo.focus==true){
+  //     fctxtSUSNo.current.focus();
+  //   }
+  // }, [txtSUSNo]);
 
-  useEffect(() => {
-    if(txtCBNo.focus==true){
-      fctxtCBNo.current.focus();
-    }
-  }, [txtCBNo]);
+  // useEffect(() => {
+  //   if(txtCBNo.focus==true){
+  //     fctxtCBNo.current.focus();
+  //   }
+  // }, [txtCBNo]);
   return (
     <div>
       <Hearder />
-      ScanSheetMOTTime
+      <h1>ScanSheetMOTTime</h1>
       <Card component={Paper} className="Card-ScanSheetMOTTime">
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Grid container spacing={2} style={{justifyContent: 'center' }}>
@@ -108,13 +108,12 @@ function ScanSheetMOTTime() {
                 className="TableMot1"
                 component={Card}
                 sx={{ width: "100%", maxWidth: "800px", minWidth: "800px" }}
-               
               >
                 <TableHead style={{ height: '60px' }}>
                   <TableRow>
                     <TableCell colSpan={3} align="center" style={{fontSize:'30px'}}>
                     
-                        Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
+                        Pre-Baking <ArrowRightOutlined /> MOT2 Control Time
                       
                     </TableCell>
                   </TableRow>
@@ -129,8 +128,9 @@ function ScanSheetMOTTime() {
                         size="small"
                         fullWidth
                         value={txtMCNo.value}
-                        inputRef={fctxtMcNo}
-                        disabled={txtMCNo.disbled}
+                        // inputRef={fctxtMcNo}
+                        inputRef={(el) => (fctxtMcNo.current = el)}
+                        disabled={false} //falseพิมได้ 
                         style={txtMCNo.style}
                         onChange={(e) => {
                           settxtMCNo((prevState) => ({
@@ -169,7 +169,8 @@ function ScanSheetMOTTime() {
                             txtLotNo_TextChanged();
                           }
                         }}
-                        inputRef={fctxtLotno}
+                        // inputRef={fctxtLotno}
+                        inputRef={(el) => (fctxtLotno.current = el)}
                         onBlur={txtLotNo_TextChanged}
                       />
                     </TableCell>
@@ -210,7 +211,8 @@ function ScanSheetMOTTime() {
                             txtSheetNo_TextChanged();
                           }
                         }}
-                        inputRef={fctxtSheetNo}
+                        // inputRef={fctxtSheetNo}
+                        inputRef={(el) => (fctxtSheetNo.current = el)}
                         onBlur={txtSheetNo_TextChanged}
                       />
                     </TableCell>
@@ -227,7 +229,7 @@ function ScanSheetMOTTime() {
                         value={txtCBNo.value}
                         style={txtCBNo.style}
                         disabled={txtCBNo.disbled}
-                        inputRef={fctxtCBNo} 
+                        inputRef={(el) => (fctxtCBNo.current = el)}
                         onChange={(e) => {
                           settxtCBNo((prevState) => ({
                             ...prevState,
@@ -255,7 +257,8 @@ function ScanSheetMOTTime() {
                         value={txtSUSNo.value}
                         disabled={txtSUSNo.disbled}
                         style={txtSUSNo.style}
-                        inputRef={fctxtSUSNo}
+                        // inputRef={fctxtSUSNo}
+                        inputRef={(el) => (fctxtSUSNo.current = el)}
                         onChange={(e) => {
                           settxtSUSNo((prevState) => ({
                             ...prevState,
@@ -291,7 +294,7 @@ function ScanSheetMOTTime() {
                       <Card style={{ background: "#EFBC9B", height: "230px" }}>
                         <Typography
                           align="center"
-                          style={{ ...lblResult.style, marginTop: "40px", fontSize: "90px"  }}
+                          style={{marginTop: "40px", fontSize: "90px"  }}
                           // { }
                         >
                           {lblResult.value}
@@ -302,11 +305,11 @@ function ScanSheetMOTTime() {
                       </Card>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  <TableRow  style={{display:pnlSave}}>
                     <TableCell colSpan={3} align="center">
-                      <Button variant="contained">Replace</Button>&nbsp;
-                      <Button variant="contained">Delete</Button>&nbsp;
-                      <Button variant="contained">Cancel</Button>&nbsp;
+                      <Button variant="contained" onClick={BtClick_Replace} >Replace</Button>&nbsp;
+                      <Button variant="contained"onClick={BtClick_Delete} >Delete</Button>&nbsp;
+                      <Button variant="contained" onClick={BtClick_Cancel}>Cancel</Button>&nbsp;
                     </TableCell>
                   </TableRow>
                 </TableBody>
