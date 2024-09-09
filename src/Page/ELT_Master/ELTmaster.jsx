@@ -131,7 +131,7 @@ function ELT_Master() {
      
       
       <div className="RejectBtoHome">
-        <a href="/">Return To Menu</a>
+        <a href="/TraceabilitySystem">Return To Menu</a>
       </div>
     </>
   );
