@@ -100,7 +100,7 @@ function fn_ScanSMTSerialPcsNG() {
   const [lblError, setLblError] = useState("");
   const [lblLot, setLblLot] = useState("");
   const [lblLotTotal, setLblLotTotal] = useState("");
-  const [lblSerialNG, setLblSerialNG] = useState("");
+  const [lblSerialNG, setLblSerialNG] = useState(0);
   // hiddenField
   const [ip, setIp] = useState("");
   const [userStation, setUserStation] = useState("");
@@ -512,8 +512,74 @@ function fn_ScanSMTSerialPcsNG() {
       ).then((res) => {
         result = res.data;
       }
-      )
+      ).catch((error) => {
+        Swal.fire("Please Try Again", error.message, "error");
+      })
       return result;
+    } else if(type == "GetEFPCSheetInspectionResult"){ // Wrong
+      let result = "";
+      await axios.post('/api/Common/GetEFPCSheetInspectionResult',{
+        _strPlantCode: params.strPlantCode,
+        _strProduct: params.strProduct,
+        _strFrontSheetNo: params.strFrontSheetNo,
+        _strBackSheetNo: params.strBackSheetNo,
+        _intPcsNo: parseInt(params.strSheetPcsNo),
+        _strAOMFlg: params.strHfCheckEFPCAOM,
+        _strAOIFlg: params.strHfCheckEFPCAOI,
+        _strOSTFlg: params.strHfCheckEFPCOST,
+        _strAVIFlg: params.strHfCheckEFPCAVI,
+        _strResult: params.strEFPCResult,
+      }).then((res) => {
+        result = res.data;
+        console.log(res.data);
+      }).catch((error) => {
+        Swal.fire("Please Try Again", error.message, "error");
+      })
+      return result;
+    } else if (type == "SetSerialLotTrayTable"){
+      let result = "";
+      console.log(
+        params.strPlantCode,
+        params.strPrdName,
+        params.strLot,
+        params.strHfUserId,
+        params.strSerial,
+        params.strUpdateFlg,
+        params.strRowUpdate,
+        params.strRejectCode,
+        params.strTestResult,
+        params.strRemarkUpdate,
+        params.strScanResult,
+        "",
+        ""
+      );
+      await axios.post('/api/Common/setseriallottraytable',{
+        dataList: {
+          strPlantCode: params.strPlantCode,
+          strPrdName: params.strPrdName,
+          strLot: params.strLot,
+          strUserID: params.strHfUserId,
+          data: [
+              {
+                  SERIAL: params.strSerial,
+                  UPDATE_FLG:params.strUpdateFlg,
+                  ROW_UPDATE: params.strRowUpdate,
+                  REJECT_CODE: params.strRejectCode,
+                  TEST_RESULT: params.strTestResult,
+                  REMARK_UPDATE: params.strRemarkUpdate,
+                  SCAN_RESULT: params.strScanResult,
+                  PACKING_NO: "",
+                  MASTER_NO: ""
+              }
+          ]
+        }
+      }).then((res) => {
+        result = res.data.p_error;
+      }).catch((error) => {
+        Swal.fire("Please Try Again", error.message, "error");
+      })
+      return result;
+      
     }
   }
   function SetFocus(txtField) {
@@ -1147,10 +1213,13 @@ function fn_ScanSMTSerialPcsNG() {
                     _bolError = true;
                   }
                 }
+                console.log(hfCheckEFPCAOM,hfCheckEFPCAOI,hfCheckEFPCOST,hfCheckEFPCAVI,'CheckEFPC')
                 if (hfCheckEFPCAOM == "Y" ||hfCheckEFPCAOI == "Y" ||hfCheckEFPCOST == "Y" ||hfCheckEFPCAVI == "Y") {
                   let _strEFPCResult = "";
                   let _strEFPCRemark;
-                  //  Dim _strEFPCRemark As String = BIZ_ScanSMTSerial.GetEFPCSheetInspectionResult(Session("PLANT_CODE"), Session("PRODUCT_KIND"), _strPrdName, drRow("FRONT_SHEET_NO"), drRow("BACK_SHEET_NO"), CInt(drRow("SHEET_PCS_NO").ToString), hfCheckEFPCAOM.Value, hfCheckEFPCAOI.Value, hfCheckEFPCOST.Value, hfCheckEFPCAVI.Value, _strEFPCResult) ทำ api
+                  // รอทำต่อ
+                  _strEFPCResult = await getData("GetEFPCSheetInspectionResult",{strPlantCode:Fac,strProduct:_strPrdName,strFrontSheetNo:dtSerial[i].FRONT_SHEET_NO,strBackSheetNo:dtSerial[i].BACK_SHEET_NO,strSheetPcsNo:dtSerial[i].SHEET_PCS_NO,strHfCheckEFPCAOM:hfCheckEFPCAOM,strHfCheckEFPCAOI:hfCheckEFPCAOI,strHfCheckEFPCOST:hfCheckEFPCOST,strHfCheckEFPCAVI:hfCheckEFPCAVI});
+                  console.log({strPlantCode:Fac,strProduct:_strPrdName,strFrontSheetNo:dtSerial[i].FRONT_SHEET_NO,strBackSheetNo:dtSerial[i].BACK_SHEET_NO,strSheetPcsNo:dtSerial[i].SHEET_PCS_NO,strHfCheckEFPCAOM:hfCheckEFPCAOM,strHfCheckEFPCAOI:hfCheckEFPCAOI,strHfCheckEFPCOST:hfCheckEFPCOST,strHfCheckEFPCAVI:hfCheckEFPCAVI},'_strEFPCResult')
                   if (_strEFPCResult == "NG") {
                     _strMessageUpdate = _strEFPCRemark;
                     _strRemark = _strEFPCRemark;
@@ -1209,7 +1278,15 @@ function fn_ScanSMTSerialPcsNG() {
                 _bolError = true;
               }
               if (_bolError) {
-                setLblSerialNG((parseInt(lblSerialNG) + 1).toString());
+                // setLblSerialNG(0)
+                setLblSerialNG(prevValue => {
+                  const numericValue = parseInt(prevValue, 10); 
+                  if (isNaN(numericValue)) {
+                    return 1; 
+                  } else {
+                    return numericValue + 1;
+                  }
+                });
               }
             }
             if (_strRejectGroup == "MASTER") {
@@ -1235,22 +1312,49 @@ function fn_ScanSMTSerialPcsNG() {
         }
 
         if (_strScanResultAll == "NG") {
-          setLblResult({ value: _strScanResultAll, styled: { color: "red" } });
+          setLblResult({ value: _strScanResultAll, styled: { color: "white" } });
         } else {
           setLblResult({
             value: _strScanResultAll,
-            styled: { color: "green" },
+            styled: { color: "white" },
           });
         }
         let _strErrorUpdate = "";
+        console.log(dtSerial, "dtSerialFinal answwer");
+
         // _strErrorUpdate = BIZ_ScanSMTSerial.SetSerialLotTrayTable(Session("PLANT_CODE"), _strLot, _strPrdName, dtSerial, hfUserID.Value, hfUserStation.Value, Session("PRODUCT_KIND")) ทำ api
+        for(let insertDt = 0 ;insertDt < dtSerial.length;insertDt++){
+          if (dtSerial[insertDt].SERIAL != '' || dtSerial[insertDt].SERIAL != null) {
+            console.log('insertDt')
+            _strErrorUpdate  = await getData("SetSerialLotTrayTable",{strPlantCode:Fac,strPrdName:_strPrdName,strLot:_strLot,strHfUserId:ip,
+              strSerial:dtSerial[insertDt].SERIAL,
+              strUpdateFlg:dtSerial[insertDt].UPDATE_FLG,
+              strRowUpdate:dtSerial[insertDt].ROW_UPDATE,
+              strRejectCode:dtSerial[insertDt].REJECT_CODE,
+              strTestResult:dtSerial[insertDt].TEST_RESULT,
+              strRemarkUpdate:dtSerial[insertDt].REMARK_UPDATE,
+              strScanResult:dtSerial[insertDt].SCAN_RESULT
+            });
+  
+            if (_strErrorUpdate != "") {
+              if (_strErrorUpdate == 'duplicate key value violates unique constraint "pk_final_gate_header"'){
+                dtSerial[insertDt].REMARK = 'duplicate serial'
+              }
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: `Error : ${_strErrorUpdate}`,
+              });
+            }
+          }
+        }
         if (_strErrorUpdate != "") {
           setLblError(`Error : ${_strErrorUpdate}`);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: `Error : ${_strErrorUpdate}`,
-          });
+        //   Swal.fire({
+        //     icon: "error",
+        //     title: "Error",
+        //     text: `Error : ${_strErrorUpdate}`,
+        //   });
         }
       }
       let dtLotPassCount = await getData("GetSerialPassByLot", _strLot);
@@ -1265,9 +1369,10 @@ function fn_ScanSMTSerialPcsNG() {
       } else {
         setGvSerialResult([]);
       }
-      // getInitialSerial();
-      // SetFocus('gvSerial_txtSerial_0')
-      console.log(dtSerial, "dtSerialFinal answwer");
+      setTxtSerial(gvSerial.map(() => ""));
+      getInitialSerial();      
+      SetFocus("txtSerial_0");
+      
     } else {
       setLblError("Scan master code incorrect / สแกน master code ไม่ถูกต้อง");
       Swal.fire({

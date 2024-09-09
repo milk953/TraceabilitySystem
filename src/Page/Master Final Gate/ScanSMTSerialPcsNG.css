@@ -49,3 +49,35 @@
   margin: auto;
   text-align: center !important;
 }
+
+.gvScanResultMasterFinal{
+  margin-top: 20px;
+  width: auto;
+  border: 1px solid rgb(221, 219, 219);
+  width: 1000px !important;
+}
+
+.gvScanResultMasterFinal th {
+  text-align: center;
+  border-right: 1px solid rgb(221, 219, 219) ;
+  /* background-color: #378CE7;*/
+  background-color: #FF9800;
+  color: white;
+  font-weight: 700;
+  font-family: Arial;
+}
+.gvScanResultMasterFinal td{
+  text-align: center;
+  border-right: 1px solid rgb(221, 219, 219) ;
+  /* font-weight: 700;
+  font-family: Arial; */
+}
+.lblResultCardMasterFinal{
+
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    margin-left: 200px;
+    height: 45px;
+
+}

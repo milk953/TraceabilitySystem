@@ -278,27 +278,27 @@ function ScanSMTSerialPcsNG() {
               {lblResultState && (
                 <div className="lblResultFin">
                   <Paper
-                    className="lblResultCard"
+                    className="lblResultCardMasterFinal"
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      background: " #ff4d4f",
+                      background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
                     }}
                   >
                     <Typography
                       variant="h4"
                       style={{
-                        paddingTop: "5px",
                         color: lblResult.styled.color,
+                        fontSize: "30px",
                       }}
                     >
                       {lblResult.value}
                     </Typography>
                   </Paper>
                   <Table
-                    id="gvScanResult"
+                    className="gvScanResultMasterFinal"
                     component={Paper}
-                    style={{ width: "900px", margunBottom: "20px" }}
+                    style={{ width: "960px", margunBottom: "20px" }}
                   >
                     <TableHead sx={{ height: "20px" }}>
                       <TableRow>
@@ -320,8 +320,8 @@ function ScanSMTSerialPcsNG() {
                         <TableCell>{row.REJECT}</TableCell>
                         <TableCell>{row.TOUCH_UP}</TableCell>
                         <TableCell>{row.REJECT2}</TableCell>
-                        <TableCell>{row.TEST_RESULT}</TableCell>
-                        <TableCell>{row.SCAN_RESULT}</TableCell>
+                        <TableCell>{row.SERIAL == '' ? '' : row.TEST_RESULT}</TableCell>
+                        <TableCell sx={{background:row.SCAN_RESULT == 'NG'? 'red' : row.SCAN_RESULT == 'OK' ? 'green' : 'white'}}>{row.SCAN_RESULT}</TableCell>
                         <TableCell>{row.REMARK}</TableCell>
                       </TableRow>
                     ))}
