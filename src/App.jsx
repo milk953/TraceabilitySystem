@@ -39,6 +39,7 @@ import ScanSMTSerialSht from "./Page/ScanSMTSerialSht/ScanSMTSerialSht";
 import PackingGate from "./Page/ScanSMTSerialPcsBox/ScanSMTSerialPcsBox"
 import ScanSheetMOTTime2 from "./Page/ScanSheetMOTTime2/ScanSheetMOTTime2";
 import ScanSMTSerialPcsAuto from "./Page/Final Gate Auto/ScanSMTSerialPcsAuto"
+import ScanSMTConnectShtConfirm from "./Page/ScanSMTConnectShtConfirm/ScanSMTConnectShtConfirm";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
  
@@ -98,6 +99,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTray' element = {<ScanSMTSerialPcsAutoTray />} />
             <Route path='/TraceabilitySystem/PackingGate' element = {<PackingGate />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
+            <Route path='/TraceabilitySystem/ScanSMTConnectShtConfirm' element = {<ScanSMTConnectShtConfirm />} />
+            
             {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
             <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsAuto' element = {<ScanSMTSerialPcsAuto/>} />  
