@@ -74,8 +74,8 @@ function ScanSMTRoollSht() {
       <h1>Final Gate</h1>
       <Card component={Paper} className="Card-FinalGate">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={10} md={4}>
+          <Grid container spacing={2} >
+            <Grid item xs={10} md={4} >
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
@@ -326,14 +326,15 @@ function ScanSMTRoollSht() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                // border:'1px solid red'
               }}
             >
               {gvScanResult.visble == false && (
                 <>
                   <img
                     style={{
-                      width: "360px",
-                      height: "300px",
+                      width: "300px",
+                      height: "260px",
                       marginBottom: "30px",
                     }}
                     src={Pageimg} // Import the image
@@ -350,8 +351,8 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
-                        width: "70%", // ควบคุมขนาดของ Paper
+                          lblResult.value === "OK" ? "#059212" : "#BA0900",
+                        width: "100%", // ควบคุมขนาดของ Paper
                       }}
                     >
                       <Typography
@@ -365,8 +366,9 @@ function ScanSMTRoollSht() {
                     <Paper
                       className="Card-lblResult"
                       style={{
-                        ...lblTime.style,
-                        width: "30%", // ควบคุมขนาดของ Paper
+                        // ...lblTime.style,
+                        width: "10%", // ควบคุมขนาดของ Paper
+                        background:'#BA0900'
                       }}
                     >
                       <Typography
@@ -454,7 +456,8 @@ function ScanSMTRoollSht() {
                                   : gvScanResult.value[index].SCAN_RESULT ===
                                     "OK"
                                   ? "#52c41a"
-                                  : "#ff4d4f",
+                                  : "#BA0900",
+                                  color:'#fff'
                             }}
                           >
                             {gvScanResult.value[index].SCAN_RESULT}

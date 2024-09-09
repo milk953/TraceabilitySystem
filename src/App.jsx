@@ -5,7 +5,7 @@ import Sheet_Master from "./Page/Sheet Structure Master/SheetMaster";
 import Serial_Master from "./Page/Serial Structure Master/SerialMaster";
 import Product_master from "./Page/Product Master/ProductMaster";
 import FINConncetSht from './Page/FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht'
-import ScanSMTRoollSht from "./Page/Scan SMTRoollSht/ScanSMTRollSht";
+import ScanSMTRoollSht from "./Page/Connect Roll Leaf/ScanSMTRollSht";
 import ReflowControlTime from "./Page/ScanSheetReflowTime/ScanSheetReflowTime";
 import ScanSheetMOTTime1 from "./Page/ScanSheetMOTTime1/ScanSheetMOTTime1";
 import Homepage from "./Page/Homepage/Homepage";
@@ -38,7 +38,7 @@ import ScanSMTConnectRollConfirm from "./Page/ScanSMTConnectRollConfirm/ScanSMTC
 import ScanSMTSerialSht from "./Page/ScanSMTSerialSht/ScanSMTSerialSht";
 import PackingGate from "./Page/ScanSMTSerialPcsBox/ScanSMTSerialPcsBox"
 import ScanSheetMOTTime2 from "./Page/ScanSheetMOTTime2/ScanSheetMOTTime2";
-import ScanSMTSerialPcsAuto from "./Page/Final Gate Auto/ScanSMTSerialPcsAuto";
+import ScanSMTSerialPcsAuto from "./Page/Final Gate Auto/ScanSMTSerialPcsAuto"
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
  

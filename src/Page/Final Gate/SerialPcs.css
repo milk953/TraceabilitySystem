@@ -35,8 +35,7 @@
 }
 
 .CSS-GvScanResult-FinalGate{
-    max-width: 1500px;
-    width: 100% !important;
+    width: 900px !important;
     margin-top: 10px;
     padding: 0;
 }
@@ -44,7 +43,7 @@
 .CSS-GvScanResult-FinalGate th{
   
     padding: 2px !important;
-    background-color: #378CE7 !important ;
+    background-color: #1f2d8d !important ;
      color: #fff;
     padding: 5px;
     font-weight: bold; 

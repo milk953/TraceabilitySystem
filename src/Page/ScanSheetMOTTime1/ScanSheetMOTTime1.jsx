@@ -99,7 +99,7 @@ function ScanSheetMOTTime() {
   // }, [txtCBNo]);
   return (
     <div>
-      <Hearder />
+      <Hearder/>
       <h1>ScanSheetMOTTime</h1>
       {/* <Card component={Paper} className="Card-ScanSheetMOTTime"> */}
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'90px' }}>
@@ -296,11 +296,11 @@ function ScanSheetMOTTime() {
                         <Typography
                           align="center"
                           style={{ ...lblResult.style, marginTop: "40px", fontSize: "90px"  }}
-                          // { }
+                        
                         >
                           {lblResult.value}
                         </Typography>
-                        <Typography align="center" style={{ fontSize: "20px",marginTop: "80px" }}>
+                        <Typography align="center" style={{ fontSize: "20px",marginTop: "40px" }}>
                           {lblRemark}
                         </Typography>
                       </Card>
