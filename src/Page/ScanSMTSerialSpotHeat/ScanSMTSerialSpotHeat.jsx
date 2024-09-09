@@ -33,7 +33,7 @@ function ScanSMTSerialSpotHeat() {
     settxtTotalPCS,
     fcGvSerial_txtSerial_0,handleTotal_Sht,fcTotalSht,
     fcProduct,fcLotNo,lblLog,pnlLog,ibtBack_Click,btnSave_Click,setSlProduct,hfMode,txtSerial,handleSerialChange,
-    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product
+    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product,dataGvSerial
   } = fn_ScanSMTSerialSpotHeat();
   return (
     <div>
@@ -70,12 +70,17 @@ function ScanSMTSerialSpotHeat() {
                         fullWidth
                         disabled={txtLot.disbled} 
                         value={txtLot.value}
-                        inputRef={fcLotNo}
+                        // inputRef={fcLotNo}
+                        inputRef={(el) => (fcLotNo.current = el)}
+                        style={{ backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit'}}
                         onChange={(e) => {
                           settxtLot((prevState)=>({...prevState,value:e.target.value}));
                         }}
-                        // disabled='false'
-                        // onChange={(e) =>  settxt_lotNo(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handletxt_Lotno();
+                          }
+                        }}
                         onBlur={handletxt_Lotno}
                       />
                     </TableCell>
@@ -128,10 +133,14 @@ function ScanSMTSerialSpotHeat() {
                         inputRef={fcTotalSht}
                         onChange={(e) => {
                           settxtTotalPCS((prevState)=>({...prevState,value:e.target.value}))
-                          handleTotal_Sht(e.target.value);
-                        }}
-                        // onChange={handleTotal_Sht}
                         
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handleTotal_Sht();
+                          }
+                        }}
+                        onBlur={ handleTotal_Sht}
                       />
                     </TableCell>
                   </TableRow>
@@ -171,7 +180,8 @@ function ScanSMTSerialSpotHeat() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
-                {Array.from({ length: txtTotalPCS.value }, (_, index) => (
+                
+                {Array.from({ length: dataGvSerial.length }, (_, index) => (
                       <TableRow key={index}>
                       
                         <TableCell
@@ -186,11 +196,27 @@ function ScanSMTSerialSpotHeat() {
                             id="txtfild"
                             size="small"
                             fullWidth
-                           inputRef={fcGvSerial_txtSerial_0}
+                          //  inputRef={fcGvSerial_txtSerial_0}
+                           inputRef={(el) => (fcGvSerial_txtSerial_0.current[index] = el)}
                             value={txtSerial[index]}
                             onChange={(event) =>
                               handleSerialChange(index, event)
                             }
+                            onBlur={(event) => {
+                              handleSerialChange(index, event);
+                             
+                            }}
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
+                                if (index < dataGvSerial.length - 1) {
+                                  fcGvSerial_txtSerial_0.current[index + 1].focus();
+                                } else{
+                                  btnSave_Click()
+                                  event.target.blur();
+                                }
+                              }
+                            }}
                           />
                         </TableCell>
                       </TableRow>
@@ -241,7 +267,7 @@ function ScanSMTSerialSpotHeat() {
                 flexDirection: "column",
                 alignItems: "center",
               }}
-            >
+            >{visiblegvScanResult == false && (<>
               <img
                 style={{
                   width: "420px",
@@ -251,6 +277,7 @@ function ScanSMTSerialSpotHeat() {
                 src={Pageimg} // Import the image
                 alt="Description of the image"
               />
+              </>)}
               {visiblegvScanResult == true && (
               <>
                 <Paper
@@ -314,7 +341,7 @@ function ScanSMTSerialSpotHeat() {
                             </TableCell>
                             
                             <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center',background: gvScanResult[index].SCAN_RESULT  !=='OK'? "#ff4d4f":""
+                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center',background: gvScanResult[index].SCAN_RESULT  =='NO'? "#ff4d4f":""
                               }}
                             >
                               {gvScanResult[index].SCAN_RESULT}

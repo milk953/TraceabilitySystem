@@ -9,9 +9,9 @@ function fn_ScanSMTSerialSpotHeat() {
   const [SlProduct, setSlProduct] = useState("");
   const [txtTotalPCS, settxtTotalPCS] = useState({value: "",disbled: "",visble: "",style: "",});
   const [lblLog, setlblLog] = useState("");
-  const [dataGvSerial, setdataGvSerial] = useState("");
+  const [dataGvSerial, setdataGvSerial] = useState([]);
   const [gvScanResult, setgvScanResult] = useState("");
-  const [txtSerial, settxtSerial] = useState("");
+  const [txtSerial, settxtSerial] = useState(Array(dataGvSerial.length).fill(""));
   const [lblResult, setlblResult] = useState({ text: "", styled: {} });
   //ซ่อน
   const [pnlLog, setpnlLog] = useState(false);
@@ -19,10 +19,10 @@ function fn_ScanSMTSerialSpotHeat() {
   const [visiblgvSerial, setvisiblgvSerial] = useState(false);
   const [visiblegvScanResult, setvisiblegvScanResult] = useState(false);
   //Focus
-  const fcTotalSht = useRef(null);
-  const fcLotNo = useRef(null);
+  const fcTotalSht = useRef([]);
+  const fcLotNo = useRef([]);
   const fcProduct = useRef(null);
-  const fcGvSerial_txtSerial_0 = useRef(null);
+  const fcGvSerial_txtSerial_0 = useRef([]);
   const fcGvSerial = useRef(null);
   //hf
   const [hfSerialLength, setHfSerialLength] = useState("");
@@ -108,12 +108,13 @@ function fn_ScanSMTSerialSpotHeat() {
     if (txtTotalPCS.value !== "") {
       getInitialSerial();
     }
-  }, [txtTotalPCS.value]);
+  }, [hfSerialCount]);
 
   const GetProductData = async () => {
     axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
       setProduct(data);
+      setSlProduct(data)
     });
   };
 
@@ -157,7 +158,7 @@ function fn_ScanSMTSerialSpotHeat() {
             }));
           } else {
             SetMode("SERIAL");
-            fcGvSerial_txtSerial_0.current.focus();
+            fcGvSerial_txtSerial_0.current[0].focus();
           }
         } catch (error) {
           const intProduct = strPrdName.indexOf("-", 12);
@@ -173,7 +174,7 @@ function fn_ScanSMTSerialSpotHeat() {
                 }));
               } else {
                 SetMode("SERIAL");
-                fcGvSerial_txtSerial_0.current.focus();
+                fcGvSerial_txtSerial_0.current[0].focus();
               }
             } catch (error) {
               setlblLog(`Product ${strPrdName} not found.`);
@@ -204,9 +205,9 @@ function fn_ScanSMTSerialSpotHeat() {
       fcLotNo.current.focus();
     }
   };
-  const handleTotal_Sht = async (value) => {
-    if (!isNaN(value)) {
-      settxtTotalPCS((prevState) => ({ ...prevState, value: value }));
+  const handleTotal_Sht = async () => {
+    if (!isNaN(txtTotalPCS.value)) {
+      setHfSerialCount(txtTotalPCS.value);
       SetMode("SERIAL");
     } else {
       settxtTotalPCS((prevState) => ({ ...prevState, value: "value" }));
@@ -347,7 +348,7 @@ function fn_ScanSMTSerialSpotHeat() {
 
   const btnCancel_Click = async () => {
     await SetMode("SERIAL");
-    fcGvSerial_txtSerial_0.current.focus();
+    fcGvSerial_txtSerial_0.current[0].focus();
   };
 
   const btnSave_Click = () => {
@@ -533,20 +534,27 @@ function fn_ScanSMTSerialSpotHeat() {
       setlblLog("Please input lot no. ");
       SetMode("SERIAL_ERROR");
     }
-    fcGvSerial_txtSerial_0.current.focus();
+    fcGvSerial_txtSerial_0.current[0].focus();
   };
 
   const getInitialSerial = async () => {
     let dtData = [];
 
-    for (let intRow = 0; intRow < txtTotalPCS.value; intRow++) {
+    for (let intRow = 0; intRow < hfSerialCount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
     setvisiblgvSerial(true);
     setdataGvSerial(dtData);
-    return dtData;
+    settxtSerial( Array(dtData.length).fill(""))
+    if (dataGvSerial.length > 0) {
+      setTimeout(() => {
+        fcGvSerial_txtSerial_0.current[0].focus();
+        }, 300);
+    
+    }
+    return 0;
   };
 
   const handleSerialChange = (index, event) => {
@@ -584,6 +592,7 @@ function fn_ScanSMTSerialSpotHeat() {
     fcGvSerial,
     visiblegvScanResult,
     visibledll_product,
+    dataGvSerial
   };
 }
 
