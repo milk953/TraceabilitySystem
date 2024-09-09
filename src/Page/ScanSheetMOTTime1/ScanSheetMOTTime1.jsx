@@ -68,35 +68,6 @@ function ScanSheetMOTTime() {
     pnlSave
   } = fn_ScanSheetMOTTime();
 
-  // useEffect(() => {
-  //   if(txtlot.focus==true){
-  //     fctxtLotno.current.focus();
-  //   }
-  // }, [txtlot]);
-
-  // useEffect(() => {
-  //   if(txtMCNo.focus==true){
-  //     fctxtMcNo.current.focus();
-  //   }
-  // }, [txtMCNo]);
-
-  // useEffect(() => {
-  //   if(txtSheet.focus==true){
-  //     fctxtSheetNo.current.focus();
-  //   }
-  // }, [txtSheet]);
-
-  // useEffect(() => {
-  //   if(txtSUSNo.focus==true){
-  //     fctxtSUSNo.current.focus();
-  //   }
-  // }, [txtSUSNo]);
-
-  // useEffect(() => {
-  //   if(txtCBNo.focus==true){
-  //     fctxtCBNo.current.focus();
-  //   }
-  // }, [txtCBNo]);
   return (
     <div>
       <Hearder/>
@@ -300,7 +271,7 @@ function ScanSheetMOTTime() {
                         >
                           {lblResult.value}
                         </Typography>
-                        <Typography align="center" style={{ fontSize: "20px",marginTop: "40px" }}>
+                        <Typography align="center" style={{ fontSize: "20px",marginTop: "80px" }}>
                           {lblRemark}
                         </Typography>
                       </Card>

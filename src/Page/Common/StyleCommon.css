@@ -1,0 +1,62 @@
+.txtfield-disable{
+background-color: #e0e0e0;
+}
+
+.Status-On{
+    background: green;
+    color: #ffffff;
+}
+
+.Status-Off{
+    background: red;
+    color: #ffffff;
+}
+
+.Header_CommonBG{
+    background: #454545;
+    color: #ffffff;
+}
+
+.Card-Common{
+    margin: auto;
+    width: 90%;
+    margin-top: 50px;
+    height: 100%;
+    padding:20px;
+   
+}
+
+.CSS-GvSerial{
+    max-width: 450px !important;
+  
+}
+
+.CSS-GvSerial th{
+    background-color: #12422e !important ;
+    color: #fff;
+    padding: 5px;
+}
+
+.CSS-GvSerial td{
+    padding: 4px 4px 4px 4px!important;
+}
+
+.Card-lblResult{
+    width: 70%;
+    margin: auto;
+    height: 45px;
+    text-align: center;
+}
+
+.Card-lblTime{
+    width: 30%;
+    margin: auto;
+    height: 45px;
+    text-align: center;
+}
+
+
+.tableGvResult .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+  }
