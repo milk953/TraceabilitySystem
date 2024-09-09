@@ -19,7 +19,9 @@ import Tooltip from "@mui/material/Tooltip";
 import { LoginOutlined } from "@mui/icons-material";
 import ImgLoging from "../Header/login.png"
 import ImgLogOut from "../Header/logout.png"
-import "../StyleCommon.css"
+import ImgTitle from "../Header/checklist.png"
+
+import "../Common/StyleCommon.css"
 
 function Hearder() {
   const { openLoginModal, menuName } = fn_Homepage();
@@ -111,8 +113,10 @@ function Hearder() {
               <MenuIcon />
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              TRACEABILITY SYSTEM  {menuName}
+            <Avatar  variant="square" src={ImgTitle} />&nbsp;&nbsp;
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1}}>
+          
+            {menuName === '' ? 'TRACEABILITY SYSTEM' : menuName}
               {/* TRACEABILITY SYSTEM */}
             </Typography>
 

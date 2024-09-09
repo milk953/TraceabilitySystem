@@ -1,10 +1,8 @@
 /* style={{margin: 'auto',width:'400px' }} */
 .FinalGate{
-    margin: auto;
     max-width:  450px;
     width:  450px;
-    /* min-width: 450px; */
-   
+
 }
 
 .FinalGate th{
@@ -24,15 +22,7 @@
 }
 
 
-.Card-FinalGate{
-    margin: auto;
-    width: 95%;
-    max-width: 1400px;
-    margin-top: 50px;
-  
-    height: 100%;
-    padding: 20px;
-}
+
 
 .CSS-GvScanResult-FinalGate{
     width: 900px !important;

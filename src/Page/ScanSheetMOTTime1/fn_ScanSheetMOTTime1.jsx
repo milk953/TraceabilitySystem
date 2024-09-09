@@ -340,6 +340,7 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
+            setlblRemark("");
             await axios
             .post("/api/CallFPCSheetLeadTimeResult", {
               LotNo:txtlot.value, 
@@ -375,6 +376,7 @@ function fn_ScanSheetMOTTime() {
             setlblSheet(txtSheet.value);
             setpnlSave(""); 
             /// pnlMain.Enabled = False
+            setlblResult('')
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" , focus:true}));
@@ -459,6 +461,7 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
+            setlblRemark("");
             await axios
             .post("/api/CallFPCSheetLeadTimeResult", {
               LotNo:txtlot.value, 
@@ -494,6 +497,7 @@ function fn_ScanSheetMOTTime() {
             setlblSheet(txtSheet.value);
             setpnlSave(""); 
             /// pnlMain.Enabled = False
+            setlblResult('')
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
@@ -565,6 +569,7 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
+            setlblRemark("");
             await axios
             .post("/api/CallFPCSheetLeadTimeResult", {
               LotNo:txtlot.value, 
@@ -600,6 +605,7 @@ function fn_ScanSheetMOTTime() {
             setlblSheet(txtSheet.value);
             setpnlSave(""); 
             /// pnlMain.Enabled = False
+            setlblResult('')
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));

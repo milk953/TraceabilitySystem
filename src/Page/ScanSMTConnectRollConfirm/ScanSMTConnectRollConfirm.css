@@ -45,33 +45,12 @@
     height: 30px;
 }
 
-.CSS-GvSerial{
-    margin: auto;
-    max-width: 400px !important;
-    width: 90% !important;
-}
 
-.CSS-GvSerial th{
-    background-color: #12422e !important ;
-    color: #fff;
-    padding: 5px;
-}
-
-.CSS-GvSerial td{
-    padding: 4px 4px 4px 4px!important;
-}
 
 .CSS-GvScanResult{
     max-width: 900px;
     width: 100% !important;
     margin-top: 10px;
-}
-.Card-lblResult{
-    max-width: 400px;
-    width: 100%;
-    margin: auto;
-    height: 45px;
-    text-align: center;
 }
 
 
