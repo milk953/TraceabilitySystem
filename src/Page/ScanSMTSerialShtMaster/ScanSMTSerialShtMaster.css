@@ -1,4 +1,4 @@
-.Card-ScanSMTSerialShtPcs{
+.Card-ScanSMTSerialShtMas{
     margin: auto;
     width: 95%;
     max-width: 1400px;
@@ -8,19 +8,19 @@
     display: flex;
 }
 
-.TbScanSMTSerialShtPcs {
+.TbScanSMTSerialShtMas {
     margin: auto;
     width: 700px;
 }
 
-.TbScanSMTSerialShtPcs th {
+.TbScanSMTSerialShtMas th {
     background-color: #8c8c8c;
     border-radius: 5px 5px 0 0;
     color: #fff;
     padding: 5px;
 }
 
-.TbScanSMTSerialShtPcs td {
+.TbScanSMTSerialShtMas td {
     padding: 4px;
 }
 
@@ -30,19 +30,19 @@
     padding-left: 5px;
 }
 
-#selectPdShtPcsAuto {
+#selectPdShtMasAuto {
     padding: 0;
     font-size: 14px;
     padding-left: 5px;
 }
 
-.btIconSerialShtPcs {
+.btIconSerialShtMas {
     padding: 0px !important;
     min-width: 50px !important;
 }
 
 /*gvBackSide*/
-.divgvBackSidePcs {
+.divgvBackSideMas {
     justify-content: center;
     display: flex;
     max-width: 100%;
@@ -51,7 +51,7 @@
     position: relative;
 }
 
-.divgvBackSidePcs th {
+.divgvBackSideMas th {
     white-space: nowrap;
     text-align: center;
     font-size: 16px;
@@ -61,12 +61,12 @@
     padding: 9px;
 }
 
-.divgvBackSidePcs td {
+.divgvBackSideMas td {
     padding: 4px 4px 4px 4px!important;
 }
 
 /*gvFrontSide*/
-.divgvFrontSideShtPcs {
+.divgvFrontSideShtMas {
     justify-content: center;
     display: flex;
     max-width: 100%;
@@ -75,7 +75,7 @@
     position: relative;
 }
 
-.divgvFrontSideShtPcs th {
+.divgvFrontSideShtMas th {
     white-space: nowrap;
     text-align: center;
     font-size: 16px;
@@ -85,12 +85,12 @@
     padding: 9px;
 }
 
-.divgvFrontSideShtPcs td {
+.divgvFrontSideShtMas td {
     padding: 4px 4px 4px 4px!important;
 }
 
 /*pnlBoard*/
-.divpnlBoardShtPcs {
+.divpnlBoardShtMas {
     justify-content: center;
     display: flex;
     max-width: 100%;
@@ -98,12 +98,12 @@
     width: 482px;
 }
 
-.divpnlBoardShtPcs td {
+.divpnlBoardShtMas td {
     padding: 4px 4px 4px 4px!important;
 }
 
 
-.divgvSerialShtPcs {
+.divgvSerialShtMas {
     justify-content: center;
     display: flex;
     max-width: 100%;
@@ -111,7 +111,7 @@
     width: 482px;
 }
 
-.divgvSerialShtPcs th {
+.divgvSerialShtMas th {
     white-space: nowrap;
     text-align: center;
     font-size: 16px;
@@ -121,11 +121,11 @@
     padding: 9px;
 }
 
-.divgvSerialShtPcs td {
+.divgvSerialShtMas td {
     padding: 4px 4px 4px 4px!important;
 }
 
-.lblResultShtPcs{
+.lblResultShtMas{
     margin: auto;
     margin-left: 45px;
     margin-top: 15px !important;
@@ -137,7 +137,7 @@
     padding: 20px;
 }
 
-.divgvScanResultShtPcs {
+.divgvScanResultShtMas {
     /* display: flex; */
     flex-direction: column;
     max-width: 100%;
@@ -146,7 +146,7 @@
     position: relative;
 }
 
-.divgvScanResultShtPcs th {
+.divgvScanResultShtMas th {
     /* white-space: nowrap; */
     text-align: center;
     font-size: 16px;
@@ -158,9 +158,6 @@
     font-family: Arial;
 }
 
-.divgvScanResultShtPcs td {
+.divgvScanResultShtMas td {
     padding: 4px 4px 4px 4px!important;
 }
-
-
-
