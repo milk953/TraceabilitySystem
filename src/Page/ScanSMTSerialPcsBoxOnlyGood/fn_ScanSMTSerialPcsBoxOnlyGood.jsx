@@ -23,7 +23,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const [lblBox, setlblBox] = useState({ value: "", disbled: "", visble: "", style: {},});
   const [lblBoxFull, setlblBoxFull] = useState({ value: "",disbled: "",visble: "",style: {},});
   const [lblBoxTotal, setlblBoxTotal] = useState({value: "",disbled: "",visble: "",style: {},});
-  const [lblBoxStatus, setlblBoxStatus] = useState({value: "",disbled: "",visble: "",style: { textAlign: "center", width: "15%" },});
+  const [lblBoxStatus, setlblBoxStatus] = useState({valusettxtSeriale: "",disbled: "",visble: "",style: { textAlign: "center", width: "15%" },});
   const [lblPacking, setlblPacking] = useState({ value: "", disbled: "", visble: "",style: {},});
   const [lblPackingTotal, setlblPackingTotal] = useState({value: "", disbled: "",visble: "",style: {},});
   const [lblLastTray, setlblLastTray] = useState({ value: "", disbled: "",visble: "",style: {},});
@@ -31,9 +31,10 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const [txtPcsTray, settxtPcsTray] = useState({value: "0",disbled: "", visble: "",style: {},});
   const [lblTime, setlblTime] = useState({value: "",disbled: "",visble: "",style: {},});
   const [lblResult, setlblResult] = useState({ value: "",disbled: "", visble: "",style: {},});
-  const [txtSerial, settxtSerial] = useState("");
+   const [gvSerial, setgvSerial] = useState([]); 
+   const [txtSerial, settxtSerial] = useState(Array(gvSerial.length).fill(""));
 
-  const [gvSerial, setgvSerial] = useState([]);
+
   const [gvScanResult, setgvScanResult] = useState([]);
 
   // Visible
@@ -66,7 +67,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const FAC = import.meta.env.VITE_FAC;
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env
+    .VITE_FINAL_GATE_SPECIAL_MESSAGE;
 
   //hf
   const hfLotLength = 9;
@@ -180,13 +182,17 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
     // PageLoad();
   }, []);
-  useEffect(() => {
-    if (gvSerial.length > 0) {
-      fc_txtSerial.current[0].focus();
-      getInitialSerial();
-    }
-  }, [gvSerial.length, ddlProduct]);
+  // useEffect(() => {
+  //   if (gvSerial.length > 0) {
+  //     fc_txtSerial.current[0].focus();
+  //     getInitialSerial();
+  //   }
+  // }, [gvSerial.length, ddlProduct]);
 
+  useEffect(() => {
+    getInitialSerial();
+  }, [hfserialcount]);
+  
   const txtLot_TextChanged = async () => {
     if (txtLot.value !== "") {
       let _strPrdName = "";
@@ -596,6 +602,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     return 0;
   };
   const SetMode = (_strType) => {
+    console.log(_strType,"_strType")
     switch (_strType) {
       case "LOT":
         settxtLot((prevState) => ({
@@ -840,7 +847,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           value: "",
           disbled: true,
         }));
-        setlblLot((prevState) => ({ ...prevState, value: "" }));
         setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
         setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
         setlblBox((prevState) => ({ ...prevState, value: "" }));
@@ -946,22 +952,28 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   };
   const getInitialSerial = async () => {
     let dtData = [];
-    for (let intRow = 0; intRow < txtPcsTray.value; intRow++) {
+    for (let intRow = 0; intRow < hfserialcount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
     setgvSerial(dtData);
+    settxtSerial( Array(gvSerial.length).fill(""))
     if (gvSerial.length > 0) {
-      fc_txtSerial.current[0].focus();
+      setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+        }, 300);
+    
     }
     return 0;
   };
+
   const txtMachine_TextChanged = () => {
     if (txtMachine.value.trim().toUpperCase() !== "") {
       SetMode("OP");
     }
   };
+
   const ibtMachineBack_Click = () => {
     SetMode("MACHINE");
   };
@@ -1040,34 +1052,32 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         _strItem = _strBox[0];
         _strBoxNo = _strBox[1];
         await axios
-          .post("/api/Common/GetBoxCount", {
-            prdName: selectddlProduct.value,
-            boxNo: _strBoxNo,
-          })
-          .then((res) => {
-            let data = res.data;
+              .post("/api/Common/GetBoxCount", {
+                prdName: selectddlProduct.value,
+                boxNo: _strBoxNo,
+              })
+              .then((res) => {
+                console.log(res.data,"มาแล้วววววววว")
+                _dblBoxQty = res.data[0].BOX_QTY;
+                let data = res.data[0].BOX_COUNT
             if (data <= 0) {
               _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
             } else {
-              setlblBoxFull((prevState) => ({
-                ...prevState,
-                value: _dblBoxQty,
-              }));
+              setlblBoxFull((prevState) => ({...prevState, value: _dblBoxQty,}));
             }
           });
       } else {
-        setlblBoxFull((prevState) => ({
-          ...prevState,
-          value: _dblBoxQty,
-        }));
         _strBoxNo = txtBox.value;
+        
         await axios
-          .post("/api/Common/GetBoxCount", {
-            prdName: selectddlProduct.value,
-            boxNo: _strBoxNo,
-          })
-          .then((res) => {
-            let data = res.data;
+        .post("/api/Common/GetBoxCount", {
+          prdName: selectddlProduct.value,
+          boxNo: _strBoxNo,
+        })
+        .then((res) => {
+          console.log(res.data,"มาแล้วววววววว")
+          _dblBoxQty = res.data[0].BOX_QTY;
+          let data = res.data[0].BOX_COUNT
             if (data <= 0) {
               _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
             } else {
@@ -1078,20 +1088,11 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             }
           });
       }
-      settxtBox((prevState) => ({
-        ...prevState,
-        value: _strBoxNo,
-      }));
-      setlblBox((prevState) => ({
-        ...prevState,
-        value: _strBoxNo,
-      }));
+      settxtBox((prevState) => ({...prevState,value: _strBoxNo,}));
+      setlblBox((prevState) => ({...prevState,value: _strBoxNo,}));
       if (_strError == "") {
         let _dtTrayCount = [];
-        setlblBoxTotal((prevState) => ({
-          ...prevState,
-          value: "0",
-        }));
+        setlblBoxTotal((prevState) => ({...prevState,value: "0",}));
         await axios
           .post("/api/Common/GetCountTrayByBoxPacking", {
             prdName: selectddlProduct.value,
@@ -1100,13 +1101,14 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           })
           .then((res) => {
             _dtTrayCount = res.data[0].BOX_COUNT;
+          });
             if (_dtTrayCount.length > 0) {
               setlblBoxTotal((prevState) => ({
                 ...prevState,
                 value: _dtTrayCount,
               }));
             }
-            if (lblBoxTotal.value == lblBoxFull.value) {
+            if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
               setlblBoxStatus((prevState) => ({
                 ...prevState,
                 value: "OK",
@@ -1116,21 +1118,16 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               setlblBoxStatus((prevState) => ({
                 ...prevState,
                 value: "NG",
-                style: { color: red },
               }));
             }
             SetMode("PACKING");
-          });
+          
       } else {
-        setlblLog((prevState) => ({
-          ...prevState,
-          value: _strError,
-        }));
+        setlblLog((prevState) => ({...prevState,value: _strError,}));
         SetMode("BOX_ERROR");
       }
     } else {
       setlblBox((prevState) => ({ ...prevState, value: "" }));
-
       setTimeout(() => {
         fntxtBox.current.focus();
       }, 300);
@@ -1265,7 +1262,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             });
         }}
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-          console.log(dtSerial[drRow].SERIAL  ,"dtSerial[drRow].SERIAL ")
+        
           if (dtSerial[drRow].SERIAL !== "") {
             let _intCount = 0;
             let _intCountOK = 0;
@@ -1849,7 +1846,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                       },
                     })
                     .then((res) => {
-                      const response = res.data.result;
+                      _intCheckPass = res.data;
                     });
                   if (_intCheckPass == "0") {
                     _strMessageUpdate = FINAL_GATE_SPECIAL_MESSAGE;
@@ -1889,6 +1886,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             dtSerial[drRow].SCAN_RESULT = _strScanResultUpdate;
             dtSerial[drRow].TEST_RESULT = _strTestResultUpdate;
             dtSerial[drRow].REMARK = _strMessageUpdate;
+            console.log(dtSerial,"สักที")
 
             if (_strScanResultUpdate == "NG") {
               _strScanResultAll = "NG";
@@ -1908,10 +1906,12 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setlblLog((prevState) => ({...prevState, value: "",}));
         setpnlLog(false);
         if (_strScanResultAll !== "NG") {
+          console.log(parseFloat(lblBoxTotal.value + _intCountOK),"//////////////o",parseFloat(lblBoxFull.value))
           if (parseFloat(lblBoxTotal.value + _intCountOK) > parseFloat(lblBoxFull.value) ) {
+            
             setlblLog((prevState) => ({...prevState,value: "Box was full / กล่องเต็มแล้ว",}));
             setpnlLog(true);
-            _strScanResultAll("NG");
+            _strScanResultAll="NG";
           }
         }
         setlblResult((prevState) => ({...prevState,value: _strScanResultAll,
@@ -1938,7 +1938,10 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         }
         //1352
         let _strErrorUpdate = "";
+        
         if (_strScanResultAll == "OK") {
+          
+          for (let drRow = 0 ; drRow < dtSerial.length; drRow++){
           await axios
             .post("/api/Common/SetSerialLotTrayTableGood", {
               dataList: {
@@ -1963,33 +1966,43 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             })
             .then((res) => {
               _strErrorUpdate = res.data.p_error;
-            });
+              console.log(_strErrorUpdate,"_strErrorUpdatelll")
+            })};
           if (_strErrorUpdate != "") {
             setlblResult((prevState) => ({ ...prevState, value: "Error :" + _strErrorUpdate,style: { color: "Red" }, }));
           } else {
             // ติดที่ SetBoxPackingSerialTray ใน PCTTTEST.FPC ทำใน PROCEDURE
             // บรรทัด 1359
+            for (let drRow = 0; drRow < dtSerial.length; drRow++) {
+              console.log(_strPrdName,lblBox.value,lblPacking.value,"SERIAL",dtSerial[drRow].SERIAL,"/////",hfUserID,hfUserStation,_strScanResultAll,"TEST_FOR")
             await axios
             .post("/api/Common/SetBoxPackingSerialTray", {
              
               strPrdName: _strPrdName,
               strBox: lblBox.value,
               strPack:lblPacking.value,
-              strSerial:dtSerial[drRow].SERIAL,
+              strSerial:dtSerial[drRow].SERIAL || "",
               strUserID:hfUserID,
               strStation:hfUserStation,
               _strResult:_strScanResultAll,
              
             })
             .then((res) => {
-              dtSerial[drRow].SCAN_RESULT = res.data.SCAN_RESULT;
-              dtSerial[drRow].REMARK = res.data.REMARK;
+              console.log(res.data)
+              if(res.data!='OK'&&res.data!=''){
+                dtSerial[drRow].SCAN_RESULT="NG"
+                dtSerial[drRow].REMARK = res.data
+                //_strResult="NG"
+                _strErrorUpdate= res.data
+              }
+             
             });
           
-            if (_strErrorUpdate) {
+            if (_strErrorUpdate !="") {
               setlblResult((prevState) => ({...prevState,value: "Error :" + _strErrorUpdate,style: { color: "Red" }, }));
             } else {
               if (FQC == "Y") {
+                console.log()
                 await axios
                   .post("/api/Common/getSerialRecordTimeTrayTable", {
                     strPlantCode: FAC,
@@ -2029,9 +2042,11 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             }
           }
         }
+        }
       
     }
     let dtLotPassCount = []; // บรรทัด 1380
+    let data_count;
     await axios
       .post("/api/Common/getSerialPassByLot", {
         strLotNo: _strLot,
@@ -2045,14 +2060,15 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     }
 
     let _dblBoxQty = 0; // 1386
-    setlblBoxFull((prevState) => ({...prevState, value: dtLotPassCount,}));
+    setlblBoxFull((prevState) => ({...prevState, value: "0",}));
     await axios
       .post("/api/Common/GetBoxCount", {
         prdName: selectddlProduct.value,
         boxNo: lblBox.value,
       })
       .then((res) => {
-        _dblBoxQty = res.data;   
+        _dblBoxQty = res.data[0].BOX_QTY;
+        data_count = res.data[0].BOX_COUNT  
       });
     if (_dblBoxQty > 0) {
       setlblBoxFull((prevState) => ({ ...prevState, value: _dblBoxQty, }));
@@ -2085,7 +2101,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       setgvScanResult("");
     }
     settxtPcsTray((prevState) => ({...prevState,value: hfSerialCountOriginal,}));
-    hfserialcount == hfSerialCountOriginal;
+    setHfserialcount(hfSerialCountOriginal)
     setlblLastTray((prevState) => ({...prevState,value: "Not Use",}));
     getInitialSerial();
     return 0;
@@ -2107,7 +2123,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         SCAN_RESULT: "",
         TEST_RESULT: "",
         TYPE_TEST_RESULT: "",
-        SCAN_RESULT: "",
         REMARK: "",
         REMARK_UPDATE: "",
         ROW_COUNT: 0,

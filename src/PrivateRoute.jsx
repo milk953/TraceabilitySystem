@@ -3,11 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const isAuthenticated = () => {
   const token = localStorage.getItem('token');
-  return !!token; // เช็คแค่มี token หรือไม่
+  return !!token; 
 };
 
 const PrivateRoute = () => {
-  return isAuthenticated() ? <Outlet /> : <Navigate to="/" />;
+  return isAuthenticated() ? <Outlet /> : <Navigate to="/TraceabilitySystem" />;
 };
 
 export default PrivateRoute;

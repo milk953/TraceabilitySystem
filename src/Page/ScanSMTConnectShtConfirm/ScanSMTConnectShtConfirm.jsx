@@ -1,6 +1,3 @@
-import React, { useState } from "react";
-import Header from "../Header/Header";
-import BackspaceIcon from "@mui/icons-material/Backspace";
 import {
   Button,
   Card,
@@ -11,43 +8,32 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import "./ScanSMTSerialPcsNG.css";
-import { Typography } from "antd";
-import { fn_ScanSMTSerialPcsNG } from "./fn_ScanSMTSerialPcsNG";
+import BackspaceIcon from "@mui/icons-material/Backspace";
+import Header from "../Header/Header";
+import React from "react";
+import { fn_ScanSMTConnectShtConfirm } from "./fn_ScanSMTConnectShtConfirm";
 import Pageimg from "/src/assets/1.jpg";
-function ScanSMTSerialPcsNG() {
+import "./ScanSMTConnectShtConfirm.css";
+function ScanSMTConnectShtConfirm() {
   const {
     hideImg,
-    lblResultState,
+    gvSerial,
+    panalSerialState,
+    txtLot,
+    setTxtLot,
+    txtLot_Change,
     ddlproduct,
     productSelected,
     setProductSelected,
-    setTxtLot,
-    txtLot,
-    txtLot_Change,
-    lblError,
-    txtMasterCode,
-    setTxtMasterCode,
-    lblLot,
-    lblLotTotal,
-    lblSerialNG,
-    panalSerialState,
-    gvSerial,
-    handle_ibtBack,
-    handle_Cancel_Click,
-    handle_Save_Click,
-    ddlproduct_Change,
     txtSerial,
-    setTxtSerial,
     handletxtSerialChange,
-    txtmasterCode_Change,
-    gvSerialResult,
-    lblResult,
-  } = fn_ScanSMTSerialPcsNG();
+    handle_Save_Click,
+    handle_Cancel_Click
+  } = fn_ScanSMTConnectShtConfirm();
   return (
     <div>
       <Header />
-      <h1>ScanSMTRoollSht</h1>
+      <h1>Confirm Sht&Pcs</h1>
       <Card
         component={Paper}
         style={{
@@ -62,22 +48,25 @@ function ScanSMTSerialPcsNG() {
       >
         <table>
           <tr>
-            <td className="masterFGmaintd">
-              <Table className="masterFGTable" component={Paper}>
+            <td className="ScanSMTConnectShtConfirmmaintd">
+              <Table
+                className="ScanSMTConnectShtConfirmTable"
+                component={Paper}
+              >
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      Confirm Master Scan
+                      Confirm Sht&Pcs
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>Scan Lot:</TableCell>
+                    <TableCell>Lot No.:</TableCell>
                     <TableCell>
                       <input
                         id="txtLot"
-                        className="masterFGtxtF"
+                        className="ScanSMTConnectShtConfirmtxtF"
                         value={txtLot}
                         onChange={(e) => setTxtLot(e.target.value)}
                         // onBlur={txtLot_Change}
@@ -89,7 +78,7 @@ function ScanSMTSerialPcsNG() {
                       ></input>
                     </TableCell>
                     <TableCell>
-                      <Button onClick={handle_ibtBack}>
+                      <Button>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -121,49 +110,17 @@ function ScanSMTSerialPcsNG() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Master Code:</TableCell>
+                    <TableCell>Total Sht:</TableCell>
                     <TableCell>
-                      <input
-                        className="masterFGtxtF"
-                        id="txtMasterCode"
-                        onChange={(e) => setTxtMasterCode(e.target.value)}
-                        value={txtMasterCode}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtmasterCode_Change();
-                          }
-                        }}
-                      ></input>
+                      <table style={{ display: "flex" }}>
+                        <tr style={{ background: "red" }}>
+                          <td>lblTotalSht</td>
+                        </tr>
+                        <tr style={{ background: "green" }}>
+                          <td>lblShtCount</td>
+                        </tr>
+                      </table>
                     </TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              <Table component={Paper} className="masterFGlblTable">
-                <TableBody>
-                  <TableRow>
-                    <TableCell style={{ width: 30, textAlign: "right" }}>
-                      Lot :
-                    </TableCell>
-                    <TableCell>{lblLot}</TableCell>
-                    <TableCell
-                      style={{ width: 30, color: "green", fontWeight: "bold" }}
-                    >
-                      OK:
-                    </TableCell>
-                    <TableCell style={{ width: 60 }}>{lblLotTotal}</TableCell>
-                  </TableRow>
-                </TableBody>
-                <TableBody>
-                  <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell
-                      style={{ width: 30, color: "red", fontWeight: "bold" }}
-                    >
-                      NG:
-                    </TableCell>
-                    <TableCell>{lblSerialNG}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -174,19 +131,15 @@ function ScanSMTSerialPcsNG() {
                   color: "yellow",
                 }}
               >
-                {lblError}
+                {"lblError"}
               </h2>
               &nbsp;&nbsp;
               {panalSerialState && (
-                <Table classname="masterFGgvSerial" component={Paper}>
-                  <TableHead className="gvSerialHead">
+                <Table classname="" component={Paper}>
+                  <TableHead className="">
                     <TableRow>
-                      <TableCell className="masterFGgvSerialCell">
-                        No.
-                      </TableCell>
-                      <TableCell className="masterFGgvSerialCell">
-                        Serial No.
-                      </TableCell>
+                      <TableCell className="">No.</TableCell>
+                      <TableCell className="">Serial No.</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -196,30 +149,30 @@ function ScanSMTSerialPcsNG() {
                         style={{ padding: "4px 4px 4px 4px" }}
                       >
                         <TableCell
-                          className="masterFGgvSerialCell"
+                          className=""
                           style={{ width: "40%", textAlign: "right" }}
                         >
                           {row.SEQ}
                         </TableCell>
                         <TableCell
-                          className="masterFGgvSerialCell"
+                          className=""
                           style={{ width: "70%", paddingRight: "10px" }}
                         >
                           <input
-                            id={`txtSerial_${index}`}
-                            type="text"
-                            style={{
-                              width: "300px",
-                              textTransform: "uppercase",
-                            }}
-                            maxLength="30"
-                            value={txtSerial[index]}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                handletxtSerialChange(index, e);
-                              }
-                            }}
-                            onChange={(e) => handletxtSerialChange(index, e)}
+                          id={`txtSerial_${index}`}
+                          type="text"
+                          style={{
+                            width: "300px",
+                            textTransform: "uppercase",
+                          }}
+                          maxLength="30"
+                          value={txtSerial[index]}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handletxtSerialChange(index, e);
+                            }
+                          }}
+                          onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
                       </TableRow>
@@ -233,7 +186,10 @@ function ScanSMTSerialPcsNG() {
                           gap: "10px",
                         }}
                       >
-                        <Button className="BtSave" onClick={handle_Save_Click}>
+                        <Button
+                          className="BtSave"
+                          onClick={handle_Save_Click}
+                        >
                           SAVE
                         </Button>
                         &nbsp;&nbsp;
@@ -275,7 +231,7 @@ function ScanSMTSerialPcsNG() {
                   alt="Description of the image"
                 />
               )}
-              {lblResultState && (
+              {/* {lblResultState && (
                 <div className="lblResultFin">
                   <Paper
                     className="lblResultCardMasterFinal"
@@ -328,7 +284,7 @@ function ScanSMTSerialPcsNG() {
                   </Table>
                   &nbsp; &nbsp;
                 </div>
-              )}
+              )} */}
             </td>
           </tr>
         </table>
@@ -337,4 +293,4 @@ function ScanSMTSerialPcsNG() {
   );
 }
 
-export default ScanSMTSerialPcsNG;
+export default ScanSMTConnectShtConfirm;
