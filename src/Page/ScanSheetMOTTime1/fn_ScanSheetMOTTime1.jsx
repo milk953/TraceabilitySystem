@@ -80,7 +80,8 @@ function fn_ScanSheetMOTTime() {
   const SUS = params.get("SUS");
   let hfZPRNProcID='1840'
   const Fac = import.meta.env.VITE_FAC;
-
+  const VITE_FINAL_GATE_AUTO_PRD= import.meta.env.VITE_FINAL_GATE_AUTO_PRD;
+  
   useEffect(() => {
     settxtMCNo((prevState) => ({ ...prevState, value: "", disbled: false,focus:true }));
     settxtlot((prevState) => ({
