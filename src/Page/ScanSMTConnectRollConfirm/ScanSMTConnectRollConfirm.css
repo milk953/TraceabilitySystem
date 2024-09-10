@@ -1,74 +1,18 @@
 /***  Khun ***/
-.ScanSMT{
-    margin: auto;
-    max-width:  450px;
-    width:  450px;
-   
-}
 
-.ScanSMT th{
-    padding: 3px !important;
-    background-color: #8c8c8c !important ;
-    border-radius: 5px  5px 0 0!important;
-    color: #fff;
-}
-
-
-.ScanSMT td{
-
-    padding: 4px 4px 4px 4px!important;
-    /* margin: 10px !important; */
-
-
-}
-
-.BtLotno{
-    background-color: #D04848 !important ;
+#txtLot_ScanSMTConnectRollConfirm_focus {
     padding: 1px !important;
-    font-size: 15px;
-    width: 35px;
-    height: 20px;
-    border-radius: 4px;
-    margin: auto;
+    font-size: 16px;
+    padding-left: 5px !important;
 }
 
-.BtSave{
-    background-color: #1A5D1A !important ;
-    color: #fff !important;
-    height: 30px;
-  
-}
-
-.BtCancel{
-    background-color: #E0282E!important ;
-    color: #fff !important;
-    height: 30px;
-}
-
-
-
-.CSS-GvScanResult{
-    max-width: 900px;
-    width: 100% !important;
-    margin-top: 10px;
-}
-
-
-.CSS-GvScanResult th{
-  
-    padding: 7px !important;
-    background-color: #378CE7 !important ;
-    color: #fff;
-    text-align: center;
-    
-}
-#txtLot {
+#lblTotalSht_ScanSMTConnectRollConfirm_focus{
     padding: 1px !important;
     font-size: 16px;
     padding-left: 5px !important;
 }
   
-#ddlProduct {
+#ddlProduct_ScanSMTConnectRollConfirm_focus {
     padding: 0 !important;
     font-size: 14px !important;
     padding-left: 5px !important;

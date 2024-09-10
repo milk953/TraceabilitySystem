@@ -31,7 +31,7 @@
 }
 /*  */
 .tableGvResultConncetShtConfirm .ant-table{
-  margin-left: 10px;
+  margin-left: 50px;
   box-shadow:rgba(0, 0, 0, 0.10) 0px 3px 8px !important;
   border: 1px black;
 }
@@ -54,6 +54,10 @@
 }
 .GvSerialConnectConfirm{
   border-radius: 10% ;
+
+}
+.GvSerialConnectConfirm th{
+  text-align: center; 
 }
 .GvSerialConnectConfirm td{
   padding: 4px 4px 4px 4px!important;

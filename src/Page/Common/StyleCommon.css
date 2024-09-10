@@ -20,6 +20,7 @@
     padding-top: 18px;
     color: yellow !important;
     font-weight: bold;
+    margin-top: 10px;
 }
 .Img_GvResult{
 width: 360px;
@@ -104,6 +105,19 @@ margin-bottom: 30px;
         background-color: #059212;
         color: #fff;
  }
+
+.BtSave{
+    background-color: #1A5D1A !important ;
+    color: #fff !important;
+    height: 30px;
+  
+}
+
+.BtCancel{
+    background-color: #E0282E!important ;
+    color: #fff !important;
+    height: 30px;
+}
 
 /* --------------Not Use--------------------------- */
 .txtfield-disable{
