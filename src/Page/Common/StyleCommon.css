@@ -86,11 +86,25 @@ margin-bottom: 30px;
   .Icon_ibtBack {
     padding: 0;
   }
+  
 .Img1{
     width: 420px;
     height: 350px;
     margin-bottom: 30px;
 }
+.Tag-NG{
+    width: 100%;
+    text-align: center;
+    background-color: #BA0900;
+    color: #fff;
+ }
+
+ .Tag-OK{
+        width: 100%;
+        text-align: center;
+        background-color: #059212;
+        color: #fff;
+ }
 
 .BtSave{
     background-color: #1A5D1A !important ;
