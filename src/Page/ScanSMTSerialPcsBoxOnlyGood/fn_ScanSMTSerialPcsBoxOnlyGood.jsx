@@ -6,6 +6,7 @@ import { color } from "framer-motion";
 import { green } from "@mui/material/colors";
 import styled from "styled-components";
 import { Tag } from "antd";
+import "../Common/StyleCommon.css";
 
 function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
@@ -264,9 +265,9 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           "transparent";
         
         return (
-          < Tag  color={backgroundColor} >
-            {text}
-          </Tag>
+          < Tag  className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+          {text}
+        </Tag>
         );
       },
       align: "center",

@@ -1,28 +1,11 @@
 /***  Khun ***/
 
-#txtLot_ScanSMTConnectRollConfirm_focus {
-    padding: 1px !important;
-    font-size: 16px;
-    padding-left: 5px !important;
-}
 
-#lblTotalSht_ScanSMTConnectRollConfirm_focus{
+  /* [id^="gvSerial_txtSerial_"] {
     padding: 1px !important;
     font-size: 16px;
     padding-left: 5px !important;
-}
-  
-#ddlProduct_ScanSMTConnectRollConfirm_focus {
-    padding: 0 !important;
-    font-size: 14px !important;
-    padding-left: 5px !important;
-  }
-
-  [id^="gvSerial_txtSerial_"] {
-    padding: 1px !important;
-    font-size: 16px;
-    padding-left: 5px !important;
-}
+} */
 
 
 

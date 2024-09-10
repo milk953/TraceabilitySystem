@@ -1,3 +1,4 @@
+import { Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
@@ -110,8 +111,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [pnlMachineState, setPnlMachineState] = useState(false);
   const [pnlBoardState, setPnlBoardState] = useState(false);
   const [panalSerialState, setPanalSerialState] = useState(false);
-  const [lblResultState, setLblResultState] = useState(false);
-  const [hideImg, setHideImg] = useState(true);
+  const [lblResultState, setLblResultState] = useState(true);
+  const [hideImg, setHideImg] = useState(false);
   // Focus State
   const Fctxtlot = useRef(null);
   const FCtxtRollleaf = useRef(null);
@@ -635,6 +636,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 });
               }
             }
+          console.log(dtRowLeaf, "dtRowLeaf");
           } else {
             _strScanResultAll = "NG";
             _strUpdateError = "Roll leaf no. incorrect.";
@@ -679,12 +681,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           styled: { backgroundColor: "green", color: "white" },
         });
       }
-      console.log(
-        _strScanResultAll,
-        "_strScanResultAll",
-        _strErrorAll,
-        "_strErrorAll"
-      );
       setGvScanResult(dtSerial);
       setTxtSideBack(gvBackSide.map(() => ""));
       setTxtSideFront(gvBackSide.map(() => ""));
@@ -1551,6 +1547,73 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       setlblLogState(false);
     }
   }
+  const columns = [
+    {
+    title: "Sheet No.",
+    dataIndex: "SHEET",
+    key: "SHEET",
+    align: "center",
+    width:80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "No.",
+    dataIndex: "SEQ",
+    key: "SEQ",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Serial No.",
+    dataIndex: "SERIAL",
+    key: "SERIAL",
+    align: "center",
+    width: 150,
+    render: (text, record, index) => {
+      return (
+        <div style={{ textAlign: 'left' }}>
+          {text}
+        </div>
+      );
+    },
+    
+  },
+  {
+    title: "Scan Result",
+    dataIndex: "SCAN_RESULT",
+    key: "SCAN_RESULT",
+    align: "center",
+    width: 80,
+    padding: '0px 0px 0px 0px',
+    render: (text, record, index) => {
+      const backgroundColor =
+        record.SCAN_RESULT === "NG" ? "#f50" : 
+        record.SCAN_RESULT === "OK" ? "#87d068" : 
+        "transparent";
+      
+      return (
+        < Tag style={{width:100,textAlign:'center',padding:'0px 0px 0px 0px'}}  color={backgroundColor} >
+          {text}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Remark",
+    dataIndex: "REMARK",
+    key: "REMARK",
+    align: "center",
+    width: 300,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+];
   return {
     productCombo,
     setProductcombo,
@@ -1613,6 +1676,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     lblResult,
     gvScanResult,
     hideImg,
+    columns
   };
 };
 

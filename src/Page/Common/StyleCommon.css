@@ -26,7 +26,10 @@ width: 360px;
 height: 300px;
 margin-bottom: 30px;
 }
+.CSS-GvSerial {
 
+    margin-top: 10px;
+}
 .CSS-GvSerial th{
     background-color: #12422e !important ;
     color: #fff;
