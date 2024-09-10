@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { Tag } from "antd";
 function Fn_ScanSMTRollSht() {
   const [txt_lotNo, settxt_lotNo] = useState({
     value: "",
@@ -379,7 +379,6 @@ function Fn_ScanSMTRollSht() {
         }
       });
     settxtTotalLeaf(data.prm_conn_roll_leaf_scan);
-    console.log(data.prm_conn_roll_leaf_scan, "data.prm_conn_roll_leaf_scan");
     if (data.prm_check_weekcode_flg == "Y") {
       axios
         .post("/api/Common/getWeekCodebyLot", {
@@ -962,6 +961,67 @@ function Fn_ScanSMTRollSht() {
     SetMode("LOT");
   };
 
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "SHT_SEQ",
+      key: "No.",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Roll/Sheet No.",
+      dataIndex: "ROLL_LEAF",
+      key: "Roll/Sheet No.",
+      align: "left",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Leaf No.",
+      dataIndex: "SHT_NO",
+      key: "Leaf No.",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "SCAN_RESULT",
+      align: "center",
+      render: (text, record, index) => {
+        const backgroundColor =
+        text === "NG" ? "#f50" :
+        text === "OK" ? "#87d068" :
+          "transparent";
+       
+        return (
+          <Tag  color={backgroundColor} >
+            {text}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "REMARK",
+      align: "center",
+      render: (text, record, index) => {
+    
+          return text;
+        
+      },
+    },
+    
+  ];
+
   return {
     settxt_lotNo,
     txt_lotNo,
@@ -995,7 +1055,8 @@ function Fn_ScanSMTRollSht() {
     fc_GvSerial,
     fc_txtLotNo,
     fc_txtOperator,
-    handletxtTotalLeaf
+    handletxtTotalLeaf,
+    columns
   };
 }
 

@@ -146,7 +146,7 @@ function fn_ScanSMTConnectRollConfirm() {
     }));
     setLblShtCount("");
     SetMode("LOT");
-    fnSetFocus("txtLot");
+    fnSetFocus("txtLot_ScanSMTConnectRollConfirm_focus");
   };
 
   const btnCancel_Click = async () => {
@@ -162,7 +162,6 @@ function fn_ScanSMTConnectRollConfirm() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    console.log("ค่าพชที่กรอกลงไป : ", newValues);
     newValues[index] = event.target.value;
     setTxtSerial(newValues);
   };
@@ -204,7 +203,7 @@ function fn_ScanSMTConnectRollConfirm() {
         visble: false,
       }));
       setHfMode("LOT");
-      fnSetFocus("txtLot");
+      fnSetFocus("txtLot_ScanSMTConnectRollConfirm_focus");
     }
     if (_strType == "LOT_ERROR") {
       setTxtLot((prevState) => ({
@@ -228,7 +227,7 @@ function fn_ScanSMTConnectRollConfirm() {
         visble: false,
       }));
       setHfMode("LOT");
-      fnSetFocus("txtLot");
+      fnSetFocus("txtLot_ScanSMTConnectRollConfirm_focus");
     }
     if (_strType == "SERIAL") {
       setTxtLot((prevState) => ({
@@ -289,16 +288,14 @@ function fn_ScanSMTConnectRollConfirm() {
   };
 
   const getInitialSerial = async () => {
-    console.log("เข้ามายัง getInitialSerial ");
     let dtData = [];
     for (let intRow = 1; intRow <= parseInt(hfShtScan, 10); intRow++) {
       // for (let intRow = 0; intRow < txtTotalLeaf; intRow++) {
-
       dtData.push({
         SEQ: intRow,
       });
     }
-    console.log("แสดงข้อมูล dtData : ", dtData);
+
     setGvSerial((prevState) => ({ ...prevState, value: dtData, visble: true }));
     return 0;
   };
@@ -322,7 +319,6 @@ function fn_ScanSMTConnectRollConfirm() {
     let _bolError = false;
     setLblShtCount("0");
     setLblRemark("");
-
     _strLotData = txtLot.value.trim().toUpperCase().split(";");
     _strLot = _strLotData[0];
     if (txtLot.value !== "" && dtSerial.length > 0) {
@@ -331,20 +327,27 @@ function fn_ScanSMTConnectRollConfirm() {
       let _intRowSerial = 0;
       for (let i = 0; i < dtSerial.length; i++) {
         const drRow = dtSerial[i];
-        if (drRow.SERIAL.trim() !== "") {
-          let _strSerial = drRow.SERIAL.trim().toUpperCase();
+
+        if (drRow.SERIAL !== "") {
+          let _strSerial = drRow.SERIAL;
           let _strTestResult = "NONE";
           let _strMessageUpdate = "";
           let _strScanResultUpdate = "";
           let _inCountSeq = 0;
           let _strSerialDup = "";
-
           for (let j = 0; j < dtSheet.length; j++) {
             const drShtRow = dtSheet[j];
+            console.log(
+              drShtRow,
+              " 190567332;#####",
+              _strSerial,
+              drRow
+            );
             if (
               drShtRow.SHEET_NO === _strSerial &&
-              drShtRow.DATA_REMARK.trim() === ""
+              drShtRow.DATA_REMARK === ""
             ) {
+              console.log("C-1");
               drShtRow.SCAN_RESULT = "OK";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -354,8 +357,9 @@ function fn_ScanSMTConnectRollConfirm() {
               _bolUpdate = true;
             } else if (
               drShtRow.SHEET_NO === _strSerial &&
-              drShtRow.DATA_REMARK.trim() !== ""
+              drShtRow.DATA_REMARK !== ""
             ) {
+              console.log("C-2");
               drShtRow.SCAN_RESULT = "NG";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -370,7 +374,9 @@ function fn_ScanSMTConnectRollConfirm() {
             lblRemark === "" &&
             _strScanResultAll === "NG"
           ) {
+            console.log(" เข้ามายัง if ขั้นตอนแรก ");
             if (hfCheckLotSht === "Y") {
+              console.log(" เข้ามายัง if ขั้นตอนสอง ");
               if (
                 _strLot !==
                 _strSerial.substring(
@@ -378,11 +384,14 @@ function fn_ScanSMTConnectRollConfirm() {
                   parseInt(hfCheckLotShtEnd) + 1
                 )
               ) {
+                console.log(" เข้ามายัง if ขั้นตอนสาม ");
                 setLblRemark("MIX LOT");
               } else {
+                console.log(" เข้ามายัง else if ขั้นตอนสาม ");
                 setLblRemark("NO DATA");
               }
             } else {
+              console.log(" เข้ามายัง  else if ขั้นตอนสอง ");
               setLblRemark("NO DATA");
             }
           } else if (
@@ -390,6 +399,7 @@ function fn_ScanSMTConnectRollConfirm() {
             lblRemark === "" &&
             _strScanResultAll === "NG"
           ) {
+            console.log(" เข้ามายัง else if ขั้นตอนแรก ");
             setLblRemark("DATA INCORRECT");
           }
         }
@@ -397,50 +407,60 @@ function fn_ScanSMTConnectRollConfirm() {
       for (let i = 0; i < dtSheet.length; i++) {
         const drShtRow = dtSheet[i];
         if (drShtRow.SCAN_RESULT === "OK") {
-          _intOK += 1;
+          _intOK = _intOK + 1;
         }
       }
       if (_bolUpdate) {
+        console.log(" เข้ามายัง _bolUpdate ขั้นตอนแรก ");
         let strError = "";
         // for (let i = 0; i < dtSerial.length; i++) {
         //   dtSerial[i].strPlantCode = "5";
         //   await axios
         //     .post("/api/SetConfirmConnectRollLeaf", {
-        //       dataList: dtSerial[i],
+        //       dataList: {
+        //         strPlantCode:  dtSerial[i].strPlantCode,
+        //         SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+        //         ROLL_LEAF_NO :dtSerial[i].ROLL_LEAF_NO,
+        //         SHEET_NO :dtSerial[i].SHEET_NO,
+        //       },
         //     })
         //     .then((res) => {
         //       strError = res.data;
         //     });
         // }
         if (strError !== "") {
+          console.log(" เข้ามายัง _bolUpdate ขั้นตอนสอง ที่ strError ");
           _strScanResultAll = "NG";
         }
-        // if (_intOK == parseInt(lblTotalSht, 10)) {
-        //   await axios
-        //     .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
-        //       strFlowID: hfFlowID,
-        //       strLotNo: _strLot,
-        //       strResult: "P",
-        //     })
-        //     .then((res) => {
-        //       strError = res.data;
-        //     });
-        // } else if (_intOK > parseInt(lblTotalSht, 10)) {
-        //   await axios
-        //     .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
-        //       strFlowID: hfFlowID,
-        //       strLotNo: _strLot,
-        //       strResult: "F",
-        //     })
-        //     .then((res) => {
-        //       strError = res.data;
-        //     });
-        // }
+        if (_intOK == parseInt(lblTotalSht, 10)) {
+          console.log(" เข้ามายัง _bolUpdate ขั้นตอนสาม ที่ _intOK ");
+          //   await axios
+          //     .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
+          //       strFlowID: hfFlowID,
+          //       strLotNo: _strLot,
+          //       strResult: "P",
+          //     })
+          //     .then((res) => {
+          //       strError = res.data;
+          //     });
+          // } else if (_intOK > parseInt(lblTotalSht, 10)) {
+          //   await axios
+          //     .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
+          //       strFlowID: hfFlowID,
+          //       strLotNo: _strLot,
+          //       strResult: "F",
+          //     })
+          //     .then((res) => {
+          //       strError = res.data;
+          //     });
+        }
 
         setLblResult((prevState) => ({
           ...prevState,
           value: _strScanResultAll,
         }));
+        console.log("_strScanResultAll",_strScanResultAll)
+
         if (_strScanResultAll.slice(0, 2) === "NG") {
           setLblResult((prevState) => ({
             ...prevState,
@@ -463,6 +483,7 @@ function fn_ScanSMTConnectRollConfirm() {
           ...prevState,
           visble: false,
         }));
+        console.log(" ออกจาก _bolUpdate ขั้นตอนแรก ");
       }
     } else {
       setLblPnlLog((prevState) => ({
@@ -470,14 +491,15 @@ function fn_ScanSMTConnectRollConfirm() {
         value: "Please input lot no. ",
       }));
       SetMode("SERIAL_ERROR");
+      console.log("กรอกข้อมูล lot no ซะ");
     }
-    await getShtDataBylot(txtLot.value.trim.toUpperCase);
+    await getShtDataBylot(txtLot.value);
     fnSetFocus("gvSerial_txtSerial_0");
-    console.log("ออกจาก setSerialData แล้ว ")
+    console.log("ออกจาก setSerialData แล้ว ");
     return 0;
   };
-  const ddlProduct_SelectedIndexChanged = async (e) => {
-    if (txtLot.trim().toUpperCase() !== "") {
+  const ddlProduct_SelectedIndexChanged = async () => {
+    if (txtLot.value.trim().toUpperCase() !== "") {
       setLblPnlLog((prevState) => ({
         ...prevState,
         value: "",
@@ -510,7 +532,6 @@ function fn_ScanSMTConnectRollConfirm() {
         .then((res) => {
           let data = res.data.prdName[0];
           strPrdName = data;
-          console.log(data, "data");
         });
 
       if (strPrdName !== "") {
@@ -527,7 +548,6 @@ function fn_ScanSMTConnectRollConfirm() {
           fnSetFocus("gvSerial_txtSerial_0");
         } catch (ex) {
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
-          console.log("intProduct : ", intProduct);
           if (intProduct > 0) {
             strPrdName =
               strPrdName.substring(0, intProduct) +
@@ -546,7 +566,7 @@ function fn_ScanSMTConnectRollConfirm() {
                 value: `Product ${strPrdName} not found.`,
                 visble: true,
               }));
-              fnSetFocus("ddlProduct");
+              fnSetFocus("ddlProduct_ScanSMTConnectRollConfirm_focus");
             }
           } else {
             setLblPnlLog((prevState) => ({
@@ -554,7 +574,7 @@ function fn_ScanSMTConnectRollConfirm() {
               value: `Product ${strPrdName} not found.`,
               visble: true,
             }));
-            fnSetFocus("ddlProduct");
+            fnSetFocus("ddlProduct_ScanSMTConnectRollConfirm_focus");
           }
         }
       } else {
@@ -570,7 +590,7 @@ function fn_ScanSMTConnectRollConfirm() {
           visble: true,
         }));
         setHfMode("LOT");
-        fnSetFocus("txtLot");
+        fnSetFocus("txtLot_ScanSMTConnectRollConfirm_focus");
       }
     } else {
       setDdlProduct((prevState) => ({
@@ -586,30 +606,15 @@ function fn_ScanSMTConnectRollConfirm() {
         visble: true,
       }));
       setHfMode("LOT");
-      fnSetFocus("txtLot");
+      fnSetFocus("txtLot_ScanSMTConnectRollConfirm_focus");
     }
     await getShtDataBylot(strLot);
   };
 
-  // const getInputSerial = async () => {
-  //   console.log("เข้ามายัง getInputSerial : ", getInputSerial);
-  //   let dtData = [];
-  //   let intRow = 0;
-  //   for (let intSeq = 0; intSeq < gvSerial.value.length; intSeq++) {
-  //     intRow += 1;
-  //     const row = gvSerial.value[intSeq];
-  //     dtData.push({
-  //       SEQ: intRow,
-  //       SERIAL: row.querySelector("#txtSerial").value.trim().toUpperCase(),
-  //     });
-  //   }
-  //   return dtData;
-  // };
-
   const getInputSerial = async () => {
     const dtData = [];
     for (let intRow = 0; intRow < gvSerial.value.length; intRow++) {
-      const serial = gvSerial.value[intRow];
+      const serial = txtSerial[intRow];
       dtData.push({
         SEQ: intRow + 1,
         SERIAL: serial,
@@ -619,61 +624,27 @@ function fn_ScanSMTConnectRollConfirm() {
   };
 
   const getSheetResult = async () => {
-    console.log("เข้ามายัง getSheetResult แล้ว ");
     const dtData = [];
     let intRow = 0;
+
     for (let intSeq = 0; intSeq < gvScanResult.value.length; intSeq++) {
       intRow = intRow + 1;
       const row = {
         SEQ: intRow,
-        ROLL_LEAF_NO: gvScanResult.value[intSeq].cells[1].toUpperCase(),
-        SHEET_NO: gvScanResult.value[intSeq].cells[2]
-          .toUpperCase(),
-        SCAN_RESULT: gvScanResult.value[intSeq].cells[3]
-          .toUpperCase(),
-        REMARK: gvScanResult.value[intSeq].cells[4]
-          .toUpperCase(),
-        DATA_REMARK: gvScanResult.value[intSeq]
-          .querySelector("#hfRemark")
-          .value
-          .toUpperCase(),
+        ROLL_LEAF_NO: gvScanResult.value[intSeq].roll_leaf_no,
+        SHEET_NO: gvScanResult.value[intSeq].sheet_no,
+        SCAN_RESULT: gvScanResult.value[intSeq].scan_result,
+        REMARK: gvScanResult.value[intSeq].remark,
+        DATA_REMARK: gvScanResult.value[intSeq].date_remark,
       };
       dtData.push(row);
     }
     return dtData;
   };
 
-  // const getShtDataBylot = async (strLot) => {
-  //   console.log(" เข้ามายัง getShtDataBylot แล้ว ");
-  //   let dtSheet = [];
-  //   let intOk = 0;
-  //   await axios
-  //     .post("/api/common/GetLotRollLeafDataAllByLot", {
-  //       dataList: {
-  //         strlotNo: strLot,
-  //         strPlantCode: plantCode,
-  //         strCheckOST: hfCheckOST,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       dtSheet = res.data[0];
-  //       setGvScanResult(dtSheet);
-  //       for (let i = 0; i < dtSheet.length; i++) {
-  //         if (dtSheet[i].SCAN_RESULT == "OK") {
-  //           intOk += 1;
-  //         }
-  //       }
-  //       setLblShtCount(intOk);
-  //       if (lblTotalSht == "" || lblTotalSht == "0") {
-  //         setLblTotalSht(dtSheet.length);
-  //       }
-  //     });
-  //     console.log(" ออกไปจาก getShtDataBylot แล้ว ");
-  //   return 0;
-  // };
   const getShtDataBylot = async (strLot) => {
-    console.log("เข้ามายัง getShtDataBylot แล้ว");
     let dtSheet = [];
+
     let intOk = 0;
     try {
       const res = await axios.post("/api/common/GetLotRollLeafDataAllByLot", {
@@ -684,7 +655,6 @@ function fn_ScanSMTConnectRollConfirm() {
         },
       });
       dtSheet = res.data;
-      console.log("dtSheet", dtSheet);
       if (dtSheet.length > 0) {
         setGvScanResult((prevState) => ({
           ...prevState,

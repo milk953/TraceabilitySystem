@@ -29,8 +29,10 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSmt.css";
+import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
+import { Table as AntTable } from 'antd';
 function ScanSMTRoollSht() {
   const {
     settxt_lotNo,
@@ -64,7 +66,8 @@ function ScanSMTRoollSht() {
     fc_GvSerial,
     fc_txtLotNo,
     fc_txtOperator,
-    handletxtTotalLeaf
+    handletxtTotalLeaf,
+    columns
   } = Fn_ScanSMTRollSht();
 console.log('gvScanResult',gvScanResult)
 
@@ -73,7 +76,7 @@ console.log('gvScanResult',gvScanResult)
     <div>
       <Hearder />
       <h1>ScanSMTRoollSht</h1>
-      <Card component={Paper} className="Card-ConfirmBarcode">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -92,7 +95,7 @@ console.log('gvScanResult',gvScanResult)
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         fullWidth
                         disabled={txt_lotNo.disbled} //true พิมไม่ได้
@@ -115,8 +118,8 @@ console.log('gvScanResult',gvScanResult)
                       
                       ></TextField>
                     </TableCell>
-                    <TableCell>
-                      <Button onClick={ibtback_Click}>
+                    <TableCell >
+                      <Button className="Bt_ibtBack" onClick={ibtback_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -128,8 +131,7 @@ console.log('gvScanResult',gvScanResult)
                     <TableCell colSpan={3}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          id="selectPd"
-                         
+                          className="Select_dropDown"
                           value={sl_Product.value}
                           style={sl_Product.style}
                           disabled={sl_Product.disbled} //true พิมไม่ได้
@@ -174,13 +176,11 @@ console.log('gvScanResult',gvScanResult)
                     </TableCell>
                     <TableCell colSpan={3}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         // label="Operator. :"
                         fullWidth
                         inputRef={(el) => (fc_txtOperator.current = el)}
-
-                        // disabled
                         value={txtOperator}
                         onChange={(e) => {
                           settxtOperator(e.target.value);
@@ -194,7 +194,7 @@ console.log('gvScanResult',gvScanResult)
                     </TableCell>
                     <TableCell>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         style={{ width: "70px" }}
                         value={txtTotalLeaf}
@@ -209,7 +209,7 @@ console.log('gvScanResult',gvScanResult)
                     </TableCell>
                     <TableCell style={{ width: "70px" }}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         value={lbltotalSht}
                       ></TextField>
@@ -221,10 +221,9 @@ console.log('gvScanResult',gvScanResult)
                     </TableCell>
                     <TableCell colSpan={3}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fc_txtRollleaf.current = el)}
-
                         disabled={txtRollLeaf.disbled} //true พิมไม่ได้
                         style={txtRollLeaf.style}
                         value={txtRollLeaf.value}
@@ -241,31 +240,19 @@ console.log('gvScanResult',gvScanResult)
                   </TableRow>
                 </TableBody>
               </Table>
-
+<br/>
               {lbllog.visble == true && (
                 <Paper
                   elevation={3}
-                  style={{
-                    width: "400px",
-                    height: "40px",
-                    margin: "auto",
-                    textAlign: "center",
-                    background: "#BB2525",
-                    paddingTop: "18px",
-                    color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
-                    fontWeight: "bold", // กำหนดความหนาของฟอนต์
-                    marginTop: "30px",
-                  }}
+                  className="Card-lblLog"
                 >
-                
                     {lbllog.value}
-                
                 </Paper>
               )}
-
+<br/>
               <Table
                 className="CSS-GvSerial"
-                style={{ display: GvSerial.visble, marginTop: "20px" }}
+                style={{ display: GvSerial.visble, }}
                 component={Card}
               >
                 <TableHead>
@@ -280,7 +267,7 @@ console.log('gvScanResult',gvScanResult)
                 </TableHead>
                 <TableBody>
                   {/* <TableRow> */}
-      {console.log('gvgvgvgvg',GvSerial.value)}
+     
                   {Array.from({ length: GvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
@@ -292,16 +279,33 @@ console.log('gvScanResult',gvScanResult)
                       <TableCell>
                         {" "}
                         <TextField
-                          id="txtfild"
                           size="small"
                           fullWidth
-                        
-                        inputRef={(el) => (fc_GvSerial.current = el)}
+                        className="input_txt"
+                        inputRef={(el) => (fc_GvSerial.current[index]  = el)}
 
                           value={txtLeafNo[index]}
                           onChange={(event) =>
                             handleTextFieldChange(index, event)
                           }
+
+                          // inputRef={(el) => (fc_txtSerial.current[index] = el)}
+                          // value={txtSerial[index]}
+                          onBlur={(event) => {
+                            handleTextFieldChange(index, event);
+                          }}
+                         
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                              event.preventDefault(); 
+                              if (index < GvSerial.value.length - 1) {
+                                fc_GvSerial.current[index + 1].focus();
+                              } else {
+                                Bt_Save();
+                                event.target.blur();
+                              }
+                            }
+                          }}
                         />
                       </TableCell>
                     </TableRow>
@@ -319,14 +323,11 @@ console.log('gvScanResult',gvScanResult)
                 </TableBody>
               </Table>
             </Grid>
-            {/* border:'1PX SOLID green' */}
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -334,23 +335,18 @@ console.log('gvScanResult',gvScanResult)
             >
               {gvScanResult.visble == false && (
                 <> <img
-                style={{
-                  width: "420px",
-                  height: "350px",
-                  marginBottom: "30px",
-                }}
-                src={Pageimg} // Import the image
+                className="Img1"
+                src={Pageimg} 
                 alt="Description of the image"
               /></>)}
-             
-              {/* visiblegvScanResult */}
               {gvScanResult.visble == true && (
                 <>
-                              <Paper
+                 <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+                 <Paper
                 className="Card-lblResult"
                 elevation={3}
                 style={{
-                  background: " #ff4d4f",
+                  background: " #BA0900",
                   display: gvScanResult,
                 }}
               >
@@ -361,7 +357,8 @@ console.log('gvScanResult',gvScanResult)
                   {lblResult.value}
                 </Typography>
               </Paper>
-              <Table
+              </div>
+              {/* <Table
                 className="CSS-GvScanResult"
                 style={{ display: gvScanResult }}
                 component={Card}
@@ -436,7 +433,17 @@ console.log('gvScanResult',gvScanResult)
                     )
                   )}
                 </TableBody>
-              </Table>
+              </Table> */}
+              <br/>
+               <AntTable 
+                columns={columns}
+                dataSource={gvScanResult.value}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                bordered
+                className="tableGvResult"
+                />
                 </>
             )}
             </Grid>
