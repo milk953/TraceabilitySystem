@@ -626,7 +626,7 @@ function fn_ScanSMTSerialPcsNG() {
       setLblLotTotal("");
       setPanalSerialState(false);
       setLblSerialNG("");
-      setLblResultState(true);
+      setLblResultState(false);
       SetFocus("txtLot");
     } else if (strType == "LOT_ERROR") {
       setTxtLot("");
