@@ -21,8 +21,10 @@ import {
   Grid,
   Input,
 } from "@mui/material";
+import { Table as AntTable } from 'antd';
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Pageimg from "/src/assets/1.jpg";
+import "../Common/StyleCommon.css";
 import "../Final Gate/SerialPcs.css";
 import Hearder from "../Header/Header";
 import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
@@ -33,13 +35,13 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
   ,gvSerial,pnlMachine,lblLastTray,lblBox,lblBoxTotal,lblPacking,lblPackingTotal,lblBoxStatus,lblLog
 ,lblBoxFull,btnSave_Click,ibtBox_Click,ibtPack_Click,pnlSerial,txtSerial
 ,pnlLog,pnlOP,handleSerialChange,lblResult,fntxtLot,fntxtMachine,fntxtTray,fntxtBox,fntxtPack,fc_txtSerial,fntxtOP,btnCancel,
-gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcsBoxOnlyGood()
+gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTSerialPcsBoxOnlyGood()
 
   return (
     <div>
       <Hearder />
       <h1>Final Gate</h1>
-      <Card component={Paper} className="Card-FinalGate">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -56,9 +58,9 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
-                        style={{ ...txtLot.style, width: "80%" , backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit', // สีพื้นหลังเมื่อ disabled
+                        style={{ ...txtLot.style , backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit', // สีพื้นหลังเมื่อ disabled
                           }}
                         disabled={txtLot.disbled} //true พิมไม่ได้
                         //inputRef={fntxtLot}
@@ -77,7 +79,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                         }}
                         onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack"
                       onClick={ibtBack_Click}
                       >
       
@@ -92,7 +94,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          id="selectPd"
+                         className="Select_dropDown"
                             // inputRef={fc_SlProduct}
                           value={selectddlProduct.value}
                         
@@ -132,7 +134,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     <TableCell colSpan={4}>
                       {console.log(txtMachine.disbled,"disbled")}
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtMachine.current = el)}
 
@@ -144,7 +146,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                           }));
                         }}
 
-                        style={{ width: "80%", backgroundColor: txtMachine.disbled ? '#e0e0e0' : 'inherit', }}
+                        style={{  backgroundColor: txtMachine.disbled ? '#e0e0e0' : 'inherit', }}
                         disabled={txtMachine.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
                         onKeyDown={(e) => {
@@ -154,7 +156,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                         }}
                         onBlur={txtMachine_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack"
                       onClick={ibtMachineBack_Click}
                       >
                         <BackspaceIcon />
@@ -167,7 +169,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtOP.current = el)}
 
@@ -178,7 +180,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                             value: e.target.value,
                           }));
                         }}
-                        style={{backgroundColor: txtOP.disbled ? '#e0e0e0' : 'inherit', width: "80%" }}
+                        style={{backgroundColor: txtOP.disbled ? '#e0e0e0' : 'inherit' }}
                         disabled={txtOP.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
                         onKeyDown={(e) => {
@@ -188,7 +190,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                         }}
                         onBlur={txtOP_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack" 
                       onClick={ibtOPBack_Click}
                       >
                         <BackspaceIcon />
@@ -201,7 +203,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtBox.current = el)}
 
@@ -212,7 +214,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                             value: e.target.value,
                           }));
                         }}
-                        style={{ backgroundColor: txtBox.disbled ? '#e0e0e0' : 'inherit',width: "80%" }}
+                        style={{ backgroundColor: txtBox.disbled ? '#e0e0e0' : 'inherit' }}
                         disabled={txtBox.disbled} //true พิมไม่ได้
                         // inputRef={fntxtBox}
                         onKeyDown={(e) => {
@@ -222,7 +224,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                         }}
                         onBlur={txtBox_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack" 
                       onClick={ibtBox_Click}
                       >
                         <BackspaceIcon />
@@ -235,7 +237,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
@@ -246,7 +248,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                             value: e.target.value,
                           }));
                         }}
-                        style={{backgroundColor: txtPack.disbled ? '#e0e0e0' : 'inherit', width: "80%" }}
+                        style={{backgroundColor: txtPack.disbled ? '#e0e0e0' : 'inherit' }}
                         disabled={txtPack.disbled} //true พิมไม่ได้
                         inputRef={fntxtPack}
                         onKeyDown={(e) => {
@@ -256,7 +258,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                         }}
                         onBlur={txtPack_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack" 
                       onClick={ibtPack_Click}
                       >
                         <BackspaceIcon />
@@ -283,7 +285,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     </TableCell>
                     <TableCell style={{ width: "130px" }}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtTray.current = el)}
                         value={txtPcsTray.value}
@@ -321,16 +323,16 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
               <Card sx={{ marginTop: '10px' ,width:'100%' }}>
   <Table >
     <TableRow>
-      <TableCell   id="txtfild" align="right" sx={{width:'15%',textAlign: "center"}} >Box :</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'25%',textAlign:'center',backgroundColor:lblBox.value !== ""? '#FFE8FF':''}}>{lblBox.value}</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxFull.value!== ""?'#d6eaf8':''}}>{lblBoxFull.value}</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxTotal.value!== ""?'#fcf3cf':''}}>{lblBoxTotal.value}</TableCell>
-      <TableCell   id="txtfild"rowSpan={2} sx={{ textAlign:'center',width:'15%' ,fontWeight:'bold',color:lblBoxStatus.value == 'OK' ? 'green' : 'red'  }} >{lblBoxStatus.value}</TableCell>
+      <TableCell   className="input_txt" align="right" sx={{width:'15%',textAlign: "center"}} >Box :</TableCell>
+      <TableCell   className="input_txt"sx={{ width:'25%',textAlign:'center',backgroundColor:lblBox.value !== ""? '#FFE8FF':''}}>{lblBox.value}</TableCell>
+      <TableCell   className="input_txt"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxFull.value!== ""?'#d6eaf8':''}}>{lblBoxFull.value}</TableCell>
+      <TableCell   className="input_txt"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxTotal.value!== ""?'#fcf3cf':''}}>{lblBoxTotal.value}</TableCell>
+      <TableCell   className="input_txt"rowSpan={2} sx={{ textAlign:'center',width:'15%' ,fontWeight:'bold',color:lblBoxStatus.value == 'OK' ? 'green' : 'red'  }} >{lblBoxStatus.value}</TableCell>
     </TableRow>
     <TableRow>
-      <TableCell   id="txtfild"align="right" sx={{width:'15%',textAlign:'center'}}>Packing :</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'15%',textAlign: "center",backgroundColor:lblPacking.value !== ""?'#FFE8FF':''}}>{lblPacking.value}</TableCell>
-      <TableCell   id="txtfild"sx={{ textAlign:'center',width:'15%',backgroundColor:lblPackingTotal.value !== "" ?'#fcf3cf':''}} colSpan={2}>{lblPackingTotal.value}</TableCell>
+      <TableCell   className="input_txt"align="right" sx={{width:'15%',textAlign:'center'}}>Packing :</TableCell>
+      <TableCell   className="input_txt"sx={{ width:'15%',textAlign: "center",backgroundColor:lblPacking.value !== ""?'#FFE8FF':''}}>{lblPacking.value}</TableCell>
+      <TableCell   className="input_txt"sx={{ textAlign:'center',width:'15%',backgroundColor:lblPackingTotal.value !== "" ?'#fcf3cf':''}} colSpan={2}>{lblPackingTotal.value}</TableCell>
     </TableRow>
   </Table>
 </Card>
@@ -410,7 +412,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                       <TableCell>
                         <TextField
                          key={index} 
-                          id="txtfild"
+                          className="input_txt"
                           size="small"
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
@@ -453,7 +455,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
                 margin: "auto",
                 marginTop: "10px",
@@ -480,16 +482,14 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
               {/* visiblegvScanResult */}
               {pnlgvScanResult && (
                 <>
-                <table>
-                  <tr>
-                    <td>
+                <div style={{ display: "flex", gap: "10px", width: "100%" }}>
               <Paper
                  className="Card-lblResult"
-                elevation={3}
+               
                 style={{
                   background: 
                   lblResult.value == "NG" ?  "#ff4d4f":"green",
-                  width:'200px'
+                  
                 }}
               >
                 <Typography variant="h4" style={{ paddingTop: "5px", color:  "#fff", }}>
@@ -497,11 +497,9 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                 </Typography>
                
               </Paper>
-                    </td>
-                    <td>
+                    
               <Paper
-                 className="Card-lblResult"
-                elevation={3}
+                 className="Card-lblTime"
                 style={{...lblTime.style,}}
               >
                 <Typography variant="h4" style={{ paddingTop: "5px", color: "#fff", }}>
@@ -509,11 +507,9 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                 </Typography>
                
               </Paper>
-                    </td>
-                  </tr>
-                </table>
+                   </div>
                 
-              
+{/*               
               <Table
                 className="CSS-GvScanResult-FinalGate"
                 // style={{ display: gvScanResult }}
@@ -565,7 +561,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                     <TableCell >Remark </TableCell>
                   </TableRow>
                 </TableHead>
-                {/* {console.log(gvScanResult.value.flat(),'gvScanResult')} */}
                 {Array.from(
                         { length: gvScanResult.length },
                         (_, index) => (
@@ -621,7 +616,17 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                           </TableRow>
                         )
                       )}
-              </Table>
+              </Table> */}
+                   <br/>
+                      <AntTable 
+                columns={columns}
+                dataSource={gvScanResult}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                bordered
+                className="tableGvResult"
+                />
               
                 </>
               )} 
