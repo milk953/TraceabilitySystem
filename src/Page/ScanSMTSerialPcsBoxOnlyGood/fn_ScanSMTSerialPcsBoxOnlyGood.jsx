@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { color } from "framer-motion";
 import { green } from "@mui/material/colors";
 import styled from "styled-components";
+import { Tag } from "antd";
 
 function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
@@ -192,7 +193,95 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   useEffect(() => {
     getInitialSerial();
   }, [hfserialcount]);
-  
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Serial No.",
+      dataIndex: "SERIAL",
+      key: "Serial No.",
+      align: "left",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Re-Judgement 1",
+      dataIndex: "REJECT",
+      key: "Re-Judgement 1",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+
+    {
+      title: "Result",
+      key: "Result",
+      dataIndex: "TOUCH_UP",
+      align: "center",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Re-Judgement 2",
+      key: "Re-Judgement 2",
+      dataIndex: "REJECT2",
+      align: "center",
+      render: (text, record, index) => {
+    
+          return text;
+        
+      },
+    },
+    {
+      title: "Test Result",
+      key: "Test Result",
+      dataIndex: "TEST_RESULT",
+      align: "center",
+
+      render: (text, record, index) => {
+        return text;
+    },
+    },
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "SCAN_RESULT",
+
+      render: (text, record, index) => {
+        const backgroundColor =
+          record.SCAN_RESULT === "NG" ? "#f50" : 
+          record.SCAN_RESULT === "OK" ? "#87d068" : 
+          "transparent";
+        
+        return (
+          < Tag  color={backgroundColor} >
+            {text}
+          </Tag>
+        );
+      },
+      align: "center",
+    },
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "REMARK",
+
+      render: (text, record, index) => {
+          return text;
+      },
+      align: "center",
+    },
+  ];
   const txtLot_TextChanged = async () => {
     if (txtLot.value !== "") {
       let _strPrdName = "";
@@ -2227,7 +2316,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     lblTime,
     lblOP,
     btnCancel,
-    dis_ddlProduct
+    dis_ddlProduct,
+    columns
   };
 }
 
