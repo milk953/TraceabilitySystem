@@ -40,12 +40,18 @@
 }
 .lblResultFin{
   margin-left: 20px;
-  width: 600px;
+  width: 900px;
   text-align: center;
   font-size: 80px;
-  height: 100px;
+  /* height: 0px; */
 }
-
+.pnlBackside{
+  margin-top: 10px;
+  width: 400px !important;
+}
+.gvBackSide{
+  width: 400px !important;
+}
 .gvBackSide td {
   padding: 3px;
   width: 100px;
@@ -90,20 +96,29 @@
 }
 
 .gvSerial {
+  
   width: 400px !important;
   margin: left;
   margin-top: 20px !important;
 }
 
+
+.gvSerialThead{
+  color: white !important;
+  text-align: center !important;
+  width: 30px !important;
+  
+}
 .gvSerial td {
   padding: 4px 4px 4px 4px !important;
 }
 
 .panelgvSerial {
+  width: 400px !important;
   margin-top: 10px;
 }
 .gvSerialCell {
-  padding: 1px !important;
+  padding: 5px !important;
   /* background-color: #006666; */
   margin: auto;
   text-align: center !important;
@@ -145,10 +160,10 @@
 
 
 .lblResultCard{
-  max-width: 400px;
+  width: 1200px;
   width: 100%;
   margin: auto;
-  margin-left: 200px;
+  /* margin-left: 200px; */
   height: 45px;
   text-align: center;
 }
