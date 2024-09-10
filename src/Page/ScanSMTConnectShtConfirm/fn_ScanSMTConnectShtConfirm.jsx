@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { get } from "lodash";
+import { get, set } from "lodash";
 import Swal from "sweetalert2";
+import { SoundFilled } from "@ant-design/icons";
+import { FitnessCenter } from "@mui/icons-material";
 function fn_ScanSMTConnectShtConfirm() {
   const [hideImg, setHideImg] = useState(true);
   const [gvSerial, setGvSerial] = useState([]);
@@ -13,6 +15,7 @@ function fn_ScanSMTConnectShtConfirm() {
   const [txtSerial, setTxtSerial] = useState(gvSerial.map(() => ""));
   const [lblError, setLblError] = useState("");
   const [lblResultState, setLblResultState] = useState(false);
+  const [lblResult, setLblResult] = useState("");
   const [gvScanResult, setGvScanResult] = useState([]);
   const [lblShtCount, setLblShtCount] = useState();
   const [lblTotalSht, setlblTotalSht] = useState();
@@ -66,8 +69,9 @@ function fn_ScanSMTConnectShtConfirm() {
         Setdisable("disable", "ScanSMTConnectShtConfirmtxtLot");
         setPanalSerialState(true);
         hfMode = "SERIAL";
-        console.log('inSERialmode')
-        getInitialSerial()
+        console.log("inSERialmode");
+        getInitialSerial();
+
         break;
       case "SERIAL_ERROR":
         Setdisable("disable", "ScanSMTConnectShtConfirmtxtLot");
@@ -76,7 +80,7 @@ function fn_ScanSMTConnectShtConfirm() {
         Setdisable("disable", "ScanSMTConnectShtConfirmtxtLot");
         setPanalSerialState(false);
         getInitialSerial();
-        SetFocus("gvSerial_0");
+        SetFocus(`txtSerial_0`);
         break;
       case "SERIAL_NG":
         Setdisable("disable", "ScanSMTConnectShtConfirmtxtLot");
@@ -86,11 +90,13 @@ function fn_ScanSMTConnectShtConfirm() {
   const ddlproduct_Change = async (value) => {
     setProductSelected(value);
     if (txtLot !== "") {
+      setLblError("");
+      // getCountDataBylot(txtLot);
+      // setMode("SERIAL");
     } else {
       setProductSelected(ddlproduct[0].prd_name);
       SetFocus("ScanSMTConnectShtConfirmtxtLot");
     }
-
   };
   const txtLot_Change = async () => {
     setLblError("");
@@ -133,10 +139,8 @@ function fn_ScanSMTConnectShtConfirm() {
     document.getElementById(`${txtField}`).focus();
   }
   async function getShtDataBylot(strLot) {
-
     let dtSheet = [];
     dtSheet = await getData("GetLotSheetDataAllByLot", strLot);
-    console.log(dtSheet,'dtSheet')
     setGvScanResult(dtSheet);
     setLblShtCount(0);
     for (let i = 0; i < dtSheet.length; i++) {
@@ -160,15 +164,55 @@ function fn_ScanSMTConnectShtConfirm() {
       }
     }
   };
-  const handle_Save_Click = async () => {};
-  const handle_Cancel_Click = async () => {};
+  const handle_Save_Click = async () => {
+    // console.log(txtSerial,'txtSerial');
+    setSerialData();
+  };
+  const handle_Cancel_Click = async () => {
+    setTxtSerial(gvSerial.map(() => ""));
+    setMode("SERIAL");
+    SetFocus(`txtSerial_0`);
+  };
   async function getCountDataBylot(strLot) {
     let dtSerialCount = [];
     dtSerialCount = await getData("GetLotSerialCountData", strLot);
-    if (dtSerialCount != ''){
-    console.log(dtSerialCount)      
+    if (dtSerialCount != "") {
       setlblTotalSht(dtSerialCount.count_sht);
     }
+  }
+  function getInputSerial() {
+    let dtData = [];
+    let intRow = 0;
+    let strFrontSide = "";
+
+    for (let intSeq = 0; intSeq < gvSerial.length; intSeq++) {
+      intRow = intRow + 1;
+      dtData.push({
+        seq: intRow,
+        SERIAL: txtSerial[intSeq],
+        SHEET_NO: txtSerial[intSeq],
+        SCAN_RESULT: "",
+      });
+    }
+    return dtData;
+  }
+  function getSheetResult() {
+    let dtData = [];
+    let intRow = 0;
+    let strFrontSide = "";
+
+    for (let intSeq = 0; intSeq < gvScanResult.length; intSeq++) {
+      intRow = intRow + 1;
+      dtData.push({
+        seq: intRow,
+        sheet_no_front: gvScanResult[intSeq].sheet_no_front,
+        sheet_no_back: gvScanResult[intSeq].sheet_no_back,
+        scan_result: gvScanResult[intSeq].scan_result,
+        remark: gvScanResult[intSeq].remark,
+      });
+    }
+
+    return dtData;
   }
   async function getData(type, params) {
     if (type == "getProductData") {
@@ -210,17 +254,107 @@ function fn_ScanSMTConnectShtConfirm() {
           Swal.fire("Error", error.message);
         });
       return drSerialCount;
+    } else if (type == "SetConfirmConnectShtPcs") {
+      let result = "";
+      await axios
+        .post("/api/common//SetConfirmConnectShtPcs", {
+          dataList: {
+            strSheetNo: params.strSheetNo,
+            strPlantCode: Fac,
+            strScanResult: params.strScanResult,
+          },
+        })
+        .then((res) => {
+          result = res.data.p_error;
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: error.message,
+          });
+        });
+      return result;
     }
   }
   function getInitialSerial() {
     let arrSerial = [];
     for (let i = 0; i < hfShtScan; i++) {
-      console.log('in',i)
       arrSerial.push({
         SEQ: i + 1,
       });
     }
     setGvSerial(arrSerial);
+    // SetFocus(`txtSerial_0`);
+  }
+  async function setSerialData() {
+    let dtSerial = getInputSerial();
+    let dtSheet = getSheetResult();
+
+    let _strlot = "";
+    let _strLotData;
+    let _strPrdName = productSelected;
+    let _strShtNoBack = "";
+    let _strShtNoFront = "";
+    let _strTray = " ";
+    let _intSeq = 1;
+    let _strScanResultAll = "";
+    let _strErrorAll = "";
+    let _strUpdateError = "";
+
+    let _bolError = false;
+
+    _strLotData = txtLot.split(";");
+    _strlot = _strLotData[0];
+    if (txtLot != "" && dtSerial.length > 0) {
+      _strScanResultAll = "NG";
+      let _intRowSerial = 0;
+      for (let i = 0; i < dtSerial.length; i++) {
+        if (dtSerial[i].SERIAL != "") {
+          let _strSerial = dtSerial[i].SERIAL;
+          let _strTestResult = "NONE";
+          let _strMessageUpdate = "";
+          let _strScanResultUpdate = "";
+          let _inCountSeq = 0;
+          let _strSerialDup = "";
+
+          for (let j = 0; j < dtSheet.length; j++) {
+            if (
+              dtSheet[j].sheet_no_front == _strSerial ||
+              dtSheet[j].sheet_no_back == _strSerial
+            ) {
+              dtSheet[j].scan_result = "OK";
+              dtSerial[i].SCAN_RESULT = dtSheet[j].scan_result;
+              _strScanResultAll = dtSheet[j].scan_result;
+            }
+          }
+        }
+      }
+
+      if (_strScanResultAll == "OK") {
+        // Dim strError As String = BIZ_ScanSMTSerial.SetConfirmConnectShtPcs(Session("PLANT_CODE"), dtSerial, Session("PRODUCT_KIND"))
+        for (let i = 0; i < dtSerial.length; i++) {
+          let strError = await getData("SetConfirmConnectShtPcs", {
+            strSheetNo: dtSerial[i].SHEET_NO,
+            strScanResult: dtSerial[i].SCAN_RESULT,
+          });
+          if (strError != "") {
+            _strErrorAll = "NG";
+          }
+        }
+      }
+      setLblResult(_strScanResultAll);
+      setLblResultState(true); 
+      getShtDataBylot(_strlot);
+      setTxtSerial(gvSerial.map(() => ""));
+      getInitialSerial();
+      setLblError("");
+    } else {
+      setLblError("Please input lot no. ");
+      setMode("SERIAL_ERROR");
+    }
+    getCountDataBylot(_strlot);
+    SetFocus("txtSerial_0");
   }
   const columns = [
     {
@@ -230,6 +364,7 @@ function fn_ScanSMTConnectShtConfirm() {
       render: (text, record, index) => {
         return index + 1;
       },
+      width: 100,
       align: "center",
     },
     {
@@ -237,6 +372,7 @@ function fn_ScanSMTConnectShtConfirm() {
       dataIndex: "sheet_no_front",
       key: "sheet_no_front",
       align: "left",
+      width: 200,
       render: (text, record, index) => {
         return text;
       },
@@ -246,6 +382,7 @@ function fn_ScanSMTConnectShtConfirm() {
       dataIndex: "sheet_no_front",
       key: "sheet_no_front",
       align: "left",
+      width: 200,
       render: (text, record, index) => {
         return text;
       },
@@ -255,6 +392,7 @@ function fn_ScanSMTConnectShtConfirm() {
       dataIndex: "scan_result",
       key: "scan_result",
       align: "left",
+      width: 130,
       render: (text, record, index) => {
         return text;
       },
@@ -264,6 +402,7 @@ function fn_ScanSMTConnectShtConfirm() {
       dataIndex: "remark",
       key: "remark",
       align: "left",
+      width: 200,
       render: (text, record, index) => {
         return text;
       },
@@ -293,7 +432,8 @@ function fn_ScanSMTConnectShtConfirm() {
     lblShtCount,
     lblTotalSht,
     gvScanResult,
-    gvResutlState
+    gvResutlState,
+    lblResult
   };
 }
 
