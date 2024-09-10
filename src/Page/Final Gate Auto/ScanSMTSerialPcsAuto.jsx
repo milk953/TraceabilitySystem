@@ -209,7 +209,7 @@ function ScanSMTRoollSht() {
               <Paper
                 elevation={3}
                 style={{
-               ay: lblLog.visble,
+               display: lblLog.visble,
                 }}
                 className="Card-lblLog"
               >
