@@ -355,18 +355,6 @@ function ScanSMTSerialPcsBox() {
               {pnlLog && (
               <Paper
                 elevation={3}
-                // style={{
-                //   width: "400px",
-                //   height: "40px",
-                //   margin: "auto",
-                //   textAlign: "center",
-                //   background: "#BB2525",
-                //   paddingTop: "18px",
-                //   color: "yellow", 
-                //   fontWeight: "bold", 
-                //   marginTop: "10px",
-                  
-                // }}
                 className="Card-lblLog"
               >
                 {lblLog.value}
