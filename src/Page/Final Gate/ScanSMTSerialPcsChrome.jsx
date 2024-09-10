@@ -26,8 +26,10 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
+import { Table as AntTable } from 'antd';
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./SerialPcs.css";
+import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsChrome";
 import Pageimg from "/src/assets/1.jpg";
@@ -66,16 +68,18 @@ function ScanSMTRoollSht() {
     gvScanResult,
     lblResult,
     lblTime,
+    columns
   } = fn_ScanSMTSerialPcsChrome();
   console.log("lblTime", lblTime);
   return (
     <div>
       <Hearder />
       <h1>Final Gate</h1>
-      <Card component={Paper} className="Card-FinalGate">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={10} md={4}>
+          <Grid container spacing={2}  >
+          {/* style={{border:'1px solid red'}} */}
+            <Grid item xs={10} md={4}  >
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
@@ -223,12 +227,12 @@ function ScanSMTRoollSht() {
               </Table>
 
               {/* {lbllog.visble == true && ( */}
+              
               <Paper
                 elevation={3}
                 style={{
-                  width: "400px",
+                  width: "450px",
                   height: "40px",
-                  margin: "auto",
                   textAlign: "center",
                   background: "#BB2525",
                   paddingTop: "18px",
@@ -319,21 +323,22 @@ function ScanSMTRoollSht() {
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
+
+              
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+               
               }}
             >
               {gvScanResult.visble == false && (
                 <>
                   <img
                     style={{
-                      width: "360px",
-                      height: "300px",
+                      width: "300px",
+                      height: "260px",
                       marginBottom: "30px",
                     }}
                     src={Pageimg} // Import the image
@@ -350,8 +355,8 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
-                        width: "70%", // ควบคุมขนาดของ Paper
+                          lblResult.value === "OK" ? "#059212" : "#BA0900",
+                        // ควบคุมขนาดของ Paper
                       }}
                     >
                       <Typography
@@ -363,10 +368,11 @@ function ScanSMTRoollSht() {
                     </Paper>
 
                     <Paper
-                      className="Card-lblResult"
+                      className="Card-lblTime"
                       style={{
                         ...lblTime.style,
-                        width: "30%", // ควบคุมขนาดของ Paper
+                       // ควบคุมขนาดของ Paper
+                        // background:'#BA0900'
                       }}
                     >
                       <Typography
@@ -377,7 +383,7 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-                  <Table
+                  {/* <Table
                     className="CSS-GvScanResult-FinalGate"
                     component={Card}
                   >
@@ -407,7 +413,7 @@ function ScanSMTRoollSht() {
                         <TableCell>Remark </TableCell>
                       </TableRow>
                     </TableHead>
-                    {/* {console.log(gvScanResult.value.flat(),'gvScanResult')} */}
+                    
                     {Array.from(
                       { length: gvScanResult.value.length },
                       (_, index) => (
@@ -454,7 +460,8 @@ function ScanSMTRoollSht() {
                                   : gvScanResult.value[index].SCAN_RESULT ===
                                     "OK"
                                   ? "#52c41a"
-                                  : "#ff4d4f",
+                                  : "#BA0900",
+                                  color:'#fff'
                             }}
                           >
                             {gvScanResult.value[index].SCAN_RESULT}
@@ -465,7 +472,17 @@ function ScanSMTRoollSht() {
                         </TableRow>
                       )
                     )}
-                  </Table>
+                  </Table> */}
+                  <br/>
+               <AntTable 
+                columns={columns}
+                dataSource={gvScanResult.value}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                // bordered
+                className="tableGvResult"
+                />
                 </>
               )}
             </Grid>

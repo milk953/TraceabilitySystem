@@ -144,7 +144,7 @@ function fn_Homepage() {
         if (currentPath === dataMenu[i].url) {
           setMenuUrl(dataMenu[i].url)
           // console.log(dataMenu[i].url)
-          setMenuName(':'+' '+dataMenu[i].page_title);
+          setMenuName(dataMenu[i].page_title);
           break; 
         }
       }

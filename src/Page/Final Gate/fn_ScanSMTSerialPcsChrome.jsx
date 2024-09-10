@@ -1675,6 +1675,88 @@ function fn_ScanSMTSerialPcsChrome() {
     setlblLastTray("Not Use");
   };
 
+
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Serial No.",
+      dataIndex: "SERIAL",
+      key: "Serial No.",
+      align: "left",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Re-Judgement 1",
+      dataIndex: "REJECT",
+      key: "Re-Judgement 1",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+
+    {
+      title: "Result",
+      key: "Result",
+      dataIndex: "TOUCH_UP",
+      align: "center",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Re-Judgement 2",
+      key: "Re-Judgement 2",
+      dataIndex: "REJECT2",
+      align: "center",
+      render: (text, record, index) => {
+    
+          return text;
+        
+      },
+    },
+    {
+      title: "Test Result",
+      key: "Test Result",
+      dataIndex: "TEST_RESULT",
+
+      render: (text, record, index) => {
+          return text;
+      },
+      align: "center",
+    },
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "SCAN_RESULT",
+
+      render: (text, record, index) => {
+          return text;
+      },
+      align: "center",
+    },
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "REMARK",
+
+      render: (text, record, index) => {
+          return text;
+      },
+      align: "center",
+    },
+  ];
+
   return {
     txtLot,
     settxtLot,
@@ -1708,7 +1790,8 @@ function fn_ScanSMTSerialPcsChrome() {
     btnCancel_Click,
     gvScanResult,
     lblResult,
-    lblTime
+    lblTime,
+    columns
   };
 }
 

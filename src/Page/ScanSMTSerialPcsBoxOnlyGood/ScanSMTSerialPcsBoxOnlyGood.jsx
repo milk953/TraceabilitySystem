@@ -488,7 +488,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                 elevation={3}
                 style={{
                   background: 
-                  lblResult.value == "NG" ?  "#ff4d4f":"",
+                  lblResult.value == "NG" ?  "#ff4d4f":"green",
                   width:'200px'
                 }}
               >
@@ -595,25 +595,21 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct} = fn_ScanSMTSerialPcs
                             </TableCell>
                             <TableCell
                             align="center"
-                            sx={{
-                              // borderRight: "1px solid #d9d9d9",
-                              // background: gvScanResult.value[index].SCAN_RESULT === '' 
-                              //   ? '' 
-                              //   : gvScanResult.value[index].SCAN_RESULT === 'OK' 
-                              //   ? 'green' 
-                              //   : '#ff4d4f'
-                            }}
+                            sx={{borderRight: "1px solid #d9d9d9"}}
                             
                             >
                               {gvScanResult[index].REJECT2}
                             </TableCell>
                             <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' }}
                             >
                               {gvScanResult[index].TEST_RESULT}
                             </TableCell>
                             <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' ,backgroundColor:gvScanResult[index].SCAN_RESULT == "NG"? '#ff4d4f':'green'}}
+                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' , backgroundColor: 
+                                gvScanResult[index].SCAN_RESULT === "NG" ? '#ff4d4f' : 
+                                gvScanResult[index].SCAN_RESULT === "OK" ? 'green' : 
+                                'transparent' }}
                             >
                               {gvScanResult[index].SCAN_RESULT}
                             </TableCell>

@@ -28,7 +28,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "/src/Page/Scan SMTRoollSht/ScanSmt.css";
+import "./ScanSmt.css";
 import Hearder from "../Header/Header";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
 function ScanSMTRoollSht() {
@@ -68,35 +68,6 @@ function ScanSMTRoollSht() {
   } = Fn_ScanSMTRollSht();
 console.log('gvScanResult',gvScanResult)
 
-useEffect(() => {
-  if(fc_txtRollleaf.current){
-    fc_txtRollleaf.current.focus();
-  }
- 
- }, [txtRollLeaf]);
-
-
- useEffect(() => {
-  if(fc_SlProduct.current){
-    fc_SlProduct.current.focus();
-  }
- 
-}, [sl_Product]);
-
-
-useEffect(() => {
-  if(fc_txtOperator.current){
-    fc_txtOperator.current.focus();
-  }
- 
-}, [txtOperator]);
-
-useEffect(() => {
-  if(fc_GvSerial.current){
-    fc_GvSerial.current.focus();
-  }
- 
-}, [GvSerial]);
 
   return (
     <div>
@@ -126,7 +97,8 @@ useEffect(() => {
                         fullWidth
                         disabled={txt_lotNo.disbled} //true พิมไม่ได้
                         style={txt_lotNo.style}
-                        inputRef={fc_txtLotNo}
+                  
+                        inputRef={(el) => (fc_txtLotNo.current = el)}
                         value={txt_lotNo.value}
                         onChange={(e) => {
                           settxt_lotNo((prevState) => ({
@@ -157,7 +129,7 @@ useEffect(() => {
                       <FormControl fullWidth>
                         <Autocomplete
                           id="selectPd"
-                          inputRef={fc_SlProduct}
+                         
                           value={sl_Product.value}
                           style={sl_Product.style}
                           disabled={sl_Product.disbled} //true พิมไม่ได้
@@ -166,6 +138,7 @@ useEffect(() => {
                           renderInput={(params) => (
                             <TextField
                               {...params}
+                              inputRef={(el) => (fc_SlProduct.current = el)}
                               size="small"
                               sx={{ textAlign: "left" }}
                             />
@@ -205,7 +178,8 @@ useEffect(() => {
                         size="small"
                         // label="Operator. :"
                         fullWidth
-                        inputRef={fc_txtOperator}
+                        inputRef={(el) => (fc_txtOperator.current = el)}
+
                         // disabled
                         value={txtOperator}
                         onChange={(e) => {
@@ -249,7 +223,8 @@ useEffect(() => {
                       <TextField
                         id="txtfild"
                         size="small"
-                        inputRef={fc_txtRollleaf}
+                        inputRef={(el) => (fc_txtRollleaf.current = el)}
+
                         disabled={txtRollLeaf.disbled} //true พิมไม่ได้
                         style={txtRollLeaf.style}
                         value={txtRollLeaf.value}
@@ -305,8 +280,8 @@ useEffect(() => {
                 </TableHead>
                 <TableBody>
                   {/* <TableRow> */}
-
-                  {Array.from({ length: txtTotalLeaf }, (_, index) => (
+      {console.log('gvgvgvgvg',GvSerial.value)}
+                  {Array.from({ length: GvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
                         align="center"
@@ -320,7 +295,9 @@ useEffect(() => {
                           id="txtfild"
                           size="small"
                           fullWidth
-                          inputRef={fc_GvSerial}
+                        
+                        inputRef={(el) => (fc_GvSerial.current = el)}
+
                           value={txtLeafNo[index]}
                           onChange={(event) =>
                             handleTextFieldChange(index, event)

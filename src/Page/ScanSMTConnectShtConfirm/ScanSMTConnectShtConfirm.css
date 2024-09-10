@@ -1,0 +1,66 @@
+.ScanSMTConnectShtConfirmmaintd {
+  vertical-align: top;
+}
+.ScanSMTConnectShtConfirmmainTable {
+  max-width: 400px;
+}
+.ScanSMTConnectShtConfirmTable th {
+  color: black;
+  font-family: Arial;
+  padding: 8px !important;
+  background-color: #8c8c8c !important ;
+  border-radius: 5px 5px 0 0 !important;
+  color: #fff;
+  font-size: 20px;
+}
+.ScanSMTConnectShtConfirmTable td {
+  padding: 5px !important;
+  text-align: right;
+}
+
+.ScanSMTConnectShtConfirmtxtF {
+  padding: 0px 0px 3px 4px !important;
+  font-size: 16px;
+  width: 230px;
+}
+
+.tableGvResultConncetShtConfirm .ant-table-thead > tr > th {
+  background-color: #31363f;
+  
+  color: white;
+}
+/*  */
+.tableGvResultConncetShtConfirm .ant-table{
+  margin-left: 10px;
+  box-shadow:rgba(0, 0, 0, 0.10) 0px 3px 8px !important;
+  border: 1px black;
+}
+.tableGvResultConncetShtConfirm .ant-table td{
+
+  border: 0.25px #454545 ;
+}
+
+.styleDisable {
+  background-color: "#B2A8A8";
+  padding: 3px !important;
+  font-size: 16px;
+  width: 230px;
+}
+.styleEnable {
+  background-color: "";
+  padding: 0px 0px 3px 3px !important;
+  font-size: 16px;
+  width: 230px;
+}
+.GvSerialConnectConfirm{
+  border-radius: 10% ;
+}
+.GvSerialConnectConfirm td{
+  padding: 4px 4px 4px 4px!important;
+}
+
+.GvSerialConnectConfirm th{
+  background-color: #12422e !important ;
+  color: #fff;
+  padding: 5px;
+}

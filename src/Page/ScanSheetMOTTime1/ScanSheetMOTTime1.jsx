@@ -68,38 +68,9 @@ function ScanSheetMOTTime() {
     pnlSave
   } = fn_ScanSheetMOTTime();
 
-  // useEffect(() => {
-  //   if(txtlot.focus==true){
-  //     fctxtLotno.current.focus();
-  //   }
-  // }, [txtlot]);
-
-  // useEffect(() => {
-  //   if(txtMCNo.focus==true){
-  //     fctxtMcNo.current.focus();
-  //   }
-  // }, [txtMCNo]);
-
-  // useEffect(() => {
-  //   if(txtSheet.focus==true){
-  //     fctxtSheetNo.current.focus();
-  //   }
-  // }, [txtSheet]);
-
-  // useEffect(() => {
-  //   if(txtSUSNo.focus==true){
-  //     fctxtSUSNo.current.focus();
-  //   }
-  // }, [txtSUSNo]);
-
-  // useEffect(() => {
-  //   if(txtCBNo.focus==true){
-  //     fctxtCBNo.current.focus();
-  //   }
-  // }, [txtCBNo]);
   return (
     <div>
-      <Hearder />
+      <Hearder/>
       <h1>ScanSheetMOTTime</h1>
       {/* <Card component={Paper} className="Card-ScanSheetMOTTime"> */}
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'90px' }}>
@@ -296,7 +267,7 @@ function ScanSheetMOTTime() {
                         <Typography
                           align="center"
                           style={{ ...lblResult.style, marginTop: "40px", fontSize: "90px"  }}
-                          // { }
+                        
                         >
                           {lblResult.value}
                         </Typography>

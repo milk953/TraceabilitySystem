@@ -111,12 +111,12 @@ function fn_ScanSMTSerialPcsAutoTray() {
     const DUPLICATE_CHECK_FLG = 0;
     const FINAL_GATE_AUTO_PRD = "";
     const FINAL_GATE_SPECIAL_FLG = 1;
-    const FINAL_GATE_SPECIAL_PRD = "RGPZ-098ML-6A,RGPZ-098ML-7A";
-    const FINAL_GATE_SPECIAL_MESSAGE = "Csig value less then 3000";
+    const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
+    const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
     const FINAL_GATE_SPECIAL_OK = "OK";
     const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
     const FINAL_GATE_MASTER_FLG = import.meta.env.VITE_FINAL_GATE_MASTER_FLG;
-    const FINAL_GATE_MASTER_TIME = import.meta.env.VITE__FINAL_GATE_MASTER_TIME;
+    const FINAL_GATE_MASTER_TIME = import.meta.env.VITE_FINAL_GATE_MASTER_TIME;
     const WORKING_START_TIME = import.meta.env.VITE_WORKING_START_TIME;
 
     useEffect(() => {
@@ -142,20 +142,25 @@ function fn_ScanSMTSerialPcsAutoTray() {
     };
 
     const getProductData = async () => {
-        axios.get("/api/Common/GetProductData").then((res) => {
-            let data = res.data.flat();
-            setProductdata(data);
-            setselProduct(data[0].prd_name);
-            getProductSerialMaster(data[0].prd_name);
-        });
+        await axios.get("/api/Common/GetProductData")
+            .then((res) => {
+                let data = res.data.flat();
+                setProductdata(data);
+                setselProduct(data[0].prd_name);
+                getProductSerialMaster(data[0].prd_name);
+            });
     };
 
     const getProductDataFix = async () => {
-        axios.get("/api/Common/getProductDataFix").then((res) => {
-            let data = res.data;
-            setProductdata(data);
-            setselProduct(data[0].prd_name);
-        });
+        await axios.post("/api/Common/getProductDataFix", {
+            strPlantCode: plantCode,
+            strPrdName: FINAL_GATE_AUTO_PRD,
+        })
+            .then((res) => {
+                let data = res.data;
+                setProductdata(data);
+                setselProduct(data.prd_name);
+            });
     };
 
     const handleChangeLot = async () => {
@@ -342,9 +347,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 setlblLotTotal(dtLotPassCount);
             }
             if (dtPackPassCount.length > 0) {
-                setlblLotTotal(dtPackPassCount);
+                setlblLotTotal(`${dtPackPassCount}/${lblLotTotal}`);
             } else {
-                setlblLotTotal(`0/ ${lblLotTotal}`);
+                setlblLotTotal(`0/${lblLotTotal}`);
             }
             SetMode("SERIAL");
         } else {
@@ -376,7 +381,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
     const btnSaveClick = async () => {
         if (hfMode === "SERIAL") {
-            setSerialDataTray();
+            await setSerialDataTray();
+            settxtgvSerial("");
         }
     };
 
@@ -477,8 +483,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
             if (hfCheckWeekCode === "Y") {
                 await axios.post("/api/Common/getWeekCodebyLot", {
-                    STRLOT: _strLot,
-                    STRPROC: hfDateInProc,
+                    _strLot: _strLot,
+                    _strProc: hfDateInProc,
                 })
                     .then((res) => {
                         console.log(res.data);
@@ -1057,7 +1063,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         _strScanResultAll = "NG";
                     }
                 } else {
-                    dtSerial[i].SCAN_RESULT = "NG";
+                    dtSerial[i].SCAN_RESULT = "";
                     dtSerial[i].ROW_UPDATE = "N";
                     _strScanResultAll = "NG";
                 }
@@ -1389,6 +1395,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === nextIndex) {
                 btnSaveClick();
+                e.target.blur();
             }
         }
     };

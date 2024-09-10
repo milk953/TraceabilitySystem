@@ -80,7 +80,8 @@ function fn_ScanSheetMOTTime() {
   const SUS = params.get("SUS");
   let hfZPRNProcID='1840'
   const Fac = import.meta.env.VITE_FAC;
-
+  const VITE_FINAL_GATE_AUTO_PRD= import.meta.env.VITE_FINAL_GATE_AUTO_PRD;
+  
   useEffect(() => {
     settxtMCNo((prevState) => ({ ...prevState, value: "", disbled: false,focus:true }));
     settxtlot((prevState) => ({
@@ -339,6 +340,7 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
+            setlblRemark("");
             await axios
             .post("/api/CallFPCSheetLeadTimeResult", {
               LotNo:txtlot.value, 
@@ -374,6 +376,7 @@ function fn_ScanSheetMOTTime() {
             setlblSheet(txtSheet.value);
             setpnlSave(""); 
             /// pnlMain.Enabled = False
+            setlblResult('')
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" , focus:true}));
@@ -458,6 +461,7 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
+            setlblRemark("");
             await axios
             .post("/api/CallFPCSheetLeadTimeResult", {
               LotNo:txtlot.value, 
@@ -493,6 +497,7 @@ function fn_ScanSheetMOTTime() {
             setlblSheet(txtSheet.value);
             setpnlSave(""); 
             /// pnlMain.Enabled = False
+            setlblResult('')
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
@@ -564,6 +569,7 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
+            setlblRemark("");
             await axios
             .post("/api/CallFPCSheetLeadTimeResult", {
               LotNo:txtlot.value, 
@@ -599,6 +605,7 @@ function fn_ScanSheetMOTTime() {
             setlblSheet(txtSheet.value);
             setpnlSave(""); 
             /// pnlMain.Enabled = False
+            setlblResult('')
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
