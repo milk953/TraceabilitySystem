@@ -23,9 +23,10 @@ import {
 
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialShtFINManySht.css";
+import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
-import { Input } from "antd";
+import { Table as AntTable } from "antd";
 import Pageimg from "/src/assets/1.jpg";
 function ScanSMTSerialShtFINManySht() {
   const {
@@ -87,6 +88,7 @@ function ScanSMTSerialShtFINManySht() {
     lblResult,
     gvScanResult,
     hideImg,
+    columns,
   } = fn_ScanSMTSerialShtFINManySht();
   useEffect(() => {
     if (gvBackSideState === true) {
@@ -125,8 +127,8 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell sx={{ width: "400px" }}>Lot No.:</TableCell>
                     <TableCell>
                       <input
-                        className ="txtField"
-                        id = 'txtlot'
+                        className="txtField"
+                        id="txtlot"
                         value={lotValue}
                         onChange={(e) => setLotValue(e.target.value)}
                         disabled={lotState.styled.disabled}
@@ -175,7 +177,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>
                       <input
                         size="small"
-                        className ="txtField"
+                        className="txtField"
                         value={txtLotRef}
                         onChange={
                           ((e) => setTxtLotRef(e.target.value),
@@ -190,7 +192,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell>
                       <input
                         size="small"
-                        className ="txtField"
+                        className="txtField"
                         ref={FctxtOperator}
                         value={txtOperator}
                         onChange={(e) => {
@@ -218,7 +220,7 @@ function ScanSMTSerialShtFINManySht() {
                         <TableCell>
                           <input
                             size="small"
-                            className ="txtField"
+                            className="txtField"
                             ref={FCtxtRollleaf}
                             value={txtRollLeaf}
                             onChange={(e) => {
@@ -245,7 +247,7 @@ function ScanSMTSerialShtFINManySht() {
                         <TableCell>
                           <input
                             size="small"
-                            className ="txtField"
+                            className="txtField"
                             ref={Fctxtmcno}
                             value={txtmcno}
                             onChange={(e) => {
@@ -257,7 +259,6 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </>
                   )}
-                 
                 </TableBody>
               </Table>
             </td>
@@ -293,95 +294,36 @@ function ScanSMTSerialShtFINManySht() {
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      background: " #ff4d4f",
+                      background:
+                        lblResult.text === "OK"
+                          ? "#059212"
+                          : lblResult.text === "NG"
+                          ? "red"
+                          : "#BA0900",
                     }}
                   >
                     <Typography
                       variant="h4"
                       style={{
                         paddingTop: "5px",
-                        color: lblResult.styled.color,
+                        color: lblResult.styled.color
                       }}
                     >
                       {lblResult.text}
                     </Typography>
                   </Paper>
-                  <Table
-                    id="gvScanResult"
-                    component={Paper}
-                    style={{ width: "900px", margunBottom: "20px" }}
-                  >
-                    <TableHead sx={{ height: "20px" }}>
-                      <TableRow>
-                        <TableCell
-                          sx={{
-                            width: "50px",
-                            height: "10px",
-                            padding: "0px",
-                          }}
-                        >
-                          Sheet No.
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            width: "70px",
-                            height: "10px",
-                            padding: "1px",
-                          }}
-                        >
-                          No.
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            width: "100px",
-                            height: "10px",
-                            padding: "1px",
-                          }}
-                        >
-                          Serial No.
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            width: "70px",
-                            height: "10px",
-                            padding: "0px",
-                          }}
-                        >
-                          Scan Result
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            width: "350px",
-                            height: "10px",
-                            padding: "0px",
-                          }}
-                        >
-                          Remark
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {gvScanResult.map((row, index) => (
-                        <TableRow key={index}>
-                          <TableCell id="gvScanResultSheet">
-                            {row.SHEET}
-                          </TableCell>
-                          <TableCell id="gvScanResultSeq">{row.SEQ}</TableCell>
-                          <TableCell id="gvScanResultSerial">
-                            {row.SERIAL}
-                          </TableCell>
-                          <TableCell id="gvScanResultScan">
-                            {row.SCAN_RESULT}
-                          </TableCell>
-                          <TableCell id="gvScanResultRemark">
-                            {row.REMARK}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                  &nbsp; &nbsp;
                 </div>
+              )}
+              {lblResultState && (
+                <AntTable
+                  className="tableGvResult"
+                  columns={columns}
+                  bordered
+                  dataSource={gvScanResult}
+                  style={{ width: "1000px",marginLeft:"20px",marginTop:"10px" }}
+                  pagination={false}
+                  size="small"
+                />
               )}
             </td>
           </tr>
@@ -389,7 +331,7 @@ function ScanSMTSerialShtFINManySht() {
             <td>
               {gvBackSideState && (
                 <div className="pnlBackside">
-                  <Table component={Paper} className="gvBackSide">
+                  <Table component={Card} className="gvBackSide">
                     <TableBody>
                       {gvBackSide.map((row, index) => (
                         <TableRow
@@ -401,7 +343,7 @@ function ScanSMTSerialShtFINManySht() {
                           <TableCell>
                             <input
                               type="text"
-                              id='gvBackside_1'
+                              id="gvBackside_1"
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
@@ -419,7 +361,7 @@ function ScanSMTSerialShtFINManySht() {
                             />
                             <input
                               type="text"
-                              id = 'gvBackside_2'
+                              id="gvBackside_2"
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
@@ -428,10 +370,11 @@ function ScanSMTSerialShtFINManySht() {
                               ref={FcgvFrontside}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                  document.getElementById(`txtSerial_0`).focus();
-                                  handleFrontSideChange(index,e)
+                                  document
+                                    .getElementById(`txtSerial_0`)
+                                    .focus();
+                                  handleFrontSideChange(index, e);
                                 }
-
                               }}
                               className="styleEnable"
                               value={txtSideFront[index]}
@@ -444,37 +387,37 @@ function ScanSMTSerialShtFINManySht() {
                   </Table>
                   {pnlBoardState && (
                     <>
-                    <Table component={Paper} sx={{marginTop:2}}>
-                      <TableRow>
-                        <TableCell>Bottom Fixture</TableCell>
-                        <TableCell>
-                          <input
-                            size="small"
-                            className ="txtField"
-                            ref={FctxtBoardnoB}
-                            value={txtBoardNoB}
-                            onChange={(e) => {
-                              setTxtBoardNoB(e.target.value);
-                            }}
-                          ></input>
-                        </TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Top Fixture:</TableCell>
-                        <TableCell>
-                          <input
-                            size="small"
-                            className ="txtField"
-                            ref={FctxtBoardnoF}
-                            value={txtBoardNoF}
-                            onChange={(e) => {
-                              setTxtBoardNoF(e.target.value);
-                            }}
-                          ></input>
-                        </TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
+                      <Table component={Paper} sx={{ marginTop: 2 }}>
+                        <TableRow>
+                          <TableCell>Bottom Fixture</TableCell>
+                          <TableCell>
+                            <input
+                              size="small"
+                              className="txtField"
+                              ref={FctxtBoardnoB}
+                              value={txtBoardNoB}
+                              onChange={(e) => {
+                                setTxtBoardNoB(e.target.value);
+                              }}
+                            ></input>
+                          </TableCell>
+                          <TableCell></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Top Fixture:</TableCell>
+                          <TableCell>
+                            <input
+                              size="small"
+                              className="txtField"
+                              ref={FctxtBoardnoF}
+                              value={txtBoardNoF}
+                              onChange={(e) => {
+                                setTxtBoardNoF(e.target.value);
+                              }}
+                            ></input>
+                          </TableCell>
+                          <TableCell></TableCell>
+                        </TableRow>
                       </Table>
                     </>
                   )}
@@ -489,12 +432,28 @@ function ScanSMTSerialShtFINManySht() {
               )}
               <div className="panelgvSerial">
                 {panalSerialState && (
-                  <Table classname="gvSerial" component={Paper}>
-                    <TableHead className="gvSerialHead">
+                  <Table classname="gvSerial" component={Card}>
+                    <TableHead
+                      sx={{
+                        background: "#12422e",
+                        padding: "5px",
+                        color: "white",
+                      }}
+                    >
                       <TableRow>
-                        <TableCell className="gvSerialCell">Sheet</TableCell>
-                        <TableCell className="gvSerialCell">No.</TableCell>
-                        <TableCell className="gvSerialCell">
+                        <TableCell
+                          className="gvSerialThead"
+                          style={{ width: "30px" }}
+                        >
+                          Sheet
+                        </TableCell>
+                        <TableCell
+                          className="gvSerialThead"
+                          style={{ width: "30px" }}
+                        >
+                          No.
+                        </TableCell>
+                        <TableCell className="gvSerialThead">
                           Serial No.
                         </TableCell>
                       </TableRow>
@@ -507,25 +466,25 @@ function ScanSMTSerialShtFINManySht() {
                         >
                           <TableCell
                             className="gvSerialCell"
-                            style={{ width: "3%", textAlign: "right" }}
+                            style={{ width: "10px", textAlign: "right" }}
                           >
                             {row.SHEET}
                           </TableCell>
                           <TableCell
                             className="gvSerialCell"
-                            style={{ width: "40%", textAlign: "right" }}
+                            style={{ width: "10px", textAlign: "right" }}
                           >
                             {row.SEQ}
                           </TableCell>
                           <TableCell
                             className="gvSerialCell"
-                            style={{ width: "70%", paddingRight: "10px" }}
+                            style={{ width: "300px", paddingRight: "10px" }}
                           >
                             <input
                               id={`txtSerial_${index}`}
                               type="text"
                               style={{
-                                width: "98%",
+                                width: "90%",
                                 textTransform: "uppercase",
                               }}
                               maxLength="30"
@@ -533,12 +492,13 @@ function ScanSMTSerialShtFINManySht() {
                               value={txtSerial[index]}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                  document.getElementById(`txtSerial_0`).focus();
+                                  document
+                                    .getElementById(`txtSerial_0`)
+                                    .focus();
                                   handletxtSerialChange(index, e);
                                 }
                               }}
                               onChange={(e) => handletxtSerialChange(index, e)}
-
                             />
                           </TableCell>
                         </TableRow>
