@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { Tag } from "antd";
 function fn_ScanSMTSerialPcsChrome() {
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
@@ -1601,6 +1601,97 @@ function fn_ScanSMTSerialPcsChrome() {
     await getInitialSerial();
   };
 
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Serial No.",
+      dataIndex: "SERIAL",
+      key: "Serial No.",
+      align: "left",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Re-Judgement 1",
+      dataIndex: "REJECT",
+      key: "Re-Judgement 1",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+
+    {
+      title: "Result",
+      key: "Result",
+      dataIndex: "TOUCH_UP",
+      align: "center",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Re-Judgement 2",
+      key: "Re-Judgement 2",
+      dataIndex: "REJECT2",
+      align: "center",
+      render: (text, record, index) => {
+    
+          return text;
+        
+      },
+    },
+    {
+      title: "Test Result",
+      key: "Test Result",
+      dataIndex: "TEST_RESULT",
+
+      render: (text, record, index) => {
+          return text;
+      },
+      align: "center",
+    },
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "SCAN_RESULT",
+
+      render: (text, record, index) => {
+        const backgroundColor =
+        text === "NG" ? "#f50" :
+        text === "OK" ? "#87d068" :
+          "transparent";
+       
+        return (
+          < Tag  color={backgroundColor} >
+            {text}
+          </Tag>
+        );
+      },
+      align: "center",
+    },
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "REMARK",
+
+      render: (text, record, index) => {
+          return text;
+      },
+      align: "center",
+    },
+  ];
+
+
   return {
     txtLot,
     settxtLot,
@@ -1635,6 +1726,7 @@ function fn_ScanSMTSerialPcsChrome() {
     gvScanResult,
     lblResult,
     lblTime,
+    columns
   };
 }
 

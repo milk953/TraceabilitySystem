@@ -28,6 +28,8 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./SerialPcsAuto.css";
+import { Table as AntTable } from 'antd';
+import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsAuto";
 import Pageimg from "/src/assets/1.jpg";
@@ -65,6 +67,7 @@ function ScanSMTRoollSht() {
     gvScanResult,
     lblResult,
     lblTime,
+    columns
   } = fn_ScanSMTSerialPcsChrome();
   console.log("lblTime", lblTime);
   return (
@@ -72,7 +75,7 @@ function ScanSMTRoollSht() {
       <>
       <Hearder />
       <h1>Final Gate Auto</h1>
-      <Card component={Paper} className="Card-FinalGateAuto">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start"}}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -89,7 +92,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         style={{ ...txtLot.style, width: "80%" }}
                         disabled={txtLot.disbled} //true พิมไม่ได้
@@ -108,8 +111,8 @@ function ScanSMTRoollSht() {
                         }}
                         onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtBack_Click}>
-                        <BackspaceIcon />
+                      <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
+                        <BackspaceIcon className="Icon_ibtBack"/>
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -120,7 +123,7 @@ function ScanSMTRoollSht() {
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          id="selectPd"
+                          className="Select_dropDown"
                           value={Sl_Product.value}
                           // , background:'#e0e0e0'
                           style={{ ...Sl_Product.style }}
@@ -148,7 +151,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fc_txtPackingNo.current = el)}
                         value={txtPackingNo.value}
@@ -168,7 +171,7 @@ function ScanSMTRoollSht() {
                         }}
                         onBlur={txtPackingNo_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtPackingBack_Click}>
+                      <Button className="Bt_ibtBack" onClick={ibtPackingBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -202,28 +205,22 @@ function ScanSMTRoollSht() {
               </Table>
 
               {/* {lbllog.visble == true && ( */}
+              <br/>
               <Paper
                 elevation={3}
                 style={{
-                  width: "400px",
-                  height: "40px",
-                  margin: "auto",
-                  textAlign: "center",
-                  background: "#BB2525",
-                  paddingTop: "18px",
-                  color: "yellow", 
-                  fontWeight: "bold",
-                  marginTop: "30px",
-                  display: lblLog.visble,
+               ay: lblLog.visble,
                 }}
+                className="Card-lblLog"
               >
                 {lblLog.value}
               </Paper>
               {/* )} */}
               {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
+              <br/>
               <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px", display: gvSerial.visble }}
+                style={{display: gvSerial.visble }}
                 component={Card}
               >
                 <TableHead>
@@ -250,7 +247,7 @@ function ScanSMTRoollSht() {
                       <TableCell>
                         <TextField
                           key={index}
-                          id="txtfild"
+                          className="input_txt"
                           size="small"
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
@@ -297,24 +294,18 @@ function ScanSMTRoollSht() {
             {/* border:'1PX SOLID green' */}
             <Grid
               item
-           
+              xs={10}
+              md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                border: "1px solid red"
               }}
             >
               {gvScanResult.visble == false && (
                 <>
                   <img
-                    style={{
-                      width: "360px",
-                      height: "300px",
-                      marginBottom: "30px",
-                    }}
+                className="Img_GvResult"
                     src={Pageimg} // Import the image
                     alt="Description of the image"
                   />
@@ -356,95 +347,16 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-                  <Table
-                    className="CSS-GvScanResult-FinalGateAuto"
-                    component={Card}
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          No.
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Serial No.
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Re-Judgement 1
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Result
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Re-Judgement 2
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Test Result
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Scan Result
-                        </TableCell>
-                        <TableCell>Remark </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    {/* {console.log(gvScanResult.value.flat(),'gvScanResult')} */}
-                    {Array.from(
-                      { length: gvScanResult.value.length },
-                      (_, index) => (
-                        <TableRow key={index}>
-                          <TableCell
-                            align="center"
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                          >
-                            {gvScanResult.value[index].SEQ}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                          >
-                            {gvScanResult.value[index].SERIAL}
-                          </TableCell>
-                          <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                            {gvScanResult.value[index].REJECT}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                          >
-                            {gvScanResult.value[index].TOUCH_UP}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              borderRight: "1px solid #d9d9d9",
-                            }}
-                          >
-                            {gvScanResult.value[index].REJECT2}
-                          </TableCell>
-                          <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                            {gvScanResult.value[index].TEST_RESULT}
-                          </TableCell>
-                          <TableCell
-                          align="center"
-                            sx={{
-                              borderRight: "1px solid #d9d9d9",
-                              background:
-                                gvScanResult.value[index].SCAN_RESULT === ""
-                                  ? ""
-                                  : gvScanResult.value[index].SCAN_RESULT ===
-                                    "OK"
-                                  ? "#52c41a"
-                                  : "#ff4d4f",
-                            }}
-                          >
-                            {gvScanResult.value[index].SCAN_RESULT}
-                          </TableCell>
-                          <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                            {gvScanResult.value[index].REMARK}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    )}
-                  </Table>
+                  <br/>
+                  <AntTable 
+                columns={columns}
+                dataSource={gvScanResult.value}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                bordered
+                className="tableGvResult"
+                />
                 </>
               )}
             </Grid>

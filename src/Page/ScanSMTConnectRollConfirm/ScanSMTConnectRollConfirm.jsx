@@ -79,7 +79,7 @@ function ScanSMTConnectRollConfirm() {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtLot"
+                        id="txtLot_ScanSMTConnectRollConfirm_focus"
                         size="small"
                         fullWidth
                         disabled={txtLot.disbled}
@@ -111,7 +111,7 @@ function ScanSMTConnectRollConfirm() {
                     <TableCell colSpan={3}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          id="ddlProduct"
+                          id="ddlProduct_ScanSMTConnectRollConfirm_focus"
                           size="small"
                           value={ddlProduct.value}
                           style={ddlProduct.style}
@@ -138,7 +138,7 @@ function ScanSMTConnectRollConfirm() {
                     </TableCell>
                     <TableCell>
                       <TextField
-                        id="txtLot"
+                        id="lblTotalSht_ScanSMTConnectRollConfirm_focus"
                         size="small"
                         value={lblTotalSht}
                         style={{ width: "95%" }}
@@ -379,7 +379,7 @@ function ScanSMTConnectRollConfirm() {
                             <TableCell
                               sx={{ borderRight: "1px solid #d9d9d9" }}
                             >
-                              {gvScanResult.value[index].date_remark}
+                              {gvScanResult.value[index].remark}
                             </TableCell>
                           </TableRow>
                         )

@@ -8,11 +8,14 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Table as AntTable, Select } from "antd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
 import React from "react";
 import { fn_ScanSMTConnectShtConfirm } from "./fn_ScanSMTConnectShtConfirm";
 import Pageimg from "/src/assets/1.jpg";
+
+import { Typography } from "antd";
 import "./ScanSMTConnectShtConfirm.css";
 function ScanSMTConnectShtConfirm() {
   const {
@@ -28,7 +31,16 @@ function ScanSMTConnectShtConfirm() {
     txtSerial,
     handletxtSerialChange,
     handle_Save_Click,
-    handle_Cancel_Click
+    handle_Cancel_Click,
+    lblError,
+    lblResultState,
+    columns,
+    ddlproduct_Change,
+    ddlproductState,
+    lblShtCount,
+    lblTotalSht,
+    gvScanResult,
+    gvResutlState,
   } = fn_ScanSMTConnectShtConfirm();
   return (
     <div>
@@ -65,7 +77,7 @@ function ScanSMTConnectShtConfirm() {
                     <TableCell>Lot No.:</TableCell>
                     <TableCell>
                       <input
-                        id="txtLot"
+                        id="ScanSMTConnectShtConfirmtxtLot"
                         className="ScanSMTConnectShtConfirmtxtF"
                         value={txtLot}
                         onChange={(e) => setTxtLot(e.target.value)}
@@ -86,60 +98,59 @@ function ScanSMTConnectShtConfirm() {
                   <TableRow>
                     <TableCell>Product:</TableCell>
                     <TableCell>
-                      {ddlproduct && (
-                        <select
-                          style={{ width: 240 }}
-                          onChange={(e) => {
-                            setProductSelected(e.target.value);
-                            ddlproduct_Change();
-                          }}
-                          onInputChange={(e) => {
-                            setProductSelected(e.target.value);
-                            ddlproduct_Change();
-                          }}
-                          value={productSelected}
-                        >
-                          {ddlproduct.map((item) => (
-                            <option key={item.prd_name} value={item.prd_name}>
-                              {item.prd_name}
-                            </option>
-                          ))}
-                        </select>
-                      )}
+                      <Select
+                        style={{
+                          width: 240,
+                          textAlign: "left",
+                          padding: "0px 5px 0px 0px",
+                        }}
+                        size={"small"}
+                        value={productSelected}
+                        onChange={(value) => {
+                          ddlproduct_Change(value);
+                        }}
+                        options={ddlproduct.map((item) => ({
+                          label: item.prd_name,
+                          value: item.prd_name,
+                        }))}
+                      ></Select>
                     </TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Sht:</TableCell>
                     <TableCell>
-                      <table style={{ display: "flex" }}>
-                        <tr style={{ background: "red" }}>
-                          <td>lblTotalSht</td>
+                      <table
+                        className="subTable"
+                        style={{ display: "flex", marginLeft: "10px" }}
+                      >
+                        <tr style={{ background: "#8DECB4", width: "115px" ,borderRadius:'5%',height:'30px'}}>
+                          <td> {lblTotalSht}</td>
                         </tr>
-                        <tr style={{ background: "green" }}>
-                          <td>lblShtCount</td>
+                        <tr style={{ background: "#FFF5E0", width: "115px" ,borderRadius:'5%',height:'30px'}}>
+                          <td>{lblShtCount}</td>
                         </tr>
                       </table>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-              <h2
+              <h3
                 style={{
                   textAlign: "center",
                   background: "red",
                   color: "yellow",
                 }}
               >
-                {"lblError"}
-              </h2>
+                {lblError}
+              </h3>
               &nbsp;&nbsp;
               {panalSerialState && (
-                <Table classname="" component={Paper}>
-                  <TableHead className="">
+                <Table className="GvSerialConnectConfirm" component={Card}>
+                  <TableHead >
                     <TableRow>
-                      <TableCell className="">No.</TableCell>
-                      <TableCell className="">Serial No.</TableCell>
+                      <TableCell >No.</TableCell>
+                      <TableCell >Serial No.</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -159,20 +170,20 @@ function ScanSMTConnectShtConfirm() {
                           style={{ width: "70%", paddingRight: "10px" }}
                         >
                           <input
-                          id={`txtSerial_${index}`}
-                          type="text"
-                          style={{
-                            width: "300px",
-                            textTransform: "uppercase",
-                          }}
-                          maxLength="30"
-                          value={txtSerial[index]}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              handletxtSerialChange(index, e);
-                            }
-                          }}
-                          onChange={(e) => handletxtSerialChange(index, e)}
+                            id={`txtSerial_${index}`}
+                            type="text"
+                            style={{
+                              width: "300px",
+                              textTransform: "uppercase",
+                            }}
+                            maxLength="30"
+                            value={txtSerial[index]}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handletxtSerialChange(index, e);
+                              }
+                            }}
+                            onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
                       </TableRow>
@@ -186,10 +197,7 @@ function ScanSMTConnectShtConfirm() {
                           gap: "10px",
                         }}
                       >
-                        <Button
-                          className="BtSave"
-                          onClick={handle_Save_Click}
-                        >
+                        <Button className="BtSave" onClick={handle_Save_Click}>
                           SAVE
                         </Button>
                         &nbsp;&nbsp;
@@ -231,60 +239,44 @@ function ScanSMTConnectShtConfirm() {
                   alt="Description of the image"
                 />
               )}
-              {/* {lblResultState && (
+              {lblResultState && (
                 <div className="lblResultFin">
                   <Paper
                     className="lblResultCardMasterFinal"
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
+                      // background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
                     }}
                   >
                     <Typography
                       variant="h4"
                       style={{
-                        color: lblResult.styled.color,
+                        // color: lblResult.styled.color,
                         fontSize: "30px",
                       }}
                     >
-                      {lblResult.value}
+                      {/* {lblResult.value} */}
                     </Typography>
                   </Paper>
-                  <Table
-                    className="gvScanResultMasterFinal"
-                    component={Paper}
-                    style={{ width: "960px", margunBottom: "20px" }}
-                  >
-                    <TableHead sx={{ height: "20px" }}>
-                      <TableRow>
-                        <TableCell>No.</TableCell>
-                        <TableCell>Serial No.</TableCell>
-                        <TableCell>Re-Judgement 1</TableCell>
-                        <TableCell>Result</TableCell>
-                        <TableCell>Re-Judgement 2</TableCell>
-                        <TableCell>Test Result</TableCell>
-                        <TableCell>Scan Result</TableCell>
-                        <TableCell>Remark</TableCell>
-                      </TableRow>
-                    </TableHead>
-
-                    {gvSerialResult.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{row.SEQ}</TableCell>
-                        <TableCell>{row.SERIAL}</TableCell>
-                        <TableCell>{row.REJECT}</TableCell>
-                        <TableCell>{row.TOUCH_UP}</TableCell>
-                        <TableCell>{row.REJECT2}</TableCell>
-                        <TableCell>{row.SERIAL == '' ? '' : row.TEST_RESULT}</TableCell>
-                        <TableCell sx={{background:row.SCAN_RESULT == 'NG'? 'red' : row.SCAN_RESULT == 'OK' ? 'green' : 'white'}}>{row.SCAN_RESULT}</TableCell>
-                        <TableCell>{row.REMARK}</TableCell>
-                      </TableRow>
-                    ))}
-                  </Table>
-                  &nbsp; &nbsp;
                 </div>
-              )} */}
+              )}
+              <div>
+                {gvResutlState && (
+                  // <Paper>
+                    <AntTable
+                      className="tableGvResultConncetShtConfirm"
+                      columns={columns}
+                      bordered
+                      dataSource={gvScanResult}
+                      style={{ width: "100%" }}
+                      pagination={false}
+                      size="small"
+                    />
+                  // </Paper>
+                )}
+                &nbsp; &nbsp;
+              </div>
             </td>
           </tr>
         </table>

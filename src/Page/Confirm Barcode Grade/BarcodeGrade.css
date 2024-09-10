@@ -1,22 +1,6 @@
-#selectPdBarcode {
-    padding: 0 !important;
-    font-size: 14px !important;
-    padding-left: 5px !important;
-}
 
-.Card-ConfirmBarcode{
-    margin: auto;
-    width: 95%;
-    max-width: 1400px;
-    margin-top: 50px;
-  
-    height: 100%;
-    padding: 20px;
-}
 
 .gvBackSideBarcode{
-    margin-top: 30px;
-    width: 400px !important;
     margin: left;
 }
 
@@ -28,12 +12,6 @@
     width: 200px !important;
   }
 
-.CSS-GvSerialBarcode{
-    /* margin: auto; */
-    margin-top: 30px;
-    max-width: 400px !important;
-    width: 100% !important;
-}
 
 .CSS-GvSerialBarcode th{
     background-color: #12422e !important ;
@@ -45,25 +23,7 @@
     padding: 4px 4px 4px 4px!important;
 }
 
-
-.CSS-GvSerialBarcode{
-    /* margin: auto; */
-    margin-top: 30px;
-    max-width: 400px !important;
-    width: 100% !important;
-}
-
-.CSS-GvSerialBarcode th{
-    background-color: #12422e !important ;
-    color: #fff;
-    padding: 5px;
-}
-
-.CSS-GvSerialBarcode td{
-    padding: 4px 4px 4px 4px!important;
-}
-
-.CSS-GvScanResult{
+/* .CSS-GvScanResult{
     max-width: 900px;
     width: 100% !important;
     margin-top: 10px;
@@ -81,5 +41,5 @@
 
 .CSS-GvScanResult td{
     padding: 4px 4px 4px 4px!important;
-}
+} */
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { Tag } from "antd";
 function fn_ScanSMTSerialPcsChrome() {
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
@@ -1506,9 +1506,7 @@ function fn_ScanSMTSerialPcsChrome() {
           }
 
           if (_bolError) {
-            // lblSerialNG.textContent = (
-            //   parseInt(lblSerialNG.textContent) + 1
-            // ).toString();
+            setlblSerialNG(prevValue => prevValue + 1);
           }
         }
         _intRowSerial = _intRowSerial + 1;
@@ -1741,7 +1739,16 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-          return text;
+        const backgroundColor =
+        text === "NG" ? "#f50" :
+        text === "OK" ? "#87d068" :
+          "transparent";
+       
+        return (
+          < Tag  color={backgroundColor} >
+            {text}
+          </Tag>
+        );
       },
       align: "center",
     },
