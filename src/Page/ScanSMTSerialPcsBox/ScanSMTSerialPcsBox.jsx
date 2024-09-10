@@ -33,7 +33,7 @@ function ScanSMTSerialPcsBox() {
   return (
     <div>
       <Hearder />
-      <h1>Final Gate</h1>
+      <h1>Packing Gate</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
@@ -51,7 +51,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         style={{ ...txtLot.style, backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit', // สีพื้นหลังเมื่อ disabled
                           }}
@@ -72,7 +72,7 @@ function ScanSMTSerialPcsBox() {
                         }}
                         onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack"
                       onClick={ibtBack_Click}
                       >
       
@@ -87,7 +87,7 @@ function ScanSMTSerialPcsBox() {
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          id="selectPd"
+                         className="Select_dropDown"
                             // inputRef={fc_SlProduct}
                           value={selectddlProduct.value}
                         
@@ -126,7 +126,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                         className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtMachine.current = el)}
 
@@ -148,7 +148,7 @@ function ScanSMTSerialPcsBox() {
                         }}
                         onBlur={txtMachine_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack" 
                       onClick={ibtMachineBack_Click}
                       >
                         <BackspaceIcon />
@@ -161,7 +161,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                         className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtOP.current = el)}
 
@@ -182,7 +182,7 @@ function ScanSMTSerialPcsBox() {
                         }}
                         onBlur={txtOP_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack" 
                       onClick={ibtOPBack_Click}
                       >
                         <BackspaceIcon />
@@ -195,7 +195,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                         className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtBox.current = el)}
 
@@ -216,7 +216,7 @@ function ScanSMTSerialPcsBox() {
                         }}
                         onBlur={txtBox_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack" 
                       onClick={ibtBox_Click}
                       >
                         <BackspaceIcon />
@@ -229,7 +229,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                         className="input_txt"
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
@@ -250,7 +250,7 @@ function ScanSMTSerialPcsBox() {
                         }}
                         onBlur={txtPack_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
+                      <Button className="Bt_ibtBack" 
                       onClick={ibtPack_Click}
                       >
                         <BackspaceIcon />
@@ -277,7 +277,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell style={{ width: "130px" }}>
                       <TextField
-                        id="txtfild"
+                         className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtTray.current = el)}
                         value={txtPcsTray.value}
@@ -315,16 +315,16 @@ function ScanSMTSerialPcsBox() {
               <Card sx={{ marginTop: '10px' ,width:'100%' }}>
   <Table >
     <TableRow>
-      <TableCell   id="txtfild" align="right" sx={{width:'15%',textAlign: "center"}} >Box :</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'25%',textAlign:'center',backgroundColor:lblBox.value !== ""? '#FFE8FF':''}}>{lblBox.value}</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxFull.value!== ""?'#d6eaf8':''}}>{lblBoxFull.value}</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxTotal.value!== ""?'#fcf3cf':''}}>{lblBoxTotal.value}</TableCell>
-      <TableCell   id="txtfild"rowSpan={2} sx={{ textAlign:'center',width:'15%' ,fontWeight:'bold',color:lblBoxStatus.value == 'OK' ? 'green' : 'red'  }} >{lblBoxStatus.value}</TableCell>
+      <TableCell    className="input_txt" align="right" sx={{width:'15%',textAlign: "center"}} >Box :</TableCell>
+      <TableCell    className="input_txt"sx={{ width:'25%',textAlign:'center',backgroundColor:lblBox.value !== ""? '#FFE8FF':''}}>{lblBox.value}</TableCell>
+      <TableCell    className="input_txt"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxFull.value!== ""?'#d6eaf8':''}}>{lblBoxFull.value}</TableCell>
+      <TableCell    className="input_txt"sx={{ width:'10%',textAlign: "center",backgroundColor:lblBoxTotal.value!== ""?'#fcf3cf':''}}>{lblBoxTotal.value}</TableCell>
+      <TableCell    className="input_txt"rowSpan={2} sx={{ textAlign:'center',width:'15%' ,fontWeight:'bold',color:lblBoxStatus.value == 'OK' ? 'green' : 'red'  }} >{lblBoxStatus.value}</TableCell>
     </TableRow>
     <TableRow>
-      <TableCell   id="txtfild"align="right" sx={{width:'15%',textAlign:'center'}}>Packing :</TableCell>
-      <TableCell   id="txtfild"sx={{ width:'15%',textAlign: "center",backgroundColor:lblPacking.value !== ""?'#FFE8FF':''}}>{lblPacking.value}</TableCell>
-      <TableCell   id="txtfild"sx={{ textAlign:'center',width:'15%',backgroundColor:lblPackingTotal.value !== "" ?'#fcf3cf':''}} colSpan={2}>{lblPackingTotal.value}</TableCell>
+      <TableCell    className="input_txt"align="right" sx={{width:'15%',textAlign:'center'}}>Packing :</TableCell>
+      <TableCell    className="input_txt"sx={{ width:'15%',textAlign: "center",backgroundColor:lblPacking.value !== ""?'#FFE8FF':''}}>{lblPacking.value}</TableCell>
+      <TableCell    className="input_txt"sx={{ textAlign:'center',width:'15%',backgroundColor:lblPackingTotal.value !== "" ?'#fcf3cf':''}} colSpan={2}>{lblPackingTotal.value}</TableCell>
     </TableRow>
   </Table>
 </Card>
@@ -404,7 +404,7 @@ function ScanSMTSerialPcsBox() {
                       <TableCell>
                         <TextField
                          key={index} 
-                          id="txtfild"
+                           className="input_txt"
                           size="small"
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
@@ -477,7 +477,7 @@ function ScanSMTSerialPcsBox() {
                         <div style={{ display: "flex", gap: "10px", width: "100%" }}>
               <Paper
                  className="Card-lblResult"
-                elevation={3}
+               
                 style={{
                   background: 
                   lblResult.value == "NG" ?  "#BA0900":"#059212",
@@ -492,10 +492,10 @@ function ScanSMTSerialPcsBox() {
                
               <Paper
                 className="Card-lblTime"
-                elevation={3}
+                
                 style={{...lblTime.style,}}
               >
-                <Typography variant="h4" style={{ paddingTop: "5px", color: "#fff", }}>
+                <Typography variant="h4" style={{color: "#fff", }}>
                  {lblTime.value}
                 </Typography>
                
@@ -620,7 +620,7 @@ function ScanSMTSerialPcsBox() {
                 style={{ width:'100%'}}
                 pagination={false}
                 size="small"
-                // bordered
+                bordered
                 className="tableGvResult"
                 />
                 </>
