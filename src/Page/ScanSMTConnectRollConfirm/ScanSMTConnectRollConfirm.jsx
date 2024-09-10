@@ -22,6 +22,7 @@ import {
   Grid,
   Input,
 } from "@mui/material";
+import { Table as AntTable } from "antd";
 import Pageimg from "/src/assets/1.jpg";
 import {
   ArrowRightOutlined,
@@ -30,6 +31,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTConnectRollConfirm.css";
+import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTConnectRollConfirm } from "./fn_ScanSMTConnectRollConfirm";
 function ScanSMTConnectRollConfirm() {
@@ -60,7 +62,7 @@ function ScanSMTConnectRollConfirm() {
     <div>
       <Hearder />
       <h1> Confirm Connect Roll&Leaf</h1>
-      <Card component={Paper} className="Card-ConfirmBarcode">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -80,6 +82,7 @@ function ScanSMTConnectRollConfirm() {
                     <TableCell colSpan={2}>
                       <TextField
                         id="txtLot_ScanSMTConnectRollConfirm_focus"
+                        className="input_txt"
                         size="small"
                         fullWidth
                         disabled={txtLot.disbled}
@@ -99,7 +102,7 @@ function ScanSMTConnectRollConfirm() {
                       ></TextField>
                     </TableCell>
                     <TableCell>
-                      <Button onClick={ibtBack_Click}>
+                      <Button onClick={ibtBack_Click} className="Bt_ibtBack">
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -113,6 +116,7 @@ function ScanSMTConnectRollConfirm() {
                         <Autocomplete
                           id="ddlProduct_ScanSMTConnectRollConfirm_focus"
                           size="small"
+                          className="Select_dropDown"
                           value={ddlProduct.value}
                           style={ddlProduct.style}
                           disabled={ddlProduct.disbled}
@@ -139,6 +143,7 @@ function ScanSMTConnectRollConfirm() {
                     <TableCell>
                       <TextField
                         id="lblTotalSht_ScanSMTConnectRollConfirm_focus"
+                        className="input_txt"
                         size="small"
                         value={lblTotalSht}
                         style={{ width: "95%" }}
@@ -164,17 +169,7 @@ function ScanSMTConnectRollConfirm() {
               {lblpnlLog.visble == true && (
                 <Paper
                   elevation={3}
-                  style={{
-                    width: "400px",
-                    height: "40px",
-                    margin: "auto",
-                    textAlign: "center",
-                    background: "#BB2525",
-                    paddingTop: "18px",
-                    color: "yellow",
-                    fontWeight: "bold",
-                    marginTop: "30px",
-                  }}
+                 className="Card-lblLog"
                 >
                   {lblpnlLog.value}
                 </Paper>
@@ -184,7 +179,6 @@ function ScanSMTConnectRollConfirm() {
                 className="CSS-GvSerial"
                 style={{
                   display: pnlSerial.visble ? "" : "none",
-                  marginTop: "20px",
                 }}
                 component={Card}
               >
@@ -218,27 +212,11 @@ function ScanSMTConnectRollConfirm() {
                               size="small"
                               fullWidth
                               id={`gvSerial_txtSerial_${index}`}
+                              className="input_txt"
                               value={txtSerial[index]}
                               onChange={(event) =>
                                 handleSerialChange(index, event)
                               }
-
-                              // inputRef={(el) => (gvSerialRefs.current[index] = el)}
-                              // onBlur={(event) => {
-                              //   handleSerialChange(index, event);
-                              // }}
-                              // onChange={(event) => handleSerialChange(index, event)}
-                              // onKeyDown={(event) => {
-                              //   if (event.key === "Enter") {
-                              //     event.preventDefault();
-                              //     if (index < gvSerial.length - 1) {
-                              //       fc_txtSerial.current[index + 1].focus();
-                              //     } else {
-                              //       btnSave_Click();
-                              //       event.target.blur();
-                              //     }
-                              //   }
-                              // }}
                             />
                           </TableCell>
                         </TableRow>
@@ -246,7 +224,10 @@ function ScanSMTConnectRollConfirm() {
                     )}
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={btnSave_Click}>Save</Button> &nbsp;&nbsp;
+                      <Button className="BtSave" onClick={btnSave_Click}>
+                        Save
+                      </Button>{" "}
+                      &nbsp;&nbsp;
                       <Button className="BtCancel" onClick={btnCancel_Click}>
                         Cancel
                       </Button>
@@ -260,10 +241,10 @@ function ScanSMTConnectRollConfirm() {
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
+                // margin: "auto",
+                // marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -271,13 +252,9 @@ function ScanSMTConnectRollConfirm() {
             >
               {gvScanResult.visble == false && (
                 <>
-                  {" "}
+                 
                   <img
-                    style={{
-                      width: "420px",
-                      height: "350px",
-                      marginBottom: "30px",
-                    }}
+                    className="Img_GvResult"
                     src={Pageimg}
                     alt="Description of the image"
                   />
