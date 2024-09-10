@@ -25,6 +25,8 @@ import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
 import Hearder from "../Header/Header";
+import "../Common/StyleCommon.css";
+import { Table as AntTable } from "antd";
 import { fn_ConfirmBarcodeGrade } from "./fn_ConfirmBarcodeGrade";
 function ConfirmBarcodeGrade() {
   const {
@@ -74,27 +76,19 @@ function ConfirmBarcodeGrade() {
     fcGvBackSide_txtsideback_0,
     fcGvSerial_txtSerial_0,
     lblConfirm,
-    dataGvSerial
+    dataGvSerial,
+    fcGvBackSide_txtsideback_1,
+    columns
   } = fn_ConfirmBarcodeGrade();
 
 
-useEffect(() => {
- if(txtRollLeaf.visble!='none'){
-  fcRollleaf.current.focus();
- }
-}, [txtRollLeaf]);
 
-useEffect(() => {
-  if(txtSideBack.visble==true){
-    fcGvBackSide_txtsideback_0.current.focus();
-  }
-}, [txtSideBack]);
 
   return (
     <div>
       <Hearder />
       <h1>ConfirmBarcodeGrade</h1>
-      <Card component={Paper} className="Card-ConfirmBarcode">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -129,11 +123,12 @@ useEffect(() => {
                     </TableCell>
                     <TableCell>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         fullWidth
                         value={txt_lotNo.value}
-                        inputRef={fcLotNo}
+                        // inputRef={fcLotNo}
+                        inputRef={(el) => (fcLotNo.current = el)}
                         onChange={(e) => {
                           settxt_lotNo((prevState) =>({...prevState,value:e.target.value, }));
                         }}
@@ -155,14 +150,16 @@ useEffect(() => {
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          inputRef={fcProduct}
-                          id="selectPdBarcode"
+                          // inputRef={fcProduct}
+                         
+                          className="Select_dropDown"
                           value={SlProduct.value}
                           // style={{background:SlProduct.style}}
                           onChange={(e, value) => handleSL_Product(value)}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
+                            inputRef={(el) => (fcProduct.current = el)}
                               {...params}
                               size="small"
                               sx={{ textAlign: "left" }}
@@ -178,7 +175,7 @@ useEffect(() => {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         value={txtLotRef.value}
                         onChange={(e) => settxtLotRef((prevState) =>({...prevState,value:e.target.value, }))}
                         onBlur={handleTxt_LotRef}
@@ -198,12 +195,13 @@ useEffect(() => {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtfild"
+                      className="input_txt"
                         value={txtOperator.value}
                         onChange={(e) => settxtOperator((prevState) =>({...prevState,value:e.target.value, }))}
                         size="small"
                         fullWidth
-                        inputRef={fcProduct}
+                        // inputRef={fcProduct}
+                        inputRef={(el) => (fcOperator.current = el)}
                         onBlur={handleTxt_Opreator}
                         // onKeyDown={(e) => {
                         //   if (e.key === "Enter") {
@@ -235,9 +233,10 @@ useEffect(() => {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
-                        inputRef={fcRollleaf}
+                        // inputRef={fcRollleaf}
+                        inputRef={(el) => (fcRollleaf.current = el)}
                         value={txtRollLeaf.value}
                         onChange={(e) => {
                           // settxtRollLeaf(e.target.value);
@@ -259,7 +258,7 @@ useEffect(() => {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         value={txtMachineNo.value}
                         onChange={(e) =>  settxtMachineNo((prevState) =>({...prevState,value:e.target.value, }))}
@@ -268,14 +267,17 @@ useEffect(() => {
                         //     handle();
                         //   }}}
                         fullWidth
-                        inputRef={fctMachchine}
+                  
+                        inputRef={(el) => (fctMachchine.current = el)}
                       />
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
               {/* visiblgvBackSide */}
+              <br/>
               { txtSideBack.visble== true && (
+             
                 <Table component={Paper} className="gvBackSideBarcode">
                   <TableBody>
                     {Array.from({ length: hfShtScan }, (_, index) => (
@@ -300,23 +302,49 @@ useEffect(() => {
                         <TableCell>
                           {" "}
                           <TextField
-                            id="txtfild"
+                            className="input_txt"
                             size="small"
                             fullWidth
                             value={txtSideBack.value[index]}
-                            inputRef={fcGvBackSide_txtsideback_0}
+                            // inputRef={fcGvBackSide_txtsideback_0}
+                            // inputRef={(el) => (fcGvBackSide_txtsideback_0.current = el)}
+ 
                             onChange={(event) =>
                               handleBackSideChange(index, event)
                             }
+                            inputRef={(el) => (fcGvBackSide_txtsideback_0.current[index] = el)}
+                          
+                            onBlur={(event) => {
+                              handleBackSideChange(index, event);
+                              fcGvBackSide_txtsideback_1.current[index].focus();
+                            }}
+                          
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault(); 
+                                fcGvBackSide_txtsideback_1.current[index].focus();
+                              }
+                            }}
                           />
                           <TextField
-                            id="txtfild"
+                            className="input_txt"
                             size="small"
                             fullWidth
                             value={txtSideFront[index]}
+                            inputRef={(el) => (fcGvBackSide_txtsideback_1.current[index] = el)}
                             onChange={(event) =>
                               handleFrontSideChange(index, event)
                             }
+                            onBlur={(event) => {
+                              fcGvSerial_txtSerial_0.current[0].focus();
+                            }}
+                          
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault(); 
+                                fcGvSerial_txtSerial_0.current[0].focus();
+                              }
+                            }}
                           />
                         </TableCell>
                       </TableRow>
@@ -327,21 +355,12 @@ useEffect(() => {
               {lblLog.visble  == true && (
                 <Card
                   component={Paper}
-                  style={{
-                    width: "400px",
-                    height: "40px",
-                    margin: "auto",
-                    textAlign: "center",
-                    background: "#BB2525",
-                    paddingTop: "18px",
-                    color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
-                    fontWeight: "bold", // กำหนดความหนาของฟอนต์
-                    marginTop: "30px",
-                  }}
+                 className="Card-lblLog"
                 >
                   {lblLog.value}
                 </Card>
               )}
+              <br/>
               {dataGvSerial.visble == true && (
                 <Table className="CSS-GvSerialBarcode" component={Card}>
                   <TableHead>
@@ -380,14 +399,31 @@ useEffect(() => {
                         <TableCell>
                           {" "}
                           <TextField
-                            id="txtfild"
+                            className="input_txt"
                             size="small"
                             fullWidth
-                            inputRef={fcGvSerial_txtSerial_0}
                             value={txtSerial[index]}
                             onChange={(event) =>
                               handleSerialChange(index, event)
                             }
+
+                            inputRef={(el) => (fcGvSerial_txtSerial_0.current[index] = el)}
+                          
+                            onBlur={(event) => {
+                              handleSerialChange(index, event);
+                            }}
+                          
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault(); 
+                                if (index < hfSerialCount - 1) {
+                                  fcGvSerial_txtSerial_0.current[index + 1].focus();
+                                } else {
+                                  btnSave_Click();
+                                  event.target.blur();
+                                }
+                              }
+                            }}
                           />
                         </TableCell>
                       </TableRow>
@@ -425,10 +461,8 @@ useEffect(() => {
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -441,7 +475,7 @@ useEffect(() => {
                   height: "350px",
                   marginBottom: "30px",
                 }}
-                src={Pageimg} // Import the image
+                src={Pageimg} 
                 alt="Description of the image"
               /></>)}
              
@@ -463,7 +497,7 @@ useEffect(() => {
                       {lblResult}
                     </Typography>
                   </Paper>
-                  <Table
+                  {/* <Table
                     className="CSS-GvScanResult"
                     // style={{ display: gvScanResult }}
                     component={Card}
@@ -554,7 +588,20 @@ useEffect(() => {
                         )
                       )}
                     </TableBody>
-                  </Table>
+                  </Table> */}
+                  <br/> 
+                     <AntTable
+                    columns={columns}
+                    dataSource={gvScanResult.value}
+                    style={{
+                      width: "100%",
+                      boxShadow: "rgba(0, 0, 0, 0.10) 0px 3px 8px",
+                    }}
+                    pagination={false}
+                    size="small"
+                    bordered
+                    className="tableGvResult"
+                  />
                 </>
               )}
             </Grid>
