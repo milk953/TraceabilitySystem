@@ -11,7 +11,7 @@ import {
 import { Table as AntTable, Select } from "antd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
-import React from "react";
+import React, { useEffect } from "react";
 import { fn_ScanSMTConnectShtConfirm } from "./fn_ScanSMTConnectShtConfirm";
 import Pageimg from "/src/assets/1.jpg";
 
@@ -41,7 +41,13 @@ function ScanSMTConnectShtConfirm() {
     lblTotalSht,
     gvScanResult,
     gvResutlState,
+    lblResult
   } = fn_ScanSMTConnectShtConfirm();
+  useEffect(() => {
+    if (gvSerial != '' && txtSerial == ''){
+      document.getElementById(`txtSerial_0`).focus();
+    }
+  }, [gvSerial]);
   return (
     <div>
       <Header />
@@ -150,7 +156,7 @@ function ScanSMTConnectShtConfirm() {
                   <TableHead >
                     <TableRow>
                       <TableCell >No.</TableCell>
-                      <TableCell >Serial No.</TableCell>
+                      <TableCell >Sheet No.</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -161,7 +167,7 @@ function ScanSMTConnectShtConfirm() {
                       >
                         <TableCell
                           className=""
-                          style={{ width: "40%", textAlign: "right" }}
+                          style={{ width: "40%", textAlign: "center" }}
                         >
                           {row.SEQ}
                         </TableCell>
@@ -256,12 +262,12 @@ function ScanSMTConnectShtConfirm() {
                         fontSize: "30px",
                       }}
                     >
-                      {/* {lblResult.value} */}
+                      {lblResult}
                     </Typography>
                   </Paper>
                 </div>
               )}
-              <div>
+              <div style={{width:'900px'}}>
                 {gvResutlState && (
                   // <Paper>
                     <AntTable
