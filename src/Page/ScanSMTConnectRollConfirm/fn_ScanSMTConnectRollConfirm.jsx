@@ -331,8 +331,11 @@ function fn_ScanSMTConnectRollConfirm() {
       let _intRowSerial = 0;
       for (let i = 0; i < dtSerial.length; i++) {
         const drRow = dtSerial[i];
-        if (drRow.SERIAL.trim() !== "") {
-          let _strSerial = drRow.SERIAL.trim().toUpperCase();
+        console.log(
+          "แสดงข้อมูลของ drRow ใน Test data : ", drRow.SERIAL, "$",drRow
+        );
+        if (drRow.SERIAL !== "") {
+          let _strSerial = drRow.SERIAL;
           let _strTestResult = "NONE";
           let _strMessageUpdate = "";
           let _strScanResultUpdate = "";
@@ -343,7 +346,7 @@ function fn_ScanSMTConnectRollConfirm() {
             const drShtRow = dtSheet[j];
             if (
               drShtRow.SHEET_NO === _strSerial &&
-              drShtRow.DATA_REMARK.trim() === ""
+              drShtRow.DATA_REMARK === ""
             ) {
               drShtRow.SCAN_RESULT = "OK";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
@@ -354,7 +357,7 @@ function fn_ScanSMTConnectRollConfirm() {
               _bolUpdate = true;
             } else if (
               drShtRow.SHEET_NO === _strSerial &&
-              drShtRow.DATA_REMARK.trim() !== ""
+              drShtRow.DATA_REMARK !== ""
             ) {
               drShtRow.SCAN_RESULT = "NG";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
@@ -365,6 +368,12 @@ function fn_ScanSMTConnectRollConfirm() {
               _bolUpdate = true;
             }
           }
+          console.log(
+            "แสดงข้อมูลของ setSerialData ใน Test data : ", _strSerial.SEQ,parseInt(hfConnLeafLength),lblRemark,_strScanResultAll,
+            _strSerial.length === parseInt(hfConnLeafLength) &&
+              lblRemark === "" &&
+              _strScanResultAll === "NG"
+          );
           if (
             _strSerial.length === parseInt(hfConnLeafLength) &&
             lblRemark === "" &&
@@ -471,13 +480,13 @@ function fn_ScanSMTConnectRollConfirm() {
       }));
       SetMode("SERIAL_ERROR");
     }
-    await getShtDataBylot(txtLot.value.trim.toUpperCase);
+    await getShtDataBylot(txtLot.value);
     fnSetFocus("gvSerial_txtSerial_0");
-    console.log("ออกจาก setSerialData แล้ว ")
+    console.log("ออกจาก setSerialData แล้ว ");
     return 0;
   };
-  const ddlProduct_SelectedIndexChanged = async (e) => {
-    if (txtLot.trim().toUpperCase() !== "") {
+  const ddlProduct_SelectedIndexChanged = async () => {
+    if (txtLot.value.trim().toUpperCase() !== "") {
       setLblPnlLog((prevState) => ({
         ...prevState,
         value: "",
@@ -626,17 +635,11 @@ function fn_ScanSMTConnectRollConfirm() {
       intRow = intRow + 1;
       const row = {
         SEQ: intRow,
-        ROLL_LEAF_NO: gvScanResult.value[intSeq].cells[1].toUpperCase(),
-        SHEET_NO: gvScanResult.value[intSeq].cells[2]
-          .toUpperCase(),
-        SCAN_RESULT: gvScanResult.value[intSeq].cells[3]
-          .toUpperCase(),
-        REMARK: gvScanResult.value[intSeq].cells[4]
-          .toUpperCase(),
-        DATA_REMARK: gvScanResult.value[intSeq]
-          .querySelector("#hfRemark")
-          .value
-          .toUpperCase(),
+        ROLL_LEAF_NO: gvScanResult.value[intSeq].roll_leaf_no,
+        SHEET_NO: gvScanResult.value[intSeq].sheet_no,
+        SCAN_RESULT: gvScanResult.value[intSeq].scan_result,
+        REMARK: gvScanResult.value[intSeq].remark,
+        DATA_REMARK: gvScanResult.value[intSeq].date_remark,
       };
       dtData.push(row);
     }
@@ -684,7 +687,7 @@ function fn_ScanSMTConnectRollConfirm() {
         },
       });
       dtSheet = res.data;
-      console.log("dtSheet", dtSheet);
+      console.log("แสดงข้อมูลของ getShtDataBylot ใน dtSheet", dtSheet);
       if (dtSheet.length > 0) {
         setGvScanResult((prevState) => ({
           ...prevState,
@@ -715,6 +718,7 @@ function fn_ScanSMTConnectRollConfirm() {
   };
 
   const getProductSerialMaster = async (strPrdName) => {
+    console.log("เข้ามายัง getProductSerialMaster แล้ว");
     let dtProductSerial = [];
     setHfSerialLength("0");
     setHfSerialFixFlag("N");
@@ -817,6 +821,7 @@ function fn_ScanSMTConnectRollConfirm() {
           setHfCheckLotShtStart(dtProductSerial.prm_conn_roll_lot_sht_start);
           setHfCheckLotShtEnd(dtProductSerial.prm_conn_roll_lot_sht_end);
           setHfSerialStartCode(dtProductSerial.prm_serial_start_code);
+          console.log("แสดงข้อมูลของ dtProductSerial ที่ได้ใน (getProductSerialMaster) : ",dtProductSerial)
         }
       });
     return 0;
