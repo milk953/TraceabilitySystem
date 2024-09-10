@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Pageimg from "/src/assets/1.jpg";
+import "../Common/StyleCommon.css";
 import "../Final Gate/SerialPcs.css";
 import Hearder from "../Header/Header";
 import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
