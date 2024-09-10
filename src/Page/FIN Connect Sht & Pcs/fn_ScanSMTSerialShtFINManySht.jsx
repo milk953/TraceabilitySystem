@@ -111,8 +111,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [pnlMachineState, setPnlMachineState] = useState(false);
   const [pnlBoardState, setPnlBoardState] = useState(false);
   const [panalSerialState, setPanalSerialState] = useState(false);
-  const [lblResultState, setLblResultState] = useState(true);
-  const [hideImg, setHideImg] = useState(false);
+  const [lblResultState, setLblResultState] = useState(false);
+  const [hideImg, setHideImg] = useState(true);
   // Focus State
   const Fctxtlot = useRef(null);
   const FCtxtRollleaf = useRef(null);
