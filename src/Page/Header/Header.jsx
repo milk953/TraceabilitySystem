@@ -96,9 +96,6 @@ function Hearder() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position="fixed"
-          style={{
-            background: "#454545",
-          }}
           className="Header_CommonBG"
         >
           <Toolbar>

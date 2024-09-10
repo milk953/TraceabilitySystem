@@ -6,23 +6,87 @@ function fn_ConfirmBarcodeGrade() {
   const [Product, setProduct] = useState([]);
 
   const [Check_Master, setCheck_Master] = useState(false);
-  const [txt_lotNo, settxt_lotNo] = useState({value:'',disbled:'',visble:'',style:''});
-  const [SlProduct, setSlProduct] = useState({value:'',disbled:'',visble:'',style:''});
-  const [txtLotRef, settxtLotRef] = useState({value:'',disbled:'',visble:'',style:''});
-  const [txtOperator, settxtOperator] = useState({value:'',disbled:'',visble:'',style:''});
-  const [lblTotalSht, setlblTotalSht] = useState({value:'',disbled:'',visble:'',style:''});
-  const [lblTotalPcs, setlblTotalPcs] = useState({value:'',disbled:'',visble:'',style:''});
-  const [txtRollLeaf, settxtRollLeaf] = useState({value:'',disbled:'',visble:'none',style:''});
-  const [txtMachineNo, settxtMachineNo] = useState({value:'',disbled:'',visble:'none',style:''});
-  const [lblLog, setlblLog] = useState({value:'',disbled:'',visble:false,style:''});
-  const [lblConfirm, setlblConfirm] = useState({value:'',disbled:'',visble:'none',style:''});
+  const [txt_lotNo, settxt_lotNo] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
+  const [SlProduct, setSlProduct] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
+  const [txtLotRef, settxtLotRef] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
+  const [txtOperator, settxtOperator] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
+  const [lblTotalSht, setlblTotalSht] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
+  const [lblTotalPcs, setlblTotalPcs] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
+  const [txtRollLeaf, settxtRollLeaf] = useState({
+    value: "",
+    disbled: "",
+    visble: "none",
+    style: "",
+  });
+  const [txtMachineNo, settxtMachineNo] = useState({
+    value: "",
+    disbled: "",
+    visble: "none",
+    style: "",
+  });
+  const [lblLog, setlblLog] = useState({
+    value: "",
+    disbled: "",
+    visble: false,
+    style: "",
+  });
+  const [lblConfirm, setlblConfirm] = useState({
+    value: "",
+    disbled: "",
+    visble: "none",
+    style: "",
+  });
   const [lblResult, setlblResult] = useState("");
-  const [dataGvSerial, setdataGvSerial] = useState({value:'',disbled:'',visble:false,style:''});
-  const [gvScanResult, setgvScanResult] = useState({value:'',disbled:'',visble:false,style:''});
-  const [txtSideBack, settxtSideBack] = useState({value:'',disbled:'',visble:false,style:''});
+  const [dataGvSerial, setdataGvSerial] = useState({
+    value: "",
+    disbled: "",
+    visble: false,
+    style: "",
+  });
+  const [gvScanResult, setgvScanResult] = useState({
+    value: "",
+    disbled: "",
+    visble: false,
+    style: "",
+  });
+  const [txtSideBack, settxtSideBack] = useState({
+    value: "",
+    disbled: "",
+    visble: false,
+    style: "",
+  });
   const [txtSideFront, settxtSideFront] = useState("");
-  const [txtSerial, settxtSerial] = useState('');
-
+  const [txtSerial, settxtSerial] = useState("");
 
   //Focus
   const fcRollleaf = useRef(null);
@@ -31,8 +95,9 @@ function fn_ConfirmBarcodeGrade() {
   const fcOperator = useRef(null);
   const fcProduct = useRef(null);
   const fcGvSerial = useRef(null);
-  const fcGvBackSide_txtsideback_0 = useRef(null);
-  const fcGvSerial_txtSerial_0 = useRef(null);
+  const fcGvBackSide_txtsideback_0 = useRef([]);
+  const fcGvSerial_txtSerial_0 = useRef([]);
+  const fcGvBackSide_txtsideback_1 = useRef([]);
 
   //hf
   const [hfRollNo, sethfRollNo] = useState("");
@@ -107,15 +172,12 @@ function fn_ConfirmBarcodeGrade() {
   const CONNECT_SERIAL_ERROR = "999999";
   const hfBarcodeErrorValue = "NA";
   const AUTO_SCAN_CHECK_FLG = "0";
-  
-
 
   // useEffect(() => {
   //   if (hfShtScan != "" && hfSerialCount != "") { //&&lblLog.visble==false
   //     getInitialSerial();
   //   }
   // }, [hfShtScan, hfSerialCount,lblLog]);
-  
 
   //Start pageload
   useEffect(() => {
@@ -128,26 +190,24 @@ function fn_ConfirmBarcodeGrade() {
   }, []);
 
   const GetProductData = async () => {
-  await  axios.get("/api/Common/GetProductData").then((res) => {
+    await axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
       setProduct(data);
-      setSlProduct((prevState) =>({...prevState,value:data[0].prd_name, }));
-
+      setSlProduct((prevState) => ({ ...prevState, value: data[0].prd_name }));
     });
   };
 
   const handletxt_Lotno = async () => {
     let strLot = "";
     let strPrdName = "";
-    setgvScanResult((prevState) =>({...prevState,visble:false}));
-    settxtSideBack((prevState) =>({...prevState,visble:false}));
-    setdataGvSerial((prevState) =>({...prevState,visble:false}));
+    setgvScanResult((prevState) => ({ ...prevState, visble: false }));
+    settxtSideBack((prevState) => ({ ...prevState, visble: false }));
+    setdataGvSerial((prevState) => ({ ...prevState, visble: false }));
     setHfSerialCount(0);
 
     if (!Check_Master) {
-     
       const strLotData = txt_lotNo.value.toUpperCase().split(";");
-      
+
       if (strLotData.length >= 2) {
         strLot = strLotData[0];
         console.log(strLot, "strLot");
@@ -156,51 +216,74 @@ function fn_ConfirmBarcodeGrade() {
             strLot: strLot,
           })
           .then((res) => {
-            settxtRollLeaf((prevState) =>({...prevState,visble:'none', }));
+            settxtRollLeaf((prevState) => ({ ...prevState, visble: "none" }));
             sethfRollNo("");
-          
+
             let data = res.data.flat().flat();
             if (data.length > 0) {
-            
               strPrdName = data[0][0];
               sethfRollNo(data[0][1]);
             }
           });
         if (strPrdName != "") {
-          setlblLog((prevState) =>({...prevState,value:'',visble:false }));
-          settxt_lotNo((prevState) =>({...prevState,value:strLot, }));
-          settxtLotRef((prevState) =>({...prevState,value:strLot, }));
-        
+          setlblLog((prevState) => ({
+            ...prevState,
+            value: "",
+            visble: false,
+          }));
+          settxt_lotNo((prevState) => ({ ...prevState, value: strLot }));
+          settxtLotRef((prevState) => ({ ...prevState, value: strLot }));
+
           getCountDataBylot(strLot);
           const datagetPd = await GetProductSerialMaster(strPrdName);
-         
+
           try {
             const isInArray = Product.some(
               (item) => item.prd_name === strPrdName
             );
-            
+
             if (isInArray) {
-              setSlProduct((prevState) =>({...prevState,value:strPrdName, }));
+              setSlProduct((prevState) => ({
+                ...prevState,
+                value: strPrdName,
+              }));
               getInitialSheet();
             } else {
-              setlblLog((prevState) =>({...prevState,value:`Product ${strPrdName} not found.`,visble:true }));
-              fcProduct.current.focus();
+              setlblLog((prevState) => ({
+                ...prevState,
+                value: `Product ${strPrdName} not found.`,
+                visble: true,
+              }));
+              setTimeout(() => {
+                fcProduct.current.focus();
+              }, 300);
               return;
             }
 
             if (datagetPd.prm_conn_roll_sht_flg == "Y") {
-              console.log('fcRollleaf',fcRollleaf)
-              settxtRollLeaf((prevState) =>({...prevState,value:'',visble:''}));
+              console.log("fcRollleaf", fcRollleaf);
+              settxtRollLeaf((prevState) => ({
+                ...prevState,
+                value: "",
+                visble: "",
+              }));
               SetMode("SERIAL");
-              fcRollleaf.current.focus();
+              setTimeout(() => {
+                fcRollleaf.current.focus();
+              }, 300);
             } else {
               SetMode("SERIAL");
-              settxtMachineNo((prevState) =>({...prevState,value:'', }));
+              settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
               if (datagetPd.prm_sht_machine_flg == "Y") {
-                settxtMachineNo((prevState) =>({...prevState,visble:'' }));
-                fctMachchine.current.focus();
+                settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
+                setTimeout(() => {
+                  fctMachchine.current.focus();
+                }, 300);
               } else {
-                settxtMachineNo((prevState) =>({...prevState,visble:'none', }));
+                settxtMachineNo((prevState) => ({
+                  ...prevState,
+                  visble: "none",
+                }));
               }
             }
           } catch (error) {
@@ -212,55 +295,101 @@ function fn_ConfirmBarcodeGrade() {
                 strPrdName.substring(intProduct + 1, intProduct + 11).trim();
               try {
                 if (datagetPd.prm_conn_roll_sht_flg == "Y") {
-                  settxtRollLeaf((prevState) =>({...prevState,value:'',visble:'' }));
-                  fcRollleaf.current.focus();
+                  settxtRollLeaf((prevState) => ({
+                    ...prevState,
+                    value: "",
+                    visble: "",
+                  }));
+                  setTimeout(() => {
+                    fcRollleaf.current.focus();
+                  }, 300);
                 } else {
                   SetMode("SERIAL");
-                  settxtMachineNo((prevState) =>({...prevState,value:'', }));
+                  settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
                   if (datagetPd.prm_sht_machine_flg == "Y") {
-                    settxtMachineNo((prevState) =>({...prevState,visble:'', }));
-                    fctMachchine.current.focus();
+                    settxtMachineNo((prevState) => ({
+                      ...prevState,
+                      visble: "",
+                    }));
+                    setTimeout(() => {
+                      fctMachchine.current.focus();
+                    }, 300);
                   } else {
-                    settxtMachineNo((prevState) =>({...prevState,visble:'none', }));
-                    fcGvBackSide_txtsideback_0.current.focus();
+                    settxtMachineNo((prevState) => ({
+                      ...prevState,
+                      visble: "none",
+                    }));
+                    setTimeout(() => {
+                      fcGvBackSide_txtsideback_0.current.focus();
+                    }, 300);
                   }
                 }
               } catch (error) {
-                setlblLog((prevState) =>({...prevState,visble:true, value:`Product ${strPrdName} not found.`}));
-                fcProduct.current.focus();
+                setlblLog((prevState) => ({
+                  ...prevState,
+                  visble: true,
+                  value: `Product ${strPrdName} not found.`,
+                }));
+                setTimeout(() => {
+                  fcProduct.current.focus();
+                }, 300);
               }
             } else {
-              setlblLog((prevState) =>({...prevState,visble:true, value:`Product ${strPrdName} not found.`}));
-              fcProduct.current.focus();
+              setlblLog((prevState) => ({
+                ...prevState,
+                visble: true,
+                value: `Product ${strPrdName} not found.`,
+              }));
+              setTimeout(() => {
+                fcProduct.current.focus();
+              }, 300);
             }
           }
         } else {
-         
-          setSlProduct((prevState) =>({...prevState,value:Product[0].prd_name, }));
-          settxt_lotNo((prevState) =>({...prevState,value:'', }));
-          setdataGvSerial((prevState) =>({...prevState,visble:false}));
-          setlblLog((prevState) =>({...prevState,visble:true, value:`Invalid lot no.`}));
+          setSlProduct((prevState) => ({
+            ...prevState,
+            value: Product[0].prd_name,
+          }));
+          settxt_lotNo((prevState) => ({ ...prevState, value: "" }));
+          setdataGvSerial((prevState) => ({ ...prevState, visble: false }));
+          setlblLog((prevState) => ({
+            ...prevState,
+            visble: true,
+            value: `Invalid lot no.`,
+          }));
           setHfMode("LOT");
-          fcLotNo.current.focus();
+          setTimeout(() => {
+            fcLotNo.current.focus();
+          }, 300);
         }
       } else {
-     
-        setSlProduct((prevState) =>({...prevState,value:Product[0].prd_name, }));
-        settxt_lotNo((prevState) =>({...prevState,value:'', }));
-        setdataGvSerial((prevState) =>({...prevState,visble:false}));
-        setlblLog((prevState) =>({...prevState,visble:true, value:`Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด`}));
+        setSlProduct((prevState) => ({
+          ...prevState,
+          value: Product[0].prd_name,
+        }));
+        settxt_lotNo((prevState) => ({ ...prevState, value: "" }));
+        setdataGvSerial((prevState) => ({ ...prevState, visble: false }));
+        setlblLog((prevState) => ({
+          ...prevState,
+          visble: true,
+          value: `Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด`,
+        }));
         setHfMode("LOT");
-        fcLotNo.current.focus();
+        setTimeout(() => {
+          fcLotNo.current.focus();
+        }, 300);
       }
     } else {
       GetProductSerialMaster(SlProduct.value);
-      fcProduct.current.focus();
+      setTimeout(() => {
+        fcProduct.current.focus();
+      }, 300);
     }
   };
 
-  const getCountDataBylot = async(strLot) => {
-    setlblTotalSht((prevState) =>({...prevState,value:'0' }));
-    setlblTotalPcs((prevState) =>({...prevState,value:'0' }));
+  const getCountDataBylot = async (strLot) => {
+    setlblTotalSht((prevState) => ({ ...prevState, value: "0" }));
+    setlblTotalPcs((prevState) => ({ ...prevState, value: "0" }));
     axios
       .post("/api/Common/getlotserialcountdata", {
         dataList: {
@@ -270,8 +399,14 @@ function fn_ConfirmBarcodeGrade() {
       })
       .then((res) => {
         if (res.data.length > 0) {
-          setlblTotalPcs((prevState) =>({...prevState,value:res.data[0].count_pcs }))
-          setlblTotalSht((prevState) =>({...prevState,value:res.data[0].count_sht }));
+          setlblTotalPcs((prevState) => ({
+            ...prevState,
+            value: res.data[0].count_pcs,
+          }));
+          setlblTotalSht((prevState) => ({
+            ...prevState,
+            value: res.data[0].count_sht,
+          }));
         }
       });
   };
@@ -318,7 +453,7 @@ function fn_ConfirmBarcodeGrade() {
         prdName: strPrdName,
       })
       .then((res) => {
-        console.log('GetSerialProductByProduct',res.data)
+        console.log("GetSerialProductByProduct", res.data);
         data = res.data[0];
         if (data != null) {
           setHfSerialLength(data.slm_serial_length);
@@ -397,7 +532,7 @@ function fn_ConfirmBarcodeGrade() {
       });
     }
 
-    settxtSideBack((prevState) =>({...prevState,visble:true}));
+    settxtSideBack((prevState) => ({ ...prevState, visble: true }));
     return dtData;
   };
 
@@ -405,7 +540,6 @@ function fn_ConfirmBarcodeGrade() {
     let dtData = [];
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
       for (let intRow = 0; intRow < hfSerialCount; intRow++) {
-       
         dtData.push({
           SHEET: intSht + 1,
           SEQ: intRow + 1,
@@ -413,158 +547,245 @@ function fn_ConfirmBarcodeGrade() {
         });
       }
     }
-    setdataGvSerial((prevState) =>({...prevState,visble:true,value:dtData}));
+    setdataGvSerial((prevState) => ({
+      ...prevState,
+      visble: true,
+      value: dtData,
+    }));
 
     return dtData;
   };
 
   const ibtBack_Click = async () => {
-    settxt_lotNo((prevState) =>({...prevState,value:'',disbled:false }));
-    setdataGvSerial((prevState) =>({...prevState,visble:true}));
-    setSlProduct((prevState) =>({...prevState,value:Product[0].prd_name, }));
+    settxt_lotNo((prevState) => ({ ...prevState, value: "", disbled: false }));
+    setdataGvSerial((prevState) => ({ ...prevState, visble: true }));
+    setSlProduct((prevState) => ({ ...prevState, value: Product[0].prd_name }));
     await SetMode("LOT");
-    fcLotNo.current.focus();
+    setTimeout(() => {
+      fcLotNo.current.focus();
+    }, 300);
   };
 
   const btnCancel_Click = async () => {
     await SetMode("SERIAL");
-    fcGvSerial_txtSerial_0.current.focus();
+    setTimeout(() => {
+      fcGvSerial_txtSerial_0[0].current.focus();
+    }, 300);
   };
 
-  const btnSave_Click = async() => {
+  const btnSave_Click = async () => {
     if (hfMode == "SERIAL") {
       setSerialData();
     }
   };
 
   const handleSL_Product = async (value) => {
-    setSlProduct((prevState) =>({...prevState,value:value, }));
+    setSlProduct((prevState) => ({ ...prevState, value: value }));
     GetProductSerialMaster(value);
     if (txt_lotNo.value != "") {
-      setlblLog((prevState) =>({...prevState,value:'',visble:false }));
+      setlblLog((prevState) => ({ ...prevState, value: "", visble: false }));
       getCountDataBylot(txt_lotNo.value);
       getInitialSheet();
       if (hfCheckRollSht == "Y") {
-        settxtRollLeaf((prevState) =>({...prevState,value:'',visble:'' }));
-        fcRollleaf.current.focus();
+        settxtRollLeaf((prevState) => ({
+          ...prevState,
+          value: "",
+          visble: "",
+        }));
+        setTimeout(() => {
+          fcRollleaf.current.focus();
+        }, 300);
       } else {
         await SetMode("SERIAL");
-        settxtMachineNo((prevState) =>({...prevState,value:'', }));
+        settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
         if (hfReqMachine == "Y") {
-          settxtMachineNo((prevState) =>({...prevState,visble:'', }));
-          fctMachchine.current.focus();
+          settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
+          setTimeout(() => {
+            fctMachchine.current.focus();
+          }, 300);
         } else {
-          fcGvBackSide_txtsideback_0.current.focus();
+          setTimeout(() => {
+            fcGvBackSide_txtsideback_0.current[0].focus();
+          }, 300);
         }
       }
     } else {
-      setSlProduct((prevState) =>({...prevState,value:Product[0].prd_name }));
+      setSlProduct((prevState) => ({
+        ...prevState,
+        value: Product[0].prd_name,
+      }));
       await SetMode("LOT");
     }
   };
 
   const handleTxt_RollLeaf = async () => {
-    setlblLog((prevState) =>({...prevState,value:'',visble:false }));
-    if (Check_Master || (txtRollLeaf.value !== "" && txtRollLeaf.value === hfConnRollLength) ) {
+    setlblLog((prevState) => ({ ...prevState, value: "", visble: false }));
+    if (
+      Check_Master ||
+      (txtRollLeaf.value !== "" && txtRollLeaf.value === hfConnRollLength)
+    ) {
       const strRollProduct = hfRollNo + hfCheckRollPrd;
       if (hfCheckRollPrdFlg === "Y") {
-        if ( !Check_Master &&  strRollProduct !==
-            txtRollLeaf.value.substring(hfCheckRollPrdStart - 1, hfCheckRollPrdEnd)
+        if (
+          !Check_Master &&
+          strRollProduct !==
+            txtRollLeaf.value.substring(
+              hfCheckRollPrdStart - 1,
+              hfCheckRollPrdEnd
+            )
         ) {
           // setvisibleLog(true);
           // setlblLog("Roll/Leaf No. mix product");
-          setlblLog((prevState) =>({...prevState,value:"Roll/Leaf No. mix product",visble:true }));
+          setlblLog((prevState) => ({
+            ...prevState,
+            value: "Roll/Leaf No. mix product",
+            visble: true,
+          }));
           // setvisiblgvSerial(false);
-          setdataGvSerial((prevState) =>({...prevState,visble:false}));
+          setdataGvSerial((prevState) => ({ ...prevState, visble: false }));
           setHfMode("ROLL");
           await getInitialSheet();
-          settxtRollLeaf((prevState) =>({...prevState,value:'', }));
-          fcRollleaf.current.focus();
+          settxtRollLeaf((prevState) => ({ ...prevState, value: "" }));
+          setTimeout(() => {
+            fcRollleaf.current.focus();
+          }, 300);
         } else {
           SetMode("SERIAL");
-          settxtMachineNo((prevState) =>({...prevState,value:'', }));
+          settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
           if (hfReqMachine == "Y") {
             // setvisibleMachine("");
-            settxtMachineNo((prevState) =>({...prevState,visble:'', }))
-            fctMachchine.current.focus();
+            settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
+            setTimeout(() => {
+              fctMachchine.current.focus();
+            }, 300);
           } else {
             // setvisibleMachine("none");
-            settxtMachineNo((prevState) =>({...prevState,visble:'none', }))
-            fcGvBackSide_txtsideback_0.current.focus();
+            settxtMachineNo((prevState) => ({ ...prevState, visble: "none" }));
+            setTimeout(() => {
+              fcGvBackSide_txtsideback_0[0].current.focus();
+            }, 300);
           }
         }
       } else {
         SetMode("SERIAL");
-        settxtMachineNo((prevState) =>({...prevState,value:'', }));
+        settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
         if (hfReqMachine == "Y") {
           // setvisibleMachine("");
-          settxtMachineNo((prevState) =>({...prevState,visble:'', }))
-          fctMachchine.current.focus();
+          settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
+          setTimeout(() => {
+            fctMachchine.current.focus();
+          }, 300);
         } else {
           // setvisibleMachine("none");
-          settxtMachineNo((prevState) =>({...prevState,visble:'none', }))
-          // fcGvBackSide_txtsideback_0.current.focus();
+          settxtMachineNo((prevState) => ({ ...prevState, visble: "none" }));
+          setTimeout(() => {
+            fcGvBackSide_txtsideback_0.current[0].focus();
+          }, 300);
         }
       }
     } else {
       // setvisibleLog(true);
       // setlblLog("Invalid Roll/Leaf No.");
-      setlblLog((prevState) =>({...prevState,visble:true,value:'Invalid Roll/Leaf No.' }))
+      setlblLog((prevState) => ({
+        ...prevState,
+        visble: true,
+        value: "Invalid Roll/Leaf No.",
+      }));
       // setvisiblgvSerial(false);
-      setdataGvSerial((prevState) =>({...prevState,visble:false}));
+      setdataGvSerial((prevState) => ({ ...prevState, visble: false }));
       setHfMode("ROLL");
       await getInitialSheet();
-      settxtRollLeaf((prevState) =>({...prevState,value:'', }));
-      fcRollleaf.current.focus();
+      settxtRollLeaf((prevState) => ({ ...prevState, value: "" }));
+      setTimeout(() => {
+        fcRollleaf.current.focus();
+      }, 300);
     }
   };
 
-  const handleTxt_LotRef = async() => {
+  const handleTxt_LotRef = async () => {
     if (txtOperator.value != "") {
       const strLotData = txtLotRef.value.trim().toUpperCase().split(";");
-      settxtLotRef((prevState) =>({...prevState,value:strLotData[0], }));
-      fcOperator.current.focus();
+      settxtLotRef((prevState) => ({ ...prevState, value: strLotData[0] }));
+      setTimeout(() => {
+        fcOperator.current.focus();
+      }, 300);
     }
   };
 
   const SetMode = async (_strType) => {
     if (_strType == "LOT") {
-      setSlProduct((prevState) =>({...prevState,disbled:false,style:'' }));
-      settxt_lotNo((prevState) =>({...prevState,value:'',disbled:false,style:''}));
-      setlblLog((prevState) =>({...prevState,visble:false}));
-      setdataGvSerial((prevState) =>({...prevState,visble:false}));
+      setSlProduct((prevState) => ({
+        ...prevState,
+        disbled: false,
+        style: "",
+      }));
+      settxt_lotNo((prevState) => ({
+        ...prevState,
+        value: "",
+        disbled: false,
+        style: "",
+      }));
+      setlblLog((prevState) => ({ ...prevState, visble: false }));
+      setdataGvSerial((prevState) => ({ ...prevState, visble: false }));
       setHfMode("LOT");
-      fcLotNo.current.focus();
+      setTimeout(() => {
+        fcLotNo.current.focus();
+      }, 300);
     }
     if (_strType == "LOT_ERROR") {
-      settxt_lotNo((prevState) =>({...prevState,value:'',disbled:false ,style:''}));
-      setlblLog((prevState) =>({...prevState,visble:true}));
-      setdataGvSerial((prevState) =>({...prevState,visble:false}));
+      settxt_lotNo((prevState) => ({
+        ...prevState,
+        value: "",
+        disbled: false,
+        style: "",
+      }));
+      setlblLog((prevState) => ({ ...prevState, visble: true }));
+      setdataGvSerial((prevState) => ({ ...prevState, visble: false }));
       setHfMode("LOT");
-      fcLotNo.current.focus();
+      setTimeout(() => {
+        fcLotNo.current.focus();
+      }, 300);
     }
     if (_strType == "SERIAL") {
-      settxt_lotNo((prevState) =>({...prevState,disbled:true,style:'#EEEEEE' }));
-      setlblLog((prevState) =>({...prevState,visble:false}));
-      setdataGvSerial((prevState) =>({...prevState,visble:true}));
+      settxt_lotNo((prevState) => ({
+        ...prevState,
+        disbled: true,
+        style: "#EEEEEE",
+      }));
+      setlblLog((prevState) => ({ ...prevState, visble: false }));
+      setdataGvSerial((prevState) => ({ ...prevState, visble: true }));
       setHfMode("SERIAL");
       await getInitialSerial();
     }
     if (_strType == "SERIAL_ERROR") {
-      settxt_lotNo((prevState) =>({...prevState,disbled:true,style:'#EEEEEE' }));
-      setlblLog((prevState) =>({...prevState,visble:true}));
+      settxt_lotNo((prevState) => ({
+        ...prevState,
+        disbled: true,
+        style: "#EEEEEE",
+      }));
+      setlblLog((prevState) => ({ ...prevState, visble: true }));
     }
     if (_strType == "SERIAL_OK") {
-      settxt_lotNo((prevState) =>({...prevState,disbled:true,style:'#EEEEEE'}));
+      settxt_lotNo((prevState) => ({
+        ...prevState,
+        disbled: true,
+        style: "#EEEEEE",
+      }));
       // setvisibleLog(false);
-      setlblLog((prevState) =>({...prevState,visble:false}));
+      setlblLog((prevState) => ({ ...prevState, visble: false }));
       await getInitialSerial();
-      fcGvSerial.current.focus();
+      setTimeout(() => {
+        fcGvSerial.current.focus();
+      }, 300);
     }
     if (_strType == "SERIAL_NG") {
-      settxt_lotNo((prevState) =>({...prevState,disbled:true,style:'#EEEEEE' }));
+      settxt_lotNo((prevState) => ({
+        ...prevState,
+        disbled: true,
+        style: "#EEEEEE",
+      }));
       // setvisibleLog(false);
-      setlblLog((prevState) =>({...prevState,visble:false}));
+      setlblLog((prevState) => ({ ...prevState, visble: false }));
     }
   };
 
@@ -585,7 +806,7 @@ function fn_ConfirmBarcodeGrade() {
               : "",
           SERIAL: txtSerial[intRow],
           GRADE_RESULT: "",
-          SCAN_RESULT: '',
+          SCAN_RESULT: "",
           REMARK: "",
           UPDATE_FLG: "N",
           MACHINE: txtMachineNo.value,
@@ -598,7 +819,7 @@ function fn_ConfirmBarcodeGrade() {
 
   const setSerialData = async () => {
     const dtSerial = await getInputSerial();
-    console.log('dtserial',dtSerial)
+    console.log("dtserial", dtSerial);
     let _strLotData = "";
     let _strLotRefData = "";
     let _strLot = "";
@@ -623,12 +844,12 @@ function fn_ConfirmBarcodeGrade() {
     const strLotRefData = txtLotRef.value.toUpperCase().split(";");
     _strLotRef = strLotRefData[0];
 
-    setlblLog((prevState) =>({...prevState,visble:false}));
+    setlblLog((prevState) => ({ ...prevState, visble: false }));
 
     if (lblConfirm.visble) {
       _bolConfirm = true;
     }
-    setlblLog((prevState) =>({...prevState,visble:'none'}));
+    setlblLog((prevState) => ({ ...prevState, visble: "none" }));
     // setvisibleConfirm("none");
 
     if (txt_lotNo.value != "" && dtSerial.length > 0) {
@@ -640,7 +861,7 @@ function fn_ConfirmBarcodeGrade() {
           })
           .then((res) => {
             setHfWeekCode(res.data);
-            dataHfWeekCode=res.data
+            dataHfWeekCode = res.data;
           });
       }
 
@@ -853,7 +1074,11 @@ function fn_ConfirmBarcodeGrade() {
           if (_strReturn != "NG") {
             // setvisibleLog(true);
             // setlblLog(_strReturn);
-            setlblLog((prevState) =>({...prevState,visble:true,value:_strReturn}));
+            setlblLog((prevState) => ({
+              ...prevState,
+              visble: true,
+              value: _strReturn,
+            }));
           }
         }
       }
@@ -880,7 +1105,11 @@ function fn_ConfirmBarcodeGrade() {
                 if (_strReturn != "NG") {
                   // setvisibleLog(true);
                   // setlblLog(_strReturn);
-                  setlblLog((prevState) =>({...prevState,visble:true,value:_strReturn}));
+                  setlblLog((prevState) => ({
+                    ...prevState,
+                    visble: true,
+                    value: _strReturn,
+                  }));
                 }
               }
             });
@@ -926,21 +1155,20 @@ function fn_ConfirmBarcodeGrade() {
                 _RearSheetBarcode = dtSerial[i].FRONT_SIDE;
               }
               await axios
-              .post("/api/Common/Get_Spi_aoi_result", {
-                dataList: {
-                  _strPlantCode: "5",
-                  _pcsPosition: _intSeq,
-                  _frontSheetNumber: _FrontSheetBarcode,
-                  _rearSheetNumber: _RearSheetBarcode,
-                  _strProduct: _strPrdName,
-                  _Message:  _Message,
-                 
-                },
-              })
-              .then((res) => {
-                _Result=res.data
-              })
-            
+                .post("/api/Common/Get_Spi_aoi_result", {
+                  dataList: {
+                    _strPlantCode: "5",
+                    _pcsPosition: _intSeq,
+                    _frontSheetNumber: _FrontSheetBarcode,
+                    _rearSheetNumber: _RearSheetBarcode,
+                    _strProduct: _strPrdName,
+                    _Message: _Message,
+                  },
+                })
+                .then((res) => {
+                  _Result = res.data;
+                });
+
               if (_Result == "NG") {
                 _strScanResultUpdate = _Result;
               }
@@ -961,7 +1189,7 @@ function fn_ConfirmBarcodeGrade() {
               if (!hfBarcodeGrade.includes(serialGrade)) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = `Barcode grade ${dtSerial[i].SERIAL_GRADE} not accept/คุณภาพบาร์โค้ด ${dtSerial[i].SERIAL_GRADE} ไม่ผ่าน`;
-            
+
                 dtSerial[i].UPDATE_FLG = "N";
               }
             }
@@ -1005,7 +1233,7 @@ function fn_ConfirmBarcodeGrade() {
               _strUpdateError = "Problem sheet from RBMP";
               _strErrorAll = "Problem sheet from RBMP";
             } else {
-              let dtRowLeaf =await getConnectRollSheetData(
+              let dtRowLeaf = await getConnectRollSheetData(
                 dtSerial,
                 SlProduct.value,
                 txtRollLeaf.value
@@ -1125,48 +1353,63 @@ function fn_ConfirmBarcodeGrade() {
         // lblResult.ForeColor = Drawing.Color.Green
       }
       if (_strErrorAll != "") {
-        setlblResult(_strScanResultAll +" "+ _strErrorAll);
+        setlblResult(_strScanResultAll + " " + _strErrorAll);
       }
       if (_strBarcodeResultAll != "NG" || _bolConfirm) {
-        setgvScanResult((prevState) =>({...prevState,value:dtSerial, }));
+        setgvScanResult((prevState) => ({ ...prevState, value: dtSerial }));
         // setgvScanResult(dtSerial);
         // setvisiblegvScanResult(true);
-        setgvScanResult((prevState) =>({...prevState,visble:true}));
+        setgvScanResult((prevState) => ({ ...prevState, visble: true }));
         await getInitialSheet();
         getInitialSerial();
         getCountDataBylot(txt_lotNo.value);
-        settxtMachineNo((prevState) =>({...prevState,value:'', }));
+        settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
         if (hfReqMachine == "Y") {
           // setvisibleMachine("");
-          settxtMachineNo((prevState) =>({...prevState,visble:'true'}));
-          fctMachchine.current.focus();
+          settxtMachineNo((prevState) => ({ ...prevState, visble: "true" }));
+          setTimeout(() => {
+            fctMachchine.current.focus();
+          }, 300);
         } else {
-          // fcGvBackSide_txtsideback_0.current.focus();
+          setTimeout(() => {
+            fcGvBackSide_txtsideback_0.current[0].focus();
+          }, 300);
         }
       } else {
         // setgvScanResult(dtSerial);
-        setgvScanResult((prevState) =>({...prevState,value:dtSerial, }));
+        setgvScanResult((prevState) => ({ ...prevState, value: dtSerial }));
         // setvisiblegvScanResult(true);
-        setgvScanResult((prevState) =>({...prevState,visble:true}));
+        setgvScanResult((prevState) => ({ ...prevState, visble: true }));
         setlblConfirm(true);
       }
     } else {
-      setlblLog((prevState) =>({...prevState,value:'Please input Sheet Side No. !!!', }));
+      setlblLog((prevState) => ({
+        ...prevState,
+        value: "Please input Sheet Side No. !!!",
+      }));
       SetMode("SERIAL_ERROR");
       // fnPlaySound()
       getCountDataBylot(txt_lotNo.value);
-      settxtMachineNo((prevState) =>({...prevState,value:'', }));
+      settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
       if (hfReqMachine == "Y") {
         // setvisibleMachine("");
-        settxtMachineNo((prevState) =>({...prevState,visble:'', }));
-        fctMachchine.current.focus();
+        settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
+        setTimeout(() => {
+          fctMachchine.current.focus();
+        }, 300);
       } else {
-        fcGvBackSide_txtsideback_0.current.focus();
+        setTimeout(() => {
+          fcGvBackSide_txtsideback_0.current[0].focus();
+        }, 300);
       }
     }
   };
 
-  const getConnectRollSheetData = async (_dtSerial, _strProduct, _strRollLeaf) => {
+  const getConnectRollSheetData = async (
+    _dtSerial,
+    _strProduct,
+    _strRollLeaf
+  ) => {
     let _dtData = [];
     let _intRollRow = 1;
     let _intRow = 0;
@@ -1317,19 +1560,27 @@ function fn_ConfirmBarcodeGrade() {
     if (txtOperator.value != "") {
       if (hfCheckRollSht == "Y") {
         // setvisibleRollLeaf("");
-        settxtRollLeaf((prevState) =>({...prevState,value:'',visble:'' }));
-        fcRollleaf.current.focus();
+        settxtRollLeaf((prevState) => ({
+          ...prevState,
+          value: "",
+          visble: "",
+        }));
+        setTimeout(() => {
+          fcRollleaf.current.focus();
+        }, 300);
       } else {
         await SetMode("SERIAL");
-        settxtMachineNo((prevState) =>({...prevState,value:'', }));
+        settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
         if (hfReqMachine == "Y") {
           // setvisibleMachine("");
-          settxtMachineNo((prevState) =>({...prevState,visble:'' }));
-          fctMachchine.current.focus();
+          settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
+          setTimeout(() => {
+            fctMachchine.current.focus();
+          }, 300);
         }
       }
     } else {
-      settxtOperator((prevState) =>({...prevState,value:"", }));
+      settxtOperator((prevState) => ({ ...prevState, value: "" }));
       // fnSetFocus("txtOperator");
     }
   };
@@ -1340,17 +1591,69 @@ function fn_ConfirmBarcodeGrade() {
     settxtSideFront(newValues);
   };
 
-  const handleBackSideChange =async (index, event) => {
+  const handleBackSideChange = async (index, event) => {
     const newValues = [...txtSideBack.value];
     newValues[index] = event.target.value;
-    settxtSideBack((prevState) =>({...prevState,value:newValues}));
+    settxtSideBack((prevState) => ({ ...prevState, value: newValues }));
   };
 
-  const handleSerialChange =async (index, event) => {
+  const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value;
     settxtSerial(newValues);
   };
+
+  const columns = [
+    {
+      title: "Sheet",
+      dataIndex: "SHEET",
+      key: "Sheet",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Serial No.",
+      dataIndex: "SERIAL",
+      key: "Serial No.",
+      align: "left",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Grade",
+      dataIndex: "SERIAL_GRADE",
+      key: "Grade",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "SCAN_RESULT",
+      align: "center",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "REMARK",
+      align: "center",
+      render: (text, record, index) => {
+    
+          return text;
+        
+      },
+    },
+   
+  ];
 
   return {
     settxt_lotNo,
@@ -1403,7 +1706,8 @@ function fn_ConfirmBarcodeGrade() {
     fcGvSerial_txtSerial_0,
     lblConfirm,
     dataGvSerial,
-    
+    fcGvBackSide_txtsideback_1,
+    columns
   };
 }
 

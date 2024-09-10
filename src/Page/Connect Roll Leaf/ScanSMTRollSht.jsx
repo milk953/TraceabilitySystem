@@ -181,8 +181,6 @@ console.log('gvScanResult',gvScanResult)
                         // label="Operator. :"
                         fullWidth
                         inputRef={(el) => (fc_txtOperator.current = el)}
-
-                        // disabled
                         value={txtOperator}
                         onChange={(e) => {
                           settxtOperator(e.target.value);
@@ -281,16 +279,33 @@ console.log('gvScanResult',gvScanResult)
                       <TableCell>
                         {" "}
                         <TextField
-                          className="input_txt"
                           size="small"
                           fullWidth
-                        
-                        inputRef={(el) => (fc_GvSerial.current = el)}
+                        className="input_txt"
+                        inputRef={(el) => (fc_GvSerial.current[index]  = el)}
 
                           value={txtLeafNo[index]}
                           onChange={(event) =>
                             handleTextFieldChange(index, event)
                           }
+
+                          // inputRef={(el) => (fc_txtSerial.current[index] = el)}
+                          // value={txtSerial[index]}
+                          onBlur={(event) => {
+                            handleTextFieldChange(index, event);
+                          }}
+                         
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                              event.preventDefault(); 
+                              if (index < GvSerial.value.length - 1) {
+                                fc_GvSerial.current[index + 1].focus();
+                              } else {
+                                Bt_Save();
+                                event.target.blur();
+                              }
+                            }
+                          }}
                         />
                       </TableCell>
                     </TableRow>

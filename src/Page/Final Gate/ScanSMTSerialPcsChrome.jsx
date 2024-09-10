@@ -364,10 +364,6 @@ function ScanSMTRoollSht() {
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}
-                    style={{
-                      width: "100%",
-                      boxShadow: "rgba(0, 0, 0, 0.10) 0px 3px 8px",
-                    }}
                     pagination={false}
                     size="small"
                     bordered

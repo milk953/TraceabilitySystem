@@ -1,7 +1,7 @@
 
 .Header_CommonBG{ 
-    background: #454545;
-    color: #ffffff;
+    background: hsl(0, 0%, 27%) !important; 
+    color: #ffffff !important;
 }
 /* Card Scan */
 .Card-Common{
@@ -21,9 +21,11 @@
     color: yellow !important;
     font-weight: bold;
 }
-
-/* .CSS-GvSerial{
-} */
+.Img_GvResult{
+width: 360px;
+height: 300px;
+margin-bottom: 30px;
+}
 
 .CSS-GvSerial th{
     background-color: #12422e !important ;
@@ -59,7 +61,10 @@
 }
 
 
-
+.tableGvResult{
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
+}
 .input_txt .MuiInputBase-input {
   height: 10px; 
 }
@@ -74,8 +79,12 @@
     height: 10px;
     line-height: 10px; 
     text-align: center; 
+    padding: 0;
   }
 
+  .Icon_ibtBack {
+    padding: 0;
+  }
 .Img1{
     width: 420px;
     height: 350px;

@@ -67,6 +67,7 @@ function ScanSMTRoollSht() {
     gvScanResult,
     lblResult,
     lblTime,
+    columns
   } = fn_ScanSMTSerialPcsChrome();
   console.log("lblTime", lblTime);
   return (
@@ -91,7 +92,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         style={{ ...txtLot.style, width: "80%" }}
                         disabled={txtLot.disbled} //true พิมไม่ได้
@@ -110,8 +111,8 @@ function ScanSMTRoollSht() {
                         }}
                         onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtBack_Click}>
-                        <BackspaceIcon />
+                      <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
+                        <BackspaceIcon className="Icon_ibtBack"/>
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -122,7 +123,7 @@ function ScanSMTRoollSht() {
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          id="selectPd"
+                          className="Select_dropDown"
                           value={Sl_Product.value}
                           // , background:'#e0e0e0'
                           style={{ ...Sl_Product.style }}
@@ -150,7 +151,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fc_txtPackingNo.current = el)}
                         value={txtPackingNo.value}
@@ -170,7 +171,7 @@ function ScanSMTRoollSht() {
                         }}
                         onBlur={txtPackingNo_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" onClick={ibtPackingBack_Click}>
+                      <Button className="Bt_ibtBack" onClick={ibtPackingBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -208,16 +209,9 @@ function ScanSMTRoollSht() {
               <Paper
                 elevation={3}
                 style={{
-                  width: "450px",
-                  height: "40px",
-                  textAlign: "center",
-                  background: "#BB2525",
-                  paddingTop: "18px",
-                  color: "yellow", 
-                  fontWeight: "bold",
-                  
-                  display: lblLog.visble,
+               ay: lblLog.visble,
                 }}
+                className="Card-lblLog"
               >
                 {lblLog.value}
               </Paper>
@@ -253,7 +247,7 @@ function ScanSMTRoollSht() {
                       <TableCell>
                         <TextField
                           key={index}
-                          id="txtfild"
+                          className="input_txt"
                           size="small"
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
@@ -311,11 +305,7 @@ function ScanSMTRoollSht() {
               {gvScanResult.visble == false && (
                 <>
                   <img
-                    style={{
-                      width: "360px",
-                      height: "300px",
-                      marginBottom: "30px",
-                    }}
+                className="Img_GvResult"
                     src={Pageimg} // Import the image
                     alt="Description of the image"
                   />
@@ -357,13 +347,14 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
+                  <br/>
                   <AntTable 
                 columns={columns}
                 dataSource={gvScanResult.value}
                 style={{ width:'100%'}}
                 pagination={false}
                 size="small"
-                // bordered
+                bordered
                 className="tableGvResult"
                 />
                 </>
