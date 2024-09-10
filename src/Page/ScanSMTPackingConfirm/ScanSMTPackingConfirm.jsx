@@ -32,7 +32,8 @@ import Hearder from "../Header/Header";
 import Pageimg from "/src/assets/1.jpg";
 import {fn_ScanSMTPackingConfirm} from '../ScanSMTPackingConfirm/fn_ScanSMTPackingConfirm'
 function ScanSMTPackingConfirm() {
-const {}=fn_ScanSMTPackingConfirm();
+const { txtLot,settxtLot,txtLot_TextChanged
+}=fn_ScanSMTPackingConfirm();
   return (
     <div>
       <Hearder />
@@ -56,22 +57,22 @@ const {}=fn_ScanSMTPackingConfirm();
                       <TextField
                         id="txtfild"
                         size="small"
-                        //style={{ ...txtLot.style, width: "80%" }}
-                        //disabled={txtLot.disbled} //true พิมไม่ได้
-                       // inputRef={(el) => (fc_txtLotNo.current = el)}
-                       // value={txtLot.value}
-                        // onChange={(e) => {
-                        //   settxtLot((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtLot_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtLot_TextChanged}
+                        style={{ ...txtLot.style, width: "80%" }}
+                        disabled={txtLot.disbled} //true พิมไม่ได้
+                      //  inputRef={(el) => (fc_txtLotNo.current = el)}
+                       value={txtLot.value}
+                        onChange={(e) => {
+                          settxtLot((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtLot_TextChanged();
+                          }
+                        }}
+                        onBlur={txtLot_TextChanged}
                       ></TextField>
                       <Button id="txtfild" 
                     //  onClick={ibtBack_Click}
