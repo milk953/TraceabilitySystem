@@ -41,13 +41,15 @@ function ScanSMTConnectShtConfirm() {
     lblTotalSht,
     gvScanResult,
     gvResutlState,
-    lblResult
+    lblResult,
+    lblErrorState,
+    handle_ibtnBack_Click,
   } = fn_ScanSMTConnectShtConfirm();
   useEffect(() => {
-    if (gvSerial != '' && txtSerial == ''){
+    if (panalSerialState == true && gvSerial != "" && txtSerial == "") {
       document.getElementById(`txtSerial_0`).focus();
     }
-  }, [gvSerial]);
+  }, [gvSerial, panalSerialState]);
   return (
     <div>
       <Header />
@@ -96,7 +98,7 @@ function ScanSMTConnectShtConfirm() {
                       ></input>
                     </TableCell>
                     <TableCell>
-                      <Button>
+                      <Button onClick={handle_ibtnBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -130,10 +132,24 @@ function ScanSMTConnectShtConfirm() {
                         className="subTable"
                         style={{ display: "flex", marginLeft: "10px" }}
                       >
-                        <tr style={{ background: "#8DECB4", width: "115px" ,borderRadius:'5%',height:'30px'}}>
+                        <tr
+                          style={{
+                            background: "#8DECB4",
+                            width: "115px",
+                            borderRadius: "5%",
+                            height: "30px",
+                          }}
+                        >
                           <td> {lblTotalSht}</td>
                         </tr>
-                        <tr style={{ background: "#FFF5E0", width: "115px" ,borderRadius:'5%',height:'30px'}}>
+                        <tr
+                          style={{
+                            background: "#FFF5E0",
+                            width: "115px",
+                            borderRadius: "5%",
+                            height: "30px",
+                          }}
+                        >
                           <td>{lblShtCount}</td>
                         </tr>
                       </table>
@@ -141,22 +157,25 @@ function ScanSMTConnectShtConfirm() {
                   </TableRow>
                 </TableBody>
               </Table>
-              <h3
-                style={{
-                  textAlign: "center",
-                  background: "red",
-                  color: "yellow",
-                }}
-              >
-                {lblError}
-              </h3>
+              {lblErrorState && (
+                <Card
+                  // style={{
+                  //   textAlign: "center",
+                  //   background: "red",
+                  //   color: "yellow",
+                  // }}
+                  className="Card-lblLog"
+                >
+                  {lblError}
+                </Card>
+              )}
               &nbsp;&nbsp;
               {panalSerialState && (
                 <Table className="GvSerialConnectConfirm" component={Card}>
-                  <TableHead >
+                  <TableHead>
                     <TableRow>
-                      <TableCell >No.</TableCell>
-                      <TableCell >Sheet No.</TableCell>
+                      <TableCell>No.</TableCell>
+                      <TableCell>Sheet No.</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -246,19 +265,24 @@ function ScanSMTConnectShtConfirm() {
                 />
               )}
               {lblResultState && (
-                <div className="lblResultFin">
+                <div className="lblResultConfirmConnect">
                   <Paper
-                    className="lblResultCardMasterFinal"
+                    className="lblResultCardConfirmConnect"
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      // background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
+                      background:
+                        lblResult === "OK"
+                          ? "#059212"
+                          : lblResult === "NG"
+                          ? "red"
+                          : "#BA0900",
                     }}
                   >
                     <Typography
                       variant="h4"
                       style={{
-                        // color: lblResult.styled.color,
+                        color: 'white',
                         fontSize: "30px",
                       }}
                     >
@@ -267,18 +291,18 @@ function ScanSMTConnectShtConfirm() {
                   </Paper>
                 </div>
               )}
-              <div style={{width:'900px'}}>
+              <div style={{ width: "900px" }}>
                 {gvResutlState && (
                   // <Paper>
-                    <AntTable
-                      className="tableGvResultConncetShtConfirm"
-                      columns={columns}
-                      bordered
-                      dataSource={gvScanResult}
-                      style={{ width: "100%" }}
-                      pagination={false}
-                      size="small"
-                    />
+                  <AntTable
+                    className="tableGvResultConncetShtConfirm"
+                    columns={columns}
+                    bordered
+                    dataSource={gvScanResult}
+                    style={{ width: "100%" }}
+                    pagination={false}
+                    size="small"
+                  />
                   // </Paper>
                 )}
                 &nbsp; &nbsp;

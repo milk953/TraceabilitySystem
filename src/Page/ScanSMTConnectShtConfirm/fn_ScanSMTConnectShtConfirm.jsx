@@ -4,6 +4,7 @@ import { get, set } from "lodash";
 import Swal from "sweetalert2";
 import { SoundFilled } from "@ant-design/icons";
 import { FitnessCenter } from "@mui/icons-material";
+import { Tag } from "antd";
 function fn_ScanSMTConnectShtConfirm() {
   const [hideImg, setHideImg] = useState(true);
   const [gvSerial, setGvSerial] = useState([]);
@@ -14,6 +15,7 @@ function fn_ScanSMTConnectShtConfirm() {
   const [productSelected, setProductSelected] = useState("");
   const [txtSerial, setTxtSerial] = useState(gvSerial.map(() => ""));
   const [lblError, setLblError] = useState("");
+  const [lblErrorState, setLblErrorState] = useState(false);
   const [lblResultState, setLblResultState] = useState(false);
   const [lblResult, setLblResult] = useState("");
   const [gvScanResult, setGvScanResult] = useState([]);
@@ -50,6 +52,8 @@ function fn_ScanSMTConnectShtConfirm() {
   function setMode(mode) {
     switch (mode) {
       case "LOT":
+        setLblErrorState(false);
+
         setTxtLot("");
         Setdisable("", "ScanSMTConnectShtConfirmtxtLot");
 
@@ -91,8 +95,10 @@ function fn_ScanSMTConnectShtConfirm() {
     setProductSelected(value);
     if (txtLot !== "") {
       setLblError("");
-      // getCountDataBylot(txtLot);
-      // setMode("SERIAL");
+      setHideImg(false);
+      setGvResutlState(true);
+      getCountDataBylot(txtLot);
+      setMode("SERIAL");
     } else {
       setProductSelected(ddlproduct[0].prd_name);
       SetFocus("ScanSMTConnectShtConfirmtxtLot");
@@ -115,13 +121,20 @@ function fn_ScanSMTConnectShtConfirm() {
           ddlproduct_Change(strPrdName);
           setMode("SERIAL");
         } else {
+          setProductSelected(ddlproduct[0].prd_name);
+          setTxtLot("");
           setLblError("Invalid lot no.");
+          setLblErrorState(true);
+          hfMode = "LOT";
+          SetFocus("ScanSMTConnectShtConfirmtxtLot");
+          // return;
         }
       } else {
         setProductSelected(ddlproduct[0].prd_name);
         setTxtLot("");
         setGvSerial([]);
         setLblError("Please scan QR Code. / กรุณาสแกนที่คิวอาร์โค้ด");
+        setLblErrorState(true);
         hfMode = "LOT";
         SetFocus("ScanSMTConnectShtConfirmtxtLot");
       }
@@ -130,6 +143,7 @@ function fn_ScanSMTConnectShtConfirm() {
       setTxtLot("");
       setGvSerial([]);
       setLblError("Please scan QR Code. / กรุณาสแกนที่คิวอาร์โค้ด");
+      setLblErrorState(true);
       hfMode = "LOT";
       SetFocus("ScanSMTConnectShtConfirmtxtLot");
     }
@@ -148,8 +162,6 @@ function fn_ScanSMTConnectShtConfirm() {
         setLblShtCount(lblShtCount + 1);
       }
     }
-    setHideImg(false);
-    setGvResutlState(true);
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
@@ -173,6 +185,17 @@ function fn_ScanSMTConnectShtConfirm() {
     setMode("SERIAL");
     SetFocus(`txtSerial_0`);
   };
+  const handle_ibtnBack_Click = async () => {
+    setTxtLot("");
+    setMode("LOT");
+    setGvResutlState(false);
+    setProductSelected(ddlproduct[0].prd_name);
+    setHideImg(true);
+    setLblError("");
+    setLblErrorState(false);
+    SetFocus("ScanSMTConnectShtConfirmtxtLot");
+    
+  }
   async function getCountDataBylot(strLot) {
     let dtSerialCount = [];
     dtSerialCount = await getData("GetLotSerialCountData", strLot);
@@ -344,13 +367,15 @@ function fn_ScanSMTConnectShtConfirm() {
         }
       }
       setLblResult(_strScanResultAll);
-      setLblResultState(true); 
+      setLblResultState(true);
       getShtDataBylot(_strlot);
+
       setTxtSerial(gvSerial.map(() => ""));
       getInitialSerial();
       setLblError("");
     } else {
       setLblError("Please input lot no. ");
+      setLblErrorState(true);
       setMode("SERIAL_ERROR");
     }
     getCountDataBylot(_strlot);
@@ -394,8 +419,18 @@ function fn_ScanSMTConnectShtConfirm() {
       align: "left",
       width: 130,
       render: (text, record, index) => {
-        return text;
+        const backgroundColor =
+          record.scan_result === "NG" ? "#f50" : 
+          record.scan_result === "OK" ? "#87d068" : 
+          "transparent";
+        
+        return (
+          < Tag style={{width:100,textAlign:'center'}}  color={backgroundColor} >
+            {text}
+          </Tag>
+        );
       },
+      align: "center",
     },
     {
       title: "Remark",
@@ -433,7 +468,9 @@ function fn_ScanSMTConnectShtConfirm() {
     lblTotalSht,
     gvScanResult,
     gvResutlState,
-    lblResult
+    lblResult,
+    lblErrorState,
+    handle_ibtnBack_Click
   };
 }
 
