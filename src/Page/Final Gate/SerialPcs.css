@@ -1,6 +1,5 @@
 /* style={{margin: 'auto',width:'400px' }} */
 .FinalGate{
-    max-width:  450px;
     width:  450px;
 
 }
@@ -12,33 +11,8 @@
     color: #fff;
 }
 
-
 .FinalGate td{
-
-    padding: 4px 4px 4px 4px!important;
-    /* margin: 10px !important; */
-
-
-}
-
-
-
-
-.CSS-GvScanResult-FinalGate{
-    width: 900px !important;
-    margin-top: 10px;
-    padding: 0;
-}
-
-.CSS-GvScanResult-FinalGate th{
-  
-    padding: 2px !important;
-    background-color: #1f2d8d !important ;
-     color: #fff;
-    padding: 5px;
-    font-weight: bold; 
-}
-
-.CSS-GvScanResult-FinalGate td{
     padding: 4px 4px 4px 4px!important;
 }
+
+

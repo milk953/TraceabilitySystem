@@ -1,22 +1,9 @@
-.txtfield-disable{
-background-color: #e0e0e0;
-}
 
-.Status-On{
-    background: green;
-    color: #ffffff;
-}
-
-.Status-Off{
-    background: red;
-    color: #ffffff;
-}
-
-.Header_CommonBG{
+.Header_CommonBG{ 
     background: #454545;
     color: #ffffff;
 }
-
+/* Card Scan */
 .Card-Common{
     margin: auto;
     width: 90%;
@@ -26,10 +13,17 @@ background-color: #e0e0e0;
    
 }
 
-.CSS-GvSerial{
-    max-width: 450px !important;
-  
+.Card-lblLog{
+    height: 40px;
+    text-align: center;
+    background: #BB2525 !important;
+    padding-top: 18px;
+    color: yellow !important;
+    font-weight: bold;
 }
+
+/* .CSS-GvSerial{
+} */
 
 .CSS-GvSerial th{
     background-color: #12422e !important ;
@@ -55,8 +49,58 @@ background-color: #e0e0e0;
     text-align: center;
 }
 
-
 .tableGvResult .ant-table-thead > tr > th {
     background-color: #31363F;
     color: white;
   }
+  .tableGvResult .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+}
+
+
+
+.input_txt .MuiInputBase-input {
+  height: 10px; 
+}
+
+
+.Select_dropDown .MuiInputBase-input {
+    height: 12px; 
+    padding: 10px 12px; 
+  }
+
+.Bt_ibtBack {
+    height: 10px;
+    line-height: 10px; 
+    text-align: center; 
+  }
+
+.Img1{
+    width: 420px;
+    height: 350px;
+    margin-bottom: 30px;
+}
+
+
+/* --------------Not Use--------------------------- */
+.txtfield-disable{
+background-color: #e0e0e0;
+}
+
+.Status-On{
+    background: green;
+    color: #ffffff;
+}
+
+.Status-Off{
+    background: red;
+    color: #ffffff;
+}
+
+/* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {
+    background-color: #f9f9f9;
+  
+  .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(even) {
+    background-color: #ffffff; 
+  } */
