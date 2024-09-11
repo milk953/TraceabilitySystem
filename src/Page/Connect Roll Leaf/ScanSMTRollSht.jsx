@@ -240,7 +240,7 @@ console.log('gvScanResult',gvScanResult)
                   </TableRow>
                 </TableBody>
               </Table>
-<br/>
+
               {lbllog.visble == true && (
                 <Paper
                   elevation={3}
@@ -249,7 +249,7 @@ console.log('gvScanResult',gvScanResult)
                     {lbllog.value}
                 </Paper>
               )}
-<br/>
+
               <Table
                 className="CSS-GvSerial"
                 style={{ display: GvSerial.visble, }}
@@ -434,7 +434,7 @@ console.log('gvScanResult',gvScanResult)
                   )}
                 </TableBody>
               </Table> */}
-              <br/>
+              
                <AntTable 
                 columns={columns}
                 dataSource={gvScanResult.value}

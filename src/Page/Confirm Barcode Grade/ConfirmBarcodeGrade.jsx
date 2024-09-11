@@ -275,7 +275,7 @@ function ConfirmBarcodeGrade() {
                 </TableBody>
               </Table>
               {/* visiblgvBackSide */}
-              <br/>
+         
               { txtSideBack.visble== true && (
              
                 <Table component={Paper} className="gvBackSideBarcode">
@@ -360,7 +360,7 @@ function ConfirmBarcodeGrade() {
                   {lblLog.value}
                 </Card>
               )}
-              <br/>
+             
               {dataGvSerial.visble == true && (
                 <Table className="CSS-GvSerialBarcode" component={Card}>
                   <TableHead>
@@ -589,7 +589,7 @@ function ConfirmBarcodeGrade() {
                       )}
                     </TableBody>
                   </Table> */}
-                  <br/> 
+                 
                      <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}

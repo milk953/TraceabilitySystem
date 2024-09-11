@@ -224,7 +224,7 @@ function ScanSMTRoollSht() {
               </Table>
 
               {/* {lbllog.visble == true && ( */}
-              <br />
+             
               <Paper
                 elevation={3}
                 className="Card-lblLog"
@@ -360,7 +360,7 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-                  <br />
+               
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}
