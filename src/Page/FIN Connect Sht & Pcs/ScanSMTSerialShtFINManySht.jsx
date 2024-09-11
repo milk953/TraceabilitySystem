@@ -306,7 +306,7 @@ function ScanSMTSerialShtFINManySht() {
                       variant="h4"
                       style={{
                         paddingTop: "5px",
-                        color: lblResult.styled.color,
+                        color: lblResult.styled.color
                       }}
                     >
                       {lblResult.text}
@@ -320,11 +320,7 @@ function ScanSMTSerialShtFINManySht() {
                   columns={columns}
                   bordered
                   dataSource={gvScanResult}
-                  style={{
-                    width: "1000px",
-                    marginLeft: "20px",
-                    marginTop: "10px",
-                  }}
+                  style={{ width: "1000px",marginLeft:"20px",marginTop:"10px" }}
                   pagination={false}
                   size="small"
                 />

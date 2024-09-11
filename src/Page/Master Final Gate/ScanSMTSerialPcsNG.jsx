@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import "./ScanSMTSerialPcsNG.css";
-import { Typography } from "antd";
+import { Typography ,Table as AntTable  } from "antd";
 import { fn_ScanSMTSerialPcsNG } from "./fn_ScanSMTSerialPcsNG";
 import Pageimg from "/src/assets/1.jpg";
 function ScanSMTSerialPcsNG() {
@@ -43,6 +43,8 @@ function ScanSMTSerialPcsNG() {
     txtmasterCode_Change,
     gvSerialResult,
     lblResult,
+    columns,
+    lblErrorState
   } = fn_ScanSMTSerialPcsNG();
   return (
     <div>
@@ -167,24 +169,27 @@ function ScanSMTSerialPcsNG() {
                   </TableRow>
                 </TableBody>
               </Table>
-              <h2
-                style={{
-                  textAlign: "center",
-                  background: "red",
-                  color: "yellow",
-                }}
+              {(lblErrorState &&
+              <Paper
+              className="Card-lblLog"
+                // style={{
+                //   textAlign: "center",
+                //   background: "red",
+                //   color: "yellow",
+                // }}
               >
                 {lblError}
-              </h2>
+              </Paper>
+              ) }
               &nbsp;&nbsp;
               {panalSerialState && (
-                <Table classname="masterFGgvSerial" component={Paper}>
-                  <TableHead className="gvSerialHead">
+                <Table classname="masterFGgvSerial" component={Card}>
+                  <TableHead className="gvSerialHead" style={{background:'#12422e'}}>
                     <TableRow>
-                      <TableCell className="masterFGgvSerialCell">
+                      <TableCell className="masterFGgvSerialCell" style={{color:'white'}}>
                         No.
                       </TableCell>
-                      <TableCell className="masterFGgvSerialCell">
+                      <TableCell className="masterFGgvSerialCell" style={{color:'white'}}>
                         Serial No.
                       </TableCell>
                     </TableRow>
@@ -209,6 +214,7 @@ function ScanSMTSerialPcsNG() {
                             id={`txtSerial_${index}`}
                             type="text"
                             style={{
+                              padding:'5px',
                               width: "300px",
                               textTransform: "uppercase",
                             }}
@@ -276,13 +282,19 @@ function ScanSMTSerialPcsNG() {
                 />
               )}
               {lblResultState && (
-                <div className="lblResultFin">
+                <div className="lblResultMasterFinal">
                   <Paper
                     className="lblResultCardMasterFinal"
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
+                      // background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
+                      background:
+                      lblResult.value === "OK"
+                        ? "#059212"
+                        : lblResult.value === "NG"
+                        ? "red"
+                        : "#BA0900",
                     }}
                   >
                     <Typography
@@ -295,37 +307,15 @@ function ScanSMTSerialPcsNG() {
                       {lblResult.value}
                     </Typography>
                   </Paper>
-                  <Table
-                    className="gvScanResultMasterFinal"
-                    component={Paper}
-                    style={{ width: "960px", margunBottom: "20px" }}
-                  >
-                    <TableHead sx={{ height: "20px" }}>
-                      <TableRow>
-                        <TableCell>No.</TableCell>
-                        <TableCell>Serial No.</TableCell>
-                        <TableCell>Re-Judgement 1</TableCell>
-                        <TableCell>Result</TableCell>
-                        <TableCell>Re-Judgement 2</TableCell>
-                        <TableCell>Test Result</TableCell>
-                        <TableCell>Scan Result</TableCell>
-                        <TableCell>Remark</TableCell>
-                      </TableRow>
-                    </TableHead>
-
-                    {gvSerialResult.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{row.SEQ}</TableCell>
-                        <TableCell>{row.SERIAL}</TableCell>
-                        <TableCell>{row.REJECT}</TableCell>
-                        <TableCell>{row.TOUCH_UP}</TableCell>
-                        <TableCell>{row.REJECT2}</TableCell>
-                        <TableCell>{row.SERIAL == '' ? '' : row.TEST_RESULT}</TableCell>
-                        <TableCell sx={{background:row.SCAN_RESULT == 'NG'? 'red' : row.SCAN_RESULT == 'OK' ? 'green' : 'white'}}>{row.SCAN_RESULT}</TableCell>
-                        <TableCell>{row.REMARK}</TableCell>
-                      </TableRow>
-                    ))}
-                  </Table>
+                  <AntTable
+                  className="tableGvResult"
+                  columns={columns}
+                  bordered
+                  dataSource={gvSerialResult}
+                  style={{ width: "980pxs",marginTop:"10px" }}
+                  pagination={false}
+                  size="small"
+                />
                   &nbsp; &nbsp;
                 </div>
               )}

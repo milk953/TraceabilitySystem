@@ -57,6 +57,7 @@ function ScanSMTConnectRollConfirm() {
     lblResult,
     pnlSerial,
     btnSave_Click,
+    columns,
   } = fn_ScanSMTConnectRollConfirm();
   return (
     <div>
@@ -167,10 +168,7 @@ function ScanSMTConnectRollConfirm() {
               </Table>
 
               {lblpnlLog.visble == true && (
-                <Paper
-                  elevation={3}
-                 className="Card-lblLog"
-                >
+                <Paper elevation={3} className="Card-lblLog">
                   {lblpnlLog.value}
                 </Paper>
               )}
@@ -252,7 +250,6 @@ function ScanSMTConnectRollConfirm() {
             >
               {gvScanResult.visble == false && (
                 <>
-                 
                   <img
                     className="Img_GvResult"
                     src={Pageimg}
@@ -281,7 +278,7 @@ function ScanSMTConnectRollConfirm() {
                     </Paper>
                   )}
 
-                  <Table
+                  {/* <Table
                     className="CSS-GvScanResult"
                     style={{ display: gvScanResult }}
                     component={Card}
@@ -362,7 +359,15 @@ function ScanSMTConnectRollConfirm() {
                         )
                       )}
                     </TableBody>
-                  </Table>
+                  </Table> */}
+                  <AntTable
+                    columns={columns}
+                    dataSource={gvScanResult.value}
+                    pagination={false}
+                    size="small"
+                    bordered
+                    className="tableGvResult"
+                  />
                 </>
               )}
             </Grid>
