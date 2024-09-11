@@ -45,10 +45,27 @@ function ScanSheetMOTTime() {
       <Card component={Paper} className="Card-Common">
 
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+       
           <Grid container spacing={2}>
             {/* style={{border:'1px solid red'}} */}
-            <Grid item xs={10} md={5} >
-            <Table component={Card} className="ChangePartino">
+            <Grid item xs={10} md={12} align='center'>
+            <Paper
+                      className="Card-lblResult"
+                      style={{
+                        background:"#059212",
+                          // lblResult.value === "OK" ? "#059212" : "#BA0900",
+                          marginBottom:'10px',
+                          width:'40%'
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        style={{ paddingTop: "5px", color: "#fff" }}
+                      >
+                        {/* {lblResult.value} */}
+                      </Typography>
+                    </Paper>
+            <Table component={Card} className="ChangePartino" style={{width:'50%'}}>
           <TableHead style={{ height: "60px" }}>
             <TableRow>
               <TableCell
@@ -82,8 +99,10 @@ function ScanSheetMOTTime() {
               <Table
                 className="CSS-GvSerial"
                 style={{
-                  marginTop: "20px",
-                  // display: gvSerial.visble
+                 width:'50%'
+                 ,marginTop:'20px'
+                  // display: gvSerial.visblew
+
                 }}
                 component={Card}
               >
@@ -138,35 +157,31 @@ function ScanSheetMOTTime() {
                   ))} */}
 
                   <TableRow>
-                    <TableCell colSpan={2} style={{ textAlign: "center" }}>
+                    <TableCell colSpan={3} style={{ textAlign: "center" }}>
                       <Button
                         className="BtSave"
                         // onClick={btnSave_Click}
                       >
-                        Save
+                        Submit
                       </Button>{" "}
-                      &nbsp;&nbsp;
-                      <Button
-                        className="BtCancel"
-                        // onClick={btnCancel_Click}
-                      >
-                        Cancel
-                      </Button>
+                    
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-            </Grid>
-            <Grid item xs={10} md={7} >            
-            <AntTable
+              <AntTable
                     columns={columns}
                     // dataSource={gvScanResult.value}
                     pagination={false}
                     size="small"
                     bordered
                     className="tableGvResult"
+                    style={{width:'70%'}}
                   />
             </Grid>
+            {/* <Grid item xs={10} md={7} >             */}
+            
+            {/* </Grid> */}
 
           </Grid>
         </Box>
