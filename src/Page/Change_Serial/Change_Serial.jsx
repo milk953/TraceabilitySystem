@@ -34,56 +34,54 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Common/StyleCommon.css";
 import { fn_Change_Serial } from "../Change_Serial/fn_Change_Serial";
 function Change_Serial() {
-  const {
-    columns
-  } = fn_Change_Serial();
+  const { columns } = fn_Change_Serial();
 
   return (
     <div>
       <Hearder />
-      <h1>Replace Partial No.</h1>
+      <h1>Serial Config.</h1>
       <Card component={Paper} className="Card-Common">
-
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-          <Grid container spacing={2}>
-            {/* style={{border:'1px solid red'}} */}
-            <Grid item xs={10} md={5} >
-            <Table component={Card} className="ChangeSerial">
-          <TableHead style={{ height: "60px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+       
+            <Grid item xs={10} md={5}>
+              <Table component={Card} className="ChangeSerial">
+                {/* <TableHead style={{ height: "60px" }}>
             <TableRow>
               <TableCell
                 colSpan={3}
                 align="center"
                 style={{ fontSize: "30px" }}
               >
-                <b>Replace Partial No.</b>
+                <b>Serial Config.</b>
               </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell align="right" style={{ width: "150px" }}>
-                <Typography>Total Partial No.:</Typography>
-              </TableCell>
-              <TableCell colSpan={2}>
-                <TextField
-                  size="small"
-                  className="input_txt"
-                  style={{ width: "50%", }}
-                  fullWidth
-                //   inputProps={{
-                //     style: { textAlign: 'center', }  
-                //   }}
-                />
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+          </TableHead> */}
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="right" style={{ width: "150px" }}>
+                      <Typography>Total Piece :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      <TextField
+                        size="small"
+                        className="input_txt"
+                        style={{ width: "50%" }}
+                        fullWidth
+                      />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
               <Table
                 className="CSS-GvSerial"
                 style={{
                   marginTop: "20px",
-                  // display: gvSerial.visble
                 }}
                 component={Card}
               >
@@ -94,8 +92,13 @@ function Change_Serial() {
                   >
                     No.
                   </TableCell>
-                  <TableCell align="center"  sx={{ borderRight: "1px solid #d9d9d9" }}>Old Partial No.</TableCell>
-                  <TableCell align="center">New Partial No.</TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ borderRight: "1px solid #d9d9d9" }}
+                  >
+                    Old Piece No.
+                  </TableCell>
+                  <TableCell align="center">New Piece No.</TableCell>
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
@@ -157,18 +160,7 @@ function Change_Serial() {
                 </TableBody>
               </Table>
             </Grid>
-            <Grid item xs={10} md={7} >            
-            <AntTable
-                    columns={columns}
-                    // dataSource={gvScanResult.value}
-                    pagination={false}
-                    size="small"
-                    bordered
-                    className="tableGvResult"
-                  />
-            </Grid>
-
-          </Grid>
+     
         </Box>
       </Card>
       {/* </Card> */}
