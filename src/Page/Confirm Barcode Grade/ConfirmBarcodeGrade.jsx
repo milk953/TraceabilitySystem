@@ -91,8 +91,8 @@ function ConfirmBarcodeGrade() {
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
-            <Grid item xs={10} md={4}>
-              <Table className="TableMot1"  component={Card}  sx={{ width: "100%" }}
+            <Grid item xs={10} md={4} >
+              <Table className="TableBarcode"  component={Card} 
               >
                 <TableHead>
                   <TableRow>
@@ -275,7 +275,7 @@ function ConfirmBarcodeGrade() {
                 </TableBody>
               </Table>
               {/* visiblgvBackSide */}
-              <br/>
+         
               { txtSideBack.visble== true && (
              
                 <Table component={Paper} className="gvBackSideBarcode">
@@ -360,7 +360,7 @@ function ConfirmBarcodeGrade() {
                   {lblLog.value}
                 </Card>
               )}
-              <br/>
+             
               {dataGvSerial.visble == true && (
                 <Table className="CSS-GvSerialBarcode" component={Card}>
                   <TableHead>
@@ -470,11 +470,7 @@ function ConfirmBarcodeGrade() {
             >
               {gvScanResult.visble == false && (
                 <> <img
-                style={{
-                  width: "420px",
-                  height: "350px",
-                  marginBottom: "30px",
-                }}
+               className="Img_GvResult"
                 src={Pageimg} 
                 alt="Description of the image"
               /></>)}
@@ -589,7 +585,7 @@ function ConfirmBarcodeGrade() {
                       )}
                     </TableBody>
                   </Table> */}
-                  <br/> 
+                 
                      <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}

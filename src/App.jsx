@@ -42,8 +42,9 @@ import ScanSMTSerialPcsAuto from "./Page/Final Gate Auto/ScanSMTSerialPcsAuto"
 import ScanSMTConnectShtConfirm from "./Page/ScanSMTConnectShtConfirm/ScanSMTConnectShtConfirm";
 import ScanSMTSerialShtMaster from "./Page/ScanSMTSerialShtMaster/ScanSMTSerialShtMaster";
 import PackingConfirmSheet from './Page/ScanSMTPackingConfirm/ScanSMTPackingConfirm'
+import Change_PartialNo from './Page/Replace Partial No/Change_PartialNo'
+import Change_Serial from './Page/Change_Serial/Change_Serial';
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
- 
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 axios.defaults.baseURL = backendUrl;
@@ -107,7 +108,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsAuto' element = {<ScanSMTSerialPcsAuto/>} />  
             <Route path='/TraceabilitySystem/ScanSMTPackingConfirm' element = {<PackingConfirmSheet/>} />  
-            
+            <Route path='/TraceabilitySystem/Change_PartialNo' element = {<Change_PartialNo/>} />  
+            <Route path="/TraceabilitySystem/Change_Serial" element={<Change_Serial />} />
  
             {/* View Data */}
             <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
@@ -127,6 +129,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
             <Route path="/TraceabilitySystem/ScanSMTConnectRollConfirm" element={<ScanSMTConnectRollConfirm />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialShtMaster" element={<ScanSMTSerialShtMaster />} />
+
+            
           </Route>
         </Routes>
       </BrowserRouter>

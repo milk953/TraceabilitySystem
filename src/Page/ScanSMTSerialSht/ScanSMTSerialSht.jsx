@@ -22,6 +22,8 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
+import { Table as AntTable } from 'antd';
+import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -38,7 +40,7 @@ function ScanSMTSerialSht() {
         txtSideFront, pnlSerial, gvSerialData, gvScanResult, gvScanData, txtgvSerial, handleChangeBoardNoB, txtLotDisabled, selProDisabled,
         txtRollLeafDisabled, inputLot, ddlProduct, inputRollLeaf, inputMachineNo, inputSideBack, inputgvSerial, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangeLotRef, handleChangeRollLeaf, handleChangeMachine, handleChangeSerial, handleChangegvBackSide, handleChangegvFontSide,
-        btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack, handleChangeBoardNoF
+        btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack, handleChangeBoardNoF, columns
     } = fn_ScanSMTSerialSht();
 
     return (
@@ -47,9 +49,15 @@ function ScanSMTSerialSht() {
             <h1>SMT Connect Sht & Pcs</h1>
             <Card
                 component={Paper}
-                className="Card-ScanSMTSerialShtPcs"
+                className="Card-Common"
+                sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between">
+                <Box justifyContent="space-between"
+                    sx={{
+                        marginLeft: "-20px",
+                        marginTop: "-10px"
+                    }}
+                >
                     <TableContainer
                         component={Paper}
                         style={{
@@ -74,7 +82,7 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                     <TableCell colSpan={3}>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
@@ -91,17 +99,17 @@ function ScanSMTSerialSht() {
                                                     handleChangeLot();
                                                 }
                                             }}
-                                        // onBlur={handleChangeLot}
+                                            onBlur={() => {
+                                                if (txtLotNo !== "") {
+                                                    handleChangeLot();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon" onClick={ibtBackClick}>
+                                        <Button className="Bt_ibtBack" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -112,9 +120,8 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                     <TableCell colSpan={3}>
                                         <Autocomplete
-                                            id="selectPdShtPcsAuto"
+                                            className="Select_dropDown"
                                             disabled={selProDisabled}
-                                            ref={ddlProduct}
                                             style={{
                                                 backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
                                             }}
@@ -123,6 +130,7 @@ function ScanSMTSerialSht() {
                                             options={Productdata.map((item) => item.prd_name)}
                                             renderInput={(params) => (
                                                 <TextField
+                                                    inputRef={ddlProduct}
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
@@ -137,7 +145,7 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                     <TableCell colSpan={3}>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             value={txtLotRef}
@@ -177,7 +185,7 @@ function ScanSMTSerialSht() {
                                             </TableCell>
                                             <TableCell colSpan={3}>
                                                 <TextField
-                                                    id="txtfield"
+                                                    className="input_txt"
                                                     size="small"
                                                     inputRef={inputRollLeaf}
                                                     fullWidth
@@ -223,7 +231,7 @@ function ScanSMTSerialSht() {
                                         </TableCell>
                                         <TableCell colSpan={3}>
                                             <TextField
-                                                id="txtfield"
+                                                className="input_txt"
                                                 size="small"
                                                 inputRef={inputMachineNo}
                                                 fullWidth
@@ -276,7 +284,7 @@ function ScanSMTSerialSht() {
                                                     </TableCell>
                                                     <TableCell>
                                                         <TextField
-                                                            id="txtfield"
+                                                            className="input_txt"
                                                             size="small"
                                                             fullWidth
                                                             value={txtSideBack[index] || ""}
@@ -324,7 +332,7 @@ function ScanSMTSerialSht() {
                                             </TableCell>
                                             <TableCell>
                                                 <TextField
-                                                    id="txtfield"
+                                                    className="input_txt"
                                                     size="small"
                                                     fullWidth
                                                     value={txtSideFront}
@@ -365,7 +373,7 @@ function ScanSMTSerialSht() {
                                             </TableCell>
                                             <TableCell>
                                                 <TextField
-                                                    id="txtfield"
+                                                    className="input_txt"
                                                     size="small"
                                                     fullWidth
                                                     value={txtBoardNoB}
@@ -412,16 +420,9 @@ function ScanSMTSerialSht() {
                     {pnlLog && (
                         <Paper
                             elevation={3}
+                            className="Card-lblLog"
                             style={{
-                                width: "432px",
-                                height: "40px",
-                                margin: "auto",
-                                textAlign: "center",
-                                background: "#BB2525",
-                                paddingTop: "18px",
-                                color: "yellow",
-                                fontWeight: "bold",
-                                marginTop: "1px",
+                                width: "433px",
                                 marginLeft: "23px",
                             }}
                         >
@@ -435,18 +436,12 @@ function ScanSMTSerialSht() {
                                 component={Paper}
                                 style={{
                                     width: "100%",
-                                    marginBottom: "10px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Table
-                                    sx={{
-                                        minWidth: 380,
-                                    }}
-                                    aria-label="simple table"
-                                >
+                                <Table>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Sheet</TableCell>
@@ -471,7 +466,7 @@ function ScanSMTSerialSht() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <TextField
-                                                        id="txtfield"
+                                                        className="input_txt"
                                                         size="small"
                                                         fullWidth
                                                         value={txtgvSerial[index] || ""}
@@ -497,17 +492,13 @@ function ScanSMTSerialSht() {
                                 >
                                     <Button
                                         className="BtSave"
-                                        variant="contained"
-                                        size="small"
-                                        style={{ marginRight: "20px" }}
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>
+                                    </Button>{" "}
+                                    &nbsp;&nbsp;
                                     <Button
-                                        variant="contained"
-                                        size="small"
-                                        color="error"
+                                        className="BtCancel"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
@@ -519,113 +510,51 @@ function ScanSMTSerialSht() {
                     }
                 </Box >
 
-                <img
-                    style={{
-                        width: "320px",
-                        height: "250px",
-                        marginLeft: "280px",
-                        display: gvScanResult ? 'none' : 'block'
-                    }}
-                    src={Pageimg} // Import the image
-                    alt="Description of the image"
-                />
-
-
                 <div className="divgvScanResultShtPcs" >
-                    {gvScanResult && (
-                        <Paper
-                            className="lblResultShtPcs"
-                            elevation={3}
-                            style={{
-                                background: lblResultcolor,
-                                textAlign: "center",
-                            }}
-                        >
-                            <Typography
-                                variant="h4"
-                                style={{ paddingTop: "3px", color: "#fff" }}
-                            >
-                                {lblResult}
-                            </Typography>
-                        </Paper>
+                    {gvScanResult === false && (
+                        <>
+                            <img
+                                className="Img_GvResult"
+                                style={{ marginLeft: "35%", }}
+                                src={Pageimg} // Import the image
+                                alt="Description of the image"
+                            />
+                        </>
                     )}
 
-                    <TableContainer
-                        component={Paper}
-                        style={{
-                            width: "98%",
-                            marginBottom: "10px",
-                            height: "auto",
-                            display: gvScanResult ? 'block' : 'none'
-                        }}
-                    >
-                        <Table
-                            sx={{
-                                minWidth: 710,
-                            }}
-                            aria-label="simple table"
-                        >
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Sheet No.</TableCell>
-                                    <TableCell>No.</TableCell>
-                                    <TableCell>Serial No.</TableCell>
-                                    <TableCell>Scan Result</TableCell>
-                                    <TableCell>Remark</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {Array.from(
-                                    { length: gvScanData.length },
-                                    (_, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'center',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].SHEET}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'center',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].SEQ}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'left',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].SERIAL}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'center',
-                                                    backgroundColor: gvScanData[index].SCAN_RESULT === 'OK' ? 'green' : '#ff4d4f',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].SCAN_RESULT}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'left',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].REMARK}
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    {gvScanResult && (
+                        <>
+
+                            <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+                                <Paper
+                                    className="Card-lblResult"
+                                    style={{
+                                        background: lblResultcolor,
+                                        width: "70%", 
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h4"
+                                        style={{ paddingTop: "5px", color: "#fff" }}
+                                    >
+                                        {lblResult}
+                                    </Typography>
+                                </Paper>
+                            </div>
+                            <br />
+                            <AntTable
+                                columns={columns}
+                                dataSource={gvScanData}
+                                rowKey={(record) => record.SEQ}
+                                style={{ width: '100%' }}
+                                pagination={false}
+                                size="small"
+                                bordered
+                                className="tableGvResult"
+                            />
+
+                        </>
+                    )}
                 </div>
             </Card >
         </div >

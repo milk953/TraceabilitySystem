@@ -79,7 +79,7 @@ function ScanSheetMOTTime() {
               <Table
                 className="TableMot1"
                 component={Card}
-                sx={{ width: "100%", maxWidth: "800px", minWidth: "800px" }}
+                
               >
                 <TableHead style={{ height: '60px' }}>
                   <TableRow>

@@ -205,7 +205,7 @@ function ScanSMTRoollSht() {
               </Table>
 
               {/* {lbllog.visble == true && ( */}
-              <br/>
+         
               <Paper
                 elevation={3}
                 style={{
@@ -217,7 +217,7 @@ function ScanSMTRoollSht() {
               </Paper>
               {/* )} */}
               {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
-              <br/>
+            
               <Table
                 className="CSS-GvSerial"
                 style={{display: gvSerial.visble }}
@@ -347,7 +347,7 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-                  <br/>
+                 
                   <AntTable 
                 columns={columns}
                 dataSource={gvScanResult.value}

@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { color } from "framer-motion";
+import { Tag } from "antd";
 
 function fn_ScanSMTConnectRollConfirm() {
   const hfUserFactory = "";
@@ -300,7 +301,6 @@ function fn_ScanSMTConnectRollConfirm() {
   };
 
   const setSerialData = async () => {
-    
     let dtSerial = await getInputSerial();
     let dtSheet = await getSheetResult();
     let _strLotData = "";
@@ -340,7 +340,6 @@ function fn_ScanSMTConnectRollConfirm() {
               drShtRow.SHEET_NO === _strSerial &&
               drShtRow.DATA_REMARK === ""
             ) {
-        
               drShtRow.SCAN_RESULT = "OK";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -352,7 +351,6 @@ function fn_ScanSMTConnectRollConfirm() {
               drShtRow.SHEET_NO === _strSerial &&
               drShtRow.DATA_REMARK !== ""
             ) {
-            
               drShtRow.SCAN_RESULT = "NG";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -362,15 +360,13 @@ function fn_ScanSMTConnectRollConfirm() {
               _bolUpdate = true;
             }
           }
-          
+
           if (
             _strSerial.length === parseInt(hfConnLeafLength) &&
             lblRemark === "" &&
             _strScanResultAll === "NG"
           ) {
-         
             if (hfCheckLotSht === "Y") {
-        
               if (
                 _strLot !==
                 _strSerial.substring(
@@ -378,14 +374,11 @@ function fn_ScanSMTConnectRollConfirm() {
                   parseInt(hfCheckLotShtEnd) + 1
                 )
               ) {
-             
                 setLblRemark("MIX LOT");
               } else {
-           
                 setLblRemark("NO DATA");
               }
             } else {
-          
               setLblRemark("NO DATA");
             }
           } else if (
@@ -393,7 +386,6 @@ function fn_ScanSMTConnectRollConfirm() {
             lblRemark === "" &&
             _strScanResultAll === "NG"
           ) {
-        
             setLblRemark("DATA INCORRECT");
           }
         }
@@ -405,17 +397,16 @@ function fn_ScanSMTConnectRollConfirm() {
         }
       }
       if (_bolUpdate) {
-   
         let strError = "";
         for (let i = 0; i < dtSerial.length; i++) {
           dtSerial[i].strPlantCode = "5";
           await axios
             .post("/api/SetConfirmConnectRollLeaf", {
               dataList: {
-                strPlantCode:  dtSerial[i].strPlantCode,
+                strPlantCode: dtSerial[i].strPlantCode,
                 SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-                ROLL_LEAF_NO :dtSerial[i].ROLL_LEAF_NO,
-                SHEET_NO :dtSerial[i].SHEET_NO,
+                ROLL_LEAF_NO: dtSerial[i].ROLL_LEAF_NO,
+                SHEET_NO: dtSerial[i].SHEET_NO,
               },
             })
             .then((res) => {
@@ -423,37 +414,34 @@ function fn_ScanSMTConnectRollConfirm() {
             });
         }
         if (strError !== "") {
-      
           _strScanResultAll = "NG";
         }
         if (_intOK == parseInt(lblTotalSht, 10)) {
-        
-            await axios
-              .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
-                strFlowID: hfFlowID,
-                strLotNo: _strLot,
-                strResult: "P",
-              })
-              .then((res) => {
-                strError = res.data;
-              });
-          } else if (_intOK > parseInt(lblTotalSht, 10)) {
-            await axios
-              .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
-                strFlowID: hfFlowID,
-                strLotNo: _strLot,
-                strResult: "F",
-              })
-              .then((res) => {
-                strError = res.data;
-              });
+          await axios
+            .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
+              strFlowID: hfFlowID,
+              strLotNo: _strLot,
+              strResult: "P",
+            })
+            .then((res) => {
+              strError = res.data;
+            });
+        } else if (_intOK > parseInt(lblTotalSht, 10)) {
+          await axios
+            .post("/api/CallFPCFlowConfirmConnectRollLeaf", {
+              strFlowID: hfFlowID,
+              strLotNo: _strLot,
+              strResult: "F",
+            })
+            .then((res) => {
+              strError = res.data;
+            });
         }
 
         setLblResult((prevState) => ({
           ...prevState,
           value: _strScanResultAll,
         }));
-   
 
         if (_strScanResultAll.slice(0, 2) === "NG") {
           setLblResult((prevState) => ({
@@ -477,7 +465,6 @@ function fn_ScanSMTConnectRollConfirm() {
           ...prevState,
           visble: false,
         }));
-  
       }
     } else {
       setLblPnlLog((prevState) => ({
@@ -485,11 +472,10 @@ function fn_ScanSMTConnectRollConfirm() {
         value: "Please input lot no. ",
       }));
       SetMode("SERIAL_ERROR");
-    
     }
     await getShtDataBylot(txtLot.value);
     fnSetFocus("gvSerial_txtSerial_0");
-  
+
     return 0;
   };
   const ddlProduct_SelectedIndexChanged = async () => {
@@ -535,10 +521,10 @@ function fn_ScanSMTConnectRollConfirm() {
           visble: false,
         }));
         setTxtLot((prevState) => ({ ...prevState, value: strLot }));
-      
+
         try {
           setDdlProduct((prevState) => ({ ...prevState, value: strPrdName }));
-     
+
           await getProductSerialMaster(strPrdName);
           SetMode("SERIAL");
           fnSetFocus("gvSerial_txtSerial_0");
@@ -550,14 +536,13 @@ function fn_ScanSMTConnectRollConfirm() {
             strPrdName =
               strPrdName.slice(0, intProduct) +
               strPrdName.slice(intProduct + 1, intProduct + 11).trim();
-           
 
             try {
               setDdlProduct((prevState) => ({
                 ...prevState,
                 value: strPrdName,
               }));
-           
+
               await getProductSerialMaster(strPrdName);
               SetMode("SERIAL");
               fnSetFocus("gvSerial_txtSerial_0");
@@ -740,7 +725,7 @@ function fn_ScanSMTConnectRollConfirm() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
-        console.log("dtProductSerial",dtProductSerial)
+        console.log("dtProductSerial", dtProductSerial);
         if (dtProductSerial != null) {
           setHfSerialLength(dtProductSerial.slm_serial_length);
           setHfSerialFixFlag(dtProductSerial.slm_fix_flag);
@@ -794,11 +779,66 @@ function fn_ScanSMTConnectRollConfirm() {
     return 0;
   };
 
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Roll No.",
+      dataIndex: "roll_leaf_no",
+      key: "Roll No.",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Leaf No.",
+      dataIndex: "sheet_no",
+      key: "Leaf No.",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "scan_result",
+      render: (text, record, index) => {
+        return text ? (
+          <Tag
+            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+          >
+            {text}
+          </Tag>
+        ) : null;
+      },
+      align: "center",
+    },
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "remark",
+
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+  ];
+
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
     }, 300);
-  
   }
   return {
     txtLot,
@@ -822,6 +862,7 @@ function fn_ScanSMTConnectRollConfirm() {
     lblResult,
     pnlSerial,
     btnSave_Click,
+    columns,
   };
 }
 

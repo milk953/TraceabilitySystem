@@ -3,10 +3,16 @@
     width: 95%;
     max-width: 1400px;
     margin-top: 50px;
-  
     height: 100%;
     padding: 20px;
 }
+
+.TableMot1 {
+    width: 100%;
+    max-width: 800px;
+    min-width: 800px;
+    margin: auto;
+  }
 
 .TableMot1 th{
     padding: 3px !important;
@@ -19,3 +25,5 @@
     padding: 4px 4px 4px 4px!important;
     /* margin: 10px !important; */
 }
+
+

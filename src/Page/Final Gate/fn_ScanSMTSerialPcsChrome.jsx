@@ -1739,15 +1739,12 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        const backgroundColor =
-        text === "NG" ? "#f50" :
-        text === "OK" ? "#87d068" :
-          "transparent";
+
        
         return (
-          < Tag  color={backgroundColor} >
-            {text}
-          </Tag>
+          < Tag  className={text === "OK" ? "Tag-OK" : text === "NG" ||"NO"? "Tag-NG" : ""} >
+          {text}
+        </Tag>
         );
       },
       align: "center",
