@@ -1,15 +1,18 @@
-.ChangeSerial {
-    width: 100%;
-  }
+/* style={{margin: 'auto',width:'400px' }} */
+.FinalGate{
+    width:  450px;
 
-.ChangeSerial th{
-    padding: 0 !important;
+}
+
+.FinalGate th{
+    padding: 3px !important;
     background-color: #8c8c8c !important ;
     border-radius: 5px  5px 0 0!important;
     color: #fff;
 }
 
-.ChangeSerial td{
+.FinalGate td{
     padding: 4px 4px 4px 4px!important;
- 
 }
+
+

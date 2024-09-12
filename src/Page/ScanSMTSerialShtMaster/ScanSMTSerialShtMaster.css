@@ -104,21 +104,18 @@
 
 
 .divgvSerialShtMas {
-    justify-content: center;
     display: flex;
-    max-width: 100%;
     overflow-x: auto;
     width: 482px;
+    margin-top: 10px;
 }
 
 .divgvSerialShtMas th {
-    white-space: nowrap;
     text-align: center;
-    font-size: 16px;
     background-color: #12422e !important ;
     color: #fff;
     border-right: 1px solid rgb(221, 219, 219);
-    padding: 9px;
+    padding: 5px;
 }
 
 .divgvSerialShtMas td {
@@ -138,16 +135,14 @@
 }
 
 .divgvScanResultShtMas {
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
-    max-width: 100%;
-    width: 900px;
-    margin-left: -20px;
-    position: relative;
+    width: 100%;
+    margin-left: -10px;
 }
 
-.divgvScanResultShtMas th {
-    /* white-space: nowrap; */
+/* .divgvScanResultShtMas th {
+    white-space: nowrap;
     text-align: center;
     font-size: 16px;
     background-color: #378CE7 !important ;
@@ -156,8 +151,8 @@
     padding: 7px;
     font-weight: bold; 
     font-family: Arial;
-}
+} */
 
-.divgvScanResultShtMas td {
+/* .divgvScanResultShtMas td {
     padding: 4px 4px 4px 4px!important;
-}
+} */

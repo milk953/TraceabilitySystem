@@ -35,7 +35,20 @@ import "../Common/StyleCommon.css";
 import { fn_Change_PartialNo } from "../Replace Partial No/fn_Change_PartialNo";
 function ScanSheetMOTTime() {
   const {
-    columns
+    columns,
+    settxtSerialNo,
+    settxtSerialNoNew,
+    settxtTotalPcs,
+    txtSerialNo,
+    txtSerialNoNew,
+    txtTotalPcs,
+    txtTotalPcs_TextChanged,
+    BtnSubmit_Click,
+    gvSerial,
+    handleSerialOldChange,
+    handleSerialNewChange,
+    lblResult,
+    gvRow
   } = fn_Change_PartialNo();
 
   return (
@@ -45,10 +58,27 @@ function ScanSheetMOTTime() {
       <Card component={Paper} className="Card-Common">
 
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+       
           <Grid container spacing={2}>
-            {/* style={{border:'1px solid red'}} */}
-            <Grid item xs={10} md={5} >
-            <Table component={Card} className="ChangePartino">
+            <Grid item xs={10} md={12} align='center'>
+            <Paper
+                      className="Card-lblResult"
+                      style={{
+                        background:
+                          lblResult.style,
+                          marginBottom:'10px',
+                          width:'50%',
+                          display:lblResult.visble
+                      }}
+                    >
+                      <Typography
+                        variant="h5"
+                        style={{ paddingTop: "6px", color: "#fff" }}
+                      >
+                        {lblResult.value}
+                      </Typography>
+                    </Paper>
+            <Table component={Card} className="ChangePartino" style={{width:'50%'}}>
           <TableHead style={{ height: "60px" }}>
             <TableRow>
               <TableCell
@@ -71,9 +101,17 @@ function ScanSheetMOTTime() {
                   className="input_txt"
                   style={{ width: "50%", }}
                   fullWidth
-                //   inputProps={{
-                //     style: { textAlign: 'center', }  
-                //   }}
+                  value={txtTotalPcs}
+                  onChange={(e) => {
+                    settxtTotalPcs(e.target.value)
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      txtTotalPcs_TextChanged();
+                    }
+                  }}
+                  onBlur={txtTotalPcs_TextChanged}
+
                 />
               </TableCell>
             </TableRow>
@@ -82,8 +120,10 @@ function ScanSheetMOTTime() {
               <Table
                 className="CSS-GvSerial"
                 style={{
-                  marginTop: "20px",
-                  // display: gvSerial.visble
+                 width:'50%'
+                 ,marginTop:'20px'
+                  // display: gvSerial.visblew
+
                 }}
                 component={Card}
               >
@@ -101,7 +141,7 @@ function ScanSheetMOTTime() {
                 <TableBody>
                   {/* <TableRow> */}
 
-                  {/* {Array.from({ length: gvSerial.value.length }, (_, index) => (
+                  {Array.from({ length: gvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
                         align="center"
@@ -115,58 +155,79 @@ function ScanSheetMOTTime() {
                           className="input_txt"
                           size="small"
                           fullWidth
-                          inputRef={(el) => (fc_txtSerial.current[index] = el)}
-                          value={txtSerial[index]}
+                          // inputRef={(el) => (fc_txtSerial.current[index] = el)}
+                          value={txtSerialNo[index]}
                           onBlur={(event) => {
-                            handleSerialChange(index, event);
+                            handleSerialOldChange(index, event);
                           }}
-                          onChange={(event) => handleSerialChange(index, event)}
-                          onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                              event.preventDefault(); 
-                              if (index < gvSerial.value.length - 1) {
-                                fc_txtSerial.current[index + 1].focus();
-                              } else {
-                                btnSave_Click();
-                                event.target.blur();
-                              }
-                            }
+                          onChange={(event) => handleSerialOldChange(index, event)}
+                          // onKeyDown={(event) => {
+                          //   if (event.key === "Enter") {
+                          //     event.preventDefault(); 
+                          //     if (index < gvSerial.value.length - 1) {
+                          //       fc_txtSerial.current[index + 1].focus();
+                          //     } else {
+                          //       btnSave_Click();
+                          //       event.target.blur();
+                          //     }
+                          //   }
+                          // }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          key={index}
+                          className="input_txt"
+                          size="small"
+                          fullWidth
+                          // inputRef={(el) => (fc_txtSerial.current[index] = el)}
+                          value={txtSerialNoNew[index]}
+                          onBlur={(event) => {
+                            handleSerialNewChange(index, event);
                           }}
+                          onChange={(event) => handleSerialNewChange(index, event)}
+                          // onKeyDown={(event) => {
+                          //   if (event.key === "Enter") {
+                          //     event.preventDefault(); 
+                          //     if (index < gvSerial.value.length - 1) {
+                          //       fc_txtSerial.current[index + 1].focus();
+                          //     } else {
+                          //       btnSave_Click();
+                          //       event.target.blur();
+                          //     }
+                          //   }
+                          // }}
                         />
                       </TableCell>
                     </TableRow>
-                  ))} */}
+                  ))}
 
                   <TableRow>
-                    <TableCell colSpan={2} style={{ textAlign: "center" }}>
+                    <TableCell colSpan={3} style={{ textAlign: "center" }}>
                       <Button
                         className="BtSave"
-                        // onClick={btnSave_Click}
+                        onClick={BtnSubmit_Click}
                       >
-                        Save
+                        Submit
                       </Button>{" "}
-                      &nbsp;&nbsp;
-                      <Button
-                        className="BtCancel"
-                        // onClick={btnCancel_Click}
-                      >
-                        Cancel
-                      </Button>
+                    
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-            </Grid>
-            <Grid item xs={10} md={7} >            
-            <AntTable
+              <AntTable
                     columns={columns}
-                    // dataSource={gvScanResult.value}
+                    dataSource={gvRow.value}
                     pagination={false}
                     size="small"
                     bordered
                     className="tableGvResult"
+                    style={{width:'70%',display:gvRow.visble}}
                   />
             </Grid>
+            {/* <Grid item xs={10} md={7} >             */}
+            
+            {/* </Grid> */}
 
           </Grid>
         </Box>

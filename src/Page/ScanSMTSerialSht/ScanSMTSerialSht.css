@@ -112,13 +112,11 @@
 }
 
 .divgvSerialShtPcs th {
-    white-space: nowrap;
     text-align: center;
-    font-size: 16px;
     background-color: #12422e !important ;
     color: #fff;
     border-right: 1px solid rgb(221, 219, 219);
-    padding: 9px;
+    padding: 5px;
 }
 
 .divgvSerialShtPcs td {
@@ -138,16 +136,14 @@
 }
 
 .divgvScanResultShtPcs {
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
-    max-width: 100%;
-    width: 900px;
-    margin-left: -20px;
-    position: relative;
+    width: 100%;
+    margin-left: -10px;
 }
 
-.divgvScanResultShtPcs th {
-    /* white-space: nowrap; */
+/* .divgvScanResultShtPcs th {
+    white-space: nowrap;
     text-align: center;
     font-size: 16px;
     background-color: #378CE7 !important ;
@@ -160,7 +156,7 @@
 
 .divgvScanResultShtPcs td {
     padding: 4px 4px 4px 4px!important;
-}
+} */
 
 
 

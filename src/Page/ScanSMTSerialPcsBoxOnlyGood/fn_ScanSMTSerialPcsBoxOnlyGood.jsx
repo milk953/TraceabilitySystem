@@ -463,11 +463,11 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       }
     } else {
       setlblLot((prevState) => ({ ...prevState, value: "" }));
-      setTimeout(() => {
+     
         setTimeout(() => {
           fntxtBox.current.focus();
         }, 300);
-      }, 300);
+   
      
     }
   };

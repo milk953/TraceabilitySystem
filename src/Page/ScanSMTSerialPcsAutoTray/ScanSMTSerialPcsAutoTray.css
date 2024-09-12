@@ -46,17 +46,15 @@
     display: flex;
     max-width: 100%;
     overflow-x: auto;
-    width: 482px;
+    width: 460px;
 }
 
 .divgvSerialPcs th {
-    white-space: nowrap;
     text-align: center;
-    font-size: 16px;
     background-color: #12422e !important ;
     color: #fff;
     border-right: 1px solid rgb(221, 219, 219);
-    padding: 9px;
+    padding: 5px;
 }
 
 .divgvSerialPcs td {
@@ -66,15 +64,12 @@
 .divgvScanResultPcs {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    flex-direction: column;
-    max-width: 100%;
-    width: 910px;
-    margin-left: -40px;
+    width: 100%;
+    margin-left: -10px;
 }
 
-.divgvScanResultPcs th {
-    /* white-space: nowrap; */
+/* .divgvScanResultPcs th {
+    white-space: nowrap;
     text-align: center;
     font-size: 16px;
     background-color: #378CE7 !important ;
@@ -87,12 +82,12 @@
 
 .divgvScanResultPcs td {
     padding: 4px 4px 4px 4px!important;
-}
+} */
 
 .gvScanResultContainer {
     display: flex;
     align-items: center; 
-    width: 920px; 
+    width: 100%; 
 }
 
 
