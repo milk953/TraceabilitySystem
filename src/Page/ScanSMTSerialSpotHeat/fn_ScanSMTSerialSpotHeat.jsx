@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Tag } from "antd";
+import "../Common/StyleCommon.css";
 
 function fn_ScanSMTSerialSpotHeat() {
   const [Product, setProduct] = useState([]);
@@ -109,7 +111,7 @@ function fn_ScanSMTSerialSpotHeat() {
       getInitialSerial();
     }
   }, [hfSerialCount]);
-
+console.log()
   const GetProductData = async () => {
     axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
@@ -117,7 +119,7 @@ function fn_ScanSMTSerialSpotHeat() {
       setSlProduct(data)
     });
   };
-
+ 
   const handletxt_Lotno = async () => {
     let strLot = "";
     let strPrdName = "";
@@ -562,6 +564,50 @@ function fn_ScanSMTSerialSpotHeat() {
     newValues[index] = event.target.value;
     settxtSerial(newValues);
   };
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Serial No.",
+      dataIndex: "SERIAL",
+      key: "Serial No.",
+      align: "left",
+      render: (text, record, index) => {
+          return text;
+      },
+    },
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "SCAN_RESULT",
+      render: (text, record, index) => {
+        return text ? (
+          <Tag className={text === "OK" ? "Tag-OK" : text === "NG"|| "NO" ? "Tag-NG" : ""}>
+            {text}
+          </Tag>
+        ) : null; // คืนค่า null ถ้า text เป็นค่าว่าง
+      },
+      align: "center",
+    },
+    
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "REMARK",
+
+      render: (text, record, index) => {
+          return text;
+      },
+      align: "center",
+    },
+  ];
 
   return {
     handletxt_Lotno,
@@ -592,7 +638,8 @@ function fn_ScanSMTSerialSpotHeat() {
     fcGvSerial,
     visiblegvScanResult,
     visibledll_product,
-    dataGvSerial
+    dataGvSerial,
+    columns
   };
 }
 

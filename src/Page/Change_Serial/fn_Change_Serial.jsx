@@ -10,7 +10,7 @@ function fn_Change_Serial() {
     style: {},
   });
   const [txtTotalPcs, setTxtTotalPcs] = useState({
-    value: "",
+    value: "1",
     disbled: "",
     visble: false,
     style: {},
@@ -30,26 +30,34 @@ function fn_Change_Serial() {
 
   const [txtSerialNo, setTxtSerialNo] = useState("");
   const [hfSerialCount, setHfSerialCount] = useState("");
+  const plantCode = import.meta.env.VITE_FAC;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      await getInitialSerial();
+    };
+    fetchData();
+  }, []);
 
   const txtTotalPcs_TextChanged = async () => {
     await getInitialSerial();
   };
 
   const BtnSubmit_Click = async () => {
+    console.log("เข้ามาละ BtnSubmit_Click");
     let dt = [];
-    let CheckerHeaderFlg = False;
-    let CheckerHeaderFlg3 = False;
+    let CheckerHeaderFlg = false;
+    let CheckerHeaderFlg3 = false;
     let TouchUpCnt = 0;
     let RejectCnt = 0;
     let FinalGateCnt = 0;
     let strError = "";
     let strOldSerial = "";
     let strNewSerial = "";
-    let CheckerOldSerialShtFlg = True;
+    let CheckerOldSerialShtFlg = true;
     let dtData = [];
     dtData = await getInputSerial(strError);
+    console.log("ได้ค่า  dtData ของ getInputSerial", dtData);
     if (strError.trim !== "") {
       setLblResult((prevState) => ({
         ...prevState,
@@ -59,14 +67,45 @@ function fn_Change_Serial() {
     }
 
     try {
-      for (const drRow of dtData) {
-        const strOldSerial = drRow.SERIAL_OLD;
-        const strNewSerial = drRow.SERIAL_NEW;
-      }
-    } catch (ex) {}
+      console.log("เข้ามาใน try one");
+      // for (let i = 0; i < dtData.length; i++) {
+      //   console.log("เข้ามาใน Loop one");
+      //   const drRow = dtData[i];
+      //   strOldSerial = drRow.SERIAL_OLD;
+      //   strNewSerial = drRow.SERIAL_NEW;
+      //   const res = await axios.post("/api/GetserialnoChangserial", {
+      //     strplant_code: plantCode,
+      //     strnewserial: strNewSerial,
+      //   });
+      //   console.log(res.data, "res.data");
+      //   if (res.data.length == 0)
+      //     setLblResult((prevState) => ({
+      //       ...prevState,
+      //       value: "NEW SERIAL NO not Exists in SMT_SERIAL_NO.",
+      //       style: { color: "red" },
+      //     }));
+      // }
+
+      // for (const drRow of dtData) {
+      //   const strOldSerial = drRow.SERIAL_OLD;
+      //   const strNewSerial = drRow.SERIAL_NEW;
+      //   const res = await axios.post("/api/", {
+      //     strplant_code: plantCode,
+      //     stroldserial: strOldSerial,
+      //   });
+      //   setLblResult((prevState) => ({
+      //     ...prevState,
+      //     value: res.data,
+      //     style: { color: "red" },
+      //   }));
+      // }
+    } catch (ex) {
+      console.log("Error ครับผม");
+    }
   };
 
   const getInitialSerial = async () => {
+    console.log("เข้ามาละ getInitialSerial");
     let dtData = [];
     for (let intRow = 1; intRow <= parseInt(txtTotalPcs.value); intRow++) {
       dtData.push({ SEQ: intRow });
@@ -86,6 +125,7 @@ function fn_Change_Serial() {
   };
 
   const getInputSerial = async (strError) => {
+    console.log("เข้ามาละ getInputSerial");
     let dtData = [];
     let intRow = 0;
     let strFrontSide = "";
@@ -122,7 +162,7 @@ function fn_Change_Serial() {
     }, 300);
   }
 
-  return {};
+  return { txtTotalPcs, txtTotalPcs_TextChanged, BtnSubmit_Click };
 }
 
 export { fn_Change_Serial };
