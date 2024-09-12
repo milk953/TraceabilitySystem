@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx';
+import { Tag } from "antd";
 
 function fn_ScanSMTSerialPcsAutoTray() {
 
@@ -15,10 +16,10 @@ function fn_ScanSMTSerialPcsAutoTray() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("green");
+    const [lblResultcolor, setlblResultcolor] = useState("#059212");
     const [lblTime, setlblTime] = useState("");
     const [pnlPackingGroup, setpnlPackingGroup] = useState(false);
-    const [lblTimecolor, setlblTimecolor] = useState("green");
+    const [lblTimecolor, setlblTimecolor] = useState("#059212");
     const [lblLastTray, setlblLastTray] = useState("Not Use");
 
     //hiddenfield
@@ -159,7 +160,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             .then((res) => {
                 let data = res.data;
                 setProductdata(data);
-                setselProduct(data.prd_name);
+                setselProduct(data[0].prd_name);
             });
     };
 
@@ -229,7 +230,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                         SetMode("SERIAL");
                                     }
                                 } else {
-                                    setlblLog(`${_strPrdName} not test master!\n${_strPrdName} ยังไม่ทดสอบมาสเตอร์`);
+                                    setlblLog(`${_strPrdName} not test master! / ${_strPrdName} ยังไม่ทดสอบมาสเตอร์`);
                                     setlblLot("");
                                     setlblLotTotal("");
                                     setlblSerialNG("");
@@ -257,7 +258,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                                 SetMode("SERIAL");
                                             }
                                         } else {
-                                            setlblLog(`${_strPrdName} not test master!\n${_strPrdName} ยังไม่ทดสอบมาสเตอร์`);
+                                            setlblLog(`${_strPrdName} not test master! / ${_strPrdName} ยังไม่ทดสอบมาสเตอร์`);
                                             setlblLot("");
                                             setlblLotTotal("");
                                             setlblSerialNG("");
@@ -280,7 +281,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                     }
                 }
             } else {
-                setlblLog(` Please scan QR Code!\nกรุณาสแกนที่คิวอาร์โค้ด`);
+                setlblLog(` Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด`);
                 setlblLot("");
                 setlblLotTotal("");
                 setlblSerialNG("");
@@ -566,7 +567,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         console.log("dtchecksumserial:", dtchecksumserial)
 
                         if (!dtchecksumserial) {
-                            _strMessageUpdate = "Serial invalid check sum\nหมายเลขบาร์โค้ดมีค่าตรวจสอบไม่ถูกค้อง";
+                            _strMessageUpdate = "Serial invalid check sum / หมายเลขบาร์โค้ดมีค่าตรวจสอบไม่ถูกค้อง";
                             _strRemark = "Serial invalid check sum";
                             _strScanResultUpdate = "NG";
                             _strTestResultUpdate = _strTestResult;
@@ -584,7 +585,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                             console.log(_strFixDigit, hfSerialDigit);
                             if (_strFixDigit !== hfSerialDigit) {
-                                _strMessageUpdate = "Serial barcode mix product\nหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
+                                _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -601,7 +602,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 const end = parseInt(hfConfigEnd);
                                 _strConfigDigit = _strSerial.substring(start - 1, end);
                                 if (_strConfigDigit !== hfConfigCode) {
-                                    _strMessageUpdate = "Serial barcode mix product\nหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
+                                    _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                     _strRemark = "Serial barcode mix product";
                                     _strScanResultUpdate = "NG";
                                     _strTestResultUpdate = _strTestResult;
@@ -616,7 +617,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                         if (hfSerialStartCode.trim() !== "" && _strScanResultUpdate !== "NG") {
                             if (_strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
-                                _strMessageUpdate = "Serial barcode mix product\nหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
+                                _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -634,7 +635,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const end = parseInt(hfCheckStartSeqEnd);
                             _strStartSeq = _strSerial.substring(start - 1, end);
                             if (_strStartSeq !== hfCheckStartSeqCode) {
-                                _strMessageUpdate = "Serial barcode mix product\nหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
+                                _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -652,7 +653,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const end = parseInt(hfCheckWeekCodeEnd);
                             _strWeekCode = _strSerial.substring(start - 1, end);
                             if (_strWeekCode !== hfWeekCode) {
-                                _strMessageUpdate = "Serial barcode mix week code\nหมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
+                                _strMessageUpdate = "Serial barcode mix week code / หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
                                 _strRemark = "Serial barcode mix week code";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -667,7 +668,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         if (!_bolError) {
                             for (let intRow = (_intRowSerial + 1); intRow < dtSerial.length; intRow++) {
                                 if (_strSerial === dtSerial[intRow].SERIAL) {
-                                    _strMessageUpdate = "Serial duplicate in tray\nหมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+                                    _strMessageUpdate = "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                                     _strRemark = "Serial duplicate in tray  ";
                                     _strScanResultUpdate = "NG";
                                     _strTestResultUpdate = _strTestResult;
@@ -698,7 +699,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const end = parseInt(hfCheckPrdShtEnd);
                             _strPrdSht = _strShtNo.substring(start - 1, end);
                             if (_strShtNo !== "" && hfCheckPrdAbbr !== _strPrdSht) {
-                                _strMessageUpdate = "Change serial barcode mix product\nเปลี่ยนหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
+                                _strMessageUpdate = "Change serial barcode mix product / เปลี่ยนหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Change serial barcode mix product  ";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -708,7 +709,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 _intCountNG = 1;
                                 _bolError = true;
                             } else if (_strShtNo === "") {
-                                _strMessageUpdate = "No data connect sheet\nไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
+                                _strMessageUpdate = "No data connect sheet / ไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
                                 _strRemark = "No data connect sheet  ";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -718,7 +719,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 _intCountNG = 1;
                                 _bolError = true;
                             } else if (hfLotAll.indexOf(strSheetLot) <= 0) {
-                                _strMessageUpdate = "Lot not same connect sheet\nล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
+                                _strMessageUpdate = "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                                 _strRemark = "Lot not same connect sheet  ";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -745,7 +746,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                     _dblPlasmaTime = res.data.plasma_time;
                                 });
                             if (_dblPlasmaTime === 0) {
-                                _strMessageUpdate = _strMessageUpdate + " Skip Plasma\nงานไม่ผ่านพลาสม่า";
+                                _strMessageUpdate = _strMessageUpdate + " Skip Plasma / งานไม่ผ่านพลาสม่า";
                                 _strRemark = "Skip Plasma";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -755,7 +756,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 _intCountNG = 1;
                                 _bolError = true;
                             } else if (_dblPlasmaTime < 0) {
-                                _strMessageUpdate = _strMessageUpdate + " Plasma time do not record\nไม่พบข้อมูลการแสกนก่อนเข้าพลาสม่า";
+                                _strMessageUpdate = _strMessageUpdate + " Plasma time do not record / ไม่พบข้อมูลการแสกนก่อนเข้าพลาสม่า";
                                 _strRemark = "Not record plasma time";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -765,7 +766,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 _intCountNG = 1;
                                 _bolError = true;
                             } else if (parseFloat(hfPlasmaTime) < _dblPlasmaTime && hfPlasmaHideTime === "N") {
-                                _strMessageUpdate = "Plasma time over " + hfPlasmaTime + " hr.\nเวลาพลาสม่าเกิน " + hfPlasmaTime + " ชม.";
+                                _strMessageUpdate = "Plasma time over " + hfPlasmaTime + " hr. / เวลาพลาสม่าเกิน " + hfPlasmaTime + " ชม.";
                                 _strRemark = "Plasma time over " + hfPlasmaTime + " hr.";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -830,7 +831,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                     _bolError = true;
                                 }
                             } else {
-                                _strMessageUpdate = "No data connect sheet\nไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
+                                _strMessageUpdate = "No data connect sheet / ไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
                                 _strRemark = "No data connect sheet  ";
                                 _strScanResultUpdate = "NG";
                                 _strTestResultUpdate = _strTestResult;
@@ -846,9 +847,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             if (hfTestResultFlag === "Y") {
                                 if (_strTouchUp === "NG" && _strRejectGroup !== "MASTER") {
                                     if (_strTestResult === "OK") {
-                                        _strMessageUpdate = "Touch up result was fail\nผล Touch up ชิ้นงานแสดงไม่ผ่าน";
+                                        _strMessageUpdate = "Touch up result was fail / ผล Touch up ชิ้นงานแสดงไม่ผ่าน";
                                     } else {
-                                        _strMessageUpdate = "Touch up result was fail " + _strTypeTestResult + "\n" + "ผล Touch up ชิ้นงานแสดงไม่ผ่าน " + _strTypeTestResult;
+                                        _strMessageUpdate = "Touch up result was fail " + _strTypeTestResult + " / " + "ผล Touch up ชิ้นงานแสดงไม่ผ่าน " + _strTypeTestResult;
                                     }
                                     _strRemark = "Touch up result was fail" + _strTypeTestResult;
                                     _strScanResultUpdate = "NG";
@@ -859,9 +860,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                     _bolError = true;
                                 } else if (_strTouchUp === "NO" && _strRejectGroup !== "MASTER") {
                                     if (_strTestResult === "OK") {
-                                        _strMessageUpdate = "Not found touch up result\nไม่พบผล Touch up ชิ้นงาน";
+                                        _strMessageUpdate = "Not found touch up result / ไม่พบผล Touch up ชิ้นงาน";
                                     } else {
-                                        _strMessageUpdate = "Not found touch up result " + _strTypeTestResult + "\n" + "ไม่พบผล Touch up ชิ้นงาน " + _strTypeTestResult;
+                                        _strMessageUpdate = "Not found touch up result " + _strTypeTestResult + " / " + "ไม่พบผล Touch up ชิ้นงาน " + _strTypeTestResult;
                                     }
                                     _strRemark = "Not found touch up result";
                                     _strScanResultUpdate = "NG";
@@ -879,7 +880,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                         dtSerial[i].REMARK_UPDATE = _strRemark;
                                         dtSerial[i].ROW_UPDATE = "Y";
                                     } else {
-                                        _strMessageUpdate = "Duplicate scan serial " + _strTypeTestResult + "\n" + "แสกนบาร์โค้ดของชิ้นงานซ้ำ" + _strTypeTestResult;
+                                        _strMessageUpdate = "Duplicate scan serial " + _strTypeTestResult + " / " + "แสกนบาร์โค้ดของชิ้นงานซ้ำ" + _strTypeTestResult;
                                         _strRemark = "Duplicate scan serial " + _strTypeTestResult;
                                         _strScanResultUpdate = "NG";
                                         _strTestResultUpdate = _strTestResult;
@@ -890,7 +891,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                         _bolError = true;
                                     }
                                 } else if (_strTestResult === "NG") {
-                                    _strMessageUpdate = "Test result was fail " + _strTypeTestResult + "\n" + "ผลทดสอบชิ้นงานแสดงไม่ผ่าน " + _strTypeTestResult;
+                                    _strMessageUpdate = "Test result was fail " + _strTypeTestResult + " / " + "ผลทดสอบชิ้นงานแสดงไม่ผ่าน " + _strTypeTestResult;
                                     _strRemark = "Test result was fail" + _strTypeTestResult;
                                     _strScanResultUpdate = "NG";
                                     _strTestResultUpdate = _strTestResult;
@@ -900,7 +901,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                                     _bolError = true;
                                 } else {
-                                    _strMessageUpdate = "Not found test result " + _strTypeTestResult + "\n" + "ไม่พบผลทดสอบชิ้นงาน " + _strTypeTestResult;
+                                    _strMessageUpdate = "Not found test result " + _strTypeTestResult + " / " + "ไม่พบผลทดสอบชิ้นงาน " + _strTypeTestResult;
                                     _strRemark = "Not found test result " + _strTypeTestResult;
                                     _strScanResultUpdate = "NG";
                                     _strTestResultUpdate = _strTestResult;
@@ -918,7 +919,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                     dtSerial[i].REMARK_UPDATE = _strRemark;
                                     dtSerial[i].ROW_UPDATE = "Y";
                                 } else {
-                                    _strMessageUpdate = "Duplicate scan serial " + _strTypeTestResult + "\n" + "แสกนบาร์โค้ดของชิ้นงานซ้ำ" + _strTypeTestResult;
+                                    _strMessageUpdate = "Duplicate scan serial " + _strTypeTestResult + " / " + "แสกนบาร์โค้ดของชิ้นงานซ้ำ" + _strTypeTestResult;
                                     _strRemark = "Duplicate scan serial " + _strTypeTestResult;
                                     _strScanResultUpdate = "NG";
                                     _strTestResultUpdate = _strTestResult;
@@ -1037,7 +1038,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             }
                         }
                     } else {
-                        _strMessageUpdate = "Serial not matching product\nหมายเลขบาร์โค้ดไม่ตรงตามที่กำหนดไว้";
+                        _strMessageUpdate = "Serial not matching product / หมายเลขบาร์โค้ดไม่ตรงตามที่กำหนดไว้";
                         _strRemark = "Serial barcode not matching product";
                         _strScanResultUpdate = "NG";
                         _strTestResultUpdate = _strTestResult;
@@ -1072,9 +1073,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
             setlblResult(_strScanResultAll);
 
             if (_strScanResultAll === "NG") {
-                setlblResultcolor("#ff4d4f");
+                setlblResultcolor("#BA0900");
             } else {
-                setlblResultcolor("green");
+                setlblResultcolor("#059212");
             }
 
             if (hfPlasmaCheck === "Y" && hfPlasmaHideTime === "N") {
@@ -1090,11 +1091,11 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         const minutes = Math.floor(fractionalPart * 60);
                         newlblTime += `${minutes} min. `;
                         setlblTime(newlblTime);
-                        setlblTimecolor("green");
+                        setlblTimecolor("#059212");
                     }
                 } else {
                     setlblTime("Over " + hfPlasmaTime + " hr.");
-                    setlblTimecolor("red");
+                    setlblTimecolor("#BA0900");
                 }
             } else {
                 setlblTime("");
@@ -1129,7 +1130,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                 if (_strErrorUpdate !== "") {
                     setlblResult("Error :" + _strErrorUpdate);
-                    setlblResultcolor("#ff4d4f");
+                    setlblResultcolor("#BA0900");
                 }
             }
         }
@@ -1365,14 +1366,98 @@ function fn_ScanSMTSerialPcsAutoTray() {
         return dtProductSerial;
     };
 
+    const columns = [
+        {
+            title: "No.",
+            dataIndex: "SEQ",
+            key: "No.",
+            render: (text, record, index) => {
+                return index + 1;
+            },
+            align: "center",
+        },
+        {
+            title: "Serial No.",
+            dataIndex: "SERIAL",
+            key: "Serial No.",
+            align: "left",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Re-Judgement 1",
+            dataIndex: "REJECT",
+            key: "Re-Judgement 1",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+
+        {
+            title: "Result",
+            key: "Result",
+            dataIndex: "TOUCH_UP",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Re-Judgement 2",
+            key: "Re-Judgement 2",
+            dataIndex: "REJECT2",
+            align: "center",
+            render: (text, record, index) => {
+
+                return text;
+
+            },
+        },
+        {
+            title: "Test Result",
+            key: "Test Result",
+            dataIndex: "TEST_RESULT",
+
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
+        },
+        {
+            title: "Scan Result",
+            key: "Scan Result",
+            dataIndex: "SCAN_RESULT",
+
+            render: (text, record, index) => {
+
+
+                return (
+                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+                        {text}
+                    </Tag>
+                );
+            },
+            align: "center",
+        },
+        {
+            title: "Remark",
+            key: "Remark",
+            dataIndex: "REMARK",
+
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
+        },
+    ];
+
     useEffect(() => {
         if (!txtLotDisabled) {
             inputLot.current.focus();
         }
-        if (!selProDisabled) {
-            ddlProduct.current.focus();
-        }
-        if (pnlPackingGroup && !txtPackingNoDisabled) {
+        if (pnlPackingGroup && txtPackingNo === "") {
             inputPackingNo.current.focus();
         }
         if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
@@ -1380,7 +1465,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
         }
     }, [
         txtLotDisabled,
-        selProDisabled,
         txtPackingNoDisabled,
         pnlPackingGroup,
         gvSerialData
@@ -1448,7 +1532,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
         txtPackingNoDisabled, inputLot, ddlProduct, inputPackingNo, inputgvSerial, inputTray, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangePackingNo, ibtPackingBackClick, handleChangePcsTray, settxtLot, settxtPackingNo,
         settxtPcsTray, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick, gvScanData, gvScanResult, lblTimecolor,
-        lblLastTray, btnHiddenClick
+        lblLastTray, btnHiddenClick, columns
     }
 };
 

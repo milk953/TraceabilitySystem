@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { Tag } from "antd";
 
 function fn_ScanSMTSerialSht() {
   const [txtLotNo, settxtLotNo] = useState("");
@@ -17,7 +18,7 @@ function fn_ScanSMTSerialSht() {
   const [pnlLog, setpnlLog] = useState(false);
   const [lblLog, setlblLog] = useState("");
   const [lblResult, setlblResult] = useState("");
-  const [lblResultcolor, setlblResultcolor] = useState("green");
+  const [lblResultcolor, setlblResultcolor] = useState("#059212");
   const [pnlBoard, setpnlBoard] = useState(false);
   const [txtBoardNoB, settxtBoardNoB] = useState("");
   const [txtBoardNoF, settxtBoardNoF] = useState("");
@@ -124,9 +125,9 @@ function fn_ScanSMTSerialSht() {
   const inputSideBack = useRef([]);
   const inputgvSerial = useRef([]);
 
-  const AUTO_SCAN_CHECK_FLG = 0;
+  const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
   const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  const CONNECT_SERIAL_NOT_FOUND = "NOT FOUND CODE";
+  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
   const ROLL_SHT_ROLL_START_DIGIT = 1;
   const ROLL_SHT_ROLL_LENGTH = 12;
   const plantCode = import.meta.env.VITE_FAC;
@@ -162,7 +163,7 @@ function fn_ScanSMTSerialSht() {
     let dtLotData = [];
     const strLotData = txtLotNo.toUpperCase().trim().split(";");
 
-    if (strLotData.length - 1 >= 2) {
+    if (strLotData.length >= 2) {
       strLot = strLotData[0];
       await axios.post("/api/Common/getProductDataByLot", {
         strLot: strLot,
@@ -461,7 +462,7 @@ function fn_ScanSMTSerialSht() {
       sethfMode("LOT");
       inputLot.current.focus();
     } else if (strType === "LOT_ERROR") {
-      settxtLot("");
+      settxtLotNo("");
       settxtLotDisabled(false);
       setpnlLog(true);
       setpnlSerial(false);
@@ -715,7 +716,7 @@ function fn_ScanSMTSerialSht() {
           if (CONNECT_SERIAL_ERROR.indexOf(_strSerial) === -1) {
 
             for (let _intRow = _intRowSerial + 1; _intRow <= dtSerial.Rows.length - 1; _intRow++) {
-              if (_strSerial.toUpperCase() === dtSerial[_intRow].SERIAL) {
+              if (_strSerial === dtSerial[_intRow].SERIAL) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = "Serial duplicate\nหมายเลขบาร์โค้ดซ้ำ";
                 _strScanResultAll = "NG";
@@ -757,7 +758,7 @@ function fn_ScanSMTSerialSht() {
                 }
               }
 
-              if (hfSerialStartCode === "Y" && _strScanResultUpdate !== "NG") {
+              if (hfCheckStartSeq === "Y" && _strScanResultUpdate !== "NG") {
                 let _strStartSeq = "";
                 const start = parseInt(hfCheckStartSeqStart);
                 const end = parseInt(hfCheckStartSeqEnd);
@@ -920,7 +921,7 @@ function fn_ScanSMTSerialSht() {
               }
               await axios.post("/api/Common/Get_Spi_aoi_result", {
                 dataList: {
-                  _strPlantCode: "5",
+                  _strPlantCode: plantCode,
                   _pcsPosition: _intSeq,
                   _frontSheetNumber: _FrontSheetBarcode,
                   _rearSheetNumber: _RearSheetBarcode,
@@ -1118,9 +1119,9 @@ function fn_ScanSMTSerialSht() {
 
       setlblResult(_strScanResultAll);
       if (_strScanResultAll === "NG") {
-        setlblResultcolor("#ff4d4f");
+        setlblResultcolor("#BA0900");
       } else {
-        setlblResultcolor("green");
+        setlblResultcolor("#059212");
       }
       if (_strErrorAll !== "") {
         setlblResult(lblResult + "\n" + _strErrorAll);
@@ -1190,7 +1191,7 @@ function fn_ScanSMTSerialSht() {
             DATA_TYPE: "PCS",
             ROW_UPDATE: "Y",
             BOARD_NO_F: hfReqBoardNo === "Y" ? txtBoardNoF : "",
-            BOARD_NO_B: hfReqBoardNo === "Y" ? txtBoardNoB : ""
+            BOARD_NO_B: hfReqBoardNo === "Y" ? txtBoardNoB : "",
           });
         }
       }
@@ -1440,10 +1441,7 @@ function fn_ScanSMTSerialSht() {
     if (e.key === 'Enter') {
       e.preventDefault();
       const nextIndex = index + 1;
-      if (nextIndex < hfSerialCount &&
-        nextIndex < hfShtScan &&
-        inputgvSerial.current[nextIndex]
-      ) {
+      if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
         inputgvSerial.current[nextIndex].focus();
         console.log('Calling btnSaveClick', nextIndex);
       } else if (nextIndex === nextIndex) {
@@ -1463,6 +1461,60 @@ function fn_ScanSMTSerialSht() {
     }
   };
 
+  const columns = [
+    {
+      title: "Sheet No.",
+      dataIndex: "SHEET",
+      key: "Sheet No.",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      align: "center",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+    },
+    {
+      title: "Serial No.",
+      dataIndex: "SERIAL",
+      key: "Serial No.",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Scan Result",
+      key: "Scan Result",
+      dataIndex: "SCAN_RESULT",
+
+      render: (text, record, index) => {
+        return (
+          < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+            {text}
+          </Tag>
+        );
+      },
+      align: "center",
+    },
+    {
+      title: "Remark",
+      key: "Remark",
+      dataIndex: "REMARK",
+
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+  ];
+
   return {
     txtLotNo, settxtLotNo, selProduct, Productdata, txtLotRef, settxtLotRef, lblTotalSht, lblTotalPcs, txtRollLeaf, settxtRollLeaf,
     lblCheckRoll, lblCheckRollcolor, txtMachineNo, settxtMachineNo, pnlRollLeaf, pnlMachine, pnlLog, lblLog, lblResult, lblResultcolor,
@@ -1470,7 +1522,7 @@ function fn_ScanSMTSerialSht() {
     txtSideFront, pnlSerial, gvSerialData, gvScanResult, gvScanData, txtgvSerial, handleChangeBoardNoB, txtLotDisabled, selProDisabled,
     txtRollLeafDisabled, inputLot, ddlProduct, inputRollLeaf, inputMachineNo, inputSideBack, inputgvSerial, handleChangeLot, ibtBackClick,
     handleChangeProduct, handleChangeLotRef, handleChangeRollLeaf, handleChangeMachine, handleChangeSerial, handleChangegvBackSide, handleChangegvFontSide,
-    btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack, handleChangeBoardNoF
+    btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack, handleChangeBoardNoF, columns
   }
 };
 
