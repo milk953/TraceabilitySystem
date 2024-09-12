@@ -191,7 +191,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     let _strPrdName = productSelect;
     let _strLotData = lotValue.split(";").toString();
     let _strLotRefData = txtLotRef.split(";").toString();
-    let _strLot = "";
+    let _strLot = lotValue;
     let _strLotRef = "";
     let _strShtNoBack = "";
     let _strShtNoFront = "";
@@ -296,8 +296,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           CONNECT_SERIAL_ERROR = "999999";
           let _intRow = 0;
           if (_strSerial !== "999999") {
-            for (_intRowSerial + 1;_intRowSerial < dtSerial.length - 1;_intRowSerial++) {
-              if (_strSerial === dtSerial[_intRow].SERIAL.toString()) {
+            for (let x = 1 ;x < dtSerial.length ;x++) {
+              console.log(dtSerial[x],'dtSerial[_intRowSerial]',_strSerial,'_strSerial');
+              if (_strSerial === dtSerial[x].SERIAL.toString()) {
+                console.log('in')
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
                 _strScanResultAll = "NG";
@@ -306,11 +308,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             }
             if (_strSerial.length == parseInt(hfSerialLength)) {
               var _strFixDigit = "";
-              _strSerial = _strSerial.substring(
-                parseInt(hfSerialStartDigit),
-                parseInt(hfSerialEndDigit) + 1
+              _strFixDigit = _strSerial.substring(
+                parseInt(hfSerialStartDigit)-1,
+                parseInt(hfSerialEndDigit) 
               );
-              if (_strSerial !== hfSerialDigit) {
+              console.log(_strFixDigit, "fixdigit",hfSerialDigit, "hfSerialDigit"); 
+              if (_strFixDigit !== hfSerialDigit) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
                 _strScanResultAll = "NG";
@@ -377,7 +380,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               var _strSerialNoDup = "";
               _inCountSeq = await getData("GetSerialDuplicateConnectSht", {
                 strSerial: dtSerial[i].SERIAL,
-                strplantcode: "5",
+                strplantcode: plantCode,
               });
               if (_inCountSeq > 0) {
                 _strScanResultUpdate = "NG";
@@ -427,7 +430,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setlblLog(_strReturn);
         }
       }
-      if (!_bolError ) {
+      console.log(_bolError, "_bolError",_strUpdateError, "_strUpdateError");
+      if (_bolError == true ) {
         for (let x = 0; x < dtSerial.length; x++) {
           if (dtSerial[x].SERIAL != "") {
             let _intCount = 0;
@@ -544,8 +548,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                     (dtRowLeaf[drRow].UPDATE_FLG = "N"),
                       (dtRowLeaf[drRow].ROW_UPDATE = "N"),
                       (dtRowLeaf[drRow].SCAN_RESULT = "NG"),
-                      (dtRowLeaf[drRow].REMARK =
-                        "Roll/Sheet not matching product / หมายเลขบาร์โค้ดไม่ตรงกับผลิตภัณฑ์");
+                      (dtRowLeaf[drRow].REMARK ="Roll/Sheet not matching product / หมายเลขบาร์โค้ดไม่ตรงกับผลิตภัณฑ์");
                     _intCount += 1;
                   }
                   _strUpdateError = "Roll/Sheet not matching product";
@@ -578,29 +581,55 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 });
               }
             }
-          console.log(dtRowLeaf, "dtRowLeaf");
           } else {
             _strScanResultAll = "NG";
             _strUpdateError = "Roll leaf no. incorrect.";
             _strErrorAll = "Roll leaf no. incorrect.";
           }
         }
-
+        console.log(_bolError, "_bolError",_strUpdateError, "_strUpdateError");
         if (!_bolError  && _strUpdateError == "") {
-          if (_strUpdateError != "") {
-            _strScanResultAll = "NG";
-          } else if (hfPlasmaConnShtPcs == "Y") {
-            _strUpdateError = await getData("SetSerialRecordTimeTrayTable", {
-              dtSerial: dtSerial,
-              strUserID: txtOperator,
-              strPlantCode: plantCode,
-              hfUserStation: hfUserStation,
-              strProgram: "frm_ScanSMTSerialShtFIN",
-            });
+          console.log(dtSerial, "dtSerial",'inlast');
+          for (let drRow = 0; drRow < dtSerial.length; drRow++) {
+            if (dtSerial[drRow].SERIAL != ''){
+              _strUpdateError = await getData("SetSerialLotShtTable", {
+                SERIAL: dtSerial[drRow].SERIAL,
+                FRONT_SIDE: dtSerial[drRow].FRONT_SIDE,
+                BACK_SIDE : dtSerial[drRow].BACK_SIDE,
+                MACHINE : dtSerial[drRow].MACHINE,
+                MASTER_NO: dtSerial[drRow].MASTER_NO,
+                intSerialLength : hfSerialLength,
+                UPDATE_FLG: dtSerial[drRow].UPDATE_FLG,
+                BarcodeSide : hfBarcodeSide,
+                SEQ: dtSerial[drRow].SEQ,
+                PRODUCT: productSelect,
+                USER_ID: hfUserID,
+                REMARK: dtSerial[drRow].REMARK,
+                LOT: _strLot,
+              })
+            }            
             if (_strUpdateError != "") {
               _strScanResultAll = "NG";
+            } else if (hfPlasmaConnShtPcs == "Y") {
+              _strUpdateError = await getData("SetSerialRecordTimeTrayTable", {
+                SERIAL: dtSerial[drRow].SERIAL,
+                MACHINE : dtSerial[drRow].MACHINE,
+                PRODUCT:dtSerial[drRow].PRODUCT,
+                LOT : dtSerial[drRow].LOT,
+                DATA_TYPE : '',
+                ROW_UPDATE :dtSerial[drRow].ROW_UPDATE,
+                UPDATE_FLG : dtSerial[drRow].UPDATE_FLG,
+                strUserID: txtOperator,
+                strPlantCode: plantCode,
+                hfUserStation: hfUserStation,
+                strProgram: "frm_ScanSMTSerialShtFIN",
+              });
+              if (_strUpdateError != "") {
+                _strScanResultAll = "NG";
+              }
             }
           }
+        
         } else {
           _strScanResultAll = "NG";
         }
@@ -624,8 +653,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         });
       }
       setGvScanResult(dtSerial);
-      setTxtSideBack(gvBackSide.map(() => ""));
-      setTxtSideFront(gvBackSide.map(() => ""));
+      // setTxtSideBack(gvBackSide.map(() => ""));
+      // setTxtSideFront(gvBackSide.map(() => ""));
       setTxtSerial(gvSerial.map(() => ""));
       getIntitiaSheet();
       getInitialSerial();
@@ -1136,10 +1165,18 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         .post("/api/Common/SetSerialRecordTimeTrayTable", {
           dataList: {
             strUserID: param.strUserID,
-            strPlantCode: param.strPlantCode,
+            strPlantCode: Fac,
             hfUserStation: param.hfUserStation,
             strProgram: param.strProgram,
-            data: param.dtSerial,
+            data: [{
+              SERIAL: param.SERIAL,
+              MACHINE: param.MACHINE,
+              PRODUCT: param.PRODUCT,
+              LOT: param.LOT,
+              DATA_TYPE: param.DATA_TYPE,
+              ROW_UPDATE: param.ROW_UPDATE,
+              UPDATE_FLG: param.UPDATE_FLG,
+            }],
           },
         })
         .then((res) => {
@@ -1151,9 +1188,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       return result;
     } else if (type == "SetRollLeafTrayTable") {
       let result = "";
-      console.log("SetSerialRecordTimeTrayTable Insert");
       await axios
-        .post("/api/Common/SetSerialRecordTimeTrayTable", {
+        .post("/api/Common/SetRollLeafTrayTable", {
           dataList: {
             strOperator: param.strOperator,
             strUserID: "",
@@ -1211,7 +1247,30 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           Swal.fire("Error", error.message);
         });
       return result;
+    }else if (type == "SetSerialLotShtTable"){
+      let result = '';
+      await axios.post("/api/Common/SetSerialLotShtTable",{
+        SERIAL: param.SERIAL,
+        FRONT_SIDE: param.FRONT_SIDE,
+        BACK_SIDE: param.BACK_SIDE,
+        MACHINE: param.MACHINE,
+        MASTER_NO: param.MASTER_NO,
+        intSerialLength: param.intSerialLength,
+        UPDATE_FLG: param.UPDATE_FLG,
+        BarcodeSide: hfBarcodeSide,
+        SEQ: param.SEQ,
+        PRODUCT: param.PRODUCT,
+        USER_ID: param.USER_ID,
+        REMARK: param.REMARK,
+        LOT: param.LOT,
+      }).then((res) => {
+        result = res.data.p_error;
+      }).catch((error) => {
+        Swal.fire("Error", error.message);
+      })
+      return result;
     }
+   
   }
   async function setSerialMaster(item) {
     hfSerialLength = "0";
