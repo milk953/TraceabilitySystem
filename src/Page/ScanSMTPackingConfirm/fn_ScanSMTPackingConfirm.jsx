@@ -157,7 +157,6 @@ function fn_ScanSMTPackingConfirm() {
         .then((res) => {
             strPrdName = res.data.prdName[0];
         });
-        console.log("เข้า 1 ",strPrdName)
         if(strPrdName !==""){
           setlblLog((prevState) => ({...prevState, value: '',}));
           setpnlLog(false)
@@ -265,7 +264,6 @@ function fn_ScanSMTPackingConfirm() {
         _strScanResultAll ='NG'
         let _intRowSerial = 0;
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-          console.log(" เข้า ", dtSerial[drRow].SERIAL.trim().toUpperCase())
           if(dtSerial[drRow].SERIAL.trim().toUpperCase() !== ""){
             let _strSerial = dtSerial[drRow].SERIAL.trim().toUpperCase()
             let _strTestResult = "NONE"
@@ -274,11 +272,8 @@ function fn_ScanSMTPackingConfirm() {
             let _inCountSeq = 0
             let _strSerialDup =""
             for(let drShtRow=0;drShtRow <  dtSheet.length;drShtRow++){
-              console.log(dtSheet[drRow].sheet_no,"SHEETNO :","=","_strSerial",_strSerial,"111111111")
             
             if ((dtSheet[drShtRow].sheet_no === _strSerial) && (dtSheet[drShtRow].confirm_result.trim() === "OK")) {
-              
-              console.log("เข้า")
               dtSheet[drShtRow].scan_result='OK'
               dtSerial[drRow].SHEET_NO = dtSheet[drShtRow].sheet_no
               dtSerial[drRow].CONFIRM_RESULT = dtSheet[drShtRow].confirm_result
@@ -286,16 +281,11 @@ function fn_ScanSMTPackingConfirm() {
               _strScanResultAll =  dtSheet[drShtRow].scan_result 
               _bolUpdate = true
             }else if( (dtSheet[drShtRow].sheet_no == _strSerial) && (dtSheet[drShtRow].confirm_result.trim() != "OK") ){
-              console.log("ไม่เข้า")
               dtSheet[drShtRow].scan_result = 'NG'
-              console.log( dtSheet[drShtRow].scan_result," ได้ result")
-              console.log(dtSheet[drRow].sheet_no,"SHEETNO :","=","_strSerial",_strSerial,"222222222222")
-              console.log(dtSheet[drShtRow].confirm_result,"COMFIRM :","=","OK22222222222")
               dtSerial[drRow].SHEET_NO = dtSheet[drShtRow].sheet_no
               dtSerial[drRow].CONFIRM_RESULT = dtSheet[drShtRow].confirm_result
               dtSerial[drRow].SCAN_RESULT = dtSheet[drShtRow].scan_result
               _strScanResultAll =  dtSheet[drShtRow].scan_result 
-              console.log(_strScanResultAll,"ได้ _strScanResultAll")
               setlblRemark((prevState) => ({...prevState, value: 'NOT CONFIRM' }))
               _bolUpdate = true
             }
@@ -310,7 +300,6 @@ function fn_ScanSMTPackingConfirm() {
         }
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         if(_bolUpdate){
-          console.log(dtSerial[drRow].SCAN_RESULT,"LOG SCAN")
           let strError;
           await axios
           .post("/api/SetConfirmPackingSheet", {
@@ -323,14 +312,12 @@ function fn_ScanSMTPackingConfirm() {
           .then((res) => {
             
             strError = res.data[0].p_error;
-            console.log(strError,"strError")
           });
           if (strError !== ""){
             _strScanResultAll = 'NG'
           }
         
         } }
-        console.log("_strScanResultAll",_strScanResultAll)
         setlblResult((prevState) => ({...prevState, value: _strScanResultAll,}));
         
         if(_strScanResultAll == 'NG'){
@@ -382,7 +369,6 @@ function fn_ScanSMTPackingConfirm() {
       return dtData;
     };
     const getShtDataBylot = async (_strLot) => {
-      console.log(_strLot,"getShtDataBylot")
       let dtSheet = [];
       let intOK = 0
      
@@ -397,7 +383,6 @@ function fn_ScanSMTPackingConfirm() {
       })
       .then((res) => {
         dtSheet = res.data
-        console.log(dtSheet,'dtSheet')
         setgvScanResult(dtSheet)
         if(dtSheet.length > 0){
             setpnlgvScanResult(true)
@@ -405,7 +390,6 @@ function fn_ScanSMTPackingConfirm() {
       
       });
       for(let row =0; row < dtSheet.length;row++ ){
-        console.log(dtSheet[row].scan_result,"scan_result")
         if (dtSheet[row].scan_result == 'OK') {
             intOK += 1;
         }
