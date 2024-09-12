@@ -46,7 +46,7 @@ import Change_PartialNo from './Page/Replace Partial No/Change_PartialNo'
 import Change_Serial from './Page/Change_Serial/Change_Serial';
 import ScanSheetAOIXrayConfirm from './Page/AOI Confirm Result/ScanSheetAOIXrayConfirm';
 import ScanSMTSerialPcsAutoTrayConfirm from './Page/Confirm Final Only Good/ScanSMTSerialPcsAutoTrayConfirm';
-import ScanSMTSerialShtShtCopy from './Page/src/Page/FIN Duplicate Sht&Pcs/ScanSMTSerialShtCopy';
+import ScanSMTSerialShtShtCopy from './Page/FIN Duplicate Sht&Pcs/ScanSMTSerialShtCopy';
 
 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
