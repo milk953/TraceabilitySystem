@@ -22,12 +22,8 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import {
-    ArrowRightOutlined,
-    DeleteOutlined,
-    ArrowLeftOutlined,
-    FileExcelFilled
-} from "@ant-design/icons";
+import { Table as AntTable } from 'antd';
+import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime.css";
 import Hearder from "../Header/Header";
@@ -40,7 +36,7 @@ function ScanSMTSerialControlTime() {
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
-        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns
     } = fn_ScanSMTSerialControlTime();
 
     return (
@@ -49,9 +45,15 @@ function ScanSMTSerialControlTime() {
             <h1>Confirm Process Time</h1>
             <Card
                 component={Paper}
-                className="Card-ScanSMTSerialCon"
+                className="Card-Common"
+                sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between">
+                <Box justifyContent="space-between"
+                    sx={{
+                        marginLeft: "-20px",
+                        marginTop: "-10px"
+                    }}
+                >
                     <TableContainer
                         component={Paper}
                         style={{
@@ -76,13 +78,13 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             inputRef={inputMachine}
                                             disabled={txtMachineDisabled}
                                             style={{
-                                                backgroundColor: txtMachineDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtMachineDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             value={txtMachine}
                                             onChange={(e) => {
@@ -102,11 +104,7 @@ function ScanSMTSerialControlTime() {
                                             onClick={ibtBackMCClick}
                                         >
                                             <Tooltip title="Lock" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -117,13 +115,13 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             inputRef={inputOperator}
                                             disabled={txtOpDisabled}
                                             style={{
-                                                backgroundColor: txtOpDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtOpDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             value={txtOperator}
                                             onChange={(e) => {
@@ -143,11 +141,7 @@ function ScanSMTSerialControlTime() {
                                             onClick={ibtBackOPClick}
                                         >
                                             <Tooltip title="Lock" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -158,11 +152,11 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             style={{
                                                 width: "60px",
-                                                backgroundColor: txtTotalPcsDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtTotalPcsDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             inputRef={inputTotalPcs}
                                             value={txtTotalPcs}
@@ -191,11 +185,7 @@ function ScanSMTSerialControlTime() {
                                             onClick={ibtPcsBackClick}
                                         >
                                             <Tooltip title="Lock" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -206,14 +196,14 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
                                             value={txtLotNo}
                                             disabled={txtLotDisabled}
                                             style={{
-                                                backgroundColor: txtLotDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             onChange={(e) => {
                                                 settxtLotNo(e.target.value);
@@ -228,11 +218,7 @@ function ScanSMTSerialControlTime() {
                                     <TableCell>
                                         <Button className="btIcon" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -245,9 +231,8 @@ function ScanSMTSerialControlTime() {
                                         <Autocomplete
                                             id="selectPdControl"
                                             disabled={selProDisabled}
-                                            ref={ddlProduct}
                                             style={{
-                                                backgroundColor: selProDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             value={selProduct}
                                             onChange={(e, value) => handleChangeProduct(value)}
@@ -255,6 +240,7 @@ function ScanSMTSerialControlTime() {
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
+                                                    inputRef={ddlProduct}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
                                                 />
@@ -292,26 +278,16 @@ function ScanSMTSerialControlTime() {
                     </Paper>
 
                     {visiblelog && (
-                        <Card
-                            component={Paper}
+                        <Paper
+                            elevation={3}
+                            className="Card-lblLog"
                             style={{
-                                width: "452px",
-                                height: "40px",
-                                margin: 'auto',
-                                textAlign: "center",
-                                background: "#BB2525",
-                                paddingTop: "16px",
-                                marginTop: "1px",
+                                width: "453px",
                                 marginLeft: "23px",
                             }}
                         >
-                            <Typography
-                                variant="h5"
-                                style={{ color: "yellow" }}
-                            >
-                                {lblLog}
-                            </Typography>
-                        </Card>
+                            {lblLog}
+                        </Paper>
                     )}
 
                     {pnlSerial && (
@@ -320,18 +296,12 @@ function ScanSMTSerialControlTime() {
                                 component={Paper}
                                 style={{
                                     width: "100%",
-                                    marginBottom: "10px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Table
-                                    sx={{
-                                        minWidth: 400,
-                                    }}
-                                    aria-label="simple table"
-                                >
+                                <Table>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>No.</TableCell>
@@ -348,7 +318,7 @@ function ScanSMTSerialControlTime() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <TextField
-                                                        id="txtfield"
+                                                        className="input_txt"
                                                         size="small"
                                                         fullWidth
                                                         value={txtgvSerial[index] || ""}
@@ -368,22 +338,19 @@ function ScanSMTSerialControlTime() {
                                     display: "flex",
                                     justifyContent: "center",
                                     gap: "10px",
-                                    marginLeft: "70px",
+                                    marginLeft: "5px",
                                     marginBottom: "2px"
                                 }}
                                 >
                                     <Button
-                                        variant="contained"
-                                        size="small"
-                                        style={{ marginRight: "20px" }}
+                                        className="BtSave"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>
+                                    </Button>{" "}
+                                    &nbsp;&nbsp;
                                     <Button
-                                        variant="contained"
-                                        size="small"
-                                        color="error"
+                                        className="BtCancel"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
@@ -394,101 +361,51 @@ function ScanSMTSerialControlTime() {
                     )}
                 </Box>
 
-                <img
-                    style={{
-                        width: "320px",
-                        height: "250px",
-                        marginLeft: "280px",
-                        display: gvScanResult ? 'none' : 'block'
-                    }}
-                    src={Pageimg} // Import the image
-                    alt="Description of the image"
-                />
-
                 <div className="divgvScanResultCon" style={{ position: "relative" }}>
-                    <Paper
-                        className="lblResultCon"
-                        elevation={3}
-                        style={{
-                            background: lblResultcolor,
-                            display: gvScanResult ? 'block' : 'none',
-                            textAlign: "center",
-                        }}
-                    >
-                        <Typography
-                            variant="h4"
-                            style={{ paddingTop: "3px", color: "#fff" }}
-                        >
-                            {lblResult}
-                        </Typography>
-                    </Paper>
-                    <TableContainer
-                        component={Paper}
-                        style={{
-                            width: "87%",
-                            marginBottom: "10px",
-                            height: "auto",
-                            display: gvScanResult ? 'block' : 'none'
-                        }}
-                    >
-                        <Table
-                            sx={{
-                                minWidth: 710,
-                            }}
-                            aria-label="simple table"
-                        >
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>No.</TableCell>
-                                    <TableCell>Serial No.</TableCell>
-                                    <TableCell>Scan Result</TableCell>
-                                    <TableCell>Remark</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {Array.from(
-                                    { length: gvScanData.length },
-                                    (_, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'center',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].SEQ}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'left',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].SERIAL}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'center',
-                                                    backgroundColor: gvScanData[index].SCAN_RESULT === 'OK' ? 'green' : '#ff4d4f',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].SCAN_RESULT}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    textAlign: 'left',
-                                                    borderRight: "1px solid #d9d9d9"
-                                                }}
-                                            >
-                                                {gvScanData[index].REMARK}
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    {gvScanResult === false && (
+                        <>
+                            <img
+                                className="Img_GvResult"
+                                style={{ marginLeft: "35%", }}
+                                src={Pageimg} // Import the image
+                                alt="Description of the image"
+                            />
+                        </>
+                    )}
+
+                    {gvScanResult && (
+                        <>
+
+                            <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+                                <Paper
+                                    className="Card-lblResult"
+                                    style={{
+                                        background: lblResultcolor,
+                                        width: "70%",
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h4"
+                                        style={{ paddingTop: "5px", color: "#fff" }}
+                                    >
+                                        {lblResult}
+                                    </Typography>
+                                </Paper>
+                            </div>
+                            <br />
+                            <AntTable
+                                columns={columns}
+                                dataSource={gvScanData}
+                                rowKey={(record) => record.SEQ}
+                                style={{ width: '100%' }}
+                                pagination={false}
+                                size="small"
+                                bordered
+                                className="tableGvResult"
+                            />
+
+                        </>
+                    )}
                 </div>
             </Card>
         </div>

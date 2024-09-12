@@ -22,12 +22,8 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import {
-    ArrowRightOutlined,
-    DeleteOutlined,
-    ArrowLeftOutlined,
-    FileExcelFilled
-} from "@ant-design/icons";
+import { Table as AntTable } from 'antd';
+import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaStopStart.css";
 import Hearder from "../Header/Header";
@@ -47,13 +43,19 @@ function ScanSMTPlasmaStopStart() {
             <h1>Start/Stop Record Time</h1>
             <Card
                 component={Paper}
-                className="Card-ScanSMTSerialSht"
+                className="Card-Common"
+                sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between">
+                <Box justifyContent="space-between"
+                    sx={{
+                        marginLeft: "-20px",
+                        marginTop: "-14px"
+                    }}
+                >
                     <TableContainer
                         component={Paper}
                         style={{
-                            width: "490px",
+                            width: "502px",
                             margin: "4px"
                         }}
                     >
@@ -74,14 +76,14 @@ function ScanSMTPlasmaStopStart() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
                                             value={txtLotNo}
                                             disabled={txtLotDisabled}
                                             style={{
-                                                backgroundColor: txtLotDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             onChange={(e) => {
                                                 settxtLotNo(e.target.value);
@@ -91,16 +93,17 @@ function ScanSMTPlasmaStopStart() {
                                                     handleChangeLot();
                                                 }
                                             }}
+                                            onBlur={() => {
+                                                if (txtLotNo !== "") {
+                                                    handleChangeLot();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon" onClick={ibtBackClick}>
+                                        <Button className="Bt_ibtBack" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -111,19 +114,19 @@ function ScanSMTPlasmaStopStart() {
                                     </TableCell>
                                     <TableCell>
                                         <Autocomplete
-                                            id="select"
+                                            className="Select_dropDown"
                                             disabled={selProductDisabled}
-                                            ref={ddlProduct}
                                             style={{
-                                                backgroundColor: selProductDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: selProductDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             value={selProduct}
                                             onChange={(e, value) => handleChangeProduct(value)}
-                                            options={Productdata.map((item) => item.prd_name || null)}
+                                            options={Productdata.map((item) => item.prd_name)}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
                                                     size="small"
+                                                    inputRef={ddlProduct}
                                                     sx={{ textAlign: "left" }}
                                                 />
                                             )}
@@ -191,14 +194,14 @@ function ScanSMTPlasmaStopStart() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             inputRef={inputPartial}
                                             fullWidth
                                             value={txtPartialNo}
                                             disabled={txtPartialDisabled}
                                             style={{
-                                                backgroundColor: txtPartialDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtPartialDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             onChange={(e) => {
                                                 settxtPartialNo(e.target.value);
@@ -208,6 +211,7 @@ function ScanSMTPlasmaStopStart() {
                                                     handleChangePartial();
                                                 }
                                             }}
+                                            onBlur={handleChangePartial}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -217,7 +221,7 @@ function ScanSMTPlasmaStopStart() {
                     <Paper
                         elevation={2}
                         style={{
-                            width: "490px",
+                            width: "502px",
                             margin: "auto",
                             height: "40px",
                             display: 'flex',
@@ -242,37 +246,27 @@ function ScanSMTPlasmaStopStart() {
                     </Paper>
 
                     {visiblelog && (
-                        <Card
-                            component={Paper}
+                        <Paper
+                            elevation={3}
+                            className="Card-lblLog"
                             style={{
-                                width: "490px",
-                                height: "40px",
-                                margin: 'auto',
-                                textAlign: "center",
-                                background: "#BB2525",
-                                paddingTop: "9px",
-                                marginTop: "1px",
-                                marginLeft: "26px",
+                                width: "505px",
+                                marginLeft: "25px",
                             }}
                         >
-                            <Typography
-                                variant="h5"
-                                style={{ color: "yellow" }}
-                            >
-                                {lblLog}
-                            </Typography>
-                        </Card>
+                            {lblLog}
+                        </Paper>
                     )}
 
                     {pnlStatus && (
                         <Card
                             component={Paper}
                             style={{
-                                width: "490px",
+                                width: "502px",
                                 height: "80px",
                                 margin: 'auto',
                                 textAlign: "center",
-                                background: "#CCFFFF",
+                                background: lblStatusColor,
                                 paddingTop: "9px",
                                 marginTop: "1px",
                                 marginLeft: "26px",
@@ -280,9 +274,9 @@ function ScanSMTPlasmaStopStart() {
                         >
                             <Typography
                                 variant="h2"
-                                color={lblStatusColor}
+                                color={"#fff"}
                             >
-                                {lblStatus} 
+                                {lblStatus}
                             </Typography>
                         </Card>
                     )}
