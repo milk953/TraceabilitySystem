@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { Tag } from "antd";
 
 function fn_ScanSMTSerialRecordTime() {
     const [selectedrbt, setselectedrbt] = useState("");
@@ -18,7 +19,7 @@ function fn_ScanSMTSerialRecordTime() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("green");
+    const [lblResultcolor, setlblResultcolor] = useState("#059212");
     const [pnlMachine, setpnlMachine] = useState(true);
     const [pnlRackNo, setpnlRackNo] = useState(false);
     const [lblOP, setlblOP] = useState("");
@@ -99,9 +100,9 @@ function fn_ScanSMTSerialRecordTime() {
     const inputRackNo = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
-    const CONNECT_SERIAL_ERROR = "999999";
-    const CONNECT_SERIAL_NOT_FOUND = "NOT FOUND CODE";
-    const _strTagNewLine = "\n";
+    const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
+    const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
+    const _strTagNewLine = "/";
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
@@ -409,9 +410,6 @@ function fn_ScanSMTSerialRecordTime() {
         if (!istxtLotDisabled) {
             inputLot.current.focus();
         }
-        if (!isselProDisabled) {
-            ddlProduct.current.focus();
-        }
         if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
             inputgvSerial.current[0].focus();
         }
@@ -420,18 +418,17 @@ function fn_ScanSMTSerialRecordTime() {
         istxtOpDisabled,
         istxtTotalPcsDisabled,
         istxtLotDisabled,
-        isselProDisabled
     ]);
 
     const handleKeygvSerial = (e, index) => {
         if (e.key === 'Enter') {
-            e.preventDefault(); 
+            e.preventDefault();
             const nextIndex = index + 1;
             if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick',nextIndex);
+                console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === nextIndex) {
-                
+
                 btnSaveClick();
             }
         }
@@ -579,7 +576,7 @@ function fn_ScanSMTSerialRecordTime() {
         if (dtData.length > 0) {
             if (selectedrbt === "rbtRecordTime") {
                 if (inputgvSerial.current[0]) {
-                    inputgvSerial.current.focus();
+                    inputgvSerial.current[0].focus();
                 }
             } else {
                 settxtRackNo("");
@@ -944,7 +941,7 @@ function fn_ScanSMTSerialRecordTime() {
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
-                                setlblResultcolor("#ff4d4f");
+                                setlblResultcolor("#BA0900");
                                 setlblLog(_strErrorUpdate);
                                 setvisiblelog(true);
                             }
@@ -957,9 +954,9 @@ function fn_ScanSMTSerialRecordTime() {
         }
 
         if (_strScanResultAll === "NG") {
-            setlblResultcolor("#ff4d4f");
+            setlblResultcolor("#BA0900");
         } else {
-            setlblResultcolor("green");
+            setlblResultcolor("#059212");
         }
 
         getCountDataBylot(lblLot);
@@ -991,6 +988,51 @@ function fn_ScanSMTSerialRecordTime() {
         SetMode("SERIAL");
     };
 
+    const columns = [
+        {
+            title: "No.",
+            dataIndex: "SEQ",
+            key: "No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Serial No.",
+            dataIndex: "SERIAL",
+            key: "Serial No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Scan Result",
+            key: "Scan Result",
+            dataIndex: "SCAN_RESULT",
+
+            render: (text, record, index) => {
+                return (
+                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+                        {text}
+                    </Tag>
+                );
+            },
+            align: "center",
+        },
+        {
+            title: "Remark",
+            key: "Remark",
+            dataIndex: "REMARK",
+
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
+        },
+    ];
+
     return {
         selectedrbt, txtMachine, settxtMachine, handleChangeMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtLotNo, settxtLotNo,
         selProduct, setselProduct, txtRackNo, settxtRackNo, lblLot, lblLotTotal, lblLog, visiblelog, lblResult, pnlSerial, gvScanResult, istxtOpDisabled,
@@ -998,7 +1040,7 @@ function fn_ScanSMTSerialRecordTime() {
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
         ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
-        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial
+        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial, columns
     }
 };
 

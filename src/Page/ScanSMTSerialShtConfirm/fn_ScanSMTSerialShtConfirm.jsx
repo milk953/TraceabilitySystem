@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { Tag } from "antd";
 
 function fn_ScanSMTSerialShtConfirm() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -9,7 +10,7 @@ function fn_ScanSMTSerialShtConfirm() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("green");
+    const [lblResultcolor, setlblResultcolor] = useState("#059212");
 
     //hiddenfield
     const hfUserID = localStorage.getItem("hfUserID");
@@ -86,8 +87,8 @@ function fn_ScanSMTSerialShtConfirm() {
     const fcGvBackSide_txtsideback_0 = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
-    const CONNECT_SERIAL_ERROR = "999999";
-    const _strTagNewLine = "\n";
+    const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
+    const _strTagNewLine = "/";
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
@@ -549,9 +550,9 @@ function fn_ScanSMTSerialShtConfirm() {
 
             setlblResult(_strScanResultAll);
             if (_strScanResultAll === "NG") {
-                setlblResultcolor("#ff4d4f");
+                setlblResultcolor("#BA0900");
             } else {
-                setlblResultcolor("green");
+                setlblResultcolor("#059212");
             }
             if (_strErrorAll !== "") {
                 setlblResult(`${lblResult}<br>${_strErrorAll}`);
@@ -604,15 +605,11 @@ function fn_ScanSMTSerialShtConfirm() {
         if (!txtLotDisabled) {
             inputLot.current.focus();
         }
-        if (!selProDisabled) {
-            ddlProduct.current.focus();
-        }
         if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
             inputgvSerial.current[0].focus();
         }
     }, [
         txtLotDisabled,
-        selProDisabled,
         gvSerialData
     ]);
 
@@ -626,15 +623,61 @@ function fn_ScanSMTSerialShtConfirm() {
             } else if (nextIndex === nextIndex) {
                 
                 btnSaveClick();
+                e.target.blur();
             }
         }
     };
 
+    const columns = [
+        {
+            title: "No.",
+            dataIndex: "SEQ",
+            key: "No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Serial No.",
+            dataIndex: "SERIAL",
+            key: "Serial No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Scan Result",
+            key: "Scan Result",
+            dataIndex: "SCAN_RESULT",
+
+            render: (text, record, index) => {
+                return (
+                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+                        {text}
+                    </Tag>
+                );
+            },
+            align: "center",
+        },
+        {
+            title: "Remark",
+            key: "Remark",
+            dataIndex: "REMARK",
+
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
+        },
+    ];
+
     return {
         txtLotNo, settxtLotNo, selProduct, Productdata, lblTotalSht, visiblelog, lblLog, pnlSerial, txtLotDisabled, selProDisabled,
-        gvScanResult, inputLot, ddlProduct, lblResultcolor, gvScanData, txtgvSerial, settxtgvSerial, handleChangeLot, ibtBackClick,
-        handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, hfShtScan, gvSerialData, inputgvSerial, lblResult,
-        handleKeygvSerial
+        gvScanResult, inputLot, ddlProduct, lblResultcolor, gvScanData, txtgvSerial, handleChangeLot, ibtBackClick, lblResult,
+        handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, hfShtScan, gvSerialData, inputgvSerial, 
+        handleKeygvSerial, columns
     }
 };
 
