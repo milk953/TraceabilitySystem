@@ -35,7 +35,7 @@ function fn_Change_PartialNo() {
   });
   let SERIAL_DATABASE_SWITCH = import.meta.env.VITE_SERIAL_DATABASE_SWITCH;
   const Fac = import.meta.env.VITE_FAC;
-  console.log(Fac,'Fac')
+
   const IP = localStorage.getItem("ipAddress");
   //PageLoad----------
   useEffect(() => {

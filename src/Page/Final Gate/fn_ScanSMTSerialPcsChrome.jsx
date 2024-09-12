@@ -161,10 +161,10 @@ function fn_ScanSMTSerialPcsChrome() {
   const fc_SlProduct = useRef([]);
 
   //env
-  const DUPLICATE_CHECK_FLG = "0";
-  const FINAL_GATE_MASTER_CODE = "T999999999";
-  const FINAL_GATE_SPECIAL_FLG ='1'
-  const FINAL_GATE_SPECIAL_PRD='RGPZ-098ML-6A,RGPZ-098ML-7A'
+  const DUPLICATE_CHECK_FLG = import.meta.env.VITE_DUPLICATE_CHECK_FLG
+  const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE
+  const FINAL_GATE_SPECIAL_FLG =import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG
+  const FINAL_GATE_SPECIAL_PRD=import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD
   const Fac = import.meta.env.VITE_FAC;
   //PageLoad----------
   useEffect(() => {
