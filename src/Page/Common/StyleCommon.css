@@ -135,6 +135,15 @@ background-color: #e0e0e0;
     background: red;
     color: #ffffff;
 }
+.Card-Result{
+    margin-bottom: 10px;
+    width: 70%;
+    margin: auto;
+    height: 45px;
+    text-align: center;
+    
+
+}
 
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {
     background-color: #f9f9f9;
