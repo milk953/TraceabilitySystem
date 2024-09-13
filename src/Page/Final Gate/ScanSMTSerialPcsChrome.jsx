@@ -83,7 +83,7 @@ function ScanSMTRoollSht() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        style={{ ...txtLot.style, width: "80%" }}
+                        style={{ ...txtLot.style, width: "75%"}}
                         disabled={txtLot.disbled} //true พิมไม่ได้
                         inputRef={(el) => (fc_txtLotNo.current = el)}
                         value={txtLot.value}
@@ -150,7 +150,7 @@ function ScanSMTRoollSht() {
                             value: e.target.value,
                           }));
                         }}
-                        style={{ ...txtPackingNo.style, width: "80%" }}
+                        style={{ ...txtPackingNo.style, width: "75%"}}
                         disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
                         onKeyDown={(e) => {

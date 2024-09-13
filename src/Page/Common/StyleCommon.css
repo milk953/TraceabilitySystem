@@ -91,9 +91,11 @@ margin-bottom: 30px;
   }
   
 .Img1{
-    width: 420px;
-    height: 350px;
-    margin-bottom: 30px;
+    width: 320px;
+    height: 250px;
+    padding: 0px;
+    align-items: center;
+    margin: auto;
 }
 .Tag-NG{
     width: 100%;

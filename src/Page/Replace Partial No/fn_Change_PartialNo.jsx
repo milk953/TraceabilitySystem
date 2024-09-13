@@ -5,6 +5,7 @@ import { Tag } from "antd";
 function fn_Change_PartialNo() {
   const [txtTotalPcs, settxtTotalPcs] = useState(1);
   const [hfSerialCount, sethfSerialCount] = useState("");
+  const [loading, setloading] = useState(false);
   const [gvSerial, setgvSerial] = useState({
     value: "",
     disbled: "",
@@ -18,7 +19,6 @@ function fn_Change_PartialNo() {
   const [txtSerialNoNew, settxtSerialNoNew] = useState(
     Array(gvSerial.value.length).fill("")
   );
-
   const [lblResult, setlblResult] = useState({
     value: "",
     disbled: "",
@@ -29,17 +29,18 @@ function fn_Change_PartialNo() {
   const [gvRow, setgvRow] = useState({
     value: "",
     disbled: "",
-    visble: 'none',
+    visble: "none",
     style: {},
     focus: "",
   });
+  const fc_txtSerialOld = useRef([]);
+  const fc_txtSerialNew = useRef([]);
   let SERIAL_DATABASE_SWITCH = import.meta.env.VITE_SERIAL_DATABASE_SWITCH;
   const Fac = import.meta.env.VITE_FAC;
 
   const IP = localStorage.getItem("ipAddress");
   //PageLoad----------
   useEffect(() => {
-
     getInitialSerial();
   }, []);
   //-------------------
@@ -88,7 +89,7 @@ function fn_Change_PartialNo() {
   };
 
   const getInitialSerial = async () => {
-    console.log()
+    console.log();
     let dtData = [];
     for (let intRow = 0; intRow < txtTotalPcs; intRow++) {
       dtData.push({
@@ -96,18 +97,19 @@ function fn_Change_PartialNo() {
       });
     }
     setgvSerial((prevState) => ({ ...prevState, visble: "", value: dtData }));
-    settxtSerialNo( Array(gvSerial.value.length).fill(""))
-    settxtSerialNoNew( Array(gvSerial.value.length).fill(""))
+    settxtSerialNo(Array(gvSerial.value.length).fill(""));
+    settxtSerialNoNew(Array(gvSerial.value.length).fill(""));
     sethfSerialCount(txtTotalPcs);
     if (dtData.length > 0) {
-      // fnSetFocus("gvSerial_txtSerialNo_0")   โฟกัสserialเก่า0
+      setTimeout(() => {
+        fc_txtSerialOld.current[0].focus();   
+        }, 300);
     }
   };
   const getInputSerial = async (strError) => {
     let dtData = [];
 
     for (let intSeq = 0; intSeq < gvSerial.value.length; intSeq++) {
-      
       dtData.push({
         SEQ: intSeq + 1,
         SERIAL_OLD: txtSerialNo[intSeq],
@@ -120,117 +122,137 @@ function fn_Change_PartialNo() {
         FINALGATE_FLG: "N",
         FINALGATE_ROW: 0,
       });
-      console.log(txtSerialNo[intSeq],'txtSerialNo')
-      if (txtSerialNo[intSeq] == ""||txtSerialNo[intSeq] == undefined)  {
-        console.log('11111')
+      console.log(txtSerialNo[intSeq], "txtSerialNo");
+      if (txtSerialNo[intSeq] == "" || txtSerialNo[intSeq] == undefined) {
+        console.log("11111");
         strError = String(intSeq + 1) + " Please input Old Serial Number.";
       }
-      if (txtSerialNoNew[intSeq] == ""||txtSerialNoNew[intSeq] == undefined) {
-        console.log('2222')
+      if (txtSerialNoNew[intSeq] == "" || txtSerialNoNew[intSeq] == undefined) {
+        console.log("2222");
         strError = String(intSeq + 1) + " Please input New Serial Number.";
       }
     }
-    console.log('dtData',strError)
+    console.log("dtData", strError);
     return [dtData, strError];
   };
 
   const BtnSubmit_Click = async () => {
-    let CheckerHeaderFlg = false;
-    let CheckerHeaderFlg3 = false;
-    let TouchUpCnt = 0;
-    let RejectCnt = 0;
-    let FinalGateCnt = 0;
-    let strError = "";
-    let strOldSerial = "";
-    let strNewSerial = "";
-    let CheckerOldSerialShtFlg = true;
-    let dtData=[{}];
-    const result  = await getInputSerial(strError);
-     [dtData, strError] = result;
-    console.log('iiii',dtData)
-    if (strError != "") {
-      setlblResult((prevState) => ({
-        ...prevState,
-        visble: "",
-        value: strError,
-        style: "#BA0900",
-      }));
-      return;
-    }
-    let Get_INSPECT_COUNT = [];
-
-    for (let intRow = 0; intRow < dtData.length; intRow++) {
-      strOldSerial = dtData[intRow].SERIAL_OLD;
-      strNewSerial = dtData[intRow].SERIAL_NEW;
-      console.log(strOldSerial,'----',strNewSerial)
-      await axios
-        .post("/api/ChangPatial/GetFgh_inspect_count", {
-          Plant_Code: Fac,
-          strOldSerial: strOldSerial,
-        })
-        .then((res) => {
-          console.log(res.data.length,'<<<<<<')
-        if(res.data.length>0){
-          Get_INSPECT_COUNT = res.data[0].inspect_count;
-        }
-          
-         
-        });
-      if (Get_INSPECT_COUNT > 0) {
-       
-        FinalGateCnt = Get_INSPECT_COUNT + 1;
-        dtData[intRow].FINALGATE_FLG = "Y";
-     
-        dtData[intRow].FINALGATE_ROW = FinalGateCnt;
-      }
-    }
-    console.log(dtData,'gvrow')
-    setgvRow((prevState) => ({
-      ...prevState,
-      visble: '',
-      value: dtData,
-    }));
+    setloading(true)
+    Swal.fire({
+      title: "Are you confirm submit?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "ConFirm",
+      denyButtonText: `Cancel`,
+    }).then(async (result) => {
  
+      if (result.isConfirmed) {
+        let CheckerHeaderFlg = false;
+        let CheckerHeaderFlg3 = false;
+        let TouchUpCnt = 0;
+        let RejectCnt = 0;
+        let FinalGateCnt = 0;
+        let strError = "";
+        let strOldSerial = "";
+        let strNewSerial = "";
+        let CheckerOldSerialShtFlg = true;
+        let dtData = [{}];
+        const result = await getInputSerial(strError);
+        [dtData, strError] = result;
+        if (strError != "") {
+          
+          setTimeout(() => {
+            setlblResult((prevState) => ({
+              ...prevState,
+              visble: "",
+              value: strError,
+              style: "#BA0900",
+            }));
+            setloading(false); 
+            
+          }, 500);
+          return;
+          
+        }
+        let Get_INSPECT_COUNT = [];
 
-    for (let intRow = 0; intRow < dtData.length; intRow++) {
-      strOldSerial = dtData[intRow].SERIAL_OLD;
-      strNewSerial = dtData[intRow].SERIAL_NEW;
-      let Str_ErrorUpdate;
-      if (dtData[intRow].FINALGATE_FLG == "Y") {
-        await axios
-          .post("/api/ChangPatial/Set_UpdateGateheader", {
-            dataList: {
-              strNewSerial: strNewSerial,
-              IP_ADDRESS: IP,
-              PLANT_CODE: Fac,
+        for (let intRow = 0; intRow < dtData.length; intRow++) {
+          strOldSerial = dtData[intRow].SERIAL_OLD;
+          strNewSerial = dtData[intRow].SERIAL_NEW;
+          console.log(strOldSerial, "----", strNewSerial);
+          await axios
+            .post("/api/ChangPatial/GetFgh_inspect_count", {
+              Plant_Code: Fac,
               strOldSerial: strOldSerial,
-            },
-          })
-          .then((res) => {
-            if(res.data.length>0){
-              Str_ErrorUpdate = res.data[0].p_error;
-            }
-            console.log('Get_INSPECT_COUNT',Str_ErrorUpdate)
-            if (Str_ErrorUpdate != "") {
-              setlblResult((prevState) => ({
-                ...prevState,
-                visble: "",
-                value: Str_ErrorUpdate,
-                style:"#BA0900",
-              }));
-            }
-          });
+            })
+            .then((res) => {
+              if (res.data.length > 0) {
+                Get_INSPECT_COUNT = res.data[0].inspect_count;
+              }
+            });
+          if (Get_INSPECT_COUNT > 0) {
+            FinalGateCnt = Get_INSPECT_COUNT + 1;
+            dtData[intRow].FINALGATE_FLG = "Y";
+
+            dtData[intRow].FINALGATE_ROW = FinalGateCnt;
+          }
+        }
+        setTimeout(() => {
+          setloading(false); 
+          setgvRow((prevState) => ({
+            ...prevState,
+            visble: "",
+            value: dtData,
+          })); 
+        }, 1000);
+        
+
+        for (let intRow = 0; intRow < dtData.length; intRow++) {
+          strOldSerial = dtData[intRow].SERIAL_OLD;
+          strNewSerial = dtData[intRow].SERIAL_NEW;
+          let Str_ErrorUpdate;
+          if (dtData[intRow].FINALGATE_FLG == "Y") {
+            await axios
+              .post("/api/ChangPatial/Set_UpdateGateheader", {
+                dataList: {
+                  strNewSerial: strNewSerial,
+                  IP_ADDRESS: IP,
+                  PLANT_CODE: Fac,
+                  strOldSerial: strOldSerial,
+                },
+              })
+              .then((res) => {
+                if (res.data.length > 0) {
+                  Str_ErrorUpdate = res.data[0].p_error;
+                }
+
+                if (Str_ErrorUpdate != "") {
+                  setlblResult((prevState) => ({
+                    ...prevState,
+                    visble: "",
+                    value: Str_ErrorUpdate,
+                    style: "#BA0900",
+                  }));
+                }
+              });
+            
+          }
+        }
+        if (strError == "") {
+          setlblResult((prevState) => ({
+            ...prevState,
+            visble: "",
+            value: "Change Serial Successed",
+            style: "#059212",
+          }));
+          getInitialSerial();
+         
+        }
+      } else {
+        setloading(false)
+        return;
       }
-    }
-    if (strError == "") {
-      setlblResult((prevState) => ({
-        ...prevState,
-        visble: "",
-        value: "Change Serial Successed",
-        style:  "#059212" ,
-      }));
-      getInitialSerial();
-    }
+    });
   };
 
   const handleSerialOldChange = async (index, event) => {
@@ -244,7 +266,6 @@ function fn_Change_PartialNo() {
     newValues[index] = event.target.value;
     settxtSerialNoNew(newValues);
   };
-
 
   return {
     columns,
@@ -260,7 +281,10 @@ function fn_Change_PartialNo() {
     handleSerialOldChange,
     handleSerialNewChange,
     lblResult,
-    gvRow
+    gvRow,
+    loading,
+    fc_txtSerialOld,
+    fc_txtSerialNew
   };
 }
 
