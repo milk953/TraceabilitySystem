@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { Tag } from "antd";
 
 function fn_ScanSMTSerialBackendConfirm() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -9,7 +10,7 @@ function fn_ScanSMTSerialBackendConfirm() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("green");
+    const [lblResultcolor, setlblResultcolor] = useState("#059212");
 
     //hiddenfield
     const hfUserID = localStorage.getItem("ipAddress");
@@ -87,8 +88,7 @@ function fn_ScanSMTSerialBackendConfirm() {
     const inputgvSerial = useRef([]);
 
     const plantCode = import.meta.env.VITE_FAC;
-    const CONNECT_SERIAL_ERROR = "999999";
-    const _strTagNewLine = "\n";
+    const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
 
     useEffect(() => {
         PageLoad();
@@ -179,7 +179,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             setselProduct(Productdata[0].prd_name);
             settxtLotNo("");
             setgvSerialData([]);
-            setlblLog(`Please scan QR Code. ${_strTagNewLine} กรุณาสแกนที่คิวอาร์โค้ด`);
+            setlblLog(`Please scan QR Code. / กรุณาสแกนที่คิวอาร์โค้ด`);
             setvisiblelog(true);
             sethfMode("LOT");
             inputLot.current.focus();
@@ -374,7 +374,7 @@ function fn_ScanSMTSerialBackendConfirm() {
 
                         dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
                         dtSerial[i].REMARK = _strMessageUpdate;
-                    } else if (CONNECT_SERIAL_ERROR.includes(_strSerial)) {
+                    } else if (CONNECT_SERIAL_ERROR.includes(_strSerial) > 0) {
                         _strScanResultUpdate = "NG";
                         _strMessageUpdate = "NG";
                         _strScanResultAll = "NG";
@@ -388,12 +388,12 @@ function fn_ScanSMTSerialBackendConfirm() {
 
             setlblResult(_strScanResultAll);
             if (_strScanResultAll === "OK") {
-                setlblResultcolor("green");
+                setlblResultcolor("#059212");
             } else {
-                setlblResultcolor("#ff4d4f");
+                setlblResultcolor("#BA0900");
             }
             if (_strErrorAll !== "") {
-                setlblResult(`${lblResult}<br>${_strErrorAll}`);
+                setlblResult(`${lblResult} / ${_strErrorAll}`);
             }
 
             setgvScanData(dtSerial);
@@ -406,7 +406,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             SetMode("SERIAL_ERROR");
         }
 
-        inputgvSerial.current[0].focus();
+        inputgvSerial.current[0]?.focus();
     };
 
     const getInputSerial = async () => {
@@ -542,15 +542,11 @@ function fn_ScanSMTSerialBackendConfirm() {
         if (!txtLotDisabled) {
             inputLot.current.focus();
         }
-        if (!selProDisabled) {
-            ddlProduct.current.focus();
-        }
         if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
             inputgvSerial.current[0].focus();
         }
     }, [
         txtLotDisabled,
-        selProDisabled
     ]);
 
     const handleKeygvSerial = (e, index) => {
@@ -567,11 +563,56 @@ function fn_ScanSMTSerialBackendConfirm() {
         }
     };
 
+    const columns = [
+        {
+          title: "No.",
+          dataIndex: "SEQ",
+          key: "No.",
+          align: "center",
+          render: (text, record, index) => {
+            return text;
+          },
+        },
+        {
+          title: "Serial No.",
+          dataIndex: "SERIAL",
+          key: "Serial No.",
+          align: "center",
+          render: (text, record, index) => {
+            return text;
+          },
+        },
+        {
+          title: "Scan Result",
+          key: "Scan Result",
+          dataIndex: "SCAN_RESULT",
+    
+          render: (text, record, index) => {
+            return (
+              < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+                {text}
+              </Tag>
+            );
+          },
+          align: "center",
+        },
+        {
+          title: "Remark",
+          key: "Remark",
+          dataIndex: "REMARK",
+    
+          render: (text, record, index) => {
+            return text;
+          },
+          align: "center",
+        },
+      ];
+
     return {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtTotalPCS, settxtTotalPCS, lblLog, visiblelog, lblResultcolor, lblResult,
         pnlSerial, gvScanResult, txtgvSerial, txtLotDisabled, selProDisabled, txtTotalDisabled, gvScanData, handleChangeLot,
         handleChangeProduct, handleChangeTotalPCS, hfSerialCount, ibtBackClick, btnSaveClick, btnCancelClick, handleChangeSerial, inputLot,
-        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial
+        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial, columns
     }
 
 };

@@ -169,15 +169,11 @@ function fn_ConfirmBarcodeGrade() {
   const [hfMode, setHfMode] = useState("");
   const [hfSerialCount, setHfSerialCount] = useState("");
   const hfUserStation = localStorage.getItem("ipAddress");
-  const CONNECT_SERIAL_ERROR = "999999";
+  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
   const hfBarcodeErrorValue = "NA";
-  const AUTO_SCAN_CHECK_FLG = "0";
+  const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG
+  const Fac = import.meta.env.VITE_FAC;
 
-  // useEffect(() => {
-  //   if (hfShtScan != "" && hfSerialCount != "") { //&&lblLog.visble==false
-  //     getInitialSerial();
-  //   }
-  // }, [hfShtScan, hfSerialCount,lblLog]);
 
   //Start pageload
   useEffect(() => {
@@ -394,7 +390,7 @@ function fn_ConfirmBarcodeGrade() {
       .post("/api/Common/getlotserialcountdata", {
         dataList: {
           strLotNo: strLot,
-          strPlantCode: "5",
+          strPlantCode: Fac,
         },
       })
       .then((res) => {
@@ -1157,7 +1153,7 @@ function fn_ConfirmBarcodeGrade() {
               await axios
                 .post("/api/Common/Get_Spi_aoi_result", {
                   dataList: {
-                    _strPlantCode: "5",
+                    _strPlantCode:Fac,
                     _pcsPosition: _intSeq,
                     _frontSheetNumber: _FrontSheetBarcode,
                     _rearSheetNumber: _RearSheetBarcode,
@@ -1289,7 +1285,7 @@ function fn_ConfirmBarcodeGrade() {
                 (_strBarcodeResultAll != "NG" || _bolConfirm)
               ) {
                 for (let i = 0; i < dtRowLeaf.length; i++) {
-                  dtRowLeaf[i].strPlantCode = "5";
+                  dtRowLeaf[i].strPlantCode = Fac;
                   dtRowLeaf[i]._strUserID = txtOperator.value;
                   dtRowLeaf[i]._strStation = hfUserStation;
                 }
@@ -1319,7 +1315,7 @@ function fn_ConfirmBarcodeGrade() {
       ) {
         for (let i = 0; i < dtSerial.length; i++) {
           dtSerial[i]._strLot = _strLot;
-          dtSerial[i]._strPlantCode = "5";
+          dtSerial[i]._strPlantCode = Fac;
           dtSerial[i]._strBarcodeSide = hfBarcodeSide;
           dtSerial[i].intSerialLength = hfSerialLength;
           dtSerial[i]._strMasterSheet = _strMasterSheet;

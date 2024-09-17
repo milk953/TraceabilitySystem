@@ -390,6 +390,12 @@ function fn_ScanSMTPlasmaStopStart() {
     }
   };
 
+  useEffect(() => {
+    if (!txtLotDisabled) {
+      inputLot.current.focus();
+    }
+  }, [txtLotDisabled])
+
   return {
     txtLotNo, settxtLotNo, selProduct, Productdata, selectedrbt, txtPartialNo, settxtPartialNo, lblPatialNo, visiblelog, lblLog,
     pnlStatus, txtLotDisabled, selProductDisabled, txtPartialDisabled, inputLot, ddlProduct, inputPartial, handleChangeLot, ibtBackClick,

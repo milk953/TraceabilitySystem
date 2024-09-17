@@ -45,6 +45,10 @@ import PackingConfirmSheet from './Page/ScanSMTPackingConfirm/ScanSMTPackingConf
 import Change_PartialNo from './Page/Replace Partial No/Change_PartialNo'
 import Change_Serial from './Page/Change_Serial/Change_Serial';
 import ScanSheetAOIXrayConfirm from './Page/AOI Confirm Result/ScanSheetAOIXrayConfirm';
+import ScanSMTSerialPcsAutoTrayConfirm from './Page/Confirm Final Only Good/ScanSMTSerialPcsAutoTrayConfirm';
+import ScanSMTSerialShtShtCopy from './Page/FIN Duplicate Sht&Pcs/ScanSMTSerialShtCopy';
+
+
 import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace'
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
@@ -105,6 +109,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsBox' element = {<PackingGate />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
             <Route path='/TraceabilitySystem/ScanSMTConnectShtConfirm' element = {<ScanSMTConnectShtConfirm />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTrayConfirm' element = {<ScanSMTSerialPcsAutoTrayConfirm />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialShtCopy' element = {<ScanSMTSerialShtShtCopy />} />
             
             {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
             <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />
