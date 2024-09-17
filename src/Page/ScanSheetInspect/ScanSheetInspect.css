@@ -32,15 +32,13 @@
 }
 
 .divgvScan{
-    justify-content: center;
     display: flex;
-    max-width: 100%;
-    overflow-x: auto;
-    margin-left: 50px;
-    width: 725px;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 35px
 }
 
-.divgvScan th {
+/* .divgvScan th {
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -53,4 +51,4 @@
 
 .divgvScan td {
     padding: 10px;
-  }
+  } */
