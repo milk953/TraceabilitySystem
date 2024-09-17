@@ -21,9 +21,9 @@ function fn_ScanSMTPackingConfirm() {
     const [pnlSerial,setpnlSerial]=useState("")
     const [pnlgvScanResult,setpnlgvScanResult]=useState("")
     //
-    const fntxtLot = useRef("")
+    const fntxtLot = useRef([])
     const fngvSerial_txtSerial_0 = useRef([])
-    const fnddlProduct = useRef("")
+    const fnddlProduct = useRef([])
 
     const [hfUserID,sethfUserID] =useState("")
     const [hfUserStation,sethfUserStation] =useState("")
@@ -54,8 +54,12 @@ function fn_ScanSMTPackingConfirm() {
       };
       
     const ibtBack_Click = async () => {
-      settxtLot((prevState) => ({...prevState, value: '',}));
-      settxtLot((prevState) => ({...prevState, value: '',}));
+      settxtLot((prevState) => ({...prevState, value: '',disbled:false}));
+      setpnlSerial(false)
+      SetMode("LOT")
+      setTimeout(() => {
+        fntxtLot.current.focus();
+      }, 300);
     };
 
     const btnCancel_Click = async () => {
@@ -420,7 +424,7 @@ function fn_ScanSMTPackingConfirm() {
         title: "Sheet No.",
         dataIndex: "sheet_no",
         key: "Sheet No.",
-        align: "left",
+        align: "center",
         render: (text, record, index) => {
             return text;
         },
