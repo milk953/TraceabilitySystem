@@ -79,6 +79,7 @@ function fn_Change_Serial() {
             value: strError,
             style: "red",
           }));
+          return;
         }
 
         try {

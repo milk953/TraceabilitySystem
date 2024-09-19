@@ -48,6 +48,7 @@ import ScanSheetAOIXrayConfirm from './Page/AOI Confirm Result/ScanSheetAOIXrayC
 import ScanSMTSerialPcsAutoTrayConfirm from './Page/Confirm Final Only Good/ScanSMTSerialPcsAutoTrayConfirm';
 import ScanSMTSerialShtShtCopy from './Page/FIN Duplicate Sht&Pcs/ScanSMTSerialShtCopy';
 import SMTDeleteData from "./Page/SMTDeleteData/SMTDeleteData";
+import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResult";
 
 import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace'
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
@@ -140,6 +141,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanSheetAOIXrayConfirm" element={<ScanSheetAOIXrayConfirm />} />
             <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
+            <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             
           </Route>
         </Routes>

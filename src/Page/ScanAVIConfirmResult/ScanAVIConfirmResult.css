@@ -1,0 +1,15 @@
+.ChangeSerial {
+    width: 100%;
+  }
+
+.ChangeSerial th{
+    padding: 0 !important;
+    background-color: #8c8c8c !important ;
+    border-radius: 5px  5px 0 0!important;
+    color: #fff;
+}
+
+.ChangeSerial td{
+    padding: 4px 4px 4px 4px!important;
+ 
+}
