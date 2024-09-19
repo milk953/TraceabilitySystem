@@ -44,6 +44,12 @@ import ScanSMTSerialShtMaster from "./Page/ScanSMTSerialShtMaster/ScanSMTSerialS
 import PackingConfirmSheet from './Page/ScanSMTPackingConfirm/ScanSMTPackingConfirm'
 import Change_PartialNo from './Page/Replace Partial No/Change_PartialNo'
 import Change_Serial from './Page/Change_Serial/Change_Serial';
+import ScanSheetAOIXrayConfirm from './Page/AOI Confirm Result/ScanSheetAOIXrayConfirm';
+import ScanSMTSerialPcsAutoTrayConfirm from './Page/Confirm Final Only Good/ScanSMTSerialPcsAutoTrayConfirm';
+import ScanSMTSerialShtShtCopy from './Page/FIN Duplicate Sht&Pcs/ScanSMTSerialShtCopy';
+import SMTDeleteData from "./Page/SMTDeleteData/SMTDeleteData";
+
+import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace'
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -103,6 +109,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsBox' element = {<PackingGate />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
             <Route path='/TraceabilitySystem/ScanSMTConnectShtConfirm' element = {<ScanSMTConnectShtConfirm />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTrayConfirm' element = {<ScanSMTSerialPcsAutoTrayConfirm />} />
+            <Route path='/TraceabilitySystem/ScanSMTSerialShtCopy' element = {<ScanSMTSerialShtShtCopy />} />
             
             {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
             <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />
@@ -129,7 +137,9 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
             <Route path="/TraceabilitySystem/ScanSMTConnectRollConfirm" element={<ScanSMTConnectRollConfirm />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialShtMaster" element={<ScanSMTSerialShtMaster />} />
-
+            <Route path="/TraceabilitySystem/ScanSheetAOIXrayConfirm" element={<ScanSheetAOIXrayConfirm />} />
+            <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
+            <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             
           </Route>
         </Routes>

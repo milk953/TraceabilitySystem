@@ -488,7 +488,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                
                 style={{
                   background: 
-                  lblResult.value == "NG" ?  "#ff4d4f":"green",
+                  lblResult.value == "NG" ?   "#BA0900":"#059212",
                   
                 }}
               >

@@ -91,9 +91,11 @@ margin-bottom: 30px;
   }
   
 .Img1{
-    width: 420px;
-    height: 350px;
-    margin-bottom: 30px;
+    width: 320px;
+    height: 250px;
+    padding: 0px;
+    align-items: center;
+    margin: auto;
 }
 .Tag-NG{
     width: 100%;
@@ -135,6 +137,15 @@ background-color: #e0e0e0;
 .Status-Off{
     background: red;
     color: #ffffff;
+}
+.Card-Result{
+    margin-bottom: 10px;
+    width: 70%;
+    margin: auto;
+    height: 45px;
+    text-align: center;
+    
+
 }
 
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {

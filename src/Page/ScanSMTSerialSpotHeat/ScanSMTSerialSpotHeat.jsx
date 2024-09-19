@@ -19,7 +19,9 @@ import {
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
+import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
+import { Table as AntTable } from 'antd';
 import { fn_ScanSMTSerialSpotHeat } from "./fn_ScanSMTSerialSpotHeat";
 function ScanSMTSerialSpotHeat() {
   const {
@@ -33,13 +35,13 @@ function ScanSMTSerialSpotHeat() {
     settxtTotalPCS,
     fcGvSerial_txtSerial_0,handleTotal_Sht,fcTotalSht,
     fcProduct,fcLotNo,lblLog,pnlLog,ibtBack_Click,btnSave_Click,setSlProduct,hfMode,txtSerial,handleSerialChange,
-    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product,dataGvSerial
+    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product,dataGvSerial,columns
   } = fn_ScanSMTSerialSpotHeat();
   return (
     <div>
       <Hearder />
       <h1>ConfirmBarcodeGrade</h1>
-      <Card component={Paper} className="Card-ConfirmBarcode">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -65,7 +67,7 @@ function ScanSMTSerialSpotHeat() {
                   
                     <TableCell>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
                         fullWidth
                         disabled={txtLot.disbled} 
@@ -85,7 +87,7 @@ function ScanSMTSerialSpotHeat() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button
+                      <Button className="Bt_ibtBack"
                         onClick={ibtBack_Click}
                       >
                         <BackspaceIcon />
@@ -100,7 +102,7 @@ function ScanSMTSerialSpotHeat() {
                       <FormControl fullWidth>
                         <Autocomplete
                             inputRef={fcProduct}
-                          id="selectPdBarcode"
+                          className="Select_dropDown"
                           value={SlProduct}
                           disabled={visibledll_product}
                           onChange={(e) => {
@@ -128,7 +130,7 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell colSpan={2}>
                       <TextField
                         size="small"
-                        id="txtfild"
+                        className="input_txt"
                         value={txtTotalPCS.value}
                         inputRef={fcTotalSht}
                         onChange={(e) => {
@@ -166,7 +168,8 @@ function ScanSMTSerialSpotHeat() {
                   {lblLog}
                 </Card>   )}
                 {visiblgvSerial == true && (
-              <Table className="CSS-GvSerialBarcode" component={Card}
+              <Table className="CSS-GvSerial" component={Card}
+              style={{ marginTop: "20px",}}
               inputRef={fcGvSerial}>
                 <TableHead>
 
@@ -193,7 +196,7 @@ function ScanSMTSerialSpotHeat() {
                         <TableCell>
                           {" "}
                           <TextField
-                            id="txtfild"
+                            className="input_txt"
                             size="small"
                             fullWidth
                           //  inputRef={fcGvSerial_txtSerial_0}
@@ -228,23 +231,21 @@ function ScanSMTSerialSpotHeat() {
                   <TableRow
                   // style={{display:visibleConfirm}}
                   >
-                    <TableCell align="center" colSpan={3}>
-                      Please be confirm to save?
-                    </TableCell>
+                    
                   </TableRow>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
                       <Button
-                        variant="contained"
-                        size="small"
+                       className="BtSave"
+                       
                           onClick={btnSave_Click}
                       >
                         Save
                       </Button>{" "}
                       &nbsp;&nbsp;
                       <Button
-                        variant="contained"
-                        size="small"
+                       className="BtCancel" 
+                      
                         color="error"
                           onClick={btnCancel_Click}
                       >
@@ -259,7 +260,7 @@ function ScanSMTSerialSpotHeat() {
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
                 margin: "auto",
                 marginTop: "10px",
@@ -283,7 +284,7 @@ function ScanSMTSerialSpotHeat() {
                 <Paper
                   className="Card-lblResult"
                   elevation={3}
-                  style={{ background: lblResult.text !=='OK'? "#ff4d4f":"green",}}
+                  style={{ background: lblResult.text !=='OK'? "#BA0900":"#059212",}}
                   
                 
                 >
@@ -292,7 +293,7 @@ function ScanSMTSerialSpotHeat() {
                     style={{ paddingTop: "3px", color: "#fff" }}
                   >{lblResult.text}</Typography>
                 </Paper>
-                <Table
+                {/* <Table
                   className="CSS-GvScanResult"
                   // style={{ display: gvScanResult }}
                   component={Card}
@@ -354,7 +355,17 @@ function ScanSMTSerialSpotHeat() {
                           </TableRow>
                         )
                       )}
-                </Table>
+                </Table> */}
+              <br/>
+                <AntTable 
+                columns={columns}
+                dataSource={gvScanResult}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                bordered
+                className="tableGvResult"
+                />
               </>  )}
             </Grid>
           </Grid>

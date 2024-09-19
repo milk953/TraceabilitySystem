@@ -50,13 +50,12 @@
 }
 
 .divgvSerialBack th {
-    white-space: nowrap;
     text-align: center;
     font-size: 16px;
     background-color: #12422e !important ;
     color: #fff;
     border-right: 1px solid rgb(221, 219, 219);
-    padding: 9px;
+    padding: 5px;
 }
 
 .divgvSerialBack td {
@@ -64,16 +63,13 @@
 }
 
 .divgvScanResultBack {
-    justify-content: center;
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
-    max-width: 100%;
-    overflow-x: auto;
-    margin-left: 0px;
-    width: 850px;
+    width: 100%;
+    margin-left: -10px;
 }
 
-.divgvScanResultBack th {
+/* .divgvScanResultBack th {
     white-space: nowrap;
     text-align: center;
     font-size: 16px;
@@ -87,7 +83,7 @@
 
 .divgvScanResultBack td {
     padding: 4px 4px 4px 4px!important;
-}
+} */
 
 .lblResultBack{
     margin: auto;

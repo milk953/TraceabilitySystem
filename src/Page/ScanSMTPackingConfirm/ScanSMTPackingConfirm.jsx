@@ -27,18 +27,47 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
+import { Table as AntTable } from 'antd';
 import "../Final Gate/SerialPcs.css";
 import Hearder from "../Header/Header";
+import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
-import {fn_ScanSMTPackingConfirm} from '../ScanSMTPackingConfirm/fn_ScanSMTPackingConfirm'
+import { fn_ScanSMTPackingConfirm } from "../ScanSMTPackingConfirm/fn_ScanSMTPackingConfirm";
 function ScanSMTPackingConfirm() {
-const { txtLot,settxtLot,txtLot_TextChanged
-}=fn_ScanSMTPackingConfirm();
+  const {
+    txtLot,
+    settxtLot,
+    txtLot_TextChanged,
+    ddlProduct,
+    selectddlProduct,
+    setselectddlProduct,
+    lblTotalSht,
+    lblShtCount,
+    lblResult,
+    txtSerial,
+    settxtSerial,
+    gvSerial,
+    gvScanResult,
+    pnlSerial,
+    pnlgvScanResult,
+    fntxtLot,
+    fngvSerial_txtSerial_0,
+    fnddlProduct,
+    pnlLog,
+    ibtBack_Click,
+    btnCancel_Click,
+    btnSave_Click,
+    lblLog,
+    ddlProduct_SelectedIndexChanged,
+    handleSerialChange,
+    lblRemark,
+    columns
+  } = fn_ScanSMTPackingConfirm();
   return (
     <div>
       <Hearder />
       <h1>Packing Confirm Sheet</h1>
-      <Card component={Paper} className="Card-FinalGate">
+      <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
@@ -51,16 +80,16 @@ const { txtLot,settxtLot,txtLot_TextChanged
                 <TableBody>
                   <TableRow>
                     <TableCell align="right">
-                      <Typography>  Lot No. :</Typography>
+                      <Typography> Lot No. :</Typography>
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
-                        id="txtfild"
+                        className="input_txt"
                         size="small"
-                        style={{ ...txtLot.style, width: "80%" }}
-                        disabled={txtLot.disbled} //true พิมไม่ได้
-                      //  inputRef={(el) => (fc_txtLotNo.current = el)}
-                       value={txtLot.value}
+                        style={{ ...txtLot.style ,backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit'}}
+                        disabled={txtLot.disbled} 
+                        inputRef={(el) => (fntxtLot.current = el)}
+                        value={txtLot.value}
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
@@ -74,8 +103,9 @@ const { txtLot,settxtLot,txtLot_TextChanged
                         }}
                         onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button id="txtfild" 
-                    //  onClick={ibtBack_Click}
+                      <Button
+                       className="Bt_ibtBack"
+                         onClick={ibtBack_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -87,83 +117,42 @@ const { txtLot,settxtLot,txtLot_TextChanged
                     </TableCell>
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
-                        {/* <Autocomplete
-                          id="selectPd"
-                          // value={Sl_Product.value}
-                          // , background:'#e0e0e0'
-                          // style={{ ...Sl_Product.style }}
-                          // disabled={Sl_Product.disbled} //true พิมไม่ได้
-                          // onChange={(e, value) =>
-                          //   ddlProduct_SelectedIndexChanged(value)
-                          // }
-                          // options={Product.map((item) => item.prd_name)}
+                        <Autocomplete
+                          className="Select_dropDown"
+                          value={selectddlProduct.value}
+                          onChange={(e, value) =>
+                            ddlProduct_SelectedIndexChanged(value)
+                          }
+                          options={ddlProduct.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
-                              // inputRef={(el) => (fc_SlProduct.current = el)}
-                              // {...params}
-                              // size="small"
-                              // sx={{ textAlign: "left" }}
+                              inputRef={(el) => (fnddlProduct.current = el)}
+                              {...params}
+                              size="small"
+                              sx={{ textAlign: "left" }}
                             />
                           )}
-                        /> */}
+                        />
                       </FormControl>
                     </TableCell>
                   </TableRow>
 
-                  <TableRow 
-                  // style={{ display: txtPackingNo.visble }}
-                  >
-                    <TableCell align="right">
-                      <Typography>Packing No :</Typography>
-                    </TableCell>
-                    <TableCell colSpan={4}>
-                      <TextField
-                        id="txtfild"
-                        size="small"
-                     //   inputRef={(el) => (fc_txtPackingNo.current = el)}
-                       // value={txtPackingNo.value}
-                        // onChange={(e) => {
-                        //   settxtPackingNo((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
-                        // style={{ ...txtPackingNo.style, width: "80%" }}
-                        // disabled={txtPackingNo.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtPackingNo_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtPackingNo_TextChanged}
-                      ></TextField>
-                      <Button id="txtfild" 
-                      // onClick={ibtPackingBack_Click}
-                      >
-                        <BackspaceIcon />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                  <TableRow></TableRow>
                   <TableRow>
                     <TableCell align="right">
                       <Typography>Total Sheet. :</Typography>
                     </TableCell>
-                    {/* <TableCell colSpan={1}>{lblLot}</TableCell> */}
-                    <TableCell align="center" sx={{border:'1px solid red'}}>
-                    [lblTotalSht]
+                    <TableCell align="center" sx={{backgroundColor:'#d5f5e3 ' }}>
+                      {lblTotalSht.value}
                     </TableCell>
-                    <TableCell align="center" sx={{border:'1px solid red'}}>
-                    [lblShtCount]
-                    </TableCell>
-                    <TableCell style={{ width: "70px" }}>
-                      {/* {lblLotTotal} */}
+                    <TableCell align="center" sx={{ backgroundColor:'#fcf3cf'}}>
+                      {lblShtCount.value}
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
 
-              {/* {lbllog.visble == true && ( */}
+              {pnlLog  && (
               <Paper
                 elevation={3}
                 style={{
@@ -173,23 +162,23 @@ const { txtLot,settxtLot,txtLot_TextChanged
                   textAlign: "center",
                   background: "#BB2525",
                   paddingTop: "18px",
-                  color: "yellow", 
+                  color: "yellow",
                   fontWeight: "bold",
                   marginTop: "30px",
-                  // display: lblLog.visble,
                 }}
               >
-                {/* {lblLog.value} */}
+                {lblLog.value}
               </Paper>
-              {/* )} */}
-              {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
-              <Table
+             )} 
+              {pnlSerial &&(
+                <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px", 
-                // display: gvSerial.visble
-               }}
+                style={{
+                  marginTop: "20px",
+                }}
                 component={Card}
               >
+                
                 <TableHead>
                   <TableCell
                     sx={{ borderRight: "1px solid #d9d9d9" }}
@@ -197,13 +186,14 @@ const { txtLot,settxtLot,txtLot_TextChanged
                   >
                     No.
                   </TableCell>
-                  <TableCell align="center">Serial No.</TableCell>
+                  <TableCell align="center">Sheet No.</TableCell>
                   <TableRow></TableRow>
                 </TableHead>
+
                 <TableBody>
                   {/* <TableRow> */}
-{/* 
-                  {Array.from({ length: gvSerial.value.length }, (_, index) => (
+                  
+                  {Array.from({ length: gvSerial.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
                         align="center"
@@ -214,10 +204,10 @@ const { txtLot,settxtLot,txtLot_TextChanged
                       <TableCell>
                         <TextField
                           key={index}
-                          id="txtfild"
+                          className="input_txt"
                           size="small"
                           fullWidth
-                          inputRef={(el) => (fc_txtSerial.current[index] = el)}
+                          inputRef={(el) => (fngvSerial_txtSerial_0.current[index] = el)}
                           value={txtSerial[index]}
                           onBlur={(event) => {
                             handleSerialChange(index, event);
@@ -225,14 +215,10 @@ const { txtLot,settxtLot,txtLot_TextChanged
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
-                              event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
-                              if (index < gvSerial.value.length - 1) {
-                                fc_txtSerial.current[index + 1].focus();
-                                console.log(
-                                  index,
-                                  "---",
-                                  gvSerial.value.length - 1
-                                );
+                              event.preventDefault(); 
+                              if (index < gvSerial.length - 1) {
+                                fngvSerial_txtSerial_0.current[index + 1].focus();
+                               
                               } else {
                                 btnSave_Click();
                                 event.target.blur();
@@ -242,31 +228,32 @@ const { txtLot,settxtLot,txtLot_TextChanged
                         />
                       </TableCell>
                     </TableRow>
-                  ))} */}
+                  ))}
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave"
-                      //  onClick={btnSave_Click}
-                       >
+                      <Button
+                        className="BtSave"
+                         onClick={btnSave_Click}
+                      >
                         Save
                       </Button>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel" 
-                      // onClick={btnCancel_Click}
+                      <Button
+                        className="BtCancel"
+                        onClick={btnCancel_Click}
                       >
                         Cancel
                       </Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </Table>
+              </Table>)}
             </Grid>
-            {/* border:'1PX SOLID green' */}
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
                 margin: "auto",
                 marginTop: "10px",
@@ -275,145 +262,65 @@ const { txtLot,settxtLot,txtLot_TextChanged
                 alignItems: "center",
               }}
             >
-              {/* {gvScanResult.visble == false && ( */}
-                <>
-                  <img
+              {pnlgvScanResult == false && (
+              <>
+                <img
+                  style={{
+                    width: "360px",
+                    height: "300px",
+                    marginBottom: "30px",
+                  }}
+                  src={Pageimg} 
+                  alt="Description of the image"
+                />
+              </>
+              )} 
+
+             
+              <>
+                {lblResult.value !=="" &&(
+                  <Paper
+                    className=".Card-Result"
                     style={{
-                      width: "360px",
-                      height: "300px",
-                      marginBottom: "30px",
+                      width: "70%", 
+                      background:'#fcf3cf',
+                      marginBottom:'10px'
                     }}
-                    src={Pageimg} // Import the image
-                    alt="Description of the image"
-                  />
-                </>
-              {/* )} */}
-
-              {/* visiblegvScanResult */}
-              {/* {gvScanResult.visble == true && ( */}
-                <>
-                  <div style={{ display: "flex", gap: "10px", width: "100%" }}>
-                    <Paper
-                      className="Card-lblResult"
-                      style={{
-                        // background:
-                          // lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
-                        width: "70%", // ควบคุมขนาดของ Paper
-                      }}
-                    >
-                      <Typography
-                        variant="h4"
-                        style={{ paddingTop: "5px", color: "#fff" }}
-                      >
-                        {/* {lblResult.value} */}
-                      </Typography>
-                    </Paper>
-
-                    <Paper
-                      className="Card-lblResult"
-                      style={{
-                        // ...lblTime.style,
-                        width: "30%", // ควบคุมขนาดของ Paper
-                      }}
-                    >
-                      <Typography
-                        variant="h4"
-                        style={{ paddingTop: "5px", color: "#fff" }}
-                      >
-                        {/* {lblTime.value} */}
-                      </Typography>
-                    </Paper>
-                  </div>
-                  <Table
-                    className="CSS-GvScanResult-FinalGate"
-                    component={Card}
                   >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          No.
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Serial No.
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Re-Judgement 1
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Result
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Re-Judgement 2
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Test Result
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          Scan Result
-                        </TableCell>
-                        <TableCell>Remark </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    {/* {console.log(gvScanResult.value.flat(),'gvScanResult')} */}
-                    {/* {Array.from(
-                      { length: gvScanResult.value.length },
-                      (_, index) => (
-                        <TableRow key={index}>
-                          <TableCell
-                            align="center"
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                          >
-                            {gvScanResult.value[index].SEQ}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                          >
-                            {gvScanResult.value[index].SERIAL}
-                          </TableCell>
-                          <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                            {gvScanResult.value[index].REJECT}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                          >
-                            {gvScanResult.value[index].TOUCH_UP}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              borderRight: "1px solid #d9d9d9",
-                            }}
-                          >
-                            {gvScanResult.value[index].REJECT2}
-                          </TableCell>
-                          <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                            {gvScanResult.value[index].TEST_RESULT}
-                          </TableCell>
-                          <TableCell
-                          align="center"
-                            sx={{
-                              borderRight: "1px solid #d9d9d9",
-                              background:
-                                gvScanResult.value[index].SCAN_RESULT === ""
-                                  ? ""
-                                  : gvScanResult.value[index].SCAN_RESULT ===
-                                    "OK"
-                                  ? "#52c41a"
-                                  : "#ff4d4f",
-                            }}
-                          >
-                            {gvScanResult.value[index].SCAN_RESULT}
-                          </TableCell>
-                          <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                            {gvScanResult.value[index].REMARK}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    )} */}
-                  </Table>
-                </>
+                    <Typography
+                      variant="h4"
+                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',color:lblResult.value !== "OK" ? '#BA0900' : '#059212',fontSize:'70px'}}
+                    >
+                   
+                   {lblResult.value}
+ 
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',color: '#BA0900'}}
+                    >
+                   
+                   {lblRemark.value}
+ 
+                    </Typography>
+                  </Paper>
+)}
+              
+               
+              {pnlgvScanResult &&(
+                       <AntTable 
+                columns={columns}
+                dataSource={gvScanResult}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                bordered
+                className="tableGvResult"
+                />
+              )}
+                
+              </>
+              
               {/* )} */}
             </Grid>
           </Grid>
@@ -424,4 +331,3 @@ const { txtLot,settxtLot,txtLot_TextChanged
 }
 
 export default ScanSMTPackingConfirm;
-

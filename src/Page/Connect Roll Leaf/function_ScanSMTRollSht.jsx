@@ -139,8 +139,8 @@ function Fn_ScanSMTRollSht() {
   const [hfLeafSerialFlg, setHfLeafSerialFlg] = useState("");
   const [hfScanResult, setHfScanResult] = useState("");
 
-  const CONNECT_SERIAL_ERROR = "999999";
-  const CONNECT_SERIAL_NOT_FOUND = "NOT FOUND CODE";
+  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR
+  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND
   const hfAutoDownload = "N";
   // --------------------------------------
   //Page loade

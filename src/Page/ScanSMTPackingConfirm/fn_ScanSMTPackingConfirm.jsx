@@ -1,11 +1,12 @@
 //Eye
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { Tag } from "antd";
 
 function fn_ScanSMTPackingConfirm() {
     const [txtLot,settxtLot] = useState({value: "",disbled: "",style: {},});
     const [ddlProduct,setddlProduct]= useState([]);
-    const [selectddlProduct,setselectddlProduct]= useState([]);
+    const [selectddlProduct,setselectddlProduct]= useState({value: "",disbled: "",style: {},});
     const [lblTotalSht,setlblTotalSht]  = useState({value: "",disbled: "",style: {},});
     const [lblShtCount,setlblShtCount] = useState({value: "",disbled: "",style: {},});
     const [lblResult,setlblResult] = useState({value: "",disbled: "",style: {},});
@@ -15,46 +16,62 @@ function fn_ScanSMTPackingConfirm() {
     // data table 
     const [gvSerial,setgvSerial]=useState([])
     const [gvScanResult,setgvScanResult]=useState([])
-
+    
+    const [pnlLog,setpnlLog]=useState("")
     const [pnlSerial,setpnlSerial]=useState("")
     const [pnlgvScanResult,setpnlgvScanResult]=useState("")
+    //
+    const fntxtLot = useRef([])
+    const fngvSerial_txtSerial_0 = useRef([])
+    const fnddlProduct = useRef([])
 
     const [hfUserID,sethfUserID] =useState("")
     const [hfUserStation,sethfUserStation] =useState("")
     const [hfMode,sethfMode] =useState("")
+    let hfShtScan ='1'
     const FAC = import.meta.env.VITE_FAC;
+
       useEffect(() => {
         let ID = localStorage.getItem("ipAddress");
         sethfUserID(ID);
         sethfUserStation(ID);
         sethfMode("");
+        SetMode("LOT")
         const fetchData = async () => {
           await GetProductData();
         };  
         fetchData()
-        // SetMode("LOT")
+        
       }, []);
 
 
     const GetProductData = async () => {
         await axios.get("/api/Common/GetProductData").then(async (res) => {
-          let data = res.data.flat();
+          let data = res.data;
           setddlProduct(data);
           setselectddlProduct((prevState) => ({...prevState, value: data[0].prd_name,}));
         });
       };
       
     const ibtBack_Click = async () => {
-      settxtLot((prevState) => ({...prevState, value: '',}));
-      settxtLot((prevState) => ({...prevState, value: '',}));
+      settxtLot((prevState) => ({...prevState, value: '',disbled:false}));
+      setpnlSerial(false)
+      SetMode("LOT")
+      setTimeout(() => {
+        fntxtLot.current.focus();
+      }, 300);
     };
 
     const btnCancel_Click = async () => {
       SetMode("SERIAL")
-      // fnSetFocus("gvSerial_txtSerial_0")
+      fngvSerial_txtSerial_0.current[0].focus();
     }
     const btnSave_Click = async () => {
-      setSerialData()
+      if(hfMode == 'SERIAL'){
+       
+        setSerialData()
+      }
+      
     }
     const SetMode = (_strType) => {
       switch (_strType) {
@@ -67,7 +84,7 @@ function fn_ScanSMTPackingConfirm() {
           setpnlSerial(false);
           sethfMode("LOT")
           setTimeout(() => {
-            // fntxtLot.current.focus();
+            fntxtLot.current.focus();
           }, 300);
           break;
         case "LOT_ERROR":
@@ -79,7 +96,7 @@ function fn_ScanSMTPackingConfirm() {
           setpnlSerial(false);
           sethfMode("LOT")
           setTimeout(() => {
-            // fntxtLot.current.focus();
+            fntxtLot.current.focus();
           }, 300);
           break;
         case "SERIAL":
@@ -98,7 +115,7 @@ function fn_ScanSMTPackingConfirm() {
           setpnlLog(false);
           setpnlSerial(true);
           getInitialSerial();
-          // fngvSerial.current.focus(); // focus Serial
+          fngvSerial_txtSerial_0.current[0].focus();
           break;
         case "SERIAL_NG":
           settxtLot((prevState) => ({ ...prevState, disbled: true }));
@@ -112,7 +129,7 @@ function fn_ScanSMTPackingConfirm() {
 
     const getInitialSerial = async () => {
       let dtData = [];
-      for (let intRow = 0; intRow < hfserialcount; intRow++) {
+      for (let intRow = 0; intRow < hfShtScan; intRow++) {
         dtData.push({
           SEQ: intRow + 1,
         });
@@ -121,20 +138,22 @@ function fn_ScanSMTPackingConfirm() {
       settxtSerial( Array(gvSerial.length).fill(""))
       if (gvSerial.length > 0) {
         setTimeout(() => {
-          // fc_txtSerial.current[0].focus();
+          fngvSerial_txtSerial_0.current[0].focus();
           }, 300);
       
       }
       return 0;
     };
     const txtLot_TextChanged = async () =>{
-    let strLotData = txtLot.value.toUpperCase().split(";");
+    let strLotData = ''
     let strLot =""
     let strPrdName =""
+    strLotData = txtLot.value.toUpperCase().split(";");
     setlblShtCount((prevState) => ({...prevState, value: '0',}));
     setlblTotalSht((prevState) => ({...prevState, value: '0',}));
-    if(strLotData >= 2){
-        strLot = strLotData[0].trim();
+    if(strLotData.length >= 2){
+        strLot = strLotData[0];
+
         await axios
         .post("/api/Common/GetProductNameByLot", {
           strLot: strLot,
@@ -154,7 +173,7 @@ function fn_ScanSMTPackingConfirm() {
               setselectddlProduct((prevState) => ({...prevState, value: strPrdName,}));
               SetMode("SERIAL")
               setTimeout(() => {
-                //fnSetFocus("gvSerial_txtSerial_0")
+                fngvSerial_txtSerial_0.current[0].focus();
               }, 300);
           }
 
@@ -168,12 +187,14 @@ function fn_ScanSMTPackingConfirm() {
                   setselectddlProduct((prevState) => ({...prevState, value: strPrdName,}));
                   SetMode("SERIAL")
                   setTimeout(() => {
-                    //fnSetFocus("gvSerial_txtSerial_0")
+                    fngvSerial_txtSerial_0.current[0].focus();
                   }, 300);
                 }catch(error2){
                   setlblLog((prevState) => ({...prevState, value: 'Product ' +strPrdName + 'not found',}));
                   setpnlLog(true)
-                  //fnSetFocus("ddlProduct")
+                  setTimeout(() => {
+                    fnddlProduct.current.focus();
+                  }, 300);
                 }
 
             }else{
@@ -181,28 +202,30 @@ function fn_ScanSMTPackingConfirm() {
             setpnlLog(true)  
             }
             
-            //fnSetFocus("ddlProduct")
+            setTimeout(() => {
+              fnddlProduct.current.focus();
+            }, 300);
           }
         }else{
         setselectddlProduct((prevState) => ({...prevState, value: ddlProduct[0].prd_name,}));
         settxtLot((prevState) => ({...prevState, value: '',}));
-        setgvSerial([])
+        //setgvSerial([])
         setlblLog((prevState) => ({...prevState, value: 'Invalid lot no.',}));
         setpnlLog(true)
         sethfMode("LOT")
         setTimeout(() => {
-          // fntxtLot.current.focus();
+          fntxtLot.current.focus();
         }, 300);
         }
     }else{
       setselectddlProduct((prevState) => ({...prevState, value: ddlProduct[0].prd_name,}));
       settxtLot((prevState) => ({...prevState, value: '',}));
       setlblLog((prevState) => ({...prevState, value: 'Please scan QR Code. / กรุณาสแกนที่คิวอาร์โค้ด',}));
-      // setpnlLog(true)
+      setpnlLog(true)
       sethfMode("LOT")
       // setgvSerial([])
       setTimeout(() => {
-        // fntxtLot.current.focus();
+        fntxtLot.current.focus();
       }, 300);
     }
     getShtDataBylot(strLot)
@@ -213,7 +236,9 @@ function fn_ScanSMTPackingConfirm() {
     setlblLog((prevState) => ({...prevState, value: '',}));
     setpnlLog(false)
     SetMode("SERIAL")
-    //fnSetFocus("gvSerial_txtSerial_0")
+    setTimeout(() => {
+      fngvSerial_txtSerial_0.current[0].focus();
+    }, )
   }else{
     setselectddlProduct((prevState) => ({...prevState, value: data[0].prd_name,}));
     SetMode("LOT")
@@ -243,32 +268,77 @@ function fn_ScanSMTPackingConfirm() {
         _strScanResultAll ='NG'
         let _intRowSerial = 0;
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
+          if(dtSerial[drRow].SERIAL.trim().toUpperCase() !== ""){
+            let _strSerial = dtSerial[drRow].SERIAL.trim().toUpperCase()
+            let _strTestResult = "NONE"
+            let _strMessageUpdate= ""
+            let _strScanResultUpdate =""
+            let _inCountSeq = 0
+            let _strSerialDup =""
+            for(let drShtRow=0;drShtRow <  dtSheet.length;drShtRow++){
+            
+            if ((dtSheet[drShtRow].sheet_no === _strSerial) && (dtSheet[drShtRow].confirm_result.trim() === "OK")) {
+              dtSheet[drShtRow].scan_result='OK'
+              dtSerial[drRow].SHEET_NO = dtSheet[drShtRow].sheet_no
+              dtSerial[drRow].CONFIRM_RESULT = dtSheet[drShtRow].confirm_result
+              dtSerial[drRow].SCAN_RESULT = dtSheet[drShtRow].scan_result
+              _strScanResultAll =  dtSheet[drShtRow].scan_result 
+              _bolUpdate = true
+            }else if( (dtSheet[drShtRow].sheet_no == _strSerial) && (dtSheet[drShtRow].confirm_result.trim() != "OK") ){
+              dtSheet[drShtRow].scan_result = 'NG'
+              dtSerial[drRow].SHEET_NO = dtSheet[drShtRow].sheet_no
+              dtSerial[drRow].CONFIRM_RESULT = dtSheet[drShtRow].confirm_result
+              dtSerial[drRow].SCAN_RESULT = dtSheet[drShtRow].scan_result
+              _strScanResultAll =  dtSheet[drShtRow].scan_result 
+              setlblRemark((prevState) => ({...prevState, value: 'NOT CONFIRM' }))
+              _bolUpdate = true
+            }
+            }
+          }
 
         }
         for (let drShtRow = 0; drShtRow < dtSheet.length ; drShtRow++){
-          if(drShtRow.SCAN_RESULT == 'OK'){
+          if(drShtRow.scan_result == 'OK'){
             _intOK = _intOK + 1
           }
         }
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         if(_bolUpdate){
-          let strError
-          // data: [
-          //   {
-          //     SCAN_RESULT: dtSerial[drRow].SCAN_RESULT,
-          //     SHEET_NO: dtSerial[drRow].SHEET_NO,
-         
-          //   },
-          // ],
+          let strError;
+          await axios
+          .post("/api/SetConfirmPackingSheet", {
+            dataList: {
+              Plantcode: FAC,
+              SCAN_RESULT: dtSerial[drRow].SCAN_RESULT,
+              SHEET_NO :dtSerial[drRow].SHEET_NO
+            },
+          })
+          .then((res) => {
+            
+            strError = res.data[0].p_error;
+          });
+          if (strError !== ""){
+            _strScanResultAll = 'NG'
+          }
+        
+        } }
+        setlblResult((prevState) => ({...prevState, value: _strScanResultAll,}));
+        
+        if(_strScanResultAll == 'NG'){
+          setlblResult((prevState) => ({...prevState, value: _strScanResultAll,style:{background:'red'} }));
+        }else{
+          setlblResult((prevState) => ({...prevState, value: _strScanResultAll,style:{background:'green'} }));
         }
-      }
+        setgvScanResult(dtSheet)
+        getInitialSerial()
+        setpnlLog(false)
         
       } else {
         setlblLog((prevState) => ({...prevState, value: 'Please input lot no. ' }));
         SetMode("SERIAL_ERROR")
       }
       getShtDataBylot(txtLot.value.trim().toUpperCase())
-      // fcGvSerial_txtSerial_0.current[0].focus();
+      fngvSerial_txtSerial_0.current[0].focus();
     };
     const getInputSerial = async () => {
       let dtData = [];
@@ -293,53 +363,124 @@ function fn_ScanSMTPackingConfirm() {
       let strFrontSide =""
       for (let intSht = 0; intSht < gvScanResult.length; intSht++) {
         dtData.push({
-          SEQ: intRow + 1,
-          SHEET_NO: gvScanResult[intSht].SHEET_NO,
-          CONFIRM_RESULT:gvScanResult[intSht].CONFIRM_RESULT ,
-          SCAN_RESULT:gvScanResult[intSht].SCAN_RESULT,
-          REMARK: gvScanResult[intSht].REMARK,
+          seq: intRow + 1,
+          sheet_no: gvScanResult[intSht].sheet_no,
+          confirm_result:gvScanResult[intSht].confirm_result ,
+          scan_result:gvScanResult[intSht].scan_result,
+          remark: gvScanResult[intSht].remark,
         });
       }
-  
       return dtData;
     };
     const getShtDataBylot = async (_strLot) => {
-      console.log("เข้า",_strLot)
       let dtSheet = [];
       let intOK = 0
      
       await axios
       .post("/api/GetConfirmSheetDataAllByLot", {
-        dataList: [
+        dataList: 
           {
             strPlantCode: FAC,
             strLot: _strLot
           },
-        ]
+        
       })
       .then((res) => {
         dtSheet = res.data
         setgvScanResult(dtSheet)
+        if(dtSheet.length > 0){
+            setpnlgvScanResult(true)
+        }
+      
       });
-      dtSheet.forEach(dtSheet => {
-        if (dtSheet.SCAN_RESULT === "OK") {
+      for(let row =0; row < dtSheet.length;row++ ){
+        if (dtSheet[row].scan_result == 'OK') {
             intOK += 1;
         }
-    });
-    setlblShtCount((prevState) => ({...prevState, value: intOK.toString(),}));
-    if(lblTotalSht.value == "" || lblTotalSht == "0"){
-      setlblShtCount((prevState) => ({...prevState, value: dtSheet.length }));
-    }
+      }
+      setlblShtCount((prevState) => ({...prevState, value: intOK.toString(),}));
+      if(lblTotalSht.value == "" || lblTotalSht == "0"){
+      setlblTotalSht((prevState) => ({...prevState, value: dtSheet.length }));
+      }
       return 0;
     };
+    const handleSerialChange = async (index, event) => {
+      const newValues = [...txtSerial];
+      newValues[index] = event.target.value;
+      settxtSerial(newValues);
+    };
 
-
-
+    const columns = [
+      {
+        title: "No.",
+        dataIndex: "seq",
+        key: "No.",
+        render: (text, record, index) => {
+          return index + 1;
+        },
+        align: "center",
+      },
+      {
+        title: "Sheet No.",
+        dataIndex: "sheet_no",
+        key: "Sheet No.",
+        align: "center",
+        render: (text, record, index) => {
+            return text;
+        },
+      },
+      {
+        title: "Confirm Result",
+        dataIndex: "confirm_result",
+        align: "center",
+        key: "Confirm Result",
+        render: (text, record, index) => {
+          return text !=' '? (
+            
+            <Tag className={text === "OK" ? "Tag-OK" : text === "NG"|| "NO" ? "Tag-NG" : ""}>
+              {text}
+            </Tag>
+          ) : ''; 
+        },
+      },
+      
+      
+   
+      {
+        title: "Scan Result",
+        key: "Scan Result",
+        dataIndex: "scan_result",
+  
+        render: (text, record, index) => {
+          return text !=' '? (
+            <Tag className={text === "OK" ? "Tag-OK" : text === "NG"|| "NO" ? "Tag-NG" : ""}>
+              {text}
+            </Tag>
+          ) : ''; 
+         
+        
+        },
+        align: "center",
+      },
+      
+      {
+        title: "Remark",
+        key: "Remark",
+        dataIndex: "remark",
+  
+        render: (text, record, index) => {
+            return text;
+        },
+        align: "center",
+      },
+    ];
 
 
 
   return {
-    txtLot,settxtLot,txtLot_TextChanged
+    txtLot,settxtLot,txtLot_TextChanged,ddlProduct,selectddlProduct,setselectddlProduct,lblTotalSht,
+    lblShtCount,lblResult,lblRemark,txtSerial , settxtSerial,gvSerial,gvScanResult,pnlSerial,lblLog,
+pnlgvScanResult,fntxtLot,fngvSerial_txtSerial_0,fnddlProduct,pnlLog,ibtBack_Click,btnCancel_Click,btnSave_Click,ddlProduct_SelectedIndexChanged,handleSerialChange,columns
 
   }
 }

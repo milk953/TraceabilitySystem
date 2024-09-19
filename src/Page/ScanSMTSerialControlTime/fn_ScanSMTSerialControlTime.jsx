@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { Tag } from "antd";
 
 function fn_ScanSMTSerialControlTime() {
     const [txtMachine, settxtMachine] = useState("");
@@ -12,7 +13,7 @@ function fn_ScanSMTSerialControlTime() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("green");
+    const [lblResultcolor, setlblResultcolor] = useState("#059212");
 
     //hiddenfield
     const hfUserID = localStorage.getItem("hfUserID");
@@ -90,9 +91,9 @@ function fn_ScanSMTSerialControlTime() {
     const inputgvSerial = useRef([]);
 
     const plantCode = import.meta.env.VITE_FAC;
-    const CONNECT_SERIAL_ERROR = "999999";
-    const CONNECT_SERIAL_NOT_FOUND = "NOT FOUND CODE";
-    const _strTagNewLine = "\n";
+    const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
+    const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
+    const _strTagNewLine = "/";
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
@@ -487,7 +488,7 @@ function fn_ScanSMTSerialControlTime() {
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
-                                setlblResultcolor("#ff4d4f");
+                                setlblResultcolor("#BA0900");
                                 setlblLog(_strErrorUpdate);
                                 setvisiblelog(true);
                             }
@@ -500,9 +501,9 @@ function fn_ScanSMTSerialControlTime() {
         }
 
         if (_strScanResultAll === "NG") {
-            setlblResultcolor("#ff4d4f");
+            setlblResultcolor("#BA0900");
         } else {
-            setlblResultcolor("green");
+            setlblResultcolor("#059212");
         }
 
         if (!bolTrayError) {
@@ -658,7 +659,7 @@ function fn_ScanSMTSerialControlTime() {
         if (!txtLotDisabled) {
             inputLot.current.focus();
         }
-        if (gvSerialData.length > 0 && inputgvSerial.current[0]) {
+        if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
             inputgvSerial.current[0].focus();
         }
     }, [
@@ -666,18 +667,17 @@ function fn_ScanSMTSerialControlTime() {
         txtOpDisabled,
         txtTotalPcsDisabled,
         txtLotDisabled,
-        gvSerialData
     ]);
 
     const handleKeygvSerial = (e, index) => {
         if (e.key === 'Enter') {
-            e.preventDefault(); 
+            e.preventDefault();
             const nextIndex = index + 1;
             if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick',nextIndex);
+                console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === nextIndex) {
-                
+
                 btnSaveClick();
             }
         }
@@ -804,12 +804,57 @@ function fn_ScanSMTSerialControlTime() {
         SetMode("SERIAL");
     };
 
+    const columns = [
+        {
+            title: "No.",
+            dataIndex: "SEQ",
+            key: "No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Serial No.",
+            dataIndex: "SERIAL",
+            key: "Serial No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "Scan Result",
+            key: "Scan Result",
+            dataIndex: "SCAN_RESULT",
+
+            render: (text, record, index) => {
+                return (
+                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+                        {text}
+                    </Tag>
+                );
+            },
+            align: "center",
+        },
+        {
+            title: "Remark",
+            key: "Remark",
+            dataIndex: "REMARK",
+
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
+        },
+    ];
+
     return {
         txtMachine, settxtMachine, handleChangeMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtLotNo, settxtLotNo, selProduct,
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
-        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns
     }
 };
 
