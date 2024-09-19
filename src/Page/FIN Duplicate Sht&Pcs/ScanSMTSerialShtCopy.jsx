@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Pageimg from "/src/assets/1.jpg";
@@ -16,7 +16,6 @@ import { Typography, Table as AntTable, Select } from "antd";
 import { fn_ScanSMTSerialShtCopy } from "./fn_ScanSMTSerialShtCopy";
 import "../Common/StyleCommon.css";
 import "./ScanSMTSerialShtCopy.css";
-import { set } from "lodash";
 function ScanSMTSerialShtCopy() {
   const {
     gvBackSideState,
@@ -44,8 +43,29 @@ function ScanSMTSerialShtCopy() {
     txtButtonFix,
     setTxtButtonFix,
     txtTopFix,
+    lblTotalSht,
+    lblTotalPcs,
     setTxtTopFix,
+    handle_txtlotNo_Change,
+    gvBackSide,
+    txtbackSide,
+    handletxtBackSide,
+    lblError,
+    ddlProductState,
+    handle_ibtnBack_Click,
+    gvSerial,
+    txtSerial,
+    handletxtSerialChange,
+    handle_Cancel_Click,
+    handle_Save_Click,
+    handle_txtLotRef_Change,
+    handle_txtRollleaf_Change
   } = fn_ScanSMTSerialShtCopy();
+  useEffect(() => {
+    if (gvBackSideState == true) {
+      document.getElementById("txtbackSide_0").focus();
+    }
+  }, [gvBackSideState]);
   return (
     <>
       <Header />
@@ -67,17 +87,21 @@ function ScanSMTSerialShtCopy() {
                     <TableCell>Lot No.:</TableCell>
                     <TableCell>
                       <input
+                        id="txtlotNoFinCopy"
                         className="FinCopytxtF"
+                        value={txtlotNo}
+                        onChange={(e) => {
+                          setTxtlotNo(e.target.value);
+                        }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            setTxtlotNo(e.target.value);
-                            // handle_txtlotNo_Change(e);
+                            handle_txtlotNo_Change(e);
                           }
                         }}
                       ></input>
                     </TableCell>
                     <TableCell>
-                      <Button>
+                      <Button onClick={handle_ibtnBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -91,6 +115,8 @@ function ScanSMTSerialShtCopy() {
                           textAlign: "left",
                           padding: "0px 5px 0px 0px",
                         }}
+                        id="ddlProductFinCopy"
+                        disabled={ddlProductState}
                         size={"small"}
                         value={productSelected}
                         onChange={(value) => {
@@ -107,31 +133,59 @@ function ScanSMTSerialShtCopy() {
                   <TableRow>
                     <TableCell>Lot Ref. No.:</TableCell>
                     <TableCell>
-                      <input className="FinCopytxtF"></input>
+                      <input className="FinCopytxtF" 
+                      id = 'txtLotRefFinCopy'
+                      value={txtLotRef} 
+                      onChange={(e) => {
+                        setTxtLotRef(e.target.value);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handle_txtLotRef_Change(e);
+                        }
+                      }}
+                      
+                      ></input>
                     </TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Sht:</TableCell>
-                    <TableCell className="CelllblSpan">0</TableCell>
+                    <TableCell className="CelllblSpan">{lblTotalSht}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Pcs:</TableCell>
-                    <TableCell className="CelllblSpan">0</TableCell>
+                    <TableCell className="CelllblSpan">{lblTotalPcs}</TableCell>
                   </TableRow>
                   {pnlRollLeafState && (
                     <>
                       <TableRow>
                         <TableCell>Roll Leaf No.:</TableCell>
                         <TableCell>
-                          <input className="FinCopytxtF"></input>
+                          <input
+                            className="FinCopytxtF"
+                            id="txtRollLeafFinCopy"
+                            value={txtRollLeaf}
+                            onChange={(e) => {
+                              setTxtRollLeaf(e.target.value);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handle_txtRollleaf_Change(e);
+                              }
+                            }}
+                          ></input>
                         </TableCell>
                         <TableCell></TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Check Roll:</TableCell>
                         <TableCell>
-                          <input className="FinCopytxtF"></input>
+                          <input
+                            className="FinCopytxtF"
+                            value={txtCheckRoll.text}
+                            style={txtCheckRoll.styled}
+                          ></input>
                         </TableCell>
                         <TableCell></TableCell>
                       </TableRow>
@@ -141,23 +195,47 @@ function ScanSMTSerialShtCopy() {
                     <TableRow>
                       <TableCell>Machine No.:</TableCell>
                       <TableCell>
-                        <input className="FinCopytxtF"></input>
+                        <input
+                          id="txtMachineNoFinCopy"
+                          className="FinCopytxtF"
+                          value={txtMachineNo}
+                          onChange={(e) => {
+                            setTxtMachineNo(e.target.value);
+                          }}
+                        ></input>
                       </TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   )}
-
-                  {gvBackSideState && (
-                    <TableRow>
-                      <TableCell style={{ width: "100px", textAlign: "right" }}>
-                        1
-                      </TableCell>
-                      <TableCell>
-                        <input className="FinCopytxtF"></input>
-                      </TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  )}
+                  {gvBackSideState &&
+                    gvBackSide.map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell style={{ textAlign: "right" }}>
+                          {row.TITLE}
+                        </TableCell>
+                        <TableCell>
+                          <input
+                            className="FinCopytxtF"
+                            id={`txtbackSide_${index}`}
+                            type="text"
+                            style={{
+                              // padding:'5px',
+                              // width: "100px",
+                              textTransform: "uppercase",
+                            }}
+                            maxLength="30"
+                            value={txtbackSide[index]}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handletxtBackSide(index, e);
+                              }
+                            }}
+                            onChange={(e) => handletxtBackSide(index, e)}
+                          />
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
               {pnlButtonFixState && (
@@ -180,7 +258,7 @@ function ScanSMTSerialShtCopy() {
                 </Table>
               )}
               {lblErrorState && (
-                <Paper className="Card-lblLog">{"lblError"}</Paper>
+                <Paper className="Card-lblLog">{lblError}</Paper>
               )}
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
@@ -189,6 +267,12 @@ function ScanSMTSerialShtCopy() {
                     style={{ background: "#12422e" }}
                   >
                     <TableRow>
+                      <TableCell
+                        className="FinCopygvSerialCell"
+                        style={{ color: "white" }}
+                      >
+                        Sheet.
+                      </TableCell>
                       <TableCell
                         className="FinCopygvSerialCell"
                         style={{ color: "white" }}
@@ -204,41 +288,61 @@ function ScanSMTSerialShtCopy() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* {gvSerial.map((row, index) => ( */}
-                    <TableRow
-                      // key={index}
-                      style={{ padding: "4px 4px 4px 4px" }}
-                    >
-                      <TableCell
-                        className="FinCopygvSerialCell"
-                        style={{ width: "40%", textAlign: "right" }}
+                    {gvSerial.map((row, index) => (
+                      <TableRow
+                        key={index}
+                        style={{ padding: "4px 4px 4px 4px" }}
                       >
-                        {/* {row.SEQ} */}
-                      </TableCell>
-                      <TableCell
-                        className="FinCopygvSerialCell"
-                        style={{ width: "70%", paddingRight: "10px" }}
-                      >
-                        <input
-                        // id={`txtSerial_${index}`}
-                        // type="text"
-                        // style={{
-                        //   padding:'5px',
-                        //   width: "300px",
-                        //   textTransform: "uppercase",
-                        // }}
-                        // maxLength="30"
-                        // value={txtSerial[index]}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     handletxtSerialChange(index, e);
-                        //   }
-                        // }}
-                        // onChange={(e) => handletxtSerialChange(index, e)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                    {/* ))} */}
+                        {row.SEQ === 0 ? (
+                          <>
+                            <TableCell
+                              className="FinCopygvSerialCell"
+                              style={{ width: "80%", textAlign: "right" }}
+                              colSpan={2}
+                            >
+                              {row.SHEET}
+                            </TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell
+                              className="FinCopygvSerialCell"
+                              style={{ width: "40%", textAlign: "right" }}
+                            >
+                              {row.SHEET}
+                            </TableCell>
+                            <TableCell
+                              className="FinCopygvSerialCell"
+                              style={{ width: "40%", textAlign: "right" }}
+                            >
+                              {row.SEQ}
+                            </TableCell>
+                          </>
+                        )}
+                        <TableCell
+                          className="FinCopygvSerialCell"
+                          style={{ width: "70%", paddingRight: "10px" }}
+                        >
+                          <input
+                            id={`txtSerial_${index}`}
+                            type="text"
+                            style={{
+                              padding: "5px",
+                              width: "230px",
+                              textTransform: "uppercase",
+                            }}
+                            maxLength="30"
+                            value={txtSerial[index]}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                handletxtSerialChange(index, e);
+                              }
+                            }}
+                            onChange={(e) => handletxtSerialChange(index, e)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                     <TableRow>
                       <TableCell
                         colSpan={3}
@@ -250,14 +354,14 @@ function ScanSMTSerialShtCopy() {
                       >
                         <Button
                           className="BtSave"
-                          // onClick={handle_Save_Click}
+                          onClick={handle_Save_Click}
                         >
                           SAVE
                         </Button>
                         &nbsp;&nbsp;
                         <Button
                           className="BtCancel"
-                          // onClick={handle_Cancel_Click}
+                          onClick={handle_Cancel_Click}
                         >
                           {" "}
                           Cancel
