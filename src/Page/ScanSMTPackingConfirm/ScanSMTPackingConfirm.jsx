@@ -88,7 +88,7 @@ function ScanSMTPackingConfirm() {
                         size="small"
                         style={{ ...txtLot.style ,backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit'}}
                         disabled={txtLot.disbled} 
-                         inputRef={(el) => (fntxtLot.current = el)}
+                        inputRef={(el) => (fntxtLot.current = el)}
                         value={txtLot.value}
                         onChange={(e) => {
                           settxtLot((prevState) => ({
@@ -253,7 +253,7 @@ function ScanSMTPackingConfirm() {
             <Grid
               item
               xs={10}
-              md={7}
+              md={8}
               style={{
                 margin: "auto",
                 marginTop: "10px",

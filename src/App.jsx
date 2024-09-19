@@ -47,8 +47,12 @@ import Change_Serial from './Page/Change_Serial/Change_Serial';
 import ScanSheetAOIXrayConfirm from './Page/AOI Confirm Result/ScanSheetAOIXrayConfirm';
 import ScanSMTSerialPcsAutoTrayConfirm from './Page/Confirm Final Only Good/ScanSMTSerialPcsAutoTrayConfirm';
 import ScanSMTSerialShtShtCopy from './Page/FIN Duplicate Sht&Pcs/ScanSMTSerialShtCopy';
+import SMTDeleteData from "./Page/SMTDeleteData/SMTDeleteData";
+import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResult";
 
-
+import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace'
+// import Prdmaster from "./Page/ProductMasterMay/prdmaster";
+ 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 axios.defaults.baseURL = backendUrl;
 
@@ -135,6 +139,9 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanSMTConnectRollConfirm" element={<ScanSMTConnectRollConfirm />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialShtMaster" element={<ScanSMTSerialShtMaster />} />
             <Route path="/TraceabilitySystem/ScanSheetAOIXrayConfirm" element={<ScanSheetAOIXrayConfirm />} />
+            <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
+            <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
+            <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             
           </Route>
         </Routes>

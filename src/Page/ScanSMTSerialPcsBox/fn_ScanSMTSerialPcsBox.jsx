@@ -989,7 +989,7 @@ function fn_ScanSMTSerialPcsBox() {
         let _intCountOK = 0;
         let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
         if (!_bolTrayError) {
-          console.log("SAVE เข้า 2")
+          console.log("SAVE เข้า 22222",_bolTrayError)
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
             await axios
             .post("/api/common/GetSerialTestResultManyTable", {
