@@ -172,7 +172,6 @@ function ScanSMTConnectRollConfirm() {
                   {lblpnlLog.value}
                 </Paper>
               )}
-
               <Table
                 className="CSS-GvSerial"
                 style={{
