@@ -33,7 +33,7 @@ import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsAutoTrayConfirm } from "./fn_ScanSMTSerialPcsAutoTrayConfirm";
 import Pageimg from "/src/assets/1.jpg";
-function ScanSMTRoollSht() {
+function ScanSMTSerialPcsAutoTrayConfirm() {
   const {
     txtLot,
     settxtLot,
@@ -362,4 +362,4 @@ function ScanSMTRoollSht() {
   );
 }
 
-export default ScanSMTRoollSht;
+export default ScanSMTSerialPcsAutoTrayConfirm;
