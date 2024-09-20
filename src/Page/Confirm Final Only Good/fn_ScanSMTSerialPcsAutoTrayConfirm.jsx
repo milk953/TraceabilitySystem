@@ -192,7 +192,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     if (gvSerial.visble == "") {
       getInitialSerial();
       if (gvSerial.value.length > 0) {
-        // fc_txtSerial.current[0].focus();
+        fc_txtSerial.current[0].focus();
       }
     }
   }, [gvSerial.visble, gvSerial.value.length]);
@@ -297,6 +297,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                 value: `Product ${_strPrdName} not found.`,
                 visble: "",
               }));
+            
               setTimeout(() => {
                 fc_SlProduct.current.focus();
               }, 300);
@@ -451,7 +452,9 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       })
       .then((res) => {
         data = res.data[0];
+        console.log('data.slm_tray_flag',data.slm_tray_flag)
         if (data != null) {
+
           setHfSerialLength(data.slm_serial_length);
           setHfSerialFixFlag(data.slm_fix_flag);
           setHfSerialDigit(data.slm_fix_digit);
@@ -624,7 +627,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       getInitialSerial();
 
       setTimeout(() => {
-        // fc_txtSerial.current[0].focus();
+        fc_txtSerial.current[0].focus();
       }, 300);
     } else if (mode == "SERIAL_NG") {
       settxtLot((prevState) => ({
@@ -644,12 +647,12 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         SEQ: intRow + 1,
       });
     }
-    console.log(dtData.length, "dtdata");
+    console.log(dtData.length, "dtdata",hfTrayFlag);
     setgvSerial((prevState) => ({ ...prevState, value: dtData }));
     settxtSerial(Array(gvSerial.value.length).fill(""));
     if (gvSerial.value.length > 0 && hfTrayFlag == "N") {
       setTimeout(() => {
-        // fc_txtSerial.current[0].focus();
+        fc_txtSerial.current[0].focus();
       }, 300);
     }
     return dtData;
@@ -691,7 +694,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       let datagetpd = await getProductSerialMaster(valueProduct);
       console.log(
         "prm_final_packing_group_flg",
-        datagetpd.prm_final_packing_group_flg
+        datagetpd.slm_tray_flag
       );
       if (datagetpd.prm_final_packing_group_flg == "Y") {
         SetMode("PACK");
@@ -771,16 +774,14 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         SHEET_PCS_NO: 0,
         ROLL_LEAF_NO: "",
       });
-      // if (dtData[intSht].SERIAL != "") {
-      //   for( let intNo=0;intNo>intRow - 2;intNo++){
-      //   }
-      // }
-      //      For intNo As Integer = 0 To intRow - 2
-      //           If drRow("SERIAL").ToString.Trim = CType(gvSerial.Rows(intNo).FindControl("txtSerial"), TextBox).Text.Trim.ToUpper Then
-      //               drRow("ROW_COUNT") = 9
-      //               Exit For
-      //           End If
-      //       Next
+      if (dtData[intSht].SERIAL != "") {
+        for (let intNo = 0; intNo <= intRow - 2; intNo++) {
+          if(dtData[intSht].SERIAL== txtSerial[intNo]){
+            dtData[intSht].ROW_COUNT=9;
+          }
+        }
+      }
+    
     }
     return dtData;
   };
