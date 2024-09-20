@@ -27,39 +27,36 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSheetInspect/ScanSheetInspect.css";
-import Hearder from "../Header/Header.jsx";
-import { green } from "@mui/material/colors";
+import Header from "../Header/Header.jsx";
+import { Table as AntTable } from 'antd';
+import "../Common/StyleCommon.css";
 import { fn_ScanSheetInspect } from "./function_ScanSheetInspect.jsx";
 import Pageimg from "/src/assets/1.jpg";
 function ScanSheetInspect() {
     const {
         txtLotNo, settxtLotNo, ClearLot, txtProduct, settxtProduct, txtRollNo, settxtRollNo, txtScanBy, settxtScanBy,
-        txtScanDate, settxtScanDate, selShift, setselShift, txtWeekCode, settxtWeekCode, selBinNo, setselBinNo,
-        txtShtNo, settxtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, hfUserID, hfUserStation,
-        hfUserFactory, hfMode, hfCheckFlg, hfSerialStart, hfSerialEnd, hfControlStart, hfControlEnd, hfBINGroup, hfControlBy,
-        gvScanResult, inputScanDate, ibtDateRefresh, BinNo, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin,
-        gvScanData, handleShtNo, ibtExportClick, inputScanBy, selShtBin, inputShtNo, btnCancel, btDelShtClick, btDelLotClick,
-        btCancelClick
+        txtScanDate, settxtScanDate, selShift, setselShift, txtWeekCode, settxtWeekCode, selBinNo, ddlShtBin,
+        txtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, gvScanResult, inputScanDate,
+        ibtDateRefresh, ddlBinNoData, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin, gvScanData,
+        handleShtNo, ibtExportClick, inputScanBy, inputShtNo, btnCancel, btDelShtClick, btDelLotClick, settxtShtNo,
+        btCancelClick, columns
     } = fn_ScanSheetInspect();
 
     return (
         <div>
-            <Hearder />
+            <Header />
             <h1>ScanSheetInspect</h1>
             <Card
                 component={Paper}
-                style={{
-                    margin: "auto",
-                    width: "90%",
-                    maxWidth: "1400px",
-                    marginTop: "50px",
-                    height: "auto",
-                    maxHeight: "550px",
-                    padding: "20px",
-                    display: 'flex',
-                }}
+                className="Card-Common"
+                sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between">
+                <Box justifyContent="space-between"
+                    sx={{
+                        marginLeft: "-20px",
+                        marginTop: "-10px"
+                    }}
+                >
                     <TableContainer
                         component={Paper}
                         style={{
@@ -84,14 +81,14 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
                                             value={txtLotNo}
                                             disabled={istxtLotDisabled}
                                             style={{
-                                                backgroundColor: istxtLotDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: istxtLotDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             onChange={(e) => {
                                                 settxtLotNo(e.target.value);
@@ -101,16 +98,17 @@ function ScanSheetInspect() {
                                                     handleLotNo();
                                                 }
                                             }}
+                                            onBlur={() => {
+                                                if (txtLotNo !== "") {
+                                                    handleLotNo();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon" onClick={ClearLot}>
+                                        <Button className="Bt_ibtBack" onClick={ClearLot}>
                                             <Tooltip title="Clear Lot" placement="right-end">
-                                                <BackspaceIcon
-                                                    style={{
-                                                        fontSize: '24px'
-                                                    }}
-                                                />
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -121,7 +119,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             value={txtProduct}
@@ -136,7 +134,7 @@ function ScanSheetInspect() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon" onClick={ibtExportClick}>
+                                        <Button className="Bt_ibtBack" onClick={ibtExportClick}>
                                             <Tooltip title="Export Data" placement="right-end">
                                                 <FileExcelFilled
                                                     style={{
@@ -154,7 +152,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             value={txtRollNo}
@@ -175,7 +173,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             inputRef={inputScanBy}
@@ -197,7 +195,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             inputRef={inputScanDate}
@@ -213,7 +211,7 @@ function ScanSheetInspect() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon" onClick={ibtDateRefresh}>
+                                        <Button className="Bt_ibtBack" onClick={ibtDateRefresh}>
                                             <Tooltip title="Refresh Date" placement="right-end">
                                                 <BackspaceIcon
                                                     style={{
@@ -230,7 +228,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <Autocomplete
-                                            id="select"
+                                            className="Select_dropDown"
                                             size="small"
                                             options={['A', 'B']}
                                             value={selShift}
@@ -257,7 +255,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             value={txtWeekCode}
@@ -277,29 +275,28 @@ function ScanSheetInspect() {
                                         <Typography>Bin No. :</Typography>
                                     </TableCell>
                                     <TableCell>
+                                        {console.log(selBinNo,'kkkkkk')}
                                         <Autocomplete
-                                            id="select"
+                                            className="Select_dropDown"
                                             size="small"
-                                            ref={selShtBin}
                                             style={{
-                                                backgroundColor: isBinNoDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: isBinNoDisabled ? "#e0e0e0" : "inherit",
                                             }}
-                                            options={BinNo.map((item) =>
-                                            ({
-                                                value: item.bin_no,
-                                                bin_name: item.bin_name
-                                            }))}
                                             value={selBinNo}
-                                            getOptionLabel={(item) => item.bin_name || ""}
                                             onChange={(e, value) => handleselShtBin(value)}
+                                            options={["-select-", ...ddlBinNoData.map((item) => item.bin_name || "")]}
+                                            isOptionEqualToValue={(option, value) => option === value || (value === "" && option === "-select-")}
                                             renderInput={(params) => (
                                                 <TextField {...params}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === "Enter") {
-                                                            e.preventDefault();
-                                                            setselBinNo(params.inputProps.value);
-                                                        }
-                                                    }}
+                                                    // onKeyDown={(e) => {
+                                                    //     if (e.key === "Enter") {
+                                                    //         e.preventDefault();
+                                                    //         setselBinNo(params.inputProps.value);
+                                                    //     }
+                                                    // }}
+                                                    inputRef={ddlShtBin}
+                                                    size="small"
+                                                    sx={{ textAlign: "left" }}
                                                 />
                                             )}
                                             disabled={isBinNoDisabled}
@@ -313,14 +310,22 @@ function ScanSheetInspect() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
                                             inputRef={inputShtNo}
                                             value={txtShtNo}
-                                            onChange={handleShtNo}
+                                            onChange={(e) => {
+                                                settxtShtNo(e.target.value);
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    handleShtNo();
+                                                }
+                                            }}
+                                            onBlur={handleShtNo}
                                             style={{
-                                                backgroundColor: isShtNoDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: isShtNoDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             disabled={isShtNoDisabled}
                                         />
@@ -340,7 +345,7 @@ function ScanSheetInspect() {
                                 textAlign: "center",
                                 marginTop: "10px",
                                 marginLeft: "20px",
-                                backgroundColor: "Green",
+                                backgroundColor: "#059212",
                             }}
                         >
                             <Typography
@@ -362,7 +367,7 @@ function ScanSheetInspect() {
                                 textAlign: "center",
                                 marginTop: "10px",
                                 marginLeft: "20px",
-                                backgroundColor: "#f5222d",
+                                backgroundColor: "#BA0900",
                             }}
                         >
                             <Typography
@@ -376,22 +381,13 @@ function ScanSheetInspect() {
                     {visiblelog && (
                         <Paper
                             elevation={3}
+                            className="Card-lblLog"
                             style={{
                                 width: "414px",
-                                margin: "auto",
-                                height: "40px",
-                                textAlign: "center",
-                                marginTop: "1px",
                                 marginLeft: "20px",
-                                backgroundColor: "#f5222d",
                             }}
                         >
-                            <Typography
-                                variant="h5"
-                                style={{ paddingTop: "5px", color: "#fff" }}
-                            >
-                                {labellog}
-                            </Typography>
+                            {labellog}
                         </Paper>
                     )}
 
@@ -431,89 +427,42 @@ function ScanSheetInspect() {
                             <Button
                                 size="small"
                                 style={{ marginTop: "5px" }}
-                                inputRef={btnCancel}
+                                ref={btnCancel}
                                 onClick={btCancelClick}
                             >
                                 Cancel
                             </Button>
                         </Paper>
                     )}
-                    <div>
-                        <input type="hidden" value={hfUserID} />
-                        <input type="hidden" value={hfUserStation} />
-                        <input type="hidden" value={hfUserFactory} />
-                        <input type="hidden" value={hfMode} />
-                        <input type="hidden" value={hfCheckFlg} />
-                        <input type="hidden" value={hfSerialStart} />
-                        <input type="hidden" value={hfSerialEnd} />
-                        <input type="hidden" value={hfControlStart} />
-                        <input type="hidden" value={hfControlEnd} />
-                        <input type="hidden" value={hfBINGroup} />
-                        <input type="hidden" value={hfControlBy} />
-                    </div>
                 </Box>
-                <img
-                    style={{
-                        width: "320px",
-                        height: "250px",
-                        marginLeft: "280px",
-                        display: gvScanResult ? 'none' : 'block'
-                    }}
-                    src={Pageimg}// Import the image
-                    alt="Description of the image"
-                />
+
                 <div className="divgvScan" style={{ position: "relative" }}>
-                    <TableContainer
-                        component={Paper}
-                        style={{
-                            width: "100%",
-                            marginBottom: "10px",
-                            height: "250px",
-                            display: gvScanResult ? 'block' : 'none'
-                        }}
-                    >
-                        <Table
-                            sx={{
-                                minWidth: 650,
-                                '& .MuiTableHead-root': {
-                                    position: 'sticky',
-                                    top: 0,
-                                    zIndex: 1,
-                                    background: 'white',
-                                },
-                            }}
-                            aria-label="simple table"
-                        >
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>No.</TableCell>
-                                    <TableCell>Roll No.</TableCell>
-                                    <TableCell>Lot No.</TableCell>
-                                    <TableCell>Shift</TableCell>
-                                    <TableCell>Week Code</TableCell>
-                                    <TableCell>Bin</TableCell>
-                                    <TableCell>Sheet No.</TableCell>
-                                    <TableCell>Scan By</TableCell>
-                                    <TableCell>Scan Date</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {gvScanData.map((item, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell style={{ textAlign: 'center' }}>{item.seq}</TableCell>
-                                        <TableCell>{item.roll_no}</TableCell>
-                                        <TableCell>{item.lot_no}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{item.shift}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{item.week_no}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{item.bin_no}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{item.sheet}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{item.scan_by}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{item.scan_date}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+
+                    {gvScanResult === false && (
+                        <>
+                            <img
+                                className="Img_GvResult"
+                                style={{ marginLeft: "35%", }}
+                                src={Pageimg} // Import the image
+                                alt="Description of the image"
+                            />
+                        </>
+                    )}
+                    {gvScanResult && (
+                        <>
+                            <AntTable
+                                columns={columns}
+                                dataSource={gvScanData}
+                                rowKey={(record) => record.seq}
+                                style={{ width: '100%' }}
+                                pagination={false}
+                                size="small"
+                                bordered
+                                className="tableGvResult"
+                            />
+
+                        </>
+                    )}
                 </div>
             </Card>
         </div>

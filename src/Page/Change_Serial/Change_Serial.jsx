@@ -35,7 +35,19 @@ import "../Common/StyleCommon.css";
 import { fn_Change_Serial } from "../Change_Serial/fn_Change_Serial";
 
 function Change_Serial() {
-  const { txtTotalPcs,txtTotalPcs_TextChanged,BtnSubmit_Click } = fn_Change_Serial();
+  const {
+    gvSerial,
+    txtTotalPcs,
+    setTxtTotalPcs,
+    txtTotalPcs_TextChanged,
+    BtnSubmit_Click,
+    txtSerialNoOld,
+    handleSerialOldChange,
+    txtSerialNoNew,
+    handleSerialNewChange,
+    lblResult,
+    gvNewSerial,
+  } = fn_Change_Serial();
 
   return (
     <div>
@@ -45,21 +57,26 @@ function Change_Serial() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
-              {/* <Paper
-                className="Card-lblResult"
-                style={{
-                  background: "#059212",
-                  marginBottom: "10px",
-                  width: "40%",
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  style={{ paddingTop: "5px", color: "#fff" }}
+              {lblResult.value.trim() !== "" && (
+                <Paper
+                  className="Card-lblResult"
+                  style={{
+                    background: lblResult.style,
+                    marginBottom: "10px",
+                    width: "50%",
+                    height: "auto",
+                    display: lblResult.visble,
+                  }}
                 >
-      
-                </Typography>
-              </Paper> */}
+                  <Typography
+                    variant="h5"
+                    style={{ paddingTop: "6px", color: "#fff" }}
+                  >
+                    {lblResult.value}
+                  </Typography>
+                </Paper>
+              )}
+
               <Table
                 component={Card}
                 className="ChangePartino"
@@ -77,6 +94,17 @@ function Change_Serial() {
                         style={{ width: "50%" }}
                         fullWidth
                         value={txtTotalPcs.value}
+                        onChange={(e) => {
+                          setTxtTotalPcs((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtTotalPcs_TextChanged();
+                          }
+                        }}
                       />
                     </TableCell>
                   </TableRow>
@@ -107,11 +135,50 @@ function Change_Serial() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
+                  {Array.isArray(gvSerial.value) &&
+                    Array.from(
+                      { length: gvSerial.value.length },
+                      (_, index) => (
+                        <TableRow key={index}>
+                          <TableCell
+                            align="center"
+                            sx={{ borderRight: "1px solid #d9d9d9" }}
+                          >
+                            {index + 1}
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              key={index}
+                              size="small"
+                              fullWidth
+                              id={`gvSerial_txtSerialNo_${index}`}
+                              className="input_txt"
+                              value={txtSerialNoOld[index]}
+                              onChange={(event) =>
+                                handleSerialOldChange(index, event)
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              key={index}
+                              size="small"
+                              fullWidth
+                              className="input_txt"
+                              value={txtSerialNoNew[index]}
+                              onChange={(event) =>
+                                handleSerialNewChange(index, event)
+                              }
+                            />
+                          </TableCell>
+                        </TableRow>
+                      )
+                    )}
                   <TableRow>
                     <TableCell colSpan={3} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={BtnSubmit_Click} >
+                      <Button className="BtSave" onClick={BtnSubmit_Click}>
                         Submit
-                      </Button>
+                      </Button>{" "}
                     </TableCell>
                   </TableRow>
                 </TableBody>
