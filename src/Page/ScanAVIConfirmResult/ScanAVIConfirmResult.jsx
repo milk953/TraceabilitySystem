@@ -21,7 +21,6 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-
 import {
   ArrowRightOutlined,
   DeleteOutlined,
@@ -35,7 +34,19 @@ import "../Common/StyleCommon.css";
 import { fn_ScanAVIConfirmResult } from "../ScanAVIConfirmResult/fn_ScanAVIConfirmResult";
 
 function ScanAVIConfirmResult() {
-  const {} = fn_ScanAVIConfirmResult();
+  const {
+    ddlProduct,
+    Product,
+    ddlTestType,
+    TestType,
+    txtSerialBarcode,
+    setTxtSerialBarcode,
+    txtSerialBarcode_TextChanged,
+    ddlProduct_SelectedIndexChanged,
+    ddlTestType_SelectedIndexChanged,
+    ClearResult,
+    showResult,
+  } = fn_ScanAVIConfirmResult();
 
   return (
     <div>
@@ -45,7 +56,6 @@ function ScanAVIConfirmResult() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
-
               <Table
                 className="ScanSMT"
                 component={Paper}
@@ -53,9 +63,7 @@ function ScanAVIConfirmResult() {
               >
                 <TableHead>
                   <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">
-                    AVI Verify Monitoring
-                    </Typography>
+                    <Typography variant="h6">AVI Verify Monitoring</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -64,12 +72,24 @@ function ScanAVIConfirmResult() {
                       <Typography> Product :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      <TextField
-                        id="txtLot_ScanSMTConnectRollConfirm_focus"
-                        className="input_txt"
-                        size="small"
-                        fullWidth
-                      ></TextField>
+                      <FormControl fullWidth>
+                        <Autocomplete
+                          size="small"
+                          className="Select_dropDown"
+                          value={ddlProduct.value}
+                          onChange={(e, value) =>
+                            ddlProduct_SelectedIndexChanged(value)
+                          }
+                          options={Product.map((item) => item.prd_name)}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              size="small"
+                              sx={{ textAlign: "left" }}
+                            />
+                          )}
+                        />
+                      </FormControl>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -78,16 +98,27 @@ function ScanAVIConfirmResult() {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
-                        <TextField
-                          id="txtLot_ScanSMTConnectRollConfirm_focus"
-                          className="input_txt"
+                        <Autocomplete
                           size="small"
-                          fullWidth
-                          style={{width: "60%"}}
-                        ></TextField>
+                          className="Select_dropDown"
+                          value={ddlTestType.value}
+                          style={{ width: "60%" }}
+                          onChange={(e, value) =>
+                            ddlTestType_SelectedIndexChanged(value)
+                          }
+                          options={TestType.map((item) => item.test_type)}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              size="small"
+                              sx={{ textAlign: "left" }}
+                            />
+                          )}
+                        />
                       </FormControl>
                     </TableCell>
                   </TableRow>
+
 
                   <TableRow>
                     <TableCell align="right">
@@ -95,10 +126,24 @@ function ScanAVIConfirmResult() {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtLot_ScanSMTConnectRollConfirm_focus"
+                        // id="txtLot_ScanSMTConnectRollConfirm_focus"
                         className="input_txt"
                         size="small"
                         fullWidth
+                        disabled={txtSerialBarcode.disbled}
+                        style={txtSerialBarcode.style}
+                        value={txtSerialBarcode.value}
+                        onChange={(e) => {
+                          setTxtSerialBarcode((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtSerialBarcode_TextChanged();
+                          }
+                        }}
                       ></TextField>
                     </TableCell>
                     <TableCell colSpan={2}>
@@ -119,7 +164,10 @@ function ScanAVIConfirmResult() {
           </Grid>
         </Box>
       </Card>
+      {/* <div>{showResult}</div> */}
     </div>
+
+    
   );
 }
 
