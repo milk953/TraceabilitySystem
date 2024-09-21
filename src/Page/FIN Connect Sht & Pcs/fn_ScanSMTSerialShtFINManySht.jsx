@@ -205,10 +205,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setlblLogState(false);
     if (lotValue != "" && dtSerial.length > 0) {
       if (hfCheckWeekCode == "Y") {
-        hfCheckWeekCode = await getData("GetWeekCodebyLot", {
-          lotValue,
-          hfDateInProc,
-        });
+        hfCheckWeekCode = await getData("GetWeekCodebyLot", {lotValue,hfDateInProc,});
       }
       let _intRowSerial = 0;
       for (let i = 0; i < dtSerial.length; i++) {
@@ -770,7 +767,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               strPrdname.substring(intProduct + 1, intProduct + 11).trim();
             try {
               setProductSelect(strPrdname);
-              await getProductSerialMaster(strPrdname);
+              // await getProductSerialMaster(strPrdname);
+              await getData("getProductSerialMaster", strPrdname);
               setGvBackSide(getIntitiaSheet());
 
               if (hfCheckRollSht == "Y") {
@@ -829,7 +827,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setlblLogState(true);
         sethfMode("ROLL");
         setGvBackSide(getIntitiaSheet());
-        setTxtRollLeaf;
+        setTxtRollLeaf('');
         FCtxtRollleaf.current.focus();
       } else {
         Setmode("SERIAL");
