@@ -692,10 +692,6 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     setSl_Product((prevState) => ({ ...prevState, value: valueProduct }));
     if (lblLot != "") {
       let datagetpd = await getProductSerialMaster(valueProduct);
-      console.log(
-        "prm_final_packing_group_flg",
-        datagetpd.slm_tray_flag
-      );
       if (datagetpd.prm_final_packing_group_flg == "Y") {
         SetMode("PACK");
       } else {

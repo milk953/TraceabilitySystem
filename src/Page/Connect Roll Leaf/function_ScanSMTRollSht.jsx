@@ -139,22 +139,30 @@ function Fn_ScanSMTRollSht() {
   const [hfLeafSerialFlg, setHfLeafSerialFlg] = useState("");
   const [hfScanResult, setHfScanResult] = useState("");
 
+  
+  const Fac = import.meta.env.VITE_FAC;
   const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR
   const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND
   const hfAutoDownload = "N";
+  const hfUserID = localStorage.getItem("ipAddress");
+  const hfUserStation  = localStorage.getItem("ipAddress");
+  
   // --------------------------------------
   //Page loade
   useEffect(() => {
     const fetchData = async () => {
       setHfMode("");
-      await getProduct();
+      await GetProductRollLeafData();
       await SetMode("LOT");
     };
     fetchData();
   }, []);
 
-  const getProduct = async () => {
-    await axios.get("/api/Common/GetProductData").then((res) => {
+  const GetProductRollLeafData = async () => {
+    await axios.post("/api/SMTRoollSht/getproductrollleafdata", {
+      plantCode: Fac,
+      }).then((res) => {
+        console.log(res.data)
       let data = res.data.flat();
       setProduct(data);
       setsl_Product((prevState) => ({ ...prevState, value: data[0].prd_name }));
@@ -163,55 +171,69 @@ function Fn_ScanSMTRollSht() {
 
   const handleLotxt_Lotno = async () => {
     // 5-190617-001RGP021S048
-    SetGvSerial((prevState) => ({ ...prevState, value: "", visble: 'none' }));
-    setgvScanResult((prevState) => ({ ...prevState, value: "", visble: false }));
-    setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
-    let strLotData = "";
-    let strLot = "";
-    let strPrdName = "";
-    let dtLotData = "";
-    let RollNo = "";
-    strLotData = txt_lotNo.value.toUpperCase().split(";");
-    strLot = strLotData[0];
-    await axios
-      .post("/api/Common/getProductDataByLot", {
-        strLot: strLot,
-      })
-      .then((res) => {
-        let data = res.data.flat().flat();
-        dtLotData = data;
-      });
-    setHfRollNo("");
-    setlbltotalSht("");
-    console.log(dtLotData, "dtLotData");
-    if (dtLotData.length > 0) {
-      strPrdName = dtLotData[0][0];
-      setHfRollNo(dtLotData[0][1]);
-      RollNo = dtLotData[0][1];
-    }
-    console.log("strPrdName", strPrdName);
-    if (strPrdName != "") {
+    if(txt_lotNo.value!=''){
+      SetGvSerial((prevState) => ({ ...prevState, value: "", visble: 'none' }));
+      setgvScanResult((prevState) => ({ ...prevState, value: "", visble: false }));
       setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
-      settxt_lotNo((prevState) => ({ ...prevState, value: strLot }));
-      if (RollNo == "") {
-        setHfRollNo(strLot);
+      let strLotData = "";
+      let strLot = "";
+      let strPrdName = "";
+      let dtLotData = "";
+      let RollNo = "";
+      strLotData = txt_lotNo.value.toUpperCase().split(";");
+      strLot = strLotData[0];
+
+
+      await axios
+        .post("/api/Common/getProductDataByLot", {
+          strLot: strLot,
+        })
+        .then((res) => {
+          let data = res.data.flat().flat();
+          dtLotData = data;
+        });
+      setHfRollNo("");
+      setlbltotalSht("");
+      console.log(dtLotData, "dtLotData");
+      if (dtLotData.length > 0) {
+        strPrdName = dtLotData[0][0];
+        setHfRollNo(dtLotData[0][1]);
+        RollNo = dtLotData[0][1];
       }
-
-      try {
-        const isInArray = Product.some((item) => item.prd_name === strPrdName);
-
-        if (isInArray) {
-          console.log("isInArray", isInArray);
-          setsl_Product((prevState) => ({ ...prevState, value: strPrdName }));
-          await getProductSerialMaster(strPrdName);
-          await getInitialSheet();
-          SetMode("ROLL");
-          setTimeout(() => {
-            fc_txtRollleaf.current.focus();
-          }, 300);
-         
-        } else {
-          console.log("not found1");
+      console.log("strPrdName", strPrdName);
+      if (strPrdName != "") {
+        setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
+        settxt_lotNo((prevState) => ({ ...prevState, value: strLot }));
+        if (RollNo == "") {
+          setHfRollNo(strLot);
+        }
+  
+        try {
+          const isInArray = Product.some((item) => item.prd_name === strPrdName);
+  
+          if (isInArray) {
+           
+            setsl_Product((prevState) => ({ ...prevState, value: strPrdName }));
+            await getProductSerialMaster(strPrdName);
+            await getInitialSheet();
+            SetMode("ROLL");
+            setTimeout(() => {
+              fc_txtRollleaf.current.focus();
+            }, 300);
+           
+          } else {
+            setlbllog((prevState) => ({
+              ...prevState,
+              value: `Product ${strPrdName} not found.`,
+              visble: true,
+            }));
+            setTimeout(() => {
+              fc_SlProduct.current.focus();
+            }, 300);
+            return;
+          }
+        } catch (error) {
+          console.log("catch", error);
           setlbllog((prevState) => ({
             ...prevState,
             value: `Product ${strPrdName} not found.`,
@@ -220,58 +242,45 @@ function Fn_ScanSMTRollSht() {
           setTimeout(() => {
             fc_SlProduct.current.focus();
           }, 300);
-          return;
+         
+        
         }
-      } catch (error) {
-        console.log("catch", error);
+        await axios
+          .post("/api/SMTRoollSht//GetRollLeafTotalByLot", {
+            LotNo: strLot,
+          })
+          .then((res) => {
+            console.log(res.data,'mmmmmm')
+            setlbltotalSht(res.data);
+          });
+      } else {
+        setsl_Product((prevState) => ({
+          ...prevState,
+          value: Product[0].prd_name,
+        }));
+        settxt_lotNo((prevState) => ({ ...prevState, value: '' }));
+        SetGvSerial((prevState) => ({ ...prevState, value: "", visble: false }));
         setlbllog((prevState) => ({
           ...prevState,
-          value: `Product ${strPrdName} not found.`,
+          value: `Invalid lot no.`,
           visble: true,
         }));
+        setHfMode("LOT");
         setTimeout(() => {
-          fc_SlProduct.current.focus();
+          fc_txtLotNo.current.focus();
         }, 300);
-       
-      
       }
-      await axios
-        .post("/api/GetRollLeafTotalByLot", {
-          LotNo: strLot,
-        })
-        .then((res) => {
-          console.log(res.data,'mmmmmm')
-          setlbltotalSht(res.data);
-        });
-    } else {
-      setsl_Product((prevState) => ({
-        ...prevState,
-        value: Product[0].prd_name,
-      }));
-      settxt_lotNo((prevState) => ({ ...prevState, value: '' }));
-      // SetGvSerial((prevState) => ({ ...prevState, value: "", visble: true }));
-      setlbllog((prevState) => ({
-        ...prevState,
-        value: `Invalid lot no.`,
-        visble: true,
-      }));
-      setHfMode("LOT");
-      setTimeout(() => {
-        fc_txtLotNo.current.focus();
-      }, 300);
-     
     }
+ 
   };
 
   useEffect(() => {
-  // GvSerial
   if(GvSerial.visble==''){
     getInitialSheet();
   }
   }, [hfSerialCount]);
 
   const getInitialSheet = async () => {
-    console.log('>>>>>',txtTotalLeaf)
     let dtData = [];
     setHfSerialCount(txtTotalLeaf)
     for (let intRow = 0; intRow < hfSerialCount; intRow++) {
@@ -415,7 +424,7 @@ function Fn_ScanSMTRollSht() {
         disbled: false,
         style: { background: "" },
       }));
-      await getProduct();
+      await GetProductRollLeafData();
       setsl_Product((prevState) => ({
         ...prevState,
         disbled: false,
@@ -430,7 +439,6 @@ function Fn_ScanSMTRollSht() {
       setlbllog((prevState) => ({ ...prevState, visble: false }));
       SetGvSerial((prevState) => ({ ...prevState, visble: 'none' }));
       setHfMode("LOT");
-     
       setTimeout(() => {
         fc_txtLotNo.current.focus();
       }, 300);
@@ -566,7 +574,6 @@ function Fn_ScanSMTRollSht() {
   };
 
   const Bt_Save = async () => {
-    console.log('hfMode',hfMode)
     if (hfMode == "SHEET") {
       await setRollSheetData();
     }
@@ -580,7 +587,7 @@ function Fn_ScanSMTRollSht() {
         LOT_NO: txt_lotNo.value,
         ROLL_NO: hfRollNo,
         ROLL_LEAF: txtRollLeaf.value,
-        SHT_NO: txtLeafNo[i],
+        SHT_NO: txtLeafNo[i]||'',
         SCAN_RESULT: "",
         REMARK: "",
         ROW_UPDATE: "N",
@@ -595,7 +602,6 @@ function Fn_ScanSMTRollSht() {
   const setRollSheetData = async () => {
     let _strFileError = "";
     let dtSheet = getInputSheet();
-    console.log(hfConnRollLength,'hfConnRollLength',txtRollLeaf.value.length)
     let _bolPrdError = false;
     let _bolError = false;
     let _strScanResultAll = "OK";
@@ -604,16 +610,19 @@ function Fn_ScanSMTRollSht() {
     let _strLot = "";
 
     let _strRollLeaf = txtRollLeaf.value;
+    console.log(hfConnRollLength,'hfConnRollLength',txtOperator)
     if (hfConnRollLength == txtRollLeaf.value.length) {
       if (txtOperator != "") {
         await axios
-          .post("/api/ScanFin/GetRollLeafDuplicate", {
-            strRollLeaf: _strRollLeaf,
+          .post("/api/Common/GetRollLeafDuplicate", {
+            dataList:{strRollLeaf:_strRollLeaf,
+              strPlantCode:Fac
+            } ,
             _dtRollLeaf: dtSheet,
           })
           .then((res) => {
-            console.log('GetRollLeafDuplicate',res.data)
-            _intCount = res.data;
+            // console.log(res.data)
+            _intCount = res.data.intCount;
           });
         if (_intCount == 1) {
           _bolError = true;
@@ -628,14 +637,15 @@ function Fn_ScanSMTRollSht() {
           }
         }
         let dataRBMP = "";
+        console.log(_strRollLeaf,'_strRollLeaf')
         await axios
           .post("/api/ScanFin/GetRollLeafScrapRBMP", {
-            strRollLeaf: _strRollLeaf,
-            _dtRollLeaf: dtSheet,
+            strRollNo: _strRollLeaf,
+            
           })
           .then((res) => {
             console.log('GetRollLeafScrapRBMP',res.data)
-            dataRBMP = res.data;
+            dataRBMP = res.data.SCRAP_FLG;
           });
         if (dataRBMP == "Y") {
           _bolError = true;
@@ -652,7 +662,7 @@ function Fn_ScanSMTRollSht() {
           let strRollProduct = hfRollNo + hfCheckRollPrd;
           const start = parseInt(hfCheckRollPrdStart, 10);
           const end = parseInt(hfCheckRollPrdEnd, 10);
-          console.log('_strRollLeaf',_strRollLeaf)
+          console.log('_strRollLeaf', _strRollLeaf.slice(start - 1, end),strRollProduct )
           if (strRollProduct != _strRollLeaf.slice(start - 1, end)) {
             _bolError = true;
             _strScanResultAll = "NG";
@@ -666,7 +676,9 @@ function Fn_ScanSMTRollSht() {
             }
           }
         }
+        console.log('เข้ามั้ย0',_bolError)
         if (!_bolError) {
+          console.log('เข้ามั้ย',dtSheet)
           for (let i = 0; i < dtSheet.length; i++) {
             _strLot = dtSheet[i].LOT_NO;
             let _strPrdName = dtSheet[i].PRODUCT;
@@ -680,16 +692,18 @@ function Fn_ScanSMTRollSht() {
               dtSheet[i].SHT_NO != CONNECT_SERIAL_ERROR &&
               dtSheet[i].SHT_NO != CONNECT_SERIAL_NOT_FOUND
             ) {
+              console.log('เข้าาาาา3')
               let _intCountDup = 0;
               let _strRemark = "";
               let _strError = "";
-              let _strShtNo = dtSheet[i].SHT_NO;
+              let _strShtNo = dtSheet[i].SHT_NO||''
               let _strShtNoDup = "";
               let _strScanResultUpdate = "";
               let _strMessageUpdate = "";
               _bolError = false;
-
-              for (let _intSeq = 0; _intSeq <= dtSheet.length - 1; _inSeq++) {
+              console.log(dtSheet.length,'เข้า10')
+              for (let _intSeq = 0; _intSeq <dtSheet.length ; _intSeq++) {
+               console.log('เข้า9')
                 if (dtSheet[_intSeq].SHT_NO == _strShtNo) {
                   _bolError = true;
                   _strScanResultAll = "NG";
@@ -698,6 +712,8 @@ function Fn_ScanSMTRollSht() {
                     "Leaf barcode scan duplicate / หมายเลขบาร์โค้ดสแกนซ้ำกัน";
                 }
               }
+    
+              console.log(hfConnLeafLength,_strShtNo.length,parseInt(hfConnLeafLength, 10),'เข้ามั้ย7',_bolError)
               if (
                 (parseInt(hfConnLeafLength, 10) === 0 ||
                   parseInt(hfConnLeafLength, 10) === _strShtNo.length) &&
@@ -821,11 +837,12 @@ function Fn_ScanSMTRollSht() {
                     }
                   }
                 }
+                console.log('เข้ามั้ย4',_bolError)
                 if (!_bolError) {
                   await axios
-                    .post("/api/getleafduplicateconnectroll", {
+                    .post("/api/Common/getleafduplicateconnectroll", {
                       dataList: {
-                        strPlantCode: "5",
+                        strPlantCode: Fac,
                         strSheetno: _strShtNo,
                         _strLot: _strLot,
                         _strRollNo: _strRollNo,
@@ -863,6 +880,7 @@ function Fn_ScanSMTRollSht() {
           }
         }
       } else {
+        console.log('txtOperator',txtOperator)
         _bolError = true;
         _strScanResultAll = "NG";
         setlbllog((prevState) => ({
@@ -870,6 +888,7 @@ function Fn_ScanSMTRollSht() {
           Visible: true,
           value: "Please input operator / กรุณาระบุพนักงาน",
         }));
+        return;
       }
     } else {
       console.log('เข้าาาาาาาา222222')
@@ -880,6 +899,7 @@ function Fn_ScanSMTRollSht() {
         Visible: true,
         value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
       }));
+      return
     }
     setlblResult((prevState) => ({
       ...prevState,
@@ -890,7 +910,7 @@ function Fn_ScanSMTRollSht() {
     setHfScanResult(_strScanResultAll);
 
     await axios
-      .post("/api/GetRollLeafTotalByLot", {
+      .post("/api/SMTRoollSht/GetRollLeafTotalByLot", {
         LotNo: _strLot,
       })
       .then((res) => {

@@ -173,7 +173,7 @@ console.log('gvScanResult',gvScanResult)
                         // label="Operator. :"
                         fullWidth
                         // disabled
-                        value={txtOperator}
+                        value={txtOperator}4
                         onChange={(e) => {
                           settxtOperator(e.target.value);
                         }}
