@@ -4,12 +4,16 @@ import Hearder from "../Header/Header";
 import { Card, Paper } from "@mui/material";
 import { Input, Button, Table,Typography  } from "antd";
 const { Text } = Typography;
+import { fc_LotTraceView } from "./fc_LotTraceView";
 import {
   SearchOutlined,
   UndoOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
 function LotTraceView() {
+    const {
+  
+      } = fc_LotTraceView();
   const columns = [
     {
       title: "Material Code",

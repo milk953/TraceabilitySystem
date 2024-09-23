@@ -51,6 +51,7 @@ import SMTDeleteData from "./Page/SMTDeleteData/SMTDeleteData";
 import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResult";
 import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace';
 import PieceTraceView from "./Page/View Trace (Piece)/PieceTraceView";
+import LotTraceView from "./Page/LotTraceView/LotTraceView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -126,7 +127,7 @@ const App = () => {
             <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
             <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
-          
+            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
             <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
