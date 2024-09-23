@@ -19,7 +19,7 @@ function Fn_ScanSMTRollSht() {
   const [lbllog, setlbllog] = useState({
     value: "",
     disbled: "",
-    visble: false,
+    visible: false,
     style: "",
   });
   const [txtRollLeaf, settxtRollLeaf] = useState({
@@ -281,6 +281,7 @@ function Fn_ScanSMTRollSht() {
   }, [hfSerialCount]);
 
   const getInitialSheet = async () => {
+    console.log('g-hjk9999')
     let dtData = [];
     setHfSerialCount(txtTotalLeaf)
     for (let intRow = 0; intRow < hfSerialCount; intRow++) {
@@ -288,6 +289,8 @@ function Fn_ScanSMTRollSht() {
         SEQ: intRow + 1,
       });
     }
+    
+    SettxtLeafNo(Array(txtTotalLeaf).fill(""))
     SetGvSerial((prevState) => ({ ...prevState, value: dtData }));
     return dtData;
   };
@@ -535,7 +538,7 @@ function Fn_ScanSMTRollSht() {
       SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
       await getInitialSheet();
       setTimeout(() => {
-        fc_GvSerial.current.focus();
+        fc_GvSerial.current[0].focus();
       }, 300);
      
       
@@ -885,10 +888,10 @@ function Fn_ScanSMTRollSht() {
         _strScanResultAll = "NG";
         setlbllog((prevState) => ({
           ...prevState,
-          Visible: true,
+          visible: true,
           value: "Please input operator / กรุณาระบุพนักงาน",
         }));
-        return;
+      fc_txtOperator.current.focus();
       }
     } else {
       console.log('เข้าาาาาาาา222222')
@@ -896,17 +899,17 @@ function Fn_ScanSMTRollSht() {
       _strScanResultAll = "NG";
       setlbllog((prevState) => ({
         ...prevState,
-        Visible: true,
+        visible: true,
         value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
       }));
-      return
+      
     }
     setlblResult((prevState) => ({
       ...prevState,
-      Visible: true,
+      visible: true,
       value: _strScanResultAll,
     }));
-
+    console.log('3333333333')
     setHfScanResult(_strScanResultAll);
 
     await axios
@@ -928,7 +931,7 @@ function Fn_ScanSMTRollSht() {
         style: 'Green',
       }));
     }
-
+console.log('!_bolPrdError',_bolPrdError)
     if (!_bolPrdError) {
       console.log(_bolPrdError,'_bolPrdError1')
       setgvScanResult((prevState) => ({
@@ -952,7 +955,7 @@ function Fn_ScanSMTRollSht() {
           value: "",
           disbled: false,
         }));
-        // pnlSerial.Visible = True
+        // pnlSerial.visible = True
         SetGvSerial((prevState) => ({ ...prevState,visble: false }));
         setHfMode("SHEET");
       } else {
@@ -967,6 +970,7 @@ function Fn_ScanSMTRollSht() {
         value: "",
         disbled: false,
       }));
+      ExportGridToCSV(dtSheet,columns)
       getInitialSheet();
     }
   };
@@ -1042,6 +1046,53 @@ function Fn_ScanSMTRollSht() {
     
   ];
 
+
+
+  const txtOperator_TextChanged = (value) => {
+    if(txtOperator!=''){
+      setlbllog((prevState) => ({
+        ...prevState,
+        visible: false,
+        value: ``,
+      }));
+    }
+  }
+
+  const txtRollLeaf_TextChanged = (value) => {
+    if(txtRollLeaf!=''){
+      setlbllog((prevState) => ({
+        ...prevState,
+        visible: false,
+        value: ``,
+      }));
+      setTimeout(() => {
+        fc_GvSerial.current[0].focus();
+      }, 300);
+    }
+  }
+  
+  const ExportGridToCSV = (data, ColumnsHeader) => {
+    const filteredColumns = ColumnsHeader.filter(
+      (col) => col.title !== "" && col.key !== null && col.title !== undefined
+    );
+
+    const headers = filteredColumns.map((col) => col.key);
+
+    const filteredData = data.map((row) =>
+      filteredColumns.map((col) => row[col.dataIndex] || "")
+    );
+
+    const wsData = [headers, ...filteredData];
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blobData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(blobData, "export.xlsx");
+  };
+
   return {
     settxt_lotNo,
     txt_lotNo,
@@ -1076,7 +1127,9 @@ function Fn_ScanSMTRollSht() {
     fc_txtLotNo,
     fc_txtOperator,
     handletxtTotalLeaf,
-    columns
+    columns,
+    txtOperator_TextChanged,
+    txtRollLeaf_TextChanged
   };
 }
 

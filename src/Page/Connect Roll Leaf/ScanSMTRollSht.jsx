@@ -67,7 +67,9 @@ function ScanSMTRoollSht() {
     fc_txtLotNo,
     fc_txtOperator,
     handletxtTotalLeaf,
-    columns
+    columns,
+    txtOperator_TextChanged,
+    txtRollLeaf_TextChanged
   } = Fn_ScanSMTRollSht();
 // console.log('gvScanResult',gvScanResult)
 
@@ -179,12 +181,16 @@ function ScanSMTRoollSht() {
                         className="input_txt"
                         size="small"
                         // label="Operator. :"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtOperator_TextChanged();
+                          }
+                        }}
                         fullWidth
                         inputRef={(el) => (fc_txtOperator.current = el)}
                         value={txtOperator}
-                        onChange={(e) => {
-                          settxtOperator(e.target.value);
-                        }}
+                        onChange={(e, value) => settxtOperator(value)}
+                        onBlur={txtOperator_TextChanged}
                       ></TextField>
                     </TableCell>
                   </TableRow>
@@ -234,14 +240,20 @@ function ScanSMTRoollSht() {
                           }));
                         
                         }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtRollLeaf_TextChanged();
+                          }
+                        }}
+                        onBlur={txtRollLeaf_TextChanged}
                         fullWidth
                       ></TextField>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-
-              {lbllog.visble == true && (
+{console.log(lbllog,'lbllog')}
+              {lbllog.visible== true && (
                 <Paper
                   elevation={3}
                   className="Card-lblLog"
