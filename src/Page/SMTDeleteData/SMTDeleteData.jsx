@@ -172,7 +172,11 @@ function SMTDeleteData() {
                                         onChange={(e) => {
                                             settxtRollLeaf(e.target.value);
                                         }}
-                                        onBlur={btnRollDeleteClick}
+                                        onBlur={() => {
+                                            if (txtRollLeaf !== "") {
+                                                btnShtDeleteClick();
+                                            }
+                                        }}
                                     />
                                 </TableCell>
                                 <TableCell align="center">
