@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Card, Paper } from "@mui/material";
-import { Input, Button, Table,Typography  } from "antd";
+import { Input, Button, Table, Typography } from "antd";
 const { Text } = Typography;
 import { fc_LotTraceView } from "./fc_LotTraceView";
 import {
@@ -10,10 +10,9 @@ import {
   UndoOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
+import "../LotTraceView/ViewLot.css";
 function LotTraceView() {
-    const {
-  
-      } = fc_LotTraceView();
+  const { settxtLotNo, txtLotNo, fc_txtLotNo } = fc_LotTraceView();
   const columns = [
     {
       title: "Material Code",
@@ -95,7 +94,7 @@ function LotTraceView() {
 
   const columns2 = [
     {
-      title: "Roll No.",  //`Roll No.${txtno}`
+      title: "Roll No.", //`Roll No.${txtno}`
       dataIndex: "SHT_SEQ",
       key: "Roll No.",
       render: (text, record, index) => {
@@ -116,87 +115,88 @@ function LotTraceView() {
       align: "center",
     },
     {
-        title: "Factory",
-        dataIndex: "SHT_SEQ",
-        key: "Factory",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      title: "Factory",
+      dataIndex: "SHT_SEQ",
+      key: "Factory",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Process",
-        dataIndex: "SHT_SEQ",
-        key: "Process",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Process",
+      dataIndex: "SHT_SEQ",
+      key: "Process",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Process Name",
-        dataIndex: "SHT_SEQ",
-        key: "Process Name",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Process Name",
+      dataIndex: "SHT_SEQ",
+      key: "Process Name",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Production Date",
-        dataIndex: "SHT_SEQ",
-        key: "Production Date",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Production Date",
+      dataIndex: "SHT_SEQ",
+      key: "Production Date",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Machine No.",
-        dataIndex: "SHT_SEQ",
-        key: "Machine No.",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Machine No.",
+      dataIndex: "SHT_SEQ",
+      key: "Machine No.",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Operator",
-        dataIndex: "SHT_SEQ",
-        key: "Operator",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Operator",
+      dataIndex: "SHT_SEQ",
+      key: "Operator",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Document No.",
-        dataIndex: "SHT_SEQ",
-        key: "Document No.",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Document No.",
+      dataIndex: "SHT_SEQ",
+      key: "Document No.",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Tools Type",
-        dataIndex: "SHT_SEQ",
-        key: "Tools Type",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Tools Type",
+      dataIndex: "SHT_SEQ",
+      key: "Tools Type",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Tools Name",
-        dataIndex: "SHT_SEQ",
-        key: "Tools Name",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Tools Name",
+      dataIndex: "SHT_SEQ",
+      key: "Tools Name",
+      render: (text, record, index) => {
+        return index + 1;
       },
+      align: "center",
+    },
   ];
+
   const columns4 = [
     {
       title: "Process",
@@ -208,33 +208,34 @@ function LotTraceView() {
       align: "center",
     },
     {
-        title: "Process Name",
-        dataIndex: "SHT_SEQ",
-        key: "Process Name",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      title: "Process Name",
+      dataIndex: "SHT_SEQ",
+      key: "Process Name",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Test Data",
-        dataIndex: "SHT_SEQ",
-        key: "Test Data",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Test Data",
+      dataIndex: "SHT_SEQ",
+      key: "Test Data",
+      render: (text, record, index) => {
+        return index + 1;
       },
-      {
-        title: "Detail",
-        dataIndex: "SHT_SEQ",
-        key: "Detail",
-        render: (text, record, index) => {
-          return index + 1;
-        },
-        align: "center",
+      align: "center",
+    },
+    {
+      title: "Detail",
+      dataIndex: "SHT_SEQ",
+      key: "Detail",
+      render: (text, record, index) => {
+        return index + 1;
       },
+      align: "center",
+    },
   ];
+
   return (
     <>
       <Hearder />
@@ -243,30 +244,15 @@ function LotTraceView() {
         <Input
           placeholder="Lot No. :"
           style={{ width: "250px" }}
-          //   value={txt_PONo}
-          //   onChange={(e) => {
-          //     settxt_PONo(e.target.value);
-          //   }}
+          value={txtLotNo}
+          onChange={(e) => {
+            settxtLotNo(e.target.value);
+          }}
+          ref={fc_txtLotNo}
         />{" "}
         &nbsp;
-        <Input
-          placeholder="Sheet No. :"
-          style={{ width: "300px" }}
-          //   value={txt_PONo}
-          //   onChange={(e) => {
-          //     settxt_PONo(e.target.value);
-          //   }}
-        />{" "}
-        &nbsp;
-        <Input
-          placeholder="Serial No.   :"
-          style={{ width: "300px" }}
-          //   value={txt_PONo}
-          //   onChange={(e) => {
-          //     settxt_PONo(e.target.value);
-          //   }}
-        />{" "}
-        &nbsp;
+        <Input placeholder="Sheet No. :" style={{ width: "300px" }} /> &nbsp;
+        <Input placeholder="Serial No.   :" style={{ width: "300px" }} /> &nbsp;
         <Button
           type="primary"
           //   icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
@@ -287,90 +273,58 @@ function LotTraceView() {
         <br />
         <br />
         <div style={{ display: "flex", gap: "10px" }}>
-          <Card
-            component={Paper}
-            style={{
-              width: "250px",
-              height: "50px",
-              textAlign: "center",
-              background: "#F0A500",
-              fontFamily:
-                "Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif", // ฟอนต์ของ Ant Design
-              color: "#fff",
-            }}
-          >
-            <b style={{ fontSize: "20px" }}> Lotno. </b>
+          <Card component={Paper} className="Card-ViewLot1" style={{width:'180px'}}>
+            <b style={{ fontSize: "20px" }}>Lotno.</b>
             <br />
             1873576464
           </Card>
-          <Card
-            component={Paper}
-            style={{
-              width: "250px",
-              height: "50px",
-              textAlign: "center",
-              background: "#F0A500",
-              fontFamily:
-                "Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif", // ฟอนต์ของ Ant Design
-              color: "#fff",
-            }}
-          >
+          <Card component={Paper} className="Card-ViewLot1" style={{width:'200px'}}>
             <b style={{ fontSize: "20px" }}> Product Name </b>
             <br />
             1873576464
           </Card>
-          <Card
-            component={Paper}
-            style={{
-              width: "250px",
-              height: "50px",
-              textAlign: "center",
-              background: "#F0A500",
-              fontFamily:
-                "Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif", // ฟอนต์ของ Ant Design
-              color: "#fff",
-            }}
-          >
+          <Card component={Paper} className="Card-ViewLot1" style={{width:'250px'}}>
+            <b style={{ fontSize: "20px" }}>Previous Lot No. </b>
+            <br />
+            1873576464
+          </Card>
+          <Card component={Paper} className="Card-ViewLot1" style={{width:'180px'}}>
+            <b style={{ fontSize: "20px" }}>Next Lot No. </b>
+            <br />
+            1873576464
+          </Card>
+          <Card component={Paper} className="Card-ViewLot1" style={{width:'180px'}}>
             <b style={{ fontSize: "18px" }}> Sheet No. </b>
             <br />
-            <b style={{ fontSize: "18px" }}>  Roll Leaf</b>
-          
+            <b style={{ fontSize: "18px" }}> Roll Leaf</b>
           </Card>
-          <Card
-            component={Paper}
-            style={{
-              width: "250px",
-              height: "50px",
-              textAlign: "center",
-              background: "#F0A500",
-              fontFamily:
-                "Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif", // ฟอนต์ของ Ant Design
-              color: "#fff",
-            }}
-          >
+          <Card component={Paper} className="Card-ViewLot1"style={{width:'210px'}}>
             <b style={{ fontSize: "20px" }}> Connect Sheet </b>
-            <br />
-            0
+            <br />0
           </Card>
-          <Card
-            component={Paper}
-            style={{
-              width: "250px",
-              height: "50px",
-              textAlign: "center",
-              background: "#F0A500",
-              fontFamily:
-                "Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif", // ฟอนต์ของ Ant Design
-              color: "#fff",
-            }}
-          >
+          <Card className="Card-ViewLot1" style={{width:'170px'}}>
             <b style={{ fontSize: "20px" }}> Final Gate </b>
             <br />
-           <b style={{color:'#00712D'}}> OK: 0</b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b style={{color:'red'}}> NG: 0</b>
+            <b style={{ color: "#00712D" }}> OK: 0</b>{" "}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+            <b style={{ color: "red" }}> NG: 0</b>
           </Card>
+          <div >
+          <Card component={Paper} className="Card-ViewLot2" >
+            <b style={{ fontSize: "16px" }}>Sheet Front: </b>12123917348274836
+        
+          </Card>
+
+            <Card component={Paper} className="Card-ViewLot2">
+            <b style={{ fontSize: "16px" }}> Sheet Back: </b>12123917348274836 
+        
+          </Card>
+          </div>
         </div>
         <br />
+       
         <div style={{ display: "flex", width: "100%" }}>
+             {/*----------------------------- Table1.1--------------------- */}
           <Table
             style={{ width: "80%" }}
             columns={columns}
@@ -380,6 +334,7 @@ function LotTraceView() {
             bordered
           />{" "}
           &nbsp;
+           {/*----------------------------- Table1.2--------------------- */}
           <Table
             style={{ width: "20%" }}
             columns={columns2}
@@ -390,7 +345,8 @@ function LotTraceView() {
             className="tableGvResult"
           />
         </div>
-        <br/>
+        <br />
+         {/*----------------------------- Table2--------------------- */}
         <Table
           style={{ width: "100%" }}
           columns={columns3}
@@ -398,7 +354,9 @@ function LotTraceView() {
           pagination={false}
           size="small"
           bordered
-        /><br/>
+        />
+         {/*----------------------------- Table3--------------------- */}
+        <br />
         <Table
           style={{ width: "50%" }}
           columns={columns4}
