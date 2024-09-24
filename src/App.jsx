@@ -50,7 +50,7 @@ import ScanSMTSerialShtShtCopy from './Page/FIN Duplicate Sht&Pcs/ScanSMTSerialS
 import SMTDeleteData from "./Page/SMTDeleteData/SMTDeleteData";
 import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResult";
 import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace';
-import PieceTraceView from "./Page/View Trace (Piece)/PieceTraceView";
+import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
