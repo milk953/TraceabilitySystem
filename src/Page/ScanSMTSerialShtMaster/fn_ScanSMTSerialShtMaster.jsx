@@ -330,7 +330,7 @@ function fn_ScanSMTSerialShtMaster() {
     const handleChangeRollLeaf = async () => {
         setpnlLog(false);
         setlblLog("");
-        console.log("hfConnRollLength",hfConnRollLength)
+        console.log("hfConnRollLength", hfConnRollLength)
         if (txtRollLeaf !== "" && txtRollLeaf.length === parseInt(hfConnRollLength)) {
             let strRollProduct = hfRollNo + hfCheckRollPrd;
             if (hfCheckRollPrdFlg === "Y" &&
@@ -796,6 +796,8 @@ function fn_ScanSMTSerialShtMaster() {
                             .then((res) => {
                                 _strReturn = res.data[0].p_error;
                                 if (_strReturn !== "") {
+                                    dtSerial[i].SCAN_RESULT = "NG";
+                                    dtSerial[i].REMARK = "No sheet ELT result / ไม่พบผลการทดสอบ ELT";
                                     _strScanResultAll = "NG";
                                     _bolError = true;
                                     if (_strReturn !== "NG") {
@@ -860,7 +862,8 @@ function fn_ScanSMTSerialShtMaster() {
                                     },
                                 })
                                     .then((res) => {
-                                        _Result = res.data;
+                                        _Result = res.data._strresult;
+                                        _strMessage = res.data._strmessage;
                                     });
                                 if (_Result === "NG") {
                                     _strScanResultUpdate = _Result;

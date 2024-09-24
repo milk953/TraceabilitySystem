@@ -867,6 +867,8 @@ function fn_ScanSMTSerialSht() {
             .then((res) => {
               _strReturn = res.data[0].p_error;
               if (_strReturn !== "") {
+                dtSerial[i].SCAN_RESULT = "NG";
+                dtSerial[i].REMARK = " No sheet ELT result / ไม่พบผลการทดสอบ ELT";
                 _strScanResultAll = "NG";
                 _bolError = true;
                 if (_strReturn !== "NG") {
@@ -930,7 +932,8 @@ function fn_ScanSMTSerialSht() {
                 },
               })
                 .then((res) => {
-                  _Result = res.data;
+                  _Result = res.data._strresult;
+                  _strMessage = res.data._strmessage;
                 });
 
               if (_Result === "NG") {

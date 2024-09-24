@@ -799,7 +799,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 .then((res) => {
                                     _dtShtData = res.data;
                                 });
-                            if (_dtShtData.length > 0) {
+                            if (_dtShtData !== "") {
                                 _FrontSheetBarcode = _dtShtData.sheet_no_front;
                                 _RearSheetBarcode = _dtShtData.sheet_no_back;
                                 _intShtSeq = _dtShtData.pcs_no;
@@ -815,7 +815,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                     },
                                 })
                                     .then((res) => {
-                                        _Result = res.data;
+                                        _Result = res.data._strresult;
+                                        _strMessage = res.data._strmessage;
                                     });
 
                                 if (_Result === "NG") {

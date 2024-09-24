@@ -215,6 +215,7 @@ function fn_ScanSMTSerialPcsChrome() {
       })
       .then((res) => {
         let data = res.data;
+        
         setProduct(data);
         setSl_Product((prevState) => ({
           ...prevState,

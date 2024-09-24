@@ -229,10 +229,15 @@ function fn_ScanSheetInspect() {
 
     const handleselShtBin = async (value) => {
         setselBinNo(value);
-        await getSheetInspectData(value);
         selShtXOut.current?.focus();
         console.log(value,'handleselShtBin')
     };
+
+    useEffect(() => {
+        if (selBinNo) {
+            getSheetInspectData();
+        }
+    }, [selBinNo]);
 
     const [boolDup, setboolDup] = useState(false);
 
@@ -319,10 +324,10 @@ function fn_ScanSheetInspect() {
         } else {
             SetMode("SHEET");
         }
-        getSheetInspectData();
+        await getSheetInspectData();
     };
 
-    const getSheetInspectData = async (selBinNo) => {
+    const getSheetInspectData = async () => {
         console.log("มาไหม", hfBINGroup, selBinNo);
         try {
             const res = await axios.post("/api/getProductShtInspect", {

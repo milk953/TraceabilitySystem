@@ -20,6 +20,7 @@
     color: yellow !important;
     font-weight: bold;
     margin-top: 10px;
+
 }
 .Img_GvResult{
 width: 360px;
@@ -45,6 +46,7 @@ margin-bottom: 30px;
     margin: auto;
     height: 45px;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .Card-lblTime{
@@ -52,6 +54,7 @@ margin-bottom: 30px;
     margin: auto;
     height: 45px;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .tableGvResult .ant-table-thead > tr > th {
@@ -67,7 +70,7 @@ margin-bottom: 30px;
 .tableGvResult{
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
-    margin-top: 10px;
+
 }
 .input_txt .MuiInputBase-input {
   height: 10px; 
@@ -135,7 +138,7 @@ background-color: #e0e0e0;
 }
 
 .Status-Off{
-    background: red;
+    background: #BB2525;
     color: #ffffff;
 }
 .Card-Result{

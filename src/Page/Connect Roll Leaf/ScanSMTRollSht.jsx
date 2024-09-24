@@ -69,7 +69,7 @@ function ScanSMTRoollSht() {
     handletxtTotalLeaf,
     columns
   } = Fn_ScanSMTRollSht();
-console.log('gvScanResult',gvScanResult)
+// console.log('gvScanResult',gvScanResult)
 
 
   return (
