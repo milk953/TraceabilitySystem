@@ -45,24 +45,23 @@ function PieceTraceView() {
                         justifyContent: 'center',
                         alignItems: 'center',
                         flexDirection: "column",
+                        width: "100%"
                     }}
 
                 >
                     <Table className="TbViewTracePiece">
                         <TableBody>
                             <TableRow>
-                                <TableCell align="center" colSpan={4}>
-                                    <Typography
-                                        style={{ marginLeft: "200px" }}
-                                    >
+                                <TableCell align="right" colSpan={4}>
+                                    <Typography>
                                         Sheet No. :
                                     </Typography>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     <TextField
                                         // className="TxtField"
                                         size="small"
-                                        fullWidth
+                                        sx={{ width: "123%" }}
                                     // inputRef={(el) => (inputShtNo.current = el)}
                                     // value={txtSheetNo}
                                     // onChange={(e) => {
@@ -75,18 +74,105 @@ function PieceTraceView() {
                                     // }}
                                     />
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     <Button
                                         variant="contained"
-                                        size="small"
-                                        // onClick={btnRetriveClick}
+                                        sx={{ width: "20%" }}
+                                    // onClick={btnRetriveClick}
                                     >
                                         Retrive
+                                    </Button>{" "}
+                                    &nbsp;&nbsp;&nbsp;
+                                    <Button
+                                        variant="contained"
+                                        sx={{ width: "20%" }}
+                                        color="error"
+                                    // onClick={btnRetriveClick}
+                                    >
+                                        Clear
                                     </Button>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell align="right" colSpan={4}>
+                                    <Typography>
+                                        Piece Chip :
+                                    </Typography>
+                                </TableCell>
+                                <TableCell align="center">
+                                    <TextField
+                                        // className="TxtField"
+                                        size="small"
+                                        sx={{ width: "123%" }}
+                                    // inputRef={(el) => (inputShtNo.current = el)}
+                                    // value={txtSheetNo}
+                                    // onChange={(e) => {
+                                    //     settxtSheetNo(e.target.value);
+                                    // }}
+                                    // onBlur={() => {
+                                    //     if (txtSheetNo !== "") {
+                                    //         btnShtDeleteClick();
+                                    //     }
+                                    // }}
+                                    />
                                 </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
+
+                    <div>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>
+                                        <Typography>
+                                            Product :
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <TextField
+                                            className="input_txt"
+                                            size="small"
+                                            fullWidth
+                                        // value={txtProduct}
+                                        // onChange={(e) => {
+                                        //     settxtProduct(e.target.value);
+                                        // }}
+                                        // onKeyDown={(e) => {
+                                        //     if (e.key === "Enter") {
+                                        //         handleChangeProduct();
+                                        //     }
+                                        // }}
+                                        // onBlur={handleChangeProduct}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            Sheet No.(F) :
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <a id="hypSheetNoF" href="/your-url" style={{ fontSize: "16px" }}>HyperLink</a>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <Typography>
+                                            Lot No. :
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <a id="hypLotNo" href="/your-url" style={{ fontSize: "16px" }}>HyperLink</a>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            Sheet No.(B) :
+                                        </Typography>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </div>
                 </Box>
             </Card>
         </div>
