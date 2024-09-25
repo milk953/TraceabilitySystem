@@ -687,11 +687,12 @@ function fn_ScanSMTSerialShtCopy() {
       }
       setLblResultState(true);
       setHideImg(false);
+      
       if (_strScanResultAll == "NG") {
         setlblResult({
-          text: _strScanResultAll,
-          styled: { backgroundColor: "red", color: "white" },
-        });
+                text: _strScanResultAll,
+                styled: { backgroundColor: "red", color: "white" },
+              })
       } else if (_strErrorAll != "") {
         setlblResult({
           text: _strScanResultAll + _strErrorAll,
@@ -703,6 +704,7 @@ function fn_ScanSMTSerialShtCopy() {
           styled: { backgroundColor: "green", color: "white" },
         });
       }
+     
       setGvScanResult(dtSerial);
       console.log(dtSerial,'dtSerialLast')
       setTxtSerial(gvSerial.map(() => ""));

@@ -385,16 +385,17 @@ function ScanSMTSerialShtCopy() {
               )}
               {lblResultState && (
                 <div className="lblResultMasterFinal">
+                  {console.log(lblResult.text, "lblResult")}
                   <Paper
                     className="lblResultCardMasterFinal"
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
+                      background: lblResult.text === "OK" ? "green" : lblResult.text === "NG" ? "red" : "white",
                       background:
-                      lblResult.value === "OK"
+                      lblResult.text === "OK"
                         ? "#059212"
-                        : lblResult.value === "NG"
+                        : lblResult.text === "NG"
                         ? "red"
                         : "#BA0900",
                     }}
