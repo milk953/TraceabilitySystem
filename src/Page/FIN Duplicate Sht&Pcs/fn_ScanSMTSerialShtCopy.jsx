@@ -442,7 +442,7 @@ function fn_ScanSMTSerialShtCopy() {
             }
             console.log(_strScanResultUpdate,'_strScanResultUpdate')
             if(_strScanResultUpdate !== 'NG'){
-              let [_inCountSeq, _strSerialNoDup] = await getData("GetSerialDuplicateConnectSht",{strLssSerialNo:dtSerial[i].SERIAL}) //รอทำ api ใหม่
+              let [_inCountSeq, _strSerialNoDup] = await getData("GetSerialDuplicateConnectSht",{strLssSerialNo:dtSerial[i].SERIAL}) 
               console.log(_inCountSeq,'_inCountSeq',_strSerialNoDup,'_strSerialNoDup')
               if (_inCountSeq > 0){
                 _strScanResultUpdate = "NG"
@@ -463,7 +463,7 @@ function fn_ScanSMTSerialShtCopy() {
       console.log(hfWeekCodeType,'hfWeekCodeType')
       if (hfWeekCodeType =='S' && _bolError == false){
         let _strReturn = ''
-        // _strReturn = BIZ_ScanSMTSerial.GetShippingSerialNo(dtSerial, _strLotRef, hfWeekCodeType.Value) ยังไม่ได้ทำ
+        _strReturn = getData("GetShippingSerialNo",{strLot:_strLotRef,serial:dtSerial[i].SERIAL,seq:dtSerial[i].SEQ,weekType:hfWeekCodeType})
         if(_strReturn !== ''){
           _strScanResultAll = "NG"
           _bolError = true
@@ -975,6 +975,22 @@ function fn_ScanSMTSerialShtCopy() {
         Swal.fire("Error", error.message);
       })
       return result;
+    } else if (type == 'GetShippingSerialNo'){
+      let result = '';
+      await axios.post("/api/Common/GetShippingSerialNo",
+        {strLotNo: params.strLot,
+          dtSerial:[{
+          SERIAL: params.serial,
+          SEQ: params.seq
+      }],
+      strWeekType: params.weekType
+    }
+      ).then((res) => {
+        result = res.data
+      }).catch((error) => {
+        console.error(error)
+      })
+     return result 
     }
   }
   async function getCountDataBylot(lot) {
