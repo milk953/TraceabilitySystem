@@ -51,7 +51,6 @@ import FVIBadmarkMonitoring from './Page/FVI Badmark Monitoring/rpt_LotFVIBadmar
 import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace'
 import SMTDeleteData from "./Page/SMTDeleteData/SMTDeleteData";
 import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResult";
-import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace';
 import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
