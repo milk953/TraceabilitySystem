@@ -60,7 +60,7 @@ function fn_rpt_LotFVIBadmarkView() {
               LOT: NO,
             })
             .then((res) => {
-                dtProduct = res.data; 
+                dtProduct = res.data[0]; 
               
             });
             if(dtProduct.length > 0){

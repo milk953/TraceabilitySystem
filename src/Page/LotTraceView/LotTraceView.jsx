@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Card, Paper } from "@mui/material";
-import { Input, Button, Table, Typography } from "antd";
+import { Input, Button, Table, Typography,Tag } from "antd";
 const { Text } = Typography;
-import { fc_LotTraceView } from "./fc_LotTraceView";
+import { fn_LotTraceView } from "./fn_LotTraceView";
 import {
   SearchOutlined,
   UndoOutlined,
@@ -12,31 +12,44 @@ import {
 } from "@ant-design/icons";
 import "../LotTraceView/ViewLot.css";
 function LotTraceView() {
-  const { settxtLotNo, txtLotNo, fc_txtLotNo } = fc_LotTraceView();
-  const columns = [
+  const {
+    settxtLotNo,
+    txtLotNo,
+    fc_txtLotNo,
+    btnSearch_Click,
+    gvLot,
+    gvMaterial,
+    gvRouting,
+  } = fn_LotTraceView();
+  console.log(gvRouting,'gvRouting')
+
+  const columnsgvMaterial = [
     {
       title: "Material Code",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "MAT_CODE",
       key: "Material Code",
       render: (text, record, index) => {
         return index + 1;
       },
       align: "center",
+      width:'66px'
+
     },
     {
       title: "Material Name",
-      dataIndex: "ROLL_LEAF",
+      dataIndex: "MAT_NAME",
       key: "Material Name",
       align: "left",
       render: (text, record, index) => {
         return text;
       },
+
     },
     {
       title: "Category",
-      dataIndex: "SHT_NO",
+      dataIndex: "MAT_CATEGORY",
       key: "Category",
-      align: "center",
+      align: "left",
       render: (text, record, index) => {
         return text;
       },
@@ -45,153 +58,158 @@ function LotTraceView() {
     {
       title: "Vender Lot",
       key: "Vender Lot",
-      dataIndex: "SCAN_RESULT",
-      align: "center",
+      dataIndex: "VENDER_LOT",
+      align: "left",
       render: (text, record, index) => {
-        const backgroundColor =
-          text === "NG" ? "#f50" : text === "OK" ? "#87d068" : "transparent";
-
-        return <Tag color={backgroundColor}>{text}</Tag>;
+        return text;
       },
     },
     {
       title: "Sub Lot",
       key: "Sub Lot",
-      dataIndex: "REMARK",
-      align: "center",
+      dataIndex: "SUB_VENDER_LOT",
+      align: "left",
       render: (text, record, index) => {
         return text;
       },
+     width:100
     },
     {
       title: "Expired Date",
       key: "Expired Date",
-      dataIndex: "REMARK",
+      dataIndex: "EXPIRE_DATE",
       align: "center",
       render: (text, record, index) => {
         return text;
       },
+      width :100
     },
     {
       title: "Invoice No.",
       key: "Invoice No.",
-      dataIndex: "REMARK",
-      align: "center",
+      dataIndex: "INVOICE_NO",
+      align: "left",
       render: (text, record, index) => {
         return text;
       },
+      width :110
     },
     {
       title: "Vender Name",
       key: "Vender Name",
-      dataIndex: "REMARK",
-      align: "center",
+      dataIndex: "VENDER_NAME",
+      align: "left",
       render: (text, record, index) => {
         return text;
       },
     },
   ];
 
-  const columns2 = [
+  const columnsgvLot = [
     {
-      title: "Roll No.", //`Roll No.${txtno}`
-      dataIndex: "SHT_SEQ",
+      title: gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO 
+      ? `Roll No. : ${gvLot.value[0].LOT_ROLL_NO}` 
+      : `Roll No.`,    
+      dataIndex: "LOT",
       key: "Roll No.",
       render: (text, record, index) => {
-        return index + 1;
+        return text
       },
       align: "center",
     },
   ];
 
-  const columns3 = [
+  const columnsgvRouting = [
     {
       title: "No.",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "SEQ",
       key: "No.",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
+      width:50
     },
     {
       title: "Factory",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "FACTORY",
       key: "Factory",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
+      width:63
     },
     {
       title: "Process",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "PROC",
       key: "Process",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
+      width:70
     },
     {
       title: "Process Name",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "PROC_DESC",
       key: "Process Name",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
     {
       title: "Production Date",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "PROD_DATE",
       key: "Production Date",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
     {
       title: "Machine No.",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "MC_NO",
       key: "Machine No.",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
     {
       title: "Operator",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "OPER",
       key: "Operator",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
     {
       title: "Document No.",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "EMCS",
       key: "Document No.",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
     {
       title: "Tools Type",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "TTT_TOOLS_TYPE_NAME",
       key: "Tools Type",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
     {
       title: "Tools Name",
-      dataIndex: "SHT_SEQ",
+      dataIndex: "TTL_TOOLS_CODE",
       key: "Tools Name",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
@@ -257,7 +275,7 @@ function LotTraceView() {
           type="primary"
           //   icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
           icon={<SearchOutlined />}
-          //   onClick={() => Search()}
+            onClick={() => btnSearch_Click()}
         >
           Execute
         </Button>
@@ -273,94 +291,120 @@ function LotTraceView() {
         <br />
         <br />
         <div style={{ display: "flex", gap: "10px" }}>
-          <Card component={Paper} className="Card-ViewLot1" style={{width:'180px'}}>
+          <Card
+            component={Paper}
+            className="Card-ViewLot1"
+            style={{ width: "180px" }}
+          >
             <b style={{ fontSize: "20px" }}>Lotno.</b>
             <br />
             1873576464
           </Card>
-          <Card component={Paper} className="Card-ViewLot1" style={{width:'200px'}}>
+          <Card
+            component={Paper}
+            className="Card-ViewLot1"
+            style={{ width: "200px" }}
+          >
             <b style={{ fontSize: "20px" }}> Product Name </b>
             <br />
             1873576464
           </Card>
-          <Card component={Paper} className="Card-ViewLot1" style={{width:'250px'}}>
+          <Card
+            component={Paper}
+            className="Card-ViewLot1"
+            style={{ width: "250px" }}
+          >
             <b style={{ fontSize: "20px" }}>Previous Lot No. </b>
             <br />
             1873576464
           </Card>
-          <Card component={Paper} className="Card-ViewLot1" style={{width:'180px'}}>
+          <Card
+            component={Paper}
+            className="Card-ViewLot1"
+            style={{ width: "180px" }}
+          >
             <b style={{ fontSize: "20px" }}>Next Lot No. </b>
             <br />
             1873576464
           </Card>
-          <Card component={Paper} className="Card-ViewLot1" style={{width:'180px'}}>
+          <Card
+            component={Paper}
+            className="Card-ViewLot1"
+            style={{ width: "180px" }}
+          >
             <b style={{ fontSize: "18px" }}> Sheet No. </b>
             <br />
             <b style={{ fontSize: "18px" }}> Roll Leaf</b>
           </Card>
-          <Card component={Paper} className="Card-ViewLot1"style={{width:'210px'}}>
+          <Card
+            component={Paper}
+            className="Card-ViewLot1"
+            style={{ width: "210px" }}
+          >
             <b style={{ fontSize: "20px" }}> Connect Sheet </b>
             <br />0
           </Card>
-          <Card className="Card-ViewLot1" style={{width:'170px'}}>
+          <Card className="Card-ViewLot1" style={{ width: "170px" }}>
             <b style={{ fontSize: "20px" }}> Final Gate </b>
             <br />
             <b style={{ color: "#00712D" }}> OK: 0</b>{" "}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
             <b style={{ color: "red" }}> NG: 0</b>
           </Card>
-          <div >
-          <Card component={Paper} className="Card-ViewLot2" >
-            <b style={{ fontSize: "16px" }}>Sheet Front: </b>12123917348274836
-        
-          </Card>
+          <div>
+            <Card component={Paper} className="Card-ViewLot2">
+              <b style={{ fontSize: "16px" }}>Sheet Front: </b>12123917348274836
+            </Card>
 
             <Card component={Paper} className="Card-ViewLot2">
-            <b style={{ fontSize: "16px" }}> Sheet Back: </b>12123917348274836 
-        
-          </Card>
+              <b style={{ fontSize: "16px" }}> Sheet Back: </b>12123917348274836
+            </Card>
           </div>
         </div>
         <br />
-       
         <div style={{ display: "flex", width: "100%" }}>
-             {/*----------------------------- Table1.1--------------------- */}
+          {/*----------------------------- Table1.1--------------------- */}
           <Table
-            style={{ width: "80%" }}
-            columns={columns}
-            className="tableGvResult"
+            style={{ width: "85%",fontSize:'12px' }}
+            columns={columnsgvMaterial}
+            dataSource={gvMaterial.value}
+            className="tableGvResultViewLot"
             pagination={false}
             size="small"
             bordered
+            scroll={{ y: 200 }}
           />{" "}
           &nbsp;
-           {/*----------------------------- Table1.2--------------------- */}
+          {/*----------------------------- Table1.2--------------------- */}
           <Table
-            style={{ width: "20%" }}
-            columns={columns2}
-            // dataSource={gvScanResult.value}
+            style={{ width: "15%" }}
+            columns={columnsgvLot}
+            dataSource={gvLot.value}
             pagination={false}
             size="small"
             bordered
-            className="tableGvResult"
+            className="tableGvResultViewLot"
+         
           />
         </div>
         <br />
-         {/*----------------------------- Table2--------------------- */}
+        {/*----------------------------- Table2--------------------- */}
         <Table
           style={{ width: "100%" }}
-          columns={columns3}
-          className="tableGvResult"
+          columns={columnsgvRouting}
+          dataSource={gvRouting.value}
+          className="tableGvResultViewLot"
           pagination={false}
           size="small"
           bordered
+          scroll={{ y: 300 }}
         />
-         {/*----------------------------- Table3--------------------- */}
+        {/*----------------------------- Table3--------------------- */}
         <br />
         <Table
           style={{ width: "50%" }}
           columns={columns4}
-          className="tableGvResult"
+          className="tableGvResultViewLot"
           pagination={false}
           size="small"
           bordered
