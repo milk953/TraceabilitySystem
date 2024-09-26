@@ -52,6 +52,7 @@ import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResu
 import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace';
 import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
+import RollTraceView from "./Page/RollTraceView/rollTraceView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -120,6 +121,7 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTPackingConfirm' element = {<PackingConfirmSheet/>} />  
             <Route path='/TraceabilitySystem/Change_PartialNo' element = {<Change_PartialNo/>} />  
             <Route path="/TraceabilitySystem/Change_Serial" element={<Change_Serial />} />
+            <Route path="/TraceabilitySystem/RollTraceView" element={<RollTraceView />} />
  
             {/* View Data */}
             <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
@@ -128,6 +130,7 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
             <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
             <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
+
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
             <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
