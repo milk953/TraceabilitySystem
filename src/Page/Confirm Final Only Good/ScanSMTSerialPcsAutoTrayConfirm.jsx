@@ -31,9 +31,9 @@ import "./SerialPcs.css";
 import { Table as AntTable } from 'antd';
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
-import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsAutoTrayConfirm";
+import { fn_ScanSMTSerialPcsAutoTrayConfirm } from "./fn_ScanSMTSerialPcsAutoTrayConfirm";
 import Pageimg from "/src/assets/1.jpg";
-function ScanSMTRoollSht() {
+function ScanSMTSerialPcsAutoTrayConfirm() {
   const {
     txtLot,
     settxtLot,
@@ -68,8 +68,8 @@ function ScanSMTRoollSht() {
     lblResult,
     lblTime,
     columns
-  } = fn_ScanSMTSerialPcsChrome();
-  console.log("lblTime", lblTime);
+  } = fn_ScanSMTSerialPcsAutoTrayConfirm();
+
   return (
     // <div>
       <>
@@ -315,7 +315,7 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
+                          lblResult.value === "OK" ? "#52c41a" : " #BA0900",
                         width: "70%", // ควบคุมขนาดของ Paper
                       }}
                     >
@@ -343,7 +343,7 @@ function ScanSMTRoollSht() {
                     </Paper>
                   </div>
                  
-                  {/* <AntTable 
+                  <AntTable 
                 columns={columns}
                 dataSource={gvScanResult.value}
                 style={{ width:'100%'}}
@@ -351,7 +351,7 @@ function ScanSMTRoollSht() {
                 size="small"
                 bordered
                 className="tableGvResult"
-                /> */}
+                />
                 </>
               )}
             </Grid>
@@ -362,4 +362,4 @@ function ScanSMTRoollSht() {
   );
 }
 
-export default ScanSMTRoollSht;
+export default ScanSMTSerialPcsAutoTrayConfirm;

@@ -205,10 +205,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setlblLogState(false);
     if (lotValue != "" && dtSerial.length > 0) {
       if (hfCheckWeekCode == "Y") {
-        hfCheckWeekCode = await getData("GetWeekCodebyLot", {
-          lotValue,
-          hfDateInProc,
-        });
+        hfCheckWeekCode = await getData("GetWeekCodebyLot", {lotValue,hfDateInProc,});
       }
       let _intRowSerial = 0;
       for (let i = 0; i < dtSerial.length; i++) {
@@ -400,7 +397,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       //Shipping2D serial special check condition lot, panel and strip
       if (hfWeekCodeType == "S" && _bolError == false) {
         var strReturn = "";
-        strReturn = GetShippingSerialNo(dtSerial);
+        strReturn = GetShippingSerialNo(dtSerial); // ยังไม่ได้ทำ
         if (strReturn !== "") {
           _strScanResultAll = "NG";
           _bolError = true;
@@ -410,18 +407,21 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           }
         }
       }
-      if (hfCheckSheetELT == "Y" && _bolError == false) {
+      for(let x =0 ;x<dtSerial.length;x++){
+      if (hfCheckSheetELT == "Y" && _bolError == false) { // ต้อง loop ใหม่
         let _strReturn = "";
         _strReturn = getData("SetSerialLotShtELTTable", {
-          strSheetNo: dtSerial[i].SHEET,
+          strSheetNo: dtSerial[x].SHEET,
           strprdName: productSelect,
           strPlantCode: "5",
-          strSideF: dtSerial[i].FRONT_SIDE,
-          strSideB: dtSerial[i].BACK_SIDE,
-          strPcsno: dtSerial[i].SEQ,
-          strSerial: dtSerial[i].SERIAL,
+          strSideF: dtSerial[x].FRONT_SIDE,
+          strSideB: dtSerial[x].BACK_SIDE,
+          strPcsno: dtSerial[x].SEQ,
+          strSerial: dtSerial[x].SERIAL,
         });
         if (_strReturn != "") {
+          dtSerial[x].SCAN_RESULT = "NG";
+          dtSerial[x].REMARK =" No sheet ELT result " + _strTagNewLine + "ไม่พบผลการทดสอบ ELT"
           _strScanResultAll = "NG";
           _bolError = true;
         }
@@ -430,6 +430,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setlblLog(_strReturn);
         }
       }
+    }
       console.log(_bolError, "_bolError",_strUpdateError, "_strUpdateError");
       if (_bolError == true ) {
         for (let x = 0; x < dtSerial.length; x++) {
@@ -770,7 +771,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               strPrdname.substring(intProduct + 1, intProduct + 11).trim();
             try {
               setProductSelect(strPrdname);
-              await getProductSerialMaster(strPrdname);
+              // await getProductSerialMaster(strPrdname);
+              await getData("getProductSerialMaster", strPrdname);
               setGvBackSide(getIntitiaSheet());
 
               if (hfCheckRollSht == "Y") {
@@ -829,7 +831,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         setlblLogState(true);
         sethfMode("ROLL");
         setGvBackSide(getIntitiaSheet());
-        setTxtRollLeaf;
+        setTxtRollLeaf('');
         FCtxtRollleaf.current.focus();
       } else {
         Setmode("SERIAL");
@@ -1227,6 +1229,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         .catch((error) => {
           Swal.fire("Error", error.message);
         });
+        return
     } else if (type == "Get_SPI_AOI_RESULT") {
       let result;
       await axios

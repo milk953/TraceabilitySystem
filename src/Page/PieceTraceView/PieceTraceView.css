@@ -1,0 +1,8 @@
+.TbViewTracePiece {
+    margin: auto;
+}
+
+.TbViewTracePiece td {
+    border: none;
+    padding: 4px;
+}
