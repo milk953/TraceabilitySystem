@@ -1620,10 +1620,10 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                       },
                     })
                     .then((res) => {
-                      _dtShtData = res.data;
+                      _dtShtData = res.data[0];
                     });
-                  if (_dtShtData > 0) {
-                    _FrontSheetBarcode = _dtShtData.sheet_no;
+                  if (_dtShtData != "") {
+                    _FrontSheetBarcode = _dtShtData.sheet_no_front;
                     _RearSheetBarcode = _dtShtData.sheet_no_back;
                     _intShtSeq = parseInt(_dtShtData.pcs_no);
                     let _Result = "";
@@ -1639,7 +1639,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                         },
                       })
                       .then((res) => {
-                        _Result = res.data;
+                        _Result = res.data._strresult;
+                        _strMessage = res.data._strmessage
                       });
                     if (_Result == "NG") {
                       _strScanResultUpdate = _Result;

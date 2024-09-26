@@ -1,12 +1,3 @@
-// import React from 'react'
-
-// function ScanSMTSerialRecordTimeReplace() {
-//   return (
-//     <div>ScanSMTSerialRecordTimeReplace</div>
-//   )
-// }
-
-// export default ScanSMTSerialRecordTimeReplace
 
 import React, { useEffect, useState, useRef } from "react";
 import {
@@ -66,7 +57,7 @@ function ScanSMTSerialRecordTimeReplace() {
   return (
     <div>
       <Hearder />
-      <h1>Replace Partial No.</h1>
+      <h1>Replace Recode Time</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
