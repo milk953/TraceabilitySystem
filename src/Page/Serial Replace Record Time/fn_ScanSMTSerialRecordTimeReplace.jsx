@@ -388,23 +388,38 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     let strFrontSide =""
     let boolDuplicate = false
     for (let intSeq = 0; intSeq < gvSerialReplace.length; intSeq++) {
+      intRow +=1
       dtData.push({
-        SEQ: intRow + 1,
-        SERIAL_NO: lblSerial[intSeq],
+        SEQ: intRow ,
+        SERIAL_NO:  gvSerialReplace[intSeq].SERIAL_NO,
       });
       if(txtSerialReplace.value.trim().toUpperCase() == gvSerialReplace.SERIAL_NO ){
         boolDuplicate = true
       }
     }
-    if(!boolDuplicate){
-        dtData.push({
-          SEQ: intRow + 1,
-          SERIAL_NO: txtSerialReplace.value,
-        });
-     
-      setlblResult((prevState) => ({...prevState,value: ""}));
-    }else{
-      setlblResult((prevState) => ({...prevState,value: "Serial no. duplicate.", style: { paddingTop: "6px", color: "red",fontWeight:'bold' }}));
+    if (!boolDuplicate) {
+      intRow +=1
+      dtData.push({
+        SEQ: intRow ,
+        SERIAL_NO: txtSerialReplace.value,
+      });
+      setlblResult((prevState) => ({
+        ...prevState,
+        value: "",
+      }));
+  
+      // เพิ่ม serial ใหม่เข้าไปใน gvSerialReplace เพื่อเก็บค่าที่ใส่เพิ่ม
+      gvSerialReplace.push({
+        SEQ: gvSerialReplace + 1,
+        SERIAL_NO: txtSerialReplace.value
+      });
+  
+    } else {
+      setlblResult((prevState) => ({
+        ...prevState,
+        value: "Serial no. duplicate.",
+        style: { paddingTop: "6px", color: "red", fontWeight: 'bold' },
+      }));
     }
 
     return dtData;
@@ -412,16 +427,16 @@ function fn_ScanSMTSerialRecordTimeReplace() {
 
   const getUpdateSerial = async () => {
     let dtData = [];
-    let intRow = 0
+
     let strFrontSide =""
     let boolDuplicate = false
     for (let intRow = 0; intRow < gvSerialReplace.length; intRow++) {
+    
       dtData.push({
-        SEQ: intRow + 1,
+        SEQ: intRow+1 ,
         SERIAL_NO: gvSerialReplace[intRow].SERIAL_NO,
       });
     }
-  
 
     return dtData;
   };
@@ -447,7 +462,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       .then((res) => {
         setlblResult((prevState) => ({...prevState,value: "Data record time save complete.", style: { paddingTop: "6px", color: "blue",fontWeight:'bold' }}));
         setTimeout(() => {
-            txtSerialRefer.current.focus();
+            // txtSerialRefer.current.focus();
           }, 300);
         
       });
@@ -456,9 +471,9 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   };
 
   const handleSetSerial = async (index, event) => {
-    const newValues = [...lblSerial];
-    newValues[index] = event.target.value;
-    setlblSerial(newValues);
+    // const newValues = [...txtSerialReplace.value];
+    // newValues[index] = event.target.value;
+    // settxtSerialReplace(newValues);
   };
   const columns = [
     {
