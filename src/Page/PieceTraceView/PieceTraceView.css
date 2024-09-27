@@ -1,3 +1,10 @@
+.divTb{
+    margin: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .TbViewTracePiece {
     margin: auto;
 }
@@ -5,4 +12,35 @@
 .TbViewTracePiece td {
     border: none;
     padding: 4px;
+}
+
+.divTbProduct {
+    margin: auto;
+    display: flex;
+    margin-top: 30px;
+}
+
+.divTbProduct td {
+    border: none;
+    padding: 6px;
+}
+
+.TbPiece {
+    margin: auto;
+    width: 100%;
+    display: flex;
+}
+
+.TbPiece th {
+    padding: 6px;
+    text-align: center;
+    background-color: #3a404b;
+    color: #fff;
+    border-right: 1px solid #d9d9d9;
+}
+
+.TbPiece td {
+    padding: 4px;
+    text-align: center;
+    border-right: 1px solid #d9d9d9;
 }
