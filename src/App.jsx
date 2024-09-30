@@ -54,6 +54,7 @@ import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResu
 import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 import RollTraceView from "./Page/RollTraceView/rollTraceView";
+import LotRollLeafNo from "./Page/LotRollLeafNo/LotRollLeafNo";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -132,7 +133,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
             <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
             <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
-
+            <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />
+            
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
             <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
