@@ -43,5 +43,7 @@
 
 .tableGvResultViewLot td,.tableGvResultViewLot th{
   font-size: 13px !important; /* กำหนดขนาดฟอนต์สำหรับเนื้อหาในเซลล์ */
+  /* padding-top: 0 !important;
+  padding-bottom: 0 !important; */
 
 }
