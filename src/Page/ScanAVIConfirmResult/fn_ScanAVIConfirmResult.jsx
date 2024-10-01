@@ -95,7 +95,6 @@ function fn_ScanAVIConfirmResult() {
             strplantcode: plantCode,
           })
           .then((res) => {
-            console.log("GetProductDataAVIResultConfirm", res.data);
             let data = res.data;
             p_name = data[0].prd_name;
             setProduct(data);
@@ -114,7 +113,6 @@ function fn_ScanAVIConfirmResult() {
             },
           })
           .then((res) => {
-            console.log("GetTestTypeAVIResultConfirm", res.data);
             let data = res.data;
             setTestType(data);
             setDdlTestType((prevState) => ({
@@ -138,7 +136,6 @@ function fn_ScanAVIConfirmResult() {
         },
       })
       .then((res) => {
-        console.log("GetTestTypeAVIResultConfirm", res.data);
         let data = res.data;
         setTestType(data);
         setDdlTestType((prevState) => ({
@@ -153,10 +150,6 @@ function fn_ScanAVIConfirmResult() {
   };
 
   const txtSerialBarcode_TextChanged = async () => {
-    console.log(
-      "เข้ามาแล้วใน Serial Barcode",
-      txtSerialBarcode.value.trim().length
-    );
     if (txtSerialBarcode.value.trim().length > 0) {
       const strSerial = await axios.post("/api/GetSerialNoByVendorBarcode", {
         dataList: {
@@ -165,8 +158,6 @@ function fn_ScanAVIConfirmResult() {
           strbarcodetype: hfBarcodeType.value,
         },
       });
-      console.log(strSerial.data[0].serial_no, "strSerial");
-
       const dtResult = await axios.post("/api/GetAVIResultConfirmSerial", {
         dataList: {
           strplant_code: plantCode,
@@ -178,7 +169,6 @@ function fn_ScanAVIConfirmResult() {
           strtesttype: ddlTestType.value,
         },
       });
-      console.log(dtResult.data, "dtResultdtResultdtResult");
       if (hfBarcodeType.value === "TSIP" || hfBarcodeType.value === "DSIP") {
         for (let i = 0; i < dtResult.data.length; i++) {
           const drRow = dtResult.data[i];
@@ -222,9 +212,7 @@ function fn_ScanAVIConfirmResult() {
         visble: false,
       }));
     }
-    
 
-    console.log("เข้ามาแล้วใน Serial Barcode end ");
     fnSetFocus("txtSerialBarcode");
   };
 
@@ -239,10 +227,8 @@ function fn_ScanAVIConfirmResult() {
         },
       })
       .then((res) => {
-        console.log("GetAVIResultConfirmDefault", res.data);
         dtResult = res.data;
       });
-    console.log("dtResult", dtResult);
     for (let i = 0; i < dtResult.length; i++) {
       const drRow = dtResult[i];
       drRow.serial_color = hfDefaultColor.value;
@@ -269,7 +255,6 @@ function fn_ScanAVIConfirmResult() {
     visble: false,
   });
   const showResult = async (dtResult) => {
-    console.log("เข้ามาแล้วใน showResult");
     setShowtableRow((prevState) => ({
       ...prevState,
       visble: true,
@@ -287,10 +272,6 @@ function fn_ScanAVIConfirmResult() {
       for (let intCol = 1; intCol <= intDataColumn; intCol++) {
         intBarcode++;
         const cellData = dtResult[intTypeColumn * (intBarcode - 1)];
-        console.log(
-          "Math.floor(100 / intDataColumn / (intTypeColumn + 2)) * intTypeColumn",
-          Math.floor(100 / intDataColumn / (intTypeColumn + 2)) * intTypeColumn
-        );
         let cellStyle = {
           width: `${
             Math.floor(100 / intDataColumn / (intTypeColumn + 2)) *
@@ -325,10 +306,6 @@ function fn_ScanAVIConfirmResult() {
       tableRows.push(<tr key={`bcRow-${intRow}`}>{bcRow}</tr>);
       for (let intCol = 1; intCol <= intDataColumn; intCol++) {
         const wkCellData = dtResult[intData];
-        console.log(
-          "Math.floor(100 / intDataColumn / (intTypeColumn + 2)",
-          Math.floor(100 / intDataColumn / (intTypeColumn + 2))
-        );
         const wkCellStyle = {
           width: `${Math.floor(100 / intDataColumn / (intTypeColumn + 2))}%`,
           textAlign: "center",
@@ -344,12 +321,6 @@ function fn_ScanAVIConfirmResult() {
           </td>
         );
         for (let intType = 1; intType <= intTypeColumn; intType++) {
-          console.log(
-            "(Math.floor(100 / intDataColumn) - Math.floor(100 / intDataColumn / (intTypeColumn + 2))) / intTypeColumn",
-            (Math.floor(100 / intDataColumn) -
-              Math.floor(100 / intDataColumn / (intTypeColumn + 2))) /
-              intTypeColumn
-          );
           const typeCellData = dtResult[intData];
           let typeCellStyle = {
             width: `${
@@ -400,7 +371,6 @@ function fn_ScanAVIConfirmResult() {
       ...prevState,
       value: tableRows,
     }));
-    console.log("tableRows", tableRows);
   };
 
   function fnSetFocus(txtField) {
@@ -517,7 +487,6 @@ function fn_ScanAVIConfirmResult() {
       return table;
     };
     const table = renderTable();
-    console.log("table", table);
     setTableData(table);
   };
 
