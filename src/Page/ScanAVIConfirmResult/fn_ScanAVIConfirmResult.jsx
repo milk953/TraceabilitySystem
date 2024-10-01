@@ -153,11 +153,15 @@ function fn_ScanAVIConfirmResult() {
   };
 
   const txtSerialBarcode_TextChanged = async () => {
+    console.log(
+      "เข้ามาแล้วใน Serial Barcode",
+      txtSerialBarcode.value.trim().length
+    );
     if (txtSerialBarcode.value.trim().length > 0) {
       const strSerial = await axios.post("/api/GetSerialNoByVendorBarcode", {
         dataList: {
           strplant_code: plantCode,
-          strbarcode: txtSerialBarcode.value.trim(),
+          strbarcode: txtSerialBarcode.value.toUpperCase().trim(),
           strbarcodetype: hfBarcodeType.value,
         },
       });
@@ -196,7 +200,7 @@ function fn_ScanAVIConfirmResult() {
 
         setLblNo((prevState) => ({
           ...prevState,
-          value: txtSerialBarcode.value.trim(),
+          value: txtSerialBarcode.value.toUpperCase().trim(),
         }));
         await showResult(dtResult.data);
         await DataTable(dtResult.data);
@@ -207,6 +211,19 @@ function fn_ScanAVIConfirmResult() {
       ...prevState,
       value: "",
     }));
+
+    if (txtSerialBarcode.value.trim().length <= 0) {
+      setLblNo((prevState) => ({
+        ...prevState,
+        value: txtSerialBarcode.value.toUpperCase().trim(),
+      }));
+      setShowtableRow((prevState) => ({
+        ...prevState,
+        visble: false,
+      }));
+    }
+
+    console.log("เข้ามาแล้วใน Serial Barcode end ");
     fnSetFocus("txtSerialBarcode");
   };
 
@@ -251,9 +268,10 @@ function fn_ScanAVIConfirmResult() {
     visble: false,
   });
   const showResult = async (dtResult) => {
+    console.log("เข้ามาแล้วใน showResult");
     setShowtableRow((prevState) => ({
       ...prevState,
-      visble: false,
+      visble: true,
     }));
     if (!dtResult || dtResult.length === 0) return null;
     const intDataRow = dtResult[0].data_row;

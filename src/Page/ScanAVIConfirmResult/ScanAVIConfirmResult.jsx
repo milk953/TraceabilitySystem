@@ -168,13 +168,13 @@ function ScanAVIConfirmResult() {
                   style={{
                     width: "50%",
                     marginTop: "10px",
-                    backgroundColor: "#FFF5CD",
+                    backgroundColor: "#FFFFCC",
                   }}
                 >
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={2}>
-                        <Typography style={{ color: "#1E3E62" }}>
+                        <Typography style={{ color: "#0000CC" }}>
                           {" "}
                           {lblNo.value}
                         </Typography>
@@ -187,6 +187,7 @@ function ScanAVIConfirmResult() {
           </Grid>
         </Box>
       </Card>
+      {ShowtableRow.visble && (
       <div
         style={{
           display: "flex",
@@ -199,7 +200,7 @@ function ScanAVIConfirmResult() {
           <tbody>{ShowtableRow.value}</tbody>
         </table>
       </div>
-
+      )}
       {/* <div>
         <table>
           <tbody>{tableData}</tbody>
