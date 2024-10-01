@@ -222,6 +222,7 @@ function fn_ScanAVIConfirmResult() {
         visble: false,
       }));
     }
+    
 
     console.log("เข้ามาแล้วใน Serial Barcode end ");
     fnSetFocus("txtSerialBarcode");
