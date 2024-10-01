@@ -29,7 +29,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "./ScanSMTConnectRollConfirm.css";
+import "./ScanSMTSerialXrayConfirm.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialXrayConfirm } from "./fn_ScanSMTSerialXrayConfirm";
@@ -39,7 +39,7 @@ function ScanSMTSerialXrayConfirm() {
   return (
     <div>
     <Hearder />
-    <h1> Confirm Connect Roll&Leaf</h1>
+    <h1>X-Ray Result Checking</h1>
     <Card component={Paper} className="Card-Common">
       <Box sx={{ display: "flex", alignItems: "flex-start" }}>
         <Grid container spacing={2}>
@@ -48,7 +48,7 @@ function ScanSMTSerialXrayConfirm() {
               <TableHead>
                 <TableCell colSpan={4} align="center">
                   <Typography variant="h6">
-                    Confirm Connect Roll&Leaf
+                  X-Ray Result Checking
                   </Typography>
                 </TableCell>
               </TableHead>
@@ -91,25 +91,25 @@ function ScanSMTSerialXrayConfirm() {
                   </TableCell>
                   <TableCell colSpan={3}>
                     <FormControl fullWidth>
-                      <Autocomplete
+                      {/* <Autocomplete
                         id="ddlProduct_ScanSMTConnectRollConfirm_focus"
                         size="small"
                         className="Select_dropDown"
-                        // value={ddlProduct.value}
-                        // style={ddlProduct.style}
-                        // disabled={ddlProduct.disbled}
-                        // onChange={(e, value) =>
-                        //   ddlProduct_SelectedIndexChanged(value)
-                        // }
-                        // options={Product.map((item) => item.prd_name)}
-                        // renderInput={(params) => (
-                        //   <TextField
-                        //     {...params}
-                        //     size="small"
-                        //     sx={{ textAlign: "left" }}
-                        //   />
-                        // )}
-                      />
+                        value={ddlProduct.value}
+                        style={ddlProduct.style}
+                        disabled={ddlProduct.disbled}
+                        onChange={(e, value) =>
+                          ddlProduct_SelectedIndexChanged(value)
+                        }
+                        options={Product.map((item) => item.prd_name)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            size="small"
+                            sx={{ textAlign: "left" }}
+                          />
+                        )}
+                      /> */}
                     </FormControl>
                   </TableCell>
                 </TableRow>
@@ -123,7 +123,7 @@ function ScanSMTSerialXrayConfirm() {
                       id="lblTotalSht_ScanSMTConnectRollConfirm_focus"
                       className="input_txt"
                       size="small"
-                      value={lblTotalSht}
+                    //   value={lblTotalSht}
                       style={{ width: "95%" }}
                     ></TextField>
                   </TableCell>
@@ -137,7 +137,7 @@ function ScanSMTSerialXrayConfirm() {
                         justifyContent: "center",
                       }}
                     >
-                      {lblShtCount}
+
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -149,7 +149,7 @@ function ScanSMTSerialXrayConfirm() {
                 {lblpnlLog.value}
               </Paper>
             )} */}
-            <Table
+            {/* <Table
               className="CSS-GvSerial"
               style={{
                 display: pnlSerial.visble ? "" : "none",
@@ -168,7 +168,7 @@ function ScanSMTSerialXrayConfirm() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {/* {Array.isArray(gvSerial.value) &&
+                {Array.isArray(gvSerial.value) &&
                   Array.from(
                     { length: gvSerial.value.length },
                     (_, index) => (
@@ -194,7 +194,7 @@ function ScanSMTSerialXrayConfirm() {
                         </TableCell>
                       </TableRow>
                     )
-                  )} */}
+                  )}
                 <TableRow>
                   <TableCell colSpan={2} style={{ textAlign: "center" }}>
                     <Button className="BtSave" >
@@ -207,7 +207,7 @@ function ScanSMTSerialXrayConfirm() {
                   </TableCell>
                 </TableRow>
               </TableBody>
-            </Table>
+            </Table> */}
           </Grid>
 
           {/* Result */}
