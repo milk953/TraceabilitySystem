@@ -1094,8 +1094,11 @@ function fn_ConfirmBarcodeGrade() {
               },
             })
             .then((res) => {
+             
               _strReturn = res.data[0].p_error;
               if (_strReturn != "") {
+                 dtSerial[i].SCAN_RESULT='NG'
+                 dtSerial[i].REMARK =" No sheet ELT result " + _strTagNewLine + "ไม่พบผลการทดสอบ ELT"
                 _strScanResultAll = "NG";
                 _bolError = True;
                 if (_strReturn != "NG") {

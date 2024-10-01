@@ -59,7 +59,10 @@ function ScanSMTSerialShtCopy() {
     handle_Cancel_Click,
     handle_Save_Click,
     handle_txtLotRef_Change,
-    handle_txtRollleaf_Change
+    handle_txtRollleaf_Change,
+    lblResult,
+    gvScanResult,
+    columns
   } = fn_ScanSMTSerialShtCopy();
   useEffect(() => {
     if (gvBackSideState == true) {
@@ -382,51 +385,40 @@ function ScanSMTSerialShtCopy() {
               )}
               {lblResultState && (
                 <div className="lblResultMasterFinal">
+                  {console.log(lblResult.text, "lblResult")}
                   <Paper
                     className="lblResultCardMasterFinal"
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      // background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
-                      // background:
-                      // lblResult.value === "OK"
-                      //   ? "#059212"
-                      //   : lblResult.value === "NG"
-                      //   ? "red"
-                      //   : "#BA0900",
+                      background: lblResult.text === "OK" ? "green" : lblResult.text === "NG" ? "red" : "white",
+                      background:
+                      lblResult.text === "OK"
+                        ? "#059212"
+                        : lblResult.text === "NG"
+                        ? "red"
+                        : "#BA0900",
                     }}
                   >
                     <Typography
                       variant="h4"
                       style={{
-                        // color: lblResult.styled.color,
+                        color: lblResult.styled.color,
                         fontSize: "30px",
                       }}
                     >
-                      {/* {lblResult.value} */}
+                      {lblResult.text}
                     </Typography>
                   </Paper>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>No.</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>1</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                  {/* <AntTable
+                  <AntTable
                   className="tableGvResult"
                   columns={columns}
                   bordered
-                  dataSource={gvSerialResult}
+                  dataSource={gvScanResult}
                   style={{ width: "980pxs",marginTop:"10px" }}
                   pagination={false}
                   size="small"
-                /> */}
+                />
                   &nbsp; &nbsp;
                 </div>
               )}

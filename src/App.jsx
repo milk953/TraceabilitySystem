@@ -47,10 +47,14 @@ import Change_Serial from './Page/Change_Serial/Change_Serial';
 import ScanSheetAOIXrayConfirm from './Page/AOI Confirm Result/ScanSheetAOIXrayConfirm';
 import ScanSMTSerialPcsAutoTrayConfirm from './Page/Confirm Final Only Good/ScanSMTSerialPcsAutoTrayConfirm';
 import ScanSMTSerialShtShtCopy from './Page/FIN Duplicate Sht&Pcs/ScanSMTSerialShtCopy';
+import FVIBadmarkMonitoring from './Page/FVI Badmark Monitoring/rpt_LotFVIBadmarkView';
+import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace';
 import SMTDeleteData from "./Page/SMTDeleteData/SMTDeleteData";
 import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResult";
-
-import SerialReplaceRecordTime from './Page/Serial Replace Record Time/ScanSMTSerialRecordTimeReplace'
+import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
+import LotTraceView from "./Page/LotTraceView/LotTraceView";
+import RollTraceView from "./Page/RollTraceView/rollTraceView";
+import LotRollLeafNo from "./Page/LotRollLeafNo/LotRollLeafNo";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -119,13 +123,18 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTPackingConfirm' element = {<PackingConfirmSheet/>} />  
             <Route path='/TraceabilitySystem/Change_PartialNo' element = {<Change_PartialNo/>} />  
             <Route path="/TraceabilitySystem/Change_Serial" element={<Change_Serial />} />
+            <Route path="/TraceabilitySystem/rpt_LotFVIBadmarkView" element={<FVIBadmarkMonitoring />} />            
+            <Route path="/TraceabilitySystem/RollTraceView" element={<RollTraceView />} />
  
             {/* View Data */}
             <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
             <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
             <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />  
- 
+            <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
+            <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
+            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
+            <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />
+            
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
             <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
