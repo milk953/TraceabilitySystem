@@ -56,6 +56,7 @@ import LotTraceView from "./Page/LotTraceView/LotTraceView";
 import RollTraceView from "./Page/RollTraceView/rollTraceView";
 import LotRollLeafNo from "./Page/LotRollLeafNo/LotRollLeafNo";
 import LotTraceSheet from './Page/SheetTraceView/rpt_SheetTraceView'
+import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSerialXrayConfirm";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -155,6 +156,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+            
             
           </Route>
         </Routes>
