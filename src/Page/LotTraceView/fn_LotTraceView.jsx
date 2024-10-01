@@ -4,13 +4,18 @@ import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { Tag } from "antd";
+import { Tooltip,Avatar } from 'antd';
+import excel  from "/src/assets/excel.png"
+
 function fn_LotTraceView() {
   const [txtLotNo, settxtLotNo] = useState("");
+  const [LotNoSearch, setLotNoSearch] = useState("");
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [txtSerialNo, settxtSerialNo] = useState("");
-  const [txtProd, settxtProd] = useState("");
-  const [lblLotNo, setlblLotNo] = useState("");
+  const [txtProd, settxtProd] = useState("_ _ _ _ _ _");
+  const [lblLotNo, setlblLotNo] = useState("xxxxxxxxx");
   const [OQC, setOQC] = useState("");
+  const [loading, setloading] = useState(false);
 
   const [txtRollNo, settxtRollNo] = useState({
     text: "",
@@ -54,6 +59,14 @@ function fn_LotTraceView() {
     focus: "",
   });
 
+  const [gvProcessLink, setgvProcessLink] = useState({
+    value: "",
+    disbled: "",
+    visible: false,
+    style: {},
+    focus: "",
+  });
+  
   const [gvLot, setgvLot] = useState({
     value: "",
     disbled: "",
@@ -86,15 +99,15 @@ function fn_LotTraceView() {
   });
 
   const [lbtConnectSht, setlbtConnectSht] = useState({
-    text: "",
+    text: "0",
     value: "",
     visible: "none",
     style: {},
   });
 
   const [lbtFinalGate, setlbtFinalGate] = useState({
-    valueOK: "",
-    valueNG: "",
+    valueOK: "0",
+    valueNG: "0",
     disabledOK: "",
     disabledNG: "",
     style: {},
@@ -108,49 +121,59 @@ function fn_LotTraceView() {
   const params = new URLSearchParams(window.location.search);
   const lot = params.get("lot");
   const Fac = import.meta.env.VITE_FAC;
+
   useEffect(() => {
     if (lot == "" || lot == null || lot == undefined) {
       console.log("lot1", lot);
-      // reset()
+      reset()
     } else {
       console.log("lot2", lot);
       settxtLotNo(lot);
-      // btnSearch_Click(btnSearch, Nothing)
+      setLotNoSearch(lot)
+    
     }
     fc_txtLotNo.current.focus();
   }, []);
 
-  const btnSearch_Click = async () => {
-    let strPrevLot;
-    let strNextLot;
+  //เข้ามาแล้วSearch
+  useEffect(() => {
+    if(LotNoSearch != ""){
+      btnSearch_Click()
+    }
+  }, [LotNoSearch]);
 
+  const btnSearch_Click = async () => {
+    setloading(true)
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
       const datalblLot = await setHead();
       
       console.log(datalblLot,"datalblLot");
       await setGrid(datalblLot);
-      if (txtPreviousLotNo != "") {
-      }
+      setloading(false)
+    }
+    else{
+      reset()
+      setloading(false)
     }
   };
 
   const reset = async () => {
-    settxtProd("_ _ _ _ _ _");
+    settxtProd("_ _ _ _ _ _ _ _ _ _ _ _");
     settxtRollNo((prevState) => ({
       ...prevState,
-      text: "_ _ _ _ _ _",
+      text: "_ _ _ _ _ _ _ _ _ _ _ _",
       url: "",
     }));
 
     settxtNextLotNo((prevState) => ({
       ...prevState,
       text: "_ _ _ _ _ _",
-      visible: "ซ่อน",
+      visible: "none",
     }));
 
     settxtPreviousLotNo((prevState) => ({
       ...prevState,
-      visible: "ซ่อน",
+      visible: "none",
     }));
   
 
@@ -159,18 +182,35 @@ function fn_LotTraceView() {
       value: "",
     }));
 
+    setgvLot((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+
+    setgvProcessLink((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+
+    setgvRouting((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+
+
+
     setlblTitleShtFront((prevState) => ({
       ...prevState,
       text: "Sheet No.(F)",
       value: "",
-      visible: "ซ่อน",
+      visible: "none",
     }));
 
     setlblTitleShtBack((prevState) => ({
       ...prevState,
       text: "Sheet No.(B)",
       value: "",
-      visible: "ซ่อน",
+      visible: "none",
     }));
 
     sethplFinalGate((prevState) => ({
@@ -216,14 +256,14 @@ function fn_LotTraceView() {
             value: dtLot.lss_front_sheet_no,
             url: "link navigate _blank",
             text: "Sheet No.(F)",
-            visible: "โชว์",
+            visible: "",
           }));
           setlblTitleShtBack((prevState) => ({
             ...prevState,
             value: dtLot.lss_back_sheet_no,
             url: "link navigate _blank",
             text: "Sheet No.(B)",
-            visible: "โชว์",
+            visible: "",
           }));
         } else if (dtLot.lss_front_sheet_no != null) {
           setlblTitleShtFront((prevState) => ({
@@ -231,7 +271,7 @@ function fn_LotTraceView() {
             value: dtLot.lss_front_sheet_no,
             url: "link navigate _blank",
             text: "Sheet No.",
-            visible: "โชว์",
+            visible: "",
           }));
         }
       } else {
@@ -254,14 +294,14 @@ function fn_LotTraceView() {
               value: dtLot.lss_front_sheet_no,
               url: "link navigate _blank",
               text: "Sheet No.(F)",
-              visible: "โชว์",
+              visible: "",
             }));
             setlblTitleShtBack((prevState) => ({
               ...prevState,
               value: dtLot.lss_back_sheet_no,
               url: "link navigate _blank",
               text: "Sheet No.(B)",
-              visible: "โชว์",
+              visible: "",
             }));
           } else if (dtLot.lss_front_sheet_no != null) {
             setlblTitleShtFront((prevState) => ({
@@ -269,7 +309,7 @@ function fn_LotTraceView() {
               value: dtLot.lss_front_sheet_no,
               url: "link navigate _blank",
               text: "Sheet No.",
-              visible: "โชว์",
+              visible: "",
             }));
           }
         }
@@ -294,14 +334,14 @@ function fn_LotTraceView() {
             value: dtLot.lss_front_sheet_no,
             url: "link navigate _blank",
             text: "Sheet No.(F)",
-            visible: "โชว์",
+            visible: "",
           }));
           setlblTitleShtBack((prevState) => ({
             ...prevState,
             value: dtLot.lss_back_sheet_no,
             url: "link navigate _blank",
             text: "Sheet No.(B)",
-            visible: "โชว์",
+            visible: "",
           }));
         } else if (dtLot.lss_front_sheet_no != null) {
           setlblTitleShtFront((prevState) => ({
@@ -309,7 +349,7 @@ function fn_LotTraceView() {
             value: dtLot.lss_front_sheet_no,
             url: "link navigate _blank",
             text: "Sheet No.",
-            visible: "โชว์",
+            visible: "",
           }));
         }
       }
@@ -323,17 +363,17 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         dt = res.data;
-      
+      console.log(res.data,'resssss')
       });
 
     settxtPreviousLotNo((prevState) => ({
       ...prevState,
-      visible: "ซ่อน",
+      visible: "none",
     }));
 
     settxtNextLotNo((prevState) => ({
       ...prevState,
-      visible: "ซ่อน",
+      visible: "none",
     }));
 
 
@@ -343,7 +383,7 @@ function fn_LotTraceView() {
       for (let dr = 0; dr < dt.length; dr++) {
      
         if (dt[dr].LOT_PRD_NAME !== null) {
-          settxtProd(dr.LOT_PRD_NAME);
+          settxtProd(dt[dr].LOT_PRD_NAME);
         } else {
           settxtProd("");
         }
@@ -395,7 +435,7 @@ function fn_LotTraceView() {
           settxtNextLotNo((prevState) => ({
             ...prevState,
             text: dt[dr].NEXTLOT,
-            visible: "โชว์",
+            visible: "",
           }));
 
 
@@ -404,7 +444,7 @@ function fn_LotTraceView() {
           settxtPreviousLotNo((prevState) => ({
             ...prevState,
             text: dt[dr].PREVTLOT,
-            visible: "โชว์",
+            visible: "",
           }));
           
         }
@@ -435,7 +475,7 @@ function fn_LotTraceView() {
     }
     // lbtConnectSht.Enabled = False กดไม่ได้
     let dtSerailCount = [];
-    axios
+    await axios
       .post("/api/Common/getlotserialcountdata", {
         dataList: {
           strLotNo: datalblLot,
@@ -464,7 +504,7 @@ function fn_LotTraceView() {
     let dtFinalGate = [];
     let dataOK;
     let dataNG;
-    axios
+    await axios
       .post("/api/ViewTraceLot/fnlotresultfinalgatedata", {
         strlotno: datalblLot,
         strplantcode: Fac,
@@ -486,19 +526,14 @@ function fn_LotTraceView() {
       dataOK = "0";
       dataNG = "0";
     }
+    console.log(dataOK,dataNG, "dtFinalGate2");
     setlbtFinalGate((prevState) => ({
       ...prevState,
-      value: dataConnectSht,
+      valueOK: dataOK,
+      valueOK:dataOK,
       disabledOK: dataOK !== "0" ? "กดได้" : "กดไม่ได้",
       disabledNG: dataNG !== "0" ? "กดได้" : "กดไม่ได้",
     }));
-
-
-    console.log('retiurn2',datalblLot)
-
-
-    
-
     return datalblLot;
   };
 
@@ -514,9 +549,410 @@ function fn_LotTraceView() {
           visible: "โชว์",
         }));
       });
-    // gvProcessLink.DataSource = BIZ_LotTraceView.fnGetProcessLinkData(lblLotNo.Text.Trim.ToUpper)
-    // gvProcessLink.DataBind()    not have table''''trc_PROC_TRACE_REPORT''''
+
+      await axios
+      .post("/api/ViewTraceLot/fnGetProcessLinkData")
+      .then((res) => {
+        console.log('gvProcessLinkgvProcessLink',res.data)
+        setgvProcessLink((prevState) => ({
+          ...prevState,
+          value: res.data,
+          visible: "โชว์",
+        }));
+      });
+
   };
+
+  const columnsgvMaterial = [
+    {
+      title: "Material Code",
+      dataIndex: "MAT_CODE",
+      key: "Material Code",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+      width:'66px'
+
+    },
+    {
+      title: "Material Name",
+      dataIndex: "MAT_NAME",
+      key: "Material Name",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+
+    },
+    {
+      title: "Category",
+      dataIndex: "MAT_CATEGORY",
+      key: "Category",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+
+    {
+      title: "Vender Lot",
+      key: "Vender Lot",
+      dataIndex: "VENDER_LOT",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Sub Lot",
+      key: "Sub Lot",
+      dataIndex: "SUB_VENDER_LOT",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+     width:100
+    },
+    {
+      title: "Expired Date",
+      key: "Expired Date",
+      dataIndex: "EXPIRE_DATE",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width :100
+    },
+    {
+      title: "Invoice No.",
+      key: "Invoice No.",
+      dataIndex: "INVOICE_NO",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+      width :110
+    },
+    {
+      title: 'Vender Name',
+      key: "Vender Name",
+      dataIndex: "VENDER_NAME",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    ,
+    {
+      title: (
+        <div>
+
+          <Tooltip title="Export to Excel">
+          <Avatar
+            // onClick={() => exportToExcel(dataTable860, columns860)}
+            src={excel}
+            shape="square"
+            style={{  cursor: "pointer",height:'25px',width:'25px', }}
+            onClick={() => {
+              console.log("Exporting to Excel...");
+            }}
+          />
+         </Tooltip>
+        </div>
+
+      ),
+      width:40
+    },
+  ];
+
+  const columnsgvLot = [
+    {
+      title: gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO 
+      ? `Roll No. : ${gvLot.value[0].LOT_ROLL_NO}` 
+      : `Roll No.`,    
+      dataIndex: "LOT",
+      key: "Roll No.",
+      render: (text, record, index) => {
+        return text
+      },
+      align: gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO 
+      ? `left` 
+      : `center`,    
+    },
+  ];
+
+  const columnsgvRouting = [
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+      width:50
+    },
+    {
+      title: "Factory",
+      dataIndex: "FACTORY",
+      key: "Factory",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+      width:63
+    },
+    {
+      title: "Process",
+      dataIndex: "PROC",
+      key: "Process",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+      width:70
+    },
+    {
+      title: "Process Name",
+      dataIndex: "PROC_DESC",
+      key: "Process Name",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+    },
+    {
+      title: "Production Date",
+      dataIndex: "PROD_DATE",
+      key: "Production Date",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+      width:135
+    },
+    {
+      title: "Machine No.",
+      dataIndex: "MC_NO",
+      key: "Machine No.",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+      width:100
+    },
+    {
+      title: "Operator",
+      dataIndex: "OPER",
+      key: "Operator",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+      width:115
+    },
+    {
+      title: "Document No.",
+      dataIndex: "EMCS",
+      key: "Document No.",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+    },
+    {
+      title: "Tools Type",
+      dataIndex: "TTT_TOOLS_TYPE_NAME",
+      key: "Tools Type",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+    },
+    {
+      // title: "Tools Name",
+      title: (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span>Tools Name</span>
+          <Tooltip title="Export to Excel">
+          <Avatar
+            // onClick={() => exportToExcel(dataTable860, columns860)}
+            src={excel}
+            shape="square"
+            style={{  cursor: "pointer",height:'25px',width:'25px', }}
+            onClick={() => {
+              console.log("Exporting to Excel...");
+            }}
+          />
+         </Tooltip>
+        </div>
+      ),
+      dataIndex: "TTL_TOOLS_CODE",
+      key: "Tools Name",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+    },
+  ];
+
+  const columnsgvProcessLink = [
+    {
+      title: "Process",
+      dataIndex: "proc_code",
+      key: "Process",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Process Name",
+      dataIndex: "proc_link_data",
+      key: "Process Name",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Test Data",
+      dataIndex: "proc_test_data",
+      key: "Test Data",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+    {
+      title: "Detail",
+      dataIndex: "proc_link_data",
+      key: "Detail",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+      align: "center",
+    },
+  ];
+
+
+  const columnsgvFinalExport = [
+    {
+      key: "PLANT_CODE",
+    },
+    {
+      key: "PRODUCT_NAME",
+    },
+    {
+      key: "LOT_NO",
+    },
+    {
+      key: "F_SHEET_NO",
+    },
+    {
+      key: "B_SHEET_NO",
+    },
+    {
+      key: "PCS_NO",
+    },
+    {
+      key: "SERIAL_NO",
+    },
+    {
+      key: "BOTTOM_FIXTURE",
+    },
+    {
+      key: "TOP_FIXTURE",
+    },
+    {
+      key: "CONFIRM",
+    },
+    {
+      key: "CREATE_BY",
+    },
+    {
+      key: "CREATE_DATE",
+    },
+    {
+      key: "CREATE_PROGRAM",
+    },
+    {
+      key: "UPDATE_BY",
+    },
+    {
+      key: "UPDATE_DATE",
+    },
+    {
+      key: "UPDATE_PROGRAM",
+    }
+
+  ];
+
+  const ExportGridToCSV = (data, ColumnsHeader,namefile) => {
+    const filteredColumns = ColumnsHeader.filter(
+      (col) => col.key !== "" && col.key !== null && col.key !== undefined
+    );
+
+    const headers = filteredColumns.map((col) => col.key);
+
+    const filteredData = data.map((row) =>
+      filteredColumns.map((col) => row[col.dataIndex] || "")
+    );
+
+    const wsData = [headers, ...filteredData];
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blobData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(blobData, namefile);
+  };
+  const setShtSerialGrid = async (strLot) => {
+    let namefile=''
+    let FinalExport =[]
+    await axios
+      .post("/api/ViewTraceLot/fnSheetSerialByLotData", {
+        strLotNo: strLot,
+        strPlantCode:Fac
+      })
+      .then((res) => {
+        FinalExport = res.data;
+        console.log('FinalExport',FinalExport)
+      });
+      if(FinalExport.length>0){
+        namefile="ShtSerial" + strLot + ".xls"
+        ExportGridToCSV(FinalExport,columnsgvFinalExport,namefile)
+      }
+  }
+
+  const setFinalGateGrid = async (strLot,strResult) => {
+    let namefile=''
+    let FinalExport =[]
+    await axios
+      .post("/api/ViewTraceLot/fnLotResultFinalGateDeatailData", {
+        strLotNo: strLot,
+        strPlantCode:Fac,
+        strResult:strResult
+      })
+      .then((res) => {
+        FinalExport = res.data;
+        console.log('FinalExport2',FinalExport)
+      });
+      if(FinalExport.length>0){
+        namefile="FinalGate" + strLot + ".xls"
+        ExportGridToCSV(FinalExport,'columnsgvFinalExport',namefile)
+      }
+  }
+  const gvRouting_RowDataBound = async () => {
+    if(gvRouting!=''){
+
+    }
+  }
+
+
   return {
     settxtLotNo,
     txtLotNo,
@@ -525,6 +961,23 @@ function fn_LotTraceView() {
     gvLot,
     gvMaterial,
     gvRouting,
+    gvProcessLink,
+    columnsgvMaterial,
+    columnsgvLot,
+    columnsgvRouting,
+    columnsgvProcessLink,
+    loading,
+    reset,
+    lblLotNo,
+    txtProd,
+    txtPreviousLotNo,
+    txtNextLotNo,
+    lbtFinalGate,
+    lblTitleShtFront,
+    lblTitleShtBack,
+    lbtConnectSht,
+    setShtSerialGrid,
+    setFinalGateGrid
   };
 }
 
