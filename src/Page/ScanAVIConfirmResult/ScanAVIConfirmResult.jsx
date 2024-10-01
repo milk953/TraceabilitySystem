@@ -44,8 +44,9 @@ function ScanAVIConfirmResult() {
     txtSerialBarcode_TextChanged,
     ddlProduct_SelectedIndexChanged,
     ddlTestType_SelectedIndexChanged,
-    ClearResult,
-    showResult,
+    lblNo,
+    tableData,
+    ShowtableRow,
   } = fn_ScanAVIConfirmResult();
 
   return (
@@ -119,13 +120,13 @@ function ScanAVIConfirmResult() {
                     </TableCell>
                   </TableRow>
 
-
                   <TableRow>
                     <TableCell align="right">
                       <Typography>Serial Barcode :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
+                        id="txtSerialBarcode"
                         // id="txtLot_ScanSMTConnectRollConfirm_focus"
                         className="input_txt"
                         size="small"
@@ -160,14 +161,51 @@ function ScanAVIConfirmResult() {
                   </TableRow>
                 </TableBody>
               </Table>
+              {lblNo.value !== "" && (
+                <Table
+                  className="ScanSMT"
+                  component={Paper}
+                  style={{
+                    width: "50%",
+                    marginTop: "10px",
+                    backgroundColor: "#FFF5CD",
+                  }}
+                >
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={2}>
+                        <Typography style={{ color: "#1E3E62" }}>
+                          {" "}
+                          {lblNo.value}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              )}
             </Grid>
           </Grid>
         </Box>
       </Card>
-      {/* <div>{showResult}</div> */}
-    </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          marginTop: "10px",
+        }}
+      >
+        <table style={{ height: "100%", width: "90%" }}>
+          <tbody>{ShowtableRow.value}</tbody>
+        </table>
+      </div>
 
-    
+      {/* <div>
+        <table>
+          <tbody>{tableData}</tbody>
+        </table>
+      </div> */}
+    </div>
   );
 }
 
