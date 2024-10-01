@@ -17,18 +17,26 @@
   }
 
   
-  .tableGvResultViewRoll .ant-table-thead > tr > th {
+  .tableGvResultViewSheet .ant-table-thead > tr > th {
     background-color: #31363F;
     color: white;
   }
-  .tableGvResultViewRoll .ant-table-thead > tr > th {
+  .tableGvResultViewSheet .ant-table-thead > tr > th {
     background-color: #31363F;
     color: white;
 }
 
 
-.tableGvResultViewRoll{
+.tableGvResultViewSheet{
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
 
 }
+
+.tableGvResultViewSheet td{
+  font-size: 15px !important; /* กำหนดขนาดฟอนต์สำหรับเนื้อหาในเซลล์ */
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+

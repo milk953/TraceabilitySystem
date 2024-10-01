@@ -55,6 +55,7 @@ import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 import RollTraceView from "./Page/RollTraceView/rollTraceView";
 import LotRollLeafNo from "./Page/LotRollLeafNo/LotRollLeafNo";
+import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -134,6 +135,7 @@ const App = () => {
             <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
             <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
             <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />
+            <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />

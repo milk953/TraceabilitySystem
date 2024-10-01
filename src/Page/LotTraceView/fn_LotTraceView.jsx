@@ -4,8 +4,8 @@ import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { Tag } from "antd";
-import { Tooltip,Avatar } from 'antd';
-import excel  from "/src/assets/excel.png"
+import { Tooltip, Avatar } from "antd";
+import excel from "/src/assets/excel.png";
 
 function fn_LotTraceView() {
   const [txtLotNo, settxtLotNo] = useState("");
@@ -66,7 +66,7 @@ function fn_LotTraceView() {
     style: {},
     focus: "",
   });
-  
+
   const [gvLot, setgvLot] = useState({
     value: "",
     disbled: "",
@@ -125,35 +125,33 @@ function fn_LotTraceView() {
   useEffect(() => {
     if (lot == "" || lot == null || lot == undefined) {
       console.log("lot1", lot);
-      reset()
+      reset();
     } else {
       console.log("lot2", lot);
       settxtLotNo(lot);
-      setLotNoSearch(lot)
-    
+      setLotNoSearch(lot);
     }
     fc_txtLotNo.current.focus();
   }, []);
 
   //เข้ามาแล้วSearch
   useEffect(() => {
-    if(LotNoSearch != ""){
-      btnSearch_Click()
+    if (LotNoSearch != "") {
+      btnSearch_Click();
     }
   }, [LotNoSearch]);
 
   const btnSearch_Click = async () => {
-    setloading(true)
+    setloading(true);
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
       const datalblLot = await setHead();
-      
-      console.log(datalblLot,"datalblLot");
+
+      console.log(datalblLot, "datalblLot");
       await setGrid(datalblLot);
-      setloading(false)
-    }
-    else{
-      reset()
-      setloading(false)
+      setloading(false);
+    } else {
+      reset();
+      setloading(false);
     }
   };
 
@@ -175,7 +173,6 @@ function fn_LotTraceView() {
       ...prevState,
       visible: "none",
     }));
-  
 
     setgvMaterial((prevState) => ({
       ...prevState,
@@ -196,8 +193,6 @@ function fn_LotTraceView() {
       ...prevState,
       value: "",
     }));
-
-
 
     setlblTitleShtFront((prevState) => ({
       ...prevState,
@@ -234,8 +229,9 @@ function fn_LotTraceView() {
       let ELT_Count = 0;
       await axios
         .post("/api/ViewTraceLot/GetDataViewLot", {
-          txtserialno: txtSerialNo,
-          plant_code: Fac,
+          dataList:{txtserialno: txtSerialNo,
+                    plant_code: Fac}
+
         })
         .then((res) => {
           dtLot = res.data;
@@ -277,8 +273,9 @@ function fn_LotTraceView() {
       } else {
         await axios
           .post("/api/ViewTraceLot/GetDataViewLot2", {
-            txtserialno: txtSerialNo,
-            plant_code: Fac,
+
+            dataList:{txtSerialNo: txtSerialNo,
+              PLANT_CODE: Fac}
           })
           .then((res) => {
             dtLot = res.data;
@@ -318,8 +315,8 @@ function fn_LotTraceView() {
       let dtLot;
       await axios
         .post("/api/ViewTraceLot/GetDataViewLot3", {
-          txtsheetno: txtSheetNo,
-          plant_code: Fac,
+          dataList:{txtSerialNo: txtSheetNo,
+            PLANT_CODE: Fac}
         })
         .then((res) => {
           dtLot = res.data;
@@ -363,7 +360,7 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         dt = res.data;
-      console.log(res.data,'resssss')
+        console.log(res.data, "resssss");
       });
 
     settxtPreviousLotNo((prevState) => ({
@@ -376,19 +373,15 @@ function fn_LotTraceView() {
       visible: "none",
     }));
 
-
-
     if (dt.length > 0) {
-    
       for (let dr = 0; dr < dt.length; dr++) {
-     
         if (dt[dr].LOT_PRD_NAME !== null) {
           settxtProd(dt[dr].LOT_PRD_NAME);
         } else {
           settxtProd("");
         }
         if (dt[dr].LOT_ROLL_NO !== null) {
-          console.log(dt,'dtdtdtdtdtdt3')
+          console.log(dt, "dtdtdtdtdtdt3");
           settxtRollNo((prevState) => ({
             ...prevState,
             value: dt[dr].LOT_ROLL_NO,
@@ -431,14 +424,11 @@ function fn_LotTraceView() {
           }));
         }
         if (dt[dr].NEXTLOT !== null) {
-         
           settxtNextLotNo((prevState) => ({
             ...prevState,
             text: dt[dr].NEXTLOT,
             visible: "",
           }));
-
-
         }
         if (dt[dr].PREVTLOT !== null) {
           settxtPreviousLotNo((prevState) => ({
@@ -446,7 +436,6 @@ function fn_LotTraceView() {
             text: dt[dr].PREVTLOT,
             visible: "",
           }));
-          
         }
       }
     }
@@ -506,8 +495,8 @@ function fn_LotTraceView() {
     let dataNG;
     await axios
       .post("/api/ViewTraceLot/fnlotresultfinalgatedata", {
-        strlotno: datalblLot,
-        strplantcode: Fac,
+        dataList: { strLotNo: datalblLot, 
+                    strPlantCode: Fac },
       })
       .then((res) => {
         dtFinalGate = res.data;
@@ -526,11 +515,11 @@ function fn_LotTraceView() {
       dataOK = "0";
       dataNG = "0";
     }
-    console.log(dataOK,dataNG, "dtFinalGate2");
+    console.log(dataOK, dataNG, "dtFinalGate2");
     setlbtFinalGate((prevState) => ({
       ...prevState,
       valueOK: dataOK,
-      valueOK:dataOK,
+      valueOK: dataOK,
       disabledOK: dataOK !== "0" ? "กดได้" : "กดไม่ได้",
       disabledNG: dataNG !== "0" ? "กดได้" : "กดไม่ได้",
     }));
@@ -550,17 +539,14 @@ function fn_LotTraceView() {
         }));
       });
 
-      await axios
-      .post("/api/ViewTraceLot/fnGetProcessLinkData")
-      .then((res) => {
-        console.log('gvProcessLinkgvProcessLink',res.data)
-        setgvProcessLink((prevState) => ({
-          ...prevState,
-          value: res.data,
-          visible: "โชว์",
-        }));
-      });
-
+    await axios.post("/api/ViewTraceLot/fnGetProcessLinkData").then((res) => {
+      console.log("gvProcessLinkgvProcessLink", res.data);
+      setgvProcessLink((prevState) => ({
+        ...prevState,
+        value: res.data,
+        visible: "โชว์",
+      }));
+    });
   };
 
   const columnsgvMaterial = [
@@ -572,8 +558,7 @@ function fn_LotTraceView() {
         return index + 1;
       },
       align: "center",
-      width:'66px'
-
+      width: "66px",
     },
     {
       title: "Material Name",
@@ -583,7 +568,6 @@ function fn_LotTraceView() {
       render: (text, record, index) => {
         return text;
       },
-
     },
     {
       title: "Category",
@@ -612,7 +596,7 @@ function fn_LotTraceView() {
       render: (text, record, index) => {
         return text;
       },
-     width:100
+      width: 100,
     },
     {
       title: "Expired Date",
@@ -622,7 +606,7 @@ function fn_LotTraceView() {
       render: (text, record, index) => {
         return text;
       },
-      width :100
+      width: 100,
     },
     {
       title: "Invoice No.",
@@ -632,10 +616,10 @@ function fn_LotTraceView() {
       render: (text, record, index) => {
         return text;
       },
-      width :110
+      width: 110,
     },
     {
-      title: 'Vender Name',
+      title: "Vender Name",
       key: "Vender Name",
       dataIndex: "VENDER_NAME",
       align: "left",
@@ -643,42 +627,44 @@ function fn_LotTraceView() {
         return text;
       },
     },
-    ,
-    {
-      title: (
-        <div>
+    // ,
+    // {
+    //   title: (
+    //     <div>
 
-          <Tooltip title="Export to Excel">
-          <Avatar
-            // onClick={() => exportToExcel(dataTable860, columns860)}
-            src={excel}
-            shape="square"
-            style={{  cursor: "pointer",height:'25px',width:'25px', }}
-            onClick={() => {
-              console.log("Exporting to Excel...");
-            }}
-          />
-         </Tooltip>
-        </div>
+    //       <Tooltip title="Export to Excel">
+    //       <Avatar
+    //         // onClick={() => exportToExcel(dataTable860, columns860)}
+    //         src={excel}
+    //         shape="square"
+    //         style={{  cursor: "pointer",height:'25px',width:'25px', }}
+    //         onClick={() => {
+    //           console.log("Exporting to Excel...");
+    //         }}
+    //       />
+    //      </Tooltip>
+    //     </div>
 
-      ),
-      width:40
-    },
+    //   ),
+    //   width:40
+    // },
   ];
 
   const columnsgvLot = [
     {
-      title: gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO 
-      ? `Roll No. : ${gvLot.value[0].LOT_ROLL_NO}` 
-      : `Roll No.`,    
+      title:
+        gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO
+          ? `Roll No. : ${gvLot.value[0].LOT_ROLL_NO}`
+          : `Roll No.`,
       dataIndex: "LOT",
       key: "Roll No.",
       render: (text, record, index) => {
-        return text
+        return text;
       },
-      align: gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO 
-      ? `left` 
-      : `center`,    
+      align:
+        gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO
+          ? `left`
+          : `center`,
     },
   ];
 
@@ -691,7 +677,7 @@ function fn_LotTraceView() {
         return text;
       },
       align: "center",
-      width:50
+      width: 50,
     },
     {
       title: "Factory",
@@ -701,7 +687,7 @@ function fn_LotTraceView() {
         return text;
       },
       align: "center",
-      width:63
+      width: 63,
     },
     {
       title: "Process",
@@ -711,7 +697,7 @@ function fn_LotTraceView() {
         return text;
       },
       align: "left",
-      width:70
+      width: 70,
     },
     {
       title: "Process Name",
@@ -730,7 +716,7 @@ function fn_LotTraceView() {
         return text;
       },
       align: "center",
-      width:135
+      width: 135,
     },
     {
       title: "Machine No.",
@@ -740,7 +726,7 @@ function fn_LotTraceView() {
         return text;
       },
       align: "left",
-      width:100
+      width: 100,
     },
     {
       title: "Operator",
@@ -750,7 +736,7 @@ function fn_LotTraceView() {
         return text;
       },
       align: "left",
-      width:115
+      width: 115,
     },
     {
       title: "Document No.",
@@ -773,19 +759,25 @@ function fn_LotTraceView() {
     {
       // title: "Tools Name",
       title: (
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <span>Tools Name</span>
           <Tooltip title="Export to Excel">
-          <Avatar
-            // onClick={() => exportToExcel(dataTable860, columns860)}
-            src={excel}
-            shape="square"
-            style={{  cursor: "pointer",height:'25px',width:'25px', }}
-            onClick={() => {
-              console.log("Exporting to Excel...");
-            }}
-          />
-         </Tooltip>
+            <Avatar
+              // onClick={() => exportToExcel(dataTable860, columns860)}
+              src={excel}
+              shape="square"
+              style={{ cursor: "pointer", height: "25px", width: "25px" }}
+              onClick={() => {
+                console.log("Exporting to Excel...");
+              }}
+            />
+          </Tooltip>
         </div>
       ),
       dataIndex: "TTL_TOOLS_CODE",
@@ -836,8 +828,7 @@ function fn_LotTraceView() {
     },
   ];
 
-
-  const columnsgvFinalExport = [
+  const columnsShtSerialExport = [
     {
       key: "PLANT_CODE",
     },
@@ -885,73 +876,120 @@ function fn_LotTraceView() {
     },
     {
       key: "UPDATE_PROGRAM",
-    }
-
+    },
   ];
 
-  const ExportGridToCSV = (data, ColumnsHeader,namefile) => {
+  const columnsFinalGatelExport = [
+    {
+      key: "PLANT_CODE",
+    },
+    {
+      key: "PRODUCT_NAME",
+    },
+    {
+      key: "LOT_NO",
+    },
+    {
+      key: "SERIAL_NO",
+    },
+    {
+      key: "ELT_RESULT",
+    },
+    {
+      key: "FINAL_RESULT",
+    },
+    {
+      key: "FINAL_REMARK",
+    },
+    {
+      key: "UPDATE_STATION",
+    },
+    {
+      key: "UPDATE_DATE",
+    },
+    {
+      key: "PACKING_GROUP",
+    },
+    {
+      key: "MASTER_CODE",
+    },
+  ];
+
+  const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
+    console.log(data, "---", ColumnsHeader, "---", namefile);
+
     const filteredColumns = ColumnsHeader.filter(
-      (col) => col.key !== "" && col.key !== null && col.key !== undefined
+      (col) => col.key && col.key !== null && col.key !== undefined
     );
 
     const headers = filteredColumns.map((col) => col.key);
 
     const filteredData = data.map((row) =>
-      filteredColumns.map((col) => row[col.dataIndex] || "")
+      filteredColumns.map((col) => {
+        const value = row[col.key];
+
+        return value === null || value === "[NULL]" || value === undefined
+          ? ""
+          : value;
+      })
     );
 
     const wsData = [headers, ...filteredData];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+
     const blobData = new Blob([excelBuffer], {
       type: "application/octet-stream",
     });
+
     saveAs(blobData, namefile);
   };
   const setShtSerialGrid = async (strLot) => {
-    let namefile=''
-    let FinalExport =[]
+    console.log("setShtSerialGrid", strLot);
+    let namefile = "";
+    let FinalExport = [];
     await axios
       .post("/api/ViewTraceLot/fnSheetSerialByLotData", {
-        strLotNo: strLot,
-        strPlantCode:Fac
+        dataList:{strLotNo: strLot,
+          strPlantCode: Fac,}
+
       })
       .then((res) => {
+        console.log("FinalExport", res.data);
         FinalExport = res.data;
-        console.log('FinalExport',FinalExport)
       });
-      if(FinalExport.length>0){
-        namefile="ShtSerial" + strLot + ".xls"
-        ExportGridToCSV(FinalExport,columnsgvFinalExport,namefile)
-      }
-  }
+    if (FinalExport.length > 0) {
+      namefile = "ShtSerial" + strLot + ".xls";
+      ExportGridToCSV(FinalExport, columnsShtSerialExport, namefile);
+    }
+  };
 
-  const setFinalGateGrid = async (strLot,strResult) => {
-    let namefile=''
-    let FinalExport =[]
+  const setFinalGateGrid = async (strLot, strResult) => {
+    let namefile = "";
+    let FinalExport = [];
     await axios
       .post("/api/ViewTraceLot/fnLotResultFinalGateDeatailData", {
-        strLotNo: strLot,
-        strPlantCode:Fac,
-        strResult:strResult
+        dataList:{     
+          strLotNo: strLot,
+          strPlantCode: Fac,
+          strResult: strResult}
       })
       .then((res) => {
         FinalExport = res.data;
-        console.log('FinalExport2',FinalExport)
+        console.log("FinalExport2", FinalExport.length,FinalExport);
       });
-      if(FinalExport.length>0){
-        namefile="FinalGate" + strLot + ".xls"
-        ExportGridToCSV(FinalExport,'columnsgvFinalExport',namefile)
-      }
-  }
-  const gvRouting_RowDataBound = async () => {
-    if(gvRouting!=''){
-
+    if (FinalExport.length > 0) {
+      namefile = "FinalGate" + strLot + ".xls";
+      ExportGridToCSV(FinalExport, columnsFinalGatelExport, namefile);
     }
-  }
-
+  };
+  const gvRouting_RowDataBound = async () => {
+    if (gvRouting != "") {
+    }
+  };
 
   return {
     settxtLotNo,
@@ -977,7 +1015,7 @@ function fn_LotTraceView() {
     lblTitleShtBack,
     lbtConnectSht,
     setShtSerialGrid,
-    setFinalGateGrid
+    setFinalGateGrid,
   };
 }
 
