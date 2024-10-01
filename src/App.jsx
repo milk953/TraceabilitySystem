@@ -55,6 +55,8 @@ import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 import RollTraceView from "./Page/RollTraceView/rollTraceView";
 import LotRollLeafNo from "./Page/LotRollLeafNo/LotRollLeafNo";
+import LotTraceSheet from './Page/SheetTraceView/rpt_SheetTraceView'
+import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSerialXrayConfirm";
 import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
@@ -135,6 +137,10 @@ const App = () => {
             <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
             <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
             <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />
+            
+            <Route path="/TraceabilitySystem/LotTraceSheet" element={<LotTraceSheet />} />
+            
+
             <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />
             
             {/* Maintenance */}
@@ -153,6 +159,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+            
             
           </Route>
         </Routes>
