@@ -54,6 +54,10 @@ import ScanAVIConfirmResult from "./Page/ScanAVIConfirmResult/ScanAVIConfirmResu
 import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 import RollTraceView from "./Page/RollTraceView/rollTraceView";
+import LotRollLeafNo from "./Page/LotRollLeafNo/LotRollLeafNo";
+import LotTraceSheet from './Page/SheetTraceView/rpt_SheetTraceView'
+import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSerialXrayConfirm";
+import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
