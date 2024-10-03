@@ -1,6 +1,7 @@
 import axios from "axios";
 import { set } from "lodash";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function fn_rollTraceView() {
   const [Product, setProduct] = useState("");
@@ -10,24 +11,41 @@ function fn_rollTraceView() {
   const [RollLeafTextFiled, setRollLeafTextFiled] = useState("");
   const [gvResult, setGvResult] = useState([]);
   const [gvResultState, setgvResultState] = useState(false);
-
-  async function enterBtn() {
-    console.log(RollLeafTextFiled);
-    searchData();
+  useEffect(() => {
+    if (RollLeafTextFiled == "") {
+      setFocus("RollLeafTextFiledFirst");
+    }
+  }, [RollLeafTextFiled]);
+  function setFocus(id) {
+    document.getElementById(id).focus();
   }
-  function clearViwe() {
-    setProduct("Pond");
+  async function enterBtn() {
+    if (RollLeafTextFiled === "") {
+      alert("Please Input Roll Leaf");
+      setFocus("RollLeafTextFiledFirst");
+    } else {
+      searchData();
+    }
+  }
+
+  const clearViwe = () => {
+    setRollLeafTextFiled("");
+    setProduct("");
     setRollNo("");
     setLotNo("");
     setRollSheetNo("");
-    setRollLeafTextFiled("");
     setGvResult([]);
-  }
+  };
   async function searchData() {
     let dtLeft = await getData("fnLotRollLeafData", RollLeafTextFiled);
+    if (dtLeft == "") {
+      setRollLeafTextFiled("");
+      alert("Roll Leaf No. Not Found");      
+      setFocus("RollLeafTextFiledFirst");
+      return;
+    }
     setGvResult(dtLeft);
     setgvResultState(true);
-    console.log(dtLeft);
 
     if (dtLeft != "") {
       let dtLot = await getData("fnLotNoByRoll", dtLeft[0].lot_no);
@@ -78,17 +96,21 @@ function fn_rollTraceView() {
       },
     },
     {
-      title: <div style={{ textAlign: 'center' }}>Sheet No.</div>,
+      title: <div style={{ textAlign: "center" }}>Sheet No.</div>,
       dataIndex: "sheet_no",
       key: "sheet_no",
       align: "left",
       width: 80,
       render: (text, record, index) => {
-        return <a href={`rpt_SheetTraceView?SHEETNO=${text}`} target='#'>{text}</a>; // รอแก้
+        return (
+          <a href={`rpt_SheetTraceView?SHEETNO=${text}`} target="_blank">
+            {text}
+          </a>
+        ); // รอแก้
       },
     },
     {
-        title: <div style={{ textAlign: 'center' }}>Operator</div>,
+      title: <div style={{ textAlign: "center" }}>Operator</div>,
       dataIndex: "operator",
       key: "operator",
       align: "left",
@@ -120,6 +142,7 @@ function fn_rollTraceView() {
     gvResultState,
     gvResult,
     columns,
+    clearViwe,
   };
 }
 

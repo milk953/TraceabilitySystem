@@ -18,6 +18,7 @@ function rollTraceView() {
     gvResultState,
     gvResult,
     columns,
+    clearViwe
   } = fn_rollTraceView();
   return (
     <>
@@ -40,8 +41,10 @@ function rollTraceView() {
           </Button>
           <Input
             size="small"
+            id = 'RollLeafTextFiledFirst'
             className="RollTraceInput"
             placeholder="Please Input Roll Leaf"
+            value={RollLeafTextFiled}
             onChange={(e) => setRollLeafTextFiled(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -64,6 +67,7 @@ function rollTraceView() {
             className="RollTraceBtn"
             iconPosition={"end"}
             icon={<ClearOutlined />}
+            onClick={clearViwe}
           >
             Clear
           </Button>
@@ -118,8 +122,8 @@ function rollTraceView() {
                 </th>
                 <th>
                   <a
-                    href={`rpt_LotRollLeafNo.aspx?LOTNO=${LotNo}&product=${Product}`}
-                    target="#"
+                    href={`LotRollLeafNo?ROLLNO=${LotNo}&product=${Product}`}
+                    target="_blank"
                   >
                     {LotNo}{" "}
                   </a>
