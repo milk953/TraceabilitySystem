@@ -22,3 +22,11 @@
 .ReportBadBtnLabel{
     width: 100px;
 }
+.ReportBadCard{
+/* min-height: 500px; */
+  max-width: none; 
+  
+}
+.ReportBadLabelTxt{
+  padding-left: 20px !important;
+}

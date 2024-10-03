@@ -19,12 +19,19 @@ function SheetBadMarkView() {
     radioValue,
     resultValue,
     setResultValue,
+    RetriveBtn,
+    product_result,
+    lotNo_result,
+    totalSheet_result,
+    dataSource,
+    columns,
+    exportExcelFile
   } = fn_SheetBadMarkView();
   return (
     <div>
       <Header />
       <h1>SheetBadMarkView</h1>
-      <Card component={Card}>
+      <Card component={Card} className="ReportBadCard">
         <div className="ReportBadTextFileDiv">
           <Button
             disabled
@@ -41,11 +48,11 @@ function SheetBadMarkView() {
             placeholder="Please Input Lot No"
             value={lotNotextField}
             onChange={(e) => setLotNotextField(e.target.value)}
-            // onKeyDown={(e) => {
-            //   if (e.key === "Enter") {
-            //     enterBtn();
-            //   }
-            // }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                RetriveBtn();
+              }
+            }}
           />
           <Button
             disabled
@@ -59,7 +66,9 @@ function SheetBadMarkView() {
           <Select
             value={resultValue}
             style={{ width: 120 }}
-            onChange={(e) => {setResultValue(e)}}
+            onChange={(e) => {
+              setResultValue(e);
+            }}
             options={[
               { value: "ALL", label: "ALL" },
               { value: "OK", label: "OK" },
@@ -83,15 +92,15 @@ function SheetBadMarkView() {
               setRadioValue(e.target.value);
             }}
           >
-            <Radio value={"Result"}>Result</Radio>
-            <Radio value={"Value"}>Value</Radio>
+            <Radio value={"RESULT"}>Result</Radio>
+            <Radio value={"VALUE"}>Value</Radio>
           </Radio.Group>
           <Button
             type="primary"
             className="ReportBadBtn"
             iconPosition={"end"}
             icon={<SearchOutlined />}
-            // onClick={enterBtn}
+            onClick={RetriveBtn}
           >
             Retrive
           </Button>
@@ -101,7 +110,7 @@ function SheetBadMarkView() {
             className="ReportBadBtn"
             iconPosition={"end"}
             icon={<FileExcelOutlined />}
-            // onClick={clearViwe}
+            onClick={exportExcelFile}
           >
             Export
           </Button>
@@ -122,7 +131,7 @@ function SheetBadMarkView() {
                     Product
                   </Button>
                 </th>
-                {/* <th>{Product}</th> */}
+                <th className="ReportBadLabelTxt">{product_result}</th>
               </td>
             </tr>
             <tr>
@@ -138,12 +147,12 @@ function SheetBadMarkView() {
                     Lot No.
                   </Button>
                 </th>
-                <th>
+                <th className="ReportBadLabelTxt">
                   <a
-                    // href={`rpt_LotRollLeafNo.aspx?LOTNO=${LotNo}&product=${Product}`}
+                    href={`LotRollLeafNo?LOTNO=${lotNo_result}&product=${product_result}`}
                     target="#"
                   >
-                    {/* {LotNo}{" "} */}
+                    {lotNo_result}
                   </a>
                 </th>
               </td>
@@ -161,11 +170,29 @@ function SheetBadMarkView() {
                     Total Sheet
                   </Button>
                 </th>
-                {/* <th>{RollSheetNo}</th> */}
+                <th className="ReportBadLabelTxt">{totalSheet_result}</th>
               </td>
             </tr>
           </table>
         </div>
+        {gvResultState && (
+          <div>
+            <Table
+              className="tableGvResult"
+              style={{
+                width: "98%",
+                margin: "auto",
+                marginTop: "20px",
+                marginBottom: "20px",
+              }}
+              dataSource={gvResult}
+              columns={columns}
+              pagination={false}
+              scroll={{ x: 55 * 5 }}
+            />
+          </div>
+        )}
+        &nbsp;
       </Card>
     </div>
   );
