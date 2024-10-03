@@ -3,6 +3,12 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 function fn_ScanAVIConfirmResult() {
+  const [lblNo, setLblNo] = useState({
+    value: "",
+    disbled: "",
+    visble: false,
+    style: {},
+  });
   const [ddlProduct, setDdlProduct] = useState({
     value: "",
     disbled: "",
@@ -76,7 +82,6 @@ function fn_ScanAVIConfirmResult() {
     style: {},
   });
 
-  
   const [Product, setProduct] = useState([]);
   const [TestType, setTestType] = useState([]);
   const plantCode = import.meta.env.VITE_FAC;
@@ -90,7 +95,6 @@ function fn_ScanAVIConfirmResult() {
             strplantcode: plantCode,
           })
           .then((res) => {
-            console.log("GetProductDataAVIResultConfirm", res.data);
             let data = res.data;
             p_name = data[0].prd_name;
             setProduct(data);
@@ -109,7 +113,6 @@ function fn_ScanAVIConfirmResult() {
             },
           })
           .then((res) => {
-            console.log("GetTestTypeAVIResultConfirm", res.data);
             let data = res.data;
             setTestType(data);
             setDdlTestType((prevState) => ({
@@ -133,7 +136,6 @@ function fn_ScanAVIConfirmResult() {
         },
       })
       .then((res) => {
-        console.log("GetTestTypeAVIResultConfirm", res.data);
         let data = res.data;
         setTestType(data);
         setDdlTestType((prevState) => ({
@@ -149,13 +151,70 @@ function fn_ScanAVIConfirmResult() {
 
   const txtSerialBarcode_TextChanged = async () => {
     if (txtSerialBarcode.value.trim().length > 0) {
+      const strSerial = await axios.post("/api/GetSerialNoByVendorBarcode", {
+        dataList: {
+          strplant_code: plantCode,
+          strbarcode: txtSerialBarcode.value.toUpperCase().trim(),
+          strbarcodetype: hfBarcodeType.value,
+        },
+      });
+      const dtResult = await axios.post("/api/GetAVIResultConfirmSerial", {
+        dataList: {
+          strplant_code: plantCode,
+          strprdname: ddlProduct.value,
+          strserialno: strSerial.data[0].serial_no,
+          strserialokcolor: hfOKColor.value,
+          strserialngcolor: hfNGColor.value,
+          strserialerror: hfSerialError.value,
+          strtesttype: ddlTestType.value,
+        },
+      });
+      if (hfBarcodeType.value === "TSIP" || hfBarcodeType.value === "DSIP") {
+        for (let i = 0; i < dtResult.data.length; i++) {
+          const drRow = dtResult.data[i];
 
-    } else {
-      setTxtSerialBarcode("");
-      fnSetFocus("txtSerialBarcode");
+          if (
+            hfBarcodeType.value === "TSIP" &&
+            hfBarcodeError.value.includes(drRow.serial_no)
+          ) {
+            drRow.serial_no = drRow.t_sip;
+            drRow.type_color = hfBarcodeErrorColor.value;
+          } else if (
+            hfBarcodeType.value === "DSIP" &&
+            hfBarcodeError.value.includes(drRow.serial_no)
+          ) {
+            drRow.serial_no = drRow.d_sip;
+            drRow.type_color = hfBarcodeErrorColor.value;
+          }
+        }
+
+        setLblNo((prevState) => ({
+          ...prevState,
+          value: txtSerialBarcode.value.toUpperCase().trim(),
+        }));
+        await showResult(dtResult.data);
+        await DataTable(dtResult.data);
+      }
     }
-  }
 
+    setTxtSerialBarcode((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+
+    if (txtSerialBarcode.value.trim().length <= 0) {
+      setLblNo((prevState) => ({
+        ...prevState,
+        value: txtSerialBarcode.value.toUpperCase().trim(),
+      }));
+      setShowtableRow((prevState) => ({
+        ...prevState,
+        visble: false,
+      }));
+    }
+
+    fnSetFocus("txtSerialBarcode");
+  };
 
   const ClearResult = async (strProduct, strTestType) => {
     let dtResult = [];
@@ -168,17 +227,15 @@ function fn_ScanAVIConfirmResult() {
         },
       })
       .then((res) => {
-        console.log("GetAVIResultConfirmDefault", res.data);
         dtResult = res.data;
       });
-    console.log("dtResult", dtResult);
     for (let i = 0; i < dtResult.length; i++) {
       const drRow = dtResult[i];
       drRow.serial_color = hfDefaultColor.value;
       drRow.type_color = hfDefaultColor.value;
     }
     await showResult(dtResult);
-    if (ddlProduct.length > 0) {
+    if (ddlProduct.value.length > 0) {
       setTxtSerialBarcode((prevState) => ({
         ...prevState,
         disbled: false,
@@ -192,131 +249,128 @@ function fn_ScanAVIConfirmResult() {
     }
   };
 
+  const [ShowtableRow, setShowtableRow] = useState({
+    value: null,
+    disbled: "",
+    visble: false,
+  });
   const showResult = async (dtResult) => {
+    setShowtableRow((prevState) => ({
+      ...prevState,
+      visble: true,
+    }));
     if (!dtResult || dtResult.length === 0) return null;
-
     const intDataRow = dtResult[0].data_row;
     const intDataColumn = dtResult[0].data_column;
     const intTypeColumn = dtResult[0].type_column;
-    let intData = 0;
     let intBarcode = 0;
+    let intData = 0;
+    const tableRows = [];
+    for (let intRow = 1; intRow <= intDataRow; intRow++) {
+      const bcRow = [];
+      const wkRow = [];
+      for (let intCol = 1; intCol <= intDataColumn; intCol++) {
+        intBarcode++;
+        const cellData = dtResult[intTypeColumn * (intBarcode - 1)];
+        let cellStyle = {
+          width: `${
+            Math.floor(100 / intDataColumn / (intTypeColumn + 2)) *
+            intTypeColumn
+          }%`,
+          textAlign: "center",
+          backgroundColor: "#FFFFFF",
+          fontSize: hfFontSize.value,
+          fontFamily: "Arial, Helvetica, sans-serif",
+          border: "2px double #006666",
+          color: "black",
+        };
+        if (
+          hfBarcodeType.value !== "" &&
+          (cellData.serial_no.startsWith(hfBarcodeType.value.substring(0, 2)) ||
+            cellData.serial_no === "BARCODE ERROR")
+        ) {
+          cellStyle.color = "red";
+        }
 
-    // Function to render the table
-    const renderTable = () => {
-      const rows = [];
-
-      for (let intRow = 1; intRow <= intDataRow; intRow++) {
-        const bcRow = [];
-
-        for (let intCol = 1; intCol <= intDataColumn; intCol++) {
-          intBarcode += 1;
-          const bcCell = dtResult[intTypeColumn * (intBarcode - 1)].serial_no;
-          const isBarcodeError =
-            bcCell === "BARCODE ERROR" ||
-            dtResult[intTypeColumn * (intBarcode - 1)].serial_no.startsWith(
-              lblNo.slice(0, 2)
-            );
-
-          const bcCellStyle = {
+        const colSpan = hfBarcodeType ? intTypeColumn + 1 : 1;
+        bcRow.push(
+          <td
+            style={cellStyle}
+            colSpan={colSpan}
+            key={`bcRow-${intRow}-${intCol}`}
+          >
+            {cellData.serial_no}
+          </td>
+        );
+      }
+      tableRows.push(<tr key={`bcRow-${intRow}`}>{bcRow}</tr>);
+      for (let intCol = 1; intCol <= intDataColumn; intCol++) {
+        const wkCellData = dtResult[intData];
+        const wkCellStyle = {
+          width: `${Math.floor(100 / intDataColumn / (intTypeColumn + 2))}%`,
+          textAlign: "center",
+          backgroundColor: "#FFFFFF",
+          fontSize: hfPCSSize, // Assume this is defined elsewhere
+          fontFamily: "Arial, Helvetica, sans-serif",
+          borderLeft: "2px double #006666",
+          borderBottom: "2px double #006666",
+        };
+        wkRow.push(
+          <td style={wkCellStyle} key={`wkRow-${intRow}-${intCol}`}>
+            {wkCellData.pcs_no}
+          </td>
+        );
+        for (let intType = 1; intType <= intTypeColumn; intType++) {
+          const typeCellData = dtResult[intData];
+          let typeCellStyle = {
             width: `${
-              Math.trunc(100 / intDataColumn / (intTypeColumn + 2)) *
+              (Math.floor(100 / intDataColumn) -
+                Math.floor(100 / intDataColumn / (intTypeColumn + 2))) /
               intTypeColumn
             }%`,
             textAlign: "center",
-            backgroundColor: "#FFFFFF",
-            fontSize: `${hfFontSize}px`,
-            fontFamily: "Arial, Helvetica, sans-serif",
-            border: "2px double #006666",
-            color: isBarcodeError ? "red" : "black",
-          };
-
-          bcRow.push(
-            <td key={`bc-cell-${intRow}-${intCol}`} style={bcCellStyle}>
-              {bcCell}
-            </td>
-          );
-        }
-
-        rows.push(<tr key={`bc-row-${intRow}`}>{bcRow}</tr>);
-
-        const wkRow = [];
-
-        for (let intCol = 1; intCol <= intDataColumn; intCol++) {
-          const wkCellText = dtResult[intData].pcs_no;
-          const strSerialColor = dtResult[intData].serial_color;
-
-          const wkCellStyle = {
-            width: `${Math.trunc(100 / intDataColumn / (intTypeColumn + 2))}%`,
-            textAlign: "center",
-            backgroundColor: "#FFFFFF",
-            borderLeft: "2px double #006666",
+            backgroundColor: typeCellData.type_color,
             borderBottom: "2px double #006666",
-            fontSize: `${hfPCSSize}px`,
-            fontFamily: "Arial, Helvetica, sans-serif",
+            verticalAlign: "top",
           };
-
+          if (intType === intTypeColumn) {
+            typeCellStyle.borderRight = "2px double #006666";
+          }
           wkRow.push(
-            <td key={`wk-cell-${intRow}-${intCol}`} style={wkCellStyle}>
-              {wkCellText}
+            <td
+              style={typeCellStyle}
+              key={`wkRow2-${intRow}-${intCol}-${intType}`}
+            >
+              {typeCellData.avi_type}
+              {typeCellData.type_item && (
+                <>
+                  <br />
+                  <br />
+                  {typeCellData.type_item}
+                </>
+              )}
             </td>
           );
-
-          for (let intType = 1; intType <= intTypeColumn; intType++) {
-            const strTypeColor = dtResult[intData].type_color;
-            const wkCell2Text =
-              dtResult[intData].avi_type +
-              (dtResult[intData].type_item.trim() !== ""
-                ? "<br /><br /><br /><br /><br />" +
-                  dtResult[intData].type_item.trim()
-                : "");
-
-            const wkCell2Style = {
-              width: `${
-                (Math.trunc(100 / intDataColumn) -
-                  Math.trunc(100 / intDataColumn / (intTypeColumn + 2))) /
-                intTypeColumn
-              }%`,
-              textAlign: "center",
-              backgroundColor: strTypeColor,
-              borderBottom: "2px double #006666",
-              verticalAlign: "top",
-              ...(intType === intTypeColumn && {
-                borderRight: "2px double #006666",
-              }),
-            };
-
-            wkRow.push(
-              <td
-                key={`wk-cell2-${intRow}-${intCol}-${intType}`}
-                style={wkCell2Style}
-              >
-                {wkCell2Text}
-              </td>
-            );
-
-            intData += 1;
-          }
+          intData += 1;
         }
-
-        rows.push(
-          <tr
-            key={`wk-row-${intRow}`}
-            style={{
-              height: `${Math.trunc(500 / intDataRow)}px`,
-              fontSize: `${hfFontSize}px`,
-              fontFamily: `Arial, Helvetica, sans-serif`,
-            }}
-          >
-            {wkRow}
-          </tr>
-        );
       }
+      tableRows.push(
+        <tr
+          key={`wkRow-${intRow}`}
+          style={{
+            height: `${Math.floor(500 / intDataRow)}px`,
+            fontSize: hfFontSize.value,
+          }}
+        >
+          {wkRow}
+        </tr>
+      );
+    }
 
-      return rows;
-    };
-
-    // Return the rendered table
-    return <table>{renderTable()}</table>;
+    setShowtableRow((prevState) => ({
+      ...prevState,
+      value: tableRows,
+    }));
   };
 
   function fnSetFocus(txtField) {
@@ -324,6 +378,119 @@ function fn_ScanAVIConfirmResult() {
       document.getElementById(`${txtField}`).focus();
     }, 300);
   }
+
+  //----------------------------------------  เนื้อหาของ const DataTable ส่วนนี้เก็บไว้ก่อนอาจต้องใช้  {
+  const [tableData, setTableData] = useState(null);
+  const DataTable = async (dtResult) => {
+    if (!dtResult || dtResult.length === 0) {
+      return null;
+    }
+    const intDataRow = dtResult[0].data_row;
+    const intDataColumn = dtResult[0].data_column;
+    const intTypeColumn = dtResult[0].type_column;
+    const renderTable = () => {
+      let table = [];
+      let intData = 0;
+      let intBarcode = 0;
+      for (let intRow = 1; intRow <= intDataRow; intRow++) {
+        let bcRow = [];
+        let wkRow = [];
+        for (let intCol = 1; intCol <= intDataColumn; intCol++) {
+          intBarcode++;
+          const barcodeData = dtResult[intTypeColumn * (intBarcode - 1)];
+          const isBarcodeError = barcodeData.serial_no === "BARCODE ERROR";
+          const barcodeStyle = {
+            width: `${
+              Math.trunc(100 / intDataColumn / (intTypeColumn + 2)) *
+              intTypeColumn
+            }%`,
+            textAlign: "center",
+            backgroundColor: "#FFFFFF",
+            fontSize: hfFontSize.value, // Assume this is defined elsewhere
+            fontFamily: "Arial, Helvetica, sans-serif",
+            border: "2px double #006666",
+            color: isBarcodeError ? "red" : "black",
+          };
+          bcRow.push(
+            <td
+              key={`bc-${intRow}-${intCol}`}
+              style={barcodeStyle}
+              colSpan={intTypeColumn + 1}
+            >
+              {barcodeData.serial_no}
+            </td>
+          );
+          const wkCellStyle = {
+            width: `${Math.trunc(100 / intDataColumn / (intTypeColumn + 2))}%`,
+            textAlign: "center",
+            backgroundColor: "#FFFFFF",
+            borderColor: "#FFFFFF",
+            margin: "0px",
+            fontSize: hfPCSSize, // Assume this is defined elsewhere
+            fontFamily: "Arial, Helvetica, sans-serif",
+            borderLeft: "2px double #006666",
+            borderBottom: "2px double #006666",
+          };
+          wkRow.push(
+            <td key={`wk-${intRow}-${intCol}-pcs`} style={wkCellStyle}>
+              {dtResult[intData].pcs_no}
+            </td>
+          );
+          for (let intType = 1; intType <= intTypeColumn; intType++) {
+            const typeData = dtResult[intData];
+            const typeStyle = {
+              width: `${
+                (Math.trunc(100 / intDataColumn) -
+                  Math.trunc(100 / intDataColumn / (intTypeColumn + 2))) /
+                intTypeColumn
+              }%`,
+              borderColor: "#FFFFFF",
+              textAlign: "center",
+              backgroundColor: typeData.type_color,
+              borderBottom: "2px double #006666",
+              verticalAlign: "top",
+              borderRight:
+                intType === intTypeColumn ? "2px double #006666" : "none",
+            };
+            wkRow.push(
+              <td key={`wk-${intRow}-${intCol}-${intType}`} style={typeStyle}>
+                {typeData.avi_type}
+                {typeData.type_item && (
+                  <>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    {typeData.type_item}
+                  </>
+                )}
+              </td>
+            );
+            intData++;
+          }
+        }
+        table.push(<tr key={`bcrow-${intRow}`}>{bcRow}</tr>);
+        table.push(
+          <tr
+            key={`wkrow-${intRow}`}
+            style={{
+              height: `${Math.trunc(500 / intDataRow)}px`,
+              fontSize: hfFontSize.value,
+              fontFamily: "Arial, Helvetica, sans-serif",
+            }}
+          >
+            {wkRow}
+          </tr>
+        );
+      }
+      return table;
+    };
+    const table = renderTable();
+    setTableData(table);
+  };
+
+  //----------------------------------------  อย่าลบเด็ดขาดนะครับ  }
 
   return {
     ddlProduct,
@@ -335,8 +502,9 @@ function fn_ScanAVIConfirmResult() {
     txtSerialBarcode_TextChanged,
     ddlProduct_SelectedIndexChanged,
     ddlTestType_SelectedIndexChanged,
-    ClearResult,
-    showResult,
+    lblNo,
+    tableData,
+    ShowtableRow,
   };
 }
 

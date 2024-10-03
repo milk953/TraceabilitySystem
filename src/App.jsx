@@ -55,7 +55,7 @@ import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 import RollTraceView from "./Page/RollTraceView/rollTraceView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
-import SheetBadMarkView from "./Page/SheetBadMarkReport/SheetBadMarkView";
+ 
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 axios.defaults.baseURL = backendUrl;
 
@@ -131,7 +131,11 @@ const App = () => {
             <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
             <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
-            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />SheetBadMarkView
+            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
+            <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />            
+            <Route path="/TraceabilitySystem/LotTraceSheet" element={<LotTraceSheet />} />       
+            <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />            
+            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
             <Route path="/TraceabilitySystem/SheetBadMarkView" element={<SheetBadMarkView />} />
 
             {/* Maintenance */}
@@ -150,6 +154,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+            
             
           </Route>
         </Routes>

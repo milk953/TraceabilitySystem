@@ -1,0 +1,34 @@
+.Card-ViewRollTitlePage {
+    /* width: 250px !important; */
+    height: 50px !important;
+    text-align: center!important;
+    background: #0D7C66 !important; /* สีพื้นหลัง */
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif!important;
+    color: #fff!important;
+  }
+
+  .Card-ViewRoll{
+    /* width: 250px !important; */
+    height: 50px !important;
+    text-align: center!important;
+    background: #1A4870 !important; /* สีพื้นหลัง */
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif!important;
+    color: #fff!important;
+  }
+
+  
+  .tableGvResultViewRoll .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+  }
+  .tableGvResultViewRoll .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+}
+
+
+.tableGvResultViewRoll{
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
+
+}

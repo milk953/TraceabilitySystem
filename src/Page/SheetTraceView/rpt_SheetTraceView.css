@@ -1,0 +1,38 @@
+.TbViewTraceSheet {
+    margin: auto;
+}
+
+.TbViewTraceSheet td {
+    border: none;
+    padding: px;
+}
+.divSheetTable{
+    margin: auto;
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+.Product {
+    margin: auto;
+    display: flex;
+ 
+}
+
+.Product td {
+    border: none;
+    padding: 6px;
+    border: 1px solid#fdfefe ;
+}
+.color-bg-product{
+
+background-color:#aed6f1
+}
+
+/* .card-style-product {
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #fff;
+    max-width: 600px;
+    margin: 20px auto;
+} */
