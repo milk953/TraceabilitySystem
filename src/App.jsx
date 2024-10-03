@@ -58,6 +58,7 @@ import LotRollLeafNo from "./Page/LotRollLeafNo/LotRollLeafNo";
 import LotTraceSheet from './Page/SheetTraceView/rpt_SheetTraceView'
 import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSerialXrayConfirm";
 import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
+import SheetBadMarkView from "./Page/SheetBadMarkView/SheetBadMarkView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
