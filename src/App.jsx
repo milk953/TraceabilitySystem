@@ -55,7 +55,7 @@ import PieceTraceView from "./Page/PieceTraceView/PieceTraceView";
 import LotTraceView from "./Page/LotTraceView/LotTraceView";
 import RollTraceView from "./Page/RollTraceView/rollTraceView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
- 
+import SheetBadMarkView from "./Page/SheetBadMarkReport/SheetBadMarkView";
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
 axios.defaults.baseURL = backendUrl;
 
@@ -131,7 +131,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
             <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
-            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
+            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />SheetBadMarkView
+            <Route path="/TraceabilitySystem/SheetBadMarkView" element={<SheetBadMarkView />} />
 
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
