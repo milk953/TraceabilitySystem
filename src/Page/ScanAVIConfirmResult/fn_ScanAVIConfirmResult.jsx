@@ -22,7 +22,7 @@ function fn_ScanAVIConfirmResult() {
     style: {},
   });
   const [hfDefaultColor, setHfDefaultColor] = useState({
-    value: "#FFFFFF",
+    value: "#00CCFF",
     disbled: "",
     visble: false,
     style: {},
