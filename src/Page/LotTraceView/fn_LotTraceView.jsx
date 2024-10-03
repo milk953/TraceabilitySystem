@@ -462,7 +462,7 @@ function fn_LotTraceView() {
         }
       }
     }
-    // lbtConnectSht.Enabled = False กดไม่ได้
+    
     let dtSerailCount = [];
     await axios
       .post("/api/Common/getlotserialcountdata", {
@@ -547,6 +547,24 @@ function fn_LotTraceView() {
         visible: "โชว์",
       }));
     });
+  };
+  const setShtSerialGrid = async (strLot) => {
+    let namefile = "";
+    let FinalExport = [];
+    await axios
+      .post("/api/ViewTraceLot/fnSheetSerialByLotData", {
+        dataList:{strLotNo: strLot,
+          strPlantCode: Fac,}
+
+      })
+      .then((res) => {
+        console.log("FinalExport", res.data);
+        FinalExport = res.data;
+      });
+    if (FinalExport.length > 0) {
+      namefile = "ShtSerial" + strLot + ".xls";
+      ExportGridToCSV(FinalExport, columnsShtSerialExport, namefile);
+    }
   };
 
   const columnsgvMaterial = [
@@ -947,25 +965,6 @@ function fn_LotTraceView() {
 
     saveAs(blobData, namefile);
   };
-  const setShtSerialGrid = async (strLot) => {
-    console.log("setShtSerialGrid", strLot);
-    let namefile = "";
-    let FinalExport = [];
-    await axios
-      .post("/api/ViewTraceLot/fnSheetSerialByLotData", {
-        dataList:{strLotNo: strLot,
-          strPlantCode: Fac,}
-
-      })
-      .then((res) => {
-        console.log("FinalExport", res.data);
-        FinalExport = res.data;
-      });
-    if (FinalExport.length > 0) {
-      namefile = "ShtSerial" + strLot + ".xls";
-      ExportGridToCSV(FinalExport, columnsShtSerialExport, namefile);
-    }
-  };
 
   const setFinalGateGrid = async (strLot, strResult) => {
     let namefile = "";
@@ -986,10 +985,7 @@ function fn_LotTraceView() {
       ExportGridToCSV(FinalExport, columnsFinalGatelExport, namefile);
     }
   };
-  const gvRouting_RowDataBound = async () => {
-    if (gvRouting != "") {
-    }
-  };
+
 
   return {
     settxtLotNo,
