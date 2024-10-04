@@ -9,6 +9,7 @@ import BuildIcon from "@mui/icons-material/Build";
 import SourceIcon from "@mui/icons-material/Source";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { sidebarT } from "./function_sidebar";
+import HomeIcon from '@mui/icons-material/Home';
 import "./sidebar.css";
 
 function Sidebar({ isOpen, onClose }) {
@@ -53,7 +54,8 @@ function Sidebar({ isOpen, onClose }) {
           }}
         >
           <ListItemIcon>
-            <Circle style={{ fontSize: "8px", marginRight: "10px" }} />
+            <HomeIcon   />
+            {/* style={{ fontSize: "8px", marginRight: "10px" }} */}
           </ListItemIcon>
           <ListItemText primary={"Home"} />
         </ListItem>

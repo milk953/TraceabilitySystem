@@ -2,11 +2,9 @@ import axios from "axios";
 import { get } from "lodash";
 import React, { useState } from "react";
 import ExcelJS  from "exceljs"
+import Swal from "sweetalert2";
 
 function fn_SheetBadMarkView() {
-  const [product, setProduct] = useState("");
-  const [lotNo, setLotNo] = useState("");
-  const [totalSheet, setTotalSheet] = useState("");
   const [gvResult, setGvResult] = useState([]);
   const [gvResultState, setGvResultState] = useState(false);
   const [lotNotextField, setLotNotextField] = useState("");
@@ -34,6 +32,16 @@ function fn_SheetBadMarkView() {
           },
         })
         .then((response) => {
+          if(response.data == ''|| response.data ==[]) {
+            Swal.fire({
+              icon: 'error',
+              title: 'No Data Found',
+              showConfirmButton: false,
+              timer: 1000,
+            })
+            setLotNotextField('');
+            return;
+          }
           setGvResult(response.data);
           setTotalSheet_result(response.data.length);
           setGvResultState(true)
@@ -107,6 +115,14 @@ function fn_SheetBadMarkView() {
   const columns = [...predefinedColumns, ...dynamicColumns];
 
   const exportExcelFile = () => {
+    if (gvResult == '' || gvResult == null || gvResult == []) {
+      Swal.fire({
+        icon: 'error',
+        title: 'No Data to Export',
+        showConfirmButton: false,
+        timer: 1000,
+      })
+    }
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("My Sheet");
     sheet.properties.defaultRowHeight = 20;
@@ -204,9 +220,6 @@ function fn_SheetBadMarkView() {
 
 
   return {
-    product,
-    lotNo,
-    totalSheet,
     gvResult,
     gvResultState,
     lotNotextField,

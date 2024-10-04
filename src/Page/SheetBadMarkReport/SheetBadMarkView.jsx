@@ -8,9 +8,6 @@ import { fn_SheetBadMarkView } from "./fn_SheetBadMarkView";
 import { set } from "lodash";
 function SheetBadMarkView() {
   const {
-    product,
-    lotNo,
-    totalSheet,
     gvResult,
     gvResultState,
     lotNotextField,

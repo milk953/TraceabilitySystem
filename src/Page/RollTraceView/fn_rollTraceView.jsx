@@ -103,7 +103,7 @@ function fn_rollTraceView() {
       width: 80,
       render: (text, record, index) => {
         return (
-          <a href={`rpt_SheetTraceView?SHEETNO=${text}`} target="_blank">
+          <a href={`LotTraceSheet?SHEETNO=${text}`} target="_blank">
             {text}
           </a>
         ); // รอแก้
