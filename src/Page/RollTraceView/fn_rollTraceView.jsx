@@ -40,6 +40,8 @@ function fn_rollTraceView() {
   }
 
   const clearViwe = () => {
+    removeURLParameter('ROLLLEAF');
+    setgvResultState(false);
     setRollLeafTextFiled("");
     setProduct("");
     setRollNo("");
