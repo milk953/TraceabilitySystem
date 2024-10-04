@@ -551,7 +551,6 @@ function fn_ScanSMTSerialXrayConfirm() {
             "(",_strSerial,")",
             _strScanResultAll
           );
-          console.log(!CONNECT_SERIAL_ERROR.includes(_strSerial),"||",CONNECT_SERIAL_ERROR.includes(_strSerial),"ดูค่า CONNECT_SERIAL_ERROR นะ",_strScanResultAll)
           if (
             !CONNECT_SERIAL_ERROR.includes(_strSerial) &&
             _strScanResultAll === "OK"
