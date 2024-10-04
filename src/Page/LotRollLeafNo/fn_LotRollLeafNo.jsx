@@ -125,7 +125,7 @@ function fn_LotRollLeafNo() {
       dataIndex: "LEAF1",
       key: "LEAF-NO. 1",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
       align: "center",
     },
@@ -135,7 +135,7 @@ function fn_LotRollLeafNo() {
       key: "LEAF-NO. 2",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
     {
@@ -144,7 +144,7 @@ function fn_LotRollLeafNo() {
       key: "LEAF-NO. 3",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
 
@@ -154,7 +154,7 @@ function fn_LotRollLeafNo() {
       dataIndex: "LEAF4",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
     {
@@ -163,7 +163,7 @@ function fn_LotRollLeafNo() {
       dataIndex: "LEAF5",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
   ];
@@ -236,7 +236,17 @@ function fn_LotRollLeafNo() {
       key: "SHR_UPDATE_DATE",
     },
   ];
-
+  const createLink= (text) => {
+    return (
+      <a
+        href={`/TraceabilitySystem/RollTraceView?ROLLLEAF=${text}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {text}
+      </a>
+    );
+  };
   const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
     console.log(data, "---", ColumnsHeader, "---", namefile);
   

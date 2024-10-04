@@ -87,7 +87,17 @@ function fn_LotSheetNo() {
         settblBackSheet(dtBack);
       });
   };
-
+  const createLink= (text) => {
+    return (
+      <a
+        href={`/TraceabilitySystem/SheetTraceView?SHEETNO=${text}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {text}
+      </a>
+    );
+  };
 
   const columnsFRONT= [
     {
@@ -95,7 +105,7 @@ function fn_LotSheetNo() {
       dataIndex: "FRONTSHEET1",
       key: "FRONT-SHEET-NO. 1",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
       align: "center",
     },
@@ -105,7 +115,7 @@ function fn_LotSheetNo() {
       key: "FRONT-SHEET-NO. 2",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
     {
@@ -114,7 +124,7 @@ function fn_LotSheetNo() {
       key: "FRONT-SHEET-NO. 3",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
 
@@ -124,7 +134,7 @@ function fn_LotSheetNo() {
       dataIndex: "FRONTSHEET4",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
     {
@@ -133,7 +143,7 @@ function fn_LotSheetNo() {
       dataIndex: "FRONTSHEET5",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
   ];
@@ -144,7 +154,7 @@ function fn_LotSheetNo() {
       dataIndex: "BACKSHEET1",
       key: "BACK-SHEET-NO. 1",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
       align: "center",
     },
@@ -154,7 +164,7 @@ function fn_LotSheetNo() {
       key: "BACK-SHEET-NO. 2",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
     {
@@ -163,7 +173,7 @@ function fn_LotSheetNo() {
       key: "BACK-SHEET-NO. 3",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
 
@@ -173,7 +183,7 @@ function fn_LotSheetNo() {
       dataIndex: "BACKSHEET4",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
     {
@@ -182,7 +192,7 @@ function fn_LotSheetNo() {
       dataIndex: "BACKSHEET5",
       align: "center",
       render: (text, record, index) => {
-        return text;
+        return createLink(text);
       },
     },
   ];

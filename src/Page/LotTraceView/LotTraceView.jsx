@@ -2,9 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Card, Paper } from "@mui/material";
-import { Input, Button, Table, Typography, Tag, Tooltip } from "antd";
+import { Input, Button, Table, Typography, Tag, Tooltip, Avatar ,Spin} from "antd";
 const { Text } = Typography;
 import { fn_LotTraceView } from "./fn_LotTraceView";
+import excel from "/src/assets/excel.png";
 import {
   SearchOutlined,
   UndoOutlined,
@@ -37,14 +38,16 @@ function LotTraceView() {
     lbtConnectSht,
     setShtSerialGrid,
     setFinalGateGrid,
+    ExportTableToCSV,
+    loadingDoc
   } = fn_LotTraceView();
-  console.log(gvProcessLink, "gvProcessLink");
 
   return (
     <>
       <Hearder />
       <h1>LotTraceView</h1>
       <Card component={Paper} className="Card-Common">
+      <Spin tip="Loading..." spinning={loadingDoc} >
         <Input
           placeholder="Lot No. :"
           style={{ width: "250px" }}
@@ -94,7 +97,7 @@ function LotTraceView() {
           >
             <b style={{ fontSize: "20px" }}> Product Name </b>
             <br />
-           <b> {txtProd}</b>
+            <b> {txtProd}</b>
           </Card>
           <Card
             component={Paper}
@@ -104,7 +107,7 @@ function LotTraceView() {
             <b style={{ fontSize: "20px" }}>Previous Lot No. </b>
             <br />
             <a
-              href={`http://10.17.74.226/TraceabilitySystem/LotTraceView?lot=${txtPreviousLotNo.text}`}
+              href={`/TraceabilitySystem/LotTraceView?lot=${txtPreviousLotNo.text}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "#fff" }}
@@ -120,12 +123,12 @@ function LotTraceView() {
             <b style={{ fontSize: "20px" }}>Next Lot No. </b>
             <br />
             <a
-              href={`http://10.17.74.226/TraceabilitySystem/LotTraceView?lot=${txtNextLotNo.text}`}
+              href={`/TraceabilitySystem/LotTraceView?lot=${txtNextLotNo.text}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "#fff" }}
             >
-             <b>{txtNextLotNo.text}</b> 
+              <b>{txtNextLotNo.text}</b>
             </a>
           </Card>
           <Card
@@ -162,8 +165,11 @@ function LotTraceView() {
           >
             <b style={{ fontSize: "20px" }}> Connect Sheet </b>
             <br />
-            <div style={{ cursor: "pointer" }}onClick={() => setShtSerialGrid(txtLotNo)}>
-             <b> {lbtConnectSht.value}</b>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => setShtSerialGrid(txtLotNo)}
+            >
+              <b> {lbtConnectSht.value}</b>
             </div>
           </Card>
           <Card className="Card-ViewLot1" style={{ width: "170px" }}>
@@ -175,7 +181,7 @@ function LotTraceView() {
                 onClick={() => setFinalGateGrid(txtLotNo, "OK")}
                 style={{ cursor: "pointer" }}
               >
-               &nbsp; {lbtFinalGate.valueOK}
+                &nbsp; {lbtFinalGate.valueOK}
               </span>
             </b>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -185,7 +191,7 @@ function LotTraceView() {
                 onClick={() => setFinalGateGrid(txtLotNo, "NG")}
                 style={{ cursor: "pointer" }}
               >
-               &nbsp; {lbtFinalGate.valueNG}
+                &nbsp; {lbtFinalGate.valueNG}
               </span>
             </b>
           </Card>
@@ -211,6 +217,28 @@ function LotTraceView() {
           </div>
         </div>
         <br />
+        <div
+          style={{
+            width: "87%",
+            display: "flex",
+            justifyContent: "flex-end",
+            display: gvMaterial.value.length > 0 ? "flex" : "none",
+          }}
+        >
+          <Button
+            size="small"
+            icon={<Avatar shape="square" src={excel} size="small" />}
+            onClick={() =>
+              ExportTableToCSV(
+                gvMaterial.value,
+                columnsgvMaterial,
+                "MAT_" + txtLotNo + ".xls"
+              )
+            }
+          >
+            Export
+          </Button>
+        </div>
         <div style={{ display: "flex", width: "100%" }}>
           {/*----------------------------- Table1.1--------------------- */}
           <Table
@@ -237,6 +265,28 @@ function LotTraceView() {
         </div>
         <br />
         {/*----------------------------- Table2--------------------- */}
+        <div
+          style={{
+            width: "99%",
+            display: "flex",
+            justifyContent: "flex-end",
+            display: gvRouting.value.length > 0 ? "flex" : "none",
+          }}
+        >
+          <Button
+            size="small"
+            icon={<Avatar shape="square" src={excel} size="small" />}
+            onClick={() =>
+              ExportTableToCSV(
+                gvRouting.value,
+                columnsgvRouting,
+                "Proc_" + txtLotNo + ".xls"
+              )
+            }
+          >
+            Export
+          </Button>
+        </div>
         <Table
           style={{ width: "100%" }}
           columns={columnsgvRouting}
@@ -251,12 +301,14 @@ function LotTraceView() {
         <br />
         <Table
           style={{ width: "50%" }}
+          dataSource={gvProcessLink.value}
           columns={columnsgvProcessLink}
           className="tableGvResultViewLot"
           pagination={false}
           size="small"
           bordered
         />
+           </Spin>
       </Card>
     </>
   );

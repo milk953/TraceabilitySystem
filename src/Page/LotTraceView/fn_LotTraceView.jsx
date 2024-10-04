@@ -16,6 +16,7 @@ function fn_LotTraceView() {
   const [lblLotNo, setlblLotNo] = useState("xxxxxxxxx");
   const [OQC, setOQC] = useState("");
   const [loading, setloading] = useState(false);
+  const [loadingDoc, setLoadingDoc] = React.useState(false);
 
   const [txtRollNo, settxtRollNo] = useState({
     text: "",
@@ -141,6 +142,15 @@ function fn_LotTraceView() {
     }
   }, [LotNoSearch]);
 
+  //   useEffect(() => {
+  // fetchdata()
+  //     // const [strEMCSNo, linkEmcNo, linkEmcNo2, linkEmcNo3] = test1; // ค่าแต่ละตัวจาก array test1
+  //     // console.log(strEMCSNo, linkEmcNo, linkEmcNo2, linkEmcNo3,'useeeeee')
+
+  //   }, [gvRouting.value]);
+  //   const fetchdata = async () => {  const test1= await DatagvRouting(); // ค่าแรกจาก DatagvRouting
+  //     console.log(test1,'ttttttt')}
+
   const btnSearch_Click = async () => {
     setloading(true);
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
@@ -229,9 +239,7 @@ function fn_LotTraceView() {
       let ELT_Count = 0;
       await axios
         .post("/api/ViewTraceLot/GetDataViewLot", {
-          dataList:{txtserialno: txtSerialNo,
-                    plant_code: Fac}
-
+          dataList: { txtserialno: txtSerialNo, plant_code: Fac },
         })
         .then((res) => {
           dtLot = res.data;
@@ -273,9 +281,7 @@ function fn_LotTraceView() {
       } else {
         await axios
           .post("/api/ViewTraceLot/GetDataViewLot2", {
-
-            dataList:{txtSerialNo: txtSerialNo,
-              PLANT_CODE: Fac}
+            dataList: { txtSerialNo: txtSerialNo, PLANT_CODE: Fac },
           })
           .then((res) => {
             dtLot = res.data;
@@ -315,8 +321,7 @@ function fn_LotTraceView() {
       let dtLot;
       await axios
         .post("/api/ViewTraceLot/GetDataViewLot3", {
-          dataList:{txtSerialNo: txtSheetNo,
-            PLANT_CODE: Fac}
+          dataList: { txtSerialNo: txtSheetNo, PLANT_CODE: Fac },
         })
         .then((res) => {
           dtLot = res.data;
@@ -462,7 +467,7 @@ function fn_LotTraceView() {
         }
       }
     }
-    
+
     let dtSerailCount = [];
     await axios
       .post("/api/Common/getlotserialcountdata", {
@@ -495,8 +500,7 @@ function fn_LotTraceView() {
     let dataNG;
     await axios
       .post("/api/ViewTraceLot/fnlotresultfinalgatedata", {
-        dataList: { strLotNo: datalblLot, 
-                    strPlantCode: Fac },
+        dataList: { strLotNo: datalblLot, strPlantCode: Fac },
       })
       .then((res) => {
         dtFinalGate = res.data;
@@ -532,11 +536,13 @@ function fn_LotTraceView() {
         strLOTNO: datalblLot,
       })
       .then((res) => {
+        console.log(res.data, "fnGetLotProcessDetailData");
         setgvRouting((prevState) => ({
           ...prevState,
           value: res.data,
-          visible: "โชว์",
+          visible: "",
         }));
+        // DatagvRouting()
       });
 
     await axios.post("/api/ViewTraceLot/fnGetProcessLinkData").then((res) => {
@@ -544,18 +550,17 @@ function fn_LotTraceView() {
       setgvProcessLink((prevState) => ({
         ...prevState,
         value: res.data,
-        visible: "โชว์",
+        visible: "",
       }));
     });
   };
+
   const setShtSerialGrid = async (strLot) => {
     let namefile = "";
     let FinalExport = [];
     await axios
       .post("/api/ViewTraceLot/fnSheetSerialByLotData", {
-        dataList:{strLotNo: strLot,
-          strPlantCode: Fac,}
-
+        dataList: { strLotNo: strLot, strPlantCode: Fac },
       })
       .then((res) => {
         console.log("FinalExport", res.data);
@@ -573,10 +578,10 @@ function fn_LotTraceView() {
       dataIndex: "MAT_CODE",
       key: "Material Code",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
-      align: "center",
-      width: "66px",
+      align: "left",
+      width: "85px",
     },
     {
       title: "Material Name",
@@ -645,27 +650,6 @@ function fn_LotTraceView() {
         return text;
       },
     },
-    // ,
-    // {
-    //   title: (
-    //     <div>
-
-    //       <Tooltip title="Export to Excel">
-    //       <Avatar
-    //         // onClick={() => exportToExcel(dataTable860, columns860)}
-    //         src={excel}
-    //         shape="square"
-    //         style={{  cursor: "pointer",height:'25px',width:'25px', }}
-    //         onClick={() => {
-    //           console.log("Exporting to Excel...");
-    //         }}
-    //       />
-    //      </Tooltip>
-    //     </div>
-
-    //   ),
-    //   width:40
-    // },
   ];
 
   const columnsgvLot = [
@@ -688,11 +672,12 @@ function fn_LotTraceView() {
 
   const columnsgvRouting = [
     {
+      // (text, record, index) => index + 1,
       title: "No.",
       dataIndex: "SEQ",
       key: "No.",
       render: (text, record, index) => {
-        return text;
+        return index + 1;
       },
       align: "center",
       width: 50,
@@ -761,8 +746,47 @@ function fn_LotTraceView() {
       dataIndex: "EMCS",
       key: "Document No.",
       render: (text, record, index) => {
-        return text;
+        let strEMCSNo = [];
+        let strEMCSRev = [];
+        let linkEmcNo = [];
+        let linkEmcNo2 = [];
+        let linkEmcNo3 = [];
+        const strEMCS = text ? text.split(",") : [];
+
+        for (let intSeq = 0; intSeq < strEMCS.length; intSeq++) {
+          strEMCSNo[intSeq] = strEMCS[intSeq]
+            .substring(0, strEMCS[intSeq].indexOf("_"))
+            .trim(); //ตัดเอาข้างหน้าก่อนเครื่องหมาย'_'
+          strEMCSRev[intSeq] = strEMCS[intSeq]
+            .substring(
+              strEMCS[intSeq].indexOf("_") + 1,
+              strEMCS[intSeq].indexOf("_") + 6
+            )
+            .trim(); //ตัวสุดท้ายหลัง_
+        }
+        console.log(strEMCSNo, "strEMCSNo");
+        return (
+          <>
+            {strEMCSNo.map((item, idx) => (
+              <span key={idx}>
+                <a
+                  style={{ marginRight: 8 }}
+                  onClick={() => DatagvRouting(strEMCS, item, strEMCSRev[idx])}
+                >
+                  {item}
+                </a>
+                {idx !== strEMCSNo.length - 1 && ","}
+              </span>
+            ))}
+          </>
+        );
       },
+      
+      // render:  (text, record, index) => {
+
+      //   return text;
+      // },
+
       align: "left",
     },
     {
@@ -775,29 +799,7 @@ function fn_LotTraceView() {
       align: "left",
     },
     {
-      // title: "Tools Name",
-      title: (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <span>Tools Name</span>
-          <Tooltip title="Export to Excel">
-            <Avatar
-              // onClick={() => exportToExcel(dataTable860, columns860)}
-              src={excel}
-              shape="square"
-              style={{ cursor: "pointer", height: "25px", width: "25px" }}
-              onClick={() => {
-                console.log("Exporting to Excel...");
-              }}
-            />
-          </Tooltip>
-        </div>
-      ),
+      title: "Tools Name",
       dataIndex: "TTL_TOOLS_CODE",
       key: "Tools Name",
       render: (text, record, index) => {
@@ -806,6 +808,7 @@ function fn_LotTraceView() {
       align: "left",
     },
   ];
+  
 
   const columnsgvProcessLink = [
     {
@@ -966,19 +969,42 @@ function fn_LotTraceView() {
     saveAs(blobData, namefile);
   };
 
+  const ExportTableToCSV = (data, ColumnsHeader, namefile) => {
+    const filteredColumns = ColumnsHeader.filter(
+      (col) => col.key !== "" && col.key !== null && col.key !== undefined
+    );
+
+    const headers = filteredColumns.map((col) => col.key);
+
+    const filteredData = data.map((row) =>
+      filteredColumns.map((col) => row[col.dataIndex] || "")
+    );
+
+    const wsData = [headers, ...filteredData];
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blobData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(blobData, namefile);
+  };
+
   const setFinalGateGrid = async (strLot, strResult) => {
     let namefile = "";
     let FinalExport = [];
     await axios
       .post("/api/ViewTraceLot/fnLotResultFinalGateDeatailData", {
-        dataList:{     
+        dataList: {
           strLotNo: strLot,
           strPlantCode: Fac,
-          strResult: strResult}
+          strResult: strResult,
+        },
       })
       .then((res) => {
         FinalExport = res.data;
-        console.log("FinalExport2", FinalExport.length,FinalExport);
+        console.log("FinalExport2", FinalExport.length, FinalExport);
       });
     if (FinalExport.length > 0) {
       namefile = "FinalGate" + strLot + ".xls";
@@ -986,6 +1012,111 @@ function fn_LotTraceView() {
     }
   };
 
+  const DatagvRouting = async (strEMCS, strEMCSNo, strEMCSRev) => {
+    setLoadingDoc(true)
+    let linkEmcNo = "";
+    let linkEmcNo2 = "";
+    let linkEmcNo3 = "";
+    console.log(`${strEMCS}หมายเลข: ${strEMCSNo}, รุ่น: ${strEMCSRev}`);
+    let dt1 = [];
+    let dt2 = [];
+    await axios
+      .post("/api/common/fnGetEDOCLink", {
+        strEMCS: strEMCSNo,
+        strRev: strEMCSRev,
+      })
+      .then((res) => {
+        dt1 = res.data;
+        console.log(dt1,'fdsfksdhf')
+      });
+
+    for (let intSeq = 0; intSeq < strEMCS.length; intSeq++) {
+      for (let dr = 0; dr < dt1.length; dr++) {
+        dt1 = dt1[0];
+        if (intSeq == 0) {
+          if (dt1.EMCS_TYPE == "EMCS") {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
+            console.log("เข้าจ้า1.1", linkEmcNo);
+          } else if (dt1.EMCS_TYPE == "EPS") {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormePS.aspx?EPS_NO=${dt1.EMCS_NO}&EPS_REV=${dt1.EMCS_REV}&EPS_LANGUAGE=EN&EPS_TYPE=FORM`;
+            console.log("เข้าจ้า1.2", linkEmcNo);
+          } else {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
+            console.log("เข้าจ้า1.3", linkEmcNo);
+          }
+        } else if (intSeq == 1) {
+          if (dt1.EMCS_TYPE == "EMCS") {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
+            console.log("เข้าจ้า1.1", linkEmcNo);
+          } else if (dt1.EMCS_TYPE == "EPS") {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormePS.aspx?EPS_NO=${dt1.EMCS_NO}&EPS_REV=${dt1.EMCS_REV}&EPS_LANGUAGE=EN&EPS_TYPE=FORM`;
+            console.log("เข้าจ้า1.2", linkEmcNo);
+          } else {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
+            console.log("เข้าจ้า1.3", linkEmcNo);
+          }
+        } else if (intSeq == 2) {
+          if (dt1.EMCS_TYPE == "EMCS") {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
+            console.log("เข้าจ้า1.1", linkEmcNo);
+          } else if (dt1.EMCS_TYPE == "EPS") {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormePS.aspx?EPS_NO=${dt1.EMCS_NO}&EPS_REV=${dt1.EMCS_REV}&EPS_LANGUAGE=EN&EPS_TYPE=FORM`;
+            console.log("เข้าจ้า1.2", linkEmcNo);
+          } else {
+            linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
+            console.log("เข้าจ้า1.3", linkEmcNo);
+          }
+        }
+      }
+      console.log(strEMCSNo,'strEMCSNostrEMCSNo')
+      await axios
+        .post("/api/common/fnGetDocumentLink", {
+          strEMCS: strEMCSNo,
+        })
+        .then((res) => {
+          dt2 = res.data;
+          console.log(dt2,'tdtdtdtdtddt');
+        });
+      for (let dr = 0; dr < dt2.length; dr++) {
+        dt2 = dt2[0];
+        if (intSeq == 0) {
+          linkEmcNo = dt2.filepdf;
+          console.log(linkEmcNo, "dt1.1");
+        } else if (intSeq == 1) {
+          linkEmcNo2 = dt2.filepdf;
+          console.log(linkEmcNo2, "dt1.2");
+        } else if (intSeq == 2) {
+          linkEmcNo3 = dt2.filepdf;
+          console.log(linkEmcNo3, "dt1.3");
+        }
+      }
+      console.log("linkEmcNo", linkEmcNo, linkEmcNo2, linkEmcNo3);
+      if (linkEmcNo != "" ||linkEmcNo2 != "" || linkEmcNo3 != "") {
+        if (intSeq == 0) {
+          window.open(linkEmcNo, '_blank');
+
+        }
+        if (intSeq == 1) {
+          window.open(linkEmcNo2, '_blank');
+
+  
+        }
+        if (intSeq == 2) {
+          window.open(linkEmcNo3, '_blank');
+
+        }
+
+      }
+    }
+    // if (dt1.length === 0 && dt2.length === 0) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Not Found',
+    //     text: 'Document not found',
+    //   });
+    // }
+    setLoadingDoc(false)
+  };
 
   return {
     settxtLotNo,
@@ -1012,6 +1143,8 @@ function fn_LotTraceView() {
     lbtConnectSht,
     setShtSerialGrid,
     setFinalGateGrid,
+    ExportTableToCSV,
+    loadingDoc
   };
 }
 
