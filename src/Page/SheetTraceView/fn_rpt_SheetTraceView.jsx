@@ -6,11 +6,13 @@ import { color } from "framer-motion";
 function fn_rpt_SheetTraceView() {
     const[txtSheetNo,settxtSheetNo] =useState("")
     const[txtProduct,settxtProduct] =useState("")
-    const[ddlCavity,setddlCavity] =useState([])
+    const[ddlCavity,setddlCavity] =useState({ text: "",value:[]})
+    const[dtddlCavity,setdtddlCavity]=useState([])
     const[selectddlCavity,setselectddlCavity]=useState("")
     const[lblShtMachine,setlblShtMachine]=useState({ visible: "",value:''})
     const[lblTitleMachine,setlblTitleMachine]=useState({ visible: "",value:''})
     const[hypMaterial,sethypMaterial]=useState({ visible: "",value:''})
+    const[lblCavity,setlblCavity]=useState({value:''})
     const[txtAOMEFPCCnt,settxtAOMEFPCCnt]=useState("")
     const[txtAOMEFPCTime,settxtAOMEFPCTime]=useState("")
     const[txtAOMEFPCMachine,settxtAOMEFPCMachine]=useState("")
@@ -95,6 +97,7 @@ function fn_rpt_SheetTraceView() {
             Clear_View();
             settxtProduct("");
             sethypLotNo("")
+            ViewData()
         }
       }, []);
 
@@ -192,7 +195,7 @@ function fn_rpt_SheetTraceView() {
             }
           
             await axios
-            .post("/api/GetLotSheet", {
+            .post("/api/ViewTraceSheet/GetLotSheet", {
               dataList: {
                 strPlantCode: FAC,
                 strSheetNo: txtSheetNo,
@@ -214,7 +217,7 @@ function fn_rpt_SheetTraceView() {
                 }
               }
             await axios
-            .post("/api/GetProductSheet", {
+            .post("/api/ViewTraceSheet/GetProductSheet", {
               dataList: {
                 strPlantCode: FAC,
                 strSheetNo: txtSheetNo,
@@ -233,7 +236,7 @@ function fn_rpt_SheetTraceView() {
                 }
             }
             await axios
-            .post("/api/GetSPI", {
+            .post("/api/ViewTraceSheet/GetSPI", {
               dataList: {
                 strPlantCode: FAC,
                 strSheetNo: txtSheetNo,
@@ -273,9 +276,10 @@ function fn_rpt_SheetTraceView() {
                 settxtSPIMachine("")
             }
             await axios
-            .post("/api/GetPreAOI", {
-                strplantcode: FAC,
-                strsheetno: txtSheetNo,
+            .post("/api/ViewTraceSheet/GetPreAOI", {
+                dataList:{strplantcode: FAC,
+                strsheetno: txtSheetNo,}
+                
             })
             .then((res) => {
                 dt = res.data;
@@ -308,9 +312,10 @@ function fn_rpt_SheetTraceView() {
                 settxtPreTime("");
             }
             await axios
-            .post("/api/GetAOI", {
-                plantcode: FAC,
-                sheetno: txtSheetNo,
+            .post("/api/ViewTraceSheet/GetAOI", {
+                dataList:{plantcode: FAC,
+                sheetno: txtSheetNo,}
+                
             })
             .then((res) => {
                 dt = res.data;
@@ -356,9 +361,12 @@ function fn_rpt_SheetTraceView() {
                 setbtnAOI((prevState) => ({...prevState,disabled: true}));
             }
             await axios
-            .post("/api/GetAOI_Coating", {
-                strplantcode: FAC,
+            .post("/api/ViewTraceSheet/GetAOI_Coating", {
+                dataList:{
+                    strplantcode: FAC,
                 strsheetno: txtSheetNo,
+                }
+                
             })
             .then((res) => {
                 dt = res.data;
@@ -403,20 +411,595 @@ function fn_rpt_SheetTraceView() {
             }else{
                 setbtnAOICOA((prevState) => ({...prevState,disbled:true}));
             }
+            await axios
+            .post("/api/ViewTraceSheet/Getinspection", {
+                dataList:{  strplantcode: FAC,
+                strsheetno: txtSheetNo,}
+              
+            })
+            .then((res) => {
+                dt = res.data;
+            });
+            if(dt.length > 0){
+                setbtnSMTInt((prevState) => ({...prevState,value:dt[0].inspect_result}));
+                settxtSMTIntCnt((prevState) => ({...prevState,value:dt[0].inspect_count}));
+                settxtSMTIntCnt((prevState) => ({...prevState,value:dt[0].machine_no}));
+                settxtSMTIntTime((prevState) => ({...prevState,value:dt[0].inspect_date}));
+                if(btnSMTInt == "NG"){
+                    setbtnSMTInt((prevState) => ({...prevState,value:dt[0].inspect_result,style:{backgroundColor:'red',color:'white'}}));
+                }else{
+                    setbtnSMTInt((prevState) => ({...prevState,value:dt[0].inspect_result,style:{backgroundColor:'green',color:'white'}}));
+                }
+            }
+            await axios
+            .post("/api/ViewTraceSheet/Get_LOT_SHEET_SERIAL", {
+             dataList:{
+                plantcode: FAC,
+                sheetno: txtSheetNo,
+                }
+                
+            })
+            .then((res) => {
+                dt = res.data;
+            });
+            if(dt.length >0){
+                //527
+                // Me.tblData1.Visible = True
+                // Me.tblData1.Rows.Clear()
+                // Dim wkRowHead As New Web.UI.WebControls.TableHeaderRow
+                // Dim ArryTitle0() As String = {"PIECE1", "PIECE2", "PIECE3", "PIECE4", "PIECE5"}
+                // wkRowHead.CssClass = "tablehead"
+                // For Each wkTitle As String In ArryTitle0
+                //     Dim wkCell As New Web.UI.WebControls.TableCell
+                //     wkCell.HorizontalAlign = HorizontalAlign.Center
+                //     wkCell.Wrap = False
+                //     wkCell.Text = wkTitle
+                //     wkRowHead.Cells.Add(wkCell)
+                // Next
+                //538
+            let StrSerial;
+            for(let introw =0;introw < dt.length;introw++){
+               //543 ReDim Preserve StrSerial(introw)
+               StrSerial(introw) = dt[introw].lss_serial_no
+            }
+            let MaxCount = dt.length;
+            let DataCount = 0;
+            let ColCount = 0;
+            let RowCount = 0;
+            let ExitFlg = false
+            while (!ExitFlg) {
+                RowCount=RowCount + 1;
+                let rowCells = [];
+                let rowClass = "tabledata" + (RowCount % 2);
+    
+                while (true) {
+                    let strParameter = StrSerial[DataCount];
+                    const strSpecial = "+";
+    
+                    // ถ้าพบ '+' ให้แทนที่ด้วย '%2B'
+                    if (StrSerial[DataCount].includes(strSpecial)) {
+                        strParameter = strParameter.replace(strSpecial, "%2B");
+                    }
+    
+                    // สร้างลิงก์ใน cell
+                    rowCells.push(
+                        <td key={DataCount}>
+                            <a href={`./rpt_PieceTraceView.aspx?SERIAL=${strParameter}`}>
+                                {StrSerial[dataCount]}
+                            </a>
+                        </td>
+                    );
+    
+                    DataCount =DataCount + 1;
+                    ColCount += 1;
+    
+                    if (DataCount >= MaxCount) {
+                        tableRows.push(<tr className={rowClass} key={rowCount}>{rowCells}</tr>);
+                        setExitFlag(true);
+                        break;
+                    }
+    
+                    if (ColCount === MaxCount) {
+                        tableRows.push(<tr className={rowClass} key={rowCount}>{rowCells}</tr>);
+                        ColCount = 0;
+                        break;
+                    }
+                }
+            }
+    
+            return tableRows;
+            }
+            await axios
+            .post("/api/ViewTraceSheet/GetXray", {
+             dataList:{
+                sheetno: txtSheetNo,
+                }
+            })
+            .then((res) => {
+                dt = res.data;
+            });
+            if(dt.length > 0){
+                setbtnXRay((prevState) => ({...prevState,value:dt[0].xray_result}));
+                if(dt[0].xray_result == "GOOD" ||
+                    dt[0].xray_result == "OK" ||
+                    dt[0].xray_result == "PASS")
+                    {
+                    setbtnXRay((prevState) => ({...prevState,value:dt[0].xray_result,style:{backgroundColor:'green'}}));
+                    }else{
+                    setbtnXRay((prevState) => ({...prevState,value:dt[0].xray_result,style:{backgroundColor:'red'}}));  
+                    }
+                    settxtXRayCnt(dt[0].xray_count.toString())
+                    settxtXRayTime(dt[0].xray_date)
+                    settxtXRayMachine(dt[0].xray_machine)
+                    setbtnXRay((prevState) => ({...prevState,disbled:false}));        
+            }
+            let dtSMPJ=[];
+            await axios
+            .post("/api/ViewTraceSheet/GetFPCSMPJPcsCavity", {
+                strPrdName: txtProduct.toUpperCase(),
+            })
+            .then((res) => {
+                dtSMPJ = res.data;
+            });
+            // Dim dtPcsNo As DataTable = BIZ_ScanSMTSerial.GetSMTConnectShtPcsCavity(Session("PLANT_CODE"), Session("PRODUCT_KIND"), txtProduct.Text.ToUpper)
+      
+            setddlCavity((prevState) => ({...prevState,text:res.data[0].PCS_NAME,value:res.data[0].PCS_NO}));
+            if(dtSMPJ.length > 1){
+                setlblCavity((prevState) => ({...prevState,value:'SMPJ Cavity'}));
+                setdtddlCavity(dtSMPJ)
+                sethfSMPJCavityFlg("Y")
+            }else{
+                setlblCavity((prevState) => ({...prevState,value:'Connect Sht&Pcs'}));
+                setdtddlCavity(dtPcsNo)
+                sethfSMPJCavityFlg("N")
+            }
+            setdtddlCavity([])
+            setselectddlCavity()
+            if(txtSheetNo.trim() !== '' && txtProduct.trim() !== ""){
+                let dtData = []
+                //757 มิ้วทำ
+                //  dtData = BIZ_ScanSMTSerial.GetSerialAOMEFPCResult(Session("PLANT_CODE"), Session("PRODUCT_KIND"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, txtProduct.Text.Trim.ToUpper, hfSMPJCavityFlg.Value)
+                if(dtData.length > 0){
+                    let AOM_Result = 'OK'
+                    for(let i = 0; i < dtData.length;i++){
+                        if( dtData[i].AOM_RESULT !== "GOOD" &&
+                            dtData[i].AOM_RESULT !== "OK" &&
+                            dtData[i].AOM_RESULT !== "WN" &&
+                            dtData[i].AOM_RESULT !== "JUDGE" &&
+                            dtData[i].AOM_RESULT !== "BADMARK" &&
+                            dtData[i].AOM_RESULT !== "SKIP" &&
+                            dtData[i].AOM_RESULT !== "RPASS" &&
+                            dtData[i].AOM_RESULT !== "PASS" 
+                        ){
+                            AOM_Result = dtData[i].AOM_RESULT
+                        }
+                    }
+                    StrResult =  AOM_Result
+                    if(StrResult.trim() !== ""){
+                        setbtnAOMEFPC((prevState) => ({...prevState,value:StrResult}));
+                        settxtAOMEFPCTime(dtData[0].AOM_DATE)
+                        settxtAOMEFPCCnt("");
+                        settxtAOMEFPCMachine(dtData[0].AOM_MACHINE)
+                        sethfAOMRollLeafNo(dtData[0].ROLL_LEAF)
+                        sethfAOMLeafNo(dtData[0].LEAF_NO)
+                        sethfAOMPcsNo(selectddlCavity)
+                        if( StrResult == "GOOD" || StrResult == "OK" || StrResult == "PASS" ){
+                            setbtnAOMEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));
+                        }else{
+                            setbtnAOMEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red'}}));
+                        }
+                    }
+                }
+                //793
+                await axios
+                .post("/api/ViewTraceSheet/GetSerialAOIEFPCResult", {
+                  _strPlantCode: FAC,
+                  _strFrontSheetNo: txtSheetNo,
+                  _intPcsNo:selectddlCavity,
+                  _strProduct: txtProduct,
+                  _strSMPJCavityFlg: hfSMPJCavityFlg,
+                })
+                .then((res) => {
+                    dtData = res.data;
+                });
+                if(dtData.length > 0){
+                    let AOI_Result ='OK'
+                    for(let i =0; i < dtData.length;i++){
+                        if(dtData[i].AOI_RESULT !== "GOOD" &&
+                           dtData[i].AOI_RESULT !== "OK" &&
+                           dtData[i].AOI_RESULT !== "WN" &&
+                           dtData[i].AOI_RESULT !== "JUDGE" &&
+                           dtData[i].AOI_RESULT !== "BADMARK" &&
+                           dtData[i].AOI_RESULT !== "SKIP" &&
+                           dtData[i].AOI_RESULT !== "RPASS" &&
+                           dtData[i].AOI_RESULT !== "PASS" 
+                        ){
+                            AOI_Result = dtData[i].AOI_RESULT
+                        }
+                    }
+                    StrResult = AOI_Result
+                    if(StrResult.trim() !== ""){
+                        setbtnAOIEFPC((prevState) => ({...prevState,value:StrResult}));
+                        settxtAOIEFPCTime(dtData[0].AOI_DATE);
+                        settxtAOIEFPCCnt("")
+                        settxtAOIEFPCMachine(dtData[0].AOI_MACHINE)
+                        sethfAOIRollLeafNo(dtData[0].ROLL_LEAF)
+                        sethfAOILeafNo(dtData[0].LEAF_NO)
+                        sethfAOIPcsNo(selectddlCavity)
+                        if(StrResult == "GOOD" ||StrResult == "OK" ||StrResult == "PASS" ){
+                            setbtnAOIEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));
+                        }else{
+                            setbtnAOIEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red',disabled:false}}));
+                        }
 
-        }catch{
+                    }
+                }
+                await axios
+                .post("/api/ViewTraceSheet/GetSerialOSTResult", {
+                  SerialNo: txtSheetNo.trim().toUpperCase(),
+                  intPCSNo:selectddlCavity,
+                  strSMPJCavityFlg: hfSMPJCavityFlg,
+                })
+                .then((res) => {
+                  dtData = res.data;
+                });
+                if(dtData.length > 0){
+                    let OST_Result = "OK"
+                    for(let i =0;i < dtData.length;i++){
+                        if(dtData[i].OST_RESULT !== "GOOD" &&
+                            dtData[i].OST_RESULT !== "OK" &&
+                            dtData[i].OST_RESULT !== "WN" &&
+                            dtData[i].OST_RESULT !== "JUDGE" &&
+                            dtData[i].OST_RESULT !== "BADMARK" &&
+                            dtData[i].OST_RESULT !== "SKIP" &&
+                            dtData[i].OST_RESULT !== "RPASS" &&
+                            dtData[i].OST_RESULT !== "PASS" 
+                         ){
+                            OST_Result = dtData[i].OST_RESULT
+                         }
+                    }
+                    StrResult =OST_Result
+                    setbtnOST((prevState) => ({...prevState,value:StrResult,disbled:false}));
+                    settxtOSTTime(dtData[0].OST_DATE)
+                    settxtOSTCnt("");
+                    settxtOSTMachine(dtData[0].OST_MACHINE)
+                    sethfOSTPcsNo(selectddlCavity);
+                    sethfOSTSheetNo(txtSheetNo.trim().toUpperCase())
+                    if( StrResult == "GOOD"||StrResult == "OK"||StrResult == "PASS"){
+                        setbtnOST((prevState) => ({...prevState,value:StrResult,disbled:false,style:{backgroundColor:'green'}}));
+                    }else{
+                        setbtnOST((prevState) => ({...prevState,value:StrResult,disbled:false,style:{backgroundColor:'red'}}));
+                    }
+                }
+                await axios
+                .post("/api/ViewTraceSheet/GetSerialAVIResult", {
+                    _strFrontSheetNo: txtSheetNo.trim().toUpperCase(),
+                    _intPcsNo:selectddlCavity,
+                    _strSMPJCavityFlgfv: hfSMPJCavityFlg,
+                })
+                .then((res) => {
+                  dtData = res.data;
+                });
+                if(dtData.length >0){
+                    let AVI_Result ="OK"
+                    for(let i =0; i < dtData.length;i++)
+                    {
+                        if(dtData[i].AVI_RESULT !== "GOOD" &&
+                           dtData[i].AVI_RESULT !== "OK" &&
+                           dtData[i].AVI_RESULT !== "WN" &&
+                           dtData[i].AVI_RESULT !== "JUDGE" &&
+                           dtData[i].AVI_RESULT !== "BADMARK" &&
+                           dtData[i].AVI_RESULT !== "SKIP" &&
+                           dtData[i].AVI_RESULT !== "RPASS" &&
+                           dtData[i].AVI_RESULT !== "PASS" 
+                        ){
+                            AVI_Result = dtData[i].AVI_RESULT
+                        }
+                    }
+                    StrResult = AVI_Result
+                    setbtnAVI((prevState) => ({...prevState,value:StrResult,disbled:false}));
+                    settxtAVITime(dtData[i].AVI_DATE)
+                    settxtAVICnt("");
+                    settxtAVIMachine(dtData[i].AVI_MACHINE)
+                    if(StrResult == "GOOD" ||StrResult == "OK" || StrResult == "PASS" ){
+                        setbtnAVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));
+                    }else{
+                        setbtnAVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red'}}));
+                    }
+                }
+                // 900
+               // dtData = BIZ_ScanSMTSerial.GetSerialAVIBadmarkResult(Session("PLANT_CODE"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, hfSMPJCavityFlg.Value, Session("PRODUCT_KIND"))
+                if(dtData.length >0){
+                    let FVI_Result = "OK"
+                    for(let i =0; i < dtData.length;i++){
+                        if(dtData[i].AVI_RESULT !== "GOOD" &&
+                            dtData[i].AVI_RESULT !== "OK" &&
+                            dtData[i].AVI_RESULT !== "RPASS" &&
+                            dtData[i].AVI_RESULT !== "PASS" 
+                         )
+                         {
+                            FVI_Result = dtData[i].AVI_RESULT
+                         }
+                    }
+                    StrResult =FVI_Result
+                    setbtnFVI((prevState) => ({...prevState,value:StrResult,disbled:false}));
+                    settxtFVITime(dtData[i].AVI_DATE)
+                    settxtFVICnt("")
+                    settxtFVIMachine(dtData[i].AVI_MACHINE)
+                    if(StrResult == "GOOD" ||StrResult == "OK" ||StrResult == "PASS" ){
+                    setbtnFVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));
+                    }else if(StrResult !=""){
+                    setbtnFVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red'}}));
+                    }
 
+                }
+                //932
+                //Table จริงไม่มีข้อมูล
+                // Dim dtReflow As DataTable = BIZ_ScanSMTSerial.GetSMTSheetReflowResult(Session("plant_code"), txtSheetNo.Text.Trim.ToUpper, Session("PRODUCT_KIND"))
+                let dtReflow=[];
+                if(dtReflow.length >0){
+                    setbtnReflow((prevState) => ({...prevState,value:dtReflow[0].REFLOW_RESULT}));  
+                    if(btnReflow == "NG"){
+                        setbtnReflow((prevState) => ({...prevState,value:dtReflow[0].REFLOW_RESULT,style:{backgroundColor:'red'}}));  
+                    }else{
+                        setbtnReflow((prevState) => ({...prevState,value:dtReflow[0].REFLOW_RESULT,style:{backgroundColor:'green'}}));  
+                    }
+                    settxtReflowTime(dtReflow[0].REFLOW_DATE)
+                    settxtReflowCnt(dtReflow[0].REFLOW_COUNT)
+                    settxtReflowMachine(dtReflow[0].REFLOW_MACHINE)
+                }
+            }
+        }catch (ex){
+            setlblMessage("ERROR")
         }
 
 
 
 
     }
-    const btnRetrive = () =>{
+    const  btnSPI_Click= () =>{
+        if(txtSPICnt !== ""){
+            localStorage.setItem("SHEET_NO", txtSheetNo);
+            localStorage.setItem("PRODUCT_NAME", txtProduct);
+            localStorage.setItem("PANEL_NO", "");
+            window.location.href = '/SPI_Result';
+        }else{
+            setlblMessage("Please input SerialNo and click Retrive.")
+        }
 
     }
     const btnClear =() =>{
+        Clear_View();
+    }
+    const btnRetrive =() =>{
+        localStorage.setItem("SHEET_NO", txtSheetNo);
+        Clear_View()
+        settxtSheetNo(txtSheetNo.trim().toUpperCase())
+        settxtProduct("");
+        sethypLotNo("");
+        sethypLotNoUrl("")
+        ViewData()
 
+    }
+    const btnPre_Click =() =>{
+        if(TxtPreCnt !== ""){
+            localStorage.setItem("SHEET_NO", txtSheetNo);
+            localStorage.setItem("PRODUCT_NAME", txtProduct);
+            localStorage.setItem("PIECE_NO", "");
+            window.location.href = '/PRE_Result2';
+        }
+    }
+    const btnOST_Click =() =>{
+        if(txtSheetNo !== ""){
+            localStorage.setItem("SHEET_NO", txtSheetNo);
+            localStorage.setItem("PRODUCT_NAME", txtProduct);
+            localStorage.setItem("PANEL_NO", "");
+            window.location.href = '/OST_Result';
+        }else{
+            setlblMessage("Please input SerialNo and click Retrive.")
+        }
+    }
+    const btnAOI_Click =() =>{
+        if(txtAOICnt !== ""){
+            localStorage.setItem("SHEET_NO", txtSheetNo);
+            localStorage.setItem("PRODUCT_NAME", txtProduct);
+            localStorage.setItem("PANEL_NO", "");
+            window.location.href = '/AOI_Result2';
+        }
+    }
+    const btnXRay_Click =() =>{
+        localStorage.setItem("LOT_NO", hypLotNo.trim().toUpperCase());
+        localStorage.setItem("SHEET_NO", txtSheetNo.trim().toUpperCase());
+        localStorage.setItem("PRODUCT_NAME", txtProduct);
+        localStorage.setItem("SERIAL_NO", "0");
+        localStorage.setItem("INSPECT_NO", txtXRayCnt);
+        localStorage.setItem("INSPECT_DATE", txtXRayTime);
+        if(SERIAL_DATABASE_SWITCH == "1"){
+            window.location.href = 'XRay_Result_N1.aspx';
+        }else{
+            window.location.href = 'XRay_Result.aspx';
+        }
+    }
+    const btnAOICOA_Click =() =>{
+        if(txtAOICOACnt !== "")
+        {
+            localStorage.setItem("SHEET_NO", txtSheetNo);
+            localStorage.setItem("PRODUCT_NAME",txtProduct);
+            localStorage.setItem("PANEL_NO", "");
+            window.location.href = 'AOI_COA_Result2.aspx';  
+     }
+      
+       
+            
+       
+    }
+    const ddlCavity_SelectedIndexChanged =() =>{
+        if(txtSheetNo.trim() !== "")
+        {    
+            Clear_View()
+            if(selectddlCavity > 0){
+                ViewDataPcs()
+            }else{
+                ViewData()
+            }
+            
+     }
+      
+       
+            
+       
+    }
+    const ViewDataPcs =async()=>{
+        let intPcsNo =0
+        if(hfSMPJCavityFlg == "Y"){
+            //1048
+            //ยังไม่ทำ
+           // intPcsNo = BIZ_ScanSMTSerial.GetFPCPcsNoBySMPJCavity(txtProduct.Text, ddlCavity.SelectedValue)
+        }else{
+            intPcsNo = selectddlCavity
+        }
+        if( intPcsNo > 0){
+            setlblMessage("")
+            let DBOpenFlg = false
+            let dt = [];
+            let i;
+            let StrResult ="";
+            let ELT_Count = 0;
+            if(txtSheetNo.trim() !=="" && txtProduct.trim() !== ""){
+                let dtData = []
+                //ยังไม่ทำ
+                //1071
+                //dtData = BIZ_ScanSMTSerial.GetSerialAOMEFPCResult(Session("PLANT_CODE"), Session("PRODUCT_KIND"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, txtProduct.Text.Trim.ToUpper, hfSMPJCavityFlg.Value)
+                if( dtData.length > 0){
+                    StrResult = dtData[0].AOM_RESULT
+                    if( StrResult.trim() !== ""){
+                        setbtnAOMEFPC((prevState) => ({...prevState,value:StrResult}));  
+                        settxtAOMEFPCTime(dtData[0].AOM_DATE)
+                        settxtAOMEFPCCnt(dtData[0].PCS_NO)
+                        settxtAOMEFPCMachine(dtData[0].AOM_MACHINE)
+                        sethfAOMRollLeafNo(dtData[0].ROLL_LEAF)
+                        sethfAOMLeafNo(dtData[0].LEAF_NO)
+                        sethfAOMPcsNo(dtData[0].PCS_NO)
+                        if(StrResult == "GOOD" ||StrResult == "OK" ||StrResult == "PASS" ){
+                            setbtnAOMEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));  
+                        }else{
+                            setbtnAOMEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red'}}));  
+                        }
+                    }
+                }
+                //AOI
+                await axios
+                .post("/api/ViewTraceSheet/GetSerialAOIEFPCResult", {
+                  _strPlantCode: FAC,
+                  _strFrontSheetNo: txtSheetNo.trim().toUpperCase(),
+                  _intPcsNo:selectddlCavity,
+                  _strProduct: txtProduct,
+                  _strSMPJCavityFlg: hfSMPJCavityFlg,
+                })
+                .then((res) => {
+                    dtData = res.data;
+                });
+                if(dtData.length > 0){
+                    StrResult = dtData[0].AOI_RESULT
+                    if(StrResult.trim() !== ""){
+                        setbtnAOIEFPC((prevState) => ({...prevState,value:StrResult}));
+                        settxtAOIEFPCTime(dtData[0].AOI_DATE);
+                        settxtAOIEFPCCnt(dtData[0].PCS_NO)
+                        settxtAOIEFPCMachine(dtData[0].AOI_MACHINE)
+                        sethfAOIRollLeafNo(dtData[0].ROLL_LEAF)
+                        sethfAOILeafNo(dtData[0].LEAF_NO)
+                        sethfAOIPcsNo(dtData[0].PCS_NO)
+                        if(StrResult == "GOOD" ||StrResult == "OK" ||StrResult == "PASS" ){
+                            setbtnAOIEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));
+                        }else{
+                            setbtnAOIEFPC((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red',disabled:false}}));
+                        }
+
+                    }
+                }
+                //OST
+                await axios
+                .post("/api/ViewTraceSheet/GetSerialOSTResult", {
+                  SerialNo: txtSheetNo.trim().toUpperCase(),
+                  intPCSNo:selectddlCavity,
+                  strSMPJCavityFlg: hfSMPJCavityFlg,
+                })
+                .then((res) => {
+                  dtData = res.data;
+                });
+                if(dtData.length > 0){
+                    StrResult =dtData[0].OST_RESULT
+                    setbtnOST((prevState) => ({...prevState,value:StrResult,disbled:false}));
+                    settxtOSTTime(dtData[0].OST_DATE)
+                    settxtOSTCnt(dtData[0].PCS_NO);
+                    settxtOSTMachine(dtData[0].OST_MACHINE)
+                    sethfOSTPcsNo(dtData[0].PCS_NO);
+                    sethfOSTSheetNo(txtSheetNo.trim().toUpperCase())
+                    if( StrResult == "GOOD"||StrResult == "OK"||StrResult == "PASS"){
+                        setbtnOST((prevState) => ({...prevState,value:StrResult,disbled:false,style:{backgroundColor:'green'}}));
+                    }else{
+                        setbtnOST((prevState) => ({...prevState,value:StrResult,disbled:false,style:{backgroundColor:'red'}}));
+                    }
+                }
+                //AVI
+                await axios
+                .post("/api/ViewTraceSheet/GetSerialAVIResult", {
+                    _strFrontSheetNo: txtSheetNo.trim().toUpperCase(),
+                    _intPcsNo:selectddlCavity,
+                    _strSMPJCavityFlgfv: hfSMPJCavityFlg,
+                })
+                .then((res) => {
+                  dtData = res.data;
+                });
+                if(dtData.length >0){
+                    StrResult = AVI_Result
+                    setbtnAVI((prevState) => ({...prevState,value:StrResult,disbled:false}));
+                    settxtAVITime(dtData[0].AVI_DATE)
+                    settxtAVICnt(dtData[0].PCS_NO);
+                    settxtAVIMachine(dtData[0].AVI_MACHINE)
+                    if(StrResult == "GOOD" ||StrResult == "OK" || StrResult == "PASS" ){
+                        setbtnAVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));
+                    }else{
+                        setbtnAVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red'}}));
+                    }
+                }
+                //FVI
+                //ยังไม่ทำ
+                // 1150
+                // dtData = BIZ_ScanSMTSerial.GetSerialAVIBadmarkResult(Session("PLANT_CODE"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, hfSMPJCavityFlg.Value, Session("PRODUCT_KIND"))
+
+                if(dtData.length >0){
+                    let FVI_Result = "OK"
+                    for(let i =0; i < dtData.length;i++){
+                        if(dtData[i].AVI_RESULT !== "GOOD" &&
+                            dtData[i].AVI_RESULT !== "OK" &&
+                            dtData[i].AVI_RESULT !== "RPASS" &&
+                            dtData[i].AVI_RESULT !== "PASS" 
+                         )
+                         {
+                            FVI_Result = dtData[i].AVI_RESULT
+                         }
+                    }
+                    StrResult =FVI_Result
+                    setbtnFVI((prevState) => ({...prevState,value:StrResult,disbled:false}));
+                    settxtFVITime(dtData[i].AVI_DATE)
+                    settxtFVICnt("")
+                    settxtFVIMachine(dtData[i].AVI_MACHINE)
+                    if(StrResult == "GOOD" ||StrResult == "OK" ||StrResult == "PASS" ){
+                    setbtnFVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green'}}));
+                    }else if(StrResult !=""){
+                    setbtnFVI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red'}}));
+                    }
+
+                }
+            }
+            try {
+                
+            } catch (error) {
+                
+            }
+        }
+        
     }
 
   return {
