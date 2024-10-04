@@ -372,7 +372,8 @@ function fn_ScanSMTSerialXrayConfirm() {
             txtTotalPCS.value,
             "||",
             hfSerialCountBackup,
-            ">>",hfSerialCount
+            ">>",
+            hfSerialCount
           );
           if (txtTotalPCS.value === "") {
             setTxtTotalPCS((prevState) => ({
@@ -473,8 +474,16 @@ function fn_ScanSMTSerialXrayConfirm() {
 
   const getInitialSerial = async () => {
     let dtData = [];
-    const hfSerialCountData = hfSerialCount == "" ? hfSerialCountBackup : hfSerialCount;
-    console.log("txtTotalPCS.value hfSerialCountBackup", hfSerialCountBackup,">>",hfSerialCount,">>",hfSerialCountData);
+    const hfSerialCountData =
+      hfSerialCount == "" ? hfSerialCountBackup : hfSerialCount;
+    console.log(
+      "txtTotalPCS.value hfSerialCountBackup",
+      hfSerialCountBackup,
+      ">>",
+      hfSerialCount,
+      ">>",
+      hfSerialCountData
+    );
     for (let intRow = 1; intRow <= parseInt(hfSerialCountData, 10); intRow++) {
       dtData.push({
         SEQ: intRow,
@@ -540,7 +549,11 @@ function fn_ScanSMTSerialXrayConfirm() {
       }
       for (let i = 0; i < dtSerial.length; i++) {
         const drRow = dtSerial[i];
-        if (drRow.serial !== "" && drRow.serial !== undefined && drRow.serial !== null) {
+        if (
+          drRow.serial !== "" &&
+          drRow.serial !== undefined &&
+          drRow.serial !== null
+        ) {
           let _strSerial = drRow.serial;
           let _strMessageUpdate = "";
           let _strScanResultUpdate = "";
@@ -548,14 +561,16 @@ function fn_ScanSMTSerialXrayConfirm() {
           let _strSerialResult = "";
           console.log(
             "เข้ามายัง setSerialData _strSerial",
-            "(",_strSerial,")",
+            "(",
+            _strSerial,
+            ")",
             _strScanResultAll
           );
           if (
             !CONNECT_SERIAL_ERROR.includes(_strSerial) &&
             _strScanResultAll === "OK"
           ) {
-            console.log("เข้ามายัง CONNECT_SERIAL_ERROR แล้วนะ",_strSerial)
+            console.log("เข้ามายัง CONNECT_SERIAL_ERROR แล้วนะ", _strSerial);
             await axios
               .post("/api/GetSerialXRaySheetResult", {
                 strsheetno: _strSerial,
@@ -564,7 +579,9 @@ function fn_ScanSMTSerialXrayConfirm() {
                 _strScanResultUpdate = res.data;
                 console.log(
                   "เข้ามายัง setSerialData _strScanResultUpdate",
-                  "(",_strScanResultUpdate,")"
+                  "(",
+                  _strScanResultUpdate,
+                  ")"
                 );
               });
             if (_strSerialResult === "OK") {
@@ -729,10 +746,6 @@ function fn_ScanSMTSerialXrayConfirm() {
     return 0;
   };
 
-
-
-
-  
   const columns = [
     {
       title: "No.",
