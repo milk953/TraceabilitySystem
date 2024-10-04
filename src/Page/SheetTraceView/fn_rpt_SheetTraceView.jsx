@@ -994,8 +994,113 @@ function fn_rpt_SheetTraceView() {
                 }
             }
             try {
-                
-            } catch (error) {
+                //1194
+                await axios
+                .post("/api/ViewTraceSheet/GetSPI_Front", {
+                    dataList:{
+                        strplantcode:FAC,
+                        strprd:txtProduct,
+                        strintPcsNo: intPcsNo,
+                        strsheetno:txtSheetNo
+                    }
+                    
+                })
+                .then((res) => {
+                  dtData = res.data;
+                });
+                //1215
+            //     If dt.Rows.Count = 0 Then
+            //     sbSql.Clear()
+            //     sbSql.AppendLine(" select")
+            //     sbSql.AppendLine(" SPR_RESULT,")
+            //     sbSql.AppendLine(" SPR_INS_COUNT,")
+            //     sbSql.AppendLine(" TO_CHAR(SPR_INSPECT_DATE,'DD/MM/YYYY HH24:MI:SS'),")
+            //     sbSql.AppendLine(" SPR_MACHINE_NAME ")
+            //     sbSql.AppendLine(" from")
+            //     sbSql.AppendLine(" SMT_SPI_RSLT")
+            //     sbSql.AppendLine(" where")
+            //     sbSql.AppendLine(" SPR_PLANT_CODE = '" & Session("plant_code") & "' and ")
+            //     sbSql.AppendLine(" SPR_SHEET_NO = '" & txtSheetNo.Text.Trim.ToUpper & "' and ")
+            //     If SPI_Maker = "CKD" Then
+            //         PanelNo = Trim(CStr(intPcsNo - 1))
+            //     Else
+            //         PanelNo = intPcsNo.ToString
+            //     End If
+            //     sbSql.AppendLine(" SPR_PANEL = " & PanelNo & "")
+            //     dt = clsDB.GetDataTable(sbSql.ToString)
+            // End If
+           if(dt.length > 0){
+            StrResult = '';
+            for(let i =0; i < dt.length;i++){
+                StrResult = dt[i].SPR_RESULT.trim().toUpperCase();
+                if(StrResult.toUpperCase() == "NG" ||StrResult.toUpperCase() == "FAIL"||StrResult.toUpperCase() == "BADMARK"||StrResult.toUpperCase() == "SKIP"){
+                    break;  
+                }
+            }
+            if(StrResult.toUpperCase() != "NG" ||StrResult.toUpperCase() != "FAIL"||StrResult.toUpperCase() != "BADMARK"||StrResult.toUpperCase() != "SKIP"){
+                for(let i =0;i>dt.length;i++){
+                    StrResult = dt[i].SPR_RESULT.trim()
+                    if (StrResult.substring(0, 1).toUpperCase() === "E" || StrResult.substring(0, 1).toUpperCase() === "W") {
+                        break;
+                    }
+                    
+                }
+            }
+            settxtSPICnt(dt[0].spr_ins_count)
+            settxtSPITime(dt[0].spr_inspect_date)
+            settxtSPIMachine(dt[0].spr_machine_name)
+            setbtnSPI((prevState) => ({...prevState,value:StrResult}));  
+            switch (StrResult.toUpperCase()) {
+                case "GOOD":
+                case "OK":
+                case "JUDGE":
+                case "WN":
+                case "PASS":
+                case "RPASS":
+                    setbtnSPI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green',color:'white'}})); 
+                    break;
+                case "NG":
+                case "FAIL":
+                case "BADMARK":
+                case "SKIP":
+                    setbtnSPI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red',color:'white'}})); 
+                case "":
+                    setbtnSPI((prevState) => ({...prevState,value:""})); 
+                    break;
+                default:
+                    setbtnSPI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'green',color:'white'}})); 
+                    break;
+            }
+           }else{
+            await axios
+                .post("/api/ViewTraceSheet/GetSPI_RSLT", {
+                    dataList:{
+                        plantcode:FAC,
+                        sheetno:txtProduct
+                    }
+                    
+                })
+                .then((res) => {
+                  dtData = res.data;
+                });
+                if(dt.length>0){
+                    StrResult = "BADMARK"
+                    settxtSPICnt(dt[0].spr_ins_count)
+                    settxtSPITime(dt[0].spr_inspect_date)
+                    settxtSPIMachine(dt[0].spr_machine_name)
+                    setbtnSPI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red',color:'white'}}));  
+                }else{
+                    settxtSPICnt("")
+                    settxtSPITime("")
+                    settxtSPIMachine("")
+                    setbtnSPI((prevState) => ({...prevState,value:StrResult,disbled:true}));  
+                }
+           }
+           if(btnSPI.value == ""){
+            
+           }
+
+        } catch (error) {
                 
             }
         }
