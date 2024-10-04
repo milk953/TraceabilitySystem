@@ -137,7 +137,7 @@ function LotTraceView() {
             style={{ width: "180px" }}
           >
             <a
-              href={`http://10.17.74.226/TraceabilitySystem/LotSheetNo?lot=${txtLotNo}&product=${txtProd}`}
+              href={`/TraceabilitySystem/LotSheetNo?lot=${txtLotNo}&product=${txtProd}`}
               // http://10.17.74.226/TraceabilitySystem/LotSheetNo?lot=900035953&product=dsafjisdf
               target="_blank"
               rel="noopener noreferrer"
@@ -148,7 +148,7 @@ function LotTraceView() {
             </a>
             <br />
             <a
-              href={`http://10.17.74.226/TraceabilitySystem/LotRollLeafNo?LOTNO=${txtLotNo}&product=${txtProd}`}
+              href={`/TraceabilitySystem/LotRollLeafNo?LOTNO=${txtLotNo}&product=${txtProd}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "#fff" }}
@@ -156,7 +156,7 @@ function LotTraceView() {
               {" "}
               <b style={{ fontSize: "18px" }}> Roll Leaf</b> {/*linkkkk */}
             </a>
-            {/* http://10.17.74.226/TraceabilitySystem/LotRollLeafNo?LOTNO=${txtLotNo}&product=${txtProd} */}
+         
           </Card>
           <Card
             component={Paper}

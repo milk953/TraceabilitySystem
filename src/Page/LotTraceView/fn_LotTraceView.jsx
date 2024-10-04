@@ -654,14 +654,33 @@ function fn_LotTraceView() {
 
   const columnsgvLot = [
     {
-      title:
-        gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO
-          ? `Roll No. : ${gvLot.value[0].LOT_ROLL_NO}`
-          : `Roll No.`,
+      title: gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO ? (
+        <>
+          Roll No. : {" "}
+          <a
+            href={`/TraceabilitySystem/LotRollLeafNo?LOTNO=${gvLot.value[0].LOT_ROLL_NO}&product=${txtProd}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#98DED9" }}
+          >
+            {gvLot.value[0].LOT_ROLL_NO}
+          </a>
+        </>
+      ) : (
+        "Roll No."
+      ),
+      
       dataIndex: "LOT",
       key: "Roll No.",
       render: (text, record, index) => {
-        return text;
+        return    <a
+        href={`/TraceabilitySystem/LotTraceView?lot=${text}`}
+        target="_blank"
+        rel="noopener noreferrer"
+
+      >
+       {text}
+      </a>;
       },
       align:
         gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO
