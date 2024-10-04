@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Card, Paper } from "@mui/material";
-import { Input, Button, Table, Typography, Tag ,Tooltip} from "antd";
+import { Input, Button, Table, Typography, Tag, Tooltip } from "antd";
 const { Text } = Typography;
 import { fn_LotTraceView } from "./fn_LotTraceView";
 import {
@@ -36,7 +36,7 @@ function LotTraceView() {
     lblTitleShtBack,
     lbtConnectSht,
     setShtSerialGrid,
-    setFinalGateGrid
+    setFinalGateGrid,
   } = fn_LotTraceView();
   console.log(gvProcessLink, "gvProcessLink");
 
@@ -85,7 +85,7 @@ function LotTraceView() {
           >
             <b style={{ fontSize: "20px" }}>Lotno.</b>
             <br />
-            {lblLotNo}
+            <b>{lblLotNo}</b>
           </Card>
           <Card
             component={Paper}
@@ -94,7 +94,7 @@ function LotTraceView() {
           >
             <b style={{ fontSize: "20px" }}> Product Name </b>
             <br />
-            {txtProd}
+           <b> {txtProd}</b>
           </Card>
           <Card
             component={Paper}
@@ -109,7 +109,7 @@ function LotTraceView() {
               rel="noopener noreferrer"
               style={{ color: "#fff" }}
             >
-              {txtPreviousLotNo.text}
+              <b>{txtPreviousLotNo.text}</b>
             </a>
           </Card>
           <Card
@@ -125,24 +125,35 @@ function LotTraceView() {
               rel="noopener noreferrer"
               style={{ color: "#fff" }}
             >
-             {txtNextLotNo.text}
+             <b>{txtNextLotNo.text}</b> 
             </a>
-           
           </Card>
           <Card
             component={Paper}
             className="Card-ViewLot1"
             style={{ width: "180px" }}
           >
-           <a  href={`http://10.17.74.226/TraceabilitySystem/LotTraceView?lot=${lblLotNo}`}
+            <a
+              href={`http://10.17.74.226/TraceabilitySystem/LotSheetNo?lot=${txtLotNo}&product=${txtProd}`}
+              // http://10.17.74.226/TraceabilitySystem/LotSheetNo?lot=900035953&product=dsafjisdf
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#fff" }}> <b style={{ fontSize: "18px" }}>Sheet No.  </b> {/*linkkkk */}</a>
+              style={{ color: "#fff" }}
+            >
+              {" "}
+              <b style={{ fontSize: "18px" }}>Sheet No. </b> {/*linkkkk */}
+            </a>
             <br />
-            <a  href={`http://10.17.74.226/TraceabilitySystem/LotTraceView?lot=${lblLotNo}`}
+            <a
+              href={`http://10.17.74.226/TraceabilitySystem/LotRollLeafNo?LOTNO=${txtLotNo}&product=${txtProd}`}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#fff" }}>  <b style={{ fontSize: "18px" }}> Roll Leaf</b> {/*linkkkk */}</a>
+              style={{ color: "#fff" }}
+            >
+              {" "}
+              <b style={{ fontSize: "18px" }}> Roll Leaf</b> {/*linkkkk */}
+            </a>
+            {/* http://10.17.74.226/TraceabilitySystem/LotRollLeafNo?LOTNO=${txtLotNo}&product=${txtProd} */}
           </Card>
           <Card
             component={Paper}
@@ -151,15 +162,34 @@ function LotTraceView() {
           >
             <b style={{ fontSize: "20px" }}> Connect Sheet </b>
             <br />
-            <div  onClick={() => setShtSerialGrid(txtLotNo)}>{lbtConnectSht.value}</div>
+            <div style={{ cursor: "pointer" }}onClick={() => setShtSerialGrid(txtLotNo)}>
+             <b> {lbtConnectSht.value}</b>
+            </div>
           </Card>
           <Card className="Card-ViewLot1" style={{ width: "170px" }}>
-            <b style={{ fontSize: "20px" }}> Final Gate </b>
+            <b style={{ fontSize: "20px" }}>Final Gate</b>
             <br />
-            <b style={{ color: "#00712D" }}> OK: <div  onClick={() => setFinalGateGrid (txtLotNo,'OK')}>{lbtFinalGate.valueOK}</div>  </b>{" "}  
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-            <b style={{ color: "red" }}> NG: <div  onClick={() => setFinalGateGrid (txtLotNo,'NG')}>{lbtFinalGate.valueNG}</div>  </b>{" "}  
+            <b style={{ color: "#6EC207" }}>
+              OK:
+              <span
+                onClick={() => setFinalGateGrid(txtLotNo, "OK")}
+                style={{ cursor: "pointer" }}
+              >
+               &nbsp; {lbtFinalGate.valueOK}
+              </span>
+            </b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b style={{ color: "#C70039" }}>
+              NG:
+              <span
+                onClick={() => setFinalGateGrid(txtLotNo, "NG")}
+                style={{ cursor: "pointer" }}
+              >
+               &nbsp; {lbtFinalGate.valueNG}
+              </span>
+            </b>
           </Card>
+
           <div>
             <Card
               component={Paper}
