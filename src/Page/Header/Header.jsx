@@ -113,8 +113,8 @@ function Hearder() {
             <Avatar  variant="square" src={ImgTitle} />&nbsp;&nbsp;
             <Typography variant="h6" component="div" sx={{ flexGrow: 1}}>
           
-            {menuName === '' ? 'TRACEABILITY SYSTEM' : 'TRACEABILITY SYSTEM :' +' '+ menuName}
-              
+            {menuName === '' ? 'TRACEABILITY SYSTEM' : menuName}
+              {/* TRACEABILITY SYSTEM */}
             </Typography>
 
             {user ? <> <Avatar
