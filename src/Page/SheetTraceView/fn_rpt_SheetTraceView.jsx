@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { values } from "lodash";
+import { dropWhile, values } from "lodash";
 import { color } from "framer-motion";
 
 function fn_rpt_SheetTraceView() {
     const[txtSheetNo,settxtSheetNo] =useState("")
     const[txtProduct,settxtProduct] =useState("")
-    const[ddlCavity,setddlCavity] =useState({ text: "",value:[]})
+    const[ddlCavity,setddlCavity] =useState([])
     const[dtddlCavity,setdtddlCavity]=useState([])
     const[selectddlCavity,setselectddlCavity]=useState("")
     const[lblShtMachine,setlblShtMachine]=useState({ visible: "",value:''})
@@ -51,14 +51,17 @@ function fn_rpt_SheetTraceView() {
     const[txtSMTIntTime,settxtSMTIntTime]=useState("")
     const[txtSMTIntMachine,settxtSMTIntMachine]=useState("")
     const[lblMessage,setlblMessage]=useState("")
-    
+    let PanelNo =""
+   
     //table
     const[tblData1,settblData1]=useState([])
 
-    
+    //pnl
+    const[pnltblData1,setpnltblData1]=useState(false)
+
     // HF
     const[hfMaterialA1,sethfMaterialA1]=useState("")
-    const[hfMaterialN1,sethfMaterialN1]=useState("")
+    const[hfMaterialN1,sethfMaterialN1]=useState("http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference?PcbID=#SHEET_NO#")
     const[hfAOMRollLeafNo,sethfAOMRollLeafNo]=useState("")
     const[hfAOMLeafNo,sethfAOMLeafNo]=useState("")
     const[hfAOMPcsNo,sethfAOMPcsNo]=useState("")
@@ -87,19 +90,31 @@ function fn_rpt_SheetTraceView() {
     const [hypMaterialUrl ,sethypMaterialUrl]=useState('')
     const [hypLotNoUrl ,sethypLotNoUrl]=useState('')
     // ENV import.meta.env.
+    
+    
     const SERIAL_DATABASE_SWITCH =import.meta.env.VITE_SERIAL_DATABASE_SWITCH 
+    const FAC = import.meta.env.VITE_FAC
     const searchParams = new URLSearchParams(window.location.search);
     const SHEETNO = searchParams.get("SHEETNO");
-
+    const SPI_Maker = import.meta.env.VITE_SPI_MAKER
     useEffect(() => {
         if(SHEETNO !== ""){
             settxtSheetNo(SHEETNO)
             Clear_View();
-            settxtProduct("");
-            sethypLotNo("")
-            ViewData()
+           
+            // btnRetrive1(SHEETNO)
+            ViewData(SHEETNO)
         }
       }, []);
+
+      useEffect(() => {
+        if(SHEETNO!=''){
+            ViewData(SHEETNO);
+
+        }
+       
+      }, [SHEETNO]);
+      
 
     const Clear_View = () =>{
         setbtnSPI((prevState) => ({...prevState,value: " "}));
@@ -172,28 +187,31 @@ function fn_rpt_SheetTraceView() {
         settxtReflowMachine("");
 
     }
-    const ViewData = async() =>{
+
+    const ViewData = async (mmmm) => {
+        let txtSheetNo =   mmmm;
+        console.log('Selected sheet no:', txtSheetNo, 'Selected cavity:', selectddlCavity);
         setlblMessage("");
         let DBOpenFlg = false
         let dt =[]
         let i;
         let StrResult =""
         let ELT_Count = 0
-       
+        let Product =""
         try{
             sethypMaterial((prevState) => ({...prevState,value: "",visible:true}));
-            if(SERIAL_DATABASE_SWITCH == '0'){
+            if(SERIAL_DATABASE_SWITCH == '1'){
                 if(hfMaterialN1 !== ""){
                     sethypMaterial((prevState) => ({...prevState,value: "Material",visible:false}));
                     //sethypMaterialUrl บรรทัดที่ 184 ส่งลิงค์ไป  hypMaterial.NavigateUrl = hfMaterialN1.Value.Replace("#SHEET_NO#", txtSheetNo.Text)
                 }
             }else{
+            
                 if(hfMaterialA1 !== ""){
                     sethypMaterial((prevState) => ({...prevState,value: "Material",visible:false}));
-                    sethypMaterialUrl("") // hfMaterialA1 ส่ง URL บรรทัด 190
+                    // sethypMaterialUrl("") // hfMaterialA1 ส่ง URL บรรทัด 190
                 }
             }
-          
             await axios
             .post("/api/ViewTraceSheet/GetLotSheet", {
               dataList: {
@@ -205,8 +223,10 @@ function fn_rpt_SheetTraceView() {
                 dt = res.data;
             });
             if (dt && dt.length > 0) {
-                if (dt[0] && dt[0].lss_lot_no !== null) { 
-                  settxtProduct(dt[0].lss_product_name); 
+                if ( dt[0].lss_lot_no !== null) { 
+                  settxtProduct(dt[0].lss_product_name);
+                  console.log(dt[0].lss_product_name,"dt[0].lss_product_name")
+                  Product = dt[0].lss_product_name
                   sethypLotNo(dt[0].lss_lot_no);
                   //   hypLotNo.href = "./rpt_LotTraceView.aspx?LOT=" + dt[0].Item0;
           
@@ -225,16 +245,20 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
+              
             });
             if(dt != ""){
                 if(dt[0].shn_product_name !== null){
                     settxtProduct(dt[0].shn_product_name)
+                    console.log(dt[0].shn_product_name,"dt[0].lss_product_name1")
+                    Product = dt[0].shn_product_name
                     if(hypLotNo == ""){
                         sethypLotNo(dt[0].shn_lot_no)
                      // sethypLotNoUrl(./rpt_LotTraceView.aspx?LOT=&hypLotNo)
                     }
                 }
             }
+            //SPI
             await axios
             .post("/api/ViewTraceSheet/GetSPI", {
               dataList: {
@@ -244,10 +268,14 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
+                console.log("dt14",dt)
             });
-            if(dt !== ""){
-                StrResult =="OK"
-                setbtnSPI((prevState) => ({...prevState,value: "",visible:false}));
+            if(dt.length > 0){
+                console.log("เข้า 14")
+                StrResult = "OK"
+                
+              
+                setbtnSPI((prevState) => ({...prevState,value: "",disbled:false}));
                 for(let i =0;i < dt.length;i++){
                     if(dt[i].spr_result !== "GOOD" &&
                        dt[i].spr_result !== "OK" &&
@@ -257,6 +285,7 @@ function fn_rpt_SheetTraceView() {
                        dt[i].spr_result !== "PASS" 
                     )
                     {
+                        console.log(dt[i].spr_result ,"gt14 :data")
                         StrResult =dt [i].spr_result
                     }
                 }
@@ -265,27 +294,32 @@ function fn_rpt_SheetTraceView() {
                 settxtSPITime(dt[0].spr_inspect_date)
                 settxtSPIMachine(dt[0].spr_machine_name)
                 if(StrResult.toUpperCase() =="NG" || StrResult.toUpperCase() =="FAIL" || StrResult.toUpperCase() =="BADMARK"){
-                    setbtnSPI((prevState) => ({...prevState,value: StrResult,style:{backgroungcolor:'red'}}));
+                    setbtnSPI((prevState) => ({...prevState,style:{backgroundColor:'red'}}));
                 }else{
-                    setbtnSPI((prevState) => ({...prevState,value: StrResult,style:{backgroungcolor:'green'}}));
+                    setbtnSPI((prevState) => ({...prevState,style:{backgroundColor:'green'}}));
                 }
             }else{
-                setbtnSPI((prevState) => ({...prevState,value: StrResult,style:{backgroungcolor:'green'},disbled:true}));
+                console.log("เข้าาาึ--ภภ")
+                setbtnSPI((prevState) => ({...prevState,disbled:true}));
                 settxtSPICnt("")
                 settxtSPITime("")
                 settxtSPIMachine("")
             }
+            //PreAOI 321
             await axios
             .post("/api/ViewTraceSheet/GetPreAOI", {
-                dataList:{strplantcode: FAC,
-                strsheetno: txtSheetNo,}
-                
+                dataList:{
+                    strplantcode: FAC,
+                strsheetno: txtSheetNo,
+            } 
             })
             .then((res) => {
                 dt = res.data;
+                console.log(dt,"dt3")
             });
             if(dt.length > 0){
-                setbtnPre((prevState) => ({...prevState,value: StrResult,disbled:false}));
+                setbtnPre((prevState) => ({...prevState,disbled:false}));
+                console.log("OK",)
                 switch (dt[0].prh_result.toUpperCase()) {
                     case "GOOD":
                     case "OK":
@@ -295,8 +329,7 @@ function fn_rpt_SheetTraceView() {
                     case "RPASS":
                         setbtnPre((prevState) => ({
                             ...prevState,
-                            disabled: false,
-                            style: { backgroundColor: 'green', color: 'white' } 
+                            style: { backgroundColor: 'green', color: 'white', height: "33px",width: "90%",} 
                         }));
                         break;
                     default:
@@ -306,21 +339,29 @@ function fn_rpt_SheetTraceView() {
                             style: { backgroundColor: 'red', color: 'white' } 
                         }));
                 }
+                setbtnPre((prevState) => ({...prevState, disabled: true,value:dt[0].prh_result }));
+                setTxtPreCnt(dt[0].prh_inspect_count);
+                settxtPreTime(dt[0].prh_inspect_date);
+                settxtPreMachine(dt[0].machine_name)
             }else{
                 setbtnPre((prevState) => ({...prevState, disabled: true,value:'' }));
                 setTxtPreCnt("");
                 settxtPreTime("");
             }
+            // AOI 358
             await axios
             .post("/api/ViewTraceSheet/GetAOI", {
-                dataList:{plantcode: FAC,
-                sheetno: txtSheetNo,}
+                dataList:{
+                plantcode: FAC,
+                sheetno: txtSheetNo,
+            }
                 
             })
             .then((res) => {
                 dt = res.data;
+                console.log(dt,"dt5")
             });
-            if(dt.length > 0){
+            if(dt.length > 0){  
                 setbtnAOI((prevState) => ({...prevState, disabled: false,style:{color:'white'} }));
                 let AOI_Result = "OK"
                 for(let i =0; i < dt.length;i++){
@@ -360,6 +401,7 @@ function fn_rpt_SheetTraceView() {
             }else{
                 setbtnAOI((prevState) => ({...prevState,disabled: true}));
             }
+            //'AOI Coating 426
             await axios
             .post("/api/ViewTraceSheet/GetAOI_Coating", {
                 dataList:{
@@ -411,6 +453,7 @@ function fn_rpt_SheetTraceView() {
             }else{
                 setbtnAOICOA((prevState) => ({...prevState,disbled:true}));
             }
+            //' SMT Inspection resul 488
             await axios
             .post("/api/ViewTraceSheet/Getinspection", {
                 dataList:{  strplantcode: FAC,
@@ -431,84 +474,35 @@ function fn_rpt_SheetTraceView() {
                     setbtnSMTInt((prevState) => ({...prevState,value:dt[0].inspect_result,style:{backgroundColor:'green',color:'white'}}));
                 }
             }
+            // ' Get SMT_LOT_SHEET_SERIAL 514
+            let DataShow = [];
             await axios
             .post("/api/ViewTraceSheet/Get_LOT_SHEET_SERIAL", {
              dataList:{
                 plantcode: FAC,
                 sheetno: txtSheetNo,
                 }
-                
             })
             .then((res) => {
                 dt = res.data;
-            });
-            if(dt.length >0){
-                //527
-                // Me.tblData1.Visible = True
-                // Me.tblData1.Rows.Clear()
-                // Dim wkRowHead As New Web.UI.WebControls.TableHeaderRow
-                // Dim ArryTitle0() As String = {"PIECE1", "PIECE2", "PIECE3", "PIECE4", "PIECE5"}
-                // wkRowHead.CssClass = "tablehead"
-                // For Each wkTitle As String In ArryTitle0
-                //     Dim wkCell As New Web.UI.WebControls.TableCell
-                //     wkCell.HorizontalAlign = HorizontalAlign.Center
-                //     wkCell.Wrap = False
-                //     wkCell.Text = wkTitle
-                //     wkRowHead.Cells.Add(wkCell)
-                // Next
-                //538
-            let StrSerial;
-            for(let introw =0;introw < dt.length;introw++){
-               //543 ReDim Preserve StrSerial(introw)
-               StrSerial(introw) = dt[introw].lss_serial_no
-            }
-            let MaxCount = dt.length;
-            let DataCount = 0;
-            let ColCount = 0;
-            let RowCount = 0;
-            let ExitFlg = false
-            while (!ExitFlg) {
-                RowCount=RowCount + 1;
-                let rowCells = [];
-                let rowClass = "tabledata" + (RowCount % 2);
-    
-                while (true) {
-                    let strParameter = StrSerial[DataCount];
-                    const strSpecial = "+";
-    
-                    // ถ้าพบ '+' ให้แทนที่ด้วย '%2B'
-                    if (StrSerial[DataCount].includes(strSpecial)) {
-                        strParameter = strParameter.replace(strSpecial, "%2B");
-                    }
-    
-                    // สร้างลิงก์ใน cell
-                    rowCells.push(
-                        <td key={DataCount}>
-                            <a href={`./rpt_PieceTraceView.aspx?SERIAL=${strParameter}`}>
-                                {StrSerial[dataCount]}
-                            </a>
-                        </td>
-                    );
-    
-                    DataCount =DataCount + 1;
-                    ColCount += 1;
-    
-                    if (DataCount >= MaxCount) {
-                        tableRows.push(<tr className={rowClass} key={rowCount}>{rowCells}</tr>);
-                        setExitFlag(true);
-                        break;
-                    }
-    
-                    if (ColCount === MaxCount) {
-                        tableRows.push(<tr className={rowClass} key={rowCount}>{rowCells}</tr>);
-                        ColCount = 0;
-                        break;
-                    }
-                }
-            }
-    
-            return tableRows;
-            }
+                for (let i = 0; i < dt.length; i += 5) {
+                    DataShow.push(dt.slice(i, i + 5));
+                  }
+          
+                  DataShow = DataShow.map((group, index) => {
+                    return {
+                      key: index,
+                      PIECE1: group[0] ? group[0].lss_serial_no  : "",
+                      PIECE2: group[1] ? group[1].lss_serial_no  : "",
+                      PIECE3: group[2] ? group[2].lss_serial_no  : "",
+                      PIECE4: group[3] ? group[3].lss_serial_no  : "",
+                      PIECE5: group[4] ? group[4].lss_serial_no  : "",
+                    };
+                  });
+                  settblData1(DataShow);
+                 
+                });
+            //' Get SMT_LOT_SHEET_SERIAL 586
             await axios
             .post("/api/ViewTraceSheet/GetXray", {
              dataList:{
@@ -517,6 +511,7 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
+                console.log(dt,"dt66")
             });
             if(dt.length > 0){
                 setbtnXRay((prevState) => ({...prevState,value:dt[0].xray_result}));
@@ -534,31 +529,58 @@ function fn_rpt_SheetTraceView() {
                     setbtnXRay((prevState) => ({...prevState,disbled:false}));        
             }
             let dtSMPJ=[];
+            let dtPcsNo=[]
+            // 733
+            
             await axios
             .post("/api/ViewTraceSheet/GetFPCSMPJPcsCavity", {
-                strPrdName: txtProduct.toUpperCase(),
+                strPrdName: Product
             })
             .then((res) => {
                 dtSMPJ = res.data;
+                setddlCavity(dtSMPJ);
             });
-            // Dim dtPcsNo As DataTable = BIZ_ScanSMTSerial.GetSMTConnectShtPcsCavity(Session("PLANT_CODE"), Session("PRODUCT_KIND"), txtProduct.Text.ToUpper)
-      
-            setddlCavity((prevState) => ({...prevState,text:res.data[0].PCS_NAME,value:res.data[0].PCS_NO}));
             if(dtSMPJ.length > 1){
+               console.log("เข้าdll")
                 setlblCavity((prevState) => ({...prevState,value:'SMPJ Cavity'}));
-                setdtddlCavity(dtSMPJ)
+                setddlCavity(dtSMPJ)
                 sethfSMPJCavityFlg("Y")
+                setdtddlCavity([])
+                setselectddlCavity(dtSMPJ[0].pcs_no)
             }else{
+                console.log("เข้าdll2")
+                console.log(Product,"Product")
+                await axios
+                .post("/api/ViewTraceSheet/GetSMTConnectShtPcsCavity", {
+                    dataList:{
+                        strPlantCode: FAC,
+                        strPrdName:Product
+                    }
+                    
+                })
+                .then((res) => {
+                    dtPcsNo = res.data;
+                    console.log(dtPcsNo,"dtPcsNo")
+                    setddlCavity(dtPcsNo)
+                });
                 setlblCavity((prevState) => ({...prevState,value:'Connect Sht&Pcs'}));
-                setdtddlCavity(dtPcsNo)
                 sethfSMPJCavityFlg("N")
+                setdtddlCavity([])
+                setselectddlCavity(dtPcsNo[0].pcs_no)
             }
-            setdtddlCavity([])
-            setselectddlCavity()
             if(txtSheetNo.trim() !== '' && txtProduct.trim() !== ""){
                 let dtData = []
                 //757 มิ้วทำ
-                //  dtData = BIZ_ScanSMTSerial.GetSerialAOMEFPCResult(Session("PLANT_CODE"), Session("PRODUCT_KIND"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, txtProduct.Text.Trim.ToUpper, hfSMPJCavityFlg.Value)
+                await axios.post("/api/GetSerialAOMEFPCResult", {
+                    _strPlantCode: FAC,
+                    _strSheetNo: txtSheetNo,
+                    _intPcsNo: selectddlCavity,
+                    _strPrdName: Product,
+                    _strSMPJCavityFlg: hfSMPJCavityFlg
+                  })
+                    .then((res) => {
+                      dtData = res.data;
+                    });
                 if(dtData.length > 0){
                     let AOM_Result = 'OK'
                     for(let i = 0; i < dtData.length;i++){
@@ -708,8 +730,16 @@ function fn_rpt_SheetTraceView() {
                     }
                 }
                 // 900
-               // dtData = BIZ_ScanSMTSerial.GetSerialAVIBadmarkResult(Session("PLANT_CODE"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, hfSMPJCavityFlg.Value, Session("PRODUCT_KIND"))
-                if(dtData.length >0){
+               await axios.post("/api/GetSerialAVIBadmarkResult", {
+                intPCSNo: selectddlCavity,
+                strSMPJCavityFlg: hfSMPJCavityFlg,
+                strSheetNo: txtSheetNo,
+              })
+                .then((res) => {
+                  dtData = res.data;
+                  console.log(dtData,"dtDatadtData")
+                });
+               if(dtData.length >0){
                     let FVI_Result = "OK"
                     for(let i =0; i < dtData.length;i++){
                         if(dtData[i].AVI_RESULT !== "GOOD" &&
@@ -734,9 +764,15 @@ function fn_rpt_SheetTraceView() {
 
                 }
                 //932
-                //Table จริงไม่มีข้อมูล
-                // Dim dtReflow As DataTable = BIZ_ScanSMTSerial.GetSMTSheetReflowResult(Session("plant_code"), txtSheetNo.Text.Trim.ToUpper, Session("PRODUCT_KIND"))
                 let dtReflow=[];
+                await axios.post("/api/Common/GetSMTSheetReflowResult", {
+                    strplantcode: FAC,
+                    strsheetno: txtSheetNo
+                  })
+                    .then((res) => {
+                        dtReflow = res.data;
+                        console.log(dtReflow,"dtReflow")
+                    });
                 if(dtReflow.length >0){
                     setbtnReflow((prevState) => ({...prevState,value:dtReflow[0].REFLOW_RESULT}));  
                     if(btnReflow == "NG"){
@@ -750,7 +786,7 @@ function fn_rpt_SheetTraceView() {
                 }
             }
         }catch (ex){
-            setlblMessage("ERROR")
+            // setlblMessage("ERROR")
         }
 
 
@@ -772,15 +808,22 @@ function fn_rpt_SheetTraceView() {
         Clear_View();
     }
     const btnRetrive =() =>{
+        console.log(txtSheetNo,"999")
         localStorage.setItem("SHEET_NO", txtSheetNo);
         Clear_View()
-        settxtSheetNo(txtSheetNo.trim().toUpperCase())
-        settxtProduct("");
         sethypLotNo("");
         sethypLotNoUrl("")
-        ViewData()
+        ViewData(txtSheetNo)
 
     }
+    // const btnRetrive1 =() =>{
+    //     localStorage.setItem("SHEET_NO", txtSheetNo);
+    //     Clear_View()
+    //     sethypLotNo("");
+    //     sethypLotNoUrl("")
+    //     ViewData()
+
+    // }
     const btnPre_Click =() =>{
         if(TxtPreCnt !== ""){
             localStorage.setItem("SHEET_NO", txtSheetNo);
@@ -833,14 +876,17 @@ function fn_rpt_SheetTraceView() {
             
        
     }
-    const ddlCavity_SelectedIndexChanged =() =>{
+    const ddlCavity_SelectedIndexChanged =(event) =>{
+        const dropdawn = event.target.value;
+        console.log(dropdawn,"dropdawn")
+        setselectddlCavity(dropdawn)
         if(txtSheetNo.trim() !== "")
         {    
             Clear_View()
-            if(selectddlCavity > 0){
-                ViewDataPcs()
+            if(dropdawn > 0){
+                ViewDataPcs(txtSheetNo);
             }else{
-                ViewData()
+                ViewData(txtSheetNo);
             }
             
      }
@@ -851,25 +897,44 @@ function fn_rpt_SheetTraceView() {
     }
     const ViewDataPcs =async()=>{
         let intPcsNo =0
+        console.log(hfSMPJCavityFlg,"hfSMPJCavityFlg")
         if(hfSMPJCavityFlg == "Y"){
+            GetFPCPcsNoBySMPJCavity
+            await axios.post("/api/ViewTraceSheet/GetSerialAOMEFPCResult", {
+                strProduct:txtProduct,
+                _intPcsNo:selectddlCavity
+              })
+                .then((res) => {
+                  dtData = res.data;
+                  console.log(dtData,"dtData1")
+                });
             //1048
-            //ยังไม่ทำ
-           // intPcsNo = BIZ_ScanSMTSerial.GetFPCPcsNoBySMPJCavity(txtProduct.Text, ddlCavity.SelectedValue)
         }else{
+            console.log(selectddlCavity,"selectddlCavity333")
             intPcsNo = selectddlCavity
         }
         if( intPcsNo > 0){
+            console.log("เข้าจ้า-ภภภ-",intPcsNo)
             setlblMessage("")
             let DBOpenFlg = false
             let dt = [];
             let i;
             let StrResult ="";
             let ELT_Count = 0;
+            console.log(FAC,txtSheetNo,intPcsNo,txtProduct,hfSMPJCavityFlg,"HJHJHJ")
             if(txtSheetNo.trim() !=="" && txtProduct.trim() !== ""){
                 let dtData = []
-                //ยังไม่ทำ
                 //1071
-                //dtData = BIZ_ScanSMTSerial.GetSerialAOMEFPCResult(Session("PLANT_CODE"), Session("PRODUCT_KIND"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, txtProduct.Text.Trim.ToUpper, hfSMPJCavityFlg.Value)
+                await axios.post("/api/GetSerialAOMEFPCResult", {
+                    _strPlantCode: FAC,
+                    _strSheetNo: txtSheetNo,
+                    _intPcsNo: intPcsNo,
+                    _strPrdName: txtProduct,
+                    _strSMPJCavityFlg: hfSMPJCavityFlg
+                  })
+                    .then((res) => {
+                      dtData = res.data;
+                    });
                 if( dtData.length > 0){
                     StrResult = dtData[0].AOM_RESULT
                     if( StrResult.trim() !== ""){
@@ -964,10 +1029,15 @@ function fn_rpt_SheetTraceView() {
                     }
                 }
                 //FVI
-                //ยังไม่ทำ
                 // 1150
-                // dtData = BIZ_ScanSMTSerial.GetSerialAVIBadmarkResult(Session("PLANT_CODE"), txtSheetNo.Text.Trim.ToUpper, ddlCavity.SelectedValue, hfSMPJCavityFlg.Value, Session("PRODUCT_KIND"))
-
+                await axios.post("/api/GetSerialAVIBadmarkResult", {
+                    intPCSNo: selectddlCavity,
+                    strSMPJCavityFlg: hfSMPJCavityFlg,
+                    strSheetNo: txtSheetNo,
+                  })
+                    .then((res) => {
+                      dtData = res.data;
+                    });
                 if(dtData.length >0){
                     let FVI_Result = "OK"
                     for(let i =0; i < dtData.length;i++){
@@ -994,6 +1064,7 @@ function fn_rpt_SheetTraceView() {
                 }
             }
             try {
+                console.log("าสาสาสาสาส")
                 //1194
                 await axios
                 .post("/api/ViewTraceSheet/GetSPI_Front", {
@@ -1008,27 +1079,27 @@ function fn_rpt_SheetTraceView() {
                 .then((res) => {
                   dtData = res.data;
                 });
-                //1215
-            //     If dt.Rows.Count = 0 Then
-            //     sbSql.Clear()
-            //     sbSql.AppendLine(" select")
-            //     sbSql.AppendLine(" SPR_RESULT,")
-            //     sbSql.AppendLine(" SPR_INS_COUNT,")
-            //     sbSql.AppendLine(" TO_CHAR(SPR_INSPECT_DATE,'DD/MM/YYYY HH24:MI:SS'),")
-            //     sbSql.AppendLine(" SPR_MACHINE_NAME ")
-            //     sbSql.AppendLine(" from")
-            //     sbSql.AppendLine(" SMT_SPI_RSLT")
-            //     sbSql.AppendLine(" where")
-            //     sbSql.AppendLine(" SPR_PLANT_CODE = '" & Session("plant_code") & "' and ")
-            //     sbSql.AppendLine(" SPR_SHEET_NO = '" & txtSheetNo.Text.Trim.ToUpper & "' and ")
-            //     If SPI_Maker = "CKD" Then
-            //         PanelNo = Trim(CStr(intPcsNo - 1))
-            //     Else
-            //         PanelNo = intPcsNo.ToString
-            //     End If
-            //     sbSql.AppendLine(" SPR_PANEL = " & PanelNo & "")
-            //     dt = clsDB.GetDataTable(sbSql.ToString)
-            // End If
+                //1215 
+                if(dt.length > 0){
+                    await axios 
+                    .post("/api/ViewTraceSheet/GetSPI_RSLT", {
+                        dataList:{
+                            plantcode:FAC,
+                            sheetno:txtProduct
+                        }
+                        
+                    })
+                    .then((res) => {
+                      dtData = res.data;
+                    });
+                    if(SPI_Maker == "CKD"){
+                        PanelNo =  (intPcsNo - 1).toString().trim();
+                    }else{
+                        PanelNo = intPcsNo
+                    }
+                }
+           
+       
            if(dt.length > 0){
             StrResult = '';
             for(let i =0; i < dt.length;i++){
@@ -1097,7 +1168,243 @@ function fn_rpt_SheetTraceView() {
                 }
            }
            if(btnSPI.value == ""){
-            
+            await axios
+            .post("/api/ViewTraceSheet/GetRslt_Header", {
+                dataList:{
+                    plantcode:FAC,
+                    sheetno:txtSheetNo
+                }
+                
+            })
+            .then((res) => {
+              dtData = res.data;
+            });
+            if(dt.length > 0){
+            settxtSPICnt(dt[0].sph_panel_count)
+            settxtSPITime(dt[0].sph_inspection_date)
+            settxtSPIMachine(dt[0].sph_machine_name)
+            setbtnSPI((prevState) => ({...prevState,value:dt[0].sph_result}));  
+            switch (dt[0].sph_result.toUpperCase()) {
+                case "GOOD":
+                case "OK":
+                case "JUDGE":
+                case "WN":
+                case "PASS":
+                case "RPASS":
+                    setbtnSPI((prevState) => ({...prevState,style:{backgroundColor:'green',color:'white'}})); 
+                    break;
+                case "NG":
+                case "FAIL":
+                case "BADMARK":
+                case "SKIP":
+                    setbtnSPI((prevState) => ({...prevState,style:{backgroundColor:'red',color:'white'}})); 
+                case "":
+                    setbtnSPI((prevState) => ({...prevState,value:""})); 
+                    break;
+                default:
+                    setbtnSPI((prevState) => ({...prevState,style:{backgroundColor:'green',color:'white'}})); 
+                    break;
+            }
+            }
+
+            //SPI 1340 trc_037_traceviewsheet_getprespi
+            await axios
+            .post("/api/ViewTraceSheet/GetPreSPI", {
+              dataList: {
+                strPlantCode: FAC,
+                strSheetNo: txtSheetNo,
+              },
+            })
+            .then((res) => {
+                dt = res.data;
+            });
+            if(dt.length >0){
+                setTxtPreCnt(dt[0].prh_inspect_count)
+                settxtPreTime(dt[0].prh_inspect_date)
+                settxtPreMachine(dt[0].prh_machine_id)
+              
+
+                const result = dt.rows[0].PRH_RESULT.toString().toUpperCase().trim();
+
+                switch (result) {
+                    case "GOOD":
+                    case "OK":
+                    case "JUDGE":
+                    case "WN":
+                    case "PASS":
+                    case "RPASS":
+                        btnPre.style.backgroundColor = "green"; // ตั้งค่าสีพื้นหลัง
+                        btnPre.style.color = "white"; // ตั้งค่าสีตัวอักษร
+                        btnPre.textContent = "OK"; // ตั้งค่าข้อความ
+                        break; // ออกจาก switch
+                
+                    default:
+                        await axios
+            .post("/api/ViewTraceSheet/GetPRD_NG_DETAIL", {
+              dataList: {
+                plantcode: FAC,
+                sheetno: txtSheetNo,
+                intPcsNo:intPcsNo
+              },
+            })
+            .then((res) => {
+                dt = res.data;
+            });
+                        // ตรวจสอบจำนวนแถว
+                        if (dt.length > 0) {
+                            setbtnPre((prevState) => ({...prevState,value:"NG",style:{backgroundColor:'red',color:'white'}}));  
+                        } else {
+                            setbtnPre((prevState) => ({...prevState,value:"OK",style:{backgroundColor:'green',color:'white'}}));
+                        }
+                        break; // ออกจาก switch
+                }
+                
+
+            }
+            setbtnPre((prevState) => ({...prevState,disbled:true}));  
+            setTxtPreCnt("");
+            settxtPreTime("");
+            settxtPreMachine("");
+                //AOI 1397  trc_037_traceviewsheet_getaoi_rslt
+                await axios
+                .post("/api/ViewTraceSheet/GetAoi_rslt", {
+                dataList:{
+                    plantcode: FAC,
+                    sheetno: txtSheetNo,
+                    intPcsNo: intPcsNo
+                    }
+                })
+                .then((res) => {
+                    dt = res.data;
+                });
+                if(dt.length > 0){
+                    setbtnAOI((prevState) => ({...prevState,disbled:false,style:{backgroundColor:'green',color:'white',value:'OK'}})); 
+                    settxtAOICnt(dt[0].aor_inspect_count)
+                    settxtAOITime(dt[0].aor_inspect_date)
+                    settxtAOIMachine(dt[0].aor_machine_no)
+                }else{
+                    await axios
+                    .post("/api/ViewTraceSheet/GetAoi_rslt_short", {
+                    dataList:{
+                        plantcode: FAC,
+                        sheetno: txtSheetNo
+                        }
+                    })
+                    .then((res) => {
+                        dt = res.data;
+                    });
+                    if(dt.length > 0){
+                        settxtAOICnt(dt[0].aor_inspect_count)
+                        settxtAOITime(dt[0].aor_inspect_date);
+                        settxtAOIMachine(dt[0].aor_machine_no)
+                        await axios
+                        .post("/api/ViewTraceSheet/GetAoi_rslt_short2", {
+                        dataList:{
+                            plantcode: FAC,
+                            sheetno: txtSheetNo,
+                            intPcs: intPcsNo
+                            }
+                        })
+                        .then((res) => {
+                            dt = res.data;
+                        });
+                        if(dt.length > 0){
+                            //NG
+                            setbtnAOI((prevState) => ({...prevState,style:{backgroundColor:'red',color:'white',value:dt[0].aor_result}}));
+                            for (let i = 0; i < dt.length; i++) {
+                              
+                                if (dt[drRow].error_code) {
+                                    setbtnAOI((prevState) => ({...prevState,value:dt[drRow].error_code}));
+                                  break;
+                                }
+                              }
+                              settxtAOICnt(dt[0].aor_inspect_count)
+                              settxtAOITime(dt[0].aor_inspect_date)
+                              settxtAOIMachine(dt[0].aor_machine_no)
+                              
+                        }else{
+                            setbtnAOI((prevState) => ({...prevState,style:{backgroundColor:'green',color:'white',disabled:false,value:'OK'}}));
+                        }
+                    }
+                }
+                if(btnAOI.trim() !== ""){
+                    await axios
+                    .post("/api/ViewTraceSheet/GetAoi_rslt_short", {
+                    dataList:{
+                        plantcode: FAC,
+                        sheetno: txtSheetNo
+                        }
+                    })
+                    .then((res) => {
+                        dt = res.data;
+                    });
+                    if(dt.length >0){
+                        setbtnAOI((prevState) => ({...prevState,value:dt[0].aor_result}))
+                        for(let drRow =0;drRow <dt.length;drRow++){
+                            if(dt[drRow].error_code.trim().toUpperCase() > 0){
+                                setbtnAOI((prevState) => ({...prevState,value:dt[drRow].error_code}));
+                                break;
+
+                            }
+                        }
+                        settxtAOICnt(dt[0].aor_inspect_count)
+                        settxtAOITime(dt[0].aor_inspect_date)
+                        settxtAOIMachine(dt[0].aor_machine_no)
+                        switch (btnAOI.toUpperCase()) { // สมมุติว่า btnAOIText เป็นค่าของ btnAOI.Text
+                            case "GOOD":
+                            case "OK":
+                            case "JUDGE":
+                            case "WN":
+                            case "PASS":
+                            case "RPASS":
+                                setbtnAOI((prevState) => ({...prevState,style:{backgroundColor:'green',color:'white'}}));
+                              break;
+                              
+                            case "NG":
+                            case "FAIL":
+                            case "BADMARK":
+                            case "SKIP":
+                                setbtnAOI((prevState) => ({...prevState,style:{backgroundColor:'red',color:'white'}}));
+                              break;
+                            default:
+                              break;
+                          }
+                          
+                    }
+                    
+                //end if 1519
+                }
+                //'AOI Coating 1521 กำลังทำ
+
+//1663
+            await axios
+            .post("/api/ViewTraceSheet/Get_LOT_SHEET_SERIAL", {
+            dataList:{
+                plantcode: FAC,
+                sheetno: txtSheetNo,
+                }
+                
+            })
+            .then((res) => {
+                dt = res.data; dt = res.data;
+                for (let i = 0; i < dt.length; i += 5) {
+                    DataShow.push(dt.slice(i, i + 5));
+                  }
+          
+                  DataShow = DataShow.map((group, index) => {
+                    return {
+                      key: index,
+                      PIECE1: group[0] ? group[0].lss_serial_no  : "",
+                      PIECE2: group[1] ? group[1].lss_serial_no  : "",
+                      PIECE3: group[2] ? group[2].lss_serial_no  : "",
+                      PIECE4: group[3] ? group[3].lss_serial_no  : "",
+                      PIECE5: group[4] ? group[4].lss_serial_no  : "",
+                    };
+                  });
+                  settblData1(DataShow);
+                 
+            });
+
            }
 
         } catch (error) {
@@ -1106,8 +1413,80 @@ function fn_rpt_SheetTraceView() {
         }
         
     }
-
+    const createLink= (text) => {
+        return (
+          <a
+            href={`/TraceabilitySystem/PieceTraceView?SERIAL=${text}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {text}
+          </a>
+        );
+      };
+    
+    const columnstblData1= [
+        {
+          title: "PIECE1",
+          dataIndex: "PIECE1",
+          key: "PIECE1",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+        {
+          title: "PIECE2",
+          dataIndex: "PIECE2",
+          key: "PIECE2",
+          align: "center",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+        },
+        {
+          title: "PIECE3",
+          dataIndex: "PIECE3",
+          key: "PIECE3",
+          align: "center",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+        },
+    
+        {
+          title: "PIECE4",
+          key: "PIECE4",
+          dataIndex: "PIECE4",
+          align: "center",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+        },
+        {
+          title: "PIECE5",
+          key: "PIECE5",
+          dataIndex: "PIECE5",
+          align: "center",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+        },
+      ];
+    
   return {
+    lblMessage,txtSheetNo,settxtSheetNo,btnRetrive,btnClear,txtProduct,settxtProduct,hypLotNo,
+    ddlCavity,setddlCavity,selectddlCavity,setselectddlCavity,lblShtMachine,hypMaterial,
+    btnAOMEFPC,txtAOMEFPCCnt,txtAOMEFPCTime,txtAOMEFPCMachine,btnAOIEFPC,txtAOIEFPCCnt,txtAOIEFPCTime,
+    btnOST,txtOSTCnt,txtOSTTime,txtOSTMachine,btnAVI,txtAVICnt,txtAVITime,txtAVIMachine,
+    btnFVI,txtFVICnt,txtFVITime,txtFVIMachine,btnSPI,txtSPICnt,txtSPITime,txtSPIMachine,
+    btnPre,TxtPreCnt,txtPreTime,txtPreMachine,btnReflow,txtReflowCnt,txtReflowTime,txtReflowMachine,
+    btnAOI,txtAOICnt,txtAOITime,txtAOIMachine,btnXRay,txtXRayCnt,txtXRayTime,txtXRayMachine,
+    btnAOICOA,txtAOICOACnt,txtAOICOATime,txtAOICOAMachine,btnSMTInt,txtSMTIntCnt,txtSMTIntTime,txtSMTIntMachine,tblData1,
+    btnSPI_Click,btnPre_Click,btnOST_Click,btnAOI_Click,btnXRay_Click,btnAOICOA_Click,ddlCavity_SelectedIndexChanged,
+    lblCavity,txtAOIEFPCMachine,columnstblData1
+
+
 
   }
 }
