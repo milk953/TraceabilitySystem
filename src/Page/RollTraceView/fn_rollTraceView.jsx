@@ -11,13 +11,24 @@ function fn_rollTraceView() {
   const [RollLeafTextFiled, setRollLeafTextFiled] = useState("");
   const [gvResult, setGvResult] = useState([]);
   const [gvResultState, setgvResultState] = useState(false);
+  const params = new URLSearchParams(window.location.search);
+  const lot = params.get("ROLLLEAF");
   useEffect(() => {
     if (RollLeafTextFiled == "") {
       setFocus("RollLeafTextFiledFirst");
     }
+    if(lot !== '' && lot !== null){
+      setRollLeafTextFiled(lot);
+      searchData();
+    }
   }, [RollLeafTextFiled]);
   function setFocus(id) {
     document.getElementById(id).focus();
+  }
+  async function removeURLParameter(parameter) {
+    const url = new URL(window.location);
+    url.searchParams.delete(parameter);
+    window.history.pushState({}, '', url);
   }
   async function enterBtn() {
     if (RollLeafTextFiled === "") {
@@ -29,6 +40,8 @@ function fn_rollTraceView() {
   }
 
   const clearViwe = () => {
+    removeURLParameter('ROLLLEAF');
+    setgvResultState(false);
     setRollLeafTextFiled("");
     setProduct("");
     setRollNo("");
@@ -38,11 +51,12 @@ function fn_rollTraceView() {
   };
   async function searchData() {
     let dtLeft = await getData("fnLotRollLeafData", RollLeafTextFiled);
-    if (dtLeft == "") {
+    if (dtLeft == []) {
       setRollLeafTextFiled("");
-      alert("Roll Leaf No. Not Found");      
+      Swal.fire("Roll Leaf No. Not Found", '', "error");
       setFocus("RollLeafTextFiledFirst");
-      return;
+      await removeURLParameter('ROLLLEAF');
+      return ;
     }
     setGvResult(dtLeft);
     setgvResultState(true);
@@ -103,10 +117,10 @@ function fn_rollTraceView() {
       width: 80,
       render: (text, record, index) => {
         return (
-          <a href={`rpt_SheetTraceView?SHEETNO=${text}`} target="_blank">
+          <a href={`SheetTraceView?SHEETNO=${text}`} target="_blank">
             {text}
           </a>
-        ); // รอแก้
+        );
       },
     },
     {

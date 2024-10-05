@@ -513,8 +513,7 @@ function fn_ScanSMTConnectRollConfirm() {
           let data = res.data.prdName[0];
           strPrdName = data;
         });
-
-      if (strPrdName !== "") {
+      if (strPrdName !== "" && strPrdName !== undefined && strPrdName !== null) {
         setLblPnlLog((prevState) => ({
           ...prevState,
           value: "",
