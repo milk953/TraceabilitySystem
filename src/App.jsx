@@ -59,6 +59,10 @@ import SheetTraceView from './Page/SheetTraceView/rpt_SheetTraceView'
 import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSerialXrayConfirm";
 import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
 import SheetBadMarkView from "./Page/SheetBadMarkReport/SheetBadMarkView";
+import MaterialTrace from "./Page/Material_Trace/Material_Trace";
+import AOICOAResult2 from "./Page/AOI_COA_Result2/AOI_COA_Result2";
+import SPIResult from "./Page/AOI_COA_Result2/AOI_COA_Result2";
+
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -142,7 +146,10 @@ const App = () => {
             <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />            
             <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
             <Route path="/TraceabilitySystem/SheetBadMarkView" element={<SheetBadMarkView />} />
-
+            <Route path="/TraceabilitySystem/MaterialTrace" element={<MaterialTrace />} />
+            <Route path="/TraceabilitySystem/AOICOAResult2" element={<AOICOAResult2 />} />
+            <Route path="/TraceabilitySystem/SPIResult" element={<SPIResult />} />
+            
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
             <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
