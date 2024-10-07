@@ -62,7 +62,6 @@ function ScanSMTSerialXrayConfirm() {
   return (
     <div>
       <Hearder />
-      <h1>X-Ray Result Checking</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>

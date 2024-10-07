@@ -52,7 +52,6 @@ function Change_Serial() {
   return (
     <div>
       <Hearder />
-      <h1>Replace Partial No.</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>

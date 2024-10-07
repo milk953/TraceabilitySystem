@@ -69,7 +69,7 @@ import OSTResult from "./Page/Result/Result";
 import PREResult2 from "./Page/Result/Result";
 import XRayResultN1 from "./Page/Result/Result";
 import XRayResult from "./Page/Result/Result";
-
+import SPIAOITimeView from "./Page/SPIAOITimeView/SPIAOITimeView";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -180,7 +180,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
-
+            <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
+            
 
             {/* P1 */}
             <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
