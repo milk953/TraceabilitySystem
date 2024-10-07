@@ -60,6 +60,7 @@ import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSer
 import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
 import SheetBadMarkView from "./Page/SheetBadMarkReport/SheetBadMarkView";
 import ScanSerialNo from "./Page/P1 Record Serial No/ScanSerialNo";
+import FinalGate_History from "./Page/FinalGate_History/FinalGate_History";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -136,7 +137,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
             <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
-            <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
+            <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />
+            <Route path='/TraceabilitySystem/FinalGate_History' element={<FinalGate_History />} />  
             <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
             <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />            
             <Route path="/TraceabilitySystem/SheetTraceView" element={<SheetTraceView />} />       
