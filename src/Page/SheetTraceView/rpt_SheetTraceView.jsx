@@ -1,12 +1,4 @@
-// import React from 'react'
 
-// function rpt_SheetTraceView() {
-//   return (
-//     <div>rpt_SheetTraceView</div>
-//   )
-// }
-
-// export default c
 import React, { useState, useEffect } from "react";
 import {
     TextField,
@@ -37,9 +29,22 @@ import Pageimg from "/src/assets/1.jpg";
 import Header from "../Header/Header";
 import "./rpt_SheetTraceView.css";
 // import "./PieceTraceView.css";
+import {fn_rpt_SheetTraceView} from './fn_rpt_SheetTraceView'
+import styled from "styled-components";
 
 function rpt_SheetTraceView() {
-
+const{
+    lblMessage,txtSheetNo,settxtSheetNo,btnRetrive,btnClear,txtProduct,settxtProduct,hypLotNo,
+    ddlCavity,setddlCavity,selectddlCavity,setselectddlCavity,lblShtMachine,hypMaterial,
+    btnAOMEFPC,txtAOMEFPCCnt,txtAOMEFPCTime,txtAOMEFPCMachine,btnAOIEFPC,txtAOIEFPCCnt,
+    txtAOIEFPCTime,btnOST,txtOSTCnt,txtOSTTime,txtOSTMachine,btnAVI,txtAVICnt,txtAVITime,txtAVIMachine,
+    btnFVI,txtFVICnt,txtFVITime,txtFVIMachine,btnSPI,txtSPICnt,txtSPITime,txtSPIMachine,
+    btnPre,TxtPreCnt,txtPreTime,txtPreMachine,btnReflow,txtReflowCnt,txtReflowTime,txtReflowMachine,
+    btnAOI,txtAOICnt,txtAOITime,txtAOIMachine,btnXRay,txtXRayCnt,txtXRayTime,txtXRayMachine,
+    btnAOICOA,txtAOICOACnt,txtAOICOATime,txtAOICOAMachine,btnSMTInt,txtSMTIntCnt,txtSMTIntTime,txtSMTIntMachine,tblData1,
+    btnSPI_Click,btnPre_Click,btnOST_Click,btnAOI_Click,btnXRay_Click,btnAOICOA_Click,ddlCavity_SelectedIndexChanged,lblCavity,
+    txtAOIEFPCMachine,columnstblData1
+}=fn_rpt_SheetTraceView();
     return (
         <div>
             <Header />
@@ -59,7 +64,7 @@ function rpt_SheetTraceView() {
                     }}
 
                 > <Typography sx={{textAlign:'center',color:'red'}}>
-                        [lblMessage]
+                        {lblMessage}
                         </Typography>
                     <div 
                     className="divSheetTable"
@@ -81,10 +86,10 @@ function rpt_SheetTraceView() {
                                             size="small"
                                             sx={{ width: "123%" }}
                                         // inputRef={(el) => (inputShtNo.current = el)}
-                                        // value={txtSheetNo}
-                                        // onChange={(e) => {
-                                        //     settxtSheetNo(e.target.value);
-                                        // }}
+                                        value={txtSheetNo}
+                                        onChange={(e) => {
+                                            settxtSheetNo(e.target.value);
+                                        }}
                                         // onBlur={() => {
                                         //     if (txtSheetNo !== "") {
                                         //         btnShtDeleteClick();
@@ -96,7 +101,7 @@ function rpt_SheetTraceView() {
                                         <Button
                                             variant="contained"
                                             sx={{ width: "20%" }}
-                                        // onClick={btnRetriveClick}
+                                        onClick={btnRetrive}
                                         >
                                             Retrive
                                         </Button>{" "}
@@ -105,7 +110,7 @@ function rpt_SheetTraceView() {
                                             variant="contained"
                                             sx={{ width: "20%" }}
                                             color="error"
-                                        // onClick={btnRetriveClick}
+                                        onClick={btnClear}
                                         >
                                             Clear
                                         </Button>
@@ -155,10 +160,10 @@ function rpt_SheetTraceView() {
                                             className="input_txt"
                                             size="small"
                                             style={{ width: "194px" }}
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
+                                            value={txtProduct}
+                                            onChange={(e) => {
+                                                settxtProduct(e.target.value);
+                                            }}
                                             InputProps={{
                                                 readOnly: true,
                                             }}
@@ -173,22 +178,29 @@ function rpt_SheetTraceView() {
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <a id="hypLotNo" href="/your-url" style={{ fontSize: "16px" }}>HyperLink</a>
+                                    <a
+                                href={`/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
+                                style={{ fontSize: "16px" }}
+>
+  {hypLotNo}
+</a>
+
                                     </TableCell>
                                    
                                 </TableRow>
                                 <TableRow>
                                     <TableCell className="color-bg-product">
                                         <Typography>
-                                            SMPJ Cavity :
+                                            {lblCavity.value}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
                                     <FormControl fullWidth>
-                        <Autocomplete
+                                    {/* ตรงนี้ยังติด */}
+                        {/* <Autocomplete
                          className="Select_dropDown"
                             // inputRef={fc_SlProduct}
-                        //   value={selectddlProduct.value}
+                          value={selectddlCavity}
                         
                         //   disabled={dis_ddlProduct} //true พิมไม่ได้
                         //   sx={{
@@ -200,12 +212,13 @@ function rpt_SheetTraceView() {
                         //     }
                         //   }}
                           
-                        //   onChange={(e, value) =>
-                        //     ddlProduct_SelectedIndexChanged(value)
-                        //   }
+                          onChange={(e, value) =>
+                            ddlCavity_SelectedIndexChanged(value)
+                          }
                          
-                         
-                        //   options={ddlProduct.map((item) => item.prd_name)}
+                          
+
+                          options={ddlCavity.text.map((item) => console.log(item.pcs_name,'item.pcs_name'))}  // ใช้ map เพื่อดึงค่า pcs_name มาเป็น options
                           renderInput={(params) => (
                             <TextField
                             // inputRef={(el) => (fc_SlProduct.current = el)}
@@ -214,11 +227,41 @@ function rpt_SheetTraceView() {
                               sx={{ textAlign: "left" }}
                             />
                           )}
-                        />
+                        /> */}
+                        {/* <Autocomplete
+  className="Select_dropDown"
+  value={selectddlCavity}
+  onChange={(e, value) => ddlCavity_SelectedIndexChanged(value)}
+  options={ddlCavity.map((item) => item.pcs_name)} 
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      size="small"
+      sx={{ textAlign: "left" }}
+    />
+  )}
+/> */}
+<FormControl fullWidth size="small">
+      <Select
+        labelId="select-label"
+        value={selectddlCavity}
+        onChange={ddlCavity_SelectedIndexChanged}
+        onBlur={ddlCavity_SelectedIndexChanged}
+        displayEmpty
+      >
+        {ddlCavity.map((option) => (
+          <MenuItem key={option.pcs_no} value={option.pcs_no}>
+            {option.pcs_name} {/* แสดง text */}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+
                       </FormControl>
                                     </TableCell>
                                  
                                 </TableRow>
+                                {lblShtMachine.visible &&(
                                 <TableRow>
                                     <TableCell className="color-bg-product">
                                         <Typography>
@@ -227,14 +270,14 @@ function rpt_SheetTraceView() {
                                     </TableCell>
                                     <TableCell>
                                     <Typography  sx={{textAlign:'center'}}>
-                                        [lblShtMachine]
+                                    {lblShtMachine.value}
                                     </Typography>
                                     <Typography  sx={{textAlign:'center'}}>
-                                        [hypMaterial]
+                                        {hypMaterial.value}
                                     </Typography>
                                     </TableCell>
                                  
-                                </TableRow>
+                                </TableRow>)}
                             </TableBody>
                         </Table>
                     </div>
@@ -276,21 +319,22 @@ function rpt_SheetTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
                                                     width: "90%",
+                                                    backgroundColor: "#B6BBC4",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
-                                                    }
+                                                    },
+                                                    ...btnAOMEFPC.style
+                                                    
                                                 }}
-                                            >
+                                            >{btnAOMEFPC.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtProduct}
+                                            value={txtAOMEFPCCnt}
                                             // onChange={(e) => {
                                             //     settxtProduct(e.target.value);
                                             // }}
@@ -307,7 +351,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtProduct}
+                                            value={txtAOMEFPCTime}
                                             // onChange={(e) => {
                                             //     settxtProduct(e.target.value);
                                             // }}
@@ -324,7 +368,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSMTIntTimeB}
+                                                value={txtAOMEFPCMachine}
                                                 // onChange={(e) => {
                                                 //     settxtSMTIntTimeB(e.target.value);
                                                 // }}
@@ -334,6 +378,7 @@ function rpt_SheetTraceView() {
                                             />
                                         </TableCell>
                                     </TableRow>
+                                    
                                     <TableRow>
                                         <TableCell>AOI E-FPC</TableCell>
                                         <TableCell>
@@ -347,24 +392,16 @@ function rpt_SheetTraceView() {
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
+                                                    ,...btnAOIEFPC.style,
                                                 }}
-                                            >
+                                            >{btnAOIEFPC.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                            value={txtAOIEFPCCnt}
                                             />
                                         </TableCell>
                                         <TableCell >
@@ -372,16 +409,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                            value={txtAOIEFPCTime}
                                             />
                                         </TableCell>
                                         <TableCell>
@@ -389,16 +417,14 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSMTIntTimeB}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntTimeB(e.target.value);
-                                                // }}
+                                                value={txtAOIEFPCMachine}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
                                             />
                                         </TableCell>
                                     </TableRow>
+                                    
                                     <TableRow>
                                     </TableRow>
                                     <TableRow>
@@ -413,25 +439,17 @@ function rpt_SheetTraceView() {
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
-                                                    }
+                                                    },...btnOST.style,
                                                 }}
-                                            >
+                                            >{btnOST.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                            value={txtOSTCnt}
+                                         
                                             />
                                         </TableCell>
                                         <TableCell>
@@ -439,16 +457,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                            value={txtOSTTime}
                                             />
                                         </TableCell>
                                         <TableCell>
@@ -456,16 +465,15 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSMTIntTimeB}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntTimeB(e.target.value);
-                                                // }}
+                                                value={txtOSTMachine}
+                                               
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
                                             />
                                         </TableCell>
                                     </TableRow>
+
                                     <TableRow>
                                         <TableCell>AVI</TableCell>
                                         <TableCell>
@@ -478,19 +486,17 @@ function rpt_SheetTraceView() {
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
-                                                    }
+                                                    },...btnAVI.style
                                                 }}
-                                            >
+                                            >{btnAVI.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtAVICntF}
-                                            // onChange={(e) => {
-                                            //     settxtAVICntF(e.target.value);
-                                            // }}
+                                            value={txtAVICnt}
+                                         
                                             />
                                         </TableCell>
                                         <TableCell >
@@ -498,10 +504,8 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtAVITimeF}
-                                            // onChange={(e) => {
-                                            //     settxtAVITimeF(e.target.value);
-                                            // }}
+                                            value={txtAVITime}
+                                            
                                             />
                                         </TableCell>
                                        
@@ -510,13 +514,12 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtAVITimeF}
-                                            // onChange={(e) => {
-                                            //     settxtAVITimeF(e.target.value);
-                                            // }}
+                                            value={txtAVIMachine}
+                                           
                                             />
                                         </TableCell>
                                     </TableRow>
+
                                     <TableRow>
                                         <TableCell>FVI</TableCell>
                                         <TableCell>
@@ -529,19 +532,17 @@ function rpt_SheetTraceView() {
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
-                                                    }
+                                                    },...btnFVI.style
                                                 }}
-                                            >
+                                            >{btnFVI.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAVIMarkCntF}
-                                                // onChange={(e) => {
-                                                //     settxtAVIMarkCntF(e.target.value);
-                                                // }}
+                                                value={txtFVICnt}
+                                            
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -552,10 +553,8 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAVITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAVITimeF(e.target.value);
-                                                // }}
+                                                value={txtFVITime}
+                                                
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -567,16 +566,15 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAVITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAVITimeF(e.target.value);
-                                                // }}
+                                                value={txtFVIMachine}
+                                        
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
                                             />
                                         </TableCell>
                                     </TableRow>
+                                    {console.log(btnSPI.style,"btnSPI.style")}
                                     <TableRow>
                                         <TableCell rowSpan={"10"}>SMT</TableCell>
                                         <TableCell>SPI</TableCell>
@@ -591,18 +589,16 @@ function rpt_SheetTraceView() {
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
+                                                    ,...btnSPI.style
                                                 }}
-                                            >
+                                            >{btnSPI.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtSPICntF}
-                                                // onChange={(e) => {
-                                                //     settxtSPICntF(e.target.value);
-                                                // }}
+                                                value={txtSPICnt}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -613,10 +609,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSPITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtSPITimeF(e.target.value);
-                                                // }}
+                                                value={txtSPITime}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -628,10 +621,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSPITimeB}
-                                                // onChange={(e) => {
-                                                //     settxtSPITimeB(e.target.value);
-                                                // }}
+                                                value={txtSPIMachine}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -644,23 +634,31 @@ function rpt_SheetTraceView() {
                                         <TableCell>
                                             <Button
                                                 variant="contained"
+                                                size="small"
                                                 sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
+                                                    
+                                                      
+                                                          height: "33px",
+                                                          backgroundColor: "#B6BBC4", // สีเทาเมื่อค่าเป็นค่าว่าง
+                                                          color: "white",
+                                                          width: "90%",
+                                                          "&:hover": {
+                                                            backgroundColor: "grey", // สีเทาเมื่อ hover
+                                                          },
+                                                        
+                                                      
+                                                          ...btnPre.style, // ใช้สไตล์จาก btnPre.style ถ้าค่าไม่ว่าง
+                                                        
+                                                  }}
+
+                                            >{btnPre.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtPreAOICntF}
+                                                value={TxtPreCnt}
                                                 // onChange={(e) => {
                                                 //     settxtPreAOICntF(e.target.value);
                                                 // }}
@@ -674,7 +672,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtPreTimeF}
+                                                value={txtPreTime}
                                                 // onChange={(e) => {
                                                 //     settxtPreTimeF(e.target.value);
                                                 // }}
@@ -689,7 +687,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtPreTimeB}
+                                                value={txtPreMachine}
                                                 // onChange={(e) => {
                                                 //     settxtPreTimeB(e.target.value);
                                                 // }}
@@ -714,17 +712,14 @@ function rpt_SheetTraceView() {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
-                                            >
+                                            >{btnReflow.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtReflowCntF}
-                                                // onChange={(e) => {
-                                                //     settxtReflowCntF(e.target.value);
-                                                // }}
+                                                value={txtReflowCnt}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -735,10 +730,8 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtReflowTimeF}
-                                                // onChange={(e) => {
-                                                //     settxtReflowTimeF(e.target.value);
-                                                // }}
+                                                value={txtReflowTime}
+                                               
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -750,17 +743,14 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtReflowTimeB}
-                                                // onChange={(e) => {
-                                                //     settxtReflowTimeB(e.target.value);
-                                                // }}
+                                                value={txtReflowMachine}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
                                             />
                                         </TableCell>
                                     </TableRow>
-
+                                                {console.log(btnAOI.style,"btnAOI.style")}
                                     <TableRow>
                                         <TableCell>AOI</TableCell>
                                         <TableCell>
@@ -773,19 +763,16 @@ function rpt_SheetTraceView() {
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
-                                                    }
+                                                    },...btnAOI.style
                                                 }}
-                                            >
+                                            >{btnAOI.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAOICntF}
-                                                // onChange={(e) => {
-                                                //     settxtAOICntF(e.target.value);
-                                                // }}
+                                                value={txtAOICnt}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -796,10 +783,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAOITimeF(e.target.value);
-                                                // }}
+                                                value={txtAOITime}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -811,10 +795,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOITimeB}
-                                                // onChange={(e) => {
-                                                //     settxtAOITimeB(e.target.value);
-                                                // }}
+                                                value={txtAOIMachine}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -836,17 +817,14 @@ function rpt_SheetTraceView() {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
-                                            >
+                                            >{btnXRay.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtXRAYCnt_F}
-                                                // onChange={(e) => {
-                                                //     settxtXRAYCnt_F(e.target.value);
-                                                // }}
+                                                value={txtXRayCnt}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -857,10 +835,8 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtXRAYTime_F}
-                                                // onChange={(e) => {
-                                                //     settxtXRAYTime_F(e.target.value);
-                                                // }}
+                                                value={txtXRayTime}
+                                                
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -871,10 +847,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtXRAYTime_B}
-                                                // onChange={(e) => {
-                                                //     settxtXRAYTime_B(e.target.value);
-                                                // }}
+                                                value={txtXRayMachine}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -896,17 +869,14 @@ function rpt_SheetTraceView() {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
-                                            >
+                                            >{btnAOICOA.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAOICOACntF}
-                                                // onChange={(e) => {
-                                                //     settxtAOICOACntF(e.target.value);
-                                                // }}
+                                                value={txtAOICOACnt}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -917,10 +887,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOICOATimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAOICOATimeF(e.target.value);
-                                                // }}
+                                                value={txtAOICOATime}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -931,10 +898,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOICOATimeB}
-                                                // onChange={(e) => {
-                                                //     settxtAOICOATimeB(e.target.value);
-                                                // }}
+                                                value={txtAOICOAMachine}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -956,17 +920,14 @@ function rpt_SheetTraceView() {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
-                                            >
+                                            >{btnSMTInt.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtSMTIntCntF}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntCntF(e.target.value);
-                                                // }}
+                                                value={txtSMTIntCnt}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -977,10 +938,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSMTIntTimeF}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntTimeF(e.target.value);
-                                                // }}
+                                                value={txtSMTIntTime}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -991,10 +949,7 @@ function rpt_SheetTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSMTIntTimeB}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntTimeB(e.target.value);
-                                                // }}
+                                                value={txtSMTIntMachine}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1009,11 +964,23 @@ function rpt_SheetTraceView() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        
                     </div>
-                    <div style={{ marginTop: "50px" }}>
-                        <a href="/TraceabilitySystem">Return To Menu</a>
-                    </div>
+                   <br/>
+                   {tblData1.length >0 &&(
+       <AntTable
+       
+          dataSource={tblData1}
+          columns={columnstblData1}
+          className="tableGvResultViewSheet"
+          pagination={false}
+          size="small"
+          bordered
+          scroll={{ y: 310 }}
+        />)}
+                
                 </Box>
+                
             </Card>
         </div>
     )

@@ -59,6 +59,8 @@ import SheetTraceView from './Page/SheetTraceView/rpt_SheetTraceView'
 import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSerialXrayConfirm";
 import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
 import SheetBadMarkView from "./Page/SheetBadMarkReport/SheetBadMarkView";
+import ScanSerialNo from "./Page/P1 Record Serial No/ScanSerialNo";
+import FinalGate_History from "./Page/FinalGate_History/FinalGate_History";
 import MaterialTrace from "./Page/Material_Trace/Material_Trace";
 import AOICOAResult2 from "./Page/AOI_COA_Result2/AOI_COA_Result2";
 import SPIResult from "./Page/AOI_COA_Result2/AOI_COA_Result2";
@@ -139,7 +141,8 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
             <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
-            <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />  
+            <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />
+            <Route path='/TraceabilitySystem/FinalGate_History' element={<FinalGate_History />} />  
             <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
             <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />            
             <Route path="/TraceabilitySystem/SheetTraceView" element={<SheetTraceView />} />       
@@ -167,6 +170,11 @@ const App = () => {
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+
+
+            {/* P1 */}
+            <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
+
             
             
           </Route>

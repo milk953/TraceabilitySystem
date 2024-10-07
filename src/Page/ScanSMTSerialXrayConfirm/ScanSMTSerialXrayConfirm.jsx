@@ -165,7 +165,7 @@ function ScanSMTSerialXrayConfirm() {
                         variant="body1"
                         style={{
                           width: "100%",
-                          color: "#FF0066",
+                      
                           display: "flex",
                           justifyContent: "center",
                         }}
@@ -267,15 +267,15 @@ function ScanSMTSerialXrayConfirm() {
                 </>
               )}
 
-              {gvScanResult.visble == true && (
+              {gvScanResult.visble === true && (
                 <>
                   {lblResult.value !== "" && (
                     <Paper
                       className="Card-lblResult"
                       elevation={3}
                       style={{
-                        background: "#ff4d4f",
-                        display: gvScanResult,
+                        background: lblResult.value == "NG" ?   "#BA0900":"#059212",
+                       display: gvScanResult.visble ? "" : "none",
                       }}
                     >
                       <Typography
@@ -286,6 +286,7 @@ function ScanSMTSerialXrayConfirm() {
                       </Typography>
                     </Paper>
                   )}
+                  
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}
