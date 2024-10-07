@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../Common/StyleCommon.css";
-import Hearder from "../Header/Header.jsx";
+import Header from "../Header/Header.jsx";
 import { Card, Paper } from "@mui/material";
 import { Input, Button, Table, Typography, Tag, Tooltip, Avatar } from "antd";
 import {
@@ -14,34 +14,43 @@ import { fn_FinalGate_History } from "./fn_FinalGate_History.jsx";
 
 function FinalGate_History() {
     const {
-        gvViewFinal, columns
+        gvViewFinal, columns, BtnExport, Serial
     } = fn_FinalGate_History();
 
     return (
         <div>
-            <Hearder />
-            <Card component={Paper} className="Card-Common">
-                <div>
+            <Header />
+            <Card component={Paper} className="Card-Common" style={{ width: '97%' }}>
+                <div
+                    style={{
+                        width: "99%",
+                        display: "flex",
+                        justifyContent: "flex-end",
+
+                    }}
+                >
                     <a id="hypLotNo"
                         href={`http://10.17.74.227/TraceabilitySystem/PieceTraceView`}
-                        style={{ fontSize: "16px" }}
+                        style={{ fontSize: "16px", marginRight: "20px" }}
                     >
                         Return to viewdata
                     </a>
-                    <button
-                        style={{
-                            background: 'none',
-                            border: 'none',
-                            padding: 0,
-                            marginLeft: "100px"
-                        }}
+                    <Button
+                        size="small"
+                        icon={<Avatar shape="square" src={excel} size="small" />}
+                        onClick={() =>
+                            BtnExport('FinalGateHistory_' + Serial + '.xls')
+                        }
                     >
-                        <img src={excel} alt="Excel Icon" width="40" height="40" />
-                    </button>
+                        Export
+                    </Button>
+
+
                 </div>
                 <Table
                     dataSource={gvViewFinal}
                     columns={columns}
+                    rowKey={(record) => record.serial_no}
                     className="tableGvResultViewFinalG"
                     pagination={false}
                     size="small"

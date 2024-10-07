@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import ExcelJS from "exceljs";
+import Swal from "sweetalert2";
 
 function fn_FinalGate_History() {
     //link
@@ -12,14 +14,14 @@ function fn_FinalGate_History() {
     const [gvViewFinal, setgvViewFinal] = useState([]);
 
     useEffect(() => {
-        if (Serial!==null) {
+        if (Serial !== null) {
             Serial = searchParams.get("SERIAL");
             Inspecno = searchParams.get("INSPECT_NO");
         } else {
             Inspecno = "0";
         }
         ViewData();
-    },[]);
+    }, []);
 
     const ViewData = async () => {
         let dt = [];
@@ -29,10 +31,10 @@ function fn_FinalGate_History() {
                 strserialno: Serial,
                 strinspectno: Inspecno
             })
-            .then((res) => {
-                dt = res.data;
-            });
-
+                .then((res) => {
+                    dt = res.data;
+                });
+            console.log(dt)
             setgvViewFinal(dt);
         } catch (error) {
             console.log(error.message);
@@ -141,9 +143,101 @@ function fn_FinalGate_History() {
         },
     ]
 
-  return {
-    gvViewFinal, columns
-  }
+//Export
+const BtnExport = async (nameFile) => {
+    if (gvViewFinal.length <= 0) {
+      Swal.fire({
+        icon: "error",
+        title: "No Data Export!",
+      });
+    } else {
+      console.log(nameFile, "nameFile");
+      exportExcelFile(gvViewFinal, nameFile);
+    }
+  };
+
+  const exportExcelFile = (data, namefile) => {
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("My Sheet");
+    sheet.properties.defaultRowHeight = 20;
+
+    // สร้างคอลัมน์แบบ dynamic
+    const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
+      header: key.toUpperCase(), // ทำให้ header เป็นตัวพิมพ์ใหญ่
+      key: key,
+      width: 10, // กำหนดขนาดความกว้างเริ่มต้น
+      style: { alignment: { horizontal: "center" } },
+    }));
+
+    sheet.columns = dynamicColumns;
+
+    // ถ้าไม่มีข้อมูลก็สร้างแถวว่าง
+    if (data.length === 0) {
+      const emptyRow = {};
+      dynamicColumns.forEach((col) => (emptyRow[col.key] = "")); // เติมค่าค่าว่าง
+      data.push(emptyRow);
+    }
+
+    // ใส่ข้อมูลลงใน sheet
+    data.forEach((row) => {
+      const newRow = sheet.addRow(row);
+      newRow.eachCell({ includeEmpty: true }, (cell) => {
+        // includeEmpty เพื่อให้ทุก cell รวมถึงที่ว่างมีเส้นขอบ
+        cell.alignment = { horizontal: "center" };
+
+        // เพิ่มเส้นขอบให้ทุก cell
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
+      });
+    });
+
+    // จัดรูปแบบให้แถวแรก (header)
+    const firstRow = sheet.getRow(1);
+    firstRow.eachCell({ includeEmpty: true }, (cell) => {
+      cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FFFF00" }, // สีพื้นหลังเหลือง
+      };
+      cell.font = {
+        name: "Roboto",
+        size: 9,
+        bold: true,
+      };
+
+      // เพิ่มเส้นขอบให้ header
+      cell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+    });
+
+    // กำหนดความกว้างของคอลัมน์ให้พอดีกับข้อความ
+    sheet.columns.forEach((column) => {
+      let maxWidth = column.header.length; // เริ่มต้นความกว้างจากความยาวของ header
+      data.forEach((row) => {
+        const cellValue = String(row[column.key] || ""); // แปลงค่าเป็นสตริง
+        maxWidth = Math.max(maxWidth, cellValue.length); // คำนวณความกว้างสูงสุด
+      });
+      column.width = maxWidth + 2; // เพิ่มขนาดพิเศษเล็กน้อยเพื่อความสบาย
+    });
+
+    // สร้างไฟล์ Excel
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: "application/octet-stream" });
+      saveAs(blob, `${namefile}`);
+    });
+  };
+
+    return {
+        gvViewFinal, columns, BtnExport, Serial
+    }
 };
 
 export { fn_FinalGate_History };
