@@ -10,12 +10,12 @@ import ExcelJS  from "exceljs"
 import { values } from "lodash";
 import Column from "antd/es/table/Column";
 
-function Fn_AOI_COA_Result2() {
+function fn_Result() {
 
   const [txtLotNo, settxtLotNo] = useState('');
   const [tblData1, settblData1] = useState('');
-  const [ColumntblData1, setColumntblData1] = useState('');
-  const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
+  const [ColumntblData1, setColumntblData1] = useState([]);
+
 
   const Fac = import.meta.env.VITE_FAC;
   const params = new URLSearchParams(window.location.search);
@@ -24,20 +24,25 @@ function Fn_AOI_COA_Result2() {
   let sheet_no = params.get("sheet_no");
   let panel_no = params.get("panel_no");
   let PRODUCT_NAME = params.get("PRODUCT_NAME");
-console.log(Page,'Url')
 
   //เข้ามาแล้วSearch
   useEffect(() => {
     if(panel_no==''){
       panel_no=null
     }
-    GetData()
-    setColumntblData1(columnsAoiCoaResult2)
+    if(Page=='AOICOAResult2'){
+        GetDataAOICOAResult()
+        setColumntblData1(columnsAoiCoaResult2)
+    }
+    else if(Page=='SPIResult'){
+
+    }
+
   }, []);
 
 
 
-  const GetData = async () => {
+  const GetDataAOICOAResult = async () => {
     await axios
       .post("/api/ViewTraceSheet/GetAoi_Coa_Result2", {
         dataList:{        
@@ -45,7 +50,6 @@ console.log(Page,'Url')
           plant_code: Fac,
           panel_no: panel_no,
           sheet_no: sheet_no,}
-
       })
       .then((res) => {
        console.log(res.data)
@@ -54,7 +58,8 @@ console.log(Page,'Url')
       });
    
   };
-  const BtnExport = async () => {
+
+  const BtnExport = async (nameFile) => {
     if(tblData1.length<=0){
       Swal.fire({
         icon: "error",
@@ -62,11 +67,13 @@ console.log(Page,'Url')
       });
   }
   else{
-    let nameFile ='AOI_'+Now+'.Csv'
+    // let nameFile ='AOI_'+Now+'.Csv'
     console.log(nameFile,'nameFile')
-    ExportGridToCSV(tblData1,columnstblData1,nameFile) //ชื่อไฟล์ยังไม่ถูก
+    ExportGridToCSV(tblData1,ColumntblData1,nameFile) //ชื่อไฟล์ยังไม่ถูก
   }
 }
+
+
  //Use
   // const columnstblData1= [
   //   {
@@ -460,4 +467,4 @@ console.log(Page,'Url')
   return {tblData1,ColumntblData1,BtnExport};
 }
 
-export { Fn_AOI_COA_Result2 };
+export { fn_Result };

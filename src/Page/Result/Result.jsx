@@ -10,16 +10,15 @@ import {
 } from "@ant-design/icons";
 import "../Material_Trace/MaterialTrace.css";
 import excel from "/src/assets/excel.png";
-import { Fn_AOI_COA_Result2 } from "./Fn_AOI_COA_Result2.jsx";
+import { fn_Result } from "./fn_Result.jsx";
 
 function AOI_COA_Result2() {
-  const {tblData1, ColumntblData1,BtnExport  } = Fn_AOI_COA_Result2();
-
+  const {tblData1, ColumntblData1,BtnExport  } = fn_Result();
+  const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
   return (
     <>
       <Hearder />
-      <h1>AOI COA Result2</h1>
-      <Card component={Paper} className="Card-Common" style={{width:'98%'}}>
+      <Card component={Paper} className="Card-Common" style={{width:'97%'}}>
       <div
           style={{
             width: "99%",
@@ -32,7 +31,7 @@ function AOI_COA_Result2() {
             size="small"
             icon={<Avatar shape="square" src={excel} size="small" />}
             onClick={() =>
-              BtnExport()
+              BtnExport('AOI_'+Now+'.Csv')
             
             }
           >

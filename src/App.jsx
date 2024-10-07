@@ -62,8 +62,13 @@ import SheetBadMarkView from "./Page/SheetBadMarkReport/SheetBadMarkView";
 import ScanSerialNo from "./Page/P1 Record Serial No/ScanSerialNo";
 import FinalGate_History from "./Page/FinalGate_History/FinalGate_History";
 import MaterialTrace from "./Page/Material_Trace/Material_Trace";
-import AOICOAResult2 from "./Page/AOI_COA_Result2/AOI_COA_Result2";
-import SPIResult from "./Page/AOI_COA_Result2/AOI_COA_Result2";
+import AOICOAResult2 from "./Page/Result/Result";
+import SPIResult from "./Page/Result/Result";
+import AOIResult2 from "./Page/Result/Result";
+import OSTResult from "./Page/Result/Result";
+import PREResult2 from "./Page/Result/Result";
+import XRayResultN1 from "./Page/Result/Result";
+import XRayResult from "./Page/Result/Result";
 
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
@@ -152,6 +157,11 @@ const App = () => {
             <Route path="/TraceabilitySystem/MaterialTrace" element={<MaterialTrace />} />
             <Route path="/TraceabilitySystem/AOICOAResult2" element={<AOICOAResult2 />} />
             <Route path="/TraceabilitySystem/SPIResult" element={<SPIResult />} />
+            <Route path="/TraceabilitySystem/AOIResult2" element={<AOIResult2 />} />
+            <Route path="/TraceabilitySystem/OSTResult" element={<OSTResult />} />
+            <Route path="/TraceabilitySystem/PREResult2" element={<PREResult2 />} />
+            <Route path="/TraceabilitySystem/XRayResultN1" element={<XRayResultN1 />} />
+            <Route path="/TraceabilitySystem/XRayResult" element={<XRayResult />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
