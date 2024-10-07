@@ -27,8 +27,37 @@ import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import Header from "../Header/Header";
 import "./PieceTraceView.css";
+import { fn_PieceTraceView } from "./fn_PieceTraceView";
 
 function PieceTraceView() {
+    const {
+        txtSerialNo, settxtSerialNo, txtSerialChip, settxtSerialChip, lblSerialChip, txtProduct, settxtProduct, hypLotNo, hypSheetNoB, txtPcsNo, settxtPcsNo,
+        txtShtType, settxtShtType, txtAOMEFPCCntF, settxtAOMEFPCCntF, txtAOMEFPCTimeF, settxtAOMEFPCTimeF, txtAOIEFPCCntF, settxtAOIEFPCCntF,
+        txtAOIEFPCTimeF, settxtAOIEFPCTimeF, txtBarcodeGradeTime, settxtBarcodeGradeTime, txtOSTCntF, settxtOSTCntF, txtOSTTimeF, settxtOSTTimeF,
+        txtAVICntF, settxtAVICntF, txtAVITimeF, settxtAVITimeF, txtAVICntB, settxtAVICntB, txtAVITimeB, settxtAVITimeB, txtAVIMarkCntF, settxtAVIMarkCntF,
+        txtAVIMarkTimeF, settxtAVIMarkTimeF, txtAVIMarkCntB, settxtAVIMarkCntB, txtAVIMarkTimeB, settxtAVIMarkTimeB, txtSPICntF, settxtSPICntF, txtSPITimeF,
+        settxtSPITimeF, txtSPICntB, settxtSPICntB, txtSPITimeB, settxtSPITimeB, txtPreAOICntF, settxtPreAOICntF, txtPreTimeF, settxtPreTimeF, txtPreAOICntB,
+        settxtPreAOICntB, txtPreTimeB, settxtPreTimeB, txtReflowCntF, settxtReflowCntF, txtReflowTimeF, settxtReflowTimeF, txtReflowCntB, settxtReflowCntB,
+        txtReflowTimeB, settxtReflowTimeB, txtAOICntF, settxtAOICntF, txtAOITimeF, settxtAOITimeF, txtAOICntB, settxtAOICntB, txtAOITimeB, settxtAOITimeB,
+        txtXRAYCnt_F, settxtXRAYCnt_F, txtXRAYTime_F, settxtXRAYTime_F, txtXRAYCnt_B, settxtXRAYCnt_B, txtXRAYTime_B, settxtXRAYTime_B, txtAOICOACntF, settxtAOICOACntF,
+        txtAOICOATimeF, settxtAOICOATimeF, txtAOICOACntB, settxtAOICOACntB, txtAOICOATimeB, settxtAOICOATimeB, txtSMTIntCntF, settxtSMTIntCntF, txtSMTIntTimeF, settxtSMTIntTimeF,
+        txtSMTIntCntB, settxtSMTIntCntB, txtSMTIntTimeB, settxtSMTIntTimeB, txtRejectCnt1, settxtRejectCnt1, txtRejectTime1, settxtRejectTime1, txtTouchUpCnt, settxtTouchUpCnt,
+        txtTouchUpTime, settxtTouchUpTime, txtBendingTime, settxtBendingTime, lblBendingMachine, txtELTCnt1, settxtELTCnt1, txtELTTime1, settxtELTTime1, txtELTCnt2, settxtELTCnt2,
+        txtELTTime2, settxtELTTime2, txtELTCnt3, settxtELTCnt3, txtELTTime3, settxtELTTime3, txtELTCnt4, settxtELTCnt4, txtELTTime4, settxtELTTime4, txtELTCnt5, settxtELTCnt5,
+        txtELTTime5, settxtELTTime5, txtELTCnt6, settxtELTCnt6, txtELTTime6, settxtELTTime6, txtELTCnt7, settxtELTCnt7, txtELTTime7, settxtELTTime7, txtFQCTime, settxtFQCTime,
+        lblFQC, lblFQCMachine, lblFQCOperator, txtFinalGateTime, settxtFinalGateTime, lblFinalGateRemark, txtPackingTime, settxtPackingTime, lblScanPackRemark, lblScanPackRemarkColor,
+        lblMessage, lblELT1, lblELT2, lblELT3, lblELT4, lblELT5, lblELT6, lblELT7, lblKeyType1, lblKeyType2, lblKeyType3, lblKeyType4, lblKeyType5, lblKeyType6, lblKeyType7, lblCheckID1,
+        lblCheckID2, lblCheckID3, lblCheckID4, lblCheckID5, lblCheckID6, lblCheckID7, lblTestType1, lblTestType2, lblTestType3, lblTestType4, lblTestType5, lblTestType6, lblTestType7,
+        lblBarcodeTitle, btnAOMEFPC, btnAOIEFPC, btnBarcodeGrade, btnOST, btnAVIF, btnAVIB, btnAVIMarkF, btnAVIMarkB, btnSPIF, btnSPIB, btnPreAOIF, btnPreAOIB, btnReflowF, btnReflowB,
+        btnAOIF, btnAOIB, btnXRAY_F, btnXRAY_B, btnAOICOAF, btnAOICOAB, btnSMTIntF, btnSMTIntB, btnReject1, btnTouchUp, btnBending, btnELT1, btnELT2, btnELT3, btnELT4, btnELT5, btnELT6,
+        btnELT7, btnFQC, btnFinalGate, btnScanPack, txtSPICntBColor, txtSPITimeBColor, txtPreAOICntBColor, txtPreTimeBColor, txtAOICntBColor, txtAOITimeBColor, txtSPICntFColor, txtSPITimeFColor,
+        txtPreAOICntFColor, txtPreTimeFColor, txtAOICntFColor, txtAOITimeFColor, btnAOMEFPCColor, btnAOIEFPCColor, btnBarcodeGradeColor, btnOSTColor, btnAVIFColor, btnAVIBColor, btnAVIMarkFColor,
+        btnAVIMarkBColor, btnSPIFColor, btnSPIBColor, btnPreAOIFColor, btnPreAOIBColor, btnReflowFColor, btnReflowBColor, btnAOIFColor, btnAOIBColor, btnXRAY_FColor, btnbtnXRAY_BColor,
+        btnAOICOAFColor, btnAOICOABColor, btnSMTIntFColor, btnSMTIntBColor, btnReject1Color, btnTouchUpColor, btnBendingColor, btnELT1Color, btnELT2Color, btnELT3Color, btnELT4Color, btnELT5Color,
+        btnELT6Color, btnELT7Color, btnFQCColor, btnFinalGateColor, btnScanPackColor, btnPreAOIF_Click, btnClear_Click, btnSPIB_Click, btnPreAOIB_Click, btnAOIF_Click, btnAOIB_Click, btnReject1_Click,
+        btnTouchUp_Click, btnELT1_Click, btnELT2_Click, btnELT3_Click, btnELT4_Click, btnELT5_Click, btnELT6_Click, btnELT7_Click, btnXRAY_Click, btnXRAY_B_Click, btnFinalGate_Click, btnAOICOAF_Click,
+        btnAOICOAB_Click, btnRetrive_Click, btnSPIF_Click, btnOST_Click, hypSheetNoF
+    } = fn_PieceTraceView();
 
     return (
         <div>
@@ -49,6 +78,9 @@ function PieceTraceView() {
                     }}
 
                 >
+                    <Typography sx={{ textAlign: 'center', color: 'red' }}>
+                        {lblMessage}
+                    </Typography>
                     <div className="divTb">
                         <Table className="TbViewTracePiece">
                             <TableBody>
@@ -63,23 +95,17 @@ function PieceTraceView() {
                                             // className="TxtField"
                                             size="small"
                                             sx={{ width: "123%" }}
-                                        // inputRef={(el) => (inputShtNo.current = el)}
-                                        // value={txtSheetNo}
-                                        // onChange={(e) => {
-                                        //     settxtSheetNo(e.target.value);
-                                        // }}
-                                        // onBlur={() => {
-                                        //     if (txtSheetNo !== "") {
-                                        //         btnShtDeleteClick();
-                                        //     }
-                                        // }}
+                                            value={txtSerialNo || ""}
+                                            onChange={(e) => {
+                                                settxtSerialNo(e.target.value);
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell align="center">
                                         <Button
                                             variant="contained"
                                             sx={{ width: "20%" }}
-                                        // onClick={btnRetriveClick}
+                                            onClick={btnRetrive_Click}
                                         >
                                             Retrive
                                         </Button>{" "}
@@ -88,36 +114,36 @@ function PieceTraceView() {
                                             variant="contained"
                                             sx={{ width: "20%" }}
                                             color="error"
-                                        // onClick={btnRetriveClick}
+                                            onClick={btnClear_Click}
                                         >
                                             Clear
                                         </Button>
                                     </TableCell>
                                 </TableRow>
-                                {/* <TableRow>
+                                <TableRow>
                                     <TableCell align="right" colSpan={4}>
-                                        <Typography>
-                                            Piece Chip :
-                                        </Typography>
+                                        {lblSerialChip.visible && (
+                                            <Typography>
+                                                {lblSerialChip.value}
+                                            </Typography>
+                                        )}
                                     </TableCell>
                                     <TableCell align="center">
-                                        <TextField
-                                            // className="TxtField"
-                                            size="small"
-                                            sx={{ width: "123%" }}
-                                        // inputRef={(el) => (inputShtNo.current = el)}
-                                        // value={txtSheetNo}
-                                        // onChange={(e) => {
-                                        //     settxtSheetNo(e.target.value);
-                                        // }}
-                                        // onBlur={() => {
-                                        //     if (txtSheetNo !== "") {
-                                        //         btnShtDeleteClick();
-                                        //     }
-                                        // }}
-                                        />
+                                        {txtSerialChip.visible && (
+                                            <TextField
+                                                size="small"
+                                                sx={{ width: "123%" }}
+                                                value={txtSerialChip.value}
+                                                onChange={(e) => {
+                                                    settxtSerialChip((prevState) => ({
+                                                        ...prevState,
+                                                        value: e.target.value,
+                                                    }));
+                                                }}
+                                            />
+                                        )}
                                     </TableCell>
-                                </TableRow> */}
+                                </TableRow>
                             </TableBody>
                         </Table>
                     </div>
@@ -136,10 +162,10 @@ function PieceTraceView() {
                                             className="input_txt"
                                             size="small"
                                             style={{ width: "194px" }}
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
+                                            value={txtProduct}
+                                            onChange={(e) => {
+                                                settxtProduct(e.target.value);
+                                            }}
                                             InputProps={{
                                                 readOnly: true,
                                             }}
@@ -151,7 +177,12 @@ function PieceTraceView() {
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <a id="hypSheetNoF" href="/your-url" style={{ fontSize: "16px" }}>HyperLink</a>
+                                        <a id="hypSheetNoF"
+                                            href={`http://10.17.74.227/TraceabilitySystem/SheetTraceView?SHEETNO=${hypSheetNoF}`}
+                                            style={{ fontSize: "16px" }}
+                                        >
+                                            {hypSheetNoF}
+                                        </a>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -161,7 +192,12 @@ function PieceTraceView() {
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <a id="hypLotNo" href="/your-url" style={{ fontSize: "16px" }}>HyperLink</a>
+                                        <a id="hypLotNo"
+                                            href={`http://10.17.74.227/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
+                                            style={{ fontSize: "16px" }}
+                                        >
+                                            {hypLotNo}
+                                        </a>
                                     </TableCell>
                                     <TableCell>
                                         <Typography>
@@ -169,7 +205,12 @@ function PieceTraceView() {
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <a id="hypSheetNoB" href="/your-url" style={{ fontSize: "16px" }}>HyperLink</a>
+                                        <a id="hypSheetNoB"
+                                            href={`http://10.17.74.227/TraceabilitySystem/SheetTraceView?SHEETNO=${hypSheetNoB}`}
+                                            style={{ fontSize: "16px" }}
+                                        >
+                                            {hypSheetNoB}
+                                        </a>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -183,16 +224,10 @@ function PieceTraceView() {
                                             className="input_txt"
                                             size="small"
                                             style={{ width: "194px" }}
-                                        // value={txtProduct}
-                                        // onChange={(e) => {
-                                        //     settxtProduct(e.target.value);
-                                        // }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         handleChangeProduct();
-                                        //     }
-                                        // }}
-                                        // onBlur={handleChangeProduct}
+                                            value={txtPcsNo}
+                                            onChange={(e) => {
+                                                settxtPcsNo(e.target.value);
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -205,16 +240,10 @@ function PieceTraceView() {
                                             className="input_txt"
                                             size="small"
                                             style={{ width: "194px" }}
-                                        // value={txtProduct}
-                                        // onChange={(e) => {
-                                        //     settxtProduct(e.target.value);
-                                        // }}
-                                        // onKeyDown={(e) => {
-                                        //     if (e.key === "Enter") {
-                                        //         handleChangeProduct();
-                                        //     }
-                                        // }}
-                                        // onBlur={handleChangeProduct}
+                                            value={txtShtType}
+                                            onChange={(e) => {
+                                                settxtShtType(e.target.value);
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -260,30 +289,29 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAOMEFPCColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnAOMEFPC.disabled}
                                             >
+                                                {btnAOMEFPC.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                                value={txtAOMEFPCCntF}
+                                                onChange={(e) => {
+                                                    settxtAOMEFPCCntF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                         <TableCell style={{ width: "250px" }}>
@@ -291,16 +319,13 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                                value={txtAOMEFPCTimeF}
+                                                onChange={(e) => {
+                                                    settxtAOMEFPCTimeF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                     </TableRow>
@@ -311,30 +336,29 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAOIEFPCColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnAOIEFPC.disabled}
                                             >
+                                                {btnAOIEFPC.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                                value={txtAOIEFPCCntF}
+                                                onChange={(e) => {
+                                                    settxtAOIEFPCCntF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                         <TableCell >
@@ -342,53 +366,57 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                                value={txtAOIEFPCTimeF}
+                                                onChange={(e) => {
+                                                    settxtAOIEFPCTimeF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell>Barcode Grade</TableCell>
+                                        {lblBarcodeTitle.visible && (
+                                            <TableCell>Barcode Grade</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnBarcodeGrade.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnBarcodeGradeColor,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                >
+                                                    {btnBarcodeGrade.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell></TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
-                                            />
+                                        <TableCell>
+                                            {txtBarcodeGradeTime.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtBarcodeGradeTime.value}
+                                                    onChange={(e) => {
+                                                        settxtBarcodeGradeTime((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -398,30 +426,30 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnOSTColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnOST.disabled}
+                                                onClick={btnOST_Click}
                                             >
+                                                {btnOST.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                                value={txtOSTCntF}
+                                                onChange={(e) => {
+                                                    settxtOSTCntF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                         <TableCell>
@@ -429,16 +457,13 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtProduct}
-                                            // onChange={(e) => {
-                                            //     settxtProduct(e.target.value);
-                                            // }}
-                                            // onKeyDown={(e) => {
-                                            //     if (e.key === "Enter") {
-                                            //         handleChangeProduct();
-                                            //     }
-                                            // }}
-                                            // onBlur={handleChangeProduct}
+                                                value={txtOSTTimeF}
+                                                onChange={(e) => {
+                                                    settxtOSTTimeF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                     </TableRow>
@@ -449,24 +474,29 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAVIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnAVIF.disabled}
                                             >
+                                                {btnAVIF.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtAVICntF}
-                                            // onChange={(e) => {
-                                            //     settxtAVICntF(e.target.value);
-                                            // }}
+                                                value={txtAVICntF}
+                                                onChange={(e) => {
+                                                    settxtAVICntF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                         <TableCell >
@@ -474,10 +504,13 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtAVITimeF}
-                                            // onChange={(e) => {
-                                            //     settxtAVITimeF(e.target.value);
-                                            // }}
+                                                value={txtAVITimeF}
+                                                onChange={(e) => {
+                                                    settxtAVITimeF(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                         <TableCell style={{ width: "100px" }}>
@@ -485,24 +518,29 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAVIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnAVIB.disabled}
                                             >
+                                                {btnAVIB.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell style={{ width: "40px" }}>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                            // value={txtAVICntF}
-                                            // onChange={(e) => {
-                                            //     settxtAVICntF(e.target.value);
-                                            // }}
+                                                value={txtAVICntB}
+                                                onChange={(e) => {
+                                                    settxtAVICntB(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                         <TableCell style={{ width: "250px" }}>
@@ -510,10 +548,13 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                            // value={txtAVITimeF}
-                                            // onChange={(e) => {
-                                            //     settxtAVITimeF(e.target.value);
-                                            // }}
+                                                value={txtAVITimeB}
+                                                onChange={(e) => {
+                                                    settxtAVITimeB(e.target.value);
+                                                }}
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
                                             />
                                         </TableCell>
                                     </TableRow>
@@ -524,24 +565,26 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAVIMarkFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnAVIMarkF.disabled}
                                             >
+                                                {btnAVIMarkF.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAVIMarkCntF}
-                                                // onChange={(e) => {
-                                                //     settxtAVIMarkCntF(e.target.value);
-                                                // }}
+                                                value={txtAVIMarkCntF}
+                                                onChange={(e) => {
+                                                    settxtAVIMarkCntF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -552,10 +595,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAVITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAVITimeF(e.target.value);
-                                                // }}
+                                                value={txtAVIMarkTimeF}
+                                                onChange={(e) => {
+                                                    settxtAVIMarkTimeF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -566,24 +609,26 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAVIMarkBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnAVIMarkB.disabled}
                                             >
+                                                {btnAVIMarkB.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAVICntF}
-                                                // onChange={(e) => {
-                                                //     settxtAVICntF(e.target.value);
-                                                // }}
+                                                value={txtAVIMarkCntB}
+                                                onChange={(e) => {
+                                                    settxtAVIMarkCntB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -594,10 +639,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAVITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAVITimeF(e.target.value);
-                                                // }}
+                                                value={txtAVIMarkTimeB}
+                                                onChange={(e) => {
+                                                    settxtAVIMarkTimeB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -612,24 +657,31 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnSPIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnSPIF.disabled}
+                                                onClick={btnSPIF_Click}
                                             >
+                                                {btnSPIF.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtSPICntF}
-                                                // onChange={(e) => {
-                                                //     settxtSPICntF(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtSPICntFColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtSPICntF}
+                                                onChange={(e) => {
+                                                    settxtSPICntF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -640,10 +692,14 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSPITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtSPITimeF(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtSPITimeFColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtSPITimeF}
+                                                onChange={(e) => {
+                                                    settxtSPITimeF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -654,24 +710,31 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnSPIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnSPIB_Click}
+                                                disabled={btnSPIB.disabled}
                                             >
+                                                {btnSPIB.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtSPICntB}
-                                                // onChange={(e) => {
-                                                //     settxtSPICntB(e.target.value);
-                                                // }}
+                                                value={txtSPICntB}
+                                                style={{
+                                                    backgroundColor: txtSPICntBColor,
+                                                    color: "#fff"
+                                                }}
+                                                onChange={(e) => {
+                                                    settxtSPICntB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -682,10 +745,14 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSPITimeB}
-                                                // onChange={(e) => {
-                                                //     settxtSPITimeB(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtSPITimeBColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtSPITimeB}
+                                                onChange={(e) => {
+                                                    settxtSPITimeB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -700,24 +767,31 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnPreAOIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnPreAOIF_Click}
+                                                disabled={btnPreAOIF.disabled}
                                             >
+                                                {btnPreAOIF.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtPreAOICntF}
-                                                // onChange={(e) => {
-                                                //     settxtPreAOICntF(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtPreAOICntFColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtPreAOICntF}
+                                                onChange={(e) => {
+                                                    settxtPreAOICntF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -728,10 +802,14 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtPreTimeF}
-                                                // onChange={(e) => {
-                                                //     settxtPreTimeF(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtPreTimeFColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtPreTimeF}
+                                                onChange={(e) => {
+                                                    settxtPreTimeF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -742,24 +820,31 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnPreAOIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnPreAOIB_Click}
+                                                disabled={btnPreAOIB.disabled}
                                             >
+                                                {btnPreAOIB.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtPreAOICntB}
-                                                // onChange={(e) => {
-                                                //     settxtPreAOICntB(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtPreAOICntBColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtPreAOICntB}
+                                                onChange={(e) => {
+                                                    settxtPreAOICntB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -770,10 +855,14 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtPreTimeB}
-                                                // onChange={(e) => {
-                                                //     settxtPreTimeB(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtPreTimeBColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtPreTimeB}
+                                                onChange={(e) => {
+                                                    settxtPreTimeB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -788,24 +877,26 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnReflowFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnReflowF.disabled}
                                             >
+                                                {btnReflowF.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtReflowCntF}
-                                                // onChange={(e) => {
-                                                //     settxtReflowCntF(e.target.value);
-                                                // }}
+                                                value={txtReflowCntF}
+                                                onChange={(e) => {
+                                                    settxtReflowCntF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -816,10 +907,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtReflowTimeF}
-                                                // onChange={(e) => {
-                                                //     settxtReflowTimeF(e.target.value);
-                                                // }}
+                                                value={txtReflowTimeF}
+                                                onChange={(e) => {
+                                                    settxtReflowTimeF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -830,24 +921,26 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnReflowBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                disabled={btnReflowB.disabled}
                                             >
+                                                {btnReflowB.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtReflowCntB}
-                                                // onChange={(e) => {
-                                                //     settxtReflowCntB(e.target.value);
-                                                // }}
+                                                value={txtReflowCntB}
+                                                onChange={(e) => {
+                                                    settxtReflowCntB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -858,10 +951,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtReflowTimeB}
-                                                // onChange={(e) => {
-                                                //     settxtReflowTimeB(e.target.value);
-                                                // }}
+                                                value={txtReflowTimeB}
+                                                onChange={(e) => {
+                                                    settxtReflowTimeB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -876,24 +969,31 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAOIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnAOIF_Click}
+                                                disabled={btnAOIF.disabled}
                                             >
+                                                {btnAOIF.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAOICntF}
-                                                // onChange={(e) => {
-                                                //     settxtAOICntF(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtAOICntFColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtAOICntF}
+                                                onChange={(e) => {
+                                                    settxtAOICntF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -904,10 +1004,14 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOITimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAOITimeF(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtAOITimeFColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtAOITimeF}
+                                                onChange={(e) => {
+                                                    settxtAOITimeF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -918,24 +1022,31 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAOIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnAOIB_Click}
+                                                disabled={btnAOIB.disabled}
                                             >
+                                                {btnAOIB.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAOICntB}
-                                                // onChange={(e) => {
-                                                //     settxtAOICntB(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtAOICntBColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtAOICntB}
+                                                onChange={(e) => {
+                                                    settxtAOICntB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -946,10 +1057,14 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOITimeB}
-                                                // onChange={(e) => {
-                                                //     settxtAOITimeB(e.target.value);
-                                                // }}
+                                                style={{
+                                                    backgroundColor: txtAOITimeBColor,
+                                                    color: "#fff"
+                                                }}
+                                                value={txtAOITimeB}
+                                                onChange={(e) => {
+                                                    settxtAOITimeB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -964,38 +1079,40 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnXRAY_FColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnXRAY_Click}
                                             >
+                                                {btnXRAY_F}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtXRAYCnt_F}
-                                                // onChange={(e) => {
-                                                //     settxtXRAYCnt_F(e.target.value);
-                                                // }}
+                                                value={txtXRAYCnt_F}
+                                                onChange={(e) => {
+                                                    settxtXRAYCnt_F(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
                                             />
                                         </TableCell>
-                                        <TableCell >
+                                        <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtXRAYTime_F}
-                                                // onChange={(e) => {
-                                                //     settxtXRAYTime_F(e.target.value);
-                                                // }}
+                                                value={txtXRAYTime_F}
+                                                onChange={(e) => {
+                                                    settxtXRAYTime_F(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1006,24 +1123,26 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnbtnXRAY_BColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnXRAY_B_Click}
                                             >
+                                                {btnXRAY_B}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtXRAYCnt_B}
-                                                // onChange={(e) => {
-                                                //     settxtXRAYCnt_B(e.target.value);
-                                                // }}
+                                                value={txtXRAYCnt_B}
+                                                onChange={(e) => {
+                                                    settxtXRAYCnt_B(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1034,10 +1153,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtXRAYTime_B}
-                                                // onChange={(e) => {
-                                                //     settxtXRAYTime_B(e.target.value);
-                                                // }}
+                                                value={txtXRAYTime_B}
+                                                onChange={(e) => {
+                                                    settxtXRAYTime_B(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1052,24 +1171,27 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAOICOAFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnAOICOAF_Click}
+                                                disabled={btnAOICOAF.disabled}
                                             >
+                                                {btnAOICOAF.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAOICOACntF}
-                                                // onChange={(e) => {
-                                                //     settxtAOICOACntF(e.target.value);
-                                                // }}
+                                                value={txtAOICOACntF}
+                                                onChange={(e) => {
+                                                    settxtAOICOACntF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1080,10 +1202,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOICOATimeF}
-                                                // onChange={(e) => {
-                                                //     settxtAOICOATimeF(e.target.value);
-                                                // }}
+                                                value={txtAOICOATimeF}
+                                                onChange={(e) => {
+                                                    settxtAOICOATimeF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1094,24 +1216,27 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnAOICOABColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnAOICOAB_Click}
+                                                disabled={btnAOICOAB.disabled}
                                             >
+                                                {btnAOICOAB.value}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtAOICOACntB}
-                                                // onChange={(e) => {
-                                                //     settxtAOICOACntB(e.target.value);
-                                                // }}
+                                                value={txtAOICOACntB}
+                                                onChange={(e) => {
+                                                    settxtAOICOACntB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1122,10 +1247,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtAOICOATimeB}
-                                                // onChange={(e) => {
-                                                //     settxtAOICOATimeB(e.target.value);
-                                                // }}
+                                                value={txtAOICOATimeB}
+                                                onChange={(e) => {
+                                                    settxtAOICOATimeB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1140,7 +1265,7 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnSMTIntFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
@@ -1148,16 +1273,17 @@ function PieceTraceView() {
                                                     }
                                                 }}
                                             >
+                                                {btnSMTIntF}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtSMTIntCntF}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntCntF(e.target.value);
-                                                // }}
+                                                value={txtSMTIntCntF}
+                                                onChange={(e) => {
+                                                    settxtSMTIntCntF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1168,10 +1294,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSMTIntTimeF}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntTimeF(e.target.value);
-                                                // }}
+                                                value={txtSMTIntTimeF}
+                                                onChange={(e) => {
+                                                    settxtSMTIntTimeF(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1182,7 +1308,7 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnSMTIntBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
@@ -1190,16 +1316,17 @@ function PieceTraceView() {
                                                     }
                                                 }}
                                             >
+                                                {btnSMTIntB}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtSMTIntCntB}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntCntB(e.target.value);
-                                                // }}
+                                                value={txtSMTIntCntB}
+                                                onChange={(e) => {
+                                                    settxtSMTIntCntB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1210,10 +1337,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtSMTIntTimeB}
-                                                // onChange={(e) => {
-                                                //     settxtSMTIntTimeB(e.target.value);
-                                                // }}
+                                                value={txtSMTIntTimeB}
+                                                onChange={(e) => {
+                                                    settxtSMTIntTimeB(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1228,24 +1355,26 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnReject1Color,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnReject1_Click}
                                             >
+                                                {btnReject1}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtRejectCnt1}
-                                                // onChange={(e) => {
-                                                //     settxtRejectCnt1(e.target.value);
-                                                // }}
+                                                value={txtRejectCnt1}
+                                                onChange={(e) => {
+                                                    settxtRejectCnt1(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1256,10 +1385,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtRejectTime1}
-                                                // onChange={(e) => {
-                                                //     settxtRejectTime1(e.target.value);
-                                                // }}
+                                                value={txtRejectTime1}
+                                                onChange={(e) => {
+                                                    settxtRejectTime1(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1274,24 +1403,26 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnTouchUpColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnTouchUp_Click}
                                             >
+                                                {btnTouchUp}
                                             </Button>
                                         </TableCell>
                                         <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
-                                                // value={txtTouchUpCnt}
-                                                // onChange={(e) => {
-                                                //     settxtTouchUpCnt(e.target.value);
-                                                // }}
+                                                value={txtTouchUpCnt}
+                                                onChange={(e) => {
+                                                    settxtTouchUpCnt(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1302,10 +1433,10 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtTouchUpTime}
-                                                // onChange={(e) => {
-                                                //     settxtTouchUpTime(e.target.value);
-                                                // }}
+                                                value={txtTouchUpTime}
+                                                onChange={(e) => {
+                                                    settxtTouchUpTime(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
@@ -1320,7 +1451,7 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnBendingColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
@@ -1328,6 +1459,7 @@ function PieceTraceView() {
                                                     }
                                                 }}
                                             >
+                                                {btnBending}
                                             </Button>
                                         </TableCell>
                                         <TableCell></TableCell>
@@ -1336,377 +1468,499 @@ function PieceTraceView() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtBendingTime}
-                                                // onChange={(e) => {
-                                                //     settxtBendingTime(e.target.value);
-                                                // }}
+                                                value={txtBendingTime}
+                                                onChange={(e) => {
+                                                    settxtBendingTime(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
                                             />
                                         </TableCell>
                                         <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
-                                            <Typography>lblBendingMachine</Typography>
+                                            <Typography>{lblBendingMachine}</Typography>
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
                                         <TableCell rowSpan={"10"}>Common</TableCell>
-                                        <TableCell>ELT1</TableCell>
+                                        {lblELT1.visible && (
+                                            <TableCell>{lblELT1.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnELT1.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnELT1Color,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                    onClick={btnELT1_Click}
+                                                >
+                                                    {btnELT1.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                // value={txtELTCnt1}
-                                                // onChange={(e) => {
-                                                //     settxtELTCnt1(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                            {txtELTCnt1.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    value={txtELTCnt1.value}
+                                                    onChange={(e) => {
+                                                        settxtELTCnt1((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtELTTime1}
-                                                // onChange={(e) => {
-                                                //     settxtELTTime1(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtELTTime1.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtELTTime1.value}
+                                                    onChange={(e) => {
+                                                        settxtELTTime1((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell>ELT2</TableCell>
+                                        {lblELT2.visible && (
+                                            <TableCell>{lblELT2.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnELT2.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnELT2Color,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                    onClick={btnELT2_Click}
+                                                >
+                                                    {btnELT2.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                // value={txtELTCnt2}
-                                                // onChange={(e) => {
-                                                //     settxtELTCnt2(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                            {txtELTCnt2.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    value={txtELTCnt2.value}
+                                                    onChange={(e) => {
+                                                        settxtELTCnt2((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtELTTime2}
-                                                // onChange={(e) => {
-                                                //     settxtELTTime2(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtELTTime2.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtELTTime2.value}
+                                                    onChange={(e) => {
+                                                        settxtELTTime2((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell>ELT3</TableCell>
+                                        {lblELT3.visible && (
+                                            <TableCell>{lblELT3.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnELT3.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnELT3Color,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                    onClick={btnELT3_Click}
+                                                >
+                                                    {btnELT3.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                // value={txtELTCnt3}
-                                                // onChange={(e) => {
-                                                //     settxtELTCnt3(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                            {txtELTCnt3.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    value={txtELTCnt3.value}
+                                                    onChange={(e) => {
+                                                        settxtELTCnt3((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtELTTime3}
-                                                // onChange={(e) => {
-                                                //     settxtELTTime3(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtELTTime3.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtELTTime3.value}
+                                                    onChange={(e) => {
+                                                        settxtELTTime3((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell>ELT4</TableCell>
+                                        {lblELT4.visible && (
+                                            <TableCell>{lblELT4.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnELT4.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnELT4Color,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                    onClick={btnELT4_Click}
+                                                >
+                                                    {btnELT4.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                // value={txtELTCnt4}
-                                                // onChange={(e) => {
-                                                //     settxtELTCnt4(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                            {txtELTCnt4.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    value={txtELTCnt4.value}
+                                                    onChange={(e) => {
+                                                        settxtELTCnt4((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtELTTime4}
-                                                // onChange={(e) => {
-                                                //     settxtELTTime4(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtELTTime4.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtELTTime4.value}
+                                                    onChange={(e) => {
+                                                        settxtELTTime4((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell>ELT5</TableCell>
+                                        {lblELT5.visible && (
+                                            <TableCell>{lblELT5.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnELT5.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnELT5Color,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                    onClick={btnELT5_Click}
+                                                >
+                                                    {btnELT5.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                // value={txtELTCnt5}
-                                                // onChange={(e) => {
-                                                //     settxtELTCnt5(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                            {txtELTCnt5.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    value={txtELTCnt5.value}
+                                                    onChange={(e) => {
+                                                        settxtELTCnt5((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtELTTime5}
-                                                // onChange={(e) => {
-                                                //     settxtELTTime5(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtELTTime5.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtELTTime5.value}
+                                                    onChange={(e) => {
+                                                        settxtELTTime5((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell>ELT6</TableCell>
+                                        {lblELT6.visible && (
+                                            <TableCell>{lblELT6.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnELT6.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnELT6Color,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                    onClick={btnELT6_Click}
+                                                >
+                                                    {btnELT6.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                // value={txtELTCnt6}
-                                                // onChange={(e) => {
-                                                //     settxtELTCnt6(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                            {txtELTCnt6.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    value={txtELTCnt6.value}
+                                                    onChange={(e) => {
+                                                        settxtELTCnt6((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtELTTime6}
-                                                // onChange={(e) => {
-                                                //     settxtELTTime6(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtELTTime6.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtELTTime6.value}
+                                                    onChange={(e) => {
+                                                        settxtELTTime6((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell>ELT7</TableCell>
+                                        {lblELT7.visible && (
+                                            <TableCell>{lblELT7.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnELT7.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnELT7Color,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                    onClick={btnELT7_Click}
+                                                >
+                                                    {btnELT7.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                // value={txtELTCnt7}
-                                                // onChange={(e) => {
-                                                //     settxtELTCnt7(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                            {txtELTCnt7.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    value={txtELTCnt7.value}
+                                                    onChange={(e) => {
+                                                        settxtELTCnt7((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtELTTime7}
-                                                // onChange={(e) => {
-                                                //     settxtELTTime7(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtELTTime7.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtELTTime7.value}
+                                                    onChange={(e) => {
+                                                        settxtELTTime7((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                     </TableRow>
 
                                     <TableRow>
-                                        <TableCell>FQC</TableCell>
+                                        {lblFQC.visible && (
+                                            <TableCell>{lblFQC.value}</TableCell>
+                                        )}
                                         <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                sx={{
-                                                    height: "33px",
-                                                    backgroundColor: "#B6BBC4",
-                                                    color: "white",
-                                                    width: "90%",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey"
-                                                    }
-                                                }}
-                                            >
-                                            </Button>
+                                            {btnFQC.visible && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        height: "33px",
+                                                        backgroundColor: btnFQCColor,
+                                                        color: "white",
+                                                        width: "90%",
+                                                        "&:hover": {
+                                                            backgroundColor: "grey"
+                                                        }
+                                                    }}
+                                                >
+                                                    {btnFQC.value}
+                                                </Button>
+                                            )}
                                         </TableCell>
                                         <TableCell></TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtFQCTime}
-                                                // onChange={(e) => {
-                                                //     settxtFQCTime(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtFQCTime.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtFQCTime.v}
+                                                    onChange={(e) => {
+                                                        settxtFQCTime((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
                                         <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
-                                            <Typography>lblFQCMachine lblFQCOperator</Typography>
+                                            {/* <Typography>{lblFQCMachine} {" "} {lblFQCOperator}</Typography> */}
                                         </TableCell>
                                     </TableRow>
 
@@ -1717,33 +1971,35 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnFinalGateColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
                                                     }
                                                 }}
+                                                onClick={btnFinalGate_Click}
                                             >
+                                                {btnFinalGate}
                                             </Button>
                                         </TableCell>
                                         <TableCell></TableCell>
-                                        <TableCell >
+                                        <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
-                                                // value={txtFinalGateTime}
-                                                // onChange={(e) => {
-                                                //     settxtFinalGateTime(e.target.value);
-                                                // }}
+                                                value={txtFinalGateTime}
+                                                onChange={(e) => {
+                                                    settxtFinalGateTime(e.target.value);
+                                                }}
                                                 InputProps={{
                                                     readOnly: true,
                                                 }}
                                             />
                                         </TableCell>
                                         <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
-                                            <Typography>lblFinalGateRemark</Typography>
+                                            <Typography>{lblFinalGateRemark}</Typography>
                                         </TableCell>
                                     </TableRow>
 
@@ -1754,7 +2010,7 @@ function PieceTraceView() {
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: "#B6BBC4",
+                                                    backgroundColor: btnScanPackColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
@@ -1762,25 +2018,37 @@ function PieceTraceView() {
                                                     }
                                                 }}
                                             >
+                                                {btnScanPack}
                                             </Button>
                                         </TableCell>
                                         <TableCell></TableCell>
-                                        <TableCell >
-                                            <TextField
-                                                className="input_txt"
-                                                size="small"
-                                                fullWidth
-                                                // value={txtPackingTime}
-                                                // onChange={(e) => {
-                                                //     settxtPackingTime(e.target.value);
-                                                // }}
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
+                                        <TableCell>
+                                            {txtPackingTime.visible && (
+                                                <TextField
+                                                    className="input_txt"
+                                                    size="small"
+                                                    fullWidth
+                                                    value={txtPackingTime.value}
+                                                    onChange={(e) => {
+                                                        settxtPackingTime((prevState) => ({
+                                                            ...prevState,
+                                                            value: e.target.value,
+                                                        }));
+                                                    }}
+                                                    InputProps={{
+                                                        readOnly: true,
+                                                    }}
+                                                />
+                                            )}
                                         </TableCell>
-                                        <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
-                                            <Typography>lblScanPackRemark</Typography>
+                                        <TableCell colSpan={"3"}
+                                            style={{
+                                                textAlign: "left",
+                                                backgroundColor: lblScanPackRemarkColor,
+                                                color: "#fff"
+                                            }}
+                                        >
+                                            <Typography>{lblScanPackRemark}</Typography>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
