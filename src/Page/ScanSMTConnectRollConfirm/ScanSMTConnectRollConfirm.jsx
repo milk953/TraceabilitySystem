@@ -62,7 +62,6 @@ function ScanSMTConnectRollConfirm() {
   return (
     <div>
       <Hearder />
-      <h1> Confirm Connect Roll&Leaf</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
