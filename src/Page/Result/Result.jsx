@@ -31,7 +31,7 @@ function AOI_COA_Result2() {
             size="small"
             icon={<Avatar shape="square" src={excel} size="small" />}
             onClick={() =>
-              BtnExport('AOI_'+Now+'.Csv')
+              BtnExport('AOI_'+Now+'.csv')
             
             }
           >
@@ -49,7 +49,8 @@ function AOI_COA_Result2() {
    
           size="small"
           bordered
-          scroll={{ y: 310, x: 2100 }} // เพิ่ม x เพื่อให้เลื่อนซ้ายขวา
+          // scroll={{ y: 310 }}
+          scroll={{ x: 'max-content' }}
         />
         <br/>
        
