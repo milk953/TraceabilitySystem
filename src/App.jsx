@@ -59,6 +59,7 @@ import SheetTraceView from './Page/SheetTraceView/rpt_SheetTraceView'
 import ScanSMTSerialXrayConfirm from "./Page/ScanSMTSerialXrayConfirm/ScanSMTSerialXrayConfirm";
 import LotSheetNo from "./Page/LotSheetNo/LotSheetNo";
 import SheetBadMarkView from "./Page/SheetBadMarkReport/SheetBadMarkView";
+import ScanSerialNo from "./Page/P1 Record Serial No/ScanSerialNo";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -160,6 +161,11 @@ const App = () => {
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+
+
+            {/* P1 */}
+            <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
+
             
             
           </Route>
