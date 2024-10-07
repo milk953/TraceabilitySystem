@@ -1,0 +1,100 @@
+.RecordSP1maintd {
+  vertical-align: top;
+}
+
+.RecordSP1Table td {
+  padding: 5px !important;
+  text-align: right;
+}
+.RecordSP1mainTable {
+  max-width: 400px;
+}
+.RecordSP1Table th {
+  color: black;
+  font-family: Arial;
+  padding: 8px !important;
+  background-color: #8c8c8c !important ;
+  border-radius: 5px 5px 0 0 !important;
+  color: #fff;
+  font-size: 20px;
+}
+
+.RecordSP1txtF {
+  padding: 3px !important;
+  font-size: 16px;
+  width: 180px;
+}
+.RecordSP1gvSerial {
+  width: 400px !important;
+  margin: left;
+  margin-top: 20px !important;
+}
+
+.RecordSP1gvSerialCell {
+  padding: 5px !important;
+  margin: auto;
+  text-align: center !important;
+}
+.lblResultRecordSP1 {
+  margin-left: 20px;
+  width: 1000px;
+  text-align: center;
+  font-size: 80px;
+}
+.lblResultCardRecordSP1 {
+  max-width: 1000px;
+  width: 100%;
+  height: 45px;
+}
+.RecordSP1Card {
+  margin: auto;
+  width: 95%;
+  max-width: 1450px;
+  margin-top: 50px;
+  min-height: 200px;
+  padding: 20px;
+  overflow: auto;
+  margin-top: 80px;
+}
+.RecordSP1TextFSerial {
+  padding: 5px;
+  width: 200px;
+  text-transform: uppercase;
+}
+.RecordSP1gvSerialSave {
+  text-align: center !important;
+  padding: 3px !important;
+  gap: 10px;
+}
+.RecordSP1ResultTd {
+  text-align: left;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding: 0;
+  margin: 0;
+  vertical-align: top;
+}
+.RecordSP1ResultImg {
+  width: 320px;
+  height: 250px;
+  padding: 0;
+  align-items: center;
+  margin: auto;
+}
+.RecordSP1lblShow {
+  text-align: center !important;
+}
+.styleDisable {
+  background-color: "#B2A8A8";
+  padding: 3px !important;
+  font-size: 16px;
+  width: 230px;
+}
+.styleEnable {
+  background-color: "";
+  padding: 3px !important;
+  font-size: 16px;
+  width: 230px;
+}
