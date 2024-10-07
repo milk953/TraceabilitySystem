@@ -52,7 +52,6 @@ function ScanAVIConfirmResult() {
   return (
     <div>
       <Hearder />
-      <h1>AVI Verify Monitoring</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
