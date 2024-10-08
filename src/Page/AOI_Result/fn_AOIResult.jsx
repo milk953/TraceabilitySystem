@@ -13,6 +13,8 @@ function fn_AOIResult() {
 
     //table
     const [gvViewAOI, setgvViewAOI] = useState([]);
+    const [lbl_Message, setlbl_Message] = useState("");
+    const [lblMessageColor, setlblMessageColor] = useState("#059212");
 
     useEffect(() => {
         if (Sheetno !== null && Prdname !== null ) {
@@ -48,8 +50,12 @@ function fn_AOIResult() {
             dataIndex: "link",
             key: "LINK",
             align: "center",
-            render: (text, record, index) => {
-                return text;
+            render: (text, record) => {
+                return (
+                    <a href={record.image_name} target="_blank" rel="noopener noreferrer">
+                        {record.seq}
+                    </a>
+                );
             },
         },
         {
@@ -214,9 +220,14 @@ const BtnExport = async (nameFile) => {
         icon: "error",
         title: "No Data Export!",
       });
+      setlbl_Message("error", title);
+      setlblMessageColor("#BA0900");
+
     } else {
       console.log(nameFile, "nameFile");
       exportExcelFile(gvViewAOI, nameFile);
+      setlbl_Message("CSV export Complete.");
+      setlblMessageColor("#059212");
     }
   };
 
@@ -300,7 +311,7 @@ const BtnExport = async (nameFile) => {
   };
 
   return {
-    gvViewAOI, columns, BtnExport
+    gvViewAOI, columns, BtnExport, lbl_Message, lblMessageColor
   }
 };
 

@@ -71,6 +71,7 @@ import XRayResultN1 from "./Page/Result/Result";
 import XRayResult from "./Page/Result/Result";
 import SPIAOITimeView from "./Page/SPIAOITimeView/SPIAOITimeView";
 import AOIResult from "./Page/AOI_Result/AOI_Result";
+import OSTResultPiece from "./Page/OSTResultPiece/OSTResultPiece";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -164,6 +165,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/XRayResultN1" element={<XRayResultN1 />} />
             <Route path="/TraceabilitySystem/XRayResult" element={<XRayResult />} />
             <Route path="/TraceabilitySystem/AOIResult" element={<AOIResult />} />
+            <Route path="/TraceabilitySystem/OSTResultPiece" element={<OSTResultPiece />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />

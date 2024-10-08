@@ -8,13 +8,13 @@ import {
     UndoOutlined,
     LoadingOutlined,
 } from "@ant-design/icons";
-import "../AOI_Result/AOI_Result.css";
-import excel from "/src/assets/excel.png";
-import { fn_AOIResult } from "./fn_AOIResult.jsx";
+import "../OSTResultPiece/OSTResultPiece.css";
+import { fn_OSTResultPiece } from "./fn_OSTResultPiece.jsx";
 
-function AOI_Result() {
-    const { gvViewAOI, columns, BtnExport, lbl_Message, lblMessageColor } = fn_AOIResult();
-    const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
+function OSTResultPiece() {
+    const {
+        gvViewOST, lbl_Message, lblMessageColor, columnsOST
+    } = fn_OSTResultPiece();
 
     return (
         <div>
@@ -39,21 +39,12 @@ function AOI_Result() {
                     >
                         Return to viewdata
                     </a>
-                    <Button
-                        size="small"
-                        icon={<Avatar shape="square" src={excel} size="small" />}
-                        onClick={() =>
-                            BtnExport('AOI_' + Now + '.csv')
-                        }
-                    >
-                        Export
-                    </Button>
                 </div>
                 <Table
-                    dataSource={gvViewAOI}
-                    columns={columns}
-                    rowKey={(record) => record.seq}
-                    className="tableGvResultViewAOI"
+                    dataSource={gvViewOST}
+                    columns={columnsOST}
+                    rowKey={(record) => record.LOT_NO}
+                    className="tableGvResultViewOST"
                     pagination={false}
                     size="small"
                     bordered
@@ -64,4 +55,4 @@ function AOI_Result() {
     )
 };
 
-export default AOI_Result;
+export default OSTResultPiece;
