@@ -11,23 +11,33 @@ import { values } from "lodash";
 import Column from "antd/es/table/Column";
 
 function fn_Result() {
-  const [txtLotNo, settxtLotNo] = useState("");
-  const [tblData1, settblData1] = useState("");
+  const [tblData1, settblData1] = useState(""); //เก็บข้อมูลใส่ตาราง
   const [ColumntblData1, setColumntblData1] = useState([]);
-  const [DatatblData1, setDatatblData1] = useState([]);
-
+  const [DatatblData1, setDatatblData1] = useState([]); //เก็บข้อมูลใส่ExportCSV
+  const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
   const Fac = import.meta.env.VITE_FAC;
   const params = new URLSearchParams(window.location.search);
   const Url = window.location.href;
   const Page = Url.split("/").pop().split("?")[0];
   let sheet_no = params.get("sheet_no");
   let panel_no = params.get("panel_no");
-  let PRODUCT_NAME = params.get("PRODUCT_NAME");
-
+  let product_name = params.get("PRODUCT_NAME");
+  let piece_no = params.get("piece_no");
+  let serial_no = params.get("serial_no");
+  let Serial = params.get("Serial");
   //เข้ามาแล้วSearch
   useEffect(() => {
     if (panel_no == "") {
       panel_no = null;
+    }
+    if(sheet_no==null){
+        sheet_no=''
+    }
+    if(piece_no==null){
+        piece_no=''
+    }
+    if(product_name==null){
+        product_name=''
     }
     if (Page == "AOICOAResult2") {
       GetDataAOICOAResult();
@@ -35,8 +45,17 @@ function fn_Result() {
     } else if (Page == "SPIResult") {
       GetDataSPIResult();
       setColumntblData1(columnsSPIResult);
+    } else if (Page == "PREResult2") {
+      GetDataPreResult();
+      setColumntblData1(columnsPreResult);
     }
-    else if(Page=='PREResult2'){
+    else if(Page=='XRayResult'||Page=='XRayResultN1'){
+      if (serial_no == '0') {
+        window.location.href = '/TraceabilitySystem/SheetTraceView'; //มีอีก
+      }
+      else{
+        window.location.href = '/TraceabilitySystem/PieceTraceView'; //มีอีก
+      }
 
     }
   }, []);
@@ -46,7 +65,7 @@ function fn_Result() {
     await axios
       .post("/api/Result/GetAoi_Coa_Result2", {
         dataList: {
-          PRODUCT_NAME: PRODUCT_NAME,
+          product_name: product_name,
           plant_code: Fac,
           panel_no: panel_no,
           sheet_no: sheet_no,
@@ -417,17 +436,16 @@ function fn_Result() {
     await axios
       .post("/api/Result/SPIResult_getCheckData", {
         dataList: {
-          strProduct: PRODUCT_NAME,
+          strProduct: product_name,
           strPlantCode: Fac,
           strPanelNo: panel_no,
         },
       })
       .then((res) => {
-        console.log(res.data,'position_v');
-        if(res.data.length>0){
-            dtCheck = res.data[0].position_v;
+        console.log(res.data, "position_v");
+        if (res.data.length > 0) {
+          dtCheck = res.data[0].position_v;
         }
-       
       });
 
     await axios
@@ -435,31 +453,31 @@ function fn_Result() {
         dataList: {
           strPlantCode: Fac,
           strPanelNo: panel_no,
-          strProduct: PRODUCT_NAME,
+          strProduct: product_name,
           strSheetNo: sheet_no,
           strdtCheck: dtCheck,
           strExport: "0",
         },
       })
       .then((res) => {
-        console.log(res.data,'SPIResult_Getfinaldata');
-        settblData1(res.data)
+        console.log(res.data, "SPIResult_Getfinaldata");
+        settblData1(res.data);
       });
 
-      await axios
+    await axios
       .post("/api/Result/SPIResult_Getfinaldata", {
         dataList: {
           strPlantCode: Fac,
           strPanelNo: panel_no,
-          strProduct: PRODUCT_NAME,
+          strProduct: product_name,
           strSheetNo: sheet_no,
           strdtCheck: dtCheck,
           strExport: "1",
         },
       })
       .then((res) => {
-        console.log(res.data,'SPIResult_GetfinaldataExport');
-        setDatatblData1(res.data)
+        console.log(res.data, "SPIResult_GetfinaldataExport");
+        setDatatblData1(res.data);
       });
   };
 
@@ -736,8 +754,459 @@ function fn_Result() {
     },
   ];
 
-//Export
-  const BtnExport = async (nameFile) => {
+  //Pre Result
+  const GetDataPreResult = async () => {
+    let dt = [];
+    let dt2 = [];
+    await axios
+      .post("/api/Result/PreResult_GetCheck", {
+        dataList: {
+          strProduct: product_name,
+          strPlantCode: Fac,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, "position_v2");
+        if (res.data.length > 0) {
+          dt2 = res.data;
+        }
+      });
+      console.log(dt2.length,'dtdtdtdt')
+    if (dt2.length > 0) {
+      await axios
+        .post("/api/Result/PreResult_GetDataFound", {
+          dataList: {
+            strPlantCode: Fac,
+            strProduct: product_name,
+            strSheetNo: sheet_no,
+            strPiece_no: piece_no,
+          },
+        })
+        .then((res) => {
+  
+          if (res.data.length> 0) {
+            console.log(res.data, "SPIResult_Getfinaldata000000");
+            settblData1(res.data);
+            dt = res.data;
+          }
+        });
+    } else {
+      await axios
+        .post("/api/Result/PreResult_GetDataNotFound", {
+          dataList: {
+            strPlantCode: Fac,
+            strProduct: product_name,
+            strSheetNo: sheet_no,
+            strPiece_no: piece_no,
+          },
+        })
+        .then((res) => {
+          console.log(res.data, "SPIResult_Getfinaldata1");
+          if (res.data.length > 0) {
+            settblData1(res.data);
+            dt = res.data;
+          }
+        });
+      if (dt.length <= 0) {
+        await axios
+          .post("/api/Result/PreResult_GetDataNotFoundFound", {
+            dataList: {
+              strPlantCode: Fac,
+              strProduct: product_name,
+              strSheetNo: sheet_no,
+              strPiece_no: piece_no,
+            },
+          })
+          .then((res) => {
+            console.log(res.data, "SPIResult_Getfinaldata1");
+            if (res.data.length > 0) {
+              settblData1(res.data);
+              dt = res.data;
+            }
+          });
+      }
+      
+    }
+    setDatatblData1(dt)
+  };
+
+  const columnsPreResult = [
+    {
+      title: "LINK",
+      dataIndex: "link", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "LINK",
+      align: "center",
+      render: (text, record, index) => {
+        let modifiedText=''
+        if(text!=''){
+           modifiedText = text.replace("<a ", '<a target="_blank" '); // เพิ่ม target="_blank"
+        }
+       
+        return (
+          <span
+            dangerouslySetInnerHTML={{ __html: modifiedText }} // แสดง HTML ที่แก้ไขแล้ว
+          />
+        );
+      },
+    },
+    {
+      title: "PLANT_CODE",
+      dataIndex: "prh_plant_code", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "PLANT_CODE",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "SHEET_NO",
+      dataIndex: "prh_sheet_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "SHEET_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "INS_COUNT",
+      key: "INS_COUNT", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "prh_inspect_count", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CIRCUIT_ID",
+      key: "CIRCUIT_ID", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "prh_circuit_id", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "MACHINE_NAME",
+      dataIndex: "prh_machine_id", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "MACHINE_NAME",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+    {
+      title: "SIZE_X",
+      dataIndex: "prh_size_x", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "SIZE_X",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "SIZE_Y",
+      dataIndex: "prh_size_y", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "SIZE_Y",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PROGRAM_NO",
+      key: "PROGRAM_NO", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "prh_program_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PROGRAM_ID",
+      key: "PROGRAM_ID", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "prh_program_id", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "INSPECT_CNT_LOT",
+      dataIndex: "prh_inspect_cnt_lot", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "INSPECT_CNT_LOT",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+    {
+      title: "PIC_X1",
+      dataIndex: "prh_pic_x1", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "PIC_X1",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PIC_X2",
+      dataIndex: "prh_pic_x2", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "PIC_X2",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PIC_Y1",
+      key: "PIC_Y1", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "prh_pic_y1", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PIC_Y2",
+      key: "PIC_Y2", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "prh_pic_y2", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "RESULT",
+      dataIndex: "prh_result", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "RESULT",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+    {
+      title: "PIC_FILENAME",
+      dataIndex: "prh_pic_filename", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "PIC_FILENAME",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "INSPECT_DATE",
+      dataIndex: "prh_inspect_date", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "INSPECT_DATE",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CABITY_NO",
+      dataIndex: "cabity_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "CABITY_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "SEQ",
+      dataIndex: "prd_seq", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "SEQ",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "NG_DETAIL",
+      dataIndex: "prd_ng_detail", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "NG_DETAIL",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "BLOCK_NO",
+      dataIndex: "prd_block_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "BLOCK_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "STEP_NO",
+      dataIndex: "prd_step_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "STEP_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "REFER",
+      dataIndex: "prd_refer", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "REFER",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "LIB_PART_NAME",
+      dataIndex: "prd_lib_part_name", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "LIB_PART_NAME",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "STEP_POS",
+      dataIndex: "prd_step_pos", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "STEP_POS",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "STEP_X2",
+      dataIndex: "prd_step_x2", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "STEP_X2",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "STEP_Y1",
+      dataIndex: "prd_step_y1", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "STEP_Y1",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "STEP_Y2",
+      dataIndex: "prd_step_y2", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "STEP_Y2",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "MEASURE_NUM",
+      dataIndex: "prd_measure_num", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "MEASURE_NUM",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_BY",
+      dataIndex: "prh_create_by", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "CREATE_BY",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_PROGRAM",
+      dataIndex: "prh_create_program", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "CREATE_PROGRAM",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_DATE",
+      dataIndex: "prh_create_date", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "CREATE_DATE",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+  ];
+
+  //OST Result
+  const GetDataOSTResult = async () => {
+    let dataOst=[]
+    let OST=[]
+    let OST_BAD=[]
+    await axios
+      .post("/api/Result/OSTResult_GetData1", {
+        dataList: {
+          SHEET_NO: sheet_no
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'OST111');
+        OST=res.data
+      });
+      //BADMARK
+      await axios
+      .post("/api/Result/OSTResult_GetData2", {
+        dataList: {
+          SHEET_NO: sheet_no
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'OST222');
+        OST_BAD=res.data
+      });
+      // for(let)
+
+      settblData1(dataOst);
+      setDatatblData1(dataOst);
+  };
+
+  const columnsOSTResult = [
+   
+    {
+      title: "CAVITY",
+      dataIndex: "prh_plant_code",
+      key: "CAVITY",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "OST",
+      dataIndex: "prh_sheet_no", 
+      key: "OST",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "BADMARK",
+      key: "BADMARK", 
+      dataIndex: "prh_inspect_count",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    
+    
+  ]
+
+  //Export
+  const BtnExport = async () => {
+    let nameFile=''
     if (tblData1.length <= 0) {
       Swal.fire({
         icon: "error",
@@ -745,40 +1214,41 @@ function fn_Result() {
       });
     } else {
       console.log(nameFile, "nameFile");
-      exportExcelFile(DatatblData1, nameFile);
+      nameFile=`${Page.replace(/Result2?|/g, "")}_${Now}.csv`
+      exportExcelFile(ColumntblData1,DatatblData1, nameFile);
     }
   };
 
-  const exportExcelFile = (data, namefile) => {
+  const exportExcelFile = (HeaderColumn, data, namefile) => {
+    console.log(data, 'hhhhhhhh');
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("My Sheet");
     sheet.properties.defaultRowHeight = 20;
+  
 
-    // สร้างคอลัมน์แบบ dynamic
-    const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
-      header: key.toUpperCase(), // ทำให้ header เป็นตัวพิมพ์ใหญ่
-      key: key,
-      width: 10, // กำหนดขนาดความกว้างเริ่มต้น
+    const dynamicColumns = HeaderColumn.map(col => ({
+      header: col.title.toUpperCase(), 
+      key: col.dataIndex,
+      width: 10, 
       style: { alignment: { horizontal: "center" } },
     }));
-
+  
     sheet.columns = dynamicColumns;
+  
 
-    // ถ้าไม่มีข้อมูลก็สร้างแถวว่าง
     if (data.length === 0) {
       const emptyRow = {};
-      dynamicColumns.forEach((col) => (emptyRow[col.key] = "")); // เติมค่าค่าว่าง
+      dynamicColumns.forEach((col) => (emptyRow[col.dataIndex] = "")); // เติมค่าค่าว่าง
       data.push(emptyRow);
     }
+  
 
-    // ใส่ข้อมูลลงใน sheet
     data.forEach((row) => {
       const newRow = sheet.addRow(row);
       newRow.eachCell({ includeEmpty: true }, (cell) => {
-        // includeEmpty เพื่อให้ทุก cell รวมถึงที่ว่างมีเส้นขอบ
         cell.alignment = { horizontal: "center" };
-
-        // เพิ่มเส้นขอบให้ทุก cell
+  
+   
         cell.border = {
           top: { style: "thin" },
           left: { style: "thin" },
@@ -787,22 +1257,22 @@ function fn_Result() {
         };
       });
     });
+  
 
-    // จัดรูปแบบให้แถวแรก (header)
     const firstRow = sheet.getRow(1);
     firstRow.eachCell({ includeEmpty: true }, (cell) => {
       cell.fill = {
         type: "pattern",
         pattern: "solid",
-        fgColor: { argb: "FFFF00" }, // สีพื้นหลังเหลือง
+        fgColor: { argb: "FFFF00" }, 
       };
       cell.font = {
         name: "Roboto",
         size: 9,
         bold: true,
       };
-
-      // เพิ่มเส้นขอบให้ header
+  
+     
       cell.border = {
         top: { style: "thin" },
         left: { style: "thin" },
@@ -810,23 +1280,25 @@ function fn_Result() {
         right: { style: "thin" },
       };
     });
-
-    // กำหนดความกว้างของคอลัมน์ให้พอดีกับข้อความ
+  
+   
     sheet.columns.forEach((column) => {
-      let maxWidth = column.header.length; // เริ่มต้นความกว้างจากความยาวของ header
+      let maxWidth = column.header.length; 
       data.forEach((row) => {
-        const cellValue = String(row[column.key] || ""); // แปลงค่าเป็นสตริง
-        maxWidth = Math.max(maxWidth, cellValue.length); // คำนวณความกว้างสูงสุด
+        const cellValue = String(row[column.key] || ""); 
+        maxWidth = Math.max(maxWidth, cellValue.length); 
       });
-      column.width = maxWidth + 2; // เพิ่มขนาดพิเศษเล็กน้อยเพื่อความสบาย
+      column.width = maxWidth + 2; 
     });
+  
 
-    // สร้างไฟล์ Excel
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], { type: "application/octet-stream" });
       saveAs(blob, `${namefile}`);
     });
   };
+  
+  
 
   return { tblData1, ColumntblData1, BtnExport };
 }

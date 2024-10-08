@@ -24,36 +24,30 @@ function AOI_COA_Result2() {
             width: "99%",
             display: "flex",
             justifyContent: "flex-end",
-           
           }}
         >
           <Button
             size="small"
             icon={<Avatar shape="square" src={excel} size="small" />}
             onClick={() =>
-              BtnExport('AOI_'+Now+'.csv')
-            
+              BtnExport()
             }
           >
             Export
           </Button>
         </div>
      
-        
-      
         <Table
           dataSource={tblData1}
           columns={ColumntblData1}
           className="tableGvResultViewLot"
           pagination={false}
-   
           size="small"
           bordered
           // scroll={{ y: 310 }}
           scroll={{ x: 'max-content' }}
         />
         <br/>
-       
       </Card>
     </>
   );
