@@ -2744,8 +2744,9 @@ function fn_PieceTraceView() {
   };
 
   const btnFinalGate_Click = async () => {
+    let linkfinalGate = `http://10.17.74.227/TraceabilitySystem/FinalGate_History?SERIAL=${txtSerialNo}&INSPECT_NO=${txtPcsNo}`;
     localStorage.setItem("SERIAL", txtSerialNo);
-    //Response.Redirect("FinalGate_History.aspx")
+    window.open(linkfinalGate, '_blank');
   };
 
   const btnAOICOAF_Click = async () => {

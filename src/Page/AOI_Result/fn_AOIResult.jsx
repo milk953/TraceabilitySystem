@@ -3,22 +3,22 @@ import axios from "axios";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
 
-function fn_FinalGate_History() {
+function fn_AOIResult() {
     //link
     const searchParams = new URLSearchParams(window.location.search);
-    let Serial = searchParams.get("SERIAL");
-    let Inspecno = searchParams.get("INSPECT_NO");
+    let Sheetno = searchParams.get("sheet_no");
+    let Prdname = searchParams.get("PRODUCT_NAME");
+    let panelno = searchParams.get("panel_no");
     const plantCode = import.meta.env.VITE_FAC;
 
     //table
-    const [gvViewFinal, setgvViewFinal] = useState([]);
+    const [gvViewAOI, setgvViewAOI] = useState([]);
 
     useEffect(() => {
-        if (Serial !== null) {
-            Serial = searchParams.get("SERIAL");
-            Inspecno = searchParams.get("INSPECT_NO");
-        } else {
-            Inspecno = "0";
+        if (Sheetno !== null && Prdname !== null ) {
+            Sheetno = searchParams.get("sheet_no");
+            Prdname = searchParams.get("PRODUCT_NAME");
+            panelno = searchParams.get("panel_no");
         }
         ViewData();
     }, []);
@@ -26,16 +26,17 @@ function fn_FinalGate_History() {
     const ViewData = async () => {
         let dt = [];
         try {
-            await axios.post("/api/ViewTracePiece/getfinalgatehistory", {
+            await axios.post("/api/ViewTracePiece/getaoiresult", {
                 strplantcode: plantCode,
-                strserialno: Serial,
-                strinspectno: Inspecno
+                strsheetno: Sheetno,
+                strprdname: Prdname,
+                strpanelno: panelno
             })
                 .then((res) => {
                     dt = res.data;
                 });
             console.log(dt)
-            setgvViewFinal(dt);
+            setgvViewAOI(dt);
         } catch (error) {
             console.log(error.message);
         }
@@ -43,99 +44,162 @@ function fn_FinalGate_History() {
 
     const columns = [
         {
-            title: "PLANT_CODE",
+            title: "LINK",
+            dataIndex: "link",
+            key: "LINK",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "AOR_PLANT_CODE",
             dataIndex: "plant_code",
-            key: "PLANT_CODE",
+            key: "AOR_PLANT_CODE",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "SERIAL_NO",
-            dataIndex: "serial_no",
-            key: "SERIAL_NO",
+            title: "AOR_SHEET_NO",
+            dataIndex: "sheet_no",
+            key: "AOR_SHEET_NO",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "INSPECT_COUNT",
-            dataIndex: "inspect_count",
-            key: "INSPECT_COUNT",
+            title: "CABITY_NO",
+            dataIndex: "cabity_no",
+            key: "CABITY_NO",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "LOT_NO",
+            title: "AOR_SEQ",
+            dataIndex: "seq",
+            key: "AOR_SEQ",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "AOR_INSPECT_COUNT",
+            dataIndex: "ins_count",
+            key: "AOR_INSPECT_COUNT",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "AOR_MACHINE_NO",
+            dataIndex: "machine_name",
+            key: "AOR_MACHINE_NO",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "AOR_REFERENCE",
+            dataIndex: "reference",
+            key: "AOR_REFERENCE",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "AOR_POSITION",
+            dataIndex: "p_position",
+            key: "AOR_POSITION",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "AOR_INSPECT_DATE",
+            dataIndex: "inspect_date",
+            key: "AOR_INSPECT_DATE",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+        },
+        {
+            title: "AOR_LOT_NO",
             dataIndex: "lot_no",
-            key: "LOT_NO",
+            key: "AOR_LOT_NO",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "PRODUCT_NAME",
-            dataIndex: "product_name",
-            key: "PRODUCT_NAME",
+            title: "AOR_RESULT",
+            dataIndex: "result",
+            key: "AOR_RESULT",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "ELT_RESULT",
-            dataIndex: "elt_result",
-            key: "ELT_RESULT",
+            title: "AOR_PROGRAM_NAME",
+            dataIndex: "program_name",
+            key: "AOR_PROGRAM_NAME",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "FINAL_RESULT",
-            dataIndex: "final_result",
-            key: "FINAL_RESULT",
+            title: "AOR_IMAGE_PATH",
+            dataIndex: "image_path",
+            key: "AOR_IMAGE_PATH",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "REMARKS",
-            dataIndex: "elt_remarks",
-            key: "REMARKS",
+            title: "AOR_COMPONENT",
+            dataIndex: "component",
+            key: "AOR_COMPONENT",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "UPDATE_BY",
-            dataIndex: "update_by",
-            key: "UPDATE_BY",
+            title: "AOR_CREATE_BY",
+            dataIndex: "create_by",
+            key: "AOR_CREATE_BY",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "UPDATE_PROGRAM",
-            dataIndex: "update_program",
-            key: "UPDATE_PROGRAM",
+            title: "AOR_CREATE_PROGRAM",
+            dataIndex: "create_program",
+            key: "AOR_CREATE_PROGRAM",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "UPDATE_DATE",
-            dataIndex: "update_date",
-            key: "UPDATE_DATE",
+            title: "AOR_CREATE_DATE",
+            dataIndex: "create_date",
+            key: "AOR_CREATE_DATE",
             align: "center",
             render: (text, record, index) => {
                 return text;
@@ -145,14 +209,14 @@ function fn_FinalGate_History() {
 
 //Export
 const BtnExport = async (nameFile) => {
-    if (gvViewFinal.length <= 0) {
+    if (gvViewAOI.length <= 0) {
       Swal.fire({
         icon: "error",
         title: "No Data Export!",
       });
     } else {
       console.log(nameFile, "nameFile");
-      exportExcelFile(gvViewFinal, nameFile);
+      exportExcelFile(gvViewAOI, nameFile);
     }
   };
 
@@ -235,9 +299,9 @@ const BtnExport = async (nameFile) => {
     });
   };
 
-    return {
-        gvViewFinal, columns, BtnExport, Serial
-    }
+  return {
+    gvViewAOI, columns, BtnExport
+  }
 };
 
-export { fn_FinalGate_History };
+export { fn_AOIResult };

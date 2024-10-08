@@ -62,7 +62,6 @@ function PieceTraceView() {
     return (
         <div>
             <Header />
-            <h1>View Trace (Piece)</h1>
             <Card
                 component={Paper}
                 className="Card-Common"

@@ -8,14 +8,13 @@ import {
     UndoOutlined,
     LoadingOutlined,
 } from "@ant-design/icons";
-import "../FinalGate_History/FinalGate_History.css";
+import "../AOI_Result/AOI_Result.css";
 import excel from "/src/assets/excel.png";
-import { fn_FinalGate_History } from "./fn_FinalGate_History.jsx";
+import { fn_AOIResult } from "./fn_AOIResult.jsx";
 
-function FinalGate_History() {
-    const {
-        gvViewFinal, columns, BtnExport, Serial
-    } = fn_FinalGate_History();
+function AOI_Result() {
+    const { gvViewAOI, columns, BtnExport } = fn_AOIResult();
+    const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
 
     return (
         <div>
@@ -39,19 +38,17 @@ function FinalGate_History() {
                         size="small"
                         icon={<Avatar shape="square" src={excel} size="small" />}
                         onClick={() =>
-                            BtnExport('FinalGateHistory_' + Serial + '.xls')
+                            BtnExport('AOI_' + Now + '.csv')
                         }
                     >
                         Export
                     </Button>
-
-
                 </div>
                 <Table
-                    dataSource={gvViewFinal}
+                    dataSource={gvViewAOI}
                     columns={columns}
-                    rowKey={(record) => record.serial_no}
-                    className="tableGvResultViewFinalG"
+                    rowKey={(record) => record.seq}
+                    className="tableGvResultViewAOI"
                     pagination={false}
                     size="small"
                     bordered
@@ -61,4 +58,4 @@ function FinalGate_History() {
     )
 };
 
-export default FinalGate_History;
+export default AOI_Result;

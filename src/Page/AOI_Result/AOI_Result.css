@@ -1,0 +1,21 @@
+.tableGvResultViewAOI .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+  }
+  .tableGvResultViewAOI .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+}
+
+
+.tableGvResultViewAOI{
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
+
+}
+
+.tableGvResultViewAOI td{
+  font-size: 15px !important; /* กำหนดขนาดฟอนต์สำหรับเนื้อหาในเซลล์ */
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
