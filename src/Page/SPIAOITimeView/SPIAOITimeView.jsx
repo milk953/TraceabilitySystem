@@ -35,16 +35,37 @@ import "../Common/StyleCommon.css";
 import { fn_SPIAOITimeView } from "../SPIAOITimeView/fn_SPIAOITimeView";
 
 function SPIAOITimeView() {
-  const {} = fn_SPIAOITimeView();
-
+  const {btnRetrive} = fn_SPIAOITimeView();
   return (
     <div>
       <Hearder />
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={12} align="center">
+              {/* {lblMessage.value.trim() !== "" && (
+                <Paper
+                  className="Card-lblResult"
+                  style={{
+                    background: lblMessage.style,
+                    backgroundColor: "#BA0900",
+                    marginBottom: "10px",
+                    width: "50%",
+                    height: "auto",
+                    display: lblMessage.visble,
+                  }}
+                >
+                  <Typography
+                    variant="h5"
+                    style={{ paddingTop: "6px", color: "#fff" }}
+                  >
+                    {lblMessage.value}
+                  </Typography>
+                </Paper>
+              )} */}
+            </Grid>
             <Grid item xs={2} md={2} align="center"></Grid>
-            <Grid item xs={6} md={6} align="center" >
+            <Grid item xs={6} md={6} align="center">
               <Table
                 component={Card}
                 className="ChangeSpiaoitimeview"
@@ -102,9 +123,10 @@ function SPIAOITimeView() {
                   backgroundColor: "#F0F0F0",
                   padding: "0px",
                   color: "#000000",
-                  border: "0px solid #000000", 
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1)", 
-                  transition: "all 0.3s ease", 
+                  border: "0px solid #000000",
+                  boxShadow:
+                    "0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1)",
+                  transition: "all 0.3s ease",
                 }}
               >
                 <TableRow>
@@ -125,7 +147,7 @@ function SPIAOITimeView() {
                         fontWeight: "bold",
                       }}
                     >
-                      START
+              { btnRetrive.value}
                     </Typography>
                   </TableCell>
                 </TableRow>

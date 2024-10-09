@@ -77,6 +77,7 @@ import RejectResult from "./Page/RejectResult/RejectResult";
 import LOT_Trace from "./Page/LOTTrace/LOTTrace";
 import SheetBarcodeGradeView from "./Page/SheetBarcodeGradeView/SheetBarcodeGradeView";
 import TouchUpResult from "./Page/TouchUpResult/TouchUpResult";
+import CheckerResult from "./Page/CheckerResult/CheckerResult";
 
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
@@ -177,6 +178,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/RejectResult" element={<RejectResult />} />
             <Route path="/TraceabilitySystem/SheetBarcodeGradeView" element={<SheetBarcodeGradeView />} />
             <Route path="/TraceabilitySystem/TouchUpResult" element={<TouchUpResult />} />
+            <Route path="/TraceabilitySystem/CheckerResult" element={<CheckerResult />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
