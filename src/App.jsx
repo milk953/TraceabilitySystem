@@ -70,6 +70,14 @@ import PREResult2 from "./Page/Result/Result";
 import XRayResultN1 from "./Page/Result/Result";
 import XRayResult from "./Page/Result/Result";
 import SPIAOITimeView from "./Page/SPIAOITimeView/SPIAOITimeView";
+import AOIResult from "./Page/AOI_Result/AOI_Result";
+import OSTResultPiece from "./Page/OSTResultPiece/OSTResultPiece";
+import PREResult from "./Page/PREResult/PREResult";
+import RejectResult from "./Page/RejectResult/RejectResult";
+import LOT_Trace from "./Page/LOTTrace/LOTTrace";
+import SheetBarcodeGradeView from "./Page/SheetBarcodeGradeView/SheetBarcodeGradeView";
+import TouchUpResult from "./Page/TouchUpResult/TouchUpResult";
+
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -131,6 +139,7 @@ const App = () => {
             <Route path='/TraceabilitySystem/ScanSMTConnectShtConfirm' element = {<ScanSMTConnectShtConfirm />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTrayConfirm' element = {<ScanSMTSerialPcsAutoTrayConfirm />} />
             <Route path='/TraceabilitySystem/ScanSMTSerialShtCopy' element = {<ScanSMTSerialShtShtCopy />} />
+            <Route path='/TraceabilitySystem/LOT_Trace' element = {<LOT_Trace />} />
             
             {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
             <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />
@@ -162,6 +171,12 @@ const App = () => {
             <Route path="/TraceabilitySystem/PREResult2" element={<PREResult2 />} />
             <Route path="/TraceabilitySystem/XRayResultN1" element={<XRayResultN1 />} />
             <Route path="/TraceabilitySystem/XRayResult" element={<XRayResult />} />
+            <Route path="/TraceabilitySystem/AOIResult" element={<AOIResult />} />
+            <Route path="/TraceabilitySystem/OSTResultPiece" element={<OSTResultPiece />} />
+            <Route path="/TraceabilitySystem/PREResult" element={<PREResult />} />
+            <Route path="/TraceabilitySystem/RejectResult" element={<RejectResult />} />
+            <Route path="/TraceabilitySystem/SheetBarcodeGradeView" element={<SheetBarcodeGradeView />} />
+            <Route path="/TraceabilitySystem/TouchUpResult" element={<TouchUpResult />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />

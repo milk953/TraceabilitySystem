@@ -574,12 +574,12 @@ const{
                                             />
                                         </TableCell>
                                     </TableRow>
-                                    {console.log(btnSPI.style,"btnSPI.style")}
                                     <TableRow>
                                         <TableCell rowSpan={"10"}>SMT</TableCell>
                                         <TableCell>SPI</TableCell>
                                         <TableCell>
                                             <Button
+                                            onClick={btnSPI_Click}
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
@@ -972,7 +972,7 @@ const{
        
           dataSource={tblData1}
           columns={columnstblData1}
-          className="tableGvResultViewSheet"
+          className="tableGvResultView"
           pagination={false}
           size="small"
           bordered

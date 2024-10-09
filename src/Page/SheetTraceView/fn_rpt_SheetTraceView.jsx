@@ -188,8 +188,8 @@ function fn_rpt_SheetTraceView() {
 
     }
 
-    const ViewData = async (mmmm) => {
-        let txtSheetNo =   mmmm;
+    const ViewData = async (sheetno) => {
+        let txtSheetNo =   sheetno;
         console.log('Selected sheet no:', txtSheetNo, 'Selected cavity:', selectddlCavity);
         setlblMessage("");
         let DBOpenFlg = false
@@ -554,7 +554,7 @@ function fn_rpt_SheetTraceView() {
                 .post("/api/ViewTraceSheet/GetSMTConnectShtPcsCavity", {
                     dataList:{
                         strPlantCode: FAC,
-                        strPrdName:Product
+                        strPrdName:Product.trim()
                     }
                     
                 })
@@ -571,7 +571,7 @@ function fn_rpt_SheetTraceView() {
             if(txtSheetNo.trim() !== '' && txtProduct.trim() !== ""){
                 let dtData = []
                 //757 มิ้วทำ
-                await axios.post("/api/GetSerialAOMEFPCResult", {
+                await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
                     _strPlantCode: FAC,
                     _strSheetNo: txtSheetNo,
                     _intPcsNo: selectddlCavity,
@@ -730,7 +730,7 @@ function fn_rpt_SheetTraceView() {
                     }
                 }
                 // 900
-               await axios.post("/api/GetSerialAVIBadmarkResult", {
+               await axios.post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
                 intPCSNo: selectddlCavity,
                 strSMPJCavityFlg: hfSMPJCavityFlg,
                 strSheetNo: txtSheetNo,
@@ -925,7 +925,7 @@ function fn_rpt_SheetTraceView() {
             if(txtSheetNo.trim() !=="" && txtProduct.trim() !== ""){
                 let dtData = []
                 //1071
-                await axios.post("/api/GetSerialAOMEFPCResult", {
+                await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
                     _strPlantCode: FAC,
                     _strSheetNo: txtSheetNo,
                     _intPcsNo: intPcsNo,
@@ -1030,7 +1030,7 @@ function fn_rpt_SheetTraceView() {
                 }
                 //FVI
                 // 1150
-                await axios.post("/api/GetSerialAVIBadmarkResult", {
+                await axios.post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
                     intPCSNo: selectddlCavity,
                     strSMPJCavityFlg: hfSMPJCavityFlg,
                     strSheetNo: txtSheetNo,
@@ -1064,7 +1064,6 @@ function fn_rpt_SheetTraceView() {
                 }
             }
             try {
-                console.log("าสาสาสาสาส")
                 //1194
                 await axios
                 .post("/api/ViewTraceSheet/GetSPI_Front", {

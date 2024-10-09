@@ -62,7 +62,6 @@ function PieceTraceView() {
     return (
         <div>
             <Header />
-            <h1>View Trace (Piece)</h1>
             <Card
                 component={Paper}
                 className="Card-Common"
@@ -178,7 +177,7 @@ function PieceTraceView() {
                                     </TableCell>
                                     <TableCell>
                                         <a id="hypSheetNoF"
-                                            href={`http://10.17.74.227/TraceabilitySystem/SheetTraceView?SHEETNO=${hypSheetNoF}`}
+                                            href={`/TraceabilitySystem/SheetTraceView?SHEETNO=${hypSheetNoF}`}
                                             style={{ fontSize: "16px" }}
                                         >
                                             {hypSheetNoF}
@@ -193,7 +192,7 @@ function PieceTraceView() {
                                     </TableCell>
                                     <TableCell>
                                         <a id="hypLotNo"
-                                            href={`http://10.17.74.227/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
+                                            href={`/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
                                             style={{ fontSize: "16px" }}
                                         >
                                             {hypLotNo}
@@ -206,7 +205,7 @@ function PieceTraceView() {
                                     </TableCell>
                                     <TableCell>
                                         <a id="hypSheetNoB"
-                                            href={`http://10.17.74.227/TraceabilitySystem/SheetTraceView?SHEETNO=${hypSheetNoB}`}
+                                            href={`/TraceabilitySystem/SheetTraceView?SHEETNO=${hypSheetNoB}`}
                                             style={{ fontSize: "16px" }}
                                         >
                                             {hypSheetNoB}

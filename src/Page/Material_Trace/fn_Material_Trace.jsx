@@ -13,6 +13,7 @@ function fn_Material_Trace() {
 
   const [txtLotNo, settxtLotNo] = useState('');
   const [tblData1, settblData1] = useState('');
+  const [loading, setloading] = useState(false);
 
 
   //link
@@ -32,6 +33,8 @@ function fn_Material_Trace() {
 
 
   const ViewData = async (strlot) => {
+    setloading(true)
+    settblData1([])
     console.log("ViewData", strlot);
     let Meterial = [];
     await axios
@@ -53,15 +56,17 @@ function fn_Material_Trace() {
             LOT5: group[4] ? group[4].LOT  : "",
           };
         });
-        console.log("Meterial", Meterial);
-        settblData1(Meterial);
+        setTimeout(() => {
+          settblData1(Meterial);
+          setloading(false)
+        }, 1000);
       });
    
   };
   const createLink= (text) => {
     return (
       <a
-        // href={`/TraceabilitySystem/SheetTraceView?SHEETNO=${text}`}
+        href={`/TraceabilitySystem/LOT_Trace?LOTNO=${text}`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -121,7 +126,7 @@ function fn_Material_Trace() {
 
 
 
-  return { tblData1, txtLotNo, columnstblData1 };
+  return { tblData1, txtLotNo, columnstblData1,ViewData,loading };
 }
 
 export { fn_Material_Trace };

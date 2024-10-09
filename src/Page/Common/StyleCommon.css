@@ -127,6 +127,35 @@ margin-bottom: 30px;
     height: 30px;
 }
 
+.tableGvResultView .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+  }
+  .tableGvResultView .ant-table-thead > tr > th {
+    background-color: #31363F;
+    color: white;
+}
+
+
+.tableGvResultView{
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
+
+}
+.tableGvResultView td{
+  font-size: 13px !important; /* กำหนดขนาดฟอนต์สำหรับเนื้อหาในเซลล์ */
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.tableGvResultView td,.tableGvResultView th{
+  font-size: 13px !important; /* กำหนดขนาดฟอนต์สำหรับเนื้อหาในเซลล์ */
+  /* padding-top: 0 !important;
+  padding-bottom: 0 !important; */
+
+}
+
+
 /* --------------Not Use--------------------------- */
 .txtfield-disable{
 background-color: #e0e0e0;
