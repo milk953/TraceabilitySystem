@@ -35,7 +35,7 @@ import "../Common/StyleCommon.css";
 import { fn_SPIAOITimeView } from "../SPIAOITimeView/fn_SPIAOITimeView";
 
 function SPIAOITimeView() {
-  const {btnRetrive} = fn_SPIAOITimeView();
+  const { btnRetrive, columns, gvData, btnRetrive_Click , txtSPIMCNo , setTxtSPIMCNo , txtAOIMCNo, setTxtAOIMCNo } = fn_SPIAOITimeView();
   return (
     <div>
       <Hearder />
@@ -88,7 +88,20 @@ function SPIAOITimeView() {
                         size="small"
                         className="input_txt"
                         style={{ width: "100%" }}
+                        disabled={txtSPIMCNo.disbled}
                         fullWidth
+                        value={txtSPIMCNo.value}
+                        onChange={(e) => {
+                          setTxtSPIMCNo((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            btnRetrive_Click();
+                          }
+                        }}
                       />
                     </TableCell>
                   </TableRow>
@@ -110,6 +123,20 @@ function SPIAOITimeView() {
                         className="input_txt"
                         style={{ width: "100%" }}
                         fullWidth
+                        value={txtAOIMCNo.value}
+                        disabled={txtAOIMCNo.disbled}
+                        onChange={(e) => {
+                          setTxtAOIMCNo((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            btnRetrive_Click();
+                          }
+                        }}
+                        
                       />
                     </TableCell>
                   </TableRow>
@@ -128,6 +155,8 @@ function SPIAOITimeView() {
                     "0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1)",
                   transition: "all 0.3s ease",
                 }}
+                onClick={btnRetrive_Click}
+            
               >
                 <TableRow>
                   <TableCell
@@ -147,7 +176,7 @@ function SPIAOITimeView() {
                         fontWeight: "bold",
                       }}
                     >
-              { btnRetrive.value}
+                      {btnRetrive.value}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -157,6 +186,25 @@ function SPIAOITimeView() {
           </Grid>
         </Box>
       </Card>
+      {gvData.visble && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            marginTop: "10px",
+          }}
+        >
+          <AntTable
+            columns={columns}
+            dataSource={gvData.value}
+            pagination={false}
+            size="small"
+            bordered
+            style={{ height: "100%", width: "93%" , padding: "0px" }}
+          />
+        </div>
+      )}
     </div>
   );
 }
