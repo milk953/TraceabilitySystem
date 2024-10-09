@@ -74,7 +74,6 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
     // <div>
       <>
       <Hearder />
-      <h1>Final Gate Confirm Only Good</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start"}}>
           <Grid container spacing={2}>

@@ -2557,26 +2557,24 @@ function fn_PieceTraceView() {
 
   const btnTouchUp_Click = async () => {
     if (txtTouchUpCnt !== "") {
-      localStorage.setItem("SERIAL_NO", txtSerialNo);
-      //Response.Redirect("TouchUp_Result.aspx")
+      let linkfinalGate = `/TraceabilitySystem/TouchUpResult?serial_no=${txtSerialNo}`;
+      window.open(linkfinalGate, '_blank');
     }
   };
 
   const btnELT1_Click = async () => {
     if (txtELTCnt1 !== "") {
-      localStorage.setItem("SERIAL_NO", txtSerialNo);
       localStorage.setItem("SERIAL_CHIP", txtSerialChip);
-      localStorage.setItem("PRODUCT_NAME", txtProduct);
       localStorage.setItem("KEY_TYPE", lblKeyType1);
       localStorage.setItem("CHECK_ID", lblCheckID1);
-      localStorage.setItem("TEST_TYPE", lblTestType1);
       switch (lblKeyType1) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType1}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
-        //Response.Redirect("Checker_Result2.aspx")
+        //Response.Redirect("Checker_Result2.aspx") มีtableที่ไม่ใช้แล้ว
         case "3":
-        //Response.Redirect("Checker_Result3.aspx")
+        //Response.Redirect("Checker_Result3.aspx") มีtableที่ไม่ใช้แล้ว
       }
     }
   };
@@ -2591,7 +2589,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType2);
       switch (lblKeyType2) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType2}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2610,7 +2609,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType3);
       switch (lblKeyType3) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType3}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2629,7 +2629,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType4);
       switch (lblKeyType4) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType4}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2648,7 +2649,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType5);
       switch (lblKeyType5) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType5}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2667,7 +2669,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType6);
       switch (lblKeyType6) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType6}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2686,7 +2689,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType7);
       switch (lblKeyType7) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType7}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2716,8 +2720,6 @@ function fn_PieceTraceView() {
   const btnXRAY_Click = async () => {
     if (btnXRAY_F !== "") {
       localStorage.setItem("LOT_NO", hypLotNo);
-      //localStorage.setItem("SHEET_NO", hypSheetNoF);
-      //localStorage.setItem("SERIAL_NO", txtPcsNo);
       localStorage.setItem("INSPECT_NO", txtXRAYCnt_F);
       localStorage.setItem("INSPECT_DATE", txtXRAYTime_F);
       let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoF}&Serial=${txtSerialNo}`;
@@ -2728,12 +2730,6 @@ function fn_PieceTraceView() {
 
   const btnXRAY_B_Click = async () => {
     if (btnXRAY_B !== "") {
-      // localStorage.setItem("LOT_NO", hypLotNo);
-      // localStorage.setItem("SHEET_NO", hypSheetNoB);
-      // localStorage.setItem("SERIAL", txtSerialNo);
-      // localStorage.setItem("SERIAL_NO", txtPcsNo);
-      // localStorage.setItem("INSPECT_NO", txtXRAYCnt_B);
-      // localStorage.setItem("INSPECT_DATE", txtXRAYTime_B);
       let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoB}&Serial=${txtSerialNo}`;
       window.open(linkfinalGate, '_blank');
     };
@@ -2747,19 +2743,15 @@ function fn_PieceTraceView() {
 
   const btnAOICOAF_Click = async () => {
     if (txtAOICOACntF !== "" && btnAOICOAF !== "OK") {
-      localStorage.setItem("PRODUCT_NAME", txtProduct);
-      localStorage.setItem("SHEET_NO", hypSheetNoF);
-      localStorage.setItem("PANEL_NO", txtPcsNo);
-      //Response.Redirect("AOI_COA_Result.aspx")
+      let linkfinalGate = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkfinalGate, '_blank');
     }
   };
 
   const btnAOICOAB_Click = async () => {
     if (txtAOICOACntB !== "" && btnAOICOAB !== "OK") {
-      localStorage.setItem("PRODUCT_NAME", txtProduct);
-      localStorage.setItem("SHEET_NO", hypSheetNoB);
-      localStorage.setItem("PANEL_NO", txtPcsNo);
-      //Response.Redirect("AOI_COA_Result.aspx")
+      let linkfinalGate = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkfinalGate, '_blank');
     }
   };
 

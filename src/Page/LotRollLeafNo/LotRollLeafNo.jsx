@@ -18,7 +18,6 @@ function LotTraceView() {
   return (
     <>
       <Hearder />
-      <h1>Roll Leaf No.</h1>
       <Card component={Paper} className="Card-Common">
         <div style={{ display: "flex", gap: "10px" }}>
           <Card
