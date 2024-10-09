@@ -28,7 +28,6 @@ import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import Header from "../Header/Header";
 import "./rpt_SheetTraceView.css";
-import "./rpt_SheetTraceView.css";
 // import "./PieceTraceView.css";
 import {fn_rpt_SheetTraceView} from './fn_rpt_SheetTraceView'
 import styled from "styled-components";
@@ -973,7 +972,7 @@ const{
        
           dataSource={tblData1}
           columns={columnstblData1}
-          className="tableGvResult"
+          className="tableGvResultView"
           pagination={false}
           size="small"
           bordered

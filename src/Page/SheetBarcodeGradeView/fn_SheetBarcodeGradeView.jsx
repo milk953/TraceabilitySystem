@@ -16,8 +16,16 @@ function fn_SheetBarcodeGradeView() {
 
   const Fac = import.meta.env.VITE_FAC;
   const RetriveBtn = async () => {
+    Clear_View()
     setGrid()
   };
+
+  const Clear_View = async () => {
+    setProduct_result('')
+    setGvResult([])
+    setLotNo_result('')
+    setTotalSheet_result('0')
+  }
   const setGrid = async () => {
     let dtData = [];
     let strShowBy = "";

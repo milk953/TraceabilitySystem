@@ -54,7 +54,7 @@ function LotTraceView() {
         <Table
           dataSource={tblFrontSheet}
           columns={columnsFRONT}
-          className="tableGvResultViewSheet"
+          className="tableGvResultView"
           pagination={false}
           size="small"
           bordered
@@ -64,7 +64,7 @@ function LotTraceView() {
         <Table
           dataSource={tblBackSheet}
           columns={columnsBACK}
-          className="tableGvResultViewSheet"
+          className="tableGvResultView"
           pagination={false}
           size="small"
           bordered
