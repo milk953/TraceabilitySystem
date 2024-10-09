@@ -73,6 +73,7 @@ import SPIAOITimeView from "./Page/SPIAOITimeView/SPIAOITimeView";
 import AOIResult from "./Page/AOI_Result/AOI_Result";
 import OSTResultPiece from "./Page/OSTResultPiece/OSTResultPiece";
 import PREResult from "./Page/PREResult/PREResult";
+import RejectResult from "./Page/RejectResult/RejectResult";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -168,6 +169,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/AOIResult" element={<AOIResult />} />
             <Route path="/TraceabilitySystem/OSTResultPiece" element={<OSTResultPiece />} />
             <Route path="/TraceabilitySystem/PREResult" element={<PREResult />} />
+            <Route path="/TraceabilitySystem/RejectResult" element={<RejectResult />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />

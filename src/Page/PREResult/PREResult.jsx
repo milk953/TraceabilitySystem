@@ -32,7 +32,7 @@ function PREResult() {
                         {lbl_Message}
                     </Typography>
                     <a id="PieceTraceView"
-                        href={`http://10.17.74.227/TraceabilitySystem/PieceTraceView`}
+                        href={`/TraceabilitySystem/PieceTraceView`}
                         style={{ fontSize: "16px", marginRight: "20px" }}
                     >
                         Return to viewdata
