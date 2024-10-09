@@ -79,7 +79,7 @@ function fn_SheetBarcodeGradeView() {
       dataIndex: "sheet_no",
       key: "sheet_no",
       align: "center",
-      width: 30,
+      width: 180,
       render: (text, record, index) => {
         return text;
       },
@@ -89,7 +89,7 @@ function fn_SheetBarcodeGradeView() {
       dataIndex: "ok",
       key: "ok",
       align: "center",
-      width: 30,
+      width: 45,
       render: (text, record, index) => {
         return text;
       },
@@ -99,7 +99,7 @@ function fn_SheetBarcodeGradeView() {
       dataIndex: "ng",
       key: "ng",
       align: "center",
-      width: 30,
+      width: 45,
       render: (text, record, index) => {
         return text;
       },
@@ -113,7 +113,7 @@ function fn_SheetBarcodeGradeView() {
       dataIndex: key,
       key: key,
       align: "center",
-      width: 10,
+     
       render: (text) => (
         <span style={{ color: text === "NG" ? "red" : "inherit" }}>{text}</span>
       ),

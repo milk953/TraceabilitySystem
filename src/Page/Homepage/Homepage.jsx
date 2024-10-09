@@ -41,18 +41,9 @@ function ScanSheetMOTTime() {
   return (
     <div>
       <Hearder />
-      <h1>ScanSheetMOTTime</h1>
       <Card
         component={Paper}
-        style={{
-          margin: "auto",
-          width: "90%",
-          maxWidth: "1400px",
-          marginTop: "50px",
-          height: "auto",
-          maxHeight: "550px",
-          padding: "20px",
-        }}
+      className="Card-Common"
       >
         <div style={{}}>
           <Grid container alignItems="center" justifyContent="space-between">

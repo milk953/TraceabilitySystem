@@ -45,7 +45,7 @@ function LotTraceView() {
   return (
     <>
       <Hearder />
-      <h1>LotTraceView</h1>
+
       <Card component={Paper} className="Card-Common">
       <Spin tip="Loading..." spinning={loadingDoc} >
         <Input

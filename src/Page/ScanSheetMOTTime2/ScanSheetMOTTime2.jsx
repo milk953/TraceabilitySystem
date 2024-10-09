@@ -71,9 +71,9 @@ function ScanSheetMOTTime() {
   return (
     <div>
       <Hearder />
-      <h1>ScanSheetMOTTime</h1>
-      <Card component={Paper} className="Card-ScanSheetMOTTime">
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'140px' }}>
           <Grid container spacing={2} style={{justifyContent: 'center' }}>
             <Grid >
               <Table
@@ -289,7 +289,7 @@ function ScanSheetMOTTime() {
             </Grid>
           </Grid>
         </Box>
-      </Card>
+
     </div>
   );
   
