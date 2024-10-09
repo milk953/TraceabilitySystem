@@ -13,7 +13,7 @@ import excel from "/src/assets/excel.png";
 import { fn_AOIResult } from "./fn_AOIResult.jsx";
 
 function AOI_Result() {
-    const { gvViewAOI, columns, BtnExport } = fn_AOIResult();
+    const { gvViewAOI, columns, BtnExport, lbl_Message, lblMessageColor } = fn_AOIResult();
     const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
 
     return (
@@ -28,8 +28,13 @@ function AOI_Result() {
 
                     }}
                 >
+                    <Typography
+                        style={{ marginRight: "500px", color: lblMessageColor }}
+                    >
+                        {lbl_Message}
+                    </Typography>
                     <a id="PieceTraceView"
-                        href={`http://10.17.74.227/TraceabilitySystem/PieceTraceView`}
+                        href={`/TraceabilitySystem/PieceTraceView`}
                         style={{ fontSize: "16px", marginRight: "20px" }}
                     >
                         Return to viewdata
@@ -52,6 +57,7 @@ function AOI_Result() {
                     pagination={false}
                     size="small"
                     bordered
+                    scroll={{ x: 'max-content' }}
                 />
             </Card>
         </div>

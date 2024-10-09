@@ -8,15 +8,12 @@ import {
     UndoOutlined,
     LoadingOutlined,
 } from "@ant-design/icons";
-import "../FinalGate_History/FinalGate_History.css";
 import excel from "/src/assets/excel.png";
-import { fn_FinalGate_History } from "./fn_FinalGate_History.jsx";
+import "../PREResult/PREResult.css";
+import { fn_PREResult } from "./fn_PREResult.jsx";
 
-function FinalGate_History() {
-    const {
-        gvViewFinal, columns, BtnExport, Serial
-    } = fn_FinalGate_History();
-
+function PREResult() {
+    const {gvViewPRE, lbl_Message, lblMessageColor, columnsPRE, btnExport} = fn_PREResult();
     return (
         <div>
             <Header />
@@ -29,6 +26,11 @@ function FinalGate_History() {
 
                     }}
                 >
+                    <Typography
+                        style={{ marginRight: "500px", color: lblMessageColor }}
+                    >
+                        {lbl_Message}
+                    </Typography>
                     <a id="PieceTraceView"
                         href={`/TraceabilitySystem/PieceTraceView`}
                         style={{ fontSize: "16px", marginRight: "20px" }}
@@ -39,26 +41,25 @@ function FinalGate_History() {
                         size="small"
                         icon={<Avatar shape="square" src={excel} size="small" />}
                         onClick={() =>
-                            BtnExport('FinalGateHistory_' + Serial + '.xls')
+                            btnExport('PRE_' + Now + '.csv')
                         }
                     >
                         Export
                     </Button>
-
-
                 </div>
                 <Table
-                    dataSource={gvViewFinal}
-                    columns={columns}
-                    rowKey={(record) => record.serial_no}
-                    className="tableGvResultViewFinalG"
+                    dataSource={gvViewPRE}
+                    columns={columnsPRE}
+                    rowKey={(record) => record.prd_sheet_no}
+                    className="tableGvResultViewPRE"
                     pagination={false}
                     size="small"
                     bordered
+                    scroll={{ x: 'max-content' }}
                 />
             </Card>
         </div>
     )
 };
 
-export default FinalGate_History;
+export default PREResult;

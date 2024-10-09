@@ -71,6 +71,9 @@ import XRayResultN1 from "./Page/Result/Result";
 import XRayResult from "./Page/Result/Result";
 import SPIAOITimeView from "./Page/SPIAOITimeView/SPIAOITimeView";
 import AOIResult from "./Page/AOI_Result/AOI_Result";
+import OSTResultPiece from "./Page/OSTResultPiece/OSTResultPiece";
+import PREResult from "./Page/PREResult/PREResult";
+import RejectResult from "./Page/RejectResult/RejectResult";
 import LOT_Trace from "./Page/LOTTrace/LOTTrace";
 import SheetBarcodeGradeView from "./Page/SheetBarcodeGradeView/SheetBarcodeGradeView";
 
@@ -168,6 +171,9 @@ const App = () => {
             <Route path="/TraceabilitySystem/XRayResultN1" element={<XRayResultN1 />} />
             <Route path="/TraceabilitySystem/XRayResult" element={<XRayResult />} />
             <Route path="/TraceabilitySystem/AOIResult" element={<AOIResult />} />
+            <Route path="/TraceabilitySystem/OSTResultPiece" element={<OSTResultPiece />} />
+            <Route path="/TraceabilitySystem/PREResult" element={<PREResult />} />
+            <Route path="/TraceabilitySystem/RejectResult" element={<RejectResult />} />
             <Route path="/TraceabilitySystem/SheetBarcodeGradeView" element={<SheetBarcodeGradeView />} />
             
             
