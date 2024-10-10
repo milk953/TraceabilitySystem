@@ -181,6 +181,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/TouchUpResult" element={<TouchUpResult />} />
             <Route path="/TraceabilitySystem/CheckerResult" element={<CheckerResult />} />
             <Route path="/TraceabilitySystem/AOICOAResult" element={<AOICOAResult />} />
+            <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
@@ -199,6 +200,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+          
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialPcsP1" element={<ScanSMTSerialPcsP1 />} />
             

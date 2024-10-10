@@ -210,8 +210,12 @@ function fn_SPIAOITimeView() {
         return (
           <div
             style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               padding: 0,
               width: "100%",
+              height: "70px",
               backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
             }}
           >
@@ -240,6 +244,7 @@ function fn_SPIAOITimeView() {
             color: "#ffffff",
             padding: "0px",
             margin: "0px",
+            
           }}
         >
           Sheet No.
@@ -263,6 +268,7 @@ function fn_SPIAOITimeView() {
         return (
           <div
             style={{
+              height: "70px",
               padding: "0px",
               width: "100%",
               backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
@@ -350,6 +356,10 @@ function fn_SPIAOITimeView() {
         return (
           <div
             style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "70px",
               padding: "0px",
               width: "100%",
               backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
