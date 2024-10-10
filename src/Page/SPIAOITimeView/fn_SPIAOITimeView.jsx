@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Table, TableCell, TableBody, TableRow, Grid } from "@mui/material";
 function fn_SPIAOITimeView() {
   const plantCode = import.meta.env.VITE_FAC;
   const [hfURL, setHfURL] = useState("");
@@ -56,6 +57,7 @@ function fn_SPIAOITimeView() {
   useEffect(() => {
     const fetchData = async () => {
       setHfURL(window.location.href);
+      console.log("window.location.href : ( ", window.location.href, " )");
       if (txtAOIMCNo.value.trim() !== "" || txtSPIMCNo.value.trim() !== "") {
         setBtnRetrive((prevState) => ({
           ...prevState,
@@ -89,6 +91,11 @@ function fn_SPIAOITimeView() {
     fetchData();
   }, []);
   const btnRetrive_Click = async () => {
+    console.log(
+      "เข้ามายัง btnRetrive_Click",
+      txtAOIMCNo.value,
+      txtSPIMCNo.value
+    );
     if (
       btnRetrive.value === "START" &&
       (txtAOIMCNo.value !== "" || txtSPIMCNo.value !== "")
@@ -133,6 +140,7 @@ function fn_SPIAOITimeView() {
         ...prevState,
         disbled: false,
       }));
+      let currentURL = hfURL;
       if (currentURL.includes("?")) {
         setHfURL(currentURL.substring(0, currentURL.indexOf("?")));
       }
@@ -140,11 +148,13 @@ function fn_SPIAOITimeView() {
     }
   };
   const fnSetPageTimeOut = async () => {
+    console.log("เข้ามายัง fnSetPageTimeOut");
     const script = document.createElement("script");
     script.innerHTML = "";
     document.body.appendChild(script);
   };
   const setGrid = async () => {
+    console.log("เข้ามายัง setGrid");
     let dtData = [];
     await axios
       .post("/api/SPIAOITimeView/fnSheetSPIAOITimeData", {
@@ -169,8 +179,277 @@ function fn_SPIAOITimeView() {
       });
   };
 
-  return { btnRetrive };
-}
+  const columns = [
+    {
+      title: (
+        <div
+          style={{
+            fontSize: "22px",
+            backgroundColor: "#336699",
+            color: "#ffffff",
+            padding: 0,
+            margin: 0,
+            borderTopLeftRadius: "4px",
+          }}
+        >
+          No.
+        </div>
+      ),
+      dataIndex: "sheet_seq",
+      key: "No.",
+      onCell: () => ({
+        style: {
+          padding: 0,
+        },
+      }),
+      onHeaderCell: () => ({
+        style: {
+          padding: 0,
+        },
+      }),
+      render: (text, record, index) => {
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 0,
+              width: "100%",
+              height: "70px",
+              backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
+              // border: "1px solid #000000",
+              borderBlockEnd: "1px solid #000000",
+              borderLeft: "1px solid #000000",
+              // borderBlockStart: "1px solid #000000",
+              // borderRight: "1px solid #000000",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: "bold",
+                fontSize: "20px",
+                color: "#000000",
+                width: "100%",
+              }}
+            >
+              {text}
+            </div>
+          </div>
+        );
+      },
+      align: "center",
+      width: "10%",
+    },
+    {
+      title: (
+        <div
+          style={{
+            fontSize: "22px",
+            backgroundColor: "#336699",
+            color: "#ffffff",
+            padding: "0px",
+            margin: "0px",
+          }}
+        >
+          Sheet No.
+        </div>
+      ),
+      key: "Sheet No.",
+      dataIndex: "sheet_no",
+      align: "center",
+      width: "75%",
+      onCell: () => ({
+        style: {
+          padding: 0,
+        },
+      }),
+      onHeaderCell: () => ({
+        style: {
+          padding: 0,
+        },
+      }),
+      render: (text, record, index) => {
+        return (
+          <div
+            style={{
+              height: "70px",
+              padding: "0px",
+              width: "100%",
+              backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
+              borderBlockEnd: "1px solid #000000",
+              borderLeft: "1px solid #000000",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: "bold",
+                fontSize: "26px",
+                color: "#336699",
+                width: "100%",
+                borderBlockEnd: "1px solid #000000",
+              }}
+            >
+              <Grid container spacing={0} alignItems="center">
+                <Grid item xs={12} md={12} align="left">
+                  <span
+                    style={{
+                      color:
+                        record.time_result === "OK" ? "#059212" : "#E0282E",
+                    }}
+                  >
+                    &nbsp;&nbsp;{text}
+                  </span>
+                </Grid>
+              </Grid>
+            </div>
+            <div style={{ width: "100%", fontWeight: 500, }}>
+              <Grid container spacing={0} alignItems="center">
+                <Grid
+                  item
+                  xs={1}
+                  md={1}
+                  align="left"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    borderRight: "1px solid #000000",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", color: "#660066" }}>
+                    SPI :
+                  </span>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  md={4}
+                  align="left"
+                  style={{
+                    borderRight: "1px solid #000000",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", color: "#660066" }}>
+                    &nbsp;&nbsp;{record.spi_time}
+                  </span>
+                </Grid>
+                <Grid
+                  item
+                  xs={1}
+                  md={1}
+                  align="left"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    borderRight: "1px solid #000000",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", color: "#003366" }}>
+                    AOI :
+                  </span>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  md={4}
+                  align="left"
+                  style={{
+                    borderRight: "1px solid #000000",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", color: "#003366" }}>
+                    &nbsp;&nbsp;{record.aoi_time}
+                  </span>
+                </Grid>
+                <Grid item xs={2} md={2} align="center">
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      color:
+                        record.time_result === "OK" ? "#059212" : "#E0282E",
+                    }}
+                  >
+                    {record.total_time}
+                  </span>
+                </Grid>
+              </Grid>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            fontSize: "22px",
+            backgroundColor: "#336699",
+            color: "#ffffff",
+            padding: "0px",
+            margin: "0px",
+            borderTopRightRadius: "4px",
+          }}
+        >
+          Result
+        </div>
+      ),
+      key: "Time Result",
+      dataIndex: "time_result",
+      align: "center",
+      width: "15%",
+      onCell: () => ({
+        style: {
+          padding: 0,
+        },
+      }),
+      onHeaderCell: () => ({
+        style: {
+          padding: 0,
+        },
+      }),
+      render: (text, record, index) => {
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "70px",
+              padding: "0px",
+              width: "100%",
+              backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
+              borderBlockEnd: "1px solid #000000",
+              borderLeft: "1px solid #000000",
+              borderRight: "1px solid #000000",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "30px",
+                fontWeight: "bold",
+                color: "#000000",
+                padding: "0px",
+                color: text === "OK" ? "#059212" : "#E0282E",
+              }}
+            >
+              {text}
+            </div>
+          </div>
+        );
+      },
+    },
+  ];
 
+  return {
+    btnRetrive,
+    columns,
+    gvData,
+    btnRetrive_Click,
+    txtSPIMCNo,
+    setTxtSPIMCNo,
+    txtAOIMCNo,
+    setTxtAOIMCNo,
+  };
+}
 
 export { fn_SPIAOITimeView };

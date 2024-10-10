@@ -281,7 +281,11 @@ function PieceTraceView() {
                                 </TableHead>
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell rowSpan={"6"}>EFPC</TableCell>
+                                        <TableCell rowSpan={"6"}
+                                            // sx={{ backgroundColor: "#E5D9F2" }}
+                                        >
+                                            EFPC
+                                        </TableCell>
                                         <TableCell>AOM / Via AOI</TableCell>
                                         <TableCell style={{ width: "100px" }}>
                                             <Button
@@ -379,8 +383,9 @@ function PieceTraceView() {
                                         {lblBarcodeTitle.visible && (
                                             <TableCell>Barcode Grade</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnBarcodeGrade.visible && (
+                                        {btnBarcodeGrade.visible && (
+                                            <TableCell>
+
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -395,11 +400,13 @@ function PieceTraceView() {
                                                 >
                                                     {btnBarcodeGrade.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
-                                        <TableCell></TableCell>
-                                        <TableCell>
-                                            {txtBarcodeGradeTime.visible && (
+                                            </TableCell>
+                                        )}
+                                        {btnBarcodeGrade.visible && (
+                                            <TableCell></TableCell>
+                                        )}
+                                        {txtBarcodeGradeTime.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -415,8 +422,8 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
                                     <TableRow>
                                         <TableCell>OST</TableCell>
@@ -1476,9 +1483,11 @@ function PieceTraceView() {
                                                 }}
                                             />
                                         </TableCell>
-                                        <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
-                                            <Typography>{lblBendingMachine}</Typography>
-                                        </TableCell>
+                                        {lblBendingMachine && (
+                                            <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
+                                                <Typography>{lblBendingMachine}</Typography>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
@@ -1486,8 +1495,8 @@ function PieceTraceView() {
                                         {lblELT1.visible && (
                                             <TableCell>{lblELT1.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnELT1.visible && (
+                                        {btnELT1.visible && (
+                                            <TableCell>
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1503,8 +1512,8 @@ function PieceTraceView() {
                                                 >
                                                     {btnELT1.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                         <TableCell>
                                             {txtELTCnt1.visible && (
                                                 <TextField
@@ -1548,8 +1557,8 @@ function PieceTraceView() {
                                         {lblELT2.visible && (
                                             <TableCell>{lblELT2.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnELT2.visible && (
+                                        {btnELT2.visible && (
+                                            <TableCell>
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1565,8 +1574,9 @@ function PieceTraceView() {
                                                 >
                                                     {btnELT2.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
+
                                         <TableCell>
                                             {txtELTCnt2.visible && (
                                                 <TextField
@@ -1585,8 +1595,9 @@ function PieceTraceView() {
                                                 />
                                             )}
                                         </TableCell>
-                                        <TableCell>
-                                            {txtELTTime2.visible && (
+
+                                        {txtELTTime2.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -1602,16 +1613,17 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
                                         {lblELT3.visible && (
                                             <TableCell>{lblELT3.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnELT3.visible && (
+                                        {btnELT3.visible && (
+                                            <TableCell>
+
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1627,8 +1639,9 @@ function PieceTraceView() {
                                                 >
                                                     {btnELT3.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
+
                                         <TableCell>
                                             {txtELTCnt3.visible && (
                                                 <TextField
@@ -1647,8 +1660,9 @@ function PieceTraceView() {
                                                 />
                                             )}
                                         </TableCell>
-                                        <TableCell>
-                                            {txtELTTime3.visible && (
+
+                                        {txtELTTime3.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -1664,16 +1678,16 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
                                         {lblELT4.visible && (
                                             <TableCell>{lblELT4.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnELT4.visible && (
+                                        {btnELT4.visible && (
+                                            <TableCell>
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1689,8 +1703,9 @@ function PieceTraceView() {
                                                 >
                                                     {btnELT4.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
+
                                         <TableCell>
                                             {txtELTCnt4.visible && (
                                                 <TextField
@@ -1709,8 +1724,9 @@ function PieceTraceView() {
                                                 />
                                             )}
                                         </TableCell>
-                                        <TableCell>
-                                            {txtELTTime4.visible && (
+
+                                        {txtELTTime4.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -1726,16 +1742,16 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
                                         {lblELT5.visible && (
                                             <TableCell>{lblELT5.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnELT5.visible && (
+                                        {btnELT5.visible && (
+                                            <TableCell>
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1751,8 +1767,9 @@ function PieceTraceView() {
                                                 >
                                                     {btnELT5.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
+
                                         <TableCell>
                                             {txtELTCnt5.visible && (
                                                 <TextField
@@ -1771,8 +1788,9 @@ function PieceTraceView() {
                                                 />
                                             )}
                                         </TableCell>
-                                        <TableCell>
-                                            {txtELTTime5.visible && (
+
+                                        {txtELTTime5.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -1788,16 +1806,16 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
                                         {lblELT6.visible && (
                                             <TableCell>{lblELT6.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnELT6.visible && (
+                                        {btnELT6.visible && (
+                                            <TableCell>
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1813,8 +1831,9 @@ function PieceTraceView() {
                                                 >
                                                     {btnELT6.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
+
                                         <TableCell>
                                             {txtELTCnt6.visible && (
                                                 <TextField
@@ -1833,8 +1852,9 @@ function PieceTraceView() {
                                                 />
                                             )}
                                         </TableCell>
-                                        <TableCell>
-                                            {txtELTTime6.visible && (
+
+                                        {txtELTTime6.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -1850,16 +1870,16 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
                                         {lblELT7.visible && (
                                             <TableCell>{lblELT7.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnELT7.visible && (
+                                        {btnELT7.visible && (
+                                            <TableCell>
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1875,8 +1895,9 @@ function PieceTraceView() {
                                                 >
                                                     {btnELT7.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
+
                                         <TableCell>
                                             {txtELTCnt7.visible && (
                                                 <TextField
@@ -1895,8 +1916,9 @@ function PieceTraceView() {
                                                 />
                                             )}
                                         </TableCell>
-                                        <TableCell>
-                                            {txtELTTime7.visible && (
+
+                                        {txtELTTime7.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -1912,16 +1934,16 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
                                         {lblFQC.visible && (
                                             <TableCell>{lblFQC.value}</TableCell>
                                         )}
-                                        <TableCell>
-                                            {btnFQC.visible && (
+                                        {btnFQC.visible && (
+                                            <TableCell>
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -1936,11 +1958,14 @@ function PieceTraceView() {
                                                 >
                                                     {btnFQC.value}
                                                 </Button>
-                                            )}
-                                        </TableCell>
-                                        <TableCell></TableCell>
-                                        <TableCell>
-                                            {txtFQCTime.visible && (
+                                            </TableCell>
+                                        )}
+
+                                        {btnFQC.visible && (
+                                            <TableCell></TableCell>
+                                        )}
+                                        {txtFQCTime.visible && (
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
@@ -1956,11 +1981,23 @@ function PieceTraceView() {
                                                         readOnly: true,
                                                     }}
                                                 />
-                                            )}
-                                        </TableCell>
-                                        <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
-                                            {/* <Typography>{lblFQCMachine} {" "} {lblFQCOperator}</Typography> */}
-                                        </TableCell>
+                                            </TableCell>
+                                        )}
+                                        {lblFQCMachine.visible && (
+                                            <TableCell colSpan={"2"} style={{ textAlign: "left" }}>
+                                                <Typography>
+                                                    {lblFQCMachine.value}
+                                                </Typography>
+                                            </TableCell>
+                                        )}
+
+                                        {lblFQCOperator.visible && (
+                                            <TableCell colSpan={"1"} style={{ textAlign: "left" }}>
+                                                <Typography>
+                                                    {lblFQCOperator.value}
+                                                </Typography>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>
@@ -1997,9 +2034,11 @@ function PieceTraceView() {
                                                 }}
                                             />
                                         </TableCell>
-                                        <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
-                                            <Typography>{lblFinalGateRemark}</Typography>
-                                        </TableCell>
+                                        {lblFinalGateRemark && (
+                                            <TableCell colSpan={"3"} style={{ textAlign: "left" }}>
+                                                <Typography>{lblFinalGateRemark}</Typography>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
 
                                     <TableRow>

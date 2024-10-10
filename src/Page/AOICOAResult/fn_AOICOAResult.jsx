@@ -3,238 +3,214 @@ import axios from "axios";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
 
-function fn_PREResult() {
+function fn_AOICOAResult() {
     const params = new URLSearchParams(window.location.search);
-    let sheet_no = params.get("sheet_no");
-    let product_name = params.get("PRODUCT_NAME");
-    let piece_no = params.get("piece_no");
-    let pre_result = params.get("pre_result");
+    let sheetno = params.get("sheet_no");
+    let prdname = params.get("PRODUCT_NAME");
+    let Panelno = params.get("panel_no");
     const plantCode = import.meta.env.VITE_FAC;
     const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
 
     //table
-    const [gvViewPRE, setgvViewPRE] = useState([]);
+    const [gvViewAOICOA, setgvViewAOICOA] = useState([]);
     const [lbl_Message, setlbl_Message] = useState("");
     const [lblMessageColor, setlblMessageColor] = useState("#059212");
 
     useEffect(() => {
-        PageLoad();
+        Viewdata();
     }, []);
 
-    const PageLoad = async () => {
-        let dt2 = [];
-        let dt = [];
-
+    const Viewdata = async () => {
         try {
-            if (piece_no !== null) {
-                await axios.post("/api/ViewTracePiece/getposition", {
-                    strplantcode: plantCode,
-                    strprdname: product_name,
-                    intpieceno: piece_no
-                })
-                    .then((res) => {
-                        dt2 = res.data;
-                    });
-            }
-        } catch (error) {
-            setlbl_Message(error.message);
-            setlblMessageColor("#BA0900");
-        }
-
-        try {
-
-            if (dt2.length > 0) {
-
-                await axios.post("/api/ViewTracePiece/getpreresult", {
-                    strplantcode: plantCode,
-                    strsheetno: sheet_no,
-                    strprdname: product_name,
-                    intpieceno: piece_no
-                })
-                    .then((res) => {
-                        dt = res.data;
-                    });
-            } else {
-                await axios.post("/api/ViewTracePiece/getpreresult2", {
-                    strplantcode: plantCode,
-                    strsheetno: sheet_no,
-                    pieceno: piece_no
-                })
-                    .then((res) => {
-                        dt = res.data;
-                    });
-            }
-
-            setgvViewPRE(dt);
-
+            await axios.post("/api/ViewTracePiece/getaoicoaresult", {
+                strprdname: prdname,
+                strplantcode: plantCode,
+                panelno: Panelno,
+                strsheetno: sheetno,
+            })
+                .then((res) => {
+                    setgvViewAOICOA(res.data);
+                });
         } catch (error) {
             setlbl_Message(error.message);
             setlblMessageColor("#BA0900");
         }
     };
 
-    const columnsPRE = [
+    const columnsAoiCoaResult = [
         {
-            title: "LINK",
-            dataIndex: "prd_seq",
-            key: "LINK",
-            align: "center",
+            title: "Link",
+            dataIndex: "link",
+            key: "link",
             render: (text, record) => {
                 return (
                     <a href={record.image_name} target="_blank" rel="noopener noreferrer">
-                        {record.prd_seq}
+                        {record.link}
                     </a>
                 );
             },
+            align: "center",
+            width: 45,
         },
         {
-            title: "PRD_PLANT_CODE",
-            dataIndex: "prd_plant_code",
-            key: "PRD_PLANT_CODE",
+            title: "AOR_PLANT_CODE",
+            dataIndex: "plant_code",
+            key: "plant_code",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 70,
+        },
+        {
+            title: "AOR_SHEET_NO",
+            dataIndex: "sheet_no",
+            key: "sheet_no",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 190,
+        },
+        {
+            title: "CABITY_NO",
+            key: "cabity_no",
+            dataIndex: "cabity_no",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 70,
+        },
+        {
+            title: "AOR_SEQ",
+            key: "seq",
+            dataIndex: "seq",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 50,
+        },
+        {
+            title: "AOR_INSPECT_COUNT",
+            dataIndex: "ins_count",
+            key: "ins_count",
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
+            width: 90,
+        },
+        {
+            title: "AOR_MACHINE_NAME",
+            dataIndex: "machine_name",
+            key: "machine_name",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 90,
+        },
+        {
+            title: "AOR_REFERENCE",
+            dataIndex: "reference",
+            key: "reference",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 90,
+        },
+        {
+            title: "AOR_POSITION",
+            key: "p_position",
+            dataIndex: "p_position",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 90,
+        },
+        {
+            title: "AOR_INSPECT_DATE",
+            key: "inspect_date",
+            dataIndex: "inspect_date",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 110,
+        },
+        {
+            title: "AOR_LOT_NO",
+            dataIndex: "lot_no",
+            key: "lot_no",
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
+            width: 110,
+        },
+        {
+            title: "AOR_RESULT",
+            dataIndex: "result",
+            key: "result",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
+            width: 70,
+        },
+        {
+            title: "AOR_PROGRAM_NAME",
+            dataIndex: "program_name",
+            key: "program_name",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "PRD_SHEET_NO",
-            dataIndex: "prd_sheet_no",
-            key: "PRD_SHEET_NO",
+            title: "AOR_IMAGE_PATH",
+            key: "image_path",
+            dataIndex: "image_path",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "PRD_NG_DETAIL",
-            dataIndex: "prd_ng_detail",
-            key: "PRD_NG_DETAIL",
+            title: "AOR_COMPONENT",
+            key: "component",
+            dataIndex: "component",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "PRD_BLOCK_NO",
-            dataIndex: "prd_block_no",
-            key: "PRD_BLOCK_NO",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_STEP_NO",
-            dataIndex: "prd_step_no",
-            key: "PRD_STEP_NO",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_REFER",
-            dataIndex: "prd_refer",
-            key: "PRD_REFER",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_LIB_PART_NAME",
-            dataIndex: "prd_lib_part_name",
-            key: "PRD_LIB_PART_NAME",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_STEP_POS",
-            dataIndex: "prd_step_pos",
-            key: "PRD_STEP_POS",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_STEP_X2",
-            dataIndex: "prd_step_x2",
-            key: "PRD_STEP_X2",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_STEP_Y1",
-            dataIndex: "prd_step_y1",
-            key: "PRD_STEP_Y1",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_STEP_Y2",
-            dataIndex: "prd_step_y2",
-            key: "PRD_STEP_Y2",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_MEASURE_NUM",
-            dataIndex: "prd_measure_num",
-            key: "PRD_MEASURE_NUM",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_CREATE_BY",
-            dataIndex: "prd_create_by",
-            key: "PRD_CREATE_BY",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_CREATE_PROGRAM",
-            dataIndex: "prd_create_program",
-            key: "PRD_CREATE_PROGRAM",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "PRD_CREATE_BY",
+            title: "AOR_CREATE_BY",
             dataIndex: "create_by",
-            key: "PRD_CREATE_BY",
-            align: "center",
+            key: "create_by",
             render: (text, record, index) => {
                 return text;
             },
+            align: "center",
         },
         {
-            title: "PRD_CREATE_PROGRAM",
+            title: "AOR_CREATE_PROGRAM",
             dataIndex: "create_program",
-            key: "PRD_CREATE_PROGRAM",
+            key: "create_program",
             align: "center",
             render: (text, record, index) => {
                 return text;
             },
         },
         {
-            title: "PRD_CREATE_DATE",
-            dataIndex: "prd_create_date",
-            key: "PRD_CREATE_DATE",
+            title: "AOR_CREATE_DATE",
+            dataIndex: "create_date",
+            key: "create_date",
             align: "center",
             render: (text, record, index) => {
                 return text;
@@ -242,64 +218,17 @@ function fn_PREResult() {
         },
     ];
 
+    //Export
     const btnExport = async (nameFile) => {
-        let dt2 = [];
-        let dt = [];
-        try {
-            if (piece_no !== null) {
-                await axios.post("/api/ViewTracePiece/getposition", {
-                    strplantcode: plantCode,
-                    strprdname: product_name,
-                    intpieceno: piece_no
-                })
-                    .then((res) => {
-                        dt2 = res.data;
-                    });
-            }
-            if (pre_result === "OK") {
-                await axios.post("/api/ViewTracePiece/getpreresult3", {
-                    strplantcode: plantCode,
-                    strsheetno: sheet_no
-                })
-                    .then((res) => {
-                        dt = res.data;
-                    });
-            } else {
-                if (dt2.length > 0) {
-
-                    await axios.post("/api/ViewTracePiece/getpreresult", {
-                        strplantcode: plantCode,
-                        strsheetno: sheet_no,
-                        strprdname: product_name,
-                        intpieceno: piece_no
-                    })
-                        .then((res) => {
-                            dt = res.data;
-                        });
-                } else {
-                    await axios.post("/api/ViewTracePiece/getpreresult2", {
-                        strplantcode: plantCode,
-                        strsheetno: sheet_no,
-                        pieceno: piece_no
-                    })
-                        .then((res) => {
-                            dt = res.data;
-                        });
-                }
-            }
-
-            if (dt.length > 0) {
-                exportExcelFile(dt, nameFile);
-                setlbl_Message("CSV export Complete.");
-                setlblMessageColor("#059212");
-            }
-        } catch (error) {
+        if (gvViewAOICOA.length <= 0) {
             Swal.fire({
                 icon: "error",
                 title: "No Data Export!",
             });
-            setlbl_Message("error", error.message);
-            setlblMessageColor("#BA0900");
+        } else {
+            exportExcelFile(gvViewAOICOA, nameFile);
+            setlbl_Message("CSV export Complete.");
+            setlblMessageColor("#059212");
         }
     };
 
@@ -383,8 +312,8 @@ function fn_PREResult() {
     };
 
     return {
-        gvViewPRE, lbl_Message, lblMessageColor, columnsPRE, btnExport, Now
+        gvViewAOICOA, columnsAoiCoaResult, btnExport, lbl_Message, lblMessageColor, Now
     }
 };
 
-export { fn_PREResult };
+export { fn_AOICOAResult };

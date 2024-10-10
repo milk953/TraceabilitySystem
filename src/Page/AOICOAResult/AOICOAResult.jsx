@@ -9,11 +9,13 @@ import {
     LoadingOutlined,
 } from "@ant-design/icons";
 import excel from "/src/assets/excel.png";
-import "../PREResult/PREResult.css";
-import { fn_PREResult } from "./fn_PREResult.jsx";
+import "../AOICOAResult/AOICOAResult.css";
+import { fn_AOICOAResult } from "./fn_AOICOAResult.jsx";
 
-function PREResult() {
-    const { gvViewPRE, lbl_Message, lblMessageColor, columnsPRE, btnExport, Now } = fn_PREResult();
+function AOICOAResult() {
+
+    const { gvViewAOICOA, columnsAoiCoaResult, btnExport, lbl_Message, lblMessageColor, Now } = fn_AOICOAResult();
+
     return (
         <div>
             <Header />
@@ -41,17 +43,17 @@ function PREResult() {
                         size="small"
                         icon={<Avatar shape="square" src={excel} size="small" />}
                         onClick={() =>
-                            btnExport('PRE_' + Now + '.csv')
+                            btnExport('AOI_' + Now + '.csv')
                         }
                     >
                         Export
                     </Button>
                 </div>
                 <Table
-                    dataSource={gvViewPRE}
-                    columns={columnsPRE}
-                    rowKey={(record) => record.prd_sheet_no}
-                    className="tableGvResultViewPRE"
+                    dataSource={gvViewAOICOA}
+                    columns={columnsAoiCoaResult}
+                    rowKey={(record) => record.seq}
+                    className="tableGvResultViewAOICOA"
                     pagination={false}
                     size="small"
                     bordered
@@ -62,4 +64,4 @@ function PREResult() {
     )
 };
 
-export default PREResult;
+export default AOICOAResult;

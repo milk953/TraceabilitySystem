@@ -541,7 +541,6 @@ function fn_PieceTraceView() {
             dtSerial = dtSerial[0];
             settxtProduct(dtSerial.productname);
             sethypLotNo(dtSerial.lotno);
-            //hypLotNo.NavigateUrl = "./rpt_LotTraceView.aspx?LOT=" & dtSerial.lotno
           } else {
             setlblMessage("Error : SMT_SERIAL_NO isn't Found!");
           }
@@ -630,22 +629,17 @@ function fn_PieceTraceView() {
         dt2 = dt2[0];
         if (hypLotNo === "") {
           sethypLotNo(dt2.lot_no);
-          //hypLotNo.NavigateUrl = "./rpt_LotTraceView.aspx?LOT=" & dt2.lot_no
         }
 
         if (SheetType === "S") {
           if (BarcodeSide === "F") {
             sethypSheetNoF(dt2.front_sheet_no);
-            //hypSheetNoF.NavigateUrl = "./rpt_SheetTraceView.aspx?SHEETNO=" & dt2.front_sheet_no
           } else {
             sethypSheetNoB(dt2.back_sheet_no);
-            //hypSheetNoB.NavigateUrl = "./rpt_SheetTraceView.aspx?SHEETNO=" & dt2.back_sheet_no
           }
         } else {
           sethypSheetNoF(dt2.front_sheet_no);
-          //hypSheetNoF.NavigateUrl = "./rpt_SheetTraceView.aspx?SHEETNO=" & dt2.front_sheet_no
           sethypSheetNoB(dt2.back_sheet_no);
-          //hypSheetNoB.NavigateUrl = "./rpt_SheetTraceView.aspx?SHEETNO=" & dt2.back_sheet_no
         }
 
         settxtPcsNo(dt2.pcs_no);
@@ -656,16 +650,16 @@ function fn_PieceTraceView() {
             if (SheetType === "S") {
               if (BarcodeSide === "F") {
                 sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                //hypMaterialF.NavigateUrl = hfMaterialN1.Value.Replace("#SHEET_NO#", hypSheetNoF.Text).Replace("#PCS_NO#", txtPcsNo.Text)
+                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
+                window.open(linkfinalGate, '_blank');
               } else {
                 sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                //hypMaterialB.NavigateUrl = hfMaterialN1.Value.Replace("#SHEET_NO#", hypSheetNoB.Text).Replace("#PCS_NO#", txtPcsNo.Text)
+                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoB}&BlockNo=${txtPcsNo}`;
+                window.open(linkfinalGate, '_blank');
               }
             } else {
               sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-              //hypMaterialF.NavigateUrl
               sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
-              //hypMaterialB.NavigateUrl
             }
           }
         } else {
@@ -674,16 +668,19 @@ function fn_PieceTraceView() {
             if (SheetType === "S") {
               if (BarcodeSide === "F") {
                 sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                //hypMaterialF.NavigateUrl = hfMaterialA1.Value.Replace("#SHEET_NO#", hypSheetNoF.Text).Replace("#PCS_NO#", txtPcsNo.Text)
+                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/A1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
+                window.open(linkfinalGate, '_blank');
               } else {
                 sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                //hypMaterialB.NavigateUrl = hfMaterialA1.Value.Replace("#SHEET_NO#", hypSheetNoB.Text).Replace("#PCS_NO#", txtPcsNo.Text)
+                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/A1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoB}&BlockNo=${txtPcsNo}`;
+                window.open(linkfinalGate, '_blank');
               }
             } else {
               sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-              //hypMaterialF.NavigateUrl
+              let linkfinalGate = ``;
+              window.open(linkfinalGate, '_blank');
               sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
-              //hypMaterialB.NavigateUrl
+              window.open(linkfinalGate, '_blank');
             }
           }
         }
@@ -910,7 +907,7 @@ function fn_PieceTraceView() {
       if (btnSPIF === "" && btnSPIB === "") {
         await axios.post("/api/ViewTracePiece/getspi", {
           strplantcode: plantCode,
-          strsheetno: txtSerialNo
+          strsheetno: SerialNo
         })
           .then((res) => {
             dt9 = res.data;
@@ -947,10 +944,10 @@ function fn_PieceTraceView() {
       }
 
       //PreAOI Front
-      if (hypSheetNoF !== "") {
+      if (dt2.front_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getpreaoifront", {
           strplantcode: plantCode,
-          strsheetno: hypSheetNoF
+          strsheetno: dt2.front_sheet_no
         })
           .then((res) => {
             dt10 = res.data;
@@ -976,8 +973,8 @@ function fn_PieceTraceView() {
             default:
               await axios.post("/api/ViewTracePiece/getpreaoifronttelse", {
                 strplantcode: plantCode,
-                strsheetno: hypSheetNoF,
-                strpcsno: txtPcsNo
+                strsheetno: dt2.front_sheet_no,
+                strpcsno: dt2.pcs_no
               })
                 .then((res) => {
                   dt11 = res.data;
@@ -1014,10 +1011,10 @@ function fn_PieceTraceView() {
       }
 
       //PreAOIB
-      if (hypSheetNoB !== "") {
+      if (dt2.back_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getpreaoifront", {
           strplantcode: plantCode,
-          strsheetno: hypSheetNoB
+          strsheetno: dt2.back_sheet_no
         })
           .then((res) => {
             dt12 = res.data;
@@ -1043,8 +1040,8 @@ function fn_PieceTraceView() {
             default:
               await axios.post("/api/ViewTracePiece/getpreaoifronttelse", {
                 strplantcode: plantCode,
-                strsheetno: hypSheetNoB,
-                strpcsno: txtPcsNo
+                strsheetno: dt2.back_sheet_no,
+                strpcsno: dt2.pcs_no
               })
                 .then((res) => {
                   dt13 = res.data;
@@ -1215,7 +1212,7 @@ function fn_PieceTraceView() {
       if (btnAOIF === "" && btnAOIB === "") {
         await axios.post("/api/ViewTracePiece/getaoi2", {
           strplantcode: plantCode,
-          strsheetno: txtSerialNo
+          strsheetno: SerialNo
         })
           .then((res) => {
             dt20 = res.data;
@@ -1246,11 +1243,11 @@ function fn_PieceTraceView() {
         }
       }
 
-      if (hypSheetNoF !== "") {
+      if (dt2.front_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getaoicoating", {
           strplantcode: plantCode,
-          strsheetno: hypSheetNoF,
-          strpcsno: txtPcsNo
+          strsheetno: dt2.front_sheet_no,
+          strpcsno: dt2.pcs_no,
         })
           .then((res) => {
             dt21 = res.data;
@@ -1265,7 +1262,7 @@ function fn_PieceTraceView() {
         } else {
           await axios.post("/api/ViewTracePiece/getaoicoating2", {
             strplantcode: plantCode,
-            strsheetno: hypSheetNoF
+            strsheetno: dt2.front_sheet_no
           })
             .then((res) => {
               dt22 = res.data;
@@ -1277,8 +1274,8 @@ function fn_PieceTraceView() {
 
             await axios.post("/api/ViewTracePiece/getaoicoating3", {
               strplantcode: plantCode,
-              strsheetno: hypSheetNoF,
-              strpcsno: txtPcsNo
+              strsheetno: dt2.front_sheet_no,
+              strpcsno: dt2.pcs_no
             })
               .then((res) => {
                 dt23 = res.data;
@@ -1310,11 +1307,11 @@ function fn_PieceTraceView() {
       }
 
       //AOI Coating Back
-      if (hypSheetNoB !== "") {
+      if (dt2.back_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getaoicoating", {
           strplantcode: plantCode,
-          strsheetno: hypSheetNoB,
-          strpcsno: txtPcsNo
+          strsheetno: dt2.back_sheet_no,
+          strpcsno: dt2.pcs_no
         })
           .then((res) => {
             dt24 = res.data;
@@ -1329,7 +1326,7 @@ function fn_PieceTraceView() {
         } else {
           await axios.post("/api/ViewTracePiece/getaoicoating2", {
             strplantcode: plantCode,
-            strsheetno: hypSheetNoB
+            strsheetno: dt2.back_sheet_no
           })
             .then((res) => {
               dt25 = res.data;
@@ -1341,8 +1338,8 @@ function fn_PieceTraceView() {
 
             await axios.post("/api/ViewTracePiece/getaoicoating3", {
               strplantcode: plantCode,
-              strsheetno: hypSheetNoB,
-              strpcsno: txtPcsNo
+              strsheetno: dt2.back_sheet_no,
+              strpcsno: dt2.pcs_no
             })
               .then((res) => {
                 dt26 = res.data;
@@ -1682,7 +1679,7 @@ function fn_PieceTraceView() {
                   let _intCheckPass = 0;
                   await axios.post("/api/Common/getcheckspecialbyserial", {
                     dataList: {
-                      strSerialno: txtSerialNo,
+                      strSerialno: SerialNo,
                       strPlantCode: plantCode
                     }
                   })
@@ -1730,7 +1727,7 @@ function fn_PieceTraceView() {
                   let _intCheckPass = 0;
                   await axios.post("/api/Common/getcheckspecialbyserial", {
                     dataList: {
-                      strSerialno: txtSerialNo,
+                      strSerialno: SerialNo,
                       strPlantCode: plantCode
                     }
                   })
@@ -1923,7 +1920,7 @@ function fn_PieceTraceView() {
                   let _intCheckPass = 0;
                   await axios.post("/api/Common/getcheckspecialbyserial", {
                     dataList: {
-                      strSerialno: txtSerialNo,
+                      strSerialno: SerialNo,
                       strPlantCode: plantCode
                     }
                   })
@@ -1943,14 +1940,14 @@ function fn_PieceTraceView() {
       }
 
       //X-RAY Result
-      if (hypSheetNoF !== "") {
+      if (dt2.front_sheet_no !== "") {
         setbtnXRAY_F("");
         settxtXRAYCnt_F("");
         settxtXRAYTime_F("");
 
         await axios.post("/api/ViewTracePiece/getxrayresult", {
-          strpcsno: txtPcsNo,
-          strsheetno: hypSheetNoF
+          strpcsno: dt2.pcs_no,
+          strsheetno: dt2.front_sheet_no
         })
           .then((res) => {
             dt35 = res.data;
@@ -1969,14 +1966,14 @@ function fn_PieceTraceView() {
         }
       }
 
-      if (hypSheetNoB !== "") {
+      if (dt2.back_sheet_no !== "") {
         setbtnXRAY_B("");
         settxtXRAYCnt_B("");
         settxtXRAYTime_B("");
 
         await axios.post("/api/ViewTracePiece/getxrayresult", {
-          strpcsno: txtPcsNo,
-          strsheetno: hypSheetNoB
+          strpcsno: dt2.pcs_no,
+          strsheetno: dt2.back_sheet_no
         })
           .then((res) => {
             dt36 = res.data;
@@ -1999,13 +1996,13 @@ function fn_PieceTraceView() {
       setlblBarcodeTitle(prevState => ({ ...prevState, visible: false }));
       setbtnBarcodeGrade(prevState => ({ ...prevState, visible: false, value: "" }));
       settxtBarcodeGradeTime(prevState => ({ ...prevState, visible: false, value: "" }));
-      if (txtPcsNo !== "") {
+      if (dt2.pcs_no !== "") {
         let dt = [];
         await axios.post("/api/ViewTracePiece/getbarcodegrade", {
           strplantcode: plantCode,
-          strsheetnof: hypSheetNoF,
-          strsheetnob: hypSheetNoB,
-          strpcsno: txtPcsNo
+          strsheetnof: dt2.front_sheet_no,
+          strsheetnob: dt2.back_sheet_no,
+          strpcsno: dt2.pcs_no
         })
           .then((res) => {
             dt = res.data;
@@ -2084,12 +2081,12 @@ function fn_PieceTraceView() {
     settxtAOMEFPCCntF("");
     settxtAOMEFPCTimeF("");
 
-    if ((hypSheetNoF !== "" || hypSheetNoB !== "") && !isNaN(txtPcsNo)) {
+    if ((dt2.front_sheet_no !== "" || dt2.back_sheet_no !== "") && !isNaN(dt2.pcs_no)) {
       let dtData = [];
-      if (hypSheetNoF !== "") {
+      if (dt2.front_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
-          _intPcsNo: txtPcsNo,
-          _strPrdName: txtProduct,
+          _intPcsNo: dt2.pcs_no,
+          _strPrdName: dtPrd.product_name,
           _strSMPJCavityFlg: "N"
         })
           .then((res) => {
@@ -2113,13 +2110,13 @@ function fn_PieceTraceView() {
         }
       }
 
-      if (hypSheetNoB !== "" && btnAOMEFPC === "") {
+      if (dt2.back_sheet_no !== "" && btnAOMEFPC === "") {
         let dtData = [];
         await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
           _strPlantCode: plantCode,
-          _strSheetNo: hypSheetNoB,
-          _intPcsNo: txtPcsNo,
-          _strPrdName: txtProduct,
+          _strSheetNo: dt2.back_sheet_no,
+          _intPcsNo: dt2.pcs_no,
+          _strPrdName: dtPrd.product_name,
           _strSMPJCavityFlg: "N"
         })
           .then((res) => {
@@ -2149,14 +2146,14 @@ function fn_PieceTraceView() {
     setbtnAOIEFPC(prevState => ({ ...prevState, disabled: true }));
     settxtAOIEFPCCntF("");
     settxtAOIEFPCTimeF("");
-    if ((hypSheetNoF !== "" || hypSheetNoB !== "") && !isNaN(txtPcsNo)) {
+    if ((dt2.front_sheet_no !== "" || dt2.back_sheet_no !== "") && !isNaN(dt2.pcs_no)) {
       let dtData = [];
-      if (hypSheetNoF !== "") {
+      if (dt2.front_sheet_no !== "") {
         await axios.post("/api/GetSerialAOIEFPCResult", {
           _strPlantCode: plantCode,
-          _strFrontSheetNo: hypSheetNoF,
-          _intPcsNo: txtPcsNo,
-          _strProduct: txtProduct,
+          _strFrontSheetNo: dt2.front_sheet_no,
+          _intPcsNo: dt2.pcs_no,
+          _strProduct: dtPrd.product_name,
           _strSMPJCavityFlg: "N",
         })
           .then((res) => {
@@ -2183,12 +2180,12 @@ function fn_PieceTraceView() {
         }
       }
 
-      if (hypSheetNoB !== "" && btnAOIEFPC === "") {
+      if (dt2.back_sheet_no !== "" && btnAOIEFPC === "") {
         await axios.post("/api/GetSerialAOIEFPCResult", {
           _strPlantCode: plantCode,
-          _strFrontSheetNo: hypSheetNoB,
-          _intPcsNo: txtPcsNo,
-          _strProduct: txtProduct,
+          _strFrontSheetNo: dt2.back_sheet_no,
+          _intPcsNo: dt2.pcs_no,
+          _strProduct: dtPrd.product_name,
           _strSMPJCavityFlg: "N",
         })
           .then((res) => {
@@ -2220,11 +2217,11 @@ function fn_PieceTraceView() {
     settxtOSTCntF("");
     settxtOSTTimeF("");
     sethfOSTSheetNo("");
-    if ((hypSheetNoF !== "" || hypSheetNoB !== "") && !isNaN(txtPcsNo)) {
+    if ((dt2.front_sheet_no !== "" || dt2.back_sheet_no !== "") && !isNaN(dt2.pcs_no)) {
       let dtData = [];
       await axios.post("/api/GetSerialOSTResult", {
-        SerialNo: hypSheetNoF,
-        intPCSNo: parseInt(txtPcsNo),
+        SerialNo: dt2.front_sheet_no,
+        intPCSNo: parseInt(dt2.pcs_no),
         strSMPJCavityFlg: "N",
       })
         .then((res) => {
@@ -2237,7 +2234,7 @@ function fn_PieceTraceView() {
         settxtOSTTimeF(dtData.OST_DATE);
         settxtOSTCntF(dtData.PCS_NO);
         sethfOSTPcsNo(dtData.PCS_NO);
-        sethfOSTSheetNo(hypSheetNoB);
+        sethfOSTSheetNo(dt2.back_sheet_no);
 
         setbtnOST(prevState => ({ ...prevState, disabled: false }));
         if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
@@ -2246,11 +2243,11 @@ function fn_PieceTraceView() {
           setbtnOSTColor("#BA0900");
         }
       }
-      if (hypSheetNoB !== "" && btnOST === "") {
+      if (dt2.back_sheet_no !== "" && btnOST === "") {
         let dtData = [];
         await axios.post("/api/GetSerialOSTResult", {
-          SerialNo: hypSheetNoB,
-          intPCSNo: parseInt(txtPcsNo),
+          SerialNo: dt2.back_sheet_no,
+          intPCSNo: parseInt(dt2.pcs_no),
           strSMPJCavityFlg: "N",
         })
           .then((res) => {
@@ -2263,7 +2260,7 @@ function fn_PieceTraceView() {
           settxtOSTTimeF(dtData.OST_DATE);
           settxtOSTCntF(dtData.PCS_NO);
           sethfOSTPcsNo(dtData.PCS_NO);
-          sethfOSTSheetNo(hypSheetNoB);
+          sethfOSTSheetNo(dt2.back_sheet_no);
 
           setbtnOST(prevState => ({ ...prevState, disabled: false }));
           if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
@@ -2278,11 +2275,11 @@ function fn_PieceTraceView() {
     setbtnAVIF(prevState => ({ ...prevState, disabled: true }));
     settxtAVICntF("");
     settxtAVITimeF("");
-    if (hypSheetNoF !== "" && !isNaN(txtPcsNo)) {
+    if (dt2.front_sheet_no !== "" && !isNaN(dt2.pcs_no)) {
       let dtData = [];
       await axios.post("/api/ViewTracePiece/GetSerialAVIResult", {
-        strSheetNo: hypSheetNoF,
-        intPCSNo: parseInt(txtPcsNo),
+        strSheetNo: dt2.front_sheet_no,
+        intPCSNo: parseInt(dt2.pcs_no),
         strSMPJCavityFlg: "N",
       })
         .then((res) => {
@@ -2306,11 +2303,11 @@ function fn_PieceTraceView() {
     setbtnAVIB(prevState => ({ ...prevState, disabled: true }));
     settxtAVICntB("");
     settxtAVITimeB("");
-    if (hypSheetNoB !== "" && !isNaN(txtPcsNo)) {
+    if (dt2.back_sheet_no !== "" && !isNaN(dt2.pcs_no)) {
       let dtData = [];
       await axios.post("/api/ViewTracePiece/GetSerialAVIResult", {
-        strSheetNo: hypSheetNoF,
-        intPCSNo: parseInt(txtPcsNo),
+        strSheetNo: dt2.front_sheet_no,
+        intPCSNo: dt2.pcs_no,
         strSMPJCavityFlg: "N",
       })
         .then((res) => {
@@ -2334,12 +2331,12 @@ function fn_PieceTraceView() {
     setbtnAVIMarkF(prevState => ({ ...prevState, disabled: true }));
     settxtAVIMarkCntF("");
     settxtAVIMarkTimeF("");
-    if (hypSheetNoF !== "" && !isNaN(txtPcsNo)) {
+    if (dt2.front_sheet_no !== "" && !isNaN(dt2.pcs_no)) {
       let dtData = [];
       await axios.post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
-        intPCSNo: txtPcsNo,
+        intPCSNo: dt2.pcs_no,
         strSMPJCavityFlg: "N",
-        strSheetNo: hypSheetNoF,
+        strSheetNo: dt2.front_sheet_no,
       })
         .then((res) => {
           dtData = res.data;
@@ -2364,12 +2361,12 @@ function fn_PieceTraceView() {
     setbtnAVIMarkB(prevState => ({ ...prevState, disabled: true }));
     settxtAVIMarkCntB("");
     settxtAVIMarkTimeB("");
-    if (hypSheetNoB !== "" && !isNaN(txtPcsNo)) {
+    if (dt2.back_sheet_no !== "" && !isNaN(dt2.pcs_no)) {
       let dtData = [];
       await axios.post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
-        intPCSNo: txtPcsNo,
+        intPCSNo: dt2.pcs_no,
         strSMPJCavityFlg: "N",
-        strSheetNo: hypSheetNoB,
+        strSheetNo: dt2.back_sheet_no,
       })
         .then((res) => {
           dtData = res.data;
@@ -2394,11 +2391,11 @@ function fn_PieceTraceView() {
     setbtnReflowF(prevState => ({ ...prevState, disabled: true }));
     settxtReflowCntF("");
     settxtReflowTimeF("");
-    if (hypSheetNoF !== "") {
+    if (dt2.front_sheet_no !== "") {
       let dtData = [];
       await axios.post("/api/Common/GetSMTSheetReflowResult", {
         strplantcode: plantCode,
-        strsheetno: hypSheetNoF
+        strsheetno: dt2.front_sheet_no
       })
         .then((res) => {
           dtData = res.data;
@@ -2421,11 +2418,11 @@ function fn_PieceTraceView() {
     setbtnReflowB(prevState => ({ ...prevState, disabled: true }));
     settxtReflowCntB("");
     settxtReflowTimeB("");
-    if (hypSheetNoB !== "") {
+    if (dt2.back_sheet_no !== "") {
       let dtData = [];
       await axios.post("/api/Common/GetSMTSheetReflowResult", {
         strplantcode: plantCode,
-        strsheetno: hypSheetNoB
+        strsheetno: dt2.back_sheet_no
       })
         .then((res) => {
           dtData = res.data;
@@ -2557,26 +2554,24 @@ function fn_PieceTraceView() {
 
   const btnTouchUp_Click = async () => {
     if (txtTouchUpCnt !== "") {
-      localStorage.setItem("SERIAL_NO", txtSerialNo);
-      //Response.Redirect("TouchUp_Result.aspx")
+      let linkfinalGate = `/TraceabilitySystem/TouchUpResult?serial_no=${txtSerialNo}`;
+      window.open(linkfinalGate, '_blank');
     }
   };
 
   const btnELT1_Click = async () => {
     if (txtELTCnt1 !== "") {
-      localStorage.setItem("SERIAL_NO", txtSerialNo);
       localStorage.setItem("SERIAL_CHIP", txtSerialChip);
-      localStorage.setItem("PRODUCT_NAME", txtProduct);
       localStorage.setItem("KEY_TYPE", lblKeyType1);
       localStorage.setItem("CHECK_ID", lblCheckID1);
-      localStorage.setItem("TEST_TYPE", lblTestType1);
       switch (lblKeyType1) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType1}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
-        //Response.Redirect("Checker_Result2.aspx")
+        //Response.Redirect("Checker_Result2.aspx") มีtableที่ไม่ใช้แล้ว
         case "3":
-        //Response.Redirect("Checker_Result3.aspx")
+        //Response.Redirect("Checker_Result3.aspx") มีtableที่ไม่ใช้แล้ว
       }
     }
   };
@@ -2591,7 +2586,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType2);
       switch (lblKeyType2) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType2}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2610,7 +2606,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType3);
       switch (lblKeyType3) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType3}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2629,7 +2626,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType4);
       switch (lblKeyType4) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType4}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2648,7 +2646,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType5);
       switch (lblKeyType5) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType5}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2667,7 +2666,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType6);
       switch (lblKeyType6) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType6}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2686,7 +2686,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType7);
       switch (lblKeyType7) {
         case "1":
-        //Response.Redirect("Checker_Result.aspx")
+          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType7}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkfinalGate, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2716,11 +2717,9 @@ function fn_PieceTraceView() {
   const btnXRAY_Click = async () => {
     if (btnXRAY_F !== "") {
       localStorage.setItem("LOT_NO", hypLotNo);
-      //localStorage.setItem("SHEET_NO", hypSheetNoF);
-      //localStorage.setItem("SERIAL_NO", txtPcsNo);
       localStorage.setItem("INSPECT_NO", txtXRAYCnt_F);
       localStorage.setItem("INSPECT_DATE", txtXRAYTime_F);
-      let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoF}&Serial=${txtSerialNo}`;
+      let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoF}&serial_no=${txtSerialNo}`;
       window.open(linkfinalGate, '_blank');
       localStorage.setItem("SERIAL", txtSerialNo);
     }
@@ -2728,13 +2727,7 @@ function fn_PieceTraceView() {
 
   const btnXRAY_B_Click = async () => {
     if (btnXRAY_B !== "") {
-      // localStorage.setItem("LOT_NO", hypLotNo);
-      // localStorage.setItem("SHEET_NO", hypSheetNoB);
-      // localStorage.setItem("SERIAL", txtSerialNo);
-      // localStorage.setItem("SERIAL_NO", txtPcsNo);
-      // localStorage.setItem("INSPECT_NO", txtXRAYCnt_B);
-      // localStorage.setItem("INSPECT_DATE", txtXRAYTime_B);
-      let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoB}&Serial=${txtSerialNo}`;
+      let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoB}&serial_no=${txtSerialNo}`;
       window.open(linkfinalGate, '_blank');
     };
   };
@@ -2747,19 +2740,15 @@ function fn_PieceTraceView() {
 
   const btnAOICOAF_Click = async () => {
     if (txtAOICOACntF !== "" && btnAOICOAF !== "OK") {
-      localStorage.setItem("PRODUCT_NAME", txtProduct);
-      localStorage.setItem("SHEET_NO", hypSheetNoF);
-      localStorage.setItem("PANEL_NO", txtPcsNo);
-      //Response.Redirect("AOI_COA_Result.aspx")
+      let linkfinalGate = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkfinalGate, '_blank');
     }
   };
 
   const btnAOICOAB_Click = async () => {
     if (txtAOICOACntB !== "" && btnAOICOAB !== "OK") {
-      localStorage.setItem("PRODUCT_NAME", txtProduct);
-      localStorage.setItem("SHEET_NO", hypSheetNoB);
-      localStorage.setItem("PANEL_NO", txtPcsNo);
-      //Response.Redirect("AOI_COA_Result.aspx")
+      let linkfinalGate = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkfinalGate, '_blank');
     }
   };
 

@@ -78,7 +78,9 @@ import LOT_Trace from "./Page/LOTTrace/LOTTrace";
 import SheetBarcodeGradeView from "./Page/SheetBarcodeGradeView/SheetBarcodeGradeView";
 import TouchUpResult from "./Page/TouchUpResult/TouchUpResult";
 import CheckerResult from "./Page/CheckerResult/CheckerResult";
-
+import AOICOAResult from "./Page/AOICOAResult/AOICOAResult";
+import ScanSMTSerialPcsP1 from "./Page/P1 Final Gate/ScanSMTSerialPcsP1";
+import SheetInspection from "./Page/SheetInspection/SheetInspection";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -179,6 +181,9 @@ const App = () => {
             <Route path="/TraceabilitySystem/SheetBarcodeGradeView" element={<SheetBarcodeGradeView />} />
             <Route path="/TraceabilitySystem/TouchUpResult" element={<TouchUpResult />} />
             <Route path="/TraceabilitySystem/CheckerResult" element={<CheckerResult />} />
+            <Route path="/TraceabilitySystem/AOICOAResult" element={<AOICOAResult />} />
+            <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
+            <Route path="/TraceabilitySystem/SheetInspection" element={<SheetInspection />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
@@ -197,12 +202,13 @@ const App = () => {
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+          
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialPcsP1" element={<ScanSMTSerialPcsP1 />} />
             
 
             {/* P1 */}
             <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
-
             
             
           </Route>
