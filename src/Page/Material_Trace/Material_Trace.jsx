@@ -20,31 +20,12 @@ function LotTraceView() {
       <Hearder />
      
       <Card component={Paper} className="Card-Common">
-        {/* <div style={{ display: "flex", gap: "10px" }}> */}
-          {/* <Card
-            component={Paper}
-            className="Card-ViewRollTitlePage"
-            style={{ width: "200px" }}
-          >
-            <b style={{ fontSize: "32px" }}>Sheet No.</b>
-          </Card> */}
-          {/* <Card
-            component={Paper}
-            className="Card-ViewRoll"
-            style={{ width: "200px" }}
-          >
-            <b style={{ fontSize: "20px" }}>Lot No.</b>
-            <br />
-            {txtLotNo}
-          </Card> */}
+
            <Input
           placeholder="Vendor Lot NO :"
           style={{ width: "250px" }}
           value={txtLotNo}
-          // onChange={(e) => {
-          //   settxtLotNo(e.target.value);
-          // }}
-          // ref={fc_txtLotNo}
+
         />{" "}
                  <Button
           type="primary"
@@ -55,14 +36,14 @@ function LotTraceView() {
         >
           Retrive
         </Button>
-        {/* </div> */}
+
         <br />
         
       
         <Table
           dataSource={tblData1}
           columns={columnstblData1}
-          className="tableGvResultView"
+          className="tableGvResult"
           pagination={false}
           size="small"
           bordered

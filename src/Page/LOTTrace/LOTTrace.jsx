@@ -121,7 +121,7 @@ function LotTrace() {
         <Table
           dataSource={dataMaterial}
           columns={columnsMaterial}
-          className="tableGvResultView"
+          className="tableGvResult"
           pagination={false}
           size="small"
           bordered
@@ -131,7 +131,7 @@ function LotTrace() {
         <Table
           dataSource={dataDetail}
           columns={columnsDetail}
-          className="tableGvResultView"
+          className="tableGvResult"
           pagination={false}
           size="small"
           bordered

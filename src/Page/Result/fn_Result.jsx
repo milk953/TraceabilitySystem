@@ -25,6 +25,9 @@ function fn_Result() {
   let piece_no = params.get("piece_no");
   let serial_no = params.get("serial_no");
   let Serial = params.get("Serial");
+  let INSPECT_DATE = params.get("INSPECT_DATE");
+  let INSPECT_NO = params.get("INSPECT_NO");
+  // INSPECT_DATE INSPECT_NO
   //เข้ามาแล้วSearch
   useEffect(() => {
     if (panel_no == "") {
@@ -49,15 +52,30 @@ function fn_Result() {
       GetDataPreResult();
       setColumntblData1(columnsPreResult);
     }
-    else if(Page=='XRayResult'||Page=='XRayResultN1'){
-      if (serial_no == '0') {
-        window.location.href = '/TraceabilitySystem/SheetTraceView'; //มีอีก
-      }
-      else{
-        window.location.href = '/TraceabilitySystem/PieceTraceView'; //มีอีก
-      }
+    else if(Page=='XRayResult'){
+      GetDataXrayResult()
+      // if (serial_no == '0') {
+      //   window.location.href = '/TraceabilitySystem/SheetTraceView'; //มีอีก
+      // }
+      // else{
+      //   window.location.href = '/TraceabilitySystem/PieceTraceView'; //มีอีก
+      // }
 
     }
+    else if(Page=='XRayResultN1'){
+      // if (serial_no == '0') {
+      //   window.location.href = '/TraceabilitySystem/SheetTraceView'; //มีอีก
+      // }
+      // else{
+      //   window.location.href = '/TraceabilitySystem/PieceTraceView'; //มีอีก
+      // }
+
+      
+    }else if(Page=='OSTResult'){
+      GetDataOSTResult()
+      setColumntblData1(columnsOSTResult)
+    }
+
   }, []);
 
   //AOI_COA_Result
@@ -65,193 +83,33 @@ function fn_Result() {
     await axios
       .post("/api/Result/GetAoi_Coa_Result2", {
         dataList: {
-          product_name: product_name,
-          plant_code: Fac,
-          panel_no: panel_no,
-          sheet_no: sheet_no,
+          strprdname: product_name,
+          strplantcode: Fac,
+          panelno:panel_no === '' ? null : panel_no,
+          strsheetno: sheet_no,
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data,'GetAoi_Coa_Result2');
         settblData1(res.data);
+      });
+
+      await axios
+      .post("/api/Result/GetAoi_Coa_Result2_Export", {
+        dataList: {
+          strprdname: product_name,
+          strplantcode: Fac,
+          panelno:panel_no === '' ? null : panel_no,
+          strsheetno: sheet_no,
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'GetAoi_Coa_Result2_Export');
         setDatatblData1(res.data);
       });
+
+
   };
-
-  //Use
-  // const columnstblData1= [
-  //   {
-  //     title: "Link",
-  //     dataIndex: "LINK",
-  //     key: "Link",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //     width:45
-  //   },
-  //   {
-  //     title: "PLANT_CODE",
-  //     dataIndex: "PLANT_CODE",
-  //     key: "PLANT_CODE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "SHEET_NO",
-  //     dataIndex: "SHEET_NO",
-  //     key: "SHEET_NO",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  //   {
-  //     title: "CABITY_NO",
-  //     key: "CABITY_NO",
-  //     dataIndex: "CABITY_NO",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "SEQ",
-  //     key: "SEQ",
-  //     dataIndex: "SEQ",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     width:50
-  //   },
-  //   {
-  //     title: "INS_COUNT",
-  //     dataIndex: "INS_COUNT",
-  //     key: "INS_COUNT",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //   },
-  //   {
-  //     title: "MACHINE_NAME",
-  //     dataIndex: "MACHINE_NAME",
-  //     key: "MACHINE_NAME",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "REFERENCE",
-  //     dataIndex: "REFERENCE",
-  //     key: "REFERENCE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  //   {
-  //     title: "POSITION",
-  //     key: "POSITION",
-  //     dataIndex: "POSITION",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "INSPECT_DATE",
-  //     key: "INSPECT_DATE",
-  //     dataIndex: "INSPECT_DATE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "LOT_NO",
-  //     dataIndex: "LOT_NO",
-  //     key: "LOT_NO",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //   },
-  //   {
-  //     title: "RESULT",
-  //     dataIndex: "RESULT",
-  //     key: "RESULT",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     width:70
-  //   },
-  //   {
-  //     title: "PROGRAM_NAME",
-  //     dataIndex: "PROGRAM_NAME",
-  //     key: "PROGRAM_NAME",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  //   {
-  //     title: "IMAGE_PATH",
-  //     key: "IMAGE_PATH",
-  //     dataIndex: "IMAGE_PATH",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "COMPONENT",
-  //     key: "COMPONENT",
-  //     dataIndex: "COMPONENT",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "CREATE_BY",
-  //     dataIndex: "CREATE_BY",
-  //     key: "CREATE_BY",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //   },
-  //   {
-  //     title: "CREATE_PROGRAM",
-  //     dataIndex: "CREATE_PROGRAM",
-  //     key: "CREATE_PROGRAM",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "CREATE_DATE",
-  //     dataIndex: "CREATE_DATE",
-  //     key: "CREATE_DATE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  // ];
-
-  //test
 
   const columnsAoiCoaResult2 = [
     {
@@ -259,7 +117,15 @@ function fn_Result() {
       dataIndex: "link", // เปลี่ยนเป็นพิมพ์เล็ก
       key: "link",
       render: (text, record, index) => {
-        return text;
+        let modifiedText=''
+        if(text!=''){
+           modifiedText = text.replace("<a ", '<a target="_blank" '); 
+        }
+        return (
+          <span
+            dangerouslySetInnerHTML={{ __html: modifiedText }} 
+          />
+        );
       },
       align: "center",
       width: 45,
@@ -1203,7 +1069,55 @@ function fn_Result() {
     
     
   ]
+  //XRAY_Result  
+  const GetDataXrayResult = async () => {
+    await axios
+      .post("/api/Result/XrayResult", {
+        dataList: {
+          strsheetno: sheet_no,
+          strserialno: serial_no,
+          inspectno:panel_no === '' ? null : INSPECT_NO,
+          inspectdate: INSPECT_DATE,
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'GetDataXrayResult');
+        settblData1(res.data);
+      });
+  };
 
+  const columnsXrayResult = [
+   
+    {
+      title: "TSX_PRODUCT",
+      dataIndex: "TSX_PRODUCT_NAME",
+      key: "TSX_PRODUCT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "OST",
+      dataIndex: "prh_sheet_no", 
+      key: "OST",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "BADMARK",
+      key: "BADMARK", 
+      dataIndex: "prh_inspect_count",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    
+    
+  ]
   //Export
   const BtnExport = async () => {
     let nameFile=''
