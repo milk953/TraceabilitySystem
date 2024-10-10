@@ -79,7 +79,7 @@ import SheetBarcodeGradeView from "./Page/SheetBarcodeGradeView/SheetBarcodeGrad
 import TouchUpResult from "./Page/TouchUpResult/TouchUpResult";
 import CheckerResult from "./Page/CheckerResult/CheckerResult";
 import AOICOAResult from "./Page/AOICOAResult/AOICOAResult";
-
+import ScanSMTSerialPcsP1 from "./Page/P1 Final Gate/ScanSMTSerialPcsP1";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -200,11 +200,11 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialPcsP1" element={<ScanSMTSerialPcsP1 />} />
             
 
             {/* P1 */}
             <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
-
             
             
           </Route>
