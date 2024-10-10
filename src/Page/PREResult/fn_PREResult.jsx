@@ -10,6 +10,7 @@ function fn_PREResult() {
     let piece_no = params.get("piece_no");
     let pre_result = params.get("pre_result");
     const plantCode = import.meta.env.VITE_FAC;
+    const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
 
     //table
     const [gvViewPRE, setgvViewPRE] = useState([]);
@@ -382,7 +383,7 @@ function fn_PREResult() {
     };
 
     return {
-        gvViewPRE, lbl_Message, lblMessageColor, columnsPRE, btnExport
+        gvViewPRE, lbl_Message, lblMessageColor, columnsPRE, btnExport, Now
     }
 };
 

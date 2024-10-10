@@ -9,6 +9,7 @@ function fn_AOICOAResult() {
     let prdname = params.get("PRODUCT_NAME");
     let Panelno = params.get("panel_no");
     const plantCode = import.meta.env.VITE_FAC;
+    const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
 
     //table
     const [gvViewAOICOA, setgvViewAOICOA] = useState([]);
@@ -218,8 +219,7 @@ function fn_AOICOAResult() {
     ];
 
     //Export
-    const btnExport = async () => {
-        let nameFile = ''
+    const btnExport = async (nameFile) => {
         if (gvViewAOICOA.length <= 0) {
             Swal.fire({
                 icon: "error",
@@ -312,7 +312,7 @@ function fn_AOICOAResult() {
     };
 
     return {
-        gvViewAOICOA, columnsAoiCoaResult, btnExport, lbl_Message, lblMessageColor
+        gvViewAOICOA, columnsAoiCoaResult, btnExport, lbl_Message, lblMessageColor, Now
     }
 };
 
