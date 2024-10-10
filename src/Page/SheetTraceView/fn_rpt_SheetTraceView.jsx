@@ -87,7 +87,6 @@ function fn_rpt_SheetTraceView() {
     const[ btnAOICOA,setbtnAOICOA ]= useState({ disbled: true,value:"",style:{}, })
     const[ btnSMTInt,setbtnSMTInt ]= useState({ disbled: true,value:"",style:{}, })
     //URL 
-    const [hypMaterialUrl ,sethypMaterialUrl]=useState('')
     const [hypLotNoUrl ,sethypLotNoUrl]=useState('')
     // ENV import.meta.env.
     
@@ -101,7 +100,6 @@ function fn_rpt_SheetTraceView() {
         if(SHEETNO !== ""){
             settxtSheetNo(SHEETNO)
             Clear_View();
-           
             // btnRetrive1(SHEETNO)
             ViewData(SHEETNO)
         }
@@ -117,38 +115,38 @@ function fn_rpt_SheetTraceView() {
       
 
     const Clear_View = () =>{
-        setbtnSPI((prevState) => ({...prevState,value: " "}));
+        setbtnSPI((prevState) => ({...prevState,value: " ",style:{}}));
         settxtSPICnt("");
         settxtSPITime("");
         settxtSPIMachine("");
-        setbtnPre((prevState) => ({...prevState,value: " "}));
+        setbtnPre((prevState) => ({...prevState,value: " ",style:{}}));
         setTxtPreCnt("");
         settxtPreTime("");
         settxtPreMachine("");
-        setbtnAOI((prevState) => ({...prevState,value: " "}));
+        setbtnAOI((prevState) => ({...prevState,value: " ",style:{}}));
         settxtAOICnt("");
         settxtAOITime("");
         settxtAOIMachine("");
 
-        setlblShtMachine((prevState) => ({...prevState,value: "",visible:false}))
-        setlblTitleMachine((prevState) => ({...prevState,value: ""}))
+        setlblShtMachine((prevState) => ({...prevState,value: "",visible:false,style:{}}))
+        setlblTitleMachine((prevState) => ({...prevState,value: "",style:{}}))
 
-        setbtnXRay((prevState) => ({...prevState,value: " "}));
+        setbtnXRay((prevState) => ({...prevState,value: " ",style:{}}));
         settxtXRayCnt("");
         settxtXRayTime("");
         settxtXRayMachine("");
 
-        setbtnAOICOA((prevState) => ({...prevState,value: " "}));
+        setbtnAOICOA((prevState) => ({...prevState,value: " ",style:{}}));
         settxtAOICOACnt("");
         settxtAOICOATime("");
         settxtAOICOAMachine("");
 
-        setbtnSMTInt((prevState) => ({...prevState,value: " "}));
+        setbtnSMTInt((prevState) => ({...prevState,value: " ",style:{}}));
         settxtSMTIntCnt("");
         settxtSMTIntTime("");
         settxtSMTIntMachine("");
 
-        setbtnAOMEFPC((prevState) => ({...prevState,value: " "}));
+        setbtnAOMEFPC((prevState) => ({...prevState,value: " ",style:{}}));
         settxtAOMEFPCCnt("");
         settxtAOMEFPCTime("");
         settxtAOMEFPCMachine("");
@@ -156,7 +154,7 @@ function fn_rpt_SheetTraceView() {
         sethfAOMLeafNo("");
         sethfAOMPcsNo("");
 
-        setbtnAOIEFPC((prevState) => ({...prevState,value: " "}))
+        setbtnAOIEFPC((prevState) => ({...prevState,value: " ",style:{}}))
         settxtAOIEFPCCnt("");
         settxtAOIEFPCTime("");
         settxtAOIEFPCMachine("");
@@ -164,24 +162,24 @@ function fn_rpt_SheetTraceView() {
         sethfAOMLeafNo("");
         sethfAOMPcsNo("");
 
-        setbtnOST((prevState) => ({...prevState,value: " "}))
+        setbtnOST((prevState) => ({...prevState,value: " ",style:{}}))
         settxtOSTCnt("");
         settxtOSTTime("");
         settxtOSTMachine("");
         sethfOSTSheetNo("");
         sethfOSTPcsNo("");
 
-        setbtnAVI((prevState) => ({...prevState,value: " "}))
+        setbtnAVI((prevState) => ({...prevState,value: " ",style:{}}))
         settxtAVICnt("");
         settxtAVITime("");
         settxtAVIMachine("");
 
-        setbtnFVI((prevState) => ({...prevState,value: " "}))
+        setbtnFVI((prevState) => ({...prevState,value: " ",style:{}}))
         settxtFVICnt("");
         settxtFVITime("");
         settxtFVIMachine("");
 
-        setbtnReflow((prevState) => ({...prevState,value: " "}))
+        setbtnReflow((prevState) => ({...prevState,value: " ",style:{}}))
         settxtReflowCnt("");
         settxtReflowTime("");
         settxtReflowMachine("");
@@ -793,88 +791,57 @@ function fn_rpt_SheetTraceView() {
 
 
     }
-    const  btnSPI_Click= () =>{
-        if(txtSPICnt !== ""){
-            localStorage.setItem("SHEET_NO", txtSheetNo);
-            localStorage.setItem("PRODUCT_NAME", txtProduct);
-            localStorage.setItem("PANEL_NO", "");
-            window.location.href = '/SPI_Result';
+    const  btnAllLInk= (page) =>{
+        if(page == 'SPI'){
+            if(txtSPICnt !== ""){
+                window.open(`/TraceabilitySystem/SPIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+            }else{
+                setlblMessage("Please input SerialNo and click Retrive.")
+            }
+    
+        }else if(page=='PRE_AOI'){
+            if(TxtPreCnt !== ""){
+               window.open(`/TraceabilitySystem/PREResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+                
+            }
+        }else if(page=='OST'){
+            if(txtSheetNo !== ""){;
+               window.open(`/TraceabilitySystem/OSTResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+                
+            }else{
+                setlblMessage("Please input SerialNo and click Retrive.")
+            }
+        }else if(page=='AOI'){
+            if(txtAOICnt !== ""){
+                window.open(`/TraceabilitySystem/AOIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+            }
+        }else if(page=='XRAY'){
+            let SERIAL_NO = '0'
+        if(SERIAL_DATABASE_SWITCH == "1"){
+            window.open(`/TraceabilitySystem/XRayResult?sheet_no=${txtSheetNo}&serial_no=${SERIAL_NO}&INSPECT_NO=${txtXRayCnt.trim()}&INSPECT_DATE=${txtXRayTime.trim()}`, '_blank');
         }else{
-            setlblMessage("Please input SerialNo and click Retrive.")
-        }
+            window.open(`/TraceabilitySystem/XRayResult?sheet_no=${txtSheetNo}&serial_no=${SERIAL_NO}&INSPECT_NO=${txtXRayCnt.trim()}&INSPECT_DATE=${txtXRayTime.trim()}`, '_blank');
 
+        }
+        }else if(page=='AOI_COA'){
+            if(txtAOICOACnt !== "")
+                {
+                    window.open(`/TraceabilitySystem/AOICOAResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+                   
+                    
+             }
+        }
+       
     }
     const btnClear =() =>{
         Clear_View();
     }
     const btnRetrive =() =>{
-        console.log(txtSheetNo,"999")
-        localStorage.setItem("SHEET_NO", txtSheetNo);
         Clear_View()
         sethypLotNo("");
         sethypLotNoUrl("")
         ViewData(txtSheetNo)
 
-    }
-    // const btnRetrive1 =() =>{
-    //     localStorage.setItem("SHEET_NO", txtSheetNo);
-    //     Clear_View()
-    //     sethypLotNo("");
-    //     sethypLotNoUrl("")
-    //     ViewData()
-
-    // }
-    const btnPre_Click =() =>{
-        if(TxtPreCnt !== ""){
-            localStorage.setItem("SHEET_NO", txtSheetNo);
-            localStorage.setItem("PRODUCT_NAME", txtProduct);
-            localStorage.setItem("PIECE_NO", "");
-            window.location.href = '/PRE_Result2';
-        }
-    }
-    const btnOST_Click =() =>{
-        if(txtSheetNo !== ""){
-            localStorage.setItem("SHEET_NO", txtSheetNo);
-            localStorage.setItem("PRODUCT_NAME", txtProduct);
-            localStorage.setItem("PANEL_NO", "");
-            window.location.href = '/OST_Result';
-        }else{
-            setlblMessage("Please input SerialNo and click Retrive.")
-        }
-    }
-    const btnAOI_Click =() =>{
-        if(txtAOICnt !== ""){
-            localStorage.setItem("SHEET_NO", txtSheetNo);
-            localStorage.setItem("PRODUCT_NAME", txtProduct);
-            localStorage.setItem("PANEL_NO", "");
-            window.location.href = '/AOI_Result2';
-        }
-    }
-    const btnXRay_Click =() =>{
-        localStorage.setItem("LOT_NO", hypLotNo.trim().toUpperCase());
-        localStorage.setItem("SHEET_NO", txtSheetNo.trim().toUpperCase());
-        localStorage.setItem("PRODUCT_NAME", txtProduct);
-        localStorage.setItem("SERIAL_NO", "0");
-        localStorage.setItem("INSPECT_NO", txtXRayCnt);
-        localStorage.setItem("INSPECT_DATE", txtXRayTime);
-        if(SERIAL_DATABASE_SWITCH == "1"){
-            window.location.href = 'XRay_Result_N1.aspx';
-        }else{
-            window.location.href = 'XRay_Result.aspx';
-        }
-    }
-    const btnAOICOA_Click =() =>{
-        if(txtAOICOACnt !== "")
-        {
-            localStorage.setItem("SHEET_NO", txtSheetNo);
-            localStorage.setItem("PRODUCT_NAME",txtProduct);
-            localStorage.setItem("PANEL_NO", "");
-            window.location.href = 'AOI_COA_Result2.aspx';  
-     }
-      
-       
-            
-       
     }
     const ddlCavity_SelectedIndexChanged =(event) =>{
         const dropdawn = event.target.value;
@@ -1422,8 +1389,7 @@ function fn_rpt_SheetTraceView() {
             {text}
           </a>
         );
-      };
-    
+    };  
     const columnstblData1= [
         {
           title: "PIECE1",
@@ -1471,20 +1437,21 @@ function fn_rpt_SheetTraceView() {
             return createLink(text);
           },
         },
-      ];
+    ];
     
   return {
     lblMessage,txtSheetNo,settxtSheetNo,btnRetrive,btnClear,txtProduct,settxtProduct,hypLotNo,
-    ddlCavity,setddlCavity,selectddlCavity,setselectddlCavity,lblShtMachine,hypMaterial,
+    ddlCavity,selectddlCavity,setselectddlCavity,lblShtMachine,hypMaterial,
     btnAOMEFPC,txtAOMEFPCCnt,txtAOMEFPCTime,txtAOMEFPCMachine,btnAOIEFPC,txtAOIEFPCCnt,txtAOIEFPCTime,
     btnOST,txtOSTCnt,txtOSTTime,txtOSTMachine,btnAVI,txtAVICnt,txtAVITime,txtAVIMachine,
     btnFVI,txtFVICnt,txtFVITime,txtFVIMachine,btnSPI,txtSPICnt,txtSPITime,txtSPIMachine,
     btnPre,TxtPreCnt,txtPreTime,txtPreMachine,btnReflow,txtReflowCnt,txtReflowTime,txtReflowMachine,
     btnAOI,txtAOICnt,txtAOITime,txtAOIMachine,btnXRay,txtXRayCnt,txtXRayTime,txtXRayMachine,
     btnAOICOA,txtAOICOACnt,txtAOICOATime,txtAOICOAMachine,btnSMTInt,txtSMTIntCnt,txtSMTIntTime,txtSMTIntMachine,tblData1,
-    btnSPI_Click,btnPre_Click,btnOST_Click,btnAOI_Click,btnXRay_Click,btnAOICOA_Click,ddlCavity_SelectedIndexChanged,
-    lblCavity,txtAOIEFPCMachine,columnstblData1
+    btnAllLInk,ddlCavity_SelectedIndexChanged,
+    lblCavity,txtAOIEFPCMachine,columnstblData1,
 
+    // onClick={() => btnAllLInk('AOI')}
 
 
   }
