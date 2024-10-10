@@ -189,6 +189,7 @@ function fn_SPIAOITimeView() {
             color: "#ffffff",
             padding: 0,
             margin: 0,
+            borderTopLeftRadius: "4px",
           }}
         >
           No.
@@ -217,6 +218,11 @@ function fn_SPIAOITimeView() {
               width: "100%",
               height: "70px",
               backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
+              // border: "1px solid #000000",
+              borderBlockEnd: "1px solid #000000",
+              borderLeft: "1px solid #000000",
+              // borderBlockStart: "1px solid #000000",
+              // borderRight: "1px solid #000000",
             }}
           >
             <div
@@ -244,7 +250,6 @@ function fn_SPIAOITimeView() {
             color: "#ffffff",
             padding: "0px",
             margin: "0px",
-            
           }}
         >
           Sheet No.
@@ -272,6 +277,8 @@ function fn_SPIAOITimeView() {
               padding: "0px",
               width: "100%",
               backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
+              borderBlockEnd: "1px solid #000000",
+              borderLeft: "1px solid #000000",
             }}
           >
             <div
@@ -280,6 +287,7 @@ function fn_SPIAOITimeView() {
                 fontSize: "26px",
                 color: "#336699",
                 width: "100%",
+                borderBlockEnd: "1px solid #000000",
               }}
             >
               <Grid container spacing={0} alignItems="center">
@@ -290,21 +298,67 @@ function fn_SPIAOITimeView() {
                         record.time_result === "OK" ? "#059212" : "#E0282E",
                     }}
                   >
-                    {text}
+                    &nbsp;&nbsp;{text}
                   </span>
                 </Grid>
               </Grid>
             </div>
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%", fontWeight: 500, }}>
               <Grid container spacing={0} alignItems="center">
-                <Grid item xs={5} md={5} align="left">
+                <Grid
+                  item
+                  xs={1}
+                  md={1}
+                  align="left"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    borderRight: "1px solid #000000",
+                  }}
+                >
                   <span style={{ fontSize: "20px", color: "#660066" }}>
-                    SPI: {record.spi_time}
+                    SPI :
                   </span>
                 </Grid>
-                <Grid item xs={5} md={5} align="left">
+                <Grid
+                  item
+                  xs={4}
+                  md={4}
+                  align="left"
+                  style={{
+                    borderRight: "1px solid #000000",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", color: "#660066" }}>
+                    &nbsp;&nbsp;{record.spi_time}
+                  </span>
+                </Grid>
+                <Grid
+                  item
+                  xs={1}
+                  md={1}
+                  align="left"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    borderRight: "1px solid #000000",
+                  }}
+                >
                   <span style={{ fontSize: "20px", color: "#003366" }}>
-                    AOI: {record.aoi_time}
+                    AOI :
+                  </span>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  md={4}
+                  align="left"
+                  style={{
+                    borderRight: "1px solid #000000",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", color: "#003366" }}>
+                    &nbsp;&nbsp;{record.aoi_time}
                   </span>
                 </Grid>
                 <Grid item xs={2} md={2} align="center">
@@ -333,6 +387,7 @@ function fn_SPIAOITimeView() {
             color: "#ffffff",
             padding: "0px",
             margin: "0px",
+            borderTopRightRadius: "4px",
           }}
         >
           Result
@@ -363,6 +418,9 @@ function fn_SPIAOITimeView() {
               padding: "0px",
               width: "100%",
               backgroundColor: record.sheet_seq === 1 ? "LightYellow" : "Azure",
+              borderBlockEnd: "1px solid #000000",
+              borderLeft: "1px solid #000000",
+              borderRight: "1px solid #000000",
             }}
           >
             <div
