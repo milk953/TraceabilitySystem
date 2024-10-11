@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function fn_ScanSMTSerialPcsP1() {
   const [scanLot, setScanLot] = useState("");
@@ -21,7 +22,28 @@ function fn_ScanSMTSerialPcsP1() {
   const [gvSerialResult, setGvSerialResult] = useState([]);
   const [gvSerial, setGvSerial] = useState([]);
   const [txtSerial, setTxtSerial] = useState(gvSerial.map(() => ""));
-  const columns =[];
+  const columns = [];
+  useEffect(() => {
+    PageLoad();
+  }, []);
+  async function PageLoad() {
+    await getData("getProductData");
+  }
+  async function getData(type, params) {
+    try {
+      if (type == "getProductData") {
+        await axios.get("/api/common/GetProductData").then((res) => {
+          setProductSelected(res.data[0].prd_name);
+          setddlproduct(res.data);
+        });
+      }
+    } catch (error) {
+        console.error(error);
+    }
+  }
+  const ddlproduct_Change = (e) => {
+    console.log(e);
+  }
   return {
     scanLot,
     setScanLot,
@@ -46,7 +68,8 @@ function fn_ScanSMTSerialPcsP1() {
     gvSerialResult,
     gvSerial,
     txtSerial,
-    setTxtSerial
+    setTxtSerial,
+    ddlproduct_Change
   };
 }
 

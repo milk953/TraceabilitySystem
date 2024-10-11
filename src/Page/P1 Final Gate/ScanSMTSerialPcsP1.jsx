@@ -41,6 +41,7 @@ function ScanSMTSerialPcsP1() {
     gvSerial,
     txtSerial,
     setTxtSerial,
+    ddlproduct_Change
   } = fn_ScanSMTSerialPcsP1();
   return (
     <>
@@ -97,11 +98,11 @@ function ScanSMTSerialPcsP1() {
                             style={{ width: 240, padding: "5px" }}
                             onChange={(e) => {
                               setProductSelected(e.target.value);
-                              ddlproduct_Change();
+                              ddlproduct_Change(e.target.value);
                             }}
                             onInputChange={(e) => {
                               setProductSelected(e.target.value);
-                              ddlproduct_Change();
+                              ddlproduct_Change(e.target.value);
                             }}
                             value={productSelected}
                           >
