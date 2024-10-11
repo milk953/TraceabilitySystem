@@ -43,7 +43,6 @@ function ScanSMTSerialShtMaster() {
     return (
         <div>
             <Header />
-            <h1>Connect Master Sht & Pcs</h1>
             <Card
                 component={Paper}
                 className="Card-Common"

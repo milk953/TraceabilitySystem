@@ -136,6 +136,7 @@ function fn_LOTTrace() {
       title: "No",
       dataIndex: "SEQ",
       key: "No",
+      width:40,
       render: (text, record, index) => {
          return text
       },
@@ -146,6 +147,7 @@ function fn_LOTTrace() {
       dataIndex: "FACTORY_CODE",
       key: "Factory",
       align: "center",
+      width:70,
       render: (text, record, index) => {
          return text
       },
@@ -155,20 +157,20 @@ function fn_LOTTrace() {
       dataIndex: "PROC_DISP",
       key: "Process",
       align: "center",
+   
       render: (text, record, index) => {
          return text
       },
     },
-
     {
       title: "Production Date",
       key: "Production Date",
       dataIndex: "SCAN_DATE",
-      align: "center",
+      align: "left",
       render: (text, record, index) => {
          return text
       },
-    },
+    }
   ];
 
   const columnsMaterial = [

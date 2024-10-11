@@ -1,0 +1,15 @@
+.TbSheetInspection {
+    margin: auto;
+    width: 700px;
+}
+
+.TbSheetInspection th {
+    background-color: #8c8c8c;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+    padding: 5px;
+}
+
+.TbSheetInspection td {
+    padding: 4px;
+}

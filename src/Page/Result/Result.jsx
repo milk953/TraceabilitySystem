@@ -40,7 +40,7 @@ function AOI_COA_Result2() {
         <Table
           dataSource={tblData1}
           columns={ColumntblData1}
-          className="tableGvResultViewLot"
+          className="tableGvResult"
           pagination={false}
           size="small"
           bordered

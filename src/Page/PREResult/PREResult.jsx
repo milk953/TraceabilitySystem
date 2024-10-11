@@ -13,7 +13,7 @@ import "../PREResult/PREResult.css";
 import { fn_PREResult } from "./fn_PREResult.jsx";
 
 function PREResult() {
-    const {gvViewPRE, lbl_Message, lblMessageColor, columnsPRE, btnExport} = fn_PREResult();
+    const { gvViewPRE, lbl_Message, lblMessageColor, columnsPRE, btnExport, Now } = fn_PREResult();
     return (
         <div>
             <Header />

@@ -14,7 +14,7 @@ import { fn_AOICOAResult } from "./fn_AOICOAResult.jsx";
 
 function AOICOAResult() {
 
-    const { gvViewAOICOA, columnsAoiCoaResult, btnExport, lbl_Message, lblMessageColor } = fn_AOICOAResult();
+    const { gvViewAOICOA, columnsAoiCoaResult, btnExport, lbl_Message, lblMessageColor, Now } = fn_AOICOAResult();
 
     return (
         <div>

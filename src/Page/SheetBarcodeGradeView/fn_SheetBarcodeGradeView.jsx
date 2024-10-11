@@ -113,7 +113,7 @@ function fn_SheetBarcodeGradeView() {
       dataIndex: key,
       key: key,
       align: "center",
-     
+      width: 35,
       render: (text) => (
         <span style={{ color: text === "NG" ? "red" : "inherit" }}>{text}</span>
       ),

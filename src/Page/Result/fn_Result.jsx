@@ -14,7 +14,7 @@ function fn_Result() {
   const [tblData1, settblData1] = useState(""); //เก็บข้อมูลใส่ตาราง
   const [ColumntblData1, setColumntblData1] = useState([]);
   const [DatatblData1, setDatatblData1] = useState([]); //เก็บข้อมูลใส่ExportCSV
-  const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
+  let Now =  new Date();
   const Fac = import.meta.env.VITE_FAC;
   const params = new URLSearchParams(window.location.search);
   const Url = window.location.href;
@@ -25,6 +25,9 @@ function fn_Result() {
   let piece_no = params.get("piece_no");
   let serial_no = params.get("serial_no");
   let Serial = params.get("Serial");
+  let INSPECT_DATE = params.get("INSPECT_DATE");
+  let INSPECT_NO = params.get("INSPECT_NO");
+  // INSPECT_DATE INSPECT_NO
   //เข้ามาแล้วSearch
   useEffect(() => {
     if (panel_no == "") {
@@ -39,7 +42,7 @@ function fn_Result() {
     if(product_name==null){
         product_name=''
     }
-    if (Page == "AOICOAResult2") {
+    if (Page == "AOICOAResult2"|| Page=='AOIResult2') {
       GetDataAOICOAResult();
       setColumntblData1(columnsAoiCoaResult2);
     } else if (Page == "SPIResult") {
@@ -49,15 +52,18 @@ function fn_Result() {
       GetDataPreResult();
       setColumntblData1(columnsPreResult);
     }
-    else if(Page=='XRayResult'||Page=='XRayResultN1'){
-      if (serial_no == '0') {
-        window.location.href = '/TraceabilitySystem/SheetTraceView'; //มีอีก
-      }
-      else{
-        window.location.href = '/TraceabilitySystem/PieceTraceView'; //มีอีก
-      }
+    else if(Page=='XRayResult' ||Page=='XRayResultN1'){
+      GetDataXrayResult()
+      setColumntblData1(columnsXrayResult)
+      
+      
+    }else if(Page=='OSTResult'){
+      GetDataOSTResult()
+      setColumntblData1(columnsOSTResult)
+    }else if(Page=='AOIResult2'){
 
     }
+
   }, []);
 
   //AOI_COA_Result
@@ -65,193 +71,33 @@ function fn_Result() {
     await axios
       .post("/api/Result/GetAoi_Coa_Result2", {
         dataList: {
-          product_name: product_name,
-          plant_code: Fac,
-          panel_no: panel_no,
-          sheet_no: sheet_no,
+          strprdname: product_name,
+          strplantcode: Fac,
+          panelno:panel_no === '' ? null : panel_no,
+          strsheetno: sheet_no,
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data,'GetAoi_Coa_Result2');
         settblData1(res.data);
+      });
+
+      await axios
+      .post("/api/Result/GetAoi_Coa_Result2_Export", {
+        dataList: {
+          strprdname: product_name,
+          strplantcode: Fac,
+          panelno:panel_no === '' ? null : panel_no,
+          strsheetno: sheet_no,
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'GetAoi_Coa_Result2_Export');
         setDatatblData1(res.data);
       });
+
+
   };
-
-  //Use
-  // const columnstblData1= [
-  //   {
-  //     title: "Link",
-  //     dataIndex: "LINK",
-  //     key: "Link",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //     width:45
-  //   },
-  //   {
-  //     title: "PLANT_CODE",
-  //     dataIndex: "PLANT_CODE",
-  //     key: "PLANT_CODE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "SHEET_NO",
-  //     dataIndex: "SHEET_NO",
-  //     key: "SHEET_NO",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  //   {
-  //     title: "CABITY_NO",
-  //     key: "CABITY_NO",
-  //     dataIndex: "CABITY_NO",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "SEQ",
-  //     key: "SEQ",
-  //     dataIndex: "SEQ",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     width:50
-  //   },
-  //   {
-  //     title: "INS_COUNT",
-  //     dataIndex: "INS_COUNT",
-  //     key: "INS_COUNT",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //   },
-  //   {
-  //     title: "MACHINE_NAME",
-  //     dataIndex: "MACHINE_NAME",
-  //     key: "MACHINE_NAME",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "REFERENCE",
-  //     dataIndex: "REFERENCE",
-  //     key: "REFERENCE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  //   {
-  //     title: "POSITION",
-  //     key: "POSITION",
-  //     dataIndex: "POSITION",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "INSPECT_DATE",
-  //     key: "INSPECT_DATE",
-  //     dataIndex: "INSPECT_DATE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "LOT_NO",
-  //     dataIndex: "LOT_NO",
-  //     key: "LOT_NO",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //   },
-  //   {
-  //     title: "RESULT",
-  //     dataIndex: "RESULT",
-  //     key: "RESULT",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     width:70
-  //   },
-  //   {
-  //     title: "PROGRAM_NAME",
-  //     dataIndex: "PROGRAM_NAME",
-  //     key: "PROGRAM_NAME",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  //   {
-  //     title: "IMAGE_PATH",
-  //     key: "IMAGE_PATH",
-  //     dataIndex: "IMAGE_PATH",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "COMPONENT",
-  //     key: "COMPONENT",
-  //     dataIndex: "COMPONENT",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "CREATE_BY",
-  //     dataIndex: "CREATE_BY",
-  //     key: "CREATE_BY",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //     align: "center",
-  //   },
-  //   {
-  //     title: "CREATE_PROGRAM",
-  //     dataIndex: "CREATE_PROGRAM",
-  //     key: "CREATE_PROGRAM",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-  //   {
-  //     title: "CREATE_DATE",
-  //     dataIndex: "CREATE_DATE",
-  //     key: "CREATE_DATE",
-  //     align: "center",
-  //     render: (text, record, index) => {
-  //       return text;
-  //     },
-  //   },
-
-  // ];
-
-  //test
 
   const columnsAoiCoaResult2 = [
     {
@@ -259,7 +105,15 @@ function fn_Result() {
       dataIndex: "link", // เปลี่ยนเป็นพิมพ์เล็ก
       key: "link",
       render: (text, record, index) => {
-        return text;
+        let modifiedText=''
+        if(text!=''){
+           modifiedText = text.replace("<a ", '<a target="_blank" '); 
+        }
+        return (
+          <span
+            dangerouslySetInnerHTML={{ __html: modifiedText }} 
+          />
+        );
       },
       align: "center",
       width: 45,
@@ -1203,6 +1057,307 @@ function fn_Result() {
     
     
   ]
+  //XRAY_Result  
+  const GetDataXrayResult = async () => {
+    await axios
+      .post("/api/Result/XrayResult", {
+        dataList: {
+          strsheetno: sheet_no,
+          strserialno: serial_no,
+          inspectno:panel_no === '' ? null : INSPECT_NO,
+          inspectdate: INSPECT_DATE,
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'GetDataXrayResult');
+        settblData1(res.data);
+        setDatatblData1(res.data);
+      });
+  };
+
+  const columnsXrayResult = [
+   
+    {
+      title: "TSX_PRODUCT",
+      dataIndex: "TSX_PRODUCT",
+      key: "TSX_PRODUCT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "LOT NO.",
+      dataIndex: "TSX_LOT", 
+      key: "LOT NO.",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_SHEET_NO",
+      key: "TSX_SHEET_NO", 
+      dataIndex: "TSX_SERIAL",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_INSPECTION_NO",
+      key: "TSX_INSPECTION_NO", 
+      dataIndex: "TSX_INSPECTION_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_SAMPLE_NO",
+      key: "TSX_SAMPLE_NO", 
+      dataIndex: "TSX_SAMPLE_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_BLOCK_NO",
+      key: "TSX_BLOCK_NO", 
+      dataIndex: "TSX_BLOCK_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_MC",
+      key: "TSX_MC", 
+      dataIndex: "TSX_MC",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_TIME_OUT",
+      key: "TSX_TIME_OUT", 
+      dataIndex: "TSX_TIME_OUT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_PROGRAM",
+      key: "TSX_PROGRAM", 
+      dataIndex: "TSX_PROGRAM",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_RESULT_PIECE",
+      key: "TSX_RESULT_PIECE", 
+      dataIndex: "TSX_RESULT_2",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_RESULT_SHEET",
+      key: "TSX_RESULT_SHEET", 
+      dataIndex: "TSX_RESULT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_MC_BRAND",
+      key: "TSX_MC_BRAND", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    
+    
+  ]
+  //AOI_Result
+  const columnsAOIResult2 = [
+   
+    {
+      title: "Link",
+      dataIndex: "TSX_PRODUCT",
+      key: "Link",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PLANT_CODE",
+      dataIndex: "TSX_LOT", 
+      key: "PLANT_CODE",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "SHEET_NO",
+      key: "SHEET_NO", 
+      dataIndex: "TSX_SERIAL",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CABITY_NO",
+      key: "CABITY_NO", 
+      dataIndex: "TSX_INSPECTION_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "SEQ",
+      key: "SEQ", 
+      dataIndex: "TSX_SAMPLE_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "INS_COUNT",
+      key: "INS_COUNT", 
+      dataIndex: "TSX_BLOCK_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "MACHINE_NAME",
+      key: "MACHINE_NAME", 
+      dataIndex: "TSX_MC",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "REFERENCE",
+      key: "REFERENCE", 
+      dataIndex: "TSX_TIME_OUT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "POSITION",
+      key: "POSITION", 
+      dataIndex: "TSX_PROGRAM",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "INSPECT_DATE",
+      key: "INSPECT_DATE", 
+      dataIndex: "TSX_RESULT_2",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "LOT_NO",
+      key: "LOT_NO", 
+      dataIndex: "TSX_RESULT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "RESULT",
+      key: "RESULT", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PROGRAM_NAME",
+      key: "PROGRAM_NAME", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "IMAGE_PATH",
+      key: "IMAGE_PATH", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "COMPONENT",
+      key: "COMPONENT", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_BY",
+      key: "CREATE_BY", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_PROGRAM",
+      key: "CREATE_PROGRAM", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_DATE",
+      key: "CREATE_DATE", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    
+
+    
+    
+  ]
 
   //Export
   const BtnExport = async () => {
@@ -1214,7 +1369,13 @@ function fn_Result() {
       });
     } else {
       console.log(nameFile, "nameFile");
-      nameFile=`${Page.replace(/Result2?|/g, "")}_${Now}.csv`
+      let formattedNow = Now.getFullYear().toString() + 
+      (Now.getMonth() + 1).toString().padStart(2, '0') +  // เดือนเริ่มต้นที่ 0 ต้องบวก 1
+      Now.getDate().toString().padStart(2, '0') + 
+      Now.getHours().toString().padStart(2, '0') + 
+      Now.getMinutes().toString().padStart(2, '0') + 
+      Now.getSeconds().toString().padStart(2, '0');
+      nameFile=`${Page.replace(/Result2?|/g, "")}_${formattedNow}.csv`
       exportExcelFile(ColumntblData1,DatatblData1, nameFile);
     }
   };

@@ -35,14 +35,14 @@ import styled from "styled-components";
 function rpt_SheetTraceView() {
 const{
     lblMessage,txtSheetNo,settxtSheetNo,btnRetrive,btnClear,txtProduct,settxtProduct,hypLotNo,
-    ddlCavity,setddlCavity,selectddlCavity,setselectddlCavity,lblShtMachine,hypMaterial,
+    ddlCavity,selectddlCavity,lblShtMachine,hypMaterial,
     btnAOMEFPC,txtAOMEFPCCnt,txtAOMEFPCTime,txtAOMEFPCMachine,btnAOIEFPC,txtAOIEFPCCnt,
     txtAOIEFPCTime,btnOST,txtOSTCnt,txtOSTTime,txtOSTMachine,btnAVI,txtAVICnt,txtAVITime,txtAVIMachine,
     btnFVI,txtFVICnt,txtFVITime,txtFVIMachine,btnSPI,txtSPICnt,txtSPITime,txtSPIMachine,
     btnPre,TxtPreCnt,txtPreTime,txtPreMachine,btnReflow,txtReflowCnt,txtReflowTime,txtReflowMachine,
     btnAOI,txtAOICnt,txtAOITime,txtAOIMachine,btnXRay,txtXRayCnt,txtXRayTime,txtXRayMachine,
     btnAOICOA,txtAOICOACnt,txtAOICOATime,txtAOICOAMachine,btnSMTInt,txtSMTIntCnt,txtSMTIntTime,txtSMTIntMachine,tblData1,
-    btnSPI_Click,btnPre_Click,btnOST_Click,btnAOI_Click,btnXRay_Click,btnAOICOA_Click,ddlCavity_SelectedIndexChanged,lblCavity,
+    btnAllLInk,ddlCavity_SelectedIndexChanged,lblCavity,
     txtAOIEFPCMachine,columnstblData1
 }=fn_rpt_SheetTraceView();
     return (
@@ -431,6 +431,8 @@ const{
                                         <TableCell>OST</TableCell>
                                         <TableCell>
                                             <Button
+                                             onClick={() => btnAllLInk('OST')}
+
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
@@ -579,7 +581,7 @@ const{
                                         <TableCell>SPI</TableCell>
                                         <TableCell>
                                             <Button
-                                            onClick={btnSPI_Click}
+                                           onClick={() => btnAllLInk('SPI')}
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
@@ -633,6 +635,7 @@ const{
                                         <TableCell>PreAOI</TableCell>
                                         <TableCell>
                                             <Button
+                                            onClick={() => btnAllLInk('PRE_AOI')}
                                                 variant="contained"
                                                 size="small"
                                                 sx={{
@@ -755,6 +758,7 @@ const{
                                         <TableCell>AOI</TableCell>
                                         <TableCell>
                                             <Button
+                                            onClick={() => btnAllLInk('AOI')}
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
@@ -807,6 +811,7 @@ const{
                                         <TableCell>X-RAY</TableCell>
                                         <TableCell>
                                             <Button
+                                            onClick={() => btnAllLInk('XARY')}
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
@@ -859,6 +864,7 @@ const{
                                         <TableCell>AOI Coating</TableCell>
                                         <TableCell>
                                             <Button
+                                            onClick={() => btnAllLInk('AOI_COA')}
                                                 variant="contained"
                                                 sx={{
                                                     height: "33px",
@@ -867,7 +873,7 @@ const{
                                                     width: "90%",
                                                     "&:hover": {
                                                         backgroundColor: "grey"
-                                                    }
+                                                    },...btnAOICOA.style
                                                 }}
                                             >{btnAOICOA.value}
                                             </Button>

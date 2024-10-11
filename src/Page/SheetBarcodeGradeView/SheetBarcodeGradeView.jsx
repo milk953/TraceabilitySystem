@@ -177,7 +177,6 @@ function SheetBarcodeGradeView() {
             <Table
               className="tableGvResult"
               style={{
-          
                 margin: "auto",
                 marginTop: "20px",
               }}
@@ -185,7 +184,7 @@ function SheetBarcodeGradeView() {
               columns={columns}
               pagination={false}
               size="small"
-              scroll={{  y: 450,x: 55 * 5 }} 
+              scroll={{ x: "max-content", y: 450 }}
               bordered
             />
           </div>

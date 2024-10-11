@@ -50,7 +50,7 @@ function CheckerResult() {
                     bordered
                     scroll={{ x: 'max-content' }}
                 />
-                <div style={{ marginTop: "40px" }}>
+                <div style={{ marginTop: "40px", display: 'none' }}>
                     <Table
                         dataSource={gvViewdata2}
                         columns={columnsChecker2}
@@ -62,7 +62,7 @@ function CheckerResult() {
                         scroll={{ x: 'max-content' }}
                     />
                 </div>
-                <div style={{ marginTop: "40px" }}>
+                <div style={{ marginTop: "40px", display: 'none' }}>
                     <Table
                         dataSource={gvViewdata3}
                         columns={columnsChecker3}
