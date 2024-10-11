@@ -162,7 +162,6 @@ function fn_LOTTrace() {
          return text
       },
     },
-
     {
       title: "Production Date",
       key: "Production Date",
@@ -171,7 +170,7 @@ function fn_LOTTrace() {
       render: (text, record, index) => {
          return text
       },
-    },
+    }
   ];
 
   const columnsMaterial = [

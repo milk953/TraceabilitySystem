@@ -119,9 +119,18 @@ function fn_Homepage() {
  
   const MenuHome = async () => {
     let dataMenu
+    await axios
+    .post("/api/MenuTitle", {
+      login_id: UserLogin,
+    })
+    .then((res) => {
+      dataMenu=res.data
+      
+    });
+    
     if (UserLogin == "" || UserLogin == null) {
       await axios.post("/api/menuHome", {}).then((res) => {
-        dataMenu=res.data
+        
         setmenu(res.data);
       });
     } else {
@@ -130,14 +139,15 @@ function fn_Homepage() {
           login_id: UserLogin,
         })
         .then((res) => {
-          dataMenu=res.data
+          
           setmenu(res.data);
         });
     }
+   
     const url = window.location.pathname;
     const urlSplit = url.split("/");
     const currentPath = `/${urlSplit[1]}/${urlSplit[2]}`;
-    console.log()
+    console.log(dataMenu,'dataMenu',currentPath)
     // if (dataMenu && dataMenu.length > 0) {
       for (let i = 0; i < dataMenu.length; i++) {
         

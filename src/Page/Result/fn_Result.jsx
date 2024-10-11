@@ -14,7 +14,7 @@ function fn_Result() {
   const [tblData1, settblData1] = useState(""); //เก็บข้อมูลใส่ตาราง
   const [ColumntblData1, setColumntblData1] = useState([]);
   const [DatatblData1, setDatatblData1] = useState([]); //เก็บข้อมูลใส่ExportCSV
-  const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
+  let Now =  new Date();
   const Fac = import.meta.env.VITE_FAC;
   const params = new URLSearchParams(window.location.search);
   const Url = window.location.href;
@@ -42,7 +42,7 @@ function fn_Result() {
     if(product_name==null){
         product_name=''
     }
-    if (Page == "AOICOAResult2") {
+    if (Page == "AOICOAResult2"|| Page=='AOIResult2') {
       GetDataAOICOAResult();
       setColumntblData1(columnsAoiCoaResult2);
     } else if (Page == "SPIResult") {
@@ -52,28 +52,16 @@ function fn_Result() {
       GetDataPreResult();
       setColumntblData1(columnsPreResult);
     }
-    else if(Page=='XRayResult'){
+    else if(Page=='XRayResult' ||Page=='XRayResultN1'){
       GetDataXrayResult()
-      // if (serial_no == '0') {
-      //   window.location.href = '/TraceabilitySystem/SheetTraceView'; //มีอีก
-      // }
-      // else{
-      //   window.location.href = '/TraceabilitySystem/PieceTraceView'; //มีอีก
-      // }
-
-    }
-    else if(Page=='XRayResultN1'){
-      // if (serial_no == '0') {
-      //   window.location.href = '/TraceabilitySystem/SheetTraceView'; //มีอีก
-      // }
-      // else{
-      //   window.location.href = '/TraceabilitySystem/PieceTraceView'; //มีอีก
-      // }
-
+      setColumntblData1(columnsXrayResult)
+      
       
     }else if(Page=='OSTResult'){
       GetDataOSTResult()
       setColumntblData1(columnsOSTResult)
+    }else if(Page=='AOIResult2'){
+
     }
 
   }, []);
@@ -1083,6 +1071,7 @@ function fn_Result() {
       .then((res) => {
         console.log(res.data,'GetDataXrayResult');
         settblData1(res.data);
+        setDatatblData1(res.data);
       });
   };
 
@@ -1090,7 +1079,7 @@ function fn_Result() {
    
     {
       title: "TSX_PRODUCT",
-      dataIndex: "TSX_PRODUCT_NAME",
+      dataIndex: "TSX_PRODUCT",
       key: "TSX_PRODUCT",
       align: "center",
       render: (text, record, index) => {
@@ -1098,18 +1087,99 @@ function fn_Result() {
       },
     },
     {
-      title: "OST",
-      dataIndex: "prh_sheet_no", 
-      key: "OST",
+      title: "LOT NO.",
+      dataIndex: "TSX_LOT", 
+      key: "LOT NO.",
       align: "center",
       render: (text, record, index) => {
         return text;
       },
     },
     {
-      title: "BADMARK",
-      key: "BADMARK", 
-      dataIndex: "prh_inspect_count",
+      title: "TSX_SHEET_NO",
+      key: "TSX_SHEET_NO", 
+      dataIndex: "TSX_SERIAL",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_INSPECTION_NO",
+      key: "TSX_INSPECTION_NO", 
+      dataIndex: "TSX_INSPECTION_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_SAMPLE_NO",
+      key: "TSX_SAMPLE_NO", 
+      dataIndex: "TSX_SAMPLE_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_BLOCK_NO",
+      key: "TSX_BLOCK_NO", 
+      dataIndex: "TSX_BLOCK_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_MC",
+      key: "TSX_MC", 
+      dataIndex: "TSX_MC",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_TIME_OUT",
+      key: "TSX_TIME_OUT", 
+      dataIndex: "TSX_TIME_OUT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_PROGRAM",
+      key: "TSX_PROGRAM", 
+      dataIndex: "TSX_PROGRAM",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_RESULT_PIECE",
+      key: "TSX_RESULT_PIECE", 
+      dataIndex: "TSX_RESULT_2",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_RESULT_SHEET",
+      key: "TSX_RESULT_SHEET", 
+      dataIndex: "TSX_RESULT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "TSX_MC_BRAND",
+      key: "TSX_MC_BRAND", 
+      dataIndex: "TSX_MC_BRAND",
       align: "center",
       render: (text, record, index) => {
         return text;
@@ -1118,6 +1188,177 @@ function fn_Result() {
     
     
   ]
+  //AOI_Result
+  const columnsAOIResult2 = [
+   
+    {
+      title: "Link",
+      dataIndex: "TSX_PRODUCT",
+      key: "Link",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PLANT_CODE",
+      dataIndex: "TSX_LOT", 
+      key: "PLANT_CODE",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "SHEET_NO",
+      key: "SHEET_NO", 
+      dataIndex: "TSX_SERIAL",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CABITY_NO",
+      key: "CABITY_NO", 
+      dataIndex: "TSX_INSPECTION_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "SEQ",
+      key: "SEQ", 
+      dataIndex: "TSX_SAMPLE_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "INS_COUNT",
+      key: "INS_COUNT", 
+      dataIndex: "TSX_BLOCK_NO",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "MACHINE_NAME",
+      key: "MACHINE_NAME", 
+      dataIndex: "TSX_MC",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "REFERENCE",
+      key: "REFERENCE", 
+      dataIndex: "TSX_TIME_OUT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "POSITION",
+      key: "POSITION", 
+      dataIndex: "TSX_PROGRAM",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "INSPECT_DATE",
+      key: "INSPECT_DATE", 
+      dataIndex: "TSX_RESULT_2",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "LOT_NO",
+      key: "LOT_NO", 
+      dataIndex: "TSX_RESULT",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "RESULT",
+      key: "RESULT", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "PROGRAM_NAME",
+      key: "PROGRAM_NAME", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "IMAGE_PATH",
+      key: "IMAGE_PATH", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "COMPONENT",
+      key: "COMPONENT", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_BY",
+      key: "CREATE_BY", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_PROGRAM",
+      key: "CREATE_PROGRAM", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_DATE",
+      key: "CREATE_DATE", 
+      dataIndex: "TSX_MC_BRAND",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    
+
+    
+    
+  ]
+
   //Export
   const BtnExport = async () => {
     let nameFile=''
@@ -1128,7 +1369,13 @@ function fn_Result() {
       });
     } else {
       console.log(nameFile, "nameFile");
-      nameFile=`${Page.replace(/Result2?|/g, "")}_${Now}.csv`
+      let formattedNow = Now.getFullYear().toString() + 
+      (Now.getMonth() + 1).toString().padStart(2, '0') +  // เดือนเริ่มต้นที่ 0 ต้องบวก 1
+      Now.getDate().toString().padStart(2, '0') + 
+      Now.getHours().toString().padStart(2, '0') + 
+      Now.getMinutes().toString().padStart(2, '0') + 
+      Now.getSeconds().toString().padStart(2, '0');
+      nameFile=`${Page.replace(/Result2?|/g, "")}_${formattedNow}.csv`
       exportExcelFile(ColumntblData1,DatatblData1, nameFile);
     }
   };
