@@ -27,7 +27,7 @@ function fn_Result() {
   let Serial = params.get("Serial");
   let INSPECT_DATE = params.get("INSPECT_DATE");
   let INSPECT_NO = params.get("INSPECT_NO");
-  // INSPECT_DATE INSPECT_NO
+
   //เข้ามาแล้วSearch
   useEffect(() => {
     if (panel_no == "") {
@@ -191,7 +191,7 @@ function fn_Result() {
     {
       title: "POSITION",
       key: "position", // เปลี่ยนเป็นพิมพ์เล็ก
-      dataIndex: "position", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "p_position", // เปลี่ยนเป็นพิมพ์เล็ก
       align: "center",
       render: (text, record, index) => {
         return text;
@@ -1188,176 +1188,6 @@ function fn_Result() {
     
     
   ]
-  //AOI_Result
-  const columnsAOIResult2 = [
-   
-    {
-      title: "Link",
-      dataIndex: "TSX_PRODUCT",
-      key: "Link",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "PLANT_CODE",
-      dataIndex: "TSX_LOT", 
-      key: "PLANT_CODE",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "SHEET_NO",
-      key: "SHEET_NO", 
-      dataIndex: "TSX_SERIAL",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "CABITY_NO",
-      key: "CABITY_NO", 
-      dataIndex: "TSX_INSPECTION_NO",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "SEQ",
-      key: "SEQ", 
-      dataIndex: "TSX_SAMPLE_NO",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "INS_COUNT",
-      key: "INS_COUNT", 
-      dataIndex: "TSX_BLOCK_NO",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "MACHINE_NAME",
-      key: "MACHINE_NAME", 
-      dataIndex: "TSX_MC",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "REFERENCE",
-      key: "REFERENCE", 
-      dataIndex: "TSX_TIME_OUT",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "POSITION",
-      key: "POSITION", 
-      dataIndex: "TSX_PROGRAM",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "INSPECT_DATE",
-      key: "INSPECT_DATE", 
-      dataIndex: "TSX_RESULT_2",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "LOT_NO",
-      key: "LOT_NO", 
-      dataIndex: "TSX_RESULT",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "RESULT",
-      key: "RESULT", 
-      dataIndex: "TSX_MC_BRAND",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "PROGRAM_NAME",
-      key: "PROGRAM_NAME", 
-      dataIndex: "TSX_MC_BRAND",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "IMAGE_PATH",
-      key: "IMAGE_PATH", 
-      dataIndex: "TSX_MC_BRAND",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "COMPONENT",
-      key: "COMPONENT", 
-      dataIndex: "TSX_MC_BRAND",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "CREATE_BY",
-      key: "CREATE_BY", 
-      dataIndex: "TSX_MC_BRAND",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "CREATE_PROGRAM",
-      key: "CREATE_PROGRAM", 
-      dataIndex: "TSX_MC_BRAND",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    {
-      title: "CREATE_DATE",
-      key: "CREATE_DATE", 
-      dataIndex: "TSX_MC_BRAND",
-      align: "center",
-      render: (text, record, index) => {
-        return text;
-      },
-    },
-    
-
-    
-    
-  ]
 
   //Export
   const BtnExport = async () => {
@@ -1458,8 +1288,6 @@ function fn_Result() {
       saveAs(blob, `${namefile}`);
     });
   };
-  
-  
 
   return { tblData1, ColumntblData1, BtnExport };
 }

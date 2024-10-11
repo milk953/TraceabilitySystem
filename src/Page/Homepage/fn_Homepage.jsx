@@ -147,13 +147,11 @@ function fn_Homepage() {
     const url = window.location.pathname;
     const urlSplit = url.split("/");
     const currentPath = `/${urlSplit[1]}/${urlSplit[2]}`;
-    console.log(dataMenu,'dataMenu',currentPath)
     // if (dataMenu && dataMenu.length > 0) {
       for (let i = 0; i < dataMenu.length; i++) {
         
         if (currentPath === dataMenu[i].url) {
           setMenuUrl(dataMenu[i].url)
-          // console.log(dataMenu[i].url)
           setMenuName(dataMenu[i].page_title);
           break; 
         }
@@ -174,7 +172,6 @@ function fn_Homepage() {
     window.location.href = Menu_Select;
   };
   const handleClickPath = (url) => {
-    console.log(url)
     if(url!='HOME'){
       window.location.href = url;
     }
