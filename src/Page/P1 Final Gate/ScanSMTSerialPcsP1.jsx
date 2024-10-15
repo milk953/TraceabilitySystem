@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import "../Common/StyleCommon.css";
 import "./ScanSMTSerialPcsP1.css";
@@ -41,8 +41,20 @@ function ScanSMTSerialPcsP1() {
     gvSerial,
     txtSerial,
     setTxtSerial,
-    ddlproduct_Change
+    ddlProductState,
+    ddlproduct_Change,
+    ibtBack_Click,
+    textScanLotChange,
+    btnCancel_Click,
+    btnSvae_Click,
+    handletxtSerialChange,
+    columns
   } = fn_ScanSMTSerialPcsP1();
+  useEffect(() => {
+    if(panalSerialState == true){
+      document.getElementById("txtSerial_0").focus();
+    }
+  }, [panalSerialState]);
   return (
     <>
       <Header />
@@ -80,11 +92,16 @@ function ScanSMTSerialPcsP1() {
                         onChange={(e) => {
                           setScanLot(e.target.value);
                         }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            textScanLotChange(e);
+                          }
+                        }}
                         value={scanLot}
                       />
                     </TableCell>
                     <TableCell>
-                      <Button>
+                      <Button onClick={ibtBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -104,6 +121,7 @@ function ScanSMTSerialPcsP1() {
                               setProductSelected(e.target.value);
                               ddlproduct_Change(e.target.value);
                             }}
+                            disabled = {ddlProductState}
                             value={productSelected}
                           >
                             {ddlproduct.map((item) => (
@@ -152,7 +170,7 @@ function ScanSMTSerialPcsP1() {
               )}
               &nbsp;&nbsp;
               {panalSerialState && (
-                <Table classname="P1FGgvSerial" component={Card}>
+                <Table className="P1FGgvSerial" component={Card}>
                   <TableHead
                     className="gvSerialHead"
                     style={{ background: "#12422e" }}
@@ -198,12 +216,12 @@ function ScanSMTSerialPcsP1() {
                           }}
                           maxLength="30"
                           value={txtSerial[index]}
-                        //   onKeyDown={(e) => {
-                        //     if (e.key === "Enter") {
-                        //       handletxtSerialChange(index, e);
-                        //     }
-                        //   }}
-                        //   onChange={(e) => handletxtSerialChange(index, e)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handletxtSerialChange(index, e);
+                            }
+                          }}
+                          onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
                       </TableRow>
@@ -217,9 +235,9 @@ function ScanSMTSerialPcsP1() {
                           gap: "10px",
                         }}
                       >
-                        <Button className="BtSave">SAVE</Button>
+                        <Button className="BtSave" onClick={btnSvae_Click}>SAVE</Button>
                         &nbsp;&nbsp;
-                        <Button className="BtCancel"> Cancel</Button>
+                        <Button className="BtCancel" onClick={btnCancel_Click}> Cancel</Button>
                       </TableCell>
                     </TableRow>
                   </TableBody>
