@@ -204,11 +204,11 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
           
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
-            <Route path="/TraceabilitySystem/ScanSMTSerialPcsP1" element={<ScanSMTSerialPcsP1 />} />
             
 
             {/* P1 */}
             <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
+            <Route path="/TraceabilitySystem/ScanSMTSerialPcsP1" element={<ScanSMTSerialPcsP1 />} />
             
             
           </Route>

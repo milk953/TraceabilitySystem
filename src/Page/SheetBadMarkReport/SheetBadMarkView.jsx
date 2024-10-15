@@ -186,6 +186,7 @@ function SheetBadMarkView() {
               columns={columns}
               pagination={false}
               scroll={{ x: 55 * 5 }}
+              bordered
             />
           </div>
         )}
