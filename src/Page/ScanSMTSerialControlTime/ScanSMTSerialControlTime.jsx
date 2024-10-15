@@ -42,7 +42,6 @@ function ScanSMTSerialControlTime() {
     return (
         <div>
             <Hearder />
-            <h1>Confirm Process Time</h1>
             <Card
                 component={Paper}
                 className="Card-Common"

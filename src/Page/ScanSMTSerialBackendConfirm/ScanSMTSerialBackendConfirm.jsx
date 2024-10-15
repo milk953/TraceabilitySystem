@@ -41,7 +41,6 @@ function ScanSMTSerialBackendConfirm() {
     return (
         <div>
             <Hearder />
-            <h1>SMT Backend E-Mapping</h1>
             <Card
                 component={Paper}
                 className="Card-Common"

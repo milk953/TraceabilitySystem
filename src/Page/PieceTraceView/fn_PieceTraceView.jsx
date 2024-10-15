@@ -198,7 +198,7 @@ function fn_PieceTraceView() {
   const [btnAOIFColor, setbtnAOIFColor] = useState("");
   const [btnAOIBColor, setbtnAOIBColor] = useState("");
   const [btnXRAY_FColor, setbtnXRAY_FColor] = useState("");
-  const [btnbtnXRAY_BColor, setbtnXRAY_BColor] = useState("");
+  const [btnXRAY_BColor, setbtnXRAY_BColor] = useState("");
   const [btnAOICOAFColor, setbtnAOICOAFColor] = useState("");
   const [btnAOICOABColor, setbtnAOICOABColor] = useState("");
   const [btnSMTIntFColor, setbtnSMTIntFColor] = useState("");
@@ -650,12 +650,12 @@ function fn_PieceTraceView() {
             if (SheetType === "S") {
               if (BarcodeSide === "F") {
                 sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
-                window.open(linkfinalGate, '_blank');
+                let link= `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
+                window.open(link, '_blank');
               } else {
                 sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoB}&BlockNo=${txtPcsNo}`;
-                window.open(linkfinalGate, '_blank');
+                let link = `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoB}&BlockNo=${txtPcsNo}`;
+                window.open(link, '_blank');
               }
             } else {
               sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
@@ -668,19 +668,19 @@ function fn_PieceTraceView() {
             if (SheetType === "S") {
               if (BarcodeSide === "F") {
                 sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/A1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
-                window.open(linkfinalGate, '_blank');
+                let link = `http://10.17.100.236/Reports/report/Traceability%20Reports/A1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
+                window.open(link, '_blank');
               } else {
                 sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                let linkfinalGate = `http://10.17.100.236/Reports/report/Traceability%20Reports/A1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoB}&BlockNo=${txtPcsNo}`;
-                window.open(linkfinalGate, '_blank');
+                let link = `http://10.17.100.236/Reports/report/Traceability%20Reports/A1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoB}&BlockNo=${txtPcsNo}`;
+                window.open(link, '_blank');
               }
             } else {
               sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-              let linkfinalGate = ``;
-              window.open(linkfinalGate, '_blank');
+              let link = ``;
+              window.open(link, '_blank');
               sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
-              window.open(linkfinalGate, '_blank');
+              window.open(link, '_blank');
             }
           }
         }
@@ -2473,8 +2473,8 @@ function fn_PieceTraceView() {
       } else {
         PanelNo = txtPcsNo;
       }
-      let linkfinalGate = `/TraceabilitySystem/SPIResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${PanelNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkSPIResult = `/TraceabilitySystem/SPIResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${PanelNo}`;
+      window.open(linkSPIResult, '_blank');
     } else {
       setlblMessage("Please input PieceNo and click Retrive.");
     }
@@ -2482,8 +2482,8 @@ function fn_PieceTraceView() {
 
   const btnOST_Click = async () => {
     if (hfOSTSheetNo !== "") {
-      let linkfinalGate = `/TraceabilitySystem/OSTResultPiece?sheet_no=${hfOSTSheetNo}&pcs_no=${hfOSTPcsNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkOSTResultPiece = `/TraceabilitySystem/OSTResultPiece?sheet_no=${hfOSTSheetNo}&pcs_no=${hfOSTPcsNo}`;
+      window.open(linkOSTResultPiece, '_blank');
     }
   };
 
@@ -2495,8 +2495,8 @@ function fn_PieceTraceView() {
         localStorage.setItem("SHEET_SIDE", "F");
         localStorage.setItem("PIECE_NO", txtPcsNo);
         localStorage.setItem("PRE_RESULT", btnPreAOIF);
-        let linkfinalGate = `/TraceabilitySystem/PREResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&piece_no=${txtPcsNo}&pre_result=${btnPreAOIF}`;
-        window.open(linkfinalGate, '_blank');
+        let linkPREResult = `/TraceabilitySystem/PREResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&piece_no=${txtPcsNo}&pre_result=${btnPreAOIF}`;
+        window.open(linkPREResult, '_blank');
       }
     }
   };
@@ -2505,8 +2505,8 @@ function fn_PieceTraceView() {
     if (txtPreAOICntB !== "") {
       if (hidAOIB === "") {
         localStorage.setItem("SHEET_SIDE", "B");
-        let linkfinalGate = `/TraceabilitySystem/PREResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&piece_no=${txtPcsNo}&pre_result=${btnPreAOIB}`;
-        window.open(linkfinalGate, '_blank');
+        let linkPREResult = `/TraceabilitySystem/PREResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&piece_no=${txtPcsNo}&pre_result=${btnPreAOIB}`;
+        window.open(linkPREResult, '_blank');
       }
     }
   };
@@ -2525,37 +2525,37 @@ function fn_PieceTraceView() {
         PanelNo = txtPcsNo;
       }
       localStorage.setItem("PANEL_NO", PanelNo);
-      let linkfinalGate = `/TraceabilitySystem/SPIResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${PanelNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkSPIResult = `/TraceabilitySystem/SPIResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${PanelNo}`;
+      window.open(linkSPIResult, '_blank');
     }
   };
 
 
   const btnAOIF_Click = async () => {
     if (txtAOICntF !== "" && btnAOIF !== "OK") {
-      let linkfinalGate = `/TraceabilitySystem/AOIResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkAOIResult = `/TraceabilitySystem/AOIResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkAOIResult, '_blank');
     }
   };
 
   const btnAOIB_Click = async () => {
     if (txtAOICntB !== "" && btnAOIB !== "OK") {
-      let linkfinalGate = `/TraceabilitySystem/AOIResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkAOIResult = `/TraceabilitySystem/AOIResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkAOIResult, '_blank');
     }
   };
 
   const btnReject1_Click = async () => {
     if (txtRejectCnt1 !== "") {
-      let linkfinalGate = `/TraceabilitySystem/RejectResult?serial_no=${txtSerialNo}&rej_order=1`;
-      window.open(linkfinalGate, '_blank');
+      let linkRejectResult = `/TraceabilitySystem/RejectResult?serial_no=${txtSerialNo}&rej_order=1`;
+      window.open(linkRejectResult, '_blank');
     }
   };
 
   const btnTouchUp_Click = async () => {
     if (txtTouchUpCnt !== "") {
-      let linkfinalGate = `/TraceabilitySystem/TouchUpResult?serial_no=${txtSerialNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkTouchUpResult = `/TraceabilitySystem/TouchUpResult?serial_no=${txtSerialNo}`;
+      window.open(linkTouchUpResult, '_blank');
     }
   };
 
@@ -2566,8 +2566,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("CHECK_ID", lblCheckID1);
       switch (lblKeyType1) {
         case "1":
-          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType1}&PRODUCT_NAME=${txtProduct}`;
-          window.open(linkfinalGate, '_blank');
+          let linkCheckerResult = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType1}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkCheckerResult, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx") มีtableที่ไม่ใช้แล้ว
         case "3":
@@ -2586,8 +2586,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType2);
       switch (lblKeyType2) {
         case "1":
-          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType2}&PRODUCT_NAME=${txtProduct}`;
-          window.open(linkfinalGate, '_blank');
+          let linkCheckerResult = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType2}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkCheckerResult, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2606,8 +2606,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType3);
       switch (lblKeyType3) {
         case "1":
-          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType3}&PRODUCT_NAME=${txtProduct}`;
-          window.open(linkfinalGate, '_blank');
+          let linkCheckerResult = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType3}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkCheckerResult, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2626,8 +2626,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType4);
       switch (lblKeyType4) {
         case "1":
-          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType4}&PRODUCT_NAME=${txtProduct}`;
-          window.open(linkfinalGate, '_blank');
+          let linkCheckerResult = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType4}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkCheckerResult, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2646,8 +2646,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType5);
       switch (lblKeyType5) {
         case "1":
-          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType5}&PRODUCT_NAME=${txtProduct}`;
-          window.open(linkfinalGate, '_blank');
+          let linkCheckerResult = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType5}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkCheckerResult, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2666,8 +2666,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType6);
       switch (lblKeyType6) {
         case "1":
-          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType6}&PRODUCT_NAME=${txtProduct}`;
-          window.open(linkfinalGate, '_blank');
+          let linkCheckerResult = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType6}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkCheckerResult, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2686,8 +2686,8 @@ function fn_PieceTraceView() {
       localStorage.setItem("TEST_TYPE", lblTestType7);
       switch (lblKeyType7) {
         case "1":
-          let linkfinalGate = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType7}&PRODUCT_NAME=${txtProduct}`;
-          window.open(linkfinalGate, '_blank');
+          let linkCheckerResult = `/TraceabilitySystem/CheckerResult?serial_no=${txtSerialNo}&test_type=${lblTestType7}&PRODUCT_NAME=${txtProduct}`;
+          window.open(linkCheckerResult, '_blank');
         case "2":
         //Response.Redirect("Checker_Result2.aspx")
         case "3":
@@ -2717,18 +2717,16 @@ function fn_PieceTraceView() {
   const btnXRAY_Click = async () => {
     if (btnXRAY_F !== "") {
       localStorage.setItem("LOT_NO", hypLotNo);
-      localStorage.setItem("INSPECT_NO", txtXRAYCnt_F);
-      localStorage.setItem("INSPECT_DATE", txtXRAYTime_F);
-      let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoF}&serial_no=${txtSerialNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkXRayResult = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoF}&INSPECT_NO=${txtXRAYCnt_F}&INSPECT_DATE=${txtXRAYTime_F}`;
+      window.open(linkXRayResult, '_blank');
       localStorage.setItem("SERIAL", txtSerialNo);
     }
   };
 
   const btnXRAY_B_Click = async () => {
     if (btnXRAY_B !== "") {
-      let linkfinalGate = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoB}&serial_no=${txtSerialNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkXRayResult = `/TraceabilitySystem/XRayResult?sheet_no=${hypSheetNoB}&serial_no=${txtSerialNo}`;
+      window.open(linkXRayResult, '_blank');
     };
   };
 
@@ -2740,15 +2738,15 @@ function fn_PieceTraceView() {
 
   const btnAOICOAF_Click = async () => {
     if (txtAOICOACntF !== "" && btnAOICOAF !== "OK") {
-      let linkfinalGate = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkAOICOAResult = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoF}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkAOICOAResult, '_blank');
     }
   };
 
   const btnAOICOAB_Click = async () => {
     if (txtAOICOACntB !== "" && btnAOICOAB !== "OK") {
-      let linkfinalGate = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
-      window.open(linkfinalGate, '_blank');
+      let linkAOICOAResult = `/TraceabilitySystem/AOICOAResult?sheet_no=${hypSheetNoB}&PRODUCT_NAME=${txtProduct}&panel_no=${txtPcsNo}`;
+      window.open(linkAOICOAResult, '_blank');
     }
   };
 
@@ -2774,7 +2772,7 @@ function fn_PieceTraceView() {
     btnAOIF, btnAOIB, btnXRAY_F, btnXRAY_B, btnAOICOAF, btnAOICOAB, btnSMTIntF, btnSMTIntB, btnReject1, btnTouchUp, btnBending, btnELT1, btnELT2, btnELT3, btnELT4, btnELT5, btnELT6,
     btnELT7, btnFQC, btnFinalGate, btnScanPack, txtSPICntBColor, txtSPITimeBColor, txtPreAOICntBColor, txtPreTimeBColor, txtAOICntBColor, txtAOITimeBColor, txtSPICntFColor, txtSPITimeFColor,
     txtPreAOICntFColor, txtPreTimeFColor, txtAOICntFColor, txtAOITimeFColor, btnAOMEFPCColor, btnAOIEFPCColor, btnBarcodeGradeColor, btnOSTColor, btnAVIFColor, btnAVIBColor, btnAVIMarkFColor,
-    btnAVIMarkBColor, btnSPIFColor, btnSPIBColor, btnPreAOIFColor, btnPreAOIBColor, btnReflowFColor, btnReflowBColor, btnAOIFColor, btnAOIBColor, btnXRAY_FColor, btnbtnXRAY_BColor,
+    btnAVIMarkBColor, btnSPIFColor, btnSPIBColor, btnPreAOIFColor, btnPreAOIBColor, btnReflowFColor, btnReflowBColor, btnAOIFColor, btnAOIBColor, btnXRAY_FColor, btnXRAY_BColor,
     btnAOICOAFColor, btnAOICOABColor, btnSMTIntFColor, btnSMTIntBColor, btnReject1Color, btnTouchUpColor, btnBendingColor, btnELT1Color, btnELT2Color, btnELT3Color, btnELT4Color, btnELT5Color,
     btnELT6Color, btnELT7Color, btnFQCColor, btnFinalGateColor, btnScanPackColor, btnPreAOIF_Click, btnClear_Click, btnSPIB_Click, btnPreAOIB_Click, btnAOIF_Click, btnAOIB_Click, btnReject1_Click,
     btnTouchUp_Click, btnELT1_Click, btnELT2_Click, btnELT3_Click, btnELT4_Click, btnELT5_Click, btnELT6_Click, btnELT7_Click, btnXRAY_Click, btnXRAY_B_Click, btnFinalGate_Click, btnAOICOAF_Click,

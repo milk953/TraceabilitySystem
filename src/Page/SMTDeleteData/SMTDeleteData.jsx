@@ -45,7 +45,6 @@ function SMTDeleteData() {
     return (
         <div>
             <Header />
-            <h1>SMTDeleteData</h1>
             <Box
                 sx={{
                     display: "flex",
