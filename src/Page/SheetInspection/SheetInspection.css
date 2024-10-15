@@ -1,6 +1,5 @@
 .TbSheetInspection {
     margin: auto;
-    width: 700px;
 }
 
 .TbSheetInspection th {
@@ -12,4 +11,44 @@
 
 .TbSheetInspection td {
     padding: 4px;
+}
+
+.BtExcute {
+    background-color: #1A5D1A !important;
+    color: #fff !important;
+    height: 33px;
+}
+
+.tableGvData {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
+    padding-left: 35px;
+}
+
+.tableGvData .ant-table-thead>tr>th {
+    background-color: #31363F;
+    color: white;
+}
+
+.tableGvData td {
+    font-size: 15px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.tableGvDataXOut {
+    width: 68%;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
+    padding-left: 35px;
+}
+
+.tableGvDataXOut .ant-table-thead>tr>th {
+    background-color: #31363F;
+    color: white;
+}
+
+.tableGvDataXOut td {
+    font-size: 15px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
