@@ -45,7 +45,6 @@ function ScanSMTSerialPcsAutoTray() {
     return (
         <div>
             <Header />
-            <h1>Final Gate Only Good</h1>
             <Card
                 component={Paper}
                 className="Card-Common"

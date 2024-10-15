@@ -46,7 +46,6 @@ function ScanSMTSerialRecordTime() {
     return (
         <div>
             <Hearder />
-            <h1>Serial/Sheet Record Time</h1>
             <Card
                 component={Paper}
                 className="Card-Common"
