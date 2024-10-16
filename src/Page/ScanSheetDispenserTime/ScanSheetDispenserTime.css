@@ -8,10 +8,13 @@
   #DispenserTableMain {
     width: 600px !important;
     margin: 0 auto;
+   
   }
   #DispenserTableMain th {
     text-align: center;
     font-size: 38px;
+     background-color: #8c8c8c;
+    color:white;
   }
   
   .DispenserpnlResult {
@@ -22,6 +25,7 @@
   }
   #DispenserTableResult {
     height: 180px;
+    background: #EFBC9B;
   }
   #DispenserTableResult td {
     /* font-size: 80px; */

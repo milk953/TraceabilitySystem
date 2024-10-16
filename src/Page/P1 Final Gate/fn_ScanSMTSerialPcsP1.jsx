@@ -196,7 +196,6 @@ function fn_ScanSMTSerialPcsP1() {
     SetMode("LOT");
   }
   const textScanLotChange = async (e) => {
-    // setScanLot(e.target.value);
     let _strLot_V = e.target.value;
     if (_strLot_V != "") {
       let _strPrdName = "";
@@ -362,8 +361,6 @@ function fn_ScanSMTSerialPcsP1() {
           result = res.data.row_count;
         });
         return result;
-      } else if (type == "GetCheckSumSerial") {
-        //Check อีกที
       } else if (type == "GetSheetNoBySerialNo") {
         let response = "";
         await axios
@@ -460,7 +457,7 @@ function fn_ScanSMTSerialPcsP1() {
         (hiddenParams.hfTrayFlag = data[0].slm_tray_flag),
         (hiddenParams.hfTrayLength = data[0].slm_tray_length),
         (hiddenParams.hfTestResultFlag = data[0].slm_test_result_flag),
-        // (hiddenParams.hfSerialCount = data[0].slm_serial_count),
+        // (hiddenParams.hfSerialCount = data[0].slm_serial_count), // เปลี่ยนกลับ
         (hiddenParams.hfSerialCount = 3),
         (hiddenParams.hfAutoScan = data[0].slm_auto_scan),
         (hiddenParams.hfConfigCheck = data[0].prm_barcode_req_config),
@@ -829,7 +826,7 @@ function fn_ScanSMTSerialPcsP1() {
             if(!_bolError && hiddenParams.hfCheckSPIAOI == 'Y'){
               let _Result = '';
               let _strMessage = '';
-              // _Result = BIZ_ScanSMTSerial.Get_SPI_AOI_RESULT_P1(Session("PLANT_CODE"), Session("PRODUCT_KIND"), _strSerial, _strMessage, hfCheckPreAOIF.Value, hfCheckPreAOIB.Value, hfCheckAOIF.Value, hfCheckAOIB.Value, hfCheckSPIF.Value, hfCheckSPIB.Value)
+              // _Result = BIZ_ScanSMTSerial.Get_SPI_AOI_RESULT_P1(Session("PLANT_CODE"), Session("PRODUCT_KIND"), _strSerial, _strMessage, hfCheckPreAOIF.Value, hfCheckPreAOIB.Value, hfCheckAOIF.Value, hfCheckAOIB.Value, hfCheckSPIF.Value, hfCheckSPIB.Value) ทำ api
               if(_Result == 'NG'){
                 _strScanResultUpdate = _Result;
                 _strMessageUpdate = _strMessage;
