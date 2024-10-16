@@ -10,6 +10,7 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetBakeTime.css";
@@ -66,7 +67,7 @@ function ScanSheetBakeTime() {
     <>
       <Hearder />
       <h1>Baking Time</h1>
-      <Table id="TableMainBaking" component={Paper}>
+      <Table id="TableMainBaking" component={Card}>
         <TableHead>
           <TableRow>
             <TableCell colSpan={3}>Baking Record Time</TableCell>

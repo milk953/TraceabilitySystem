@@ -931,7 +931,7 @@ function fn_ScanSMTSerialPcsChrome() {
                 await axios
                   .post("/api/Common/GetSerialDuplicate", {
                     dataList: {
-                      strFghSerialNo: strFghSerialNo,
+                      strFghSerialNo: Mid(_strSerial, CInt(hfDuplicateStart), ((CInt(hfDuplicateEnd) - CInt(hfDuplicateStart)) + 1)),
                       strPlantCode: Fac,
                     },
                   })

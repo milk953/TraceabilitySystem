@@ -8,6 +8,7 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 import "./ScanSheetReflowTime.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -50,7 +51,7 @@ function ScanSheetReflowTime() {
       <Hearder />
       <h1>123</h1>
         <div className="pnlMain">
-          <Table id="TableMain" component={Paper}>
+          <Table id="TableMain" component={Card}>
             <TableHead>
               <TableRow>
                 <TableCell colSpan={3}>Reflow Control Time</TableCell>

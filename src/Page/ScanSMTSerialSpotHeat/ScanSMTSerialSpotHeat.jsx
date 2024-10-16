@@ -40,13 +40,13 @@ function ScanSMTSerialSpotHeat() {
   return (
     <div>
       <Hearder />
-      <h1>ConfirmBarcodeGrade</h1>
+     
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
               <Table
-                className="TableMot1"
+                className="ScanSMT"
                 component={Card}
                 sx={{ width: "100%" }}
               >
@@ -152,25 +152,14 @@ function ScanSMTSerialSpotHeat() {
               {pnlLog == true && (
                 <Card
                   component={Paper}
-                  style={{
-                    width: "400px",
-                    height: "40px",
-                    margin: "auto",
-
-                    textAlign: "center",
-                    background: "#BB2525",
-                    paddingTop: "18px",
-                    color: "yellow", // กำหนดสีฟอนต์เป็นสีเหลือง
-                    fontWeight: "bold", // กำหนดความหนาของฟอนต์
-                    marginTop: "30px",
-                  }}
+                  className="Card-lblLog"
                 >
                   {lblLog}
                 </Card>   )}
                 {visiblgvSerial == true && (
               <Table className="CSS-GvSerial" component={Card}
-              style={{ marginTop: "20px",}}
-              inputRef={fcGvSerial}>
+                  style={{ marginTop: "20px",}}
+                  inputRef={fcGvSerial}>
                 <TableHead>
 
                   <TableCell
@@ -256,27 +245,23 @@ function ScanSMTSerialSpotHeat() {
                 </TableBody>
               </Table>)}
             </Grid>
-            {/* border:'1PX SOLID green' */}
+          
             <Grid
               item
               xs={10}
               md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
-            >{visiblegvScanResult == false && (<>
+            >
+              {visiblegvScanResult == false && (
+                <>
               <img
-                style={{
-                  width: "420px",
-                  height: "350px",
-                  marginBottom: "30px",
-                }}
-                src={Pageimg} // Import the image
-                alt="Description of the image"
+                className="Img1"
+                src={Pageimg}
+                
               />
               </>)}
               {visiblegvScanResult == true && (
@@ -293,69 +278,6 @@ function ScanSMTSerialSpotHeat() {
                     style={{ paddingTop: "3px", color: "#fff" }}
                   >{lblResult.text}</Typography>
                 </Paper>
-                {/* <Table
-                  className="CSS-GvScanResult"
-                  // style={{ display: gvScanResult }}
-                  component={Card}
-                >
-                  <TableHead>
-                    <TableRow>
-                     
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                        width="200px"
-                      >
-                        No.
-                      </TableCell>
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                        width="200px"
-                      >
-                        Serial No.
-                      </TableCell>
-                      
-                      <TableCell
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
-                        width="150px"
-                      >
-                        Scan Result
-                      </TableCell>
-                      <TableCell width="300px">Remark</TableCell>
-                    </TableRow>
-                  </TableHead>
-
-              
-                  {Array.from(
-                        { length: gvScanResult.length },
-                        (_, index) => (
-                          <TableRow key={index}>
-                        
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center'}}
-                            >
-                              {gvScanResult[index].SEQ}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' }}
-                            >
-                              {gvScanResult[index].SERIAL}
-                            </TableCell>
-                            
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center',background: gvScanResult[index].SCAN_RESULT  =='NO'? "#ff4d4f":""
-                              }}
-                            >
-                              {gvScanResult[index].SCAN_RESULT}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' }}
-                            >
-                              {gvScanResult[index].REMARK}
-                            </TableCell>
-                          </TableRow>
-                        )
-                      )}
-                </Table> */}
               <br/>
                 <AntTable 
                 columns={columns}

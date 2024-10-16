@@ -66,7 +66,7 @@ function fn_Material_Trace() {
   const createLink= (text) => {
     return (
       <a
-        href={`/TraceabilitySystem/LOT_Trace?LOTNO=${text}`}
+        href={`/TraceabilitySystem/LotTraceView?lot=${text}`}
         target="_blank"
         rel="noopener noreferrer"
       >
