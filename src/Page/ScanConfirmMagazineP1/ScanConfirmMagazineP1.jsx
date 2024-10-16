@@ -228,13 +228,20 @@ function ScanConfirmMagazineP1() {
                   </TableRow>
                 </TableBody>
               </Table>
-
-              {/* {lblpnlLog.visble == true && (
-                <Paper elevation={3} className="Card-lblLog">
-                  {lblpnlLog.value}
+{/* 
+              {txtOperator.value !== "" && (
+                <Paper
+                  elevation={3}
+                  className="ManglblLog"
+                  style={{
+                    width: "50%",
+                    color: lblResult.value == "OK" ? "#059212" : "#FF0066",
+                  }}
+                >
+                  {lblResult.value}
                 </Paper>
               )} */}
-
+              {/* 200784420 */}
               <Paper
                 elevation={3}
                 className="ManglblLog"
