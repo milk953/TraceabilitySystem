@@ -81,6 +81,7 @@ import CheckerResult from "./Page/CheckerResult/CheckerResult";
 import AOICOAResult from "./Page/AOICOAResult/AOICOAResult";
 import ScanSMTSerialPcsP1 from "./Page/P1 Final Gate/ScanSMTSerialPcsP1";
 import SheetInspection from "./Page/SheetInspection/SheetInspection";
+import P1ConnectBoard from "./Page/P1 Connect Board/P1ConnectBoard";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -184,6 +185,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/AOICOAResult" element={<AOICOAResult />} />
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
             <Route path="/TraceabilitySystem/SheetInspection" element={<SheetInspection />} />
+            <Route path="/TraceabilitySystem/P1ConnectBoard" element={<P1ConnectBoard />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
