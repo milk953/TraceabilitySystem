@@ -10,6 +10,7 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetOvenTime.css";
@@ -43,7 +44,7 @@ function ScanSheetOvenTime() {
       <Hearder />
       <h1>123</h1>
       <div className="pnlMainOvenTime">
-        <Table id="TableMainOvenTime" component={Paper}>
+        <Table id="TableMainOvenTime" component={Card}>
           <TableHead>
             <TableRow>
               <TableCell colSpan={3} rowSpan={3}>

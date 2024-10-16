@@ -12,6 +12,8 @@
 #TableMain th {
   text-align: center;
   font-size: 38px;
+  background-color: #8c8c8c;
+  color:white;
 }
 
 .pnlResult {
@@ -22,6 +24,7 @@
 }
 #TableResult {
   height: 180px;
+  background: #EFBC9B;
 }
 #TableResult td {
   /* font-size: 80px; */

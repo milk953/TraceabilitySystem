@@ -45,7 +45,6 @@ function ScanSheetInspect() {
     return (
         <div>
             <Header />
-            <h1>ScanSheetInspect</h1>
             <Card
                 component={Paper}
                 className="Card-Common"

@@ -52,7 +52,7 @@ function PieceTraceView() {
         btnAOIF, btnAOIB, btnXRAY_F, btnXRAY_B, btnAOICOAF, btnAOICOAB, btnSMTIntF, btnSMTIntB, btnReject1, btnTouchUp, btnBending, btnELT1, btnELT2, btnELT3, btnELT4, btnELT5, btnELT6,
         btnELT7, btnFQC, btnFinalGate, btnScanPack, txtSPICntBColor, txtSPITimeBColor, txtPreAOICntBColor, txtPreTimeBColor, txtAOICntBColor, txtAOITimeBColor, txtSPICntFColor, txtSPITimeFColor,
         txtPreAOICntFColor, txtPreTimeFColor, txtAOICntFColor, txtAOITimeFColor, btnAOMEFPCColor, btnAOIEFPCColor, btnBarcodeGradeColor, btnOSTColor, btnAVIFColor, btnAVIBColor, btnAVIMarkFColor,
-        btnAVIMarkBColor, btnSPIFColor, btnSPIBColor, btnPreAOIFColor, btnPreAOIBColor, btnReflowFColor, btnReflowBColor, btnAOIFColor, btnAOIBColor, btnXRAY_FColor, btnbtnXRAY_BColor,
+        btnAVIMarkBColor, btnSPIFColor, btnSPIBColor, btnPreAOIFColor, btnPreAOIBColor, btnReflowFColor, btnReflowBColor, btnAOIFColor, btnAOIBColor, btnXRAY_FColor, btnXRAY_BColor,
         btnAOICOAFColor, btnAOICOABColor, btnSMTIntFColor, btnSMTIntBColor, btnReject1Color, btnTouchUpColor, btnBendingColor, btnELT1Color, btnELT2Color, btnELT3Color, btnELT4Color, btnELT5Color,
         btnELT6Color, btnELT7Color, btnFQCColor, btnFinalGateColor, btnScanPackColor, btnPreAOIF_Click, btnClear_Click, btnSPIB_Click, btnPreAOIB_Click, btnAOIF_Click, btnAOIB_Click, btnReject1_Click,
         btnTouchUp_Click, btnELT1_Click, btnELT2_Click, btnELT3_Click, btnELT4_Click, btnELT5_Click, btnELT6_Click, btnELT7_Click, btnXRAY_Click, btnXRAY_B_Click, btnFinalGate_Click, btnAOICOAF_Click,
@@ -282,21 +282,20 @@ function PieceTraceView() {
                                 <TableBody>
                                     <TableRow>
                                         <TableCell rowSpan={"6"}
-                                            // sx={{ backgroundColor: "#E5D9F2" }}
+                                        // sx={{ backgroundColor: "#E5D9F2" }}
                                         >
                                             EFPC
                                         </TableCell>
                                         <TableCell>AOM / Via AOI</TableCell>
                                         <TableCell style={{ width: "100px" }}>
                                             <Button
-                                                variant="contained"
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAOMEFPCColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAOMEFPCColor
                                                     }
                                                 }}
                                                 disabled={btnAOMEFPC.disabled}
@@ -336,14 +335,14 @@ function PieceTraceView() {
                                         <TableCell>AOI E-FPC</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAOIEFPCColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAOIEFPCColor
                                                     }
                                                 }}
                                                 disabled={btnAOIEFPC.disabled}
@@ -387,14 +386,14 @@ function PieceTraceView() {
                                             <TableCell>
 
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnBarcodeGradeColor,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnBarcodeGradeColor
                                                         }
                                                     }}
                                                 >
@@ -429,14 +428,14 @@ function PieceTraceView() {
                                         <TableCell>OST</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnOSTColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnOSTColor
                                                     }
                                                 }}
                                                 disabled={btnOST.disabled}
@@ -477,14 +476,14 @@ function PieceTraceView() {
                                         <TableCell>AVI</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAVIFColor
                                                     }
                                                 }}
                                                 disabled={btnAVIF.disabled}
@@ -521,14 +520,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell style={{ width: "100px" }}>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAVIBColor
                                                     }
                                                 }}
                                                 disabled={btnAVIB.disabled}
@@ -568,14 +567,14 @@ function PieceTraceView() {
                                         <TableCell>FVI</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIMarkFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAVIMarkFColor
                                                     }
                                                 }}
                                                 disabled={btnAVIMarkF.disabled}
@@ -612,14 +611,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIMarkBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAVIMarkBColor
                                                     }
                                                 }}
                                                 disabled={btnAVIMarkB.disabled}
@@ -660,14 +659,14 @@ function PieceTraceView() {
                                         <TableCell>SPI</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnSPIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnSPIFColor
                                                     }
                                                 }}
                                                 disabled={btnSPIF.disabled}
@@ -713,14 +712,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnSPIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnSPIBColor
                                                     }
                                                 }}
                                                 onClick={btnSPIB_Click}
@@ -770,14 +769,14 @@ function PieceTraceView() {
                                         <TableCell>PreAOI</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnPreAOIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnPreAOIFColor
                                                     }
                                                 }}
                                                 onClick={btnPreAOIF_Click}
@@ -823,14 +822,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnPreAOIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnPreAOIBColor
                                                     }
                                                 }}
                                                 onClick={btnPreAOIB_Click}
@@ -880,14 +879,14 @@ function PieceTraceView() {
                                         <TableCell>Reflow</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnReflowFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnReflowFColor
                                                     }
                                                 }}
                                                 disabled={btnReflowF.disabled}
@@ -924,14 +923,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnReflowBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnReflowBColor
                                                     }
                                                 }}
                                                 disabled={btnReflowB.disabled}
@@ -972,14 +971,14 @@ function PieceTraceView() {
                                         <TableCell>AOI</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAOIFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAOIFColor
                                                     }
                                                 }}
                                                 onClick={btnAOIF_Click}
@@ -1025,14 +1024,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAOIBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAOIBColor
                                                     }
                                                 }}
                                                 onClick={btnAOIB_Click}
@@ -1082,14 +1081,14 @@ function PieceTraceView() {
                                         <TableCell>X-RAY</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnXRAY_FColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnXRAY_FColor
                                                     }
                                                 }}
                                                 onClick={btnXRAY_Click}
@@ -1126,14 +1125,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
-                                                    backgroundColor: btnbtnXRAY_BColor,
+                                                    backgroundColor: btnXRAY_BColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnXRAY_BColor
                                                     }
                                                 }}
                                                 onClick={btnXRAY_B_Click}
@@ -1174,14 +1173,14 @@ function PieceTraceView() {
                                         <TableCell>AOI Coating</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAOICOAFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAOICOAFColor
                                                     }
                                                 }}
                                                 onClick={btnAOICOAF_Click}
@@ -1219,14 +1218,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnAOICOABColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnAOICOABColor
                                                     }
                                                 }}
                                                 onClick={btnAOICOAB_Click}
@@ -1268,14 +1267,14 @@ function PieceTraceView() {
                                         <TableCell>SMT-INT</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnSMTIntFColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnSMTIntFColor
                                                     }
                                                 }}
                                             >
@@ -1311,14 +1310,14 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnSMTIntBColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnSMTIntBColor
                                                     }
                                                 }}
                                             >
@@ -1358,14 +1357,14 @@ function PieceTraceView() {
                                         <TableCell>Reject1</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnReject1Color,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnReject1Color
                                                     }
                                                 }}
                                                 onClick={btnReject1_Click}
@@ -1406,14 +1405,14 @@ function PieceTraceView() {
                                         <TableCell>Re-judgement</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnTouchUpColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnTouchUpColor
                                                     }
                                                 }}
                                                 onClick={btnTouchUp_Click}
@@ -1454,14 +1453,14 @@ function PieceTraceView() {
                                         <TableCell>Bending</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnBendingColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnBendingColor
                                                     }
                                                 }}
                                             >
@@ -1498,14 +1497,14 @@ function PieceTraceView() {
                                         {btnELT1.visible && (
                                             <TableCell>
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnELT1Color,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnELT1Color
                                                         }
                                                     }}
                                                     onClick={btnELT1_Click}
@@ -1560,14 +1559,14 @@ function PieceTraceView() {
                                         {btnELT2.visible && (
                                             <TableCell>
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnELT2Color,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnELT2Color
                                                         }
                                                     }}
                                                     onClick={btnELT2_Click}
@@ -1625,14 +1624,14 @@ function PieceTraceView() {
                                             <TableCell>
 
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnELT3Color,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnELT3Color
                                                         }
                                                     }}
                                                     onClick={btnELT3_Click}
@@ -1689,14 +1688,14 @@ function PieceTraceView() {
                                         {btnELT4.visible && (
                                             <TableCell>
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnELT4Color,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnELT4Color
                                                         }
                                                     }}
                                                     onClick={btnELT4_Click}
@@ -1753,14 +1752,14 @@ function PieceTraceView() {
                                         {btnELT5.visible && (
                                             <TableCell>
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnELT5Color,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnELT5Color
                                                         }
                                                     }}
                                                     onClick={btnELT5_Click}
@@ -1817,14 +1816,14 @@ function PieceTraceView() {
                                         {btnELT6.visible && (
                                             <TableCell>
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnELT6Color,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnELT6Color
                                                         }
                                                     }}
                                                     onClick={btnELT6_Click}
@@ -1881,14 +1880,14 @@ function PieceTraceView() {
                                         {btnELT7.visible && (
                                             <TableCell>
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnELT7Color,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnELT7Color
                                                         }
                                                     }}
                                                     onClick={btnELT7_Click}
@@ -1945,14 +1944,14 @@ function PieceTraceView() {
                                         {btnFQC.visible && (
                                             <TableCell>
                                                 <Button
-                                                    variant="contained"
+
                                                     sx={{
                                                         height: "33px",
                                                         backgroundColor: btnFQCColor,
                                                         color: "white",
                                                         width: "90%",
                                                         "&:hover": {
-                                                            backgroundColor: "grey"
+                                                            backgroundColor: btnFQCColor
                                                         }
                                                     }}
                                                 >
@@ -2004,14 +2003,14 @@ function PieceTraceView() {
                                         <TableCell>FinalGate</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnFinalGateColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnFinalGateColor
                                                     }
                                                 }}
                                                 onClick={btnFinalGate_Click}
@@ -2045,14 +2044,14 @@ function PieceTraceView() {
                                         <TableCell>ScanPack</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="contained"
+
                                                 sx={{
                                                     height: "33px",
                                                     backgroundColor: btnScanPackColor,
                                                     color: "white",
                                                     width: "90%",
                                                     "&:hover": {
-                                                        backgroundColor: "grey"
+                                                        backgroundColor: btnScanPackColor
                                                     }
                                                 }}
                                             >

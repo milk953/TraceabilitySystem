@@ -12,6 +12,7 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 function ScanSheetDispenserTime() {
   const {
@@ -53,7 +54,7 @@ function ScanSheetDispenserTime() {
       <Hearder />
       <h1>ScanSheetDispenserTime</h1>
       <div className="DispenserpnlMain">
-        <Table id="DispenserTableMain" component={Paper}>
+        <Table id="DispenserTableMain" component={Card}>
           <TableHead>
             <TableRow>
               <TableCell colSpan={3}>Reflow - Dispenser Control Time</TableCell>

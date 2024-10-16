@@ -86,7 +86,6 @@ function ProductMaster() {
     return (
         <div>
             <Header />
-            <h1>Product Master</h1>
             <Card
                 component={Paper}
                 style={{

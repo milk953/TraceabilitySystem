@@ -81,6 +81,8 @@ import CheckerResult from "./Page/CheckerResult/CheckerResult";
 import AOICOAResult from "./Page/AOICOAResult/AOICOAResult";
 import ScanSMTSerialPcsP1 from "./Page/P1 Final Gate/ScanSMTSerialPcsP1";
 import SheetInspection from "./Page/SheetInspection/SheetInspection";
+import ScanAOISheetNo from "./Page/ScanAOISheetNo/ScanAOISheetNo";
+import ScanConfirmMagazineP1 from "./Page/ScanConfirmMagazineP1/ScanConfirmMagazineP1";
 import P1ConnectBoard from "./Page/P1 Connect Board/P1ConnectBoard";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
@@ -185,6 +187,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/AOICOAResult" element={<AOICOAResult />} />
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
             <Route path="/TraceabilitySystem/SheetInspection" element={<SheetInspection />} />
+            <Route path="/TraceabilitySystem/ScanConfirmMagazineP1" element={<ScanConfirmMagazineP1 />} />
+            <Route path="/TraceabilitySystem/ScanAOISheetNo" element={<ScanAOISheetNo />} />
             <Route path="/TraceabilitySystem/P1ConnectBoard" element={<P1ConnectBoard />} />
             
             {/* Maintenance */}
@@ -206,6 +210,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
           
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
+          
+            
             
 
             {/* P1 */}

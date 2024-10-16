@@ -40,7 +40,6 @@ function ScanSMTPlasmaStopStart() {
     return (
         <div>
             <Hearder />
-            <h1>Start/Stop Record Time</h1>
             <Card
                 component={Paper}
                 className="Card-Common"

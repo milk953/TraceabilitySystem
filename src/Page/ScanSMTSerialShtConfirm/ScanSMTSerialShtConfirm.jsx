@@ -42,7 +42,6 @@ function ScanSMTSerialShtConfirm() {
     return (
         <div>
             <Hearder />
-            <h1>Confirm Sheet No.</h1>
             <Card
                 component={Paper}
                 className="Card-Common"
