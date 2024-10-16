@@ -36,7 +36,26 @@ import "../Common/StyleCommon.css";
 import { fn_ScanConfirmMagazineP1 } from "../ScanConfirmMagazineP1/fn_ScanConfirmMagazineP1";
 
 function ScanConfirmMagazineP1() {
-  const {} = fn_ScanConfirmMagazineP1();
+  const {
+    txtOperator,
+    setTxtOperator,
+    txtOperator_TextChanged,
+    ibtOperator_Click,
+    txtLotNo,
+    setTxtLotNo,
+    txtLotNo_TextChanged,
+    ibtLotBack_Click,
+    txtMagNo,
+    setTxtMagNo,
+    txtMagNo_TextChanged,
+    ibtLotBack,
+    ibtOperator,
+    ibtExcel,
+    lblResult,
+    lblTotalPcs,
+    lblProduct,
+    ibtExcel_Click,
+  } = fn_ScanConfirmMagazineP1();
   return (
     <div>
       <Hearder />
@@ -61,28 +80,32 @@ function ScanConfirmMagazineP1() {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtLot_ScanSMTConnectRollConfirm_focus"
+                        id="txtOperator_ScanConfirmMagazineP1_focus"
                         className="input_txt"
                         size="small"
                         fullWidth
-                        // disabled={txtLot.disbled}
-                        // style={txtLot.style}
-                        // value={txtLot.value}
-                        // onChange={(e) => {
-                        //   setTxtLot((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtLot_TextChanged();
-                        //   }
-                        // }}
+                        disabled={txtOperator.disabled}
+                        style={txtOperator.style}
+                        value={txtOperator.value}
+                        onChange={(e) => {
+                          setTxtOperator((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtOperator_TextChanged();
+                          }
+                        }}
                       ></TextField>
                     </TableCell>
                     <TableCell>
-                      <Button className="Bt_ibtBack">
+                      <Button
+                        onClick={ibtOperator_Click}
+                        className="Bt_ibtBack"
+                        disabled={ibtOperator.disabled}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -93,14 +116,32 @@ function ScanConfirmMagazineP1() {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtLot_ScanSMTConnectRollConfirm_focus"
+                        id="txtLotNo_ScanConfirmMagazineP1_focus"
                         className="input_txt"
                         size="small"
                         fullWidth
+                        disabled={txtLotNo.disabled}
+                        style={txtLotNo.style}
+                        value={txtLotNo.value}
+                        onChange={(e) => {
+                          setTxtLotNo((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtLotNo_TextChanged();
+                          }
+                        }}
                       ></TextField>
                     </TableCell>
                     <TableCell>
-                      <Button className="Bt_ibtBack">
+                      <Button
+                        className="Bt_ibtBack"
+                        disabled={ibtLotBack.disabled}
+                        onClick={ibtLotBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -111,18 +152,36 @@ function ScanConfirmMagazineP1() {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtLot_ScanSMTConnectRollConfirm_focus"
+                        id="txtMagNo_ScanConfirmMagazineP1_focus"
                         className="input_txt"
                         size="small"
                         fullWidth
+                        disabled={txtMagNo.disabled}
+                        style={txtMagNo.style}
+                        value={txtMagNo.value}
+                        onChange={(e) => {
+                          setTxtMagNo((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtMagNo_TextChanged();
+                          }
+                        }}
                       ></TextField>
                     </TableCell>
                     <TableCell>
-                      <Button className="Bt_ibtBack">
+                      <Button
+                        className="Bt_ibtBack"
+                        disabled={ibtExcel.disabled}
+                        onClick={ibtExcel_Click}
+                      >
                         <FileExcelFilled
                           style={{
                             fontSize: "24px",
-                            color: "green",
+                            color: ibtExcel.disabled ? "" : "green",
                           }}
                         />
                       </Button>
@@ -135,18 +194,19 @@ function ScanConfirmMagazineP1() {
                     </TableCell>
 
                     <TableCell colSpan={3}>
-                      <Grid container  alignItems="center">
+                      <Grid container alignItems="center">
                         <Grid xs={6} xd={6}>
                           <Typography
                             variant="body1"
                             style={{
                               width: "100%",
-                              color: "#FF0066",
+                              color: "#006699",
                               display: "flex",
                               justifyContent: "center",
+                              fontSize: "20px",
                             }}
                           >
-                            {10}
+                            {lblProduct.value}
                           </Typography>
                         </Grid>
                         <Grid xs={6} xd={6}>
@@ -154,12 +214,13 @@ function ScanConfirmMagazineP1() {
                             variant="body1"
                             style={{
                               width: "100%",
-                              color: "#FF0066",
+                              color: "yellow",
                               display: "flex",
                               justifyContent: "center",
+                              fontSize: "20px",
                             }}
                           >
-                            {10}
+                            {lblTotalPcs.value}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -167,16 +228,23 @@ function ScanConfirmMagazineP1() {
                   </TableRow>
                 </TableBody>
               </Table>
+
               {/* {lblpnlLog.visble == true && (
                 <Paper elevation={3} className="Card-lblLog">
                   {lblpnlLog.value}
                 </Paper>
               )} */}
-                    
-                <Paper elevation={3} className="Card-lblLog"  style={{ width: "50%" }}>
-                  {10}
-                </Paper>
-          
+
+              <Paper
+                elevation={3}
+                className="ManglblLog"
+                style={{
+                  width: "50%",
+                  color: lblResult.value == "OK" ? "#059212" : "#FF0066",
+                }}
+              >
+                {lblResult.value}
+              </Paper>
             </Grid>
           </Grid>
         </Box>

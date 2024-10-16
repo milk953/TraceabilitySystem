@@ -3,64 +3,66 @@ import axios from "axios";
 import { color } from "framer-motion";
 import { Tag } from "antd";
 import { values } from "lodash";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
+
 function fn_ScanConfirmMagazineP1() {
   const plantCode = import.meta.env.VITE_FAC;
-  const { hfUserID, setHfUserID } = useState("");
-  const { hfUserStation, setHfUserStation } = useState("F");
-  const { hfMode, setHfMode } = useState("");
-  const { txtLotNo, setTxtLotNo } = useState({
+  const [hfUserID, setHfUserID] = useState("");
+  const [hfUserStation, setHfUserStation] = useState("");
+  const [txtLotNo, setTxtLotNo] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { lblProduct, setLblProduct } = useState({
+  const [lblProduct, setLblProduct] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { txtOperator, setTxtOperator } = useState({
+  const [txtOperator, setTxtOperator] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { txtMagNo, setTxtMagNo } = useState({
+  const [txtMagNo, setTxtMagNo] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { lblTotalPcs, setLblTotalPcs } = useState({
+  const [lblTotalPcs, setLblTotalPcs] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { lblResult, setLblResult } = useState({
+  const [lblResult, setLblResult] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { ibtLotBack, setIbtLotBack } = useState({
+  const [ibtLotBack, setIbtLotBack] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { ibtOperator, setIbtOperator } = useState({
+  const [ibtOperator, setIbtOperator] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
-  const { ibtExcel, setIbtExcel } = useState({
+  const [ibtExcel, setIbtExcel] = useState({
     value: "",
     disabled: "",
     visble: "",
-    style: "",
+    style: {},
   });
   const [gvScanResult, setGvScanResult] = useState({
     value: [],
@@ -74,7 +76,7 @@ function fn_ScanConfirmMagazineP1() {
     const fetchData = async () => {
       setHfUserID(ID);
       setHfUserStation(ID);
-      setHfMode("OP");
+      await SetMode("OP");
     };
     fetchData();
   }, []);
@@ -97,27 +99,28 @@ function fn_ScanConfirmMagazineP1() {
           })
           .then((res) => {
             let data = res.data.flat().flat();
-            dtLotData = data;
+            console.log("data prd_name", data[0][0]);
+            dtLotData = data[0][0];
             if (data.length > 0) {
               setLblProduct((prevState) => ({
                 ...prevState,
-                value: dtLotData[0].prd_name,
+                value: dtLotData,
               }));
-              setHfMode("MAGAZINE");
+              SetMode("MAGAZINE");
             } else {
-              setHfMode("LOT");
+              SetMode("LOT");
             }
           });
       } else {
-        setHfMode("LOT");
+        SetMode("LOT");
       }
     } else {
-      setHfMode("LOT");
+      SetMode("LOT");
     }
   };
 
   const ibtLotBack_Click = async () => {
-    setHfMode("LOT");
+    SetMode("LOT");
   };
 
   const txtOperator_TextChanged = async () => {
@@ -126,12 +129,12 @@ function fn_ScanConfirmMagazineP1() {
         ...prevState,
         value: txtOperator.value.trim(),
       }));
-      setHfMode("LOT");
+      SetMode("LOT");
     }
   };
 
   const ibtOperator_Click = async () => {
-    setHfMode("OP");
+    SetMode("OP");
   };
 
   const txtMagNo_TextChanged = async () => {
@@ -140,50 +143,49 @@ function fn_ScanConfirmMagazineP1() {
       const res1 = await axios.post("/api/GetCountSerialByLotMagazine", {
         dataList: {
           strPlantCode: plantCode,
-          strLot: txtLotNo.value,
-          strMagazine: txtMagNo.value,
+          strLotno: txtLotNo.value,
+          strMgzNo: txtMagNo.value,
         },
       });
       let data = res1.data.flat().flat();
+      console.log("data", data);
       setLblTotalPcs((prevState) => ({
         ...prevState,
-        value: data,
+        value: data[0].lot_count,
       }));
 
       if (data.length > 0) {
         const res2 = await axios.post("/api/SetManualConfirmMagazine", {
           dataList: {
             strPlantCode: plantCode,
-            strLot: txtLotNo.value,
-            strMagazine: txtMagNo.value,
-            strStation: hfUserStation.value,
+            strLotno: txtLotNo.value,
+            strMgzNo: txtMagNo.value,
+            strStation: hfUserStation,
           },
         });
         let data2 = res2.data.flat().flat();
-        strError = data2;
-        if (data2.length > 0) {
+        strError = data2[0].p_error;
+        console.log("data2", strError);
+        if (strError.trim() === "") {
           setLblResult((prevState) => ({
             ...prevState,
             value: "OK",
-            style: { color: "green" },
           }));
         } else {
           setLblResult((prevState) => ({
             ...prevState,
             value: "NG",
-            style: { color: "red" },
           }));
         }
       } else {
         setLblResult((prevState) => ({
           ...prevState,
           value: "NG",
-          style: { color: "red" },
         }));
       }
-      setHfMode("MAGAZINE");
+      SetMode("MAGAZINE");
     } catch (error) {
-      setHfMode("MAGAZINE");
+      SetMode("MAGAZINE");
       console.error("Error occurred: ", error);
     }
   };
@@ -234,7 +236,6 @@ function fn_ScanConfirmMagazineP1() {
     if (_strType == "LOT") {
       setTxtOperator((prevState) => ({
         ...prevState,
-        value: "",
         disabled: true,
         style: { background: "#EEEEEE" },
       }));
@@ -275,7 +276,6 @@ function fn_ScanConfirmMagazineP1() {
     if (_strType == "MAGAZINE") {
       setTxtOperator((prevState) => ({
         ...prevState,
-        value: "",
         disabled: true,
         style: { background: "#EEEEEE" },
       }));
@@ -285,7 +285,6 @@ function fn_ScanConfirmMagazineP1() {
       }));
       setTxtLotNo((prevState) => ({
         ...prevState,
-        value: "",
         disabled: true,
         style: { background: "#EEEEEE" },
       }));
@@ -312,28 +311,139 @@ function fn_ScanConfirmMagazineP1() {
   };
 
   const ibtExcel_Click = async () => {
+    console.log("เข้ามาในเงื่อนไขแล้ว : ")
     await axios
-      .post("/api/GetSerialMagazineByLot", {
-        dataList: {
-          strPlantCode: plantCode,
-          strLot: txtLotNo.value,
-        },
-      })
+    .post("/api/GetSerialMagazineByLot", {
+      dataList: {
+        strplant_code: plantCode,
+        strlot: txtLotNo.value,
+      },
+    })  
       .then((res) => {
         let data = res.data.flat().flat();
-        gvScanResult((prevState) => ({
+        console.log("data ibtExcel_Click", data);
+        setGvScanResult((prevState) => ({
           ...prevState,
           value: data,
         }));
+         FN_ExportGridView("Serail_" + txtLotNo.value + ".xls",data);
       });
   };
+
+
+  const FN_ExportGridView = async (namefile, data ) => {
+    console.log(data, 'hhhhhhhh',namefile);
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("My Sheet");
+    sheet.properties.defaultRowHeight = 20;
+  
+    // ดึงชื่อคีย์จาก data[0] เพื่อสร้าง header อัตโนมัติ
+    const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
+      header: key.toUpperCase(), 
+      key: key,
+      width: 10, 
+      style: { alignment: { horizontal: "center" } },
+    }));
+    sheet.columns = dynamicColumns;
+    // const dynamicColumns = HeaderColumn.map(col => ({
+    //   header: col.title.toUpperCase(), 
+    //   key: col.dataIndex,
+    //   width: 10, 
+    //   style: { alignment: { horizontal: "center" } },
+    // }));
+    // sheet.columns = dynamicColumns;
+
+  
+
+    if (data.length === 0) {
+      const emptyRow = {};
+      dynamicColumns.forEach((col) => (emptyRow[col.dataIndex] = "")); // เติมค่าค่าว่าง
+      data.push(emptyRow);
+    }
+  
+
+    data.forEach((row) => {
+      const newRow = sheet.addRow(row);
+      newRow.eachCell({ includeEmpty: true }, (cell) => {
+        cell.alignment = { horizontal: "center" };
+  
+   
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
+      });
+    });
+  
+
+    const firstRow = sheet.getRow(1);
+    firstRow.eachCell({ includeEmpty: true }, (cell) => {
+      cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FFFF00" }, 
+      };
+      cell.font = {
+        name: "Roboto",
+        size: 9,
+        bold: true,
+      };
+  
+     
+      cell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+    });
+  
+   
+    sheet.columns.forEach((column) => {
+      let maxWidth = column.header.length; 
+      data.forEach((row) => {
+        const cellValue = String(row[column.key] || ""); 
+        maxWidth = Math.max(maxWidth, cellValue.length); 
+      });
+      column.width = maxWidth + 2; 
+    });
+  
+
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: "application/octet-stream" });
+      saveAs(blob, `${namefile}`);
+    });
+  };
+
+  
 
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
     }, 300);
   }
-  return {};
+  return {
+    txtOperator,
+    setTxtOperator,
+    txtOperator_TextChanged,
+    ibtOperator_Click,
+    txtLotNo,
+    setTxtLotNo,
+    txtLotNo_TextChanged,
+    ibtLotBack_Click,
+    txtMagNo,
+    setTxtMagNo,
+    txtMagNo_TextChanged,
+    ibtLotBack,
+    ibtOperator,
+    ibtExcel,
+    lblResult,
+    lblTotalPcs,
+    lblProduct,
+    ibtExcel_Click,
+  };
 }
 
 export { fn_ScanConfirmMagazineP1 };
