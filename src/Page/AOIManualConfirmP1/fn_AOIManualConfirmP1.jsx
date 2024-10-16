@@ -1,9 +1,6 @@
-import React from 'react'
 
 function fn_AOIManualConfirmP1() {
-  return (
-    <div>fn_AOIManualConfirmP1</div>
-  )
+  return {}
 }
 
-export default fn_AOIManualConfirmP1
+export  {fn_AOIManualConfirmP1}
