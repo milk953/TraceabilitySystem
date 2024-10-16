@@ -170,17 +170,20 @@ function fn_ScanConfirmMagazineP1() {
           setLblResult((prevState) => ({
             ...prevState,
             value: "OK",
+            visble: true,
           }));
         } else {
           setLblResult((prevState) => ({
             ...prevState,
             value: "NG",
+            visble: true,
           }));
         }
       } else {
         setLblResult((prevState) => ({
           ...prevState,
           value: "NG",
+          visble: true,
         }));
       }
       SetMode("MAGAZINE");
@@ -232,6 +235,11 @@ function fn_ScanConfirmMagazineP1() {
         disabled: true,
       }));
       fnSetFocus("txtOperator_ScanConfirmMagazineP1_focus");
+      setLblResult((prevState) => ({
+        ...prevState,
+        value: "",
+        visble: false,
+      }));
     }
     if (_strType == "LOT") {
       setTxtOperator((prevState) => ({
@@ -272,6 +280,11 @@ function fn_ScanConfirmMagazineP1() {
         disabled: true,
       }));
       fnSetFocus("txtLotNo_ScanConfirmMagazineP1_focus");
+      setLblResult((prevState) => ({
+        ...prevState,
+        value: "",
+        visble: false,
+      }));
     }
     if (_strType == "MAGAZINE") {
       setTxtOperator((prevState) => ({
@@ -311,14 +324,14 @@ function fn_ScanConfirmMagazineP1() {
   };
 
   const ibtExcel_Click = async () => {
-    console.log("เข้ามาในเงื่อนไขแล้ว : ")
+    console.log("เข้ามาในเงื่อนไขแล้ว : ");
     await axios
-    .post("/api/GetSerialMagazineByLot", {
-      dataList: {
-        strplant_code: plantCode,
-        strlot: txtLotNo.value,
-      },
-    })  
+      .post("/api/GetSerialMagazineByLot", {
+        dataList: {
+          strplant_code: plantCode,
+          strlot: txtLotNo.value,
+        },
+      })
       .then((res) => {
         let data = res.data.flat().flat();
         console.log("data ibtExcel_Click", data);
@@ -326,48 +339,43 @@ function fn_ScanConfirmMagazineP1() {
           ...prevState,
           value: data,
         }));
-         FN_ExportGridView("Serail_" + txtLotNo.value + ".xls",data);
+        FN_ExportGridView("Serail_" + txtLotNo.value + ".xls", data);
       });
   };
 
-
-  const FN_ExportGridView = async (namefile, data ) => {
-    console.log(data, 'hhhhhhhh',namefile);
+  const FN_ExportGridView = async (namefile, data) => {
+    console.log(data, "hhhhhhhh", namefile);
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("My Sheet");
     sheet.properties.defaultRowHeight = 20;
-  
+
     // ดึงชื่อคีย์จาก data[0] เพื่อสร้าง header อัตโนมัติ
     const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
-      header: key.toUpperCase(), 
+      header: key.toUpperCase(),
       key: key,
-      width: 10, 
+      width: 10,
       style: { alignment: { horizontal: "center" } },
     }));
     sheet.columns = dynamicColumns;
     // const dynamicColumns = HeaderColumn.map(col => ({
-    //   header: col.title.toUpperCase(), 
+    //   header: col.title.toUpperCase(),
     //   key: col.dataIndex,
-    //   width: 10, 
+    //   width: 10,
     //   style: { alignment: { horizontal: "center" } },
     // }));
     // sheet.columns = dynamicColumns;
-
-  
 
     if (data.length === 0) {
       const emptyRow = {};
       dynamicColumns.forEach((col) => (emptyRow[col.dataIndex] = "")); // เติมค่าค่าว่าง
       data.push(emptyRow);
     }
-  
 
     data.forEach((row) => {
       const newRow = sheet.addRow(row);
       newRow.eachCell({ includeEmpty: true }, (cell) => {
         cell.alignment = { horizontal: "center" };
-  
-   
+
         cell.border = {
           top: { style: "thin" },
           left: { style: "thin" },
@@ -376,22 +384,20 @@ function fn_ScanConfirmMagazineP1() {
         };
       });
     });
-  
 
     const firstRow = sheet.getRow(1);
     firstRow.eachCell({ includeEmpty: true }, (cell) => {
       cell.fill = {
         type: "pattern",
         pattern: "solid",
-        fgColor: { argb: "FFFF00" }, 
+        fgColor: { argb: "FFFF00" },
       };
       cell.font = {
         name: "Roboto",
         size: 9,
         bold: true,
       };
-  
-     
+
       cell.border = {
         top: { style: "thin" },
         left: { style: "thin" },
@@ -399,25 +405,21 @@ function fn_ScanConfirmMagazineP1() {
         right: { style: "thin" },
       };
     });
-  
-   
+
     sheet.columns.forEach((column) => {
-      let maxWidth = column.header.length; 
+      let maxWidth = column.header.length;
       data.forEach((row) => {
-        const cellValue = String(row[column.key] || ""); 
-        maxWidth = Math.max(maxWidth, cellValue.length); 
+        const cellValue = String(row[column.key] || "");
+        maxWidth = Math.max(maxWidth, cellValue.length);
       });
-      column.width = maxWidth + 2; 
+      column.width = maxWidth + 2;
     });
-  
 
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], { type: "application/octet-stream" });
       saveAs(blob, `${namefile}`);
     });
   };
-
-  
 
   function fnSetFocus(txtField) {
     setTimeout(() => {

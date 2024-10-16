@@ -228,8 +228,8 @@ function ScanConfirmMagazineP1() {
                   </TableRow>
                 </TableBody>
               </Table>
-{/* 
-              {txtOperator.value !== "" && (
+
+              {lblResult.visble && (
                 <Paper
                   elevation={3}
                   className="ManglblLog"
@@ -240,9 +240,9 @@ function ScanConfirmMagazineP1() {
                 >
                   {lblResult.value}
                 </Paper>
-              )} */}
+              )}
               {/* 200784420 */}
-              <Paper
+              {/* <Paper
                 elevation={3}
                 className="ManglblLog"
                 style={{
@@ -251,7 +251,7 @@ function ScanConfirmMagazineP1() {
                 }}
               >
                 {lblResult.value}
-              </Paper>
+              </Paper> */}
             </Grid>
           </Grid>
         </Box>
