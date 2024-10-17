@@ -205,7 +205,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setlblLogState(false);
     if (lotValue != "" && dtSerial.length > 0) {
       if (hfCheckWeekCode == "Y") {
-        hfCheckWeekCode = await getData("GetWeekCodebyLot", {lotValue,hfDateInProc,});
+        hfCheckWeekCode = await getData("GetWeekCodebyLot", {lotValue,hfDateInProc,hfWeekCodeType,hfSerialInfo});
       }
       let _intRowSerial = 0;
       for (let i = 0; i < dtSerial.length; i++) {
@@ -1066,9 +1066,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetWeekCodebyLot") {
       let result = "";
       await axios
-        .post("/api/ScanFin/GetWeekCodebyLot", {
-          strLot: param.lotValue,
-          strProc: param.hfDateInProc,
+        // .post("/api/ScanFin/GetWeekCodebyLot", {
+        //   strLot: param.lotValue,
+        //   strProc: param.hfDateInProc,
+        // })
+        .post('/api/common/GetWeekCodebyLot', {
+          _strLot: param.lotValue,
+          _strProc: param.hfDateInProc,
+          _strWeekType: param.hfWeekCodeType,
+          _strSerialInfo: param.hfSerialInfo,
         })
         .then((res) => {
           result = res.data.strReturn;
