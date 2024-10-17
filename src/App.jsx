@@ -85,6 +85,7 @@ import ScanAOISheetNo from "./Page/ScanAOISheetNo/ScanAOISheetNo";
 import ScanConfirmMagazineP1 from "./Page/ScanConfirmMagazineP1/ScanConfirmMagazineP1";
 import P1ConnectBoard from "./Page/P1 Connect Board/P1ConnectBoard";
 import AOIManualConfirmP1 from "./Page/AOIManualConfirmP1/AOIManualConfirmP1";
+import ScanSMTConfirmMOTP1 from "./Page/ScanSMTConfirmMOTP1/ScanSMTConfirmMOTP1";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -192,7 +193,7 @@ const App = () => {
             <Route path="/TraceabilitySystem/ScanAOISheetNo" element={<ScanAOISheetNo />} />
             <Route path="/TraceabilitySystem/P1ConnectBoard" element={<P1ConnectBoard />} />
             <Route path="/TraceabilitySystem/AOIManualConfirmP1" element={<AOIManualConfirmP1 />} />
-            
+            <Route path="/TraceabilitySystem/ScanSMTConfirmMOTP1" element={<ScanSMTConfirmMOTP1 />} />
             
             {/* Maintenance */}
             <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
