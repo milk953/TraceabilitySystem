@@ -9,47 +9,78 @@ import {
   TableHead,
   Paper,
   Card,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  Grid,
+  TextField,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import "./AOIManualConfirmP1.css";
 import { fn_AOIManualConfirmP1 } from "../AOIManualConfirmP1/fn_AOIManualConfirmP1";
 function AOIManualConfirmP1() {
   const {} = fn_AOIManualConfirmP1();
+  let lblResult = "update complete.";
+  let lblUser1 = "Welcom to Serial Trace System, PLANT_CODE : 5 ";
   return (
     <>
       <Hearder />
-      <h1>AVIConfirm</h1>
-      <h3
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          color: lblResult === "update complete." ? "blue" : "red",
-        }}
-      >
-        {lblResult}
-      </h3>
-      <Card classNmae="AVIMainCard">
-        <div className="DAVITableFirst">
-          <Table className="AVITableFirst" component={Paper}>
+
+      <Card component={Paper} className="Card-Common">
+        <h3
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          {lblUser1}
+        </h3>
+        <h3
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            color: lblResult === "update complete." ? "blue" : "red",
+          }}
+        >
+          {lblResult}
+        </h3>
+        <div className="DAOITableFirst">
+          <Table className="AOITableFirst" component={Paper}>
             <TableBody>
               <TableRow>
                 <TableCell sx={{ width: "90px", textAlign: "center" }}>
-                  ELT Type :
+                  Type :
                 </TableCell>
-      
+
                 <TableCell>
-                  <select
-                    onInputChange={(e) => setEltTypeSelect(e.target.value)}
-                    onChange={(e) => setEltTypeSelect(e.target.value)}
-                    value={eltTypeSelect}
-                    style={eltTypeState.styled}
-                    disabled={eltTypeState.styled.disable}
-                  >
-                    {eltType.map((option, index) => (
-                      <option key={index} value={`${option.elt_type}`}>
-                        {`${option.elt_type}`}
-                      </option>
-                    ))}
-                  </select>
+                  <Grid container spacing={0} >
+                    <Grid item xs={6} md={6} style={{ background: "#CCFFFF" }}>
+                      <FormControl>
+                        <RadioGroup row>
+                          <FormControlLabel
+                            value="AOI"
+                            control={<Radio size="small" />}
+                            label="AOI"
+                            style={{ margin: "0px" }}
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6} md={6} style={{ background: "#CCFFCC" }} >
+                      <FormControl>
+                        <RadioGroup row >
+                          <FormControlLabel
+                            value="SPI"
+                            control={<Radio size="small" />}
+                            label="SPI"
+                            style={{ margin: "0px" }} 
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
                 </TableCell>
                 <TableCell
                   rowSpan={2}
@@ -59,60 +90,78 @@ function AOIManualConfirmP1() {
                     variant="contained"
                     color="primary"
                     sx={{ width: "100px" }}
-                    onClick={btnRetrieveClick}
+                    // onClick={btnRetrieveClick}
                   >
-                    Retrieve
+                    Retrive
                   </Button>
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell sx={{ textAlign: "center" }}>Piece No. :</TableCell>
-      
+
                 <TableCell sx={{ width: "300px" }}>
-                  <input
-                    ref={pieceNoRef}
-                    onChange={(e) => setPieceNo(e.target.value)}
-                    onBlur={handlePieceChange}
-                    value={pieceNo}
-                  ></input>
+                  <TextField
+                    id="txtOperator_ScanConfirmMagazineP1_focus"
+                    className="input_txt"
+                    size="small"
+                    fullWidth
+                  ></TextField>
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </div>
-        <div className="DAVITableSecond">
-          <Table className="AVITableSecond" component={Paper}>
+        <div className="DAOITableSecond">
+          <Table className="AOITableSecond" component={Paper}>
             <TableHead>
               <TableRow>
                 <TableCell>Result</TableCell>
                 <TableCell>Operator</TableCell>
+                <TableCell colSpan={2}>Inspect Count</TableCell>
                 <TableCell colSpan={2}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell sx={{ width: "200px" }}>
-                  <select value={resultSelect} onChange={handleResultSelect}>
-                    <option value=" "> </option>
-                    <option value="OK">OK</option>
-                    <option value="NG">NG</option>
-                    <option value="P-error">P-error</option>
-                    <option value="2D-error">2D-error</option>
-                  </select>
+                <TableCell style={{ width: "20%" }}>
+                  <FormControl style={{ width: "100%" }} size="small">
+                    <Select
+                      className="field_select"
+                      sx={{ height: 28, fontSize: 14 }} 
+                      
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={10}>OK</MenuItem>
+                      <MenuItem value={20}>NG</MenuItem>
+                    </Select>
+                  </FormControl>
                 </TableCell>
-                <TableCell sx={{ width: "100px" }}>
-                  <input
-                    style={{ width: "150px", backgroundColor: "#B2A8A8" }}
+                <TableCell style={{ width: "35%" }}>
+                  <TextField
+                    className="field_text"
+                    size="small"
                     disabled
-                    value={username}
-                  />
+                    fullWidth
+                    style={{ width: "99%", backgroundColor: "#e0e0e0" }}
+                  ></TextField>
                 </TableCell>
-                <TableCell sx={{ width: "60px" }}>
+                <TableCell style={{ width: "35%" }}>
+                  <TextField
+                    className="field_text"
+                    size="small"
+                    disabled
+                    fullWidth
+                    style={{ width: "99%", backgroundColor: "#e0e0e0" }}
+                  ></TextField>
+                </TableCell>
+                <TableCell sstyle={{ width: "10%" }}>
                   <Button
                     variant="contained"
                     color="primary"
                     sx={{ width: "100px" }}
-                    onClick={btnSubmitClick}
+                    // onClick={btnSubmitClick}
                   >
                     Submit
                   </Button>
@@ -121,38 +170,7 @@ function AOIManualConfirmP1() {
             </TableBody>
           </Table>
         </div>
-        {resultState && (
-          <div className="ELTTYPEpnlResult">
-            <Table id="ELTTYPETableResult" component={Paper}>
-              <TableHead sx={{ height: "30px" }}>
-                <TableCell>No.</TableCell>
-                <TableCell>Serial No</TableCell>
-                <TableCell>Result</TableCell>
-                <TableCell>Inspec Count</TableCell>
-                <TableCell>Inspec Date</TableCell>
-                <TableCell>Remark</TableCell>
-              </TableHead>
-              <TableBody sx={{ height: "40px" }}>
-                {result.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell sx={{ color: row.color }}>{row.SEQ}</TableCell>
-                    <TableCell sx={{ color: row.color }}>
-                      {row.CHE_SERIAL_NO}
-                    </TableCell>
-                    <TableCell sx={{ color: row.color }}>
-                      {row.result}
-                    </TableCell>
-                    <TableCell sx={{ color: row.color }}></TableCell>
-                    <TableCell sx={{ color: row.color }}></TableCell>
-                    <TableCell sx={{ color: row.color }}>
-                      {row.remark}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
+
         <br></br>
       </Card>
     </>

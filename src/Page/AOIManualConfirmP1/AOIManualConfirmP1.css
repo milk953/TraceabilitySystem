@@ -1,33 +1,41 @@
-.AVITableFirst {
-    margin: auto;
-    width: 500px;
-  }
-  .AVITableFirst td {
-    /* border: 1px solid #000; */
-    padding: 5px;
-  }
+.AOITableFirst {
+  margin: auto;
+  width: 500px;
+}
+.AOITableFirst td {
+  /* border: 1px solid #000; */
+  padding: 5px;
+}
+
+.DAOITableFirst {
+  display: flex;
+  margin: auto;
+  width: 530px;
+  margin-top: 20px;
+}
+
+.DAOITableSecond {
+  display: flex;
+  margin: auto;
+  width: 60%;
+  margin-top: 30px;
+}
+
+.AOITableSecond {
+  margin: auto;
+  width: 60%;
+}
+.AOITableSecond td {
+  padding: 3px;
+}
+.AOITableSecond th {
+  padding: 5px;
+}
+
+.field_text .MuiInputBase-input {
+  height: 10px;
+}
+.field_select .MuiSelect-select {
+  height: 10px;
   
-  .DAVITableFirst {
-    display: flex;
-    margin: auto;
-    width: 530px;
-    margin-top: 20px;
-  }
-  
-  .DAVITableSecond {
-      display: flex;
-      margin: auto;
-      width: 500px;
-      margin-top: 30px;
-    }
-    
-    .AVITableSecond {
-      margin: auto;
-      width: 500px;
-    }
-    .AVITableSecond td {
-      padding: 3px;
-    }
-    .AVITableSecond th {
-      padding: 5px;
-    }
+}
