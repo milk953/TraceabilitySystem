@@ -55,7 +55,7 @@ function AOIManualConfirmP1() {
                 </TableCell>
 
                 <TableCell>
-                  <Grid container spacing={0} >
+                  <Grid container spacing={0}>
                     <Grid item xs={6} md={6} style={{ background: "#CCFFFF" }}>
                       <FormControl>
                         <RadioGroup row>
@@ -68,14 +68,14 @@ function AOIManualConfirmP1() {
                         </RadioGroup>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={6} md={6} style={{ background: "#CCFFCC" }} >
+                    <Grid item xs={6} md={6} style={{ background: "#CCFFCC" }}>
                       <FormControl>
-                        <RadioGroup row >
+                        <RadioGroup row>
                           <FormControlLabel
                             value="SPI"
                             control={<Radio size="small" />}
                             label="SPI"
-                            style={{ margin: "0px" }} 
+                            style={{ margin: "0px" }}
                           />
                         </RadioGroup>
                       </FormControl>
@@ -127,10 +127,9 @@ function AOIManualConfirmP1() {
                   <FormControl style={{ width: "100%" }} size="small">
                     <Select
                       className="field_select"
-                      sx={{ height: 28, fontSize: 14 }} 
-                      
+                      sx={{ height: 28, fontSize: 14 }}
                     >
-                      <MenuItem value="">
+                      <MenuItem value="" style={{ color: "rgba(0, 0, 0, 0)" }}>
                         <em>None</em>
                       </MenuItem>
                       <MenuItem value={10}>OK</MenuItem>
@@ -144,7 +143,8 @@ function AOIManualConfirmP1() {
                     size="small"
                     disabled
                     fullWidth
-                    style={{ width: "99%", backgroundColor: "#e0e0e0" }}
+                    style={{ width: "99%", backgroundColor: "#e0e0e0"}}
+                    value={"Sucha.S"}
                   ></TextField>
                 </TableCell>
                 <TableCell style={{ width: "35%" }}>
