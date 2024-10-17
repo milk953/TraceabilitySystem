@@ -1,24 +1,28 @@
-.TbScanAOISheetNo {
+.TbScanSMTConfirm {
     margin: auto;
     width: 700px;
 }
 
-.TbScanAOISheetNo th {
+.TbScanSMTConfirm th {
     background-color: #8c8c8c;
     border-radius: 5px 5px 0 0;
     color: #fff;
     padding: 5px;
 }
 
-.TbScanAOISheetNo td {
+.TbScanSMTConfirm td {
     padding: 4px;
 }
 
-.divgvSerialAOISheetNo {
-    margin-bottom: -20px !important;
+.divgvSerialConfirm {
+    justify-content: center;
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    width: 450px;
 }
 
-.divgvSerialAOISheetNo th {
+.divgvSerialConfirm th {
     text-align: center;
     font-size: 16px;
     background-color: #12422e !important ;
@@ -27,12 +31,12 @@
     padding: 5px;
 }
 
-.divgvSerialAOISheetNo td {
-    border-right: 1px solid #d9d9d9;
+.divgvSerialConfirm td {
     padding: 4px 4px 4px 4px!important;
+    border-right: 1px solid #d9d9d9;
 }
 
-.divgvScanResultAOISheetNo {
+.divgvScanResultCon {
     display: flex;
     flex-direction: column;
     width: 100%;

@@ -687,8 +687,10 @@ function fn_ScanSMTSerialRecordTime() {
 
             if (hfCheckWeekCode === "Y" && selrbtPcsSht === "rbtPcs") {
                 axios.post("/api/Common/getWeekCodebyLot", {
-                    STRLOT: _strLot,
-                    STRPROC: hfDateInProc,
+                    _strLot: _strLot,
+                    _strProc: hfDateInProc,
+                    _strWeekType: hfWeekCodeType,
+                    _strSerialInfo: hfSerialInfo
                 })
                     .then((res) => {
                         console.log(res.data);

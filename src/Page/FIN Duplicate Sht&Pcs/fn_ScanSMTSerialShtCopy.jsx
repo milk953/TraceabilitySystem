@@ -798,9 +798,15 @@ function fn_ScanSMTSerialShtCopy() {
     } else if (type == "GetWeekCodebyLot") {
       let result = "";
       await axios
-        .post("/api/ScanFin/GetWeekCodebyLot", {
-          strLot: params.txtlotNo,
-          strProc: params.hfDateInProc,
+        // .post("/api/ScanFin/GetWeekCodebyLot", {
+        //   strLot: params.txtlotNo,
+        //   strProc: params.hfDateInProc,
+        // })
+        .post('/api/common/GetWeekCodebyLot', {
+          _strLot: params.txtlotNo,
+          _strProc:  params.hfDateInProc,
+          _strWeekType: hfWeekCodeType,
+          _strSerialInfo: hfSerialInfo,
         })
         .then((res) => {
           result = res.data.strReturn;
