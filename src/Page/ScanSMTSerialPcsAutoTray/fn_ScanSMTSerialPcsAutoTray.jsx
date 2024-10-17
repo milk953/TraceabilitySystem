@@ -486,6 +486,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 await axios.post("/api/Common/getWeekCodebyLot", {
                     _strLot: _strLot,
                     _strProc: hfDateInProc,
+                    _strWeekType: hfWeekCodeType,
+                    _strSerialInfo: hfSerialInfo
                 })
                     .then((res) => {
                         console.log(res.data);

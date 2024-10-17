@@ -13,3 +13,28 @@
 .TbScanAOISheetNo td {
     padding: 4px;
 }
+
+.divgvSerialAOISheetNo {
+    margin-bottom: -20px !important;
+}
+
+.divgvSerialAOISheetNo th {
+    text-align: center;
+    font-size: 16px;
+    background-color: #12422e !important ;
+    color: #fff;
+    border-right: 1px solid rgb(221, 219, 219);
+    padding: 5px;
+}
+
+.divgvSerialAOISheetNo td {
+    border-right: 1px solid #d9d9d9;
+    padding: 4px 4px 4px 4px!important;
+}
+
+.divgvScanResultAOISheetNo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: -10px;
+}
