@@ -93,7 +93,6 @@ function fn_P1ConnectBoard() {
   const fcLotRef = useRef(null);
   const fcGvBackSide = useRef([]);
 
-
   //hf
   const [hfSerialLength, setHfSerialLength] = useState("");
   const [hfSerialFixFlag, setHfSerialFixFlag] = useState("");
@@ -166,15 +165,16 @@ function fn_P1ConnectBoard() {
   const hfUserID = localStorage.getItem("ipAddress");
   const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
   const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-  const ROLL_SHT_ROLL_START_DIGIT = import.meta.env.VITE_ROLL_SHT_ROLL_START_DIGIT;
+  const ROLL_SHT_ROLL_START_DIGIT = import.meta.env
+    .VITE_ROLL_SHT_ROLL_START_DIGIT;
   const ROLL_SHT_ROLL_LENGTH = import.meta.env.VITE_ROLL_SHT_ROLL_LENGTH;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
+  const CONNECT_SERIAL_NOT_FOUND = import.meta.env
+    .VITE_CONNECT_SERIAL_NOT_FOUND;
   const Fac = import.meta.env.VITE_FAC;
   const hfProcessList = "''MPRN'',''MMOT'',''MREF'',''MAOI''";
 
   //Start pageload
   useEffect(() => {
-    // txtLot_TextChanged();
     const PageLoad = async () => {
       setHfMode("");
       GetProductData();
@@ -205,12 +205,12 @@ function fn_P1ConnectBoard() {
     settxtLot((prevState) => ({
       ...prevState,
       value: "",
-      disbled: "กดได้",
-      style: "",
+      disbled: false,
+      style: {},
     }));
 
-    setGvSerial((prevState)=>({...prevState,visble:'none',value:''}))
-    settxtSerial(Array(GvSerial).fill(""))
+    setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+    settxtSerial(Array(GvSerial).fill(""));
     setddlProduct((prevState) => ({
       ...prevState,
       value: Product[0].prd_name,
@@ -221,20 +221,30 @@ function fn_P1ConnectBoard() {
     }, 300);
   };
 
+  const btnCancel_Click = async () => {
+    SetMode("SERIAL");
+    setTimeout(() => {
+      fcGvSerial.current[0].focus();
+    }, 300);
+  };
+
   const btnSave_Click = async () => {
-  console.log(hfMode,'hfMode')
+    console.log(hfMode, "hfMode");
     if (hfMode == "SERIAL") {
-      setSerialData()
+      setSerialData();
     }
   };
 
   const ddlProduct_SelectedIndexChanged = async (Sl_Product) => {
-    let data = getProductSerialMaster(Sl_Product);
+    let data = await getProductSerialMaster(Sl_Product);
+    console.log(data,'data.prm_conn_roll_sht_length0')
     if (txtLot.value != "") {
-      setlblLog((prevState) => ({ ...prevState, value: "", visble: true }));
+      setlblLog((prevState) => ({ ...prevState, value: "", visble: false }));
       getCountDataBylot(txtLot.value);
       getInitialSheet();
-      if (data.prm_conn_roll_sht_length == "Y") {
+      console.log(data.prm_conn_roll_sht_flg ,'data.prm_conn_roll_sht_length')
+      if (data.prm_conn_roll_sht_flg
+        == "Y") {
         settxtRollLeaf((prevState) => ({
           ...prevState,
           visble: "",
@@ -243,30 +253,30 @@ function fn_P1ConnectBoard() {
         setTimeout(() => {
           fcRollleaf.current.focus();
         }, 300);
-      
       } else {
         SetMode("SERIAL");
         settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
         if (data.prm_sht_machine_flg == "Y") {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
-        
+
           setTimeout(() => {
             fctMachchine.current.focus();
           }, 300);
         } else {
           setTimeout(() => {
-            if(GvBackSide.length>0){
+            if (GvBackSide.length > 0) {
               fcGvBackSide.current[0].focus();
             }
           }, 300);
-          
         }
       }
+    } else {
+      SetMode("LOT");
+      setddlProduct((prevState) => ({
+        ...prevState,
+        value: Product[0].prd_name,
+      }));
     }
-    setddlProduct((prevState) => ({
-      ...prevState,
-      value: Product[0].prd_name,
-    }));
   };
 
   const txtLot_TextChanged = async () => {
@@ -274,99 +284,51 @@ function fn_P1ConnectBoard() {
     let strLot = "";
     let strPrdName = "";
     let strError = "";
-    strLotData = txtLot.value.toUpperCase().split(";");
-    console.log(strLotData, "strLotData");
-    if (strLotData.length >= 2) {
-      strLot = strLotData[0];
-      await axios
-        .post("/api/Common/GetProductNameByLot", {
-          strLot: strLot,
-        })
-        .then((res) => {
-          strPrdName = res.data.prdName[0];
-          console.log(res.data, "strPrdName");
-        });
-      settxtRollLeaf((prevState) => ({ ...prevState, visble: "none" }));
-      if (strPrdName != "") {
+    if (txtLot.value != "") {
+      strLotData = txtLot.value.toUpperCase().split(";");
+      console.log(strLotData, "strLotData");
+      if (strLotData.length >= 2) {
+        strLot = strLotData[0];
         await axios
-          .post("/api/P1ConnectBoard/GetConfirmToolingByLot", {
+          .post("/api/Common/GetProductNameByLot", {
             strLot: strLot,
-            strProcList: hfProcessList,
           })
           .then((res) => {
-            strError = res.data;
+            strPrdName = res.data.prdName[0];
             console.log(res.data, "strPrdName");
           });
-        if (strError == "") {
-          setlblLog((prevState) => ({
-            ...prevState,
-            value: "",
-            visble: false,
-          }));
-          settxtLot((prevState) => ({ ...prevState, value: strLot }));
-          settxtLotRef((prevState) => ({ ...prevState, value: strLot }));
-          getCountDataBylot(strLot);
-          try {
-            const isInArray = Product.some(
-              (item) => item.prd_name === strPrdName
-            );
-            if (isInArray) {
-              setddlProduct((prevState) => ({
-                ...prevState,
-                value: strPrdName,
-              }));
-              let data = await getProductSerialMaster(strPrdName);
-              getInitialSheet();
-              if (data.prm_conn_roll_sht_flg == "Y") {
-                settxtRollLeaf((prevState) => ({
+        settxtRollLeaf((prevState) => ({ ...prevState, visble: "none" }));
+        if (strPrdName != "") {
+          await axios
+            .post("/api/P1ConnectBoard/GetConfirmToolingByLot", {
+              strLot: strLot,
+              strProcList: hfProcessList,
+            })
+            .then((res) => {
+              strError = res.data;
+              console.log(res.data, "strPrdName");
+            });
+          if (strError == "") {
+            setlblLog((prevState) => ({
+              ...prevState,
+              value: "",
+              visble: false,
+            }));
+            settxtLot((prevState) => ({ ...prevState, value: strLot }));
+            settxtLotRef((prevState) => ({ ...prevState, value: strLot }));
+            getCountDataBylot(strLot);
+            try {
+              const isInArray = Product.some(
+                (item) => item.prd_name === strPrdName
+              );
+              if (isInArray) {
+                setddlProduct((prevState) => ({
                   ...prevState,
-                  value: "",
-                  visble: "",
+                  value: strPrdName,
                 }));
-                setTimeout(() => {
-                  fcRollleaf.current.focus();
-                }, 300);
-                
-              } else {
-                SetMode("SERIAL");
-                if (data.prm_sht_machine_flg == "Y") {
-                  settxtMachineNo((prevState) => ({
-                    ...prevState,
-                    visble: "",
-                  }));
-                  setTimeout(() => {
-                    fctMachchine.current.focus();
-                  }, 300);
-                
-                } else {
-                  setTimeout(() => {
-                    if(GvBackSide.length>0){
-                      fcGvBackSide.current[0].focus();
-                    }
-                  
-                  }, 300);
-                  
-                }
-              }
-            } else {
-              setlblLog((prevState) => ({
-                ...prevState,
-                visble: true,
-                value: `Product ${strPrdName} not found.`,
-              }));
-              setTimeout(() => {
-                  fcProduct.current.focus();
-              }, 300);
-            }
-          } catch (error) {
-            console.error(error, "CatchError");
-            const intProduct = strPrdName.indexOf("-", 12);
-            if (intProduct > -1) {
-              strPrdName =
-                strPrdName.substring(0, intProduct) +
-                strPrdName.substring(intProduct + 1, intProduct + 11).trim();
-              try {
-                if (datagetPd.prm_conn_roll_sht_flg == "Y") {
+                let data = await getProductSerialMaster(strPrdName);
+                getInitialSheet();
+                if (data.prm_conn_roll_sht_flg == "Y") {
                   settxtRollLeaf((prevState) => ({
                     ...prevState,
                     value: "",
@@ -377,9 +339,7 @@ function fn_P1ConnectBoard() {
                   }, 300);
                 } else {
                   SetMode("SERIAL");
-                  settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
-
-                  if (datagetPd.prm_sht_machine_flg == "Y") {
+                  if (data.prm_sht_machine_flg == "Y") {
                     settxtMachineNo((prevState) => ({
                       ...prevState,
                       visble: "",
@@ -388,18 +348,14 @@ function fn_P1ConnectBoard() {
                       fctMachchine.current.focus();
                     }, 300);
                   } else {
-                    settxtMachineNo((prevState) => ({
-                      ...prevState,
-                      visble: "none",
-                    }));
                     setTimeout(() => {
-                      if(GvBackSide.length>0){
+                      if (GvBackSide.length > 0) {
                         fcGvBackSide.current[0].focus();
                       }
                     }, 300);
                   }
                 }
-              } catch (error) {
+              } else {
                 setlblLog((prevState) => ({
                   ...prevState,
                   visble: true,
@@ -409,35 +365,114 @@ function fn_P1ConnectBoard() {
                   fcProduct.current.focus();
                 }, 300);
               }
-            } else {
-              setlblLog((prevState) => ({
-                ...prevState,
-                visble: true,
-                value: `Product ${strPrdName} not found.`,
-              }));
-              setTimeout(() => {
-                fcProduct.current.focus();
-              }, 300);
+            } catch (error) {
+              console.error(error, "CatchError");
+              const intProduct = strPrdName.indexOf("-", 12);
+              if (intProduct > -1) {
+                strPrdName =
+                  strPrdName.substring(0, intProduct) +
+                  strPrdName.substring(intProduct + 1, intProduct + 11).trim();
+                try {
+                  if (datagetPd.prm_conn_roll_sht_flg == "Y") {
+                    settxtRollLeaf((prevState) => ({
+                      ...prevState,
+                      value: "",
+                      visble: "",
+                    }));
+                    setTimeout(() => {
+                      fcRollleaf.current.focus();
+                    }, 300);
+                  } else {
+                    SetMode("SERIAL");
+                    settxtMachineNo((prevState) => ({
+                      ...prevState,
+                      value: "",
+                    }));
+
+                    if (datagetPd.prm_sht_machine_flg == "Y") {
+                      settxtMachineNo((prevState) => ({
+                        ...prevState,
+                        visble: "",
+                      }));
+                      setTimeout(() => {
+                        fctMachchine.current.focus();
+                      }, 300);
+                    } else {
+                      settxtMachineNo((prevState) => ({
+                        ...prevState,
+                        visble: "none",
+                      }));
+                      setTimeout(() => {
+                        if (GvBackSide.length > 0) {
+                          fcGvBackSide.current[0].focus();
+                        }
+                      }, 300);
+                    }
+                  }
+                } catch (error) {
+                  setlblLog((prevState) => ({
+                    ...prevState,
+                    visble: true,
+                    value: `Product ${strPrdName} not found.`,
+                  }));
+                  setTimeout(() => {
+                    fcProduct.current.focus();
+                  }, 300);
+                }
+              } else {
+                setlblLog((prevState) => ({
+                  ...prevState,
+                  visble: true,
+                  value: `Product ${strPrdName} not found.`,
+                }));
+                setTimeout(() => {
+                  fcProduct.current.focus();
+                }, 300);
+              }
             }
+          } else {
+            setddlProduct((prevState) => ({
+              ...prevState,
+              value: Product[0].prd_name,
+            }));
+            settxtLot((prevState) => ({
+              ...prevState,
+              value: "",
+              visble: false,
+            }));
+            setGvSerial((prevState) => ({
+              ...prevState,
+              value: "",
+              visble: "none",
+            }));
+            settxtSerial(Array(GvSerial).fill(""));
+            setlblLog((prevState) => ({
+              ...prevState,
+              value: strError,
+              visble: true,
+            }));
+            setHfMode("LOT");
+            setTimeout(() => {
+              fcLotNo.current.focus();
+            }, 300);
           }
         } else {
           setddlProduct((prevState) => ({
             ...prevState,
             value: Product[0].prd_name,
           }));
-          settxtLot((prevState) => ({ ...prevState, value: "",visble:false }));
-          setGvSerial((prevState) => ({ ...prevState, value: "",visble:'none' }));
+          settxtLot((prevState) => ({ ...prevState, value: "" }));
+          setGvSerial((prevState) => ({ ...prevState, visble: "none" }));
           settxtSerial(Array(GvSerial).fill(""));
           setlblLog((prevState) => ({
             ...prevState,
-            value: strError,
+            value: "Invalid lot no.",
             visble: true,
           }));
           setHfMode("LOT");
           setTimeout(() => {
             fcLotNo.current.focus();
           }, 300);
-        
         }
       } else {
         setddlProduct((prevState) => ({
@@ -445,11 +480,11 @@ function fn_P1ConnectBoard() {
           value: Product[0].prd_name,
         }));
         settxtLot((prevState) => ({ ...prevState, value: "" }));
-        setGvSerial((prevState)=>({...prevState,visble:'none'}))
-        settxtSerial(Array(GvSerial).fill(""))
+        setGvSerial((prevState) => ({ ...prevState, visble: "", value: "" }));
+        settxtSerial(Array(GvSerial).fill(""));
         setlblLog((prevState) => ({
           ...prevState,
-          value: "Invalid lot no.",
+          value: "Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด",
           visble: true,
         }));
         setHfMode("LOT");
@@ -457,23 +492,6 @@ function fn_P1ConnectBoard() {
           fcLotNo.current.focus();
         }, 300);
       }
-    } else {
-      setddlProduct((prevState) => ({
-        ...prevState,
-        value: Product[0].prd_name,
-      }));
-      settxtLot((prevState) => ({ ...prevState, value: "" }));
-      setGvSerial((prevState)=>({...prevState,visble:'',value:''}))
-      settxtSerial(Array(GvSerial).fill(""))
-      setlblLog((prevState) => ({
-        ...prevState,
-        value: "Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด",
-        visble: true,
-      }));
-      setHfMode("LOT");
-      setTimeout(() => {
-        fcLotNo.current.focus();
-      }, 300);
     }
   };
 
@@ -500,6 +518,7 @@ function fn_P1ConnectBoard() {
   };
 
   const SetMode = async (strMode) => {
+    console.log(strMode,'Modeee1')
     if (strMode == "LOT") {
       setddlProduct((prevState) => ({
         ...prevState,
@@ -513,13 +532,12 @@ function fn_P1ConnectBoard() {
         value: "",
       }));
       setlblLog((prevState) => ({ ...prevState, visble: false }));
-      settxtSerial(Array(GvSerial).fill(""))
-      setGvSerial((prevState)=>({...prevState,visble:'none',value:''}))
+      settxtSerial(Array(GvSerial).fill(""));
+      setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
       setHfMode("LOT");
       setTimeout(() => {
         fcLotNo.current.focus();
       }, 300);
-      
     }
     if (strMode == "LOT_ERROR") {
       settxtLot((prevState) => ({
@@ -529,9 +547,11 @@ function fn_P1ConnectBoard() {
         value: "",
       }));
       setlblLog((prevState) => ({ ...prevState, visble: true }));
-      setGvSerial((prevState)=>({...prevState,visble:false}))
+      setGvSerial((prevState) => ({ ...prevState, visble: false }));
       setHfMode("LOT");
-      fnSetFocus("txtLot");
+      setTimeout(() => {
+        fcLotNo.current.focus();
+      }, 300);
     }
     if (strMode == "SERIAL") {
       settxtLot((prevState) => ({
@@ -540,7 +560,7 @@ function fn_P1ConnectBoard() {
         style: { background: "#e0e0e0" },
       }));
       setlblLog((prevState) => ({ ...prevState, visble: false }));
-      setGvSerial((prevState)=>({...prevState,visble:true}))
+      setGvSerial((prevState) => ({ ...prevState, visble: '' }));
       setHfMode("SERIAL");
       await getInitialSerial();
     }
@@ -560,7 +580,10 @@ function fn_P1ConnectBoard() {
       }));
       setlblLog((prevState) => ({ ...prevState, visble: false }));
       await getInitialSerial();
-      // fnSetFocus("gvSerial")
+      
+      setTimeout(() => {
+        fcGvSerial.current[0].focus();
+      }, 300);
     }
     if (strMode == "SERIAL_NG") {
       settxtLot((prevState) => ({
@@ -578,38 +601,53 @@ function fn_P1ConnectBoard() {
       txtRollLeaf.length === parseInt(hfCheckRollShtDigit)
     ) {
       SetMode("SERIAL");
+      settxtMachineNo((prevState) => ({ ...prevState,value:'' }));
       if (hfReqMachine == "Y") {
-        settxtMachineNo((prevState)=>({...prevState,}))
-        // pnlMachine.Visible = True
-        // fnSetFocus("txtMachineNo")
+        settxtMachineNo((prevState) => ({ ...prevState,visble:'' }));        
+        setTimeout(() => {
+          fctMachchine.current.focus();
+        }, 300);
       } else {
-        // fnSetFocus("gvBackSide_txtSideBack_0")
+        setTimeout(() => {
+          fcGvBackSide.current[0].focus();
+        }, 300);
       }
     } else {
       settxtRollLeaf((prevState) => ({ ...prevState, value: "" }));
-      // fnSetFocus("txtRollLeaf")
+      setTimeout(() => {
+        fcRollleaf.current.focus();
+      }, 300);
     }
   };
 
   const txtLotRef_TextChanged = async () => {
-    if (txtLotRef.value) {
+    if (txtLotRef.value!='') {
       let strLotData = txtLotRef.value.toUpperCase().split(";");
       settxtLotRef((prevState) => ({ ...prevState, value: strLotData[0] })); //=strLotData[0]
       if (hfCheckRollSht == "Y") {
         settxtRollLeaf((prevState) => ({
           ...prevState,
           value: "",
-          visble: "none",
+          visble: "",
         }));
-        // fnSetFocus("txtRollLeaf")
+        setTimeout(() => {
+          fcRollleaf.current.focus();
+        }, 300);
+ 
       } else {
         SetMode("SERIAL");
         settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
         if (hfReqMachine == "Y") {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
-          // fnSetFocus("txtMachineNo")
+          setTimeout(() => {
+            fctMachchine.current.focus();
+          }, 300);
+         
         } else {
-          // fnSetFocus("gvBackSide_txtSideBack_0")
+          setTimeout(() => {
+            fcGvBackSide.current[0].focus();
+          }, 300);
+       
         }
       }
     }
@@ -639,16 +677,15 @@ function fn_P1ConnectBoard() {
     const dtData = [];
     let intRow = 0;
     let strFrontSide = "";
-    console.log(GvSerial.value, "gvgvgvgvgv");
+
     for (let intSeq = 0; intSeq < GvSerial.value.length; intSeq++) {
       intRow++;
       const hfType = GvSerial.value[intSeq].TYPE;
       const serialValue = txtSerial[intSeq];
-      console.log(hfType, serialValue, "------------");
+
       if (hfType === "SHT") {
         strFrontSide = serialValue;
-      } 
-      else if (txtSideBack[intSeq] !== "" && strFrontSide !== "") {
+      } else if (txtSideBack[intSeq] !== "" && strFrontSide !== "") {
         const drRow = {
           SHEET: GvSerial.value[intSeq].SHEET,
           BACK_SIDE: txtSideBack[intSeq],
@@ -663,11 +700,11 @@ function fn_P1ConnectBoard() {
           BOARD_NO_F: "",
           BOARD_NO_B: "",
         };
-        dtData.push(drRow); // เพิ่มแถวข้อมูลเข้าไปใน array
+        dtData.push(drRow);
       }
     }
     console.log(dtData, "getInputSerial");
-    return dtData; // ส่งคืนข้อมูลที่ได้
+    return dtData;
   };
 
   const getInitialSerial = async () => {
@@ -701,10 +738,9 @@ function fn_P1ConnectBoard() {
     setGvSerial((prevState) => ({
       ...prevState,
       value: dtData,
-      visble: "",
+      visble:''
     }));
     console.log(dtData, "getInitialSerial");
-    // setGvSerial((prevState)=>({...prevState,value:dtData}))
     return dtData;
   };
 
@@ -781,12 +817,13 @@ function fn_P1ConnectBoard() {
           });
       }
       let _intRowSerial = 0;
-      // parseInt(drRow["SEQ"].toString(), 10)
+ 
 
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         if (hfCheckPrdSht == "Y" && parseInt(dtSerial[drRow].SEQ, 10) == 1) {
           _strShtNoBack = dtSerial[drRow].BACK_SIDE;
           _strShtNoFront = dtSerial[drRow].FRONT_SIDE;
+          console.log('_strShtNoBack',_strShtNoBack)
           if (
             hfCheckPrdAbbr !==
             _strShtNoBack.substring(
@@ -847,7 +884,10 @@ function fn_P1ConnectBoard() {
             _bolError = true;
           }
         }
-        if (dtSerial[drRow].SERIAL != ""&&dtSerial[drRow].SERIAL !=undefined) {
+        if (
+          dtSerial[drRow].SERIAL != "" &&
+          dtSerial[drRow].SERIAL != undefined
+        ) {
           let _strSerial = dtSerial[drRow].SERIAL;
           let _strTestResult = "NONE";
           let _strMessageUpdate = "";
@@ -865,7 +905,7 @@ function fn_P1ConnectBoard() {
                 _bolError = true;
               }
             }
-            console.log(_strSerial,'_strSerial.length')
+            console.log(_strSerial, "_strSerial.length");
             if (_strSerial.length == parseInt(hfSerialLength, 10)) {
               let _strFixDigit = "";
               _strFixDigit = _strSerial.substring(
@@ -998,7 +1038,10 @@ function fn_P1ConnectBoard() {
       }
       if (!_bolError) {
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-          if (dtSerial[drRow].SERIAL != ""&&dtSerial[drRow].SERIAL !=undefined) {
+          if (
+            dtSerial[drRow].SERIAL != "" &&
+            dtSerial[drRow].SERIAL != undefined
+          ) {
             let _intCount = 0;
             let _intCountOK = 0;
             let _intCountNG = 0;
@@ -1102,7 +1145,6 @@ function fn_P1ConnectBoard() {
                   });
               }
             }
-
           } else {
             _strScanResultAll = "NG";
             _strUpdateError = "Roll leaf no. incorrect.";
@@ -1136,36 +1178,54 @@ function fn_P1ConnectBoard() {
           _strScanResultAll = "NG";
         }
       }
-      setlblResult((prevState)=>({...prevState,value:_strScanResultAll}))
-      
-      if(_strScanResultAll=='NG'){
-        setlblResult((prevState)=>({...prevState,style:{background:'red'}}))
+      setlblResult((prevState) => ({ ...prevState, value: _strScanResultAll }));
 
+      if (_strScanResultAll == "NG") {
+        setlblResult((prevState) => ({
+          ...prevState,
+          style: { background: "red" },
+        }));
+      } else {
+        setlblResult((prevState) => ({
+          ...prevState,
+          style: { background: "green" },
+        }));
       }
-      else{
-        setlblResult((prevState)=>({...prevState,style:{background:'green'}}))
+      if (_strErrorAll != "") {
+        setlblResult((prevState) => ({
+          ...prevState,
+          value: prevState.value + " " + _strScanResultAll,
+        }));
       }
-      if(_strErrorAll!=''){
-        setlblResult((prevState)=>({...prevState, value: prevState.value +" "+_strScanResultAll}))
-        }
-        setgvScanResult((prevState)=>({...prevState, value: dtSerial,visble:true}))
-        getInitialSheet()
-        getInitialSerial()
-        getCountDataBylot(txtLot.value)
-        // ExportGridToCSV()
-        // -------------------------------------------------------------------------
-    }
-    else{
-      setlblLog((prevState)=>({...prevState,value:'Please input Sheet Side No. !!!'}))
-      SetMode("SERIAL_ERROR")
-      getCountDataBylot(txtLot.value)
-      settxtMachineNo((prevState)=>({...prevState,value:''}))
-      if(hfReqMachine=='Y'){
-        settxtMachineNo((prevState)=>({...prevState,visble:''}))
-        // fnSetFocus("txtMachineNo")
-      }
-      else{
-        // fnSetFocus("gvBackSide_txtSideBack_0")
+      setgvScanResult((prevState) => ({
+        ...prevState,
+        value: dtSerial,
+        visble: true,
+      }));
+      getInitialSheet();
+      getInitialSerial();
+      getCountDataBylot(txtLot.value);
+      // ExportGridToCSV()
+      // -------------------------------------------------------------------------
+    } else {
+      setlblLog((prevState) => ({
+        ...prevState,
+        value: "Please input Sheet Side No. !!!",
+      }));
+      SetMode("SERIAL_ERROR");
+      getCountDataBylot(txtLot.value);
+      settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
+      if (hfReqMachine == "Y") {
+        settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
+        setTimeout(() => {
+          fctMachchine.current.focus();
+        }, 300);
+
+      } else {
+        setTimeout(() => {
+          fcGvBackSide.current[0].focus();
+        }, 300);
+   
       }
     }
   };
@@ -1296,54 +1356,53 @@ function fn_P1ConnectBoard() {
     settxtSerial(newData);
   };
 
-  const columns=[
+  const columns = [
     {
       title: "Sheet No.",
       dataIndex: "SHEET",
       key: "Sheet No.",
       align: "center",
       render: (text, record, index) => {
-          return text;
+        return text;
       },
-  },
-  {
-    title: "No.",
-    dataIndex: "SEQ",
-    key: "No.",
-    align: "center",
-    render: (text, record, index) => {
-        return text;
     },
-},
-  {
-    title: "Serial No.",
-    dataIndex: "SERIAL",
-    key: "Serial No.",
-    align: "center",
-    render: (text, record, index) => {
+    {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "No.",
+      align: "center",
+      render: (text, record, index) => {
         return text;
+      },
     },
-},
-{
-  title: "Scan Result",
-  dataIndex: "SERIAL",
-  key: "Scan Result",
-  align: "center",
-  render: (text, record, index) => {
-      return text;
-  },
-},
-{
-  title: "Remark",
-  dataIndex: "REMARK",
-  key: "Remark",
-  align: "center",
-  render: (text, record, index) => {
-      return text;
-  },
-},
-
-  ]
+    {
+      title: "Serial No.",
+      dataIndex: "SERIAL",
+      key: "Serial No.",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Scan Result",
+      dataIndex: "SERIAL",
+      key: "Scan Result",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Remark",
+      dataIndex: "REMARK",
+      key: "Remark",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+  ];
 
   return {
     Product,
@@ -1382,7 +1441,8 @@ function fn_P1ConnectBoard() {
     fcProduct,
     fcRollleaf,
     fctMachchine,
-    fcLotRef
+    fcLotRef,
+    lblResult
   };
 }
 

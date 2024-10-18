@@ -71,7 +71,8 @@ function P1ConnectBoard() {
     fcProduct,
     fcRollleaf,
     fctMachchine,
-    fcLotRef
+    fcLotRef,
+    lblResult
   } = fn_P1ConnectBoard();
 
 
@@ -355,12 +356,15 @@ function P1ConnectBoard() {
                       <TableCell
                         align="center"
                         sx={{ borderRight: "1px solid #d9d9d9" }}
+                        colSpan={GvSerial.value[index].SEQ === 0 ? 2 : 1} 
                       >
-                        {GvSerial.value[index].SEQ}
+                        {GvSerial.value[index].SHEET}
                       </TableCell>
-                      <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                      {GvSerial.value[index].SHEET}                     
-                      </TableCell>
+                      {GvSerial.value[index].SEQ !== 0 && (
+                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
+                          {GvSerial.value[index].SEQ}
+                        </TableCell>
+                      )}
                       <TableCell>
                       <TextField
                         className="input_txt"
@@ -373,13 +377,17 @@ function P1ConnectBoard() {
                         }
                         onBlur={(event) => {
                           handleSerialChange(index, event);
-                          // fcGvBackSide_txtsideback_1.current[index].focus();
                         }}
                       
                         onKeyDown={(event) => {
                           if (event.key === "Enter") {
                             event.preventDefault(); 
-                            // fcGvBackSide_txtsideback_1.current[index].focus();
+                            if (index <  GvSerial.value.length - 1) {
+                              fcGvSerial.current[index + 1].focus();
+                            } else {
+                              btnSave_Click();
+                              event.target.blur();
+                            }
                           }
                         }}
                       ></TextField>         
@@ -428,14 +436,14 @@ function P1ConnectBoard() {
                       elevation={3}
                       style={{
                         background: " #BA0900",
-                        // display: gvScanResult,
+                   
                       }}
                     >
                       <Typography
                         variant="h4"
                         style={{ paddingTop: "5px", color: "#fff" }}
                       >
-                        lblResult.value
+                       { lblResult.value}
                       </Typography>
                     </Paper>
                   </div>
