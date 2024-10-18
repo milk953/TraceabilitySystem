@@ -89,7 +89,7 @@ function ProductMaster() {
             <Card
                component={Paper}
                className="Card-Common"
-               sx={{ display: "flex" }}
+               sx={{ display: "flex", width: "92%" }}
             >
                 {pnlMessage && (
                     <Paper
