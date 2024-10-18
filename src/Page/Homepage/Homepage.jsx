@@ -167,6 +167,14 @@ function ScanSheetMOTTime() {
                   />
                 )}
                 {Showmenu === "Work" && (
+                     <TableContainer
+                     sx={{
+                       maxHeight: "300px",
+                       width: "350px",
+                       margin: "auto",
+                       overflowY: "auto",
+                     }}
+                   >
                   <Table
                     style={{
                       width: "300px",
@@ -216,6 +224,7 @@ function ScanSheetMOTTime() {
                       </TableRow>
                     </TableBody>
                   </Table>
+                  </TableContainer>
                 )}
                 {Showmenu === "Maintain" && (
                   <TableContainer
@@ -272,6 +281,14 @@ function ScanSheetMOTTime() {
                   </TableContainer>
                 )}
                 {Showmenu === "View" && (
+                     <TableContainer
+                     sx={{
+                       maxHeight: "300px",
+                       width: "350px",
+                       margin: "auto",
+                       overflowY: "auto",
+                     }}
+                   >
                   <Table
                     style={{
                       width: "300px",
@@ -323,6 +340,7 @@ function ScanSheetMOTTime() {
                       </TableRow>
                     </TableBody>
                   </Table>
+                  </TableContainer>
                 )}
               </td>
             </tr>

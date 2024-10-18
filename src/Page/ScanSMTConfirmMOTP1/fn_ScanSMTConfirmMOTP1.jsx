@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 function fn_ScanSMTConfirmMOTP1() {
     const [txtLot, settxtLot] = useState({ disabled: false, value: "" });
@@ -85,6 +87,12 @@ function fn_ScanSMTConfirmMOTP1() {
     const FINAL_GATE_SPECIAL_OK = "OK";
 
     useEffect(() => {
+        if (hfSerialCount != "" && !pnlLog) {
+            getInitialSerial();
+        }
+    }, [hfSerialCount, pnlLog]);
+    
+    useEffect(() => {
         PageLoad();
     }, []);
 
@@ -105,10 +113,10 @@ function fn_ScanSMTConfirmMOTP1() {
     };
 
     const handleChangeLot = async () => {
-        if (txtLot.trim() !== "") {
+        if (txtLot.value !== "") {
             let _strLot = "";
             let _strPrdName = "";
-            const _strLotAll = txtLot.trim().toUpperCase().split(";");
+            const _strLotAll = txtLot.value.trim().toUpperCase().split(";");
             if (_strLotAll.length >= 2) {
                 _strLot = _strLotAll[0];
                 _strPrdName = selProduct;
@@ -213,6 +221,12 @@ function fn_ScanSMTConfirmMOTP1() {
         settxtgvSerial(newValues);
     };
 
+    useEffect(() => {
+        if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
+            inputgvSerial.current[0].focus();
+        }
+    },[gvSerialData]);
+
     const handleKeygvSerial = (e, index) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -300,11 +314,9 @@ function fn_ScanSMTConfirmMOTP1() {
         let dtData = [];
 
         for (let intRow = 1; intRow <= hfSerialCount; intRow++) {
-            let drRow = {
+            dtData.push({
                 SEQ: intRow,
-            }
-
-            dtData.push(drRow);
+            });
         }
         setgvSerialData(dtData);
         console.log("gvserialdata:", dtData)
@@ -312,7 +324,6 @@ function fn_ScanSMTConfirmMOTP1() {
         if (gvSerialData.length > 0 && hfTrayFlag === "N") {
             inputgvSerial.current[0].focus();
         }
-        return dtData;
     };
 
     const setSerialDataTray = async () => {
@@ -595,7 +606,20 @@ function fn_ScanSMTConfirmMOTP1() {
                             let _Result = "";
                             let _strMessage = "";
 
-                            //Get_SPI_AOI_RESULT_P1
+                            await axios.post("/api/Common/get_spi_aoi_result_p1", {
+                                strSerialNo: _strSerial,
+                                strPlantCode: plantCode,
+                                strPreAOIF: hfCheckPreAOIF,
+                                strPreAOIB: hfCheckPreAOIB,
+                                strAOIF: hfCheckAOIF,
+                                strAOIB: hfCheckAOIB,
+                                strSPIF: hfCheckSPIF,
+                                strSPIB: hfCheckSPIB
+                            })
+                            .then((res) => {
+                                _Result = res.data[0].result_v;
+                            });
+
                             if (_Result === "NG") {
                                 _strScanResultUpdate = _Result;
                                 _strMessageUpdate = _strMessage;
@@ -956,7 +980,7 @@ function fn_ScanSMTConfirmMOTP1() {
     return {
         txtLot, settxtLot, selProduct, Productdata, lblLot, pnlLog, lblLog, lblResult, lblResultcolor, pnlSerial,
         hfSerialCount, gvScanResult, gvScanData, txtgvSerial, inputLot, ddlProduct, inputgvSerial, handleChangeLot,
-        ibtBackClick, handleChangeProduct, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick, 
+        ibtBackClick, handleChangeProduct, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick,
         columnsgvResult, btnHiddenClick
     }
 };

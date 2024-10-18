@@ -283,7 +283,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <TextField
-                                                        id="txtfield"
+                                                        id="input_txt"
                                                         size="small"
                                                         fullWidth
                                                         value={txtgvSerial[index] || ""}

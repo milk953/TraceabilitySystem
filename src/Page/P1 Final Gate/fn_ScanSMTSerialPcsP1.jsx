@@ -402,7 +402,22 @@ function fn_ScanSMTSerialPcsP1() {
           });
         return result;
       } else if (type == "Get_SPI_AOI_RESULT_P1") {
-        //ยังไม่ได้ืทำ
+        let result1 = "";
+        let result2 = "";
+        await axios
+        .post("/api/common/get_spi_aoi_result_p1", 
+          {
+            strSerialNo:params.strSerialNo,
+            strPlantCode:Fac,
+            strPreAOIF:params.strPreAOIF,
+            strPreAOIB:params.strPreAOIB,
+            strAOIF:params.strAOIF,
+            strAOIB:params.strAOIB,
+            strSPIF:params.strSPIF,
+            strSPIB:params.strSPIB,
+          }).then((res) => {
+          setSerialMaster(res.data);
+        });
       } else if (type == "getProductSerialMaster") {
         await axios
           .post("/api/Common/GetSerialProductByProduct", {
@@ -826,7 +841,16 @@ function fn_ScanSMTSerialPcsP1() {
             if(!_bolError && hiddenParams.hfCheckSPIAOI == 'Y'){
               let _Result = '';
               let _strMessage = '';
-              // _Result = BIZ_ScanSMTSerial.Get_SPI_AOI_RESULT_P1(Session("PLANT_CODE"), Session("PRODUCT_KIND"), _strSerial, _strMessage, hfCheckPreAOIF.Value, hfCheckPreAOIB.Value, hfCheckAOIF.Value, hfCheckAOIB.Value, hfCheckSPIF.Value, hfCheckSPIB.Value) ทำ api
+              _Result,_strMessage = await getData("Get_SPI_AOI_RESULT_P1", {
+                strSerialNo: _strSerial,
+                strPlantCode: Fac,
+                strPreAOIF: hiddenParams.hfCheckPreAOIF,
+                strPreAOIB: hiddenParams.hfCheckPreAOIB,
+                strAOIF: hiddenParams.hfCheckAOIF,
+                strAOIB: hiddenParams.hfCheckAOIB,
+                strSPIF: hiddenParams.hfCheckSPIF,
+                strSPIB: hiddenParams.hfCheckSPIB,
+              });
               if(_Result == 'NG'){
                 _strScanResultUpdate = _Result;
                 _strMessageUpdate = _strMessage;
