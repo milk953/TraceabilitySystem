@@ -35,9 +35,45 @@ import { fn_P1ConnectBoard } from "./fn_P1ConnectBoard";
 import { Table as AntTable } from "antd";
 function P1ConnectBoard() {
   const {
-    Product,ddlProduct,txtLot_TextChanged,txtLot,settxtLot,lblLog,btnSave_Click,GvSerial
+    Product,
+    ddlProduct,
+    txtLot_TextChanged,
+    txtLot,
+    settxtLot,
+    lblLog,
+    btnSave_Click,
+    GvSerial,
+    GvBackSide,
+    gvScanResult,
+    txtLotRef,
+    txtMachineNo,
+    txtSerial,
+    lblTotalPcs,
+    lblTotalSht,
+    txtRollLeaf,
+    settxtLotRef,
+    setddlProduct,
+    settxtRollLeaf,
+    settxtMachineNo,
+    ddlProduct_SelectedIndexChanged,
+    ibtBack_Click,
+    txtRollLeaf_TextChanged,
+    txtLotRef_TextChanged,
+    handleBackSideChange,
+    settxtSideBack,
+    txtSideBack,
+    settxtSerial,
+    handleSerialChange,
+    columns,
+    fcLotNo,
+    fcGvBackSide,
+    fcGvSerial,
+    fcProduct,
+    fcRollleaf,
+    fctMachchine,
+    fcLotRef
   } = fn_P1ConnectBoard();
-  // console.log('gvScanResult',gvScanResult)
+
 
   return (
     <div>
@@ -60,14 +96,14 @@ function P1ConnectBoard() {
                       <Typography> LotNo. :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      {/* {console.log(txtLot)} */}
+                    
                       <TextField
                         className="input_txt"
                         size="small"
                         fullWidth
                         disabled={txtLot.disbled} //true พิมไม่ได้
                         style={txtLot.style}
-                        // inputRef={(el) => (fc_txtLotNo.current = el)}
+                        inputRef={(el) => (fcLotNo.current = el)}
                         value={txtLot.value}
                         onChange={(e) => {
                           settxtLot((prevState) => ({
@@ -86,7 +122,7 @@ function P1ConnectBoard() {
                     <TableCell>
                       <Button 
                       className="Bt_ibtBack" 
-                      // onClick={ibtback_Click}
+                      onClick={ibtBack_Click}
                       >
                         <BackspaceIcon />
                       </Button>
@@ -101,14 +137,14 @@ function P1ConnectBoard() {
                         <Autocomplete
                           className="Select_dropDown"
                           value={ddlProduct.value}
-                          // style={sl_Product.style}
-                          // disabled={sl_Product.disbled} //true พิมไม่ได้
-                          // onChange={(e, value) => HandleSL_Product(value)}
+                          style={ddlProduct.style}
+                          disabled={ddlProduct.disbled} //true พิมไม่ได้
+                          onChange={(e, value) => ddlProduct_SelectedIndexChanged(value)}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              // inputRef={(el) => (fc_SlProduct.current = el)}
+                              inputRef={(el) => (fcProduct.current = el)}
                               size="small"
                               sx={{ textAlign: "left" }}
                             />
@@ -127,16 +163,16 @@ function P1ConnectBoard() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        // inputRef={(el) => (fc_txtRollleaf.current = el)}
-                        // disabled={txtRollLeaf.disbled} //true พิมไม่ได้
-                        // style={txtRollLeaf.style}
-                        // value={txtRollLeaf.value}
-                        // onChange={(e) => {
-                        //   settxtRollLeaf((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        inputRef={(el) => (fcLotRef.current = el)}
+                        disabled={txtLotRef.disbled} //true พิมไม่ได้
+                        style={txtLotRef.style}
+                        value={txtLotRef.value}
+                        onChange={(e) => {
+                          settxtRollLeaf((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
                         // onKeyDown={(e) => {
                         //   if (e.key === "Enter") {
                         //     txtRollLeaf_TextChanged();
@@ -157,21 +193,13 @@ function P1ConnectBoard() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        style={{width:'60px'}}
-                        // label="Operator. :"
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtOperator_TextChanged();
-                        //   }
-                        // }}
+                        disabled
+                        style={{width:'80px'}}
                         inputProps={{
                           style: { textAlign: 'center' }, // จัดข้อความให้อยู่ตรงกลาง
                         }}
                         fullWidth
-                        // inputRef={(el) => (fc_txtOperator.current = el)}
-                        // value={txtOperator}
-                        // onChange={(e, value) => settxtOperator(value)}
-                        // onBlur={txtOperator_TextChanged}
+                        value={lblTotalSht.value}
                       ></TextField>
                     </TableCell>
                   </TableRow>
@@ -181,27 +209,19 @@ function P1ConnectBoard() {
                     </TableCell>
                     <TableCell colSpan={3}>
                       <TextField
-                       style={{width:'60px'}}
+                       style={{width:'80px'}}
                         className="input_txt"
                         size="small"
-                        // label="Operator. :"
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtOperator_TextChanged();
-                        //   }
-                        // }}
+                        disabled
+                        value={lblTotalPcs.value}
                         inputProps={{
-                          style: { textAlign: 'center' }, // จัดข้อความให้อยู่ตรงกลาง
+                          style: { textAlign: 'center' },
                         }}
                         fullWidth
-                        // inputRef={(el) => (fc_txtOperator.current = el)}
-                        // value={txtOperator}
-                        // onChange={(e, value) => settxtOperator(value)}
-                        // onBlur={txtOperator_TextChanged}
                       ></TextField>
                     </TableCell>
                   </TableRow> 
-                  <TableRow>
+                  <TableRow style={{display:txtRollLeaf.visble}}>
                     <TableCell align="right">
                       <Typography>Roll Leaf No. :</Typography>
                     </TableCell>
@@ -209,16 +229,15 @@ function P1ConnectBoard() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        // inputRef={(el) => (fc_txtRollleaf.current = el)}
-                        // disabled={txtRollLeaf.disbled} //true พิมไม่ได้
-                        // style={txtRollLeaf.style}
-                        // value={txtRollLeaf.value}
-                        // onChange={(e) => {
-                        //   settxtRollLeaf((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        inputRef={(el) => (fcRollleaf.current = el)}
+                        disabled={txtRollLeaf.disbled} //true พิมไม่ได้
+                        value={txtRollLeaf.value}
+                        onChange={(e) => {
+                          settxtRollLeaf((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
                         // onKeyDown={(e) => {
                         //   if (e.key === "Enter") {
                         //     txtRollLeaf_TextChanged();
@@ -229,7 +248,7 @@ function P1ConnectBoard() {
                       ></TextField>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  <TableRow  style={{display:txtRollLeaf.visble}} >
                     <TableCell align="right">
                       <Typography>Machine No. :</Typography>
                     </TableCell>
@@ -237,16 +256,16 @@ function P1ConnectBoard() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        // inputRef={(el) => (fc_txtRollleaf.current = el)}
-                        // disabled={txtRollLeaf.disbled} //true พิมไม่ได้
-                        // style={txtRollLeaf.style}
-                        // value={txtRollLeaf.value}
-                        // onChange={(e) => {
-                        //   settxtRollLeaf((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        inputRef={(el) => (fctMachchine.current = el)}
+                        disabled={txtMachineNo.disbled} //true พิมไม่ได้
+                        style={txtMachineNo.style}
+                        value={txtMachineNo.value}
+                        onChange={(e) => {
+                          settxtRollLeaf((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
                         // onKeyDown={(e) => {
                         //   if (e.key === "Enter") {
                         //     txtRollLeaf_TextChanged();
@@ -260,15 +279,58 @@ function P1ConnectBoard() {
                 </TableBody>
               </Table>
               {lblLog.visble == true && (
-                <Paper  component={Paper}
-                className="Card-lblLog">
+                <Paper  component={Paper} className="Card-lblLog">
                  { lblLog.value}
                 </Paper>
-             )} 
+             )}
 
+                 <Table component={Paper} className="gvBackSideBarcode"  style={{ display: GvBackSide.visble }} >
+                  <TableBody>
+                    {Array.from({ length: GvBackSide.value.length }, (_, index) => (
+                      <TableRow
+                        key={index}
+                        style={{ backgroundColor: "White" }}
+                      >
+       
+                        <TableCell
+                          align="center"
+                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                        >
+                            {GvBackSide.value[index].SEQ}
+                        </TableCell>
+                        <TableCell>
+                          {" "}
+                          <TextField
+                            className="input_txt"
+                            size="small"
+                            fullWidth
+                            value={txtSideBack[index]}
+                            inputRef={(el) => (fcGvBackSide.current[index] = el)}
+                            onChange={(event) =>
+                              handleBackSideChange(index, event)
+                            }
+                            onBlur={(event) => {
+                              handleBackSideChange(index, event);
+                              // fcGvBackSide_txtsideback_1.current[index].focus();
+                            }}
+                          
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault(); 
+                                // fcGvBackSide_txtsideback_1.current[index].focus();
+                              }
+                            }}
+                          />
+          
+                        </TableCell>
+                      </TableRow>
+                     ))} 
+                  </TableBody>
+                </Table>
+                 
               <Table
                 className="CSS-GvSerial"
-                // style={{ display: GvSerial.visble }}
+                style={{ display: GvSerial.visble }}
                 component={Card}
               >
                 <TableHead>
@@ -284,7 +346,7 @@ function P1ConnectBoard() {
                   >
                     No.
                   </TableCell>
-                  <TableCell align="center"  sx={{ borderRight: "1px solid #d9d9d9" }}>Leaf No.</TableCell>
+                  <TableCell align="center"  sx={{ borderRight: "1px solid #d9d9d9" }}>Serial No.</TableCell>
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
@@ -303,23 +365,23 @@ function P1ConnectBoard() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        // inputRef={(el) => (fc_txtRollleaf.current = el)}
-                        // disabled={txtRollLeaf.disbled} //true พิมไม่ได้
-                        // style={txtRollLeaf.style}
-                        // value={txtRollLeaf.value}
-                        // onChange={(e) => {
-                        //   settxtRollLeaf((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtRollLeaf_TextChanged();
-                        //   }
-                        // }}
-                        // onBlur={txtRollLeaf_TextChanged}
                         fullWidth
+                        value={txtSerial[index]}
+                        inputRef={(el) => (fcGvSerial.current[index] = el)}
+                        onChange={(event) =>
+                          handleSerialChange(index, event)
+                        }
+                        onBlur={(event) => {
+                          handleSerialChange(index, event);
+                          // fcGvBackSide_txtsideback_1.current[index].focus();
+                        }}
+                      
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault(); 
+                            // fcGvBackSide_txtsideback_1.current[index].focus();
+                          }
+                        }}
                       ></TextField>         
                       </TableCell>
                     </TableRow>
@@ -333,7 +395,7 @@ function P1ConnectBoard() {
                         Save
                       </Button>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel">Cancel</Button>
+                      <Button className="BtCancel"  onClick={btnSave_Click} >Cancel</Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -349,17 +411,16 @@ function P1ConnectBoard() {
                 alignItems: "center",
               }}
             >
-              {/* {gvScanResult.visble == false && ( */}
+              {gvScanResult.visble == false && (
                 <>
-               
                   <img
                     className="Img1"
                     src={Pageimg}
                   
                   />
                 </>
-              {/* // )} */}
-              {/* {gvScanResult.visble == true && ( */}
+              )}
+              {gvScanResult.visble == true && (
                 <>
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                     <Paper
@@ -380,8 +441,8 @@ function P1ConnectBoard() {
                   </div>
 
                   <AntTable
-                    // columns={columns}
-                    // dataSource={gvScanResult.value}
+                    columns={columns}
+                    dataSource={gvScanResult.value}
                     style={{ width: "100%" }}
                     pagination={false}
                     size="small"
@@ -389,7 +450,7 @@ function P1ConnectBoard() {
                     className="tableGvResult"
                   />
                 </>
-              {/* )} */}
+               )} 
             </Grid>
           </Grid>
         </Box>
