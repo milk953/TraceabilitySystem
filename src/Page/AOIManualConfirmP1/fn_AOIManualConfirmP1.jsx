@@ -4,9 +4,12 @@ import { color } from "framer-motion";
 
 function fn_AOIManualConfirmP1() {
   const plantCode = import.meta.env.VITE_FAC;
+  const Username = localStorage.getItem("Username");
+  const Lastname = localStorage.getItem("Lastname");
   const [hfUserID, setHfUserID] = useState("");
   const [hfUserStation, setHfUserStation] = useState("");
   const [Result, setResult] = useState([]);
+  const [selectedValue, setSelectedValue] = useState("AOI");
   const [txtSerialNo, setTxtSerialNo] = useState({
     value: "",
     disbled: "",
@@ -38,7 +41,7 @@ function fn_AOIManualConfirmP1() {
     style: {},
   });
   const [rbtAOI, setRbtAOI] = useState({
-    value: false,
+    value: true,
     disbled: "",
     visble: false,
     style: {},
@@ -49,8 +52,15 @@ function fn_AOIManualConfirmP1() {
     visble: false,
     style: {},
   });
+  const [rbtAOIandSPIcheck, setRbtAOIandSPIcheck] = useState({
+    value: "AOI",
+    disbled: "",
+    visble: false,
+    style: {},
+  });
+
   const [txtOperatorCode, setTxtOperatorCode] = useState({
-    value: "",
+    value: Username,
     disbled: "",
     visble: false,
     style: {},
@@ -64,6 +74,7 @@ function fn_AOIManualConfirmP1() {
 
   useEffect(() => {
     let ID = localStorage.getItem("ipAddress");
+    console.log("UserLogin", Username, Lastname, txtOperatorCode.value);
     const fetchData = async () => {
       setHfUserID(ID);
       setHfUserStation(ID);
@@ -85,8 +96,10 @@ function fn_AOIManualConfirmP1() {
   };
 
   const BtnSubmit1_Click = async () => {
+    console.log("BtnSubmit1_Click V1 ", ddlResult.value);
     let AOI_SPI_Check = "";
-    if ((ddlResult.value = " ")) {
+    if (ddlResult.value === " ") {
+      console.log("BtnSubmit1_Click V2 ", ddlResult.value);
       setLblResult((prevState) => ({
         ...prevState,
         value: "Please select result.",
@@ -94,13 +107,14 @@ function fn_AOIManualConfirmP1() {
       }));
       return;
     }
+
     try {
       AOI_SPI_Check = rbtAOI.value ? "AOI" : "SPI";
       await axios
         .post("/api/Update_aoiandspi_rslt", {
           dataList: {
             strResult: ddlResult.value,
-            strCreate_by: txtOperatorCode.trim(),
+            strCreate_by: txtOperatorCode.value.trim(),
             strPlantCode: plantCode,
             strSheet_no: txtSerialNo.value.trim().toUpperCase(),
             strRbtAOI: AOI_SPI_Check,
@@ -120,7 +134,7 @@ function fn_AOIManualConfirmP1() {
           }));
           setDdlResult((prevState) => ({
             ...prevState,
-            value: "ไม่มีข้อมูล",
+            value: " ",
           }));
           setTxtOperatorCode((prevState) => ({
             ...prevState,
@@ -161,6 +175,12 @@ function fn_AOIManualConfirmP1() {
         value: "",
       }));
       AOI_SPI_Check = rbtAOI.value ? "AOI" : "SPI";
+      console.log(
+        "Search_Data",
+        plantCode,
+        txtSerialNo.value.trim().toUpperCase(),
+        AOI_SPI_Check
+      );
       await axios
         .post("/api/Search_aoiandspi_rslt", {
           dataList: {
@@ -175,11 +195,11 @@ function fn_AOIManualConfirmP1() {
           if (data.length > 0) {
             setDdlResult((prevState) => ({
               ...prevState,
-              value: data.prod_result,
+              value: data[0].prod_result,
             }));
             setTxtCnt((prevState) => ({
               ...prevState,
-              value: String(data.inspect_count),
+              value: String(data[0].inspect_count),
             }));
           } else {
             setLblResult((prevState) => ({
@@ -198,13 +218,55 @@ function fn_AOIManualConfirmP1() {
     }
   };
 
+  const handleRadioChange = async (event) => {
+    console.log("handleRadioChange", event.target.value);
+    let value = event.target.value;
+    setRbtAOIandSPIcheck((prevState) => ({
+      ...prevState,
+      value: value,
+    }));
+    if (value === "AOI") {
+      setRbtAOI((prevState) => ({
+        ...prevState,
+        value: true,
+      }));
+      setRbtSPI((prevState) => ({
+        ...prevState,
+        value: false,
+      }));
+    } else if (value === "SPI") {
+      setRbtAOI((prevState) => ({
+        ...prevState,
+        value: false,
+      }));
+      setRbtSPI((prevState) => ({
+        ...prevState,
+        value: true,
+      }));
+    }
+  };
+
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
     }, 300);
   }
 
-  return {};
+  return {
+    lblUser1,
+    lblResult,
+    txtOperatorCode,
+    rbtAOIandSPIcheck,
+    handleRadioChange,
+    txtSerialNo,
+    setTxtSerialNo,
+    txtSerialNo_TextChanged,
+    ddlResult,
+    setDdlResult,
+    txtCnt,
+    btnRetrive_Click,
+    BtnSubmit1_Click,
+  };
 }
 
 export { fn_AOIManualConfirmP1 };
