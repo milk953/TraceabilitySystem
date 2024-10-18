@@ -64,7 +64,6 @@ function ScanSMTSerialPcsP1() {
           margin: "auto",
           width: "95%",
           maxWidth: "1450px",
-          marginTop: "50px",
           minHeight: "200px",
           padding: "20px",
           overflow: "auto",

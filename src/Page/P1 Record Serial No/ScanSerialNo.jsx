@@ -265,12 +265,6 @@ function ScanSerialNo() {
                     alignItems: "center",
                     background:
                       lblResult.value === "OK"
-                        ? "green"
-                        : lblResult.value === "NG"
-                        ? "red"
-                        : "white",
-                    background:
-                      lblResult.value === "OK"
                         ? "#059212"
                         : lblResult.value === "NG"
                         ? "red"
