@@ -87,7 +87,7 @@ function ScanSMTConfirmMOTP1() {
                                                 backgroundColor: txtLot.disabled ? "#e0e0e0" : "inherit",
                                             }}
                                             onChange={(e) => {
-                                                settxtLot(e.target.value);
+                                                settxtLot({ ...txtLot, value: e.target.value });
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -95,7 +95,7 @@ function ScanSMTConfirmMOTP1() {
                                                 }
                                             }}
                                             onBlur={() => {
-                                                if (txtLot !== "") {
+                                                if (txtLot.value !== "") {
                                                     handleChangeLot();
                                                 }
                                             }}
@@ -180,8 +180,8 @@ function ScanSMTConfirmMOTP1() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {Array.from({ length: hfSerialCount.length }, (_, index) => (
-                                            <TableRow>
+                                        {Array.from({ length: hfSerialCount }, (_, index) => (
+                                            <TableRow key={index}>
                                                 <TableCell
                                                     align="center"
                                                 >
@@ -263,7 +263,8 @@ function ScanSMTConfirmMOTP1() {
                                     className="Card-lblResult"
                                     style={{
                                         background: lblResultcolor,
-                                        width: "100%",
+                                        width: "90%",
+                                        marginLeft: "25px"
                                     }}
                                 >
                                     <Typography
@@ -280,16 +281,19 @@ function ScanSMTConfirmMOTP1() {
                                 dataSource={gvScanData}
                                 rowKey={(record) => record.SEQ}
                                 style={{
-                                    width: '100%',
+                                    width: '90%',
+                                    marginLeft: "25px"
                                 }}
                                 pagination={false}
                                 size="small"
                                 bordered
                                 className="tableGvResult"
                             />
-
                         </>
                     )}
+                    <div style={{ marginTop: "140px", marginLeft: "200px" }}>
+                        <a href="/TraceabilitySystem">Return To Menu</a>
+                    </div>
                 </div>
             </Card>
         </div>
