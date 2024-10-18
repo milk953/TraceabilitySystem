@@ -1,6 +1,7 @@
 
 
 .gvBackSideBarcode{
+  
     margin-top: 10px;
     margin: left;
     width: 450px;
@@ -8,6 +9,7 @@
 
 .gvBackSideBarcode td {
     padding: 3px;
+      /* background-color: #12422e !important ; */
   
   }
   .gvBackSideBarcode input {
