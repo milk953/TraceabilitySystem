@@ -291,9 +291,6 @@ function ScanSMTConfirmMOTP1() {
                             />
                         </>
                     )}
-                    <div style={{ marginTop: "140px", marginLeft: "200px" }}>
-                        <a href="/TraceabilitySystem">Return To Menu</a>
-                    </div>
                 </div>
             </Card>
         </div>

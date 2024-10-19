@@ -2092,9 +2092,6 @@ function PieceTraceView() {
                             </Table>
                         </TableContainer>
                     </div>
-                    <div style={{ marginTop: "50px" }}>
-                        <a href="/TraceabilitySystem">Return To Menu</a>
-                    </div>
                 </Box>
             </Card>
         </div>
