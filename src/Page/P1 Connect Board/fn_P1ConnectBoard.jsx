@@ -165,11 +165,9 @@ function fn_P1ConnectBoard() {
   const hfUserID = localStorage.getItem("ipAddress");
   const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
   const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-  const ROLL_SHT_ROLL_START_DIGIT = import.meta.env
-    .VITE_ROLL_SHT_ROLL_START_DIGIT;
+  const ROLL_SHT_ROLL_START_DIGIT = import.meta.env.VITE_ROLL_SHT_ROLL_START_DIGIT;
   const ROLL_SHT_ROLL_LENGTH = import.meta.env.VITE_ROLL_SHT_ROLL_LENGTH;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env
-    .VITE_CONNECT_SERIAL_NOT_FOUND;
+  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
   const Fac = import.meta.env.VITE_FAC;
   const hfProcessList = "''MPRN'',''MMOT'',''MREF'',''MAOI''";
 
@@ -686,9 +684,9 @@ function fn_P1ConnectBoard() {
       if (hfType === "SHT") {
         strFrontSide = serialValue;
       } else if (txtSideBack[intSeq] !== "" && strFrontSide !== "") {
-        const drRow = {
-          SHEET: GvSerial.value[intSeq].SHEET,
-          BACK_SIDE: txtSideBack[intSeq],
+          const drRow = {
+            SHEET: GvSerial.value[intSeq].SHEET,
+            BACK_SIDE: txtSideBack[intSeq],
           FRONT_SIDE: strFrontSide,
           SEQ: GvSerial.value[intSeq].SEQ,
           SERIAL: txtSerial[intSeq],

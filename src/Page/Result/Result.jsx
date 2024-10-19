@@ -13,29 +13,40 @@ import excel from "/src/assets/excel.png";
 import { fn_Result } from "./fn_Result.jsx";
 
 function AOI_COA_Result2() {
-  const {tblData1, ColumntblData1,BtnExport  } = fn_Result();
+  const {tblData1, ColumntblData1,BtnExport,Page ,sheet_no } = fn_Result();
   const Now = new Date().toLocaleTimeString("en-GB", { hour12: false });
   return (
     <>
       <Hearder />
       <Card component={Paper} className="Card-Common" style={{width:'97%'}}>
       <div
-          style={{
-            width: "99%",
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            size="small"
-            icon={<Avatar shape="square" src={excel} size="small" />}
-            onClick={() =>
-              BtnExport()
-            }
-          >
-            Export
-          </Button>
-        </div>
+  style={{
+    width: "99%",
+    display: "flex",
+    justifyContent: Page === "OSTResult" ? "space-between" : "flex-end",
+    alignItems: "flex-end", // ชิดล่างสุด
+    marginBottom: '5px'
+  }}
+>
+  <Card
+    component={Paper}
+    className="Card-ViewLot1"
+    style={{ width: "230px",display:Page === "OSTResult" ? "" : "none" }}
+  >
+    <b style={{ fontSize: "20px" }}>SHEET NO</b>
+    <br />
+    <b>{sheet_no}</b>
+  </Card>
+  <Button
+    size="small"
+    icon={<Avatar shape="square" src={excel} size="small" />}
+    onClick={() => BtnExport()}
+  >
+    Export
+  </Button>
+</div>
+
+
      
         <Table
           dataSource={tblData1}

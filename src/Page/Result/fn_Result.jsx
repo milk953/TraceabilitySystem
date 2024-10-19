@@ -55,13 +55,9 @@ function fn_Result() {
     else if(Page=='XRayResult' ||Page=='XRayResultN1'){
       GetDataXrayResult()
       setColumntblData1(columnsXrayResult)
-      
-      
     }else if(Page=='OSTResult'){
       GetDataOSTResult()
       setColumntblData1(columnsOSTResult)
-    }else if(Page=='AOIResult2'){
-
     }
 
   }, []);
@@ -998,6 +994,8 @@ function fn_Result() {
     let dataOst=[]
     let OST=[]
     let OST_BAD=[]
+    let dt=[]
+    let dtB=[]
     await axios
       .post("/api/Result/OSTResult_GetData1", {
         dataList: {
@@ -1008,6 +1006,33 @@ function fn_Result() {
         console.log(res.data,'OST111');
         OST=res.data
       });
+      if(OST.length>0){
+        let strArr=[]
+        let strArrResult=[]
+        for(let i =0;i<OST.length;i++){
+          if(OST[i].RESULT!=null){
+            if (OST[i].RESULT.substring(0, 3).toUpperCase() === "PIN") {
+              strArr = OST[i].RESULT.split(",");
+            } else {
+              strArrResult = OST[i].RESULT.split(",");
+            }
+          }
+        }
+        console.log(strArr,strArrResult,'strArr')
+        for (let i = 0; i <= strArr.length - 1; i++) {
+          if (strArr[i].toUpperCase().includes("PIECE")) {
+            const drRow = {
+              SEQ: parseInt(strArr[i].toUpperCase().replace("PIECE ", "")),
+              RESULT: strArrResult[i]
+            }
+          
+            dt.push(drRow); 
+          }
+        }
+      }
+      // -------------------------------------------------------------------
+
+
       //BADMARK
       await axios
       .post("/api/Result/OSTResult_GetData2", {
@@ -1019,17 +1044,41 @@ function fn_Result() {
         console.log(res.data,'OST222');
         OST_BAD=res.data
       });
-      // for(let)
-
-      settblData1(dataOst);
-      setDatatblData1(dataOst);
+      if(OST_BAD.length>0){
+        let strArr
+        for (let i = 0; i < OST_BAD.length; i++) {
+          let dr = dt[i];
+          if (dr.TOSB_RESULT !== null) {
+            let strArr = dr.TOSB_RESULT.toString().split(",");
+            
+            if (strArr.length >= 2) {
+              const drRow = {
+                SEQ:strArr[0],
+                RESULT: strArr[1]
+              }
+              dt.push(drRow); 
+            }
+        }
+      }
+      }
+      let drNews=[]
+      if(dt.length>dtB.length){
+        drNews=dt
+      }
+      else{
+        drNews=dtB
+      }
+      
+      console.log(dt,dtB,'bbbbbbb')
+      settblData1(drNews);
+      setDatatblData1(drNews);
   };
 
   const columnsOSTResult = [
    
     {
       title: "CAVITY",
-      dataIndex: "prh_plant_code",
+      dataIndex: "SEQ",
       key: "CAVITY",
       align: "center",
       render: (text, record, index) => {
@@ -1038,7 +1087,7 @@ function fn_Result() {
     },
     {
       title: "OST",
-      dataIndex: "prh_sheet_no", 
+      dataIndex: "OST_RESULT", 
       key: "OST",
       align: "center",
       render: (text, record, index) => {
@@ -1047,7 +1096,7 @@ function fn_Result() {
     },
     {
       title: "BADMARK",
-      key: "BADMARK", 
+      key: "BADMARK_RESULT", 
       dataIndex: "prh_inspect_count",
       align: "center",
       render: (text, record, index) => {
@@ -1189,7 +1238,7 @@ function fn_Result() {
     
   ]
 
-  //Export
+  //Export--------------------------------------------------------------------------
   const BtnExport = async () => {
     let nameFile=''
     if (tblData1.length <= 0) {
@@ -1289,7 +1338,7 @@ function fn_Result() {
     });
   };
 
-  return { tblData1, ColumntblData1, BtnExport };
+  return { tblData1, ColumntblData1, BtnExport,Page ,sheet_no};
 }
 
 export { fn_Result };
