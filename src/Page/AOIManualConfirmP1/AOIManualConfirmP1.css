@@ -1,6 +1,6 @@
 .AOITableFirst {
   margin: auto;
-  width: 500px;
+  width: 40%;
 }
 .AOITableFirst td {
   /* border: 1px solid #000; */
@@ -10,14 +10,14 @@
 .DAOITableFirst {
   display: flex;
   margin: auto;
-  width: 530px;
-  margin-top: 20px;
+  width: 40%;
+  margin-top: 10px;
 }
 
 .DAOITableSecond {
   display: flex;
   margin: auto;
-  width: 60%;
+  width: 40%;
   margin-top: 30px;
 }
 

@@ -87,20 +87,9 @@ function ProductMaster() {
         <div>
             <Header />
             <Card
-                component={Paper}
-                style={{
-                    margin: "auto",
-                    width: "93%",
-                    maxWidth: "1380px",
-                    marginTop: "30px",
-                    height: "auto",
-                    maxHeight: "3000px",
-                    padding: "20px",
-                    display: 'flex',
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
+               component={Paper}
+               className="Card-Common"
+               sx={{ display: "flex", width: "92%" }}
             >
                 {pnlMessage && (
                     <Paper

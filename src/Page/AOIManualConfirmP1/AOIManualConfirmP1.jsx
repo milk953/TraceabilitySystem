@@ -17,40 +17,84 @@ import {
   TextField,
   Select,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import "./AOIManualConfirmP1.css";
 import { fn_AOIManualConfirmP1 } from "../AOIManualConfirmP1/fn_AOIManualConfirmP1";
 function AOIManualConfirmP1() {
-  const {} = fn_AOIManualConfirmP1();
-  let lblResult = "update complete.";
-  let lblUser1 = "Welcom to Serial Trace System, PLANT_CODE : 5 ";
+  const {
+    lblUser1,
+    lblResult,
+    txtOperatorCode,
+    rbtAOIandSPIcheck,
+    handleRadioChange,
+    txtSerialNo,
+    setTxtSerialNo,
+    txtSerialNo_TextChanged,
+    ddlResult,
+    setDdlResult,
+    txtCnt,
+    btnRetrive_Click,
+    BtnSubmit1_Click,
+  } = fn_AOIManualConfirmP1();
+  console.log("ddlResult.value", ddlResult.value, "###");
   return (
     <>
       <Hearder />
 
       <Card component={Paper} className="Card-Common">
-        <h3
+        <Typography
+          variant="h6"
           style={{
+            display: "flex",
+            justifyContent: "center",
+            fontSize: "20px",
+          }}
+        >
+          {lblUser1.value}
+        </Typography>
+        <TableRow
+          sx={{
+            textAlign: "center",
             display: "flex",
             justifyContent: "center",
           }}
         >
-          {lblUser1}
-        </h3>
-        <h3
+          <TableCell
+            sx={{
+              width: "40%",
+              borderBottom: "0px"
+            }}
+          >
+            <Typography
+              variant="h6"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                color: "#ffffff",
+                ...lblResult.style,
+              }}
+            >
+              {lblResult.value}
+            </Typography>
+          </TableCell>
+        </TableRow>
+        {/* <Typography
+          variant="h6"
           style={{
             display: "flex",
             justifyContent: "center",
-            color: lblResult === "update complete." ? "blue" : "red",
+            ...lblResult.style,
           }}
         >
-          {lblResult}
-        </h3>
+          {lblResult.value}
+        </Typography> */}
+
         <div className="DAOITableFirst">
           <Table className="AOITableFirst" component={Paper}>
             <TableBody>
               <TableRow>
-                <TableCell sx={{ width: "90px", textAlign: "center" }}>
+                <TableCell sx={{ width: "90px", textAlign: "right" }}>
                   Type :
                 </TableCell>
 
@@ -58,7 +102,11 @@ function AOIManualConfirmP1() {
                   <Grid container spacing={0}>
                     <Grid item xs={6} md={6} style={{ background: "#CCFFFF" }}>
                       <FormControl>
-                        <RadioGroup row>
+                        <RadioGroup
+                          row
+                          value={rbtAOIandSPIcheck.value}
+                          onChange={handleRadioChange}
+                        >
                           <FormControlLabel
                             value="AOI"
                             control={<Radio size="small" />}
@@ -70,7 +118,11 @@ function AOIManualConfirmP1() {
                     </Grid>
                     <Grid item xs={6} md={6} style={{ background: "#CCFFCC" }}>
                       <FormControl>
-                        <RadioGroup row>
+                        <RadioGroup
+                          row
+                          value={rbtAOIandSPIcheck.value}
+                          onChange={handleRadioChange}
+                        >
                           <FormControlLabel
                             value="SPI"
                             control={<Radio size="small" />}
@@ -90,21 +142,35 @@ function AOIManualConfirmP1() {
                     variant="contained"
                     color="primary"
                     sx={{ width: "100px" }}
-                    // onClick={btnRetrieveClick}
+                    onClick={btnRetrive_Click}
                   >
                     Retrive
                   </Button>
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={{ textAlign: "center" }}>Piece No. :</TableCell>
+                <TableCell sx={{ textAlign: "right" }}>Piece No. :</TableCell>
 
-                <TableCell sx={{ width: "300px" }}>
+                <TableCell sx={{ width: "60%" }}>
                   <TextField
                     id="txtOperator_ScanConfirmMagazineP1_focus"
                     className="input_txt"
                     size="small"
                     fullWidth
+                    // disabled={txtOperator.disabled}
+                    // style={txtOperator.style}
+                    value={txtSerialNo.value}
+                    onChange={(e) => {
+                      setTxtSerialNo((prevState) => ({
+                        ...prevState,
+                        value: e.target.value,
+                      }));
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        txtSerialNo_TextChanged();
+                      }
+                    }}
                   ></TextField>
                 </TableCell>
               </TableRow>
@@ -127,13 +193,24 @@ function AOIManualConfirmP1() {
                   <FormControl style={{ width: "100%" }} size="small">
                     <Select
                       className="field_select"
-                      sx={{ height: 28, fontSize: 14 }}
+                      sx={{
+                        height: 28,
+                        fontSize: 14,
+                        color: ddlResult.value == " " ? "rgba(0, 0, 0, 0)" : "",
+                      }}
+                      value={ddlResult.value}
+                      onChange={(e) => {
+                        setDdlResult((prevState) => ({
+                          ...prevState,
+                          value: e.target.value,
+                        }));
+                      }}
                     >
-                      <MenuItem value="" style={{ color: "rgba(0, 0, 0, 0)" }}>
-                        <em>None</em>
+                      <MenuItem value=" " style={{ color: "rgba(0, 0, 0, 0)" }}>
+                        <em>NONE</em>
                       </MenuItem>
-                      <MenuItem value={10}>OK</MenuItem>
-                      <MenuItem value={20}>NG</MenuItem>
+                      <MenuItem value={"OK"}>OK</MenuItem>
+                      <MenuItem value={"NG"}>NG</MenuItem>
                     </Select>
                   </FormControl>
                 </TableCell>
@@ -143,8 +220,8 @@ function AOIManualConfirmP1() {
                     size="small"
                     disabled
                     fullWidth
-                    style={{ width: "99%", backgroundColor: "#e0e0e0"}}
-                    value={"Sucha.S"}
+                    style={{ width: "99%", backgroundColor: "#e0e0e0" }}
+                    value={txtOperatorCode.value}
                   ></TextField>
                 </TableCell>
                 <TableCell style={{ width: "35%" }}>
@@ -153,6 +230,7 @@ function AOIManualConfirmP1() {
                     size="small"
                     disabled
                     fullWidth
+                    value={txtCnt.value}
                     style={{ width: "99%", backgroundColor: "#e0e0e0" }}
                   ></TextField>
                 </TableCell>
@@ -161,7 +239,7 @@ function AOIManualConfirmP1() {
                     variant="contained"
                     color="primary"
                     sx={{ width: "100px" }}
-                    // onClick={btnSubmitClick}
+                    onClick={BtnSubmit1_Click}
                   >
                     Submit
                   </Button>
