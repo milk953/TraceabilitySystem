@@ -53,7 +53,33 @@ function AOIManualConfirmP1() {
         >
           {lblUser1.value}
         </Typography>
-        <Typography
+        <TableRow
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <TableCell
+            sx={{
+              width: "40%",
+              borderBottom: "0px"
+            }}
+          >
+            <Typography
+              variant="h6"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                color: "#ffffff",
+                ...lblResult.style,
+              }}
+            >
+              {lblResult.value}
+            </Typography>
+          </TableCell>
+        </TableRow>
+        {/* <Typography
           variant="h6"
           style={{
             display: "flex",
@@ -62,13 +88,13 @@ function AOIManualConfirmP1() {
           }}
         >
           {lblResult.value}
-        </Typography>
+        </Typography> */}
 
         <div className="DAOITableFirst">
           <Table className="AOITableFirst" component={Paper}>
             <TableBody>
               <TableRow>
-                <TableCell sx={{ width: "90px", textAlign: "center" }}>
+                <TableCell sx={{ width: "90px", textAlign: "right" }}>
                   Type :
                 </TableCell>
 
@@ -123,9 +149,9 @@ function AOIManualConfirmP1() {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={{ textAlign: "center" }}>Piece No. :</TableCell>
+                <TableCell sx={{ textAlign: "right" }}>Piece No. :</TableCell>
 
-                <TableCell sx={{ width: "300px" }}>
+                <TableCell sx={{ width: "60%" }}>
                   <TextField
                     id="txtOperator_ScanConfirmMagazineP1_focus"
                     className="input_txt"
@@ -167,7 +193,11 @@ function AOIManualConfirmP1() {
                   <FormControl style={{ width: "100%" }} size="small">
                     <Select
                       className="field_select"
-                      sx={{ height: 28, fontSize: 14, color: ddlResult.value  == " " ? "rgba(0, 0, 0, 0)" : "" }}
+                      sx={{
+                        height: 28,
+                        fontSize: 14,
+                        color: ddlResult.value == " " ? "rgba(0, 0, 0, 0)" : "",
+                      }}
                       value={ddlResult.value}
                       onChange={(e) => {
                         setDdlResult((prevState) => ({

@@ -81,7 +81,7 @@ function fn_AOIManualConfirmP1() {
       fnSetFocus("txtSerialNo_AOIManualConfirmP1_focus");
       setLblUser1((prevState) => ({
         ...prevState,
-        value: "Welcom to serial trace system, plant code : " + plantCode,
+        value: "Welcom to serial trace system, plant_code : " + plantCode,
       }));
       setHfUserName((prevState) => ({
         ...prevState,
@@ -103,7 +103,7 @@ function fn_AOIManualConfirmP1() {
       setLblResult((prevState) => ({
         ...prevState,
         value: "Please select result.",
-        style: { color: "red" },
+        style: { background: "red" },
       }));
       return;
     }
@@ -130,7 +130,7 @@ function fn_AOIManualConfirmP1() {
               " => " +
               ddlResult.value +
               " update complete.",
-            style: { color: "blue" },
+            style: { background: "blue" },
           }));
           setDdlResult((prevState) => ({
             ...prevState,
@@ -154,7 +154,7 @@ function fn_AOIManualConfirmP1() {
       setLblResult((prevState) => ({
         ...prevState,
         value: ex.message,
-        style: { color: "red" },
+        style: { background: "red" },
       }));
     }
   };
@@ -205,7 +205,7 @@ function fn_AOIManualConfirmP1() {
             setLblResult((prevState) => ({
               ...prevState,
               value: "Data not found",
-              style: { color: "red" },
+              style: { background: "red" },
             }));
           }
         });
@@ -213,7 +213,7 @@ function fn_AOIManualConfirmP1() {
       setLblResult((prevState) => ({
         ...prevState,
         value: ex.message,
-        style: { color: "red" },
+        style: { background: "red",  },
       }));
     }
   };
