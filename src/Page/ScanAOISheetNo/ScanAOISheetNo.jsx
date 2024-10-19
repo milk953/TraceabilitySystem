@@ -408,9 +408,6 @@ function ScanAOISheetNo() {
                             />
                         </>
                     )}
-                    <div style={{ marginTop: "150px", marginLeft: "200px" }}>
-                        <a href="/TraceabilitySystem">Return To Menu</a>
-                    </div>
                 </div>
 
             </Card>

@@ -2549,10 +2549,6 @@ function ProductMaster() {
                     >
                         Submit
                     </Button>
-
-                    <div style={{ marginTop: "40px" }}>
-                        <a href="/TraceabilitySystem">Return To Menu</a>
-                    </div>
                 </Box>
             </Card>
         </div>

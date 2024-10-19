@@ -51,7 +51,7 @@ function SMTDeleteData() {
                     alignItems: "center",
                     justifyContent: "center",
                     flexDirection: "column",
-                    marginTop: '60px',
+                    marginTop: '90px',
                     width: "100%",
                 }}
             >
@@ -472,10 +472,6 @@ function SMTDeleteData() {
                         <DeleteIcon />
                         Delete
                     </Button>
-                </div>
-
-                <div style={{ marginTop: "50px" }}>
-                    <a href="/TraceabilitySystem">Return To Menu</a>
                 </div>
             </Box>
         </div>
