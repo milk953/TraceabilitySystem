@@ -136,10 +136,10 @@ function fn_AOIManualConfirmP1() {
             ...prevState,
             value: " ",
           }));
-          setTxtOperatorCode((prevState) => ({
-            ...prevState,
-            value: "",
-          }));
+          // setTxtOperatorCode((prevState) => ({
+          //   ...prevState,
+          //   value: "",
+          // }));
           setTxtCnt((prevState) => ({
             ...prevState,
             value: "",

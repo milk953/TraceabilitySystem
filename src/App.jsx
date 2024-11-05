@@ -125,53 +125,67 @@ const App = () => {
       <BrowserRouter>
         <Routes>
         <Route path="/TraceabilitySystem" element={<Homepage />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/TraceabilitySystem/SheetMaster" element={<Sheet_Master />} />
-            <Route path="/TraceabilitySystem/SerialMaster" element={<Serial_Master />} />
-            <Route path="/TraceabilitySystem/ProductMaster" element={<Product_master />} />
-            <Route path="/TraceabilitySystem/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
-            <Route path="/TraceabilitySystem/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} />          
-            <Route path="/TraceabilitySystem/ScanSheetMOTTime" element={<ScanSheetMOTTime1 />} />          
-            <Route path="/TraceabilitySystem/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
-            <Route path='/TraceabilitySystem/ScanSheetInspect' element={<ScanSheetInspect />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
-            <Route path='/TraceabilitySystem/AVIConfirm' element = {<AVIManualConfirm />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTray' element = {<ScanSMTSerialPcsAutoTray />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialPcsBox' element = {<PackingGate />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
-            <Route path='/TraceabilitySystem/ScanSMTConnectShtConfirm' element = {<ScanSMTConnectShtConfirm />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTrayConfirm' element = {<ScanSMTSerialPcsAutoTrayConfirm />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialShtCopy' element = {<ScanSMTSerialShtShtCopy />} />
-            <Route path='/TraceabilitySystem/LOT_Trace' element = {<LOT_Trace />} />
-            
-            {/* <Route path="/TraceabilitySystem/Prdmaster" element={<Prdmaster/>} /> */}
-            <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialPcsAuto' element = {<ScanSMTSerialPcsAuto/>} />  
-            <Route path='/TraceabilitySystem/ScanSMTPackingConfirm' element = {<PackingConfirmSheet/>} />  
-            <Route path='/TraceabilitySystem/Change_PartialNo' element = {<Change_PartialNo/>} />  
-            <Route path="/TraceabilitySystem/Change_Serial" element={<Change_Serial />} />
-            <Route path="/TraceabilitySystem/rpt_LotFVIBadmarkView" element={<FVIBadmarkMonitoring />} />            
-            <Route path="/TraceabilitySystem/RollTraceView" element={<RollTraceView />} />
- 
-            {/* View Data */}
-            <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
-            <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
-            <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
-            <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
-            <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />
-            <Route path='/TraceabilitySystem/FinalGate_History' element={<FinalGate_History />} />  
-            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
-            <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />            
-            <Route path="/TraceabilitySystem/SheetTraceView" element={<SheetTraceView />} />       
-            <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />            
-            <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
-            <Route path="/TraceabilitySystem/SheetBadMarkView" element={<SheetBadMarkView />} />
-            <Route path="/TraceabilitySystem/MaterialTrace" element={<MaterialTrace />} />
+        {/* No Login */}
+        {/* Work */}
+        <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
+        <Route path="/TraceabilitySystem/ScanSMTSerialShtFINManySht" element={<FINConncetSht />} /> 
+        <Route path='/TraceabilitySystem/ScanSMTSerialShtCopy' element = {<ScanSMTSerialShtShtCopy />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialRecordTime' element={<ScanSMTSerialRecordTime />} />
+        <Route path="/TraceabilitySystem/ScanSMTRollSht" element={<ScanSMTRoollSht />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialPcs' element = {<ScanSMTSerialPcsChrome />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialPcsAuto' element = {<ScanSMTSerialPcsAuto/>} />  
+        <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTray' element = {<ScanSMTSerialPcsAutoTray />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialShtConfirm' element={<ScanSMTSerialShtConfirm />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialPcsBox' element = {<PackingGate />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialControlTime' element={<ScanSMTSerialControlTime />} />
+        <Route path="/TraceabilitySystem/ConfirmBarcodeGrade" element={<ConfirmBarcodeGrade />} />
+        <Route path="/TraceabilitySystem/ScanSMTConnectRollConfirm" element={<ScanSMTConnectRollConfirm />} />
+        <Route path='/TraceabilitySystem/ScanSMTConnectShtConfirm' element = {<ScanSMTConnectShtConfirm />} />
+        <Route path='/TraceabilitySystem/ScanSMTPackingConfirm' element = {<PackingConfirmSheet/>} />  
+        <Route path='/TraceabilitySystem/Change_PartialNo' element = {<Change_PartialNo/>} />  
+        <Route path='/TraceabilitySystem/ScanSMTSerialPcsAutoTrayConfirm' element = {<ScanSMTSerialPcsAutoTrayConfirm />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialPcsBoxOnlyGood' element = {<ScanSMTSerialPcsBoxOnlyGood />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialSpotHeat' element={<ScanSMTSerialSpotHeat />} />
+        {/* Maintenance */}
+        <Route path='/TraceabilitySystem/ScanSheetInspect' element={<ScanSheetInspect />} />
+        <Route path="/TraceabilitySystem/Change_Serial" element={<Change_Serial />} />
+        <Route path="/TraceabilitySystem/Reject" element={<Reject />} />
+        <Route path="/TraceabilitySystem/ReJudgement" element={<ReJudgement />} />
+        <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
+        <Route path="/TraceabilitySystem/ScanSheetMOTTime" element={<ScanSheetMOTTime1 />} />  
+        <Route path="/TraceabilitySystem/ScanSheetMOTTime2" element={<ScanSheetMOTTime2 />} />   
+        <Route path="/TraceabilitySystem/ScanSheetReflowTime" element={<ReflowControlTime />} />
+        <Route path="/TraceabilitySystem/ScanSheetAOIXrayConfirm" element={<ScanSheetAOIXrayConfirm />} />
+        <Route path="/TraceabilitySystem/ScanSMTSerialShtMaster" element={<ScanSMTSerialShtMaster />} />
+        <Route path="/TraceabilitySystem/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
+        <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
+        <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
+        <Route path="/TraceabilitySystem/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
+        <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
+        <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
+        <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
+        {/* View Data */}
+        <Route path='/TraceabilitySystem/PieceTraceView' element={<PieceTraceView />} />
+        <Route path="/TraceabilitySystem/SheetTraceView" element={<SheetTraceView />} />       
+        <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} />
+        <Route path="/TraceabilitySystem/RollTraceView" element={<RollTraceView />} />
+        <Route path="/TraceabilitySystem/MaterialTrace" element={<MaterialTrace />} />
+        <Route path="/TraceabilitySystem/SheetInspection" element={<SheetInspection />} />
+        <Route path="/TraceabilitySystem/SheetBadMarkView" element={<SheetBadMarkView />} />
+        <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
+        <Route path="/TraceabilitySystem/SheetBarcodeGradeView" element={<SheetBarcodeGradeView />} />
+        <Route path="/TraceabilitySystem/ScanAOISheetNo" element={<ScanAOISheetNo />} />
+        <Route path='/TraceabilitySystem/SheetBincheking' element={<SheetBincheking />} />
+        <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
+        <Route path="/TraceabilitySystem/ScanConfirmMagazineP1" element={<ScanConfirmMagazineP1 />} />
+        <Route path="/TraceabilitySystem/ScanSMTConfirmMOTP1" element={<ScanSMTConfirmMOTP1 />} />
+        <Route path="/TraceabilitySystem/rpt_LotFVIBadmarkView" element={<FVIBadmarkMonitoring />} />   
+        <Route path="/TraceabilitySystem/ScanSMTSerialPcsP1" element={<ScanSMTSerialPcsP1 />} />
+        <Route path='/TraceabilitySystem/ScanSMTSerialBackendConfirm' element={<ScanSMTSerialBackendConfirm />} />
+
+
+               
+        {/* Result Page */}
             <Route path="/TraceabilitySystem/AOICOAResult2" element={<AOICOAResult2 />} />
             <Route path="/TraceabilitySystem/SPIResult" element={<SPIResult />} />
             <Route path="/TraceabilitySystem/AOIResult2" element={<AOIResult2 />} />
@@ -183,47 +197,34 @@ const App = () => {
             <Route path="/TraceabilitySystem/OSTResultPiece" element={<OSTResultPiece />} />
             <Route path="/TraceabilitySystem/PREResult" element={<PREResult />} />
             <Route path="/TraceabilitySystem/RejectResult" element={<RejectResult />} />
-            <Route path="/TraceabilitySystem/SheetBarcodeGradeView" element={<SheetBarcodeGradeView />} />
             <Route path="/TraceabilitySystem/TouchUpResult" element={<TouchUpResult />} />
             <Route path="/TraceabilitySystem/CheckerResult" element={<CheckerResult />} />
             <Route path="/TraceabilitySystem/AOICOAResult" element={<AOICOAResult />} />
+            {/* ไม่รู้ */}
+            <Route path="/TraceabilitySystem/SheetMaster" element={<Sheet_Master />} />
+            <Route path="/TraceabilitySystem/SerialMaster" element={<Serial_Master />} />
+            <Route path='/TraceabilitySystem/LOT_Trace' element = {<LOT_Trace />} />
             <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
-            <Route path="/TraceabilitySystem/SheetInspection" element={<SheetInspection />} />
-            <Route path="/TraceabilitySystem/ScanConfirmMagazineP1" element={<ScanConfirmMagazineP1 />} />
-            <Route path="/TraceabilitySystem/ScanAOISheetNo" element={<ScanAOISheetNo />} />
+            <Route path='/TraceabilitySystem/FinalGate_History' element={<FinalGate_History />} />  
+            <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />  
             <Route path="/TraceabilitySystem/P1ConnectBoard" element={<P1ConnectBoard />} />
-            <Route path="/TraceabilitySystem/AOIManualConfirmP1" element={<AOIManualConfirmP1 />} />
-            <Route path="/TraceabilitySystem/ScanSMTConfirmMOTP1" element={<ScanSMTConfirmMOTP1 />} />
-            
-            {/* Maintenance */}
-            <Route path='/TraceabilitySystem/ScanSheetBakeTime' element={<ScanSheetBakeTime />} />
-            <Route path='/TraceabilitySystem/ScanSheetOvenTime' element={<ScanSheetOvenTime />} />
-            <Route path="/TraceabilitySystem/ScanSheetReflowTime" element={<ReflowControlTime />} />
-            <Route path="/TraceabilitySystem/ScanSheetDispenserTime" element={<ScanSheetDispenserTime />} />          
-            <Route path="/TraceabilitySystem/Reject" element={<Reject />} />
-            <Route path="/TraceabilitySystem/ELTType" element={<SerialTestType />} />
-            <Route path="/TraceabilitySystem/ReJudgement" element={<ReJudgement />} />
-            <Route path="/TraceabilitySystem/ScanSMTSerialPcsNG" element={<ScanSMTSerialPcsNG />} />
-            <Route path="/TraceabilitySystem/ScanAutoBendingTime" element={<ScanAutoBendingTime />} />
-            <Route path="/TraceabilitySystem/ScanSMTConnectRollConfirm" element={<ScanSMTConnectRollConfirm />} />
-            <Route path="/TraceabilitySystem/ScanSMTSerialShtMaster" element={<ScanSMTSerialShtMaster />} />
-            <Route path="/TraceabilitySystem/ScanSheetAOIXrayConfirm" element={<ScanSheetAOIXrayConfirm />} />
-            <Route path="/TraceabilitySystem/SerialReplaceRecordTime" element={<SerialReplaceRecordTime />} />
-            <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
-            <Route path="/TraceabilitySystem/ScanAVIConfirmResult" element={<ScanAVIConfirmResult />} />
-            <Route path="/TraceabilitySystem/ScanSMTSerialXrayConfirm" element={<ScanSMTSerialXrayConfirm />} />
-          
-            <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
-          
-            
-            
 
+          <Route element={<PrivateRoute />}>
+          {/* work */}
+            <Route path='/TraceabilitySystem/AVIConfirm' element = {<AVIManualConfirm />} />
+            <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
+            {/* Maintenance */}
+            <Route path="/TraceabilitySystem/ProductMaster" element={<Product_master />} />
+            <Route path="/TraceabilitySystem/ELTType" element={<SerialTestType />} />
+            {/* View Data */}
+            <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
+            <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
+            <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />  
+            <Route path="/TraceabilitySystem/AOIManualConfirmP1" element={<AOIManualConfirmP1 />} />
+            {/* <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} /> */}
             {/* P1 */}
-            <Route path="/TraceabilitySystem/ScanSerialNo" element={<ScanSerialNo />} />
-            <Route path="/TraceabilitySystem/ScanSMTSerialPcsP1" element={<ScanSMTSerialPcsP1 />} />
-            
-            
           </Route>
+          
         </Routes>
       </BrowserRouter>
   );

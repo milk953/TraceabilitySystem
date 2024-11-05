@@ -2,6 +2,7 @@ import axios from "axios";
 import { Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 function fn_ScanSMTSerialShtCopy() {
   //hidden parameter
@@ -313,24 +314,24 @@ function fn_ScanSMTSerialShtCopy() {
           _bolError = true;
         }
         if(hfCheckPrdSht == 'Y' && parseInt(dtSerial[i].SEQ) == 1 && !_bolError){
-          if (hfCheckPrdAbbr !== _strShtNoBack.substring(parseInt(hfCheckPrdShtStart), parseInt(hfCheckPrdShtEnd) + 1)){
+          if (hfCheckPrdAbbr !== _strShtNoBack.substring(parseInt(hfCheckPrdShtStart) -1 , parseInt(hfCheckPrdShtEnd))){
             _strScanResultAll = "NG"
             _strErrorAll = "Sheet product mix"
             _bolError = true
           }
-          if (hfCheckPrdAbbr !== _strShtNoFront.substring(parseInt(hfCheckPrdShtStart), parseInt(hfCheckPrdShtEnd) - parseInt(hfCheckPrdShtStart) + 1)){
+          if (hfCheckPrdAbbr !== _strShtNoFront.substring(parseInt(hfCheckPrdShtStart) -1 , parseInt(hfCheckPrdShtEnd))){
             _strScanResultAll = "NG"
             _strErrorAll = "Sheet product mix"
             _bolError = true
           }
         }
         if(hfCheckLotSht == 'Y' && parseInt(dtSerial[i].SEQ) == 1 && !_bolError){
-         if(_strLotRef !== _strShtNoBack.substring(parseInt(hfCheckLotShtStart), parseInt(hfCheckLotShtEnd) - parseInt(hfCheckLotShtStart) + 1)){
+         if(_strLotRef !== _strShtNoBack.substring(parseInt(hfCheckLotShtStart) -1 , parseInt(hfCheckLotShtEnd))){
           _strScanResultAll = "NG"
           _strErrorAll = "Sheet lot mix"
           _bolError = true
          }
-         if (_strLotRef !== _strShtNoFront.substring(parseInt(hfCheckLotShtStart), parseInt(hfCheckLotShtEnd) - parseInt(hfCheckLotShtStart) + 1)) {
+         if (_strLotRef !== _strShtNoFront.substring(parseInt(hfCheckLotShtStart) -1 , parseInt(hfCheckLotShtEnd))) {
           _strScanResultAll = "NG";
           _strErrorAll = "Sheet lot mix";
           _bolError = true;
@@ -376,20 +377,26 @@ function fn_ScanSMTSerialShtCopy() {
           let _strTestResult = "None";
           let _strMessageUpdate = "";
           let _strScanResultUpdate = "";
-          
-          if (CONNECT_SERIAL_ERROR.indexOf(_strSerial) <= 0) {
-            for(let j=0;j<dtSerial.length;j++){
-              console.log(dtSerial[j].SERIAL,'dtSerial[j].SERIAL',j,'j',dtSerial)
-              if(_strSerial == dtSerial[j].SERIAL ){
-                _strScanResultUpdate = "NG"
-                _strMessageUpdate = "Serial duplicate" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำ"
-                _strScanResultAll = "NG"
-                _bolError = true
-              }
+          if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
+            // for(let j=0;j<dtSerial.length;j++){
+            //   console.log(dtSerial[j].SERIAL,'dtSerial[j].SERIAL',j,'j',dtSerial)
+            //   if(_strSerial == dtSerial[j].SERIAL ){
+            //     _strScanResultUpdate = "NG"
+            //     _strMessageUpdate = "Serial duplicate" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำ"
+            //     _strScanResultAll = "NG"
+            //     _bolError = true
+            //   }
+            // }
+            let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
+            if (isDuplicate) {
+              _strScanResultUpdate = "NG";
+              _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
+              _strScanResultAll = "NG";
+              _bolError = true;
             }
             if(_strSerial.length == parseInt(hfSerialLength)){
               let _strFixDigit = '';
-              _strFixDigit = _strSerial.substring(parseInt(hfSerialStartDigit), parseInt(hfSerialEndDigit) - parseInt(hfSerialStartDigit) + 1);
+              _strFixDigit = _strSerial.substring(parseInt(hfSerialStartDigit) -1 , parseInt(hfSerialEndDigit));
 
               if(_strFixDigit != hfSerialDigit){
                 _strScanResultUpdate = "NG"
@@ -398,7 +405,7 @@ function fn_ScanSMTSerialShtCopy() {
                 _bolError = true
               }else if(hfConfigCheck =='Y'){
                 let _strConfigDigit = ''
-                _strConfigDigit = _strSerial.substring(parseInt(hfConfigStart), parseInt(hfConfigEnd) - parseInt(hfConfigStart) + 1)
+                _strConfigDigit = _strSerial.substring(parseInt(hfConfigStart) -1 , parseInt(hfConfigEnd))
                 if (_strConfigDigit !== hfConfigCode){
                   _strScanResultUpdate = "NG"
                   _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น"
@@ -416,7 +423,7 @@ function fn_ScanSMTSerialShtCopy() {
               }
               if (hfCheckStartSeq =='Y' && _strScanResultUpdate != 'NG'){
                   let _strStartSeq = ''
-                  _strStartSeq = _strSerial.substring(parseInt(hfCheckStartSeqStart), parseInt(hfCheckStartSeqEnd) - parseInt(hfCheckStartSeqStart) + 1)
+                  _strStartSeq = _strSerial.substring(parseInt(hfCheckStartSeqStart) -1 , parseInt(hfCheckStartSeqEnd))
                   if(_strStartSeq != hfCheckStartSeqCode){
                     _strScanResultUpdate = "NG"
                     _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น"
@@ -426,7 +433,7 @@ function fn_ScanSMTSerialShtCopy() {
               }
               if(hfCheckWeekCode == 'Y' && _strScanResultUpdate !== 'NG'){
                 let _strWeekCode = ''
-                _strWeekCode = _strSerial.substring(parseInt(hfCheckWeekCodeStart), parseInt(hfCheckWeekCodeEnd) - parseInt(hfCheckWeekCodeStart) + 1)
+                _strWeekCode = _strSerial.substring(parseInt(hfCheckWeekCodeStart) -1 , parseInt(hfCheckWeekCodeEnd))
                 if(_strWeekCode !== hfWeekCode){
                   _strScanResultUpdate = "NG"
                   _strMessageUpdate = "Serial barcode mix week code" + _strTagNewLine + "หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน"
@@ -518,14 +525,14 @@ function fn_ScanSMTSerialShtCopy() {
 
             _bolError  =  false;
             let _strTestResult = 'NONE'
-            if(CONNECT_SERIAL_ERROR.indexOf(_strSerial) <= 0){
+            if(!CONNECT_SERIAL_ERROR.includes(_strSerial)){
               _strMessageUpdate = "Bad mark piece" + _strTagNewLine + "ชิ้นงานเสียทำเครื่องหมายไว้แล้ว"
               _strScanResultUpdate = "OK"
             }
             // ' ***** Miya ADD 2016/02/25 START N1 Request from Mr. Sunaga ***** 
             // ' ***** N1 Original. If transfer A1, Need change program     *****
 
-            if (AUTO_SCAN_CHECK_FLG == '1' && _strScanResultUpdate !== 'NG' && CONNECT_SERIAL_ERROR.indexOf(_strSerial) <= 0){
+            if (AUTO_SCAN_CHECK_FLG == '1' && _strScanResultUpdate !== 'NG' && !CONNECT_SERIAL_ERROR.includes(_strSerial)){
               let _Result =''
               let _FrontSheetBarcode = ''
               let _RearSheetBarcode =''
@@ -594,7 +601,7 @@ function fn_ScanSMTSerialShtCopy() {
               }
               if(hfCheckRollPrdFlg == 'Y' && !_bolError ){
                 let strRollProduct = hfRollNo + hfCheckRollPrd;
-                if ((strRollProduct !== _strRollLeaf.substring(parseInt(hfCheckRollPrdStart), parseInt(hfCheckRollPrdEnd) - parseInt(hfCheckRollPrdStart) + 1))){
+                if ((strRollProduct !== _strRollLeaf.substring(parseInt(hfCheckRollPrdStart)-1 , parseInt(hfCheckRollPrdEnd) ))){
                   _bolError = true
                   _strScanResultAll = "NG"
                   for(let drRow = 0;drRow<dtRowLeaf.length;drRow++){
@@ -1443,9 +1450,6 @@ function fn_ScanSMTSerialShtCopy() {
     },
   },
 ];
-  function GetShippingSerialNo (dtSerial,strLotNo,strWeekType){
-
-  }
   return {
     handle_txtlotNo_Change,
     gvBackSideState,

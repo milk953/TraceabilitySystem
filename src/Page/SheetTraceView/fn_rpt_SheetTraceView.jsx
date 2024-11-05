@@ -801,7 +801,7 @@ function fn_rpt_SheetTraceView() {
     
         }else if(page=='PRE_AOI'){
             if(TxtPreCnt !== ""){
-               window.open(`/TraceabilitySystem/PREResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+               window.open(`/TraceabilitySystem/PREResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}`, '_blank');
                 
             }
         }else if(page=='OST'){
@@ -813,7 +813,7 @@ function fn_rpt_SheetTraceView() {
             }
         }else if(page=='AOI'){
             if(txtAOICnt !== ""){
-                window.open(`/TraceabilitySystem/AOIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+                window.open(`/TraceabilitySystem/AOIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}`, '_blank');
             }
         }else if(page=='XRAY'){
             let SERIAL_NO = '0'

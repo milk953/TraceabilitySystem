@@ -114,7 +114,7 @@ function ScanSMTSerialShtFINManySht() {
         <table>
           <tr>
             <td className="maintd">
-              <Table className="mainTable" component={Paper}>
+              <Table className="mainTable" component={Card}>
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
@@ -261,74 +261,7 @@ function ScanSMTSerialShtFINManySht() {
                   )}
                 </TableBody>
               </Table>
-            </td>
-            <td
-              style={{
-                textAlign: "left",
-                width: "900px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "left",
-                padding: "0",
-                margin: "0",
-                verticalAlign: "top",
-              }}
-            >
-              {hideImg && (
-                <img
-                  style={{
-                    width: "320px",
-                    height: "250px",
-                    padding: "0",
-                    align: "center",
-                    margin: "auto",
-                  }}
-                  src={Pageimg}
-                  alt="Description of the image"
-                />
-              )}
-              {lblResultState && (
-                <div className="lblResultFin">
-                  <Paper
-                    className="lblResultCard"
-                    elevation={3}
-                    style={{
-                      alignItems: "center",
-                      background:
-                        lblResult.text === "OK"
-                          ? "#059212"
-                          : lblResult.text === "NG"
-                          ? "red"
-                          : "#BA0900",
-                    }}
-                  >
-                    <Typography
-                      variant="h4"
-                      style={{
-                        paddingTop: "5px",
-                        color: lblResult.styled.color
-                      }}
-                    >
-                      {lblResult.text}
-                    </Typography>
-                  </Paper>
-                </div>
-              )}
-              {lblResultState && (
-                <AntTable
-                  className="tableGvResult"
-                  columns={columns}
-                  bordered
-                  dataSource={gvScanResult}
-                  style={{ width: "1000px",marginLeft:"20px",marginTop:"10px" }}
-                  pagination={false}
-                  size="small"
-                />
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td>
+              {/* <td> */}
               {gvBackSideState && (
                 <div className="pnlBackside">
                   <Table component={Card} className="gvBackSide">
@@ -432,7 +365,7 @@ function ScanSMTSerialShtFINManySht() {
               )}
               <div className="panelgvSerial">
                 {panalSerialState && (
-                  <Table classname="gvSerial" component={Card}>
+                  <Table className="gvSerial" component={Card}>
                     <TableHead
                       sx={{
                         background: "#12422e",
@@ -459,6 +392,7 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
+                      {console.log(gvSerial,'gvSerial')}
                       {gvSerial.map((row, index) => (
                         <TableRow
                           key={index}
@@ -529,6 +463,71 @@ function ScanSMTSerialShtFINManySht() {
                   </Table>
                 )}
               </div>
+            </td>
+            {/* </td> */}
+            <td
+              style={{
+                textAlign: "center",
+                width: "900px",
+                padding: "0",
+                margin: '0',
+                verticalAlign: "top",
+                
+              }}
+            >
+              {hideImg && (
+                <img
+                  style={{
+                    width: "320px",
+                    height: "250px",
+                    padding: "0",
+                    align: "center",
+                    margin: "auto",
+                  }}
+                  src={Pageimg}
+                  alt="Description of the image"
+                />
+              )}
+              <td>
+              {lblResultState && (
+                <div className="lblResultFin">
+                  <Paper
+                    className="lblResultCard"
+                    elevation={3}
+                    style={{
+                      alignItems: "center",
+                      background:
+                        lblResult.text === "OK"
+                          ? "#059212"
+                          : lblResult.text === "NG"
+                          ? "red"
+                          : "#BA0900",
+                    }}
+                  >
+                    <Typography
+                      variant="h4"
+                      style={{
+                        paddingTop: "5px",
+                        color: lblResult.styled.color
+                      }}
+                    >
+                      {lblResult.text}
+                    </Typography>
+                  </Paper>
+                <AntTable
+                  className="tableGvResult"
+                  columns={columns}
+                  bordered
+                  dataSource={gvScanResult}
+                  style={{ width: "1000px",marginTop:"10px" }}
+                  pagination={false}
+                  size="small"
+                />
+
+                </div>                
+              )}
+              
+              </td>
             </td>
           </tr>
         </table>

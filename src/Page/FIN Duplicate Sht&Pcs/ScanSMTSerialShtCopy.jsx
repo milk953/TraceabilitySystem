@@ -385,7 +385,6 @@ function ScanSMTSerialShtCopy() {
               )}
               {lblResultState && (
                 <div className="lblResultMasterFinal">
-                  {console.log(lblResult.text, "lblResult")}
                   <Paper
                     className="lblResultCardMasterFinal"
                     elevation={3}
