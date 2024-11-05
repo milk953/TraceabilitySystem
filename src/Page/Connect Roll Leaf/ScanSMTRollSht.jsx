@@ -32,7 +32,7 @@ import "./ScanSmt.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable } from "antd";
 function ScanSMTRoollSht() {
   const {
     settxt_lotNo,
@@ -69,10 +69,9 @@ function ScanSMTRoollSht() {
     handletxtTotalLeaf,
     columns,
     txtOperator_TextChanged,
-    txtRollLeaf_TextChanged
+    txtRollLeaf_TextChanged,
   } = Fn_ScanSMTRollSht();
-// console.log('gvScanResult',gvScanResult)
-
+  // console.log('gvScanResult',gvScanResult)
 
   return (
     <div>
@@ -81,7 +80,7 @@ function ScanSMTRoollSht() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-            <Table className="ScanSMT" component={Paper}>
+              <Table className="ScanSMT" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={4} align="center">
                     <Typography variant="h6">
@@ -101,7 +100,6 @@ function ScanSMTRoollSht() {
                         fullWidth
                         disabled={txt_lotNo.disbled} //true พิมไม่ได้
                         style={txt_lotNo.style}
-                  
                         inputRef={(el) => (fc_txtLotNo.current = el)}
                         value={txt_lotNo.value}
                         onChange={(e) => {
@@ -116,10 +114,9 @@ function ScanSMTRoollSht() {
                           }
                         }}
                         onBlur={handleLotxt_Lotno}
-                      
                       ></TextField>
                     </TableCell>
-                    <TableCell >
+                    <TableCell>
                       <Button className="Bt_ibtBack" onClick={ibtback_Click}>
                         <BackspaceIcon />
                       </Button>
@@ -188,7 +185,10 @@ function ScanSMTRoollSht() {
                         fullWidth
                         inputRef={(el) => (fc_txtOperator.current = el)}
                         value={txtOperator}
-                        onChange={(e, value) => settxtOperator(value)}
+                        onChange={(e, value) => {
+                          settxtOperator(e.target.value);
+                          console.log(e.target.value,'txtoper');
+                      }}
                         onBlur={txtOperator_TextChanged}
                       ></TextField>
                     </TableCell>
@@ -213,11 +213,27 @@ function ScanSMTRoollSht() {
                       <Typography>Total Sht. :</Typography>
                     </TableCell>
                     <TableCell style={{ width: "70px" }}>
-                      <TextField
-                        className="input_txt"
-                        size="small"
-                        value={lbltotalSht}
-                      ></TextField>
+                      <div
+                        style={{
+                          background: "#0D92F4",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {" "}
+                        <Typography
+                          variant="button"
+                          style={{
+                            color: "#FFF",
+
+                            // border:'1px solid red',
+                            fontSize: "17px",
+                          }}
+                        >
+                          {lbltotalSht}
+                        </Typography>
+                      </div>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -237,33 +253,29 @@ function ScanSMTRoollSht() {
                             ...prevState,
                             value: e.target.value,
                           }));
-                        
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtRollLeaf_TextChanged();
                           }
                         }}
-                        onBlur={txtRollLeaf_TextChanged}
+                        // onBlur={txtRollLeaf_TextChanged}
                         fullWidth
                       ></TextField>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-{console.log(lbllog,'lbllog')}
-              {lbllog.visible== true && (
-                <Paper
-                  elevation={3}
-                  className="Card-lblLog"
-                >
-                    {lbllog.value}
+              {console.log(lbllog, "lbllog")}
+              {lbllog.visible == true && (
+                <Paper elevation={3} className="Card-lblLog">
+                  {lbllog.value}
                 </Paper>
               )}
 
               <Table
                 className="CSS-GvSerial"
-                style={{ display: GvSerial.visble, }}
+                style={{ display: GvSerial.visble }}
                 component={Card}
               >
                 <TableHead>
@@ -278,7 +290,7 @@ function ScanSMTRoollSht() {
                 </TableHead>
                 <TableBody>
                   {/* <TableRow> */}
-     
+
                   {Array.from({ length: GvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
@@ -292,23 +304,20 @@ function ScanSMTRoollSht() {
                         <TextField
                           size="small"
                           fullWidth
-                        className="input_txt"
-                        inputRef={(el) => (fc_GvSerial.current[index]  = el)}
-
+                          className="input_txt"
+                          inputRef={(el) => (fc_GvSerial.current[index] = el)}
                           value={txtLeafNo[index]}
                           onChange={(event) =>
                             handleTextFieldChange(index, event)
                           }
-
                           // inputRef={(el) => (fc_txtSerial.current[index] = el)}
                           // value={txtSerial[index]}
                           onBlur={(event) => {
                             handleTextFieldChange(index, event);
                           }}
-                         
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
-                              event.preventDefault(); 
+                              event.preventDefault();
                               if (index < GvSerial.value.length - 1) {
                                 fc_GvSerial.current[index + 1].focus();
                               } else {
@@ -345,31 +354,35 @@ function ScanSMTRoollSht() {
               }}
             >
               {gvScanResult.visble == false && (
-                <> <img
-                className="Img1"
-                src={Pageimg} 
-                alt="Description of the image"
-              /></>)}
+                <>
+                  {" "}
+                  <img
+                    className="Img1"
+                    src={Pageimg}
+                    alt="Description of the image"
+                  />
+                </>
+              )}
               {gvScanResult.visble == true && (
                 <>
-                 <div style={{ display: "flex", gap: "10px", width: "100%" }}>
-                 <Paper
-                className="Card-lblResult"
-                elevation={3}
-                style={{
-                  background: " #BA0900",
-                  display: gvScanResult,
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  style={{ paddingTop: "5px", color: "#fff" }}
-                >
-                  {lblResult.value}
-                </Typography>
-              </Paper>
-              </div>
-              {/* <Table
+                  <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+                    <Paper
+                      className="Card-lblResult"
+                      elevation={3}
+                      style={{
+                        backgroundColor: lblResult.value=='OK' ? "green" : "#BA0900" ,
+                        display: gvScanResult,
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        style={{ paddingTop: "5px", color: "#fff" }}
+                      >
+                        {lblResult.value}
+                      </Typography>
+                    </Paper>
+                  </div>
+                  {/* <Table
                 className="CSS-GvScanResult"
                 style={{ display: gvScanResult }}
                 component={Card}
@@ -445,18 +458,18 @@ function ScanSMTRoollSht() {
                   )}
                 </TableBody>
               </Table> */}
-              
-               <AntTable 
-                columns={columns}
-                dataSource={gvScanResult.value}
-                style={{ width:'100%'}}
-                pagination={false}
-                size="small"
-                bordered
-                className="tableGvResult"
-                />
+
+                  <AntTable
+                    columns={columns}
+                    dataSource={gvScanResult.value}
+                    style={{ width: "100%" }}
+                    pagination={false}
+                    size="small"
+                    bordered
+                    className="tableGvResult"
+                  />
                 </>
-            )}
+              )}
             </Grid>
           </Grid>
         </Box>

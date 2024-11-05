@@ -52,7 +52,7 @@ function AOI_COA_Result2() {
           dataSource={tblData1}
           columns={ColumntblData1}
           className="tableGvResult"
-          pagination={false}
+          
           size="small"
           bordered
           // scroll={{ y: 310 }}

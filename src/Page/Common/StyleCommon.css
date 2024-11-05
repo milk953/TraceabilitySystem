@@ -6,10 +6,11 @@
 /* Card Scan */
 .Card-Common{
     margin: auto;
-    width: 90%;
-    margin-top: 120px;
+    width: 98%;
+    margin-top: 70px;
     height: 100%;
-    padding:20px;
+    padding:5px;
+    /* min-height:700px ; */
 }
 
 .Card-lblLog{
@@ -98,7 +99,7 @@ margin-bottom: 30px;
     height: 250px;
     padding: 0px;
     align-items: center;
-    margin: auto;
+    /* margin: auto; */
 }
 .Tag-NG{
     width: 100%;

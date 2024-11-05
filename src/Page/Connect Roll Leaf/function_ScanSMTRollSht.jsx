@@ -26,7 +26,7 @@ function Fn_ScanSMTRollSht() {
     value: "",
     disbled: "",
     visble: "",
-    style:{},
+    style: {},
   });
   const [txtTotalLeaf, settxtTotalLeaf] = useState("4");
   const [txtOperator, settxtOperator] = useState("");
@@ -59,12 +59,12 @@ function Fn_ScanSMTRollSht() {
     style: "",
   });
 
-    //Focus
-    const fc_txtRollleaf = useRef([]);
-    const fc_SlProduct = useRef([]);
-    const fc_GvSerial= useRef([]);
-    const fc_txtLotNo= useRef([]);
-    const fc_txtOperator = useRef([]); 
+  //Focus
+  const fc_txtRollleaf = useRef([]);
+  const fc_SlProduct = useRef([]);
+  const fc_GvSerial = useRef([]);
+  const fc_txtLotNo = useRef([]);
+  const fc_txtOperator = useRef([]);
   // --------------------------------------
   const [hfSerialLength, setHfSerialLength] = useState("");
   const [hfSerialFixFlag, setHfSerialFixFlag] = useState("");
@@ -139,14 +139,14 @@ function Fn_ScanSMTRollSht() {
   const [hfLeafSerialFlg, setHfLeafSerialFlg] = useState("");
   const [hfScanResult, setHfScanResult] = useState("");
 
-  
   const Fac = import.meta.env.VITE_FAC;
-  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND
+  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
+  const CONNECT_SERIAL_NOT_FOUND = import.meta.env
+    .VITE_CONNECT_SERIAL_NOT_FOUND;
   const hfAutoDownload = "N";
   const hfUserID = localStorage.getItem("ipAddress");
-  const hfUserStation  = localStorage.getItem("ipAddress");
-  
+  const hfUserStation = localStorage.getItem("ipAddress");
+
   // --------------------------------------
   //Page loade
   useEffect(() => {
@@ -159,21 +159,30 @@ function Fn_ScanSMTRollSht() {
   }, []);
 
   const GetProductRollLeafData = async () => {
-    await axios.post("/api/SMTRoollSht/getproductrollleafdata", {
-      plantCode: Fac,
-      }).then((res) => {
-        console.log(res.data)
-      let data = res.data.flat();
-      setProduct(data);
-      setsl_Product((prevState) => ({ ...prevState, value: data[0].prd_name }));
-    });
+    await axios
+      .post("/api/SMTRoollSht/getproductrollleafdata", {
+        plantCode: Fac,
+      })
+      .then((res) => {
+        console.log(res.data);
+        let data = res.data.flat();
+        setProduct(data);
+        setsl_Product((prevState) => ({
+          ...prevState,
+          value: data[0].prd_name,
+        }));
+      });
   };
 
   const handleLotxt_Lotno = async () => {
     // 5-190617-001RGP021S048
-    if(txt_lotNo.value!=''){
-      SetGvSerial((prevState) => ({ ...prevState, value: "", visble: 'none' }));
-      setgvScanResult((prevState) => ({ ...prevState, value: "", visble: false }));
+    if (txt_lotNo.value != "") {
+      SetGvSerial((prevState) => ({ ...prevState, value: "", visble: "none" }));
+      setgvScanResult((prevState) => ({
+        ...prevState,
+        value: "",
+        visble: false,
+      }));
       setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
       let strLotData = "";
       let strLot = "";
@@ -183,7 +192,6 @@ function Fn_ScanSMTRollSht() {
       strLotData = txt_lotNo.value.toUpperCase().split(";");
       strLot = strLotData[0];
 
-
       await axios
         .post("/api/Common/getProductDataByLot", {
           strLot: strLot,
@@ -191,6 +199,7 @@ function Fn_ScanSMTRollSht() {
         .then((res) => {
           let data = res.data.flat().flat();
           dtLotData = data;
+          console.log("getProductDataByLot", data);
         });
       setHfRollNo("");
       setlbltotalSht("");
@@ -207,12 +216,13 @@ function Fn_ScanSMTRollSht() {
         if (RollNo == "") {
           setHfRollNo(strLot);
         }
-  
+
         try {
-          const isInArray = Product.some((item) => item.prd_name === strPrdName);
-  
+          const isInArray = Product.some(
+            (item) => item.prd_name === strPrdName
+          );
+
           if (isInArray) {
-           
             setsl_Product((prevState) => ({ ...prevState, value: strPrdName }));
             await getProductSerialMaster(strPrdName);
             await getInitialSheet();
@@ -220,7 +230,6 @@ function Fn_ScanSMTRollSht() {
             setTimeout(() => {
               fc_txtRollleaf.current.focus();
             }, 300);
-           
           } else {
             setlbllog((prevState) => ({
               ...prevState,
@@ -242,15 +251,13 @@ function Fn_ScanSMTRollSht() {
           setTimeout(() => {
             fc_SlProduct.current.focus();
           }, 300);
-         
-        
         }
         await axios
           .post("/api/SMTRoollSht//GetRollLeafTotalByLot", {
             LotNo: strLot,
           })
           .then((res) => {
-            console.log(res.data,'mmmmmm')
+            console.log(res.data, "mmmmmm");
             setlbltotalSht(res.data);
           });
       } else {
@@ -258,8 +265,12 @@ function Fn_ScanSMTRollSht() {
           ...prevState,
           value: Product[0].prd_name,
         }));
-        settxt_lotNo((prevState) => ({ ...prevState, value: '' }));
-        SetGvSerial((prevState) => ({ ...prevState, value: "", visble: false }));
+        settxt_lotNo((prevState) => ({ ...prevState, value: "" }));
+        SetGvSerial((prevState) => ({
+          ...prevState,
+          value: "",
+          visble: false,
+        }));
         setlbllog((prevState) => ({
           ...prevState,
           value: `Invalid lot no.`,
@@ -271,26 +282,25 @@ function Fn_ScanSMTRollSht() {
         }, 300);
       }
     }
- 
   };
 
   useEffect(() => {
-  if(GvSerial.visble==''){
-    getInitialSheet();
-  }
+    if (GvSerial.visble == "") {
+      getInitialSheet();
+    }
   }, [hfSerialCount]);
 
   const getInitialSheet = async () => {
-    console.log('g-hjk9999')
+    console.log("g-hjk9999");
     let dtData = [];
-    setHfSerialCount(txtTotalLeaf)
+    setHfSerialCount(txtTotalLeaf);
     for (let intRow = 0; intRow < hfSerialCount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
-    
-    SettxtLeafNo(Array(txtTotalLeaf).fill(""))
+
+    SettxtLeafNo(Array(txtTotalLeaf).fill(""));
     SetGvSerial((prevState) => ({ ...prevState, value: dtData }));
     return dtData;
   };
@@ -440,7 +450,7 @@ function Fn_ScanSMTRollSht() {
         style: { background: "#e0e0e0" },
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
-      SetGvSerial((prevState) => ({ ...prevState, visble: 'none' }));
+      SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
       setHfMode("LOT");
       setTimeout(() => {
         fc_txtLotNo.current.focus();
@@ -490,7 +500,6 @@ function Fn_ScanSMTRollSht() {
       setTimeout(() => {
         fc_txtOperator.current.focus();
       }, 300);
-    
     }
     if (_strType == "ROLL") {
       settxt_lotNo((prevState) => ({
@@ -498,12 +507,16 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      setsl_Product((prevState) => ({ ...prevState, disbled: true,style:{ background: "#e0e0e0"} }));
+      setsl_Product((prevState) => ({
+        ...prevState,
+        disbled: true,
+        style: { background: "#e0e0e0" },
+      }));
       settxtRollLeaf((prevState) => ({
         ...prevState,
         value: "",
         disbled: false,
-        style:{}
+        style: {},
       }));
       setlbllog((prevState) => ({ ...prevState, visble: false }));
       SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
@@ -540,8 +553,6 @@ function Fn_ScanSMTRollSht() {
       setTimeout(() => {
         fc_GvSerial.current[0].focus();
       }, 300);
-     
-      
     }
     if (_strType == "SHEET_NG") {
       settxt_lotNo((prevState) => ({
@@ -590,7 +601,7 @@ function Fn_ScanSMTRollSht() {
         LOT_NO: txt_lotNo.value,
         ROLL_NO: hfRollNo,
         ROLL_LEAF: txtRollLeaf.value,
-        SHT_NO: txtLeafNo[i]||'',
+        SHT_NO: txtLeafNo[i] || "",
         SCAN_RESULT: "",
         REMARK: "",
         ROW_UPDATE: "N",
@@ -613,23 +624,21 @@ function Fn_ScanSMTRollSht() {
     let _strLot = "";
 
     let _strRollLeaf = txtRollLeaf.value;
-    console.log(hfConnRollLength,'hfConnRollLength',txtOperator)
     if (hfConnRollLength == txtRollLeaf.value.length) {
       if (txtOperator != "") {
         await axios
           .post("/api/Common/GetRollLeafDuplicate", {
-            dataList:{strRollLeaf:_strRollLeaf,
-              strPlantCode:Fac
-            } ,
+            dataList: { strRollLeaf: _strRollLeaf, strPlantCode: Fac },
             _dtRollLeaf: dtSheet,
           })
           .then((res) => {
-            // console.log(res.data)
+            console.log(res.data, "_intCount9");
             _intCount = res.data.intCount;
           });
         if (_intCount == 1) {
           _bolError = true;
           _strScanResultAll = "NG";
+          console.log("_strScanResultAll00", _strScanResultAll);
           for (let i = 0; i < dtSheet.length; i++) {
             dtSheet[i].UPDATE_FLG = "N";
             dtSheet[i].ROW_UPDATE = "N";
@@ -640,19 +649,19 @@ function Fn_ScanSMTRollSht() {
           }
         }
         let dataRBMP = "";
-        console.log(_strRollLeaf,'_strRollLeaf')
+        console.log(_strRollLeaf, "_strRollLeaf");
         await axios
           .post("/api/ScanFin/GetRollLeafScrapRBMP", {
             strRollNo: _strRollLeaf,
-            
           })
           .then((res) => {
-            console.log('GetRollLeafScrapRBMP',res.data)
+            console.log("GetRollLeafScrapRBMP", res.data);
             dataRBMP = res.data.SCRAP_FLG;
           });
         if (dataRBMP == "Y") {
           _bolError = true;
           _strScanResultAll = "NG";
+          console.log("_strScanResultAll01", _strScanResultAll);
           for (let i = 0; i < dtSheet.length; i++) {
             dtSheet[i].UPDATE_FLG = "N";
             dtSheet[i].ROW_UPDATE = "N";
@@ -661,14 +670,26 @@ function Fn_ScanSMTRollSht() {
             _intCount += 1;
           }
         }
+        console.log(hfCheckRollPrdFlg,_bolError,'Check99')
         if (hfCheckRollPrdFlg == "Y" && !_bolError) {
           let strRollProduct = hfRollNo + hfCheckRollPrd;
-          const start = parseInt(hfCheckRollPrdStart, 10);
-          const end = parseInt(hfCheckRollPrdEnd, 10);
-          console.log('_strRollLeaf', _strRollLeaf.slice(start - 1, end),strRollProduct )
-          if (strRollProduct != _strRollLeaf.slice(start - 1, end)) {
+          const start = parseInt(hfCheckRollPrdStart);
+          const end = parseInt(hfCheckRollPrdEnd);
+          // console.log(
+          //   "_strRollLeaf1",
+          //   strRollProduct,
+          //   "-",
+          //   _strRollLeaf.substring(start - 1, end),
+          //   "-",
+          //   hfRollNo,
+          //   "-",
+          //   hfCheckRollPrd,
+          //   "-"
+          // );
+          if (strRollProduct != _strRollLeaf.substring(start - 1, end)) {
             _bolError = true;
             _strScanResultAll = "NG";
+            console.log("_strScanResultAll02", _strScanResultAll);
             for (let i = 0; i < dtSheet.length; i++) {
               dtSheet[i].UPDATE_FLG = "N";
               dtSheet[i].ROW_UPDATE = "N";
@@ -679,9 +700,8 @@ function Fn_ScanSMTRollSht() {
             }
           }
         }
-        console.log('เข้ามั้ย0',_bolError)
         if (!_bolError) {
-          console.log('เข้ามั้ย',dtSheet)
+          console.log("เข้ามั้ย", dtSheet);
           for (let i = 0; i < dtSheet.length; i++) {
             _strLot = dtSheet[i].LOT_NO;
             let _strPrdName = dtSheet[i].PRODUCT;
@@ -689,48 +709,55 @@ function Fn_ScanSMTRollSht() {
             let _inSeq = dtSheet[i].SHT_SEQ;
             _strRollLeaf = dtSheet[i].ROLL_LEAF;
             _intRow += 1;
-
             if (
               dtSheet[i].SHT_NO != "" &&
               dtSheet[i].SHT_NO != CONNECT_SERIAL_ERROR &&
               dtSheet[i].SHT_NO != CONNECT_SERIAL_NOT_FOUND
             ) {
-              console.log('เข้าาาาา3')
+              console.log("เข้าาาาา3");
               let _intCountDup = 0;
               let _strRemark = "";
               let _strError = "";
-              let _strShtNo = dtSheet[i].SHT_NO||''
+              let _strShtNo = dtSheet[i].SHT_NO || "";
               let _strShtNoDup = "";
               let _strScanResultUpdate = "";
               let _strMessageUpdate = "";
               _bolError = false;
-              console.log(dtSheet.length,'เข้า10')
-              for (let _intSeq = 0; _intSeq <dtSheet.length ; _intSeq++) {
-               console.log('เข้า9')
-                if (dtSheet[_intSeq].SHT_NO == _strShtNo) {
+              console.log(dtSheet.length, "เข้า10");
+              let isDuplicate = dtSheet.some((item, index) => index !== i && _strShtNo.toUpperCase() === item.SHT_NO.toString().trim().toUpperCase());
+              if (isDuplicate) {
                   _bolError = true;
                   _strScanResultAll = "NG";
+                  console.log("_strScanResultAll03", _strScanResultAll);
                   _strScanResultUpdate = "NG";
                   _strRemark =
-                    "Leaf barcode scan duplicate / หมายเลขบาร์โค้ดสแกนซ้ำกัน";
-                }
+                    "Leaf barcode scan duplicate/หมายเลขบาร์โค้ดสแกนซ้ำกัน";
               }
-    
-              console.log(hfConnLeafLength,_strShtNo.length,parseInt(hfConnLeafLength, 10),'เข้ามั้ย7',_bolError)
+              // for (let _intSeq = _intRow; _intSeq < dtSheet.length; _intSeq++) {
+              //   console.log(_strShtNo,'Check08',dtSheet[_intSeq].SHT_NO ,)
+                
+              //   if (dtSheet[_intSeq].SHT_NO === _strShtNo) {
+              //     _bolError = true;
+              //     _strScanResultAll = "NG";
+              //     console.log("_strScanResultAll03", _strScanResultAll);
+              //     _strScanResultUpdate = "NG";
+              //     _strRemark =
+              //       "Leaf barcode scan duplicate/หมายเลขบาร์โค้ดสแกนซ้ำกัน";
+              //   }
+              // }
+              console.log(hfConnLeafLength,_strShtNo.length,_bolError,'Check07')
               if (
-                (parseInt(hfConnLeafLength, 10) === 0 ||
-                  parseInt(hfConnLeafLength, 10) === _strShtNo.length) &&
+                (hfConnLeafLength === 0 ||
+                  hfConnLeafLength === _strShtNo.length) &&
                 !_bolError
               ) {
                 if (hfCheckPrdSht == "Y" && !_bolError) {
+                  console.log(hfCheckPrdAbbr,'04check',_strShtNo.substring(parseInt(hfCheckPrdShtStart)-1 , parseInt(hfCheckPrdShtEnd)))
                   if (
-                    hfCheckPrdAbbr !==
-                    _strShtNo.substring(
-                      parseInt(hfCheckPrdShtStart, 10),
-                      parseInt(hfCheckPrdShtEnd, 10) + 1
-                    )
-                  ) {
+                   
+                    hfCheckPrdAbbr !==_strShtNo.substring(parseInt(hfCheckPrdShtStart)-1 , parseInt(hfCheckPrdShtEnd))) {
                     _strScanResultAll = "NG";
+                    console.log("_strScanResultAll04", _strScanResultAll);
                     _strScanResultUpdate = "NG";
                     _strRemark =
                       "Leaf barcode mix product / หมายเลขบาร์โค้ดปนกันกับผลิตภัณฑ์อื่น";
@@ -738,14 +765,14 @@ function Fn_ScanSMTRollSht() {
                   }
                 }
                 if (hfCheckLotSht === "Y" && !_bolError) {
+                  console.log(_strLot,'05check',_strShtNo.substring(parseInt(hfCheckLotShtStart)-1 , parseInt(hfCheckLotShtEnd)))
                   if (
                     _strLot !==
-                    _strShtNo.substring(
-                      parseInt(hfCheckLotShtStart, 10),
-                      parseInt(hfCheckLotShtEnd, 10) + 1
-                    )
+                    _strShtNo.substring(parseInt(hfCheckLotShtStart)-1 , parseInt(hfCheckLotShtEnd))
+                    
                   ) {
                     _strScanResultAll = "NG";
+                    console.log("_strScanResultAll05", _strScanResultAll);
                     _strScanResultUpdate = "NG";
                     _strRemark =
                       "Leaf barcode mix lot / หมายเลขบาร์โค้ดปนกันกับล็อตอื่น";
@@ -763,6 +790,7 @@ function Fn_ScanSMTRollSht() {
 
                     if (_strFixDigit !== hfSerialDigit) {
                       _strScanResultAll = "NG";
+                      console.log("_strScanResultAll06", _strScanResultAll);
                       _strScanResultUpdate = "NG";
                       _strRemark =
                         "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -780,6 +808,7 @@ function Fn_ScanSMTRollSht() {
                       );
                       if (_strConfigDigit !== hfConfigCode) {
                         _strScanResultAll = "NG";
+                        console.log("_strScanResultAll07", _strScanResultAll);
                         _strScanResultUpdate = "NG";
                         _strRemark =
                           "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -797,6 +826,7 @@ function Fn_ScanSMTRollSht() {
                       hfSerialStartCode
                     ) {
                       _strScanResultAll = "NG";
+                      console.log("_strScanResultAll08", _strScanResultAll);
                       _strScanResultUpdate = "NG";
                       _strRemark =
                         "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -815,6 +845,7 @@ function Fn_ScanSMTRollSht() {
                     );
                     if (_strStartSeq !== hfCheckStartSeqCode) {
                       _strScanResultAll = "NG";
+                      console.log("_strScanResultAll09", _strScanResultAll);
                       _strScanResultUpdate = "NG";
                       _strRemark =
                         "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -833,6 +864,7 @@ function Fn_ScanSMTRollSht() {
                     );
                     if (_strWeekCode !== hfWeekCode) {
                       _strScanResultAll = "NG";
+                      console.log("_strScanResultAll0010", _strScanResultAll);
                       _strScanResultUpdate = "NG";
                       _strRemark =
                         "Serial barcode mix week code / หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
@@ -840,7 +872,6 @@ function Fn_ScanSMTRollSht() {
                     }
                   }
                 }
-                console.log('เข้ามั้ย4',_bolError)
                 if (!_bolError) {
                   await axios
                     .post("/api/Common/getleafduplicateconnectroll", {
@@ -855,92 +886,155 @@ function Fn_ScanSMTRollSht() {
                       },
                     })
                     .then((res) => {
-                      console.log('getleafduplicateconnectroll',res.data)
+                      console.log("getleafduplicateconnectroll", res.data);
                       _intCountDup = res.data;
                     });
                   if (_intCountDup != 0) {
                     _strScanResultAll = "NG";
+                    console.log("_strScanResultAll0011", _strScanResultAll);
                     _strScanResultUpdate = "NG";
                     _strRemark =
                       "Leaf barcode duplicate / หมายเลขบาร์โค้ดซ้ำกับชิ้นงานอื่น";
                     _bolError = true;
                   }
+                  console.log('_strShtNoDup',_strShtNoDup)
                   if (_strShtNoDup != "") {
+                    console.log('UPDATE_FLG01')
                     dtSheet[i].UPDATE_FLG = "Y";
                   }
                 }
                 if (!_bolError) {
+              
                   dtSheet[i].ROW_UPDATE = "Y";
                   _strScanResultUpdate = "OK";
                   _strRemark = "";
                 }
-                console.log('เข้าาาาาาาา111111')
+                console.log("เข้าาาาาาาา111111");
                 dtSheet[i].SCAN_RESULT = _strScanResultUpdate;
                 dtSheet[i].REMARK = _strRemark;
                 _intCount += 1;
+                // -------------------------------------------------
+              } else {
+                _strScanResultAll = "NG";
+                dtSheet[i].SCAN_RESULT = "NG";
+                dtSheet[i].REMARK =
+                  "Leaf length <> " +
+                  hfConnLeafLength +
+                  " / หมายเลขบาร์โค้ดยาว <>" +
+                  hfConnLeafLength;
+                _bolError = true;
               }
+            } else if (
+              dtSheet[i].SHT_NO == CONNECT_SERIAL_ERROR ||
+              dtSheet[i].SHT_NO == CONNECT_SERIAL_NOT_FOUND
+            ) {
+              _strScanResultAll = "NG";
+              dtSheet[i].SCAN_RESULT = "NG";
+              dtSheet[i].REMARK =
+                "Leaf barcode not matching product / หมายเลขบาร์โค้ดไม่ตรงตามที่กำหนดไว้";
+              _bolError = true;
+              _intCount += 1;
+            } else if (dtSheet[i].SHT_NO == "") {
+              _strScanResultAll = "NG";
+              dtSheet[i].SCAN_RESULT = "NG";
+              dtSheet[i].REMARK =
+                "Leaf barcode not blank / ไม่ได้สแกนหมายเลขบาร์โค้ด";
+              _bolError = true;
+            }
+          }
+          if (_intCount == 0) {
+            _strScanResultAll = "NG";
+          }
+          if (_strScanResultAll != "NG") {
+            
+            let _strUpdateError = "";
+            for (let i = 0; i < dtSheet.length; i++) {
+              console.log('เข้าsave',dtSheet[i].UPDATE_FLG)
+              await axios
+                .post("/api/Common/SetRollLeafTrayTable", {
+                  strRowUpdate: dtSheet[i].ROW_UPDATE,
+                  strUpdateFlg: dtSheet[i].UPDATE_FLG,
+                  strRollNo: dtSheet[i].ROLL_NO,
+                  strLotNo: dtSheet[i].LOT_NO,
+                  strRollLeaf: dtSheet[i].ROLL_LEAF,
+                  strSheetNo: dtSheet[i].SHT_NO,
+                  strShtSeq: dtSheet[i].SHT_SEQ,
+                  strIntRow: _intRow + 1,
+                  strProduct: dtSheet[i].PRODUCT,
+                  strMachine: dtSheet[i].MACHINE,
+                  strUserID: hfUserStation,
+                  strOperator: txtOperator,
+                  strPlantCode: Fac,
+                })
+                .then((res) => {
+                  console.log('save2',res.data)
+                  _strUpdateError = res.data.p_error;
+
+                });
+            }
+            if (_strUpdateError != "") {
+              _strScanResultAll = "NG";
+              console.log("_strScanResultAll0015", _strScanResultAll);
             }
           }
         }
       } else {
-        console.log('txtOperator',txtOperator)
         _bolError = true;
         _strScanResultAll = "NG";
+        console.log("_strScanResultAll0012", _strScanResultAll);
         setlbllog((prevState) => ({
           ...prevState,
           visible: true,
           value: "Please input operator / กรุณาระบุพนักงาน",
         }));
-      fc_txtOperator.current.focus();
       }
     } else {
-      console.log('เข้าาาาาาาา222222')
+      console.log("เข้าาาาาาาา222222");
       _bolError = true;
       _strScanResultAll = "NG";
+      console.log("_strScanResultAll0013", _strScanResultAll);
       setlbllog((prevState) => ({
         ...prevState,
         visible: true,
         value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
       }));
-      
     }
     setlblResult((prevState) => ({
       ...prevState,
       visible: true,
       value: _strScanResultAll,
     }));
-    console.log('3333333333')
     setHfScanResult(_strScanResultAll);
-
     await axios
       .post("/api/SMTRoollSht/GetRollLeafTotalByLot", {
         LotNo: _strLot,
       })
       .then((res) => {
-        console.log('GetRollLeafTotalByLot',res.data)
+        console.log("GetRollLeafTotalByLot", res.data);
         setlbltotalSht(res.data);
       });
     if (_strScanResultAll == "NG") {
+      console.log("เข้าหรอ1");
       setlblResult((prevState) => ({
         ...prevState,
-        style: 'Red',
+        style: "Red",
       }));
     } else {
+      console.log("เข้าหรอ2");
       setlblResult((prevState) => ({
         ...prevState,
-        style: 'Green',
+        style: "Green",
       }));
     }
-console.log('!_bolPrdError',_bolPrdError)
     if (!_bolPrdError) {
-      console.log(_bolPrdError,'_bolPrdError1')
+      console.log(_bolPrdError, "_bolPrdError1");
       setgvScanResult((prevState) => ({
         ...prevState,
         value: dtSheet,
         visble: true,
       }));
     } else {
-      console.log(_bolPrdError,'_bolPrdError2')
+      console.log(_bolPrdError, "_bolPrdError2");
       setgvScanResult((prevState) => ({
         ...prevState,
         value: "",
@@ -955,8 +1049,8 @@ console.log('!_bolPrdError',_bolPrdError)
           value: "",
           disbled: false,
         }));
-        // pnlSerial.visible = True
-        SetGvSerial((prevState) => ({ ...prevState,visble: false }));
+
+        SetGvSerial((prevState) => ({ ...prevState, visble: false }));
         setHfMode("SHEET");
       } else {
         SetMode("ROLL");
@@ -970,10 +1064,12 @@ console.log('!_bolPrdError',_bolPrdError)
         value: "",
         disbled: false,
       }));
-      ExportGridToCSV(dtSheet,columns)
+      ExportGridToCSV(dtSheet, columns);
       getInitialSheet();
     }
   };
+
+
 
   const handleTextFieldChange = (index, event) => {
     const newData = [...txtLeafNo];
@@ -1001,7 +1097,7 @@ console.log('!_bolPrdError',_bolPrdError)
       key: "Roll/Sheet No.",
       align: "left",
       render: (text, record, index) => {
-          return text;
+        return text;
       },
     },
     {
@@ -1021,15 +1117,9 @@ console.log('!_bolPrdError',_bolPrdError)
       align: "center",
       render: (text, record, index) => {
         const backgroundColor =
-        text === "NG" ? "#f50" :
-        text === "OK" ? "#87d068" :
-          "transparent";
-       
-        return (
-          <Tag  color={backgroundColor} >
-            {text}
-          </Tag>
-        );
+          text === "NG" ? "#f50" : text === "OK" ? "#87d068" : "transparent";
+
+        return <Tag color={backgroundColor}>{text}</Tag>;
       },
     },
     {
@@ -1038,28 +1128,23 @@ console.log('!_bolPrdError',_bolPrdError)
       dataIndex: "REMARK",
       align: "center",
       render: (text, record, index) => {
-    
-          return text;
-        
+        return text;
       },
     },
-    
   ];
 
-
-
   const txtOperator_TextChanged = (value) => {
-    if(txtOperator!=''){
+    if (txtOperator != "") {
       setlbllog((prevState) => ({
         ...prevState,
         visible: false,
         value: ``,
       }));
     }
-  }
+  };
 
   const txtRollLeaf_TextChanged = (value) => {
-    if(txtRollLeaf!=''){
+    if (txtRollLeaf != "") {
       setlbllog((prevState) => ({
         ...prevState,
         visible: false,
@@ -1069,8 +1154,8 @@ console.log('!_bolPrdError',_bolPrdError)
         fc_GvSerial.current[0].focus();
       }, 300);
     }
-  }
-  
+  };
+
   const ExportGridToCSV = (data, ColumnsHeader) => {
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
@@ -1129,7 +1214,7 @@ console.log('!_bolPrdError',_bolPrdError)
     handletxtTotalLeaf,
     columns,
     txtOperator_TextChanged,
-    txtRollLeaf_TextChanged
+    txtRollLeaf_TextChanged,
   };
 }
 
