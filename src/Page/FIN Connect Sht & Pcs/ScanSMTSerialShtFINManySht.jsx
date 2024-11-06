@@ -98,18 +98,19 @@ function ScanSMTSerialShtFINManySht() {
   return (
     <div>
       <Hearder />
-      <h1>ScanSMTRoollSht</h1>
+
       <Card
         component={Paper}
-        style={{
-          margin: "auto",
-          width: "95%",
-          maxWidth: "1450px",
-          marginTop: "50px",
-          minHeight: "200px",
-          padding: "20px",
-          overflow: "auto",
-        }}
+        className="Card-Common"
+        // style={{
+        //   margin: "auto",
+        //   width: "95%",
+        //   maxWidth: "1450px",
+        //   marginTop: "50px",
+        //   minHeight: "200px",
+        //   padding: "20px",
+        //   overflow: "auto",
+        // }}
       >
         <table>
           <tr>
