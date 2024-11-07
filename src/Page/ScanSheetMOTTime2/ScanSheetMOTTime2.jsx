@@ -246,7 +246,7 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                   </TableRow>
-  
+                  {console.log('lblRemark2',lblRemark,lblResult.value)}
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
                     <TableCell colSpan={3} align="center">
                       <Card
@@ -271,7 +271,7 @@ function ScanSheetMOTTime() {
                         >
                           {lblResult.value}
                         </Typography>
-                        <Typography align="center" style={{ fontSize: "20px",marginTop: "80px" }}>
+                        <Typography align="center" style={{ fontSize: "20px" }}>
                           {lblRemark}
                         </Typography>
                       </Card>

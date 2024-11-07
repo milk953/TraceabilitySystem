@@ -6,13 +6,13 @@ function Fn_ScanSMTRollSht() {
   const [txt_lotNo, settxt_lotNo] = useState({
     value: "",
     disbled: "",
-    visble: "",
+    visible: "",
     style: {},
   });
   const [sl_Product, setsl_Product] = useState({
     value: "",
     disbled: "",
-    visble: "",
+    visible: "",
     style: {},
   });
   const [Product, setProduct] = useState([]);
@@ -25,7 +25,7 @@ function Fn_ScanSMTRollSht() {
   const [txtRollLeaf, settxtRollLeaf] = useState({
     value: "",
     disbled: "",
-    visble: "",
+    visible: "",
     style: {},
   });
   const [txtTotalLeaf, settxtTotalLeaf] = useState("4");
@@ -33,14 +33,14 @@ function Fn_ScanSMTRollSht() {
   const [lblCheckRoll, setlblCheckRoll] = useState({
     value: "",
     disbled: "",
-    visble: "",
+    visible: "",
     style: {},
   });
   const [lbltotalSht, setlbltotalSht] = useState("");
   const [GvSerial, SetGvSerial] = useState({
     value: "",
     disbled: "",
-    visble: "none",
+    visible: "none",
     style: {},
   });
   const [txtLeafNo, SettxtLeafNo] = useState(Array(txtTotalLeaf).fill(""));
@@ -48,14 +48,14 @@ function Fn_ScanSMTRollSht() {
   const [lblResult, setlblResult] = useState({
     value: "",
     disbled: "",
-    visble: "",
+    visible: "",
     style: {},
   });
 
   const [gvScanResult, setgvScanResult] = useState({
     value: "",
     disbled: "",
-    visble: false,
+    visible: false,
     style: "",
   });
 
@@ -141,8 +141,7 @@ function Fn_ScanSMTRollSht() {
 
   const Fac = import.meta.env.VITE_FAC;
   const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env
-    .VITE_CONNECT_SERIAL_NOT_FOUND;
+  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
   const hfAutoDownload = "N";
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
@@ -177,13 +176,13 @@ function Fn_ScanSMTRollSht() {
   const handleLotxt_Lotno = async () => {
     // 5-190617-001RGP021S048
     if (txt_lotNo.value != "") {
-      SetGvSerial((prevState) => ({ ...prevState, value: "", visble: "none" }));
+      SetGvSerial((prevState) => ({ ...prevState, value: "", visible: "none" }));
       setgvScanResult((prevState) => ({
         ...prevState,
         value: "",
-        visble: false,
+        visible: false,
       }));
-      setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
+      setlbllog((prevState) => ({ ...prevState, value: "", visible: false }));
       let strLotData = "";
       let strLot = "";
       let strPrdName = "";
@@ -211,7 +210,7 @@ function Fn_ScanSMTRollSht() {
       }
       console.log("strPrdName", strPrdName);
       if (strPrdName != "") {
-        setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
+        setlbllog((prevState) => ({ ...prevState, value: "", visible: false }));
         settxt_lotNo((prevState) => ({ ...prevState, value: strLot }));
         if (RollNo == "") {
           setHfRollNo(strLot);
@@ -228,13 +227,13 @@ function Fn_ScanSMTRollSht() {
             await getInitialSheet();
             SetMode("ROLL");
             setTimeout(() => {
-              fc_txtRollleaf.current.focus();
+              fc_txtOperator.current.focus();
             }, 300);
           } else {
             setlbllog((prevState) => ({
               ...prevState,
               value: `Product ${strPrdName} not found.`,
-              visble: true,
+              visible: true,
             }));
             setTimeout(() => {
               fc_SlProduct.current.focus();
@@ -246,7 +245,7 @@ function Fn_ScanSMTRollSht() {
           setlbllog((prevState) => ({
             ...prevState,
             value: `Product ${strPrdName} not found.`,
-            visble: true,
+            visible: true,
           }));
           setTimeout(() => {
             fc_SlProduct.current.focus();
@@ -269,12 +268,12 @@ function Fn_ScanSMTRollSht() {
         SetGvSerial((prevState) => ({
           ...prevState,
           value: "",
-          visble: false,
+          visible: false,
         }));
         setlbllog((prevState) => ({
           ...prevState,
           value: `Invalid lot no.`,
-          visble: true,
+          visible: true,
         }));
         setHfMode("LOT");
         setTimeout(() => {
@@ -285,7 +284,7 @@ function Fn_ScanSMTRollSht() {
   };
 
   useEffect(() => {
-    if (GvSerial.visble == "") {
+    if (GvSerial.visible == "") {
       getInitialSheet();
     }
   }, [hfSerialCount]);
@@ -449,8 +448,9 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: false }));
-      SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
+      setlbllog((prevState) => ({ ...prevState, visible: false }));
+      SetGvSerial((prevState) => ({ ...prevState, visible: "none" }));
+      setgvScanResult((prevState) => ({ ...prevState, visible: false,value:'' }));
       setHfMode("LOT");
       setTimeout(() => {
         fc_txtLotNo.current.focus();
@@ -474,8 +474,8 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: true })); //falseโชว์ true ซ่อน
-      SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
+      setlbllog((prevState) => ({ ...prevState, visible: true })); //falseโชว์ true ซ่อน
+      SetGvSerial((prevState) => ({ ...prevState, visible: "none" }));
       setHfMode("LOT");
       setTimeout(() => {
         fc_txtLotNo.current.focus();
@@ -493,8 +493,8 @@ function Fn_ScanSMTRollSht() {
         value: "",
         disbled: false,
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: false }));
-      SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
+      setlbllog((prevState) => ({ ...prevState, visible: false }));
+      SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
       settxtOperator("");
       setHfMode("OP");
       setTimeout(() => {
@@ -518,8 +518,8 @@ function Fn_ScanSMTRollSht() {
         disbled: false,
         style: {},
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: false }));
-      SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
+      setlbllog((prevState) => ({ ...prevState, visible: false }));
+      SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
       setHfMode("SHEET");
     }
     if (_strType == "SHEET") {
@@ -528,8 +528,8 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: false }));
-      SetGvSerial((prevState) => ({ ...prevState, visble: "" }));
+      setlbllog((prevState) => ({ ...prevState, visible: false }));
+      SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
       setHfMode("SHEET");
       await getInitialSheet();
     }
@@ -539,7 +539,7 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: true }));
+      setlbllog((prevState) => ({ ...prevState, visible: true }));
     }
     if (_strType == "SHEET_OK") {
       settxt_lotNo((prevState) => ({
@@ -547,8 +547,8 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: false }));
-      SetGvSerial((prevState) => ({ ...prevState, visble: "none" }));
+      setlbllog((prevState) => ({ ...prevState, visible: false }));
+      SetGvSerial((prevState) => ({ ...prevState, visible: "none" }));
       await getInitialSheet();
       setTimeout(() => {
         fc_GvSerial.current[0].focus();
@@ -560,7 +560,7 @@ function Fn_ScanSMTRollSht() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      setlbllog((prevState) => ({ ...prevState, visble: false }));
+      setlbllog((prevState) => ({ ...prevState, visible: false }));
     }
   };
 
@@ -578,7 +578,7 @@ function Fn_ScanSMTRollSht() {
     setsl_Product((prevState) => ({ ...prevState, value: PD }));
     await getProductSerialMaster(PD);
     if (txt_lotNo.value != "") {
-      setlbllog((prevState) => ({ ...prevState, value: "", visble: false }));
+      setlbllog((prevState) => ({ ...prevState, value: "", visible: false }));
       await getInitialSheet();
       SetMode("ROLL");
       setTimeout(() => {
@@ -748,8 +748,8 @@ function Fn_ScanSMTRollSht() {
               console.log(hfConnLeafLength,_strShtNo.length,_bolError,'Check07')
               if (
                 (hfConnLeafLength === 0 ||
-                  hfConnLeafLength === _strShtNo.length) &&
-                !_bolError
+                  hfConnLeafLength === _strShtNo.length) 
+                  // && !_bolError
               ) {
                 if (hfCheckPrdSht == "Y" && !_bolError) {
                   console.log(hfCheckPrdAbbr,'04check',_strShtNo.substring(parseInt(hfCheckPrdShtStart)-1 , parseInt(hfCheckPrdShtEnd)))
@@ -1031,14 +1031,14 @@ function Fn_ScanSMTRollSht() {
       setgvScanResult((prevState) => ({
         ...prevState,
         value: dtSheet,
-        visble: true,
+        visible: true,
       }));
     } else {
       console.log(_bolPrdError, "_bolPrdError2");
       setgvScanResult((prevState) => ({
         ...prevState,
         value: "",
-        visble: true,
+        visible: true,
       }));
     }
     if (hfAutoDownload == "N") {
@@ -1050,7 +1050,7 @@ function Fn_ScanSMTRollSht() {
           disbled: false,
         }));
 
-        SetGvSerial((prevState) => ({ ...prevState, visble: false }));
+        SetGvSerial((prevState) => ({ ...prevState, visible: false }));
         setHfMode("SHEET");
       } else {
         SetMode("ROLL");
@@ -1079,6 +1079,24 @@ function Fn_ScanSMTRollSht() {
 
   const ibtback_Click = () => {
     SetMode("LOT");
+  };
+
+  const ibtCancel_Click = () => {
+    setgvScanResult((prevState) => ({
+      ...prevState,
+      visible: false,
+      value: "",
+    }));
+    SettxtLeafNo(Array(txtTotalLeaf).fill(""))
+    if(txtOperator==''){
+      setTimeout(() => {
+        fc_txtOperator.current.focus();
+      }, 300);
+    }else{
+      setTimeout(() => {
+        fc_txtRollleaf.current.focus();
+      }, 300);
+    }
   };
 
   const columns = [
@@ -1133,27 +1151,43 @@ function Fn_ScanSMTRollSht() {
     },
   ];
 
-  const txtOperator_TextChanged = (value) => {
-    if (txtOperator != "") {
+  const txtOperator_TextChanged = (operator) => {
+    console.log(operator,'txtOperator_TextChanged')
+    if (operator == "") {
+      setlbllog((prevState) => ({
+        ...prevState,
+        visible: true,
+        value: "Please input operator / กรุณาระบุพนักงาน",
+      }));
+      fc_txtOperator.current.focus();
+    }
+    else{
       setlbllog((prevState) => ({
         ...prevState,
         visible: false,
-        value: ``,
+        value: "",
       }));
+      fc_txtRollleaf.current.focus();
     }
   };
 
-  const txtRollLeaf_TextChanged = (value) => {
-    if (txtRollLeaf != "") {
-      setlbllog((prevState) => ({
+  const txtRollLeaf_TextChanged = (RollLeaf) => {
+    setlbllog((prevState) => ({
+      ...prevState,
+      visible: false,
+      value: "",
+    }));
+    if (RollLeaf != "") {
+      setgvScanResult((prevState) => ({
         ...prevState,
         visible: false,
-        value: ``,
+        value: "",
       }));
       setTimeout(() => {
         fc_GvSerial.current[0].focus();
       }, 300);
     }
+  
   };
 
   const ExportGridToCSV = (data, ColumnsHeader) => {
@@ -1215,6 +1249,7 @@ function Fn_ScanSMTRollSht() {
     columns,
     txtOperator_TextChanged,
     txtRollLeaf_TextChanged,
+    ibtCancel_Click
   };
 }
 

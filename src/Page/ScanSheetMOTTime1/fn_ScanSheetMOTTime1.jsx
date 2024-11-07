@@ -76,9 +76,17 @@ function fn_ScanSheetMOTTime() {
 
   //link
   const params = new URLSearchParams(window.location.search);
+  const url = window.location.href;
+  const partweb = url.split("/")[4].split("?")[0]
+  console.log(partweb)
   const CB = params.get("CB");
   const SUS = params.get("SUS");
-  let hfZPRNProcID='1840'
+  let hfZPRNProcID=''
+  if(partweb=='ScanSheetMOTTime'){
+      hfZPRNProcID='1840'
+  }else if(partweb=='ScanSheetMOTTime2'){
+      hfZPRNProcID='1841'
+  }
   const Fac = import.meta.env.VITE_FAC;
   const VITE_FINAL_GATE_AUTO_PRD= import.meta.env.VITE_FINAL_GATE_AUTO_PRD;
   
@@ -103,36 +111,41 @@ function fn_ScanSheetMOTTime() {
     /// pnlMain.Enabled = True
  
     setpnlSave("none");
-    if (CB == "Y") {
-      settxtCBNo((prevState) => ({
-        ...prevState,
-        value: "",
-        disbled: true,
-        visble: "",
-        style: { background: "#EEEEEE" },
-      }));
-    } else {
-      settxtCBNo((prevState) => ({ ...prevState, visble: "none" }));
+    if(CB!=null){
+      if (CB.toUpperCase()== "Y") {
+        settxtCBNo((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: true,
+          visble: "",
+          style: { background: "#EEEEEE" },
+        }));
+      } else {
+        settxtCBNo((prevState) => ({ ...prevState, visble: "none" }));
+      }
     }
 
-    if (SUS == "Y") {
-      settxtSUSNo((prevState) => ({
-        ...prevState,
-        value: "",
-        disbled: true,
-        visble: "",
-        style: { background: "#EEEEEE" },
-      }));
-    } else {
-      settxtSUSNo((prevState) => ({ ...prevState, visble: "none" }));
+    if(SUS!=null){
+      if (SUS.toUpperCase() == "Y") {
+        settxtSUSNo((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: true,
+          visble: "",
+          style: { background: "#EEEEEE" },
+        }));
+      } else {
+        settxtSUSNo((prevState) => ({ ...prevState, visble: "none" }));
+      }
     }
+
     setTimeout(() => {
       fctxtMcNo.current.focus();
     }, 300);
   
   }, []);
 
-  const txtMCNo_TextChanged = async () => {
+  const txtMCNo_TextChanged = async (MotMachince) => {
   
     settxtSheet((prevState) => ({
       ...prevState,
@@ -165,10 +178,12 @@ function fn_ScanSheetMOTTime() {
       }));
       
     }
-   
+   if(MotMachince!=''){
     setTimeout(() => {
       fctxtLotno.current.focus();
     }, 300);
+   }
+
   };
 
   const txtLotNo_TextChanged = async () => {
@@ -200,7 +215,7 @@ function fn_ScanSheetMOTTime() {
           })
           .then((res) => {
             dtProductSerial = res.data[0];
-            console.log(dtProductSerial,'dtProductSerial1')
+            console.log(dtProductSerial,'dtProductSerial1',_strPrdName[0])
           });
         if (dtProductSerial != null) {
           console.log(dtProductSerial,'dtProductSerial2')
@@ -267,12 +282,13 @@ function fn_ScanSheetMOTTime() {
           fctxtLotno.current.focus();
         }, 300);
       }
-    } else {
-      settxtlot((prevState) => ({ ...prevState, value: "",focus:true }));
-      setTimeout(() => {
-        fctxtLotno.current.focus();
-      }, 300);
-    }
+    } 
+    // else {
+    //   settxtlot((prevState) => ({ ...prevState, value: "",focus:true }));
+    //   setTimeout(() => {
+    //     fctxtLotno.current.focus();
+    //   }, 300);
+    // }
   };
 
   const txtSheetNo_TextChanged = async () => {
@@ -285,9 +301,8 @@ function fn_ScanSheetMOTTime() {
       setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
         const sheetNo = txtSheet.value.trim().toUpperCase();
-        const start = parseInt(hfCheckPrdShtStart);
-        const end = parseInt(hfCheckPrdShtEnd);
-        const midValue = sheetNo.substring(start - 1, end);
+        const midValue = sheetNo.substring(parseInt(hfCheckPrdShtStart) -1 ,(parseInt(hfCheckPrdShtEnd))) 
+        console.log(sheetNo,'----',hfCheckPrdAbbr,'hfCheckPrdAbbr',midValue)
         if (hfCheckPrdAbbr !== midValue) {
           strStatus = "F";
           strError = "Sheet product mix";
@@ -333,10 +348,16 @@ function fn_ScanSheetMOTTime() {
           console.log('else')
           await axios
             .post("/api/GetMOTRecordTimeData", {
-              SheetNo: txtSheet.value,
+              dataList:{
+                strSheetNo:txtSheet.value,
+                strProcId:hfZPRNProcID,
+                strPlantCode:Fac
+              }
+             
             })
             .then((res) => {
               rowCount = res.data;
+              console.log('rowCountSheet',rowCount)
             });
 
           if (rowCount == 0) {
@@ -353,7 +374,8 @@ function fn_ScanSheetMOTTime() {
               strStatus:strStatus
             })
             .then((res) => {
-              strError=res.data.strError
+              console.log(res.data,'CallFPCSheetLeadTimeResult',res.data.strReturn,'----------',res.data.strStatus)
+              strError=res.data.strReturn
               strStatus=res.data.strStatus
             });
            
@@ -409,7 +431,7 @@ function fn_ScanSheetMOTTime() {
 
   const txtCBNo_TextChanged = async () => {
     console.log(txtCBNo.value,'txtcbno')
-    if (txtSheet != "" && txtCBNo.value != "") {
+    if (txtSheet.value != "" && txtCBNo.value != "") {
       console.log('เข้าtxtCBNo',hfCheckPrdSht)
       let strError = "";
       let strStatus = "";
@@ -421,7 +443,9 @@ function fn_ScanSheetMOTTime() {
         const sheetNo = txtSheet.value.trim().toUpperCase();
         const start = parseInt(hfCheckPrdShtStart, 10);
         const end = parseInt(hfCheckPrdShtEnd, 10);
-        const extractedValue = sheetNo.substring(start, end + 1);
+        
+        const extractedValue = sheetNo.substring(start-1, end );
+        console.log(hfCheckPrdAbbr,'000000',extractedValue)
         if (hfCheckPrdAbbr !== extractedValue) {
           strStatus = "F";
           strError = "Sheet product mix";
@@ -453,11 +477,15 @@ function fn_ScanSheetMOTTime() {
         } else {
           await axios
             .post("/api/GetMOTRecordTimeData", {
-              SheetNo: txtSheet,
+              dataList:{
+                strSheetNo:txtSheet.value,
+                strProcId:hfZPRNProcID,
+                strPlantCode:Fac
+              }
             })
             .then((res) => {
               rowCount = res.data;
-              console.log(res.data, "rowCount");
+              console.log(res.data, "rowCountCB");
             });
 
           if (rowCount == 0) {
@@ -474,7 +502,7 @@ function fn_ScanSheetMOTTime() {
               strStatus:strStatus
             })
             .then((res) => {
-              strError=res.data.strError
+              strError=res.data.strReturn
               strStatus=res.data.strStatus
             });
            
@@ -501,6 +529,8 @@ function fn_ScanSheetMOTTime() {
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
+          settxtCBNo((prevState) => ({ ...prevState, value: "" }));
+       
          
           setTimeout(() => {
             fctxtSheetNo.current.focus();
@@ -529,7 +559,7 @@ function fn_ScanSheetMOTTime() {
   };
 
   const txtSUSNo_TextChanged = async () => {
-    if (txtSheet != "" && txtCBNo != "") {
+    if (txtSheet.value != "" && txtCBNo.value != "") {
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
@@ -539,7 +569,9 @@ function fn_ScanSheetMOTTime() {
         const sheetNo = txtSheet.value.trim().toUpperCase();
         const start = parseInt(hfCheckPrdShtStart, 10);
         const end = parseInt(hfCheckPrdShtEnd, 10);
-        const extractedValue = sheetNo.substring(start, end + 1);
+       
+        const extractedValue = sheetNo.substring(start-1, end);
+        console.log(hfCheckPrdAbbr,'999999',extractedValue)
         if (hfCheckPrdAbbr !== extractedValue) {
           strStatus = "F";
           strError = "Sheet product mix";
@@ -561,11 +593,15 @@ function fn_ScanSheetMOTTime() {
        
           await axios
             .post("/api/GetMOTRecordTimeData", {
-              SheetNo: txtSheet,
+              dataList:{
+                strSheetNo:txtSheet.value,
+                strProcId:hfZPRNProcID,
+                strPlantCode:Fac
+              }
             })
             .then((res) => {
               rowCount = res.data;
-              console.log(res.data, "rowCount");
+              console.log(res.data, "rowCountSus");
             });
 
           if (rowCount == 0) {
@@ -582,7 +618,7 @@ function fn_ScanSheetMOTTime() {
               strStatus:strStatus
             })
             .then((res) => {
-              strError=res.data.strError
+              strError=res.data.strReturn
               strStatus=res.data.strStatus
             });
          
@@ -604,12 +640,12 @@ function fn_ScanSheetMOTTime() {
           } else {
             setlblSheet(txtSheet.value);
             setpnlSave(""); 
-            /// pnlMain.Enabled = False
             setlblResult('')
             setlblRemark("Exists record time, please be confirm.");
           }
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
           settxtCBNo((prevState) => ({ ...prevState, value: "" }));
+          settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
           setTimeout(() => {
             fctxtSheetNo.current.focus();
           }, 300);
@@ -643,6 +679,7 @@ function fn_ScanSheetMOTTime() {
       ...prevState,
       disbled: false,
       style: { background: "" },
+      value:''
     }));
 
     settxtMCNo((prevState) => ({
@@ -727,7 +764,7 @@ function fn_ScanSheetMOTTime() {
       strStatus:strStatus
     })
     .then((res) => {
-      strError=res.data.strError
+      strError=res.data.strReturn
       strStatus=res.data.strStatus
     });
    
@@ -790,6 +827,8 @@ function fn_ScanSheetMOTTime() {
       },
     })
     .then((res) => {
+      console.log('dele ',res.data)
+      // if(res.data.length>0)
       strError=res.data.p_error
     });
     setlblSheet(lblSheet + "Delete");
