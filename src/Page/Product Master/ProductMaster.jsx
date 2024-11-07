@@ -156,7 +156,7 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             style={{
-                                                width: "430px"
+                                                width: "430px",
                                             }}
                                             value={txtProduct.toUpperCase()}
                                             onChange={handleKeyProductName}
@@ -218,7 +218,8 @@ function ProductMaster() {
                                             size="small"
                                             value={txtChkStartDig}
                                             style={{
-                                                width: "450px"
+                                                width: "450px",
+                                                backgroundColor: "#fff"
                                             }}
                                             onChange={(e) => {
                                                 const value = e.target.value;
@@ -257,6 +258,9 @@ function ProductMaster() {
                                             id="shtlot"
                                             size="small"
                                             fullWidth
+                                            style={{
+                                                backgroundColor: "#fff"
+                                            }}
                                             value={txtShtLot}
                                             onChange={(e) => {
                                                 const value = e.target.value;
