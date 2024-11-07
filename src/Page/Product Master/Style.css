@@ -43,6 +43,7 @@
 
 .TbProductMst tr.group-c1 td:nth-child(2) {
   background-color: #abe0dc ;
+  border-right: #fff solid 2px;
 }
 
 .TbProductMst tr.group-c1 td:nth-child(3) {
