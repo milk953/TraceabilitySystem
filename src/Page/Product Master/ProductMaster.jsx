@@ -42,6 +42,7 @@ import {
 } from "@ant-design/icons";
 import { fn_ProductMaster } from "./function_ProductMaster.jsx";
 import * as XLSX from 'xlsx';
+import "../Common/StyleCommon.css";
 
 function ProductMaster() {
 
@@ -79,7 +80,7 @@ function ProductMaster() {
         ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
         ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
         ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage
+        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg
 
     } = fn_ProductMaster();
 
@@ -87,9 +88,13 @@ function ProductMaster() {
         <div>
             <Header />
             <Card
-               component={Paper}
-               className="Card-Common"
-               sx={{ display: "flex", width: "92%" }}
+                component={Paper}
+                className="Card-Common"
+                sx={{
+                    display: "flex",
+                    width: "1480px",
+                    flexDirection: "column"
+                }}
             >
                 {pnlMessage && (
                     <Paper
@@ -147,15 +152,19 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
                                             size="small"
                                             fullWidth
-                                            value={txtProduct}
+                                            style={{
+                                                width: "430px"
+                                            }}
+                                            value={txtProduct.toUpperCase()}
                                             onChange={handleKeyProductName}
                                             error={ErrorPrdName}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     btnRetriveClick();
+                                                    document.getElementById("ChkStartDig").focus();
                                                 }
                                             }}
                                         />
@@ -187,13 +196,15 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="upcount"
                                             size="small"
                                             fullWidth
                                             value={txtUpdateCount}
                                             onChange={handleKeyUpdateCount}
                                             InputProps={{
                                                 readOnly: true,
+                                                style: { backgroundColor: '#e0e0e0' },
                                             }}
                                         />
                                     </TableCell>
@@ -202,14 +213,24 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ChkStartDig"
                                             size="small"
-                                            fullWidth
                                             value={txtChkStartDig}
                                             style={{
-                                                width: "370px"
+                                                width: "450px"
                                             }}
-                                            onChange={handleKeyCheckDigitFrom}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handleKeyCheckDigitFrom(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("shtlot").focus();
+                                                }
+                                            }}
                                             error={ErrorChkStartDig}
                                         />
                                     </TableCell>
@@ -232,11 +253,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="shtlot"
                                             size="small"
                                             fullWidth
                                             value={txtShtLot}
-                                            onChange={handleKeyShtLot}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 5) { // ตรวจสอบให้รับเฉพาะตัวเลขและ 5 digit
+                                                    handleKeyShtLot(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("ChkEndDig").focus();
+                                                }
+                                            }}
                                             error={ErrorShtLot}
                                         />
                                     </TableCell>
@@ -245,11 +277,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ChkEndDig"
                                             size="small"
                                             fullWidth
                                             value={txtChkEndDig}
-                                            onChange={handleKeyCheckDigitTo}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handleKeyCheckDigitTo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("PcsSht").focus();
+                                                }
+                                            }}
                                             error={ErrorChkEndDig}
                                         />
                                     </TableCell>
@@ -276,11 +319,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="PcsSht"
                                             size="small"
                                             fullWidth
                                             value={txtPcsSht}
-                                            onChange={handleKeyPcsSht}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 4) {
+                                                    handleKeyPcsSht(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("ChkWord").focus();
+                                                }
+                                            }}
                                             error={ErrorPcsSht}
                                         />
                                     </TableCell>
@@ -289,11 +343,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ChkWord"
                                             size="small"
                                             fullWidth
-                                            value={txtChkWord}
-                                            onChange={handleKeyCheckWord}
+                                            value={txtChkWord.toUpperCase()}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 15) {
+                                                    handleKeyCheckWord(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("selectSheetType").focus();
+                                                }
+                                            }}
                                             error={ErrorChkWord}
                                         />
                                     </TableCell>
@@ -320,7 +385,8 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <Autocomplete
-                                            id="selectProductMst"
+                                            className="Select_dropDown"
+                                            id="selectSheetType"
                                             value={selSheetType}
                                             onChange={(e, value) => handleselSheettype(value)}
                                             options={["", "S", "D"]}
@@ -336,6 +402,11 @@ function ProductMaster() {
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
                                                     error={ErrorselSheetType}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            document.getElementById("SerialLength").focus();
+                                                        }
+                                                    }}
                                                 />
                                             )}
                                         />
@@ -345,11 +416,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="SerialLength"
                                             size="small"
                                             fullWidth
                                             value={txtSerialLength}
-                                            onChange={handlekeySerialLength}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeySerialLength(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("selectDateType").focus();
+                                                }
+                                            }}
                                             error={ErrorSerialLength}
                                         />
                                     </TableCell>
@@ -376,7 +458,8 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <Autocomplete
-                                            id="selectProductMst"
+                                            className="Select_dropDown"
+                                            id="selectDateType"
                                             value={selDateType}
                                             onChange={(e, value) => selDateTypeselChanged(value)}
                                             options={["", "Y", "W", "R", "J", "B", "I", "M", "N", "U", "C", "S", "D", "O"]}
@@ -403,20 +486,36 @@ function ProductMaster() {
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
                                                     error={ErrorselDateType}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            document.getElementById("PcsScan").focus();
+                                                        }
+                                                    }}
                                                 />
                                             )}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>PCS/SCAN (Shipping tray) :</Typography>
+                                        <Typography>Pcs/Scan (Shipping tray) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="PcsScan"
                                             size="small"
                                             fullWidth
                                             value={txtPcsScan}
-                                            onChange={handlekeyPcsScan}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyPcsScan(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("EngCode").focus();
+                                                }
+                                            }}
                                             error={ErrorPcsScan}
                                         />
                                     </TableCell>
@@ -443,24 +542,46 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="EngCode"
                                             size="small"
                                             fullWidth
-                                            value={txtEngCode}
-                                            onChange={handlekeyEngCode}
+                                            value={txtEngCode.toUpperCase()}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 10) {
+                                                    handlekeyEngCode(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("PcsTray").focus();
+                                                }
+                                            }}
                                             error={ErrorEngCode}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>PCS/SCAN (In process tray) :</Typography>
+                                        <Typography>Pcs/Scan (In process tray) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="PcsTray"
                                             size="small"
                                             fullWidth
                                             value={txtPcsTray}
-                                            onChange={handlekeyPcsTray}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyPcsTray(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("Revision").focus();
+                                                }
+                                            }}
                                             error={ErrorPcsTray}
                                         />
                                     </TableCell>
@@ -487,11 +608,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="Revision"
                                             size="small"
                                             fullWidth
-                                            value={txtRevision}
-                                            onChange={handlekeyRevision}
+                                            value={txtRevision.toUpperCase()}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 1) {
+                                                    handlekeyRevision(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("SerialFormat").focus();
+                                                }
+                                            }}
                                             error={ErrorRevision}
                                         />
                                     </TableCell>
@@ -500,11 +632,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="SerialFormat"
                                             size="small"
                                             fullWidth
                                             value={txtSerialFormat}
-                                            onChange={handlekeySerialFormat}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 50) {
+                                                    handlekeySerialFormat(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("selectLaminationSide").focus();
+                                                }
+                                            }}
                                             error={ErrorSerialFormat}
                                         />
                                     </TableCell>
@@ -531,7 +674,8 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <Autocomplete
-                                            id="selectProductMst"
+                                            className="Select_dropDown"
+                                            id="selectLaminationSide"
                                             value={selLaminationSide}
                                             onChange={(e, value) => handleselLaminationSide(value)}
                                             options={["", "F", "B"]}
@@ -547,6 +691,11 @@ function ProductMaster() {
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
                                                     error={ErrorLaminationSide}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            document.getElementById("SheetFormat").focus();
+                                                        }
+                                                    }}
                                                 />
                                             )}
                                         />
@@ -556,11 +705,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="SheetFormat"
                                             size="small"
                                             fullWidth
                                             value={txtSheetFormat}
-                                            onChange={handlekeySheetFormat}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 50) {
+                                                    handlekeySheetFormat(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("ShtScan").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -578,28 +738,50 @@ function ProductMaster() {
 
                                 <TableRow className="special-row">
                                     <TableCell>
-                                        <Typography>SHT/SCAN :</Typography>
+                                        <Typography>Sheet/Scan :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ShtScan"
                                             size="small"
                                             fullWidth
                                             value={txtShtScan}
-                                            onChange={handlekeyShtScan}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyShtScan(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("ShtLaser").focus();
+                                                }
+                                            }}
                                             error={ErrorShtScan}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>SHT/LASER :</Typography>
+                                        <Typography>Sheet/Laser :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ShtLaser"
                                             size="small"
                                             fullWidth
                                             value={txtShtLaser}
-                                            onChange={handlekeyShtLaser}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyShtLaser(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxReqLots").focus();
+                                                }
+                                            }}
                                             error={ErrorShtLaser}
                                         />
                                     </TableCell>
@@ -631,6 +813,11 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqLotCheck}
                                             onChange={(e) => setReqLotCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxVendorCheck").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -639,11 +826,16 @@ function ProductMaster() {
                                     <TableCell>
                                         <Checkbox
                                             size="small"
-                                            id="checkboxReqLots"
+                                            id="checkboxVendorCheck"
                                             style={{ padding: "0" }}
                                             disabled={cbxReqVendorDisabled}
                                             checked={ReqVendorCheck}
                                             onChange={(e) => setReqVendorCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxReqConfigCheck").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -652,17 +844,26 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Req. Config :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Checkbox
                                             size="small"
-                                            id="checkboxReqLots"
+                                            id="checkboxReqConfigCheck"
                                             style={{ padding: "0" }}
                                             checked={ReqConfigCheck}
                                             onChange={ReqConfigCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqConfigCheck) {
+                                                        document.getElementById("ConfigWord").focus();
+                                                    } else {
+                                                        document.getElementById("DupStart").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -670,15 +871,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ConfigWord"
                                             size="small"
                                             fullWidth
-                                            value={txtConfigWord}
+                                            value={txtConfigWord.toUpperCase()}
                                             disabled={txtConfigWordDisabled}
                                             style={{
-                                                backgroundColor: txtConfigWordDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtConfigWordDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyConfigWord}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 5) {
+                                                    handlekeyConfigWord(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("ConfigStart").focus();
+                                                }
+                                            }}
                                             error={ErrorConfigWord}
                                         />
                                     </TableCell>
@@ -695,21 +907,32 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Config. Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ConfigStart"
                                             size="small"
                                             fullWidth
                                             value={txtConfigStart}
                                             disabled={txtConfigStartDisabled}
                                             style={{
-                                                backgroundColor: txtConfigStartDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtConfigStartDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyConfigStart}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyConfigStart(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("ConfigEnd").focus();
+                                                }
+                                            }}
                                             error={ErrorConfigStart}
                                         />
                                     </TableCell>
@@ -718,15 +941,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ConfigEnd"
                                             size="small"
                                             fullWidth
                                             value={txtConfigEnd}
                                             disabled={txtConfigEndDisabled}
                                             style={{
-                                                backgroundColor: txtConfigEndDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtConfigEndDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyConfigEnd}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyConfigEnd(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxConfigRunCheck").focus();
+                                                }
+                                            }}
                                             error={ErrorConfigEnd}
                                         />
                                     </TableCell>
@@ -747,18 +981,23 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Req. Config Running :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Checkbox
                                             size="small"
-                                            id="checkboxReqLots"
+                                            id="checkboxConfigRunCheck"
                                             style={{ padding: "0" }}
                                             disabled={cbxReqConfigRunDisabled}
                                             checked={ReqConfigRunCheck}
                                             onChange={(e) => setReqConfigRunCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("DupStart").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -773,11 +1012,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="DupStart"
                                             size="small"
                                             fullWidth
                                             value={txtDupStart}
-                                            onChange={handlekeyDupStart}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyDupStart(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("DupEnd").focus();
+                                                }
+                                            }}
                                             error={ErrorDupStart}
                                         />
                                     </TableCell>
@@ -786,11 +1036,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="DupEnd"
                                             size="small"
                                             fullWidth
                                             value={txtDupEnd}
-                                            onChange={handlekeyDupEnd}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    handlekeyDupEnd(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("AddInfo").focus();
+                                                }
+                                            }}
                                             error={ErrorDupEnd}
                                         />
                                     </TableCell>
@@ -817,11 +1078,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell colSpan={3}>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="AddInfo"
                                             size="small"
                                             fullWidth
-                                            value={txtAddInfo}
-                                            onChange={handlekeyAddInfo}
+                                            value={txtAddInfo.toUpperCase()}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 80) {
+                                                    handlekeyAddInfo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("Abbr").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -839,11 +1111,17 @@ function ProductMaster() {
                                     {visibletxtPassWord && (
                                         <TableCell>
                                             <TextField
-                                                id="txtfield"
+                                                className="input_txt"
+                                                id="PassWord"
                                                 size="small"
                                                 fullWidth
                                                 value={txtPassWord}
-                                                onChange={handlekeyPassWord}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 50) {
+                                                        handlekeyPassWord(e);
+                                                    }
+                                                }}
                                                 error={ErrorPassWord}
                                             />
                                         </TableCell>
@@ -853,11 +1131,49 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="Abbr"
                                             size="small"
                                             fullWidth
-                                            value={txtAbbr}
-                                            onChange={handlekeyAbbr}
+                                            value={txtAbbr.toUpperCase()}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 50) {
+                                                    handlekeyAbbr(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("SerialStartCode").focus();
+                                                }
+                                            }}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>Serial Start Code :</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <TextField
+                                            className="input_txt"
+                                            id="SerialStartCode"
+                                            size="small"
+                                            fullWidth
+                                            value={txtSerialStartCode.toUpperCase()}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 10) {
+                                                    handlekeySerialStartCode(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqCheckPrdShtCheck) {
+                                                        document.getElementById("CheckPrdShtFrom").focus();
+                                                    } else {
+                                                        document.getElementById("CheckReqCheckPrdShtCheck").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -873,24 +1189,13 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
-                                    <TableCell>
-                                        <Typography>Serial Start Code :</Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <TextField
-                                            id="txtfield"
-                                            size="small"
-                                            fullWidth
-                                            value={txtSerialStartCode}
-                                            onChange={handlekeySerialStartCode}
-                                        />
-                                    </TableCell>
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Req. Check Sheet PRD. :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Checkbox
+                                            id="CheckReqCheckPrdShtCheck"
                                             size="small"
                                             checked={ReqCheckPrdShtCheck}
                                             disabled={cbxReqCheckPrdShtDisabled}
@@ -898,6 +1203,13 @@ function ProductMaster() {
                                                 padding: "0",
                                             }}
                                             onChange={ReqCheckPrdShtCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqCheckPrdShtCheck) {
+                                                        document.getElementById("CheckPrdShtFrom").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -906,21 +1218,32 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Sheet PRD. Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="CheckPrdShtFrom"
                                             size="small"
                                             fullWidth
                                             value={txtCheckPrdShtFrom}
                                             disabled={txtCheckPrdShtDisabled}
                                             style={{
-                                                backgroundColor: txtCheckPrdShtDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtCheckPrdShtDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyCheckPrdShtFrom}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyCheckPrdShtFrom(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("CheckPrdShtTo").focus();
+                                                }
+                                            }}
                                             error={ErrorCheckPrdShtFrom}
                                         />
                                     </TableCell>
@@ -929,15 +1252,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="CheckPrdShtTo"
                                             size="small"
                                             fullWidth
                                             value={txtCheckPrdShtTo}
                                             disabled={txtCheckPrdShtToDisabled}
                                             style={{
-                                                backgroundColor: txtCheckPrdShtToDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtCheckPrdShtToDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyCheckPrdShtTo}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyCheckPrdShtTo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("rbtsel").focus();
+                                                }
+                                            }}
                                             error={ErrorCheckPrdShtTo}
                                         />
                                     </TableCell>
@@ -967,6 +1301,11 @@ function ProductMaster() {
                                             row
                                             value={rbtselLotRoll}
                                             onChange={handlerbtLotRollChange}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxLotSht").focus();
+                                                }
+                                            }}
                                         >
                                             <FormControlLabel
                                                 control={
@@ -977,6 +1316,7 @@ function ProductMaster() {
                                                             },
                                                         }}
                                                         value="rbtLotCheck"
+                                                        id="rbtsel"
                                                     />
                                                 }
                                                 label="Lot"
@@ -990,6 +1330,7 @@ function ProductMaster() {
                                                             },
                                                         }}
                                                         value="rbtRollCheck"
+                                                        id="rbtsel"
                                                     />
                                                 }
                                                 label="Roll"
@@ -997,16 +1338,32 @@ function ProductMaster() {
                                             />
                                         </RadioGroup>
                                     </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Check Sheet Lot :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Checkbox
                                             size="small"
-                                            id="checkboxReqLots"
+                                            id="checkboxLotSht"
                                             style={{ padding: "0" }}
                                             checked={ReqCheckLotShtCheck}
                                             onChange={ReqCheckLotShtCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqCheckLotShtCheck) {
+                                                        document.getElementById("CheckLotShtFrom").focus();
+                                                    } else {
+                                                        document.getElementById("selectStatus").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -1015,21 +1372,32 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Sheet Lot Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="CheckLotShtFrom"
                                             size="small"
                                             fullWidth
                                             value={txtCheckLotShtFrom}
                                             disabled={txtCheckLotShtFromDisabled}
                                             style={{
-                                                backgroundColor: txtCheckLotShtFromDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtCheckLotShtFromDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyCheckLotShtFrom}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyCheckLotShtFrom(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("CheckLotShtTo").focus();
+                                                }
+                                            }}
                                             error={ErrorCheckLotShtFrom}
                                         />
                                     </TableCell>
@@ -1038,15 +1406,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="CheckLotShtTo"
                                             size="small"
                                             fullWidth
                                             value={txtCheckLotShtTo}
                                             disabled={txtCheckLotShtToDisabled}
                                             style={{
-                                                backgroundColor: txtCheckLotShtToDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtCheckLotShtToDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyCheckLotShtTo}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyCheckLotShtTo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("selectStatus").focus();
+                                                }
+                                            }}
                                             error={ErrorCheckLotShtTo}
                                         />
                                     </TableCell>
@@ -1073,7 +1452,8 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <Autocomplete
-                                            id="selectProductMst"
+                                            className="Select_dropDown"
+                                            id="selectStatus"
                                             value={selStatus}
                                             onChange={(e, value) => handleselStatus(value)}
                                             options={["ACTIVE", "INACTIVE"]}
@@ -1084,6 +1464,11 @@ function ProductMaster() {
                                                     {...params}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            document.getElementById("checkboxReqControlPlasma").focus();
+                                                        }
+                                                    }}
                                                 />
                                             )}
                                         />
@@ -1098,7 +1483,7 @@ function ProductMaster() {
                                             onChange={(e, value) => handleselCheckIC(value)}
                                             disabled={selCheckIC === "N"}
                                             style={{
-                                                backgroundColor: selCheckIC === "N" ? "#EEEEEE" : "inherit",
+                                                backgroundColor: selCheckIC === "N" ? "#e0e0e0" : "#fff",
                                             }}
                                             options={["N", "Y"]}
                                             getOptionLabel={(option) => (option === "N" ? "No" : "Yes")}
@@ -1118,33 +1503,53 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Pcs Control Plasma Time :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Checkbox
                                             size="small"
-                                            id="checkboxReqLots"
+                                            id="checkboxReqControlPlasma"
                                             style={{ padding: "0" }}
                                             checked={ReqControlPlasmaCheck}
                                             onChange={ReqControlPlasmaCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqControlPlasmaCheck) {
+                                                        document.getElementById("PlasmaTime").focus();
+                                                    } else {
+                                                        document.getElementById("checkboxReqSt").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>Pcs Control Plasma Time (hrs.) :</Typography>
+                                        <Typography>Pcs Control Plasma Time (Hrs.) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="PlasmaTime"
                                             size="small"
                                             fullWidth
                                             value={txtPlasmaTime}
                                             disabled={txtPlasmaTimeDisabled}
                                             style={{
-                                                backgroundColor: txtPlasmaTimeDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtPlasmaTimeDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyPlasmaTime}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 5) {
+                                                    handlekeyPlasmaTime(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("rbtPlas").focus();
+                                                }
+                                            }}
                                             error={ErrorPlasmaTime}
                                         />
                                     </TableCell>
@@ -1161,7 +1566,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Record PDS Time By :</Typography>
                                     </TableCell>
@@ -1170,6 +1575,11 @@ function ProductMaster() {
                                             row
                                             value={rbtPlasmaTime}
                                             onChange={handlerbtPlasmaTimeChange}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxReqUpdate").focus();
+                                                }
+                                            }}
                                         >
                                             <FormControlLabel
                                                 control={
@@ -1179,6 +1589,7 @@ function ProductMaster() {
                                                                 fontSize: 19,
                                                             },
                                                         }}
+                                                        id="rbtPlas"
                                                         value="rbtPlasmaTimePCSCheck"
                                                         disabled={rbtPlasmaTimePCSDisabled}
                                                     />
@@ -1223,13 +1634,18 @@ function ProductMaster() {
                                     <TableCell>
                                         <Checkbox
                                             size="small"
-                                            id="checkboxReqLots"
+                                            id="checkboxReqUpdate"
                                             style={{
                                                 padding: "0",
                                             }}
                                             disabled={cbxReqUpdatePlasmaDisabled}
                                             checked={ReqUpdatePlasmaCheck}
                                             onChange={(e) => setReqUpdatePlasmaCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxNotapply").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -1238,7 +1654,7 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Not apply start PDS Time from ELT :</Typography>
                                     </TableCell>
@@ -1252,6 +1668,11 @@ function ProductMaster() {
                                             disabled={cbxPlasmaNotStartELTDisabled}
                                             checked={PlasmaNotStartELTCheck}
                                             onChange={(e) => setPlasmaNotStartELTCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxNotshow").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1267,6 +1688,11 @@ function ProductMaster() {
                                             disabled={cbxPlasmaNotShowTimeDisabled}
                                             checked={PlasmaNotShowTimeCheck}
                                             onChange={(e) => setPlasmaNotShowTimeCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("checkboxReqSt").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -1275,7 +1701,7 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Req. Start Seq. Code :</Typography>
                                     </TableCell>
@@ -1287,6 +1713,15 @@ function ProductMaster() {
                                             disabled={cbxReqStartSeqCodeDisabled}
                                             checked={ReqStartSeqCodeCheck}
                                             onChange={ReqStartSeqCodeCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqStartSeqCodeCheck) {
+                                                        document.getElementById("StartSeqCode").focus();
+                                                    } else {
+                                                        document.getElementById("cbxReqSheetELT").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1294,15 +1729,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="StartSeqCode"
                                             size="small"
                                             fullWidth
-                                            value={txtStartSeqCode}
+                                            value={txtStartSeqCode.toUpperCase()}
                                             disabled={txtStartSeqCodeDisabled}
                                             style={{
-                                                backgroundColor: txtStartSeqCodeDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtStartSeqCodeDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyStartSeqCode}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^[A-Za-z]*$/.test(value) && value.length <= 3) {
+                                                    handlekeyStartSeqCode(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("StartSeqDigitFrom").focus();
+                                                }
+                                            }}
                                             error={ErrorStartSeqCode}
                                         />
                                     </TableCell>
@@ -1319,21 +1765,32 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Start Seq. Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="StartSeqDigitFrom"
                                             size="small"
                                             fullWidth
                                             value={txtStartSeqDigitFrom}
                                             disabled={txtStartSeqDigitFromDisabled}
                                             style={{
-                                                backgroundColor: txtStartSeqDigitFromDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtStartSeqDigitFromDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyStartSeqDigitFrom}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyStartSeqDigitFrom(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("StartSeqDigitTo").focus();
+                                                }
+                                            }}
                                             error={ErrorStartSeqDigitFrom}
                                         />
                                     </TableCell>
@@ -1342,15 +1799,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="StartSeqDigitTo"
                                             size="small"
                                             fullWidth
                                             value={txtStartSeqDigitTo}
                                             disabled={txtStartSeqDigitToDisabled}
                                             style={{
-                                                backgroundColor: txtStartSeqDigitToDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtStartSeqDigitToDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyStartSeqDigitTo}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyStartSeqDigitTo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqSheetELT").focus();
+                                                }
+                                            }}
                                             error={ErrorStartSeqDigitTo}
                                         />
                                     </TableCell>
@@ -1382,6 +1850,11 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqShtELTCheck}
                                             onChange={(e) => setReqShtELTCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqSPIAOI").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1394,6 +1867,11 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqSPIAOICheck}
                                             onChange={(e) => setReqSPIAOICheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqVendorLot").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -1402,7 +1880,7 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Serial Req. Vendor Lot :</Typography>
                                     </TableCell>
@@ -1413,6 +1891,15 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqVendorLotCheck}
                                             onChange={ReqVendorLotCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqVendorLotCheck) {
+                                                        document.getElementById("VendorLotLength").focus();
+                                                    } else {
+                                                        document.getElementById("cbxReqDateProc").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1420,15 +1907,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="VendorLotLength"
                                             size="small"
                                             fullWidth
                                             value={txtVendorLotLength}
                                             disabled={txtVendorLotLengthDisabled}
                                             style={{
-                                                backgroundColor: txtVendorLotLengthDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtVendorLotLengthDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyVendorLotLength}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyVendorLotLength(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqDateProc").focus();
+                                                }
+                                            }}
                                             error={ErrorVendorLotLength}
                                         />
                                     </TableCell>
@@ -1445,7 +1943,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Req. Date by Process :</Typography>
                                     </TableCell>
@@ -1456,6 +1954,15 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqDateProcCheck}
                                             onChange={ReqDateProcCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqDateProcCheck) {
+                                                        document.getElementById("DateFromProc").focus();
+                                                    } else {
+                                                        document.getElementById("cbxReqSheetMC").focus(); //เผื่อแก้
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1463,15 +1970,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="DateFromProc"
                                             size="small"
                                             fullWidth
-                                            value={txtDateFromProc}
+                                            value={txtDateFromProc.toUpperCase()}
                                             disabled={txtDateFromProcDisabled}
                                             style={{
-                                                backgroundColor: txtDateFromProcDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtDateFromProcDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyDateFromProc}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 15) {
+                                                    handlekeyDateFromProc(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqCheckWeekCode").focus();
+                                                }
+                                            }}
                                             error={ErrorDateFromProc}
                                         />
                                     </TableCell>
@@ -1488,7 +2006,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-c1">
                                     <TableCell>
                                         <Typography>Req. Check Week Code :</Typography>
                                     </TableCell>
@@ -1500,6 +2018,13 @@ function ProductMaster() {
                                             disabled={cbxReqCheckWeekCodeDisabled}
                                             checked={ReqCheckWeekCodeCheck}
                                             onChange={ReqCheckWeekCodeCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (ReqCheckWeekCodeCheck) {
+                                                    document.getElementById("WeekCodeStart").focus();
+                                                } else {
+                                                    document.getElementById("cbxReqConRollLeaf").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1520,21 +2045,32 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Week Code Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="WeekCodeStart"
                                             size="small"
                                             fullWidth
                                             value={txtWeekCodeStart}
                                             disabled={txtWeekCodeStartDisabled}
                                             style={{
-                                                backgroundColor: txtWeekCodeStartDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtWeekCodeStartDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyWeekCodeStart}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyWeekCodeStart(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("WeekCodeEnd").focus();
+                                                }
+                                            }}
                                             error={ErrorWeekCodeStart}
                                         />
                                     </TableCell>
@@ -1543,15 +2079,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="WeekCodeEnd"
                                             size="small"
                                             fullWidth
                                             value={txtWeekCodeEnd}
                                             disabled={txtWeekCodeEndDisabled}
                                             style={{
-                                                backgroundColor: txtWeekCodeEndDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtWeekCodeEndDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyWeekCodeEnd}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyWeekCodeEnd(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqConRollLeaf").focus();
+                                                }
+                                            }}
                                             error={ErrorWeekCodeEnd}
                                         />
                                     </TableCell>
@@ -1572,7 +2119,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Req. Connect Roll & Leaf :</Typography>
                                     </TableCell>
@@ -1583,6 +2130,15 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqConRollLeafCheck}
                                             onChange={ReqConnectRollCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqConRollLeafCheck) {
+                                                        document.getElementById("LeafScan").focus();
+                                                    } else {
+                                                        document.getElementById("cbxReqConShtPcsRoll").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1590,15 +2146,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="LeafScan"
                                             size="small"
                                             fullWidth
                                             value={txtLeafScan}
                                             disabled={txtLeafScanDisabled}
                                             style={{
-                                                backgroundColor: txtLeafScanDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtLeafScanDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyLeafScan}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyLeafScan(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("RollNoLength").focus();
+                                                }
+                                            }}
                                             error={ErrorLeafScan}
                                         />
                                     </TableCell>
@@ -1615,21 +2182,32 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Roll No. Length :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="RollNoLength"
                                             size="small"
                                             fullWidth
                                             value={txtRollNoLength}
                                             disabled={txtRollNoLengthDisabled}
                                             style={{
-                                                backgroundColor: txtRollNoLengthDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtRollNoLengthDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyRollNoLength}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyRollNoLength(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("LeafNoLength").focus();
+                                                }
+                                            }}
                                             error={ErrorRollNoLength}
                                         />
                                     </TableCell>
@@ -1638,15 +2216,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="LeafNoLength"
                                             size="small"
                                             fullWidth
                                             value={txtLeafNoLength}
                                             disabled={txtLeafNoLengthDisabled}
                                             style={{
-                                                backgroundColor: txtLeafNoLengthDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtLeafNoLengthDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyLeafNoLength}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyLeafNoLength(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxLeafReqSerial").focus();
+                                                }
+                                            }}
                                             error={ErrorLeafNoLength}
                                         />
                                     </TableCell>
@@ -1667,7 +2256,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Leaf Req. Serial Condition :</Typography>
                                     </TableCell>
@@ -1679,6 +2268,11 @@ function ProductMaster() {
                                             disabled={cbxLeafReqSerialDisabled}
                                             checked={LeafReqSerialCheck}
                                             onChange={(e) => setLeafReqSerialCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqCheckPrdRoll").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -1692,6 +2286,15 @@ function ProductMaster() {
                                             disabled={cbxReqCheckPrdRollDisabled}
                                             checked={ReqCheckPrdRollCheck}
                                             onChange={ReqCheckPrdRollCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqCheckPrdRollCheck) {
+                                                        document.getElementById("CheckRollPrdFrom").focus();
+                                                    } else {
+                                                        document.getElementById("cbxRollReqCheckPrdLeaf").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -1700,21 +2303,32 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Roll PRD. Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="CheckRollPrdFrom"
                                             size="small"
                                             fullWidth
                                             value={txtCheckRollPrdFrom}
                                             disabled={txtCheckRollPrdFromDisabled}
                                             style={{
-                                                backgroundColor: txtCheckRollPrdFromDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtCheckRollPrdFromDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyCheckRollPrdFrom}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyCheckRollPrdFrom(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("CheckRollPrdTo").focus();
+                                                }
+                                            }}
                                             error={ErrorCheckRollPrdFrom}
                                         />
                                     </TableCell>
@@ -1723,15 +2337,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="CheckRollPrdTo"
                                             size="small"
                                             fullWidth
                                             value={txtCheckRollPrdTo}
                                             disabled={txtCheckRollPrdToDisabled}
                                             style={{
-                                                backgroundColor: txtCheckRollPrdToDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtCheckRollPrdToDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyCheckRollPrdTo}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyCheckRollPrdTo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("CheckRollPrdWord").focus();
+                                                }
+                                            }}
                                             error={ErrorCheckRollPrdTo}
                                         />
                                     </TableCell>
@@ -1752,21 +2377,32 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Roll Check PRD. Word :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="CheckRollPrdWord"
                                             size="small"
                                             fullWidth
-                                            value={txtCheckRollPrdWord}
+                                            value={txtCheckRollPrdWord.toUpperCase()}
                                             disabled={txtCheckRollPrdWordDisabled}
                                             style={{
-                                                backgroundColor: txtCheckRollPrdWordDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtCheckRollPrdWordDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyCheckRollPrdWord}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 10) {
+                                                    handlekeyCheckRollPrdWord(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxRollReqCheckPrdLeaf").focus();
+                                                }
+                                            }}
                                             error={ErrorCheckRollPrdWord}
                                         />
                                     </TableCell>
@@ -1781,6 +2417,15 @@ function ProductMaster() {
                                             disabled={cbxRollReqCheckPrdLeafDisabled}
                                             checked={RollReqCheckPrdLeafCheck}
                                             onChange={RollReqCheckPrdLeafCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (RollReqCheckPrdLeafCheck) {
+                                                        document.getElementById("RollCheckPrdLeafFrom").focus();
+                                                    } else {
+                                                        document.getElementById("cbxRollReqCheckLotLeaf").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -1796,21 +2441,32 @@ function ProductMaster() {
                                     <TableCell></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Leaf PRD. Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="RollCheckPrdLeafFrom"
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckPrdLeafFrom}
                                             disabled={txtRollCheckPrdLeafFromDisabled}
                                             style={{
-                                                backgroundColor: txtRollCheckPrdLeafFromDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtRollCheckPrdLeafFromDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyRollCheckPrdLeafFrom}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyRollCheckPrdLeafFrom(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("RollCheckPrdLeafTo").focus();
+                                                }
+                                            }}
                                             error={ErrorRollCheckPrdLeafFrom}
                                         />
                                     </TableCell>
@@ -1819,15 +2475,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="RollCheckPrdLeafTo"
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckPrdLeafTo}
                                             disabled={txtRollCheckPrdLeafToDisabled}
                                             style={{
-                                                backgroundColor: txtRollCheckPrdLeafToDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtRollCheckPrdLeafToDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyRollCheckPrdLeafTo}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyRollCheckPrdLeafTo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxRollReqCheckLotLeaf").focus();
+                                                }
+                                            }}
                                             error={ErrorRollCheckPrdLeafTo}
                                         />
                                     </TableCell>
@@ -1848,7 +2515,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Req. Check Leaf Lot :</Typography>
                                     </TableCell>
@@ -1860,57 +2527,104 @@ function ProductMaster() {
                                             disabled={cbxRollReqCheckLotLeafDisabled}
                                             checked={RollReqCheckLotLeafCheck}
                                             onChange={RollReqCheckLotLeafCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (RollReqCheckLotLeafCheck) {
+                                                        document.getElementById("RollCheckLotLeafFrom").focus();
+                                                    } else {
+                                                        document.getElementById("cbxReqConShtPcsRoll").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
-                                    <TableCell>
+                                    {/* <TableCell>
                                         <Typography>Leaf Lot Digit (From) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="RollCheckLotLeafFrom"
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckLotLeafFrom}
                                             disabled={txtRollCheckLotLeafFromDisabled}
                                             style={{
-                                                backgroundColor: txtRollCheckLotLeafFromDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtRollCheckLotLeafFromDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyRollCheckLotLeafFrom}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyRollCheckLotLeafFrom(e);
+                                                }
+                                            }}
                                             error={ErrorRollCheckLotLeafFrom}
                                         />
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell>
-                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
-                                            {ErrorRollCheckLotLeafFromMessage}
-                                        </Typography>
-                                    </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
+                                    <TableCell>
+                                        <Typography>Leaf Lot Digit (From) :</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <TextField
+                                            className="input_txt"
+                                            id="RollCheckLotLeafFrom"
+                                            size="small"
+                                            fullWidth
+                                            value={txtRollCheckLotLeafFrom}
+                                            disabled={txtRollCheckLotLeafFromDisabled}
+                                            style={{
+                                                backgroundColor: txtRollCheckLotLeafFromDisabled ? "#e0e0e0" : "#fff",
+                                            }}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyRollCheckLotLeafFrom(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("RollCheckLotLeafTo").focus();
+                                                }
+                                            }}
+                                            error={ErrorRollCheckLotLeafFrom}
+                                        />
+                                    </TableCell>
                                     <TableCell>
                                         <Typography>Leaf Lot Digit (To) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="RollCheckLotLeafTo"
                                             size="small"
                                             fullWidth
                                             value={txtRollCheckLotLeafTo}
                                             disabled={txtRollCheckLotLeafToDisabled}
                                             style={{
-                                                backgroundColor: txtRollCheckLotLeafToDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtRollCheckLotLeafToDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyRollCheckLotLeafTo}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 2) {
+                                                    handlekeyRollCheckLotLeafTo(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqConShtPcsRoll").focus();
+                                                }
+                                            }}
                                             error={ErrorRollCheckLotLeafTo}
                                         />
                                     </TableCell>
-                                    <TableCell>
+                                    {/* <TableCell>
                                         <Typography>Connect Sheet Req. Roll :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -1921,17 +2635,45 @@ function ProductMaster() {
                                             checked={ReqConShtPcsRollCheck}
                                             onChange={(e) => setReqConShtPcsRollCheck(e.target.checked)}
                                         />
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell></TableCell>
                                     <TableCell>
                                         <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
-                                            {ErrorRollCheckLotLeafToMessage}
+                                            {ErrorRollCheckLotLeafFromMessage}
                                         </Typography>
                                     </TableCell>
                                     <TableCell></TableCell>
+                                    <TableCell>
+                                        <Typography style={{ fontSize: "small", color: "#ff4d4f" }}>
+                                            {ErrorRollCheckLotLeafToMessage}
+                                        </Typography>
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
+                                    <TableCell>
+                                        <Typography>Connect Sheet Req. Roll :</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Checkbox
+                                            size="small"
+                                            id="cbxReqConShtPcsRoll"
+                                            style={{ padding: "0" }}
+                                            checked={ReqConShtPcsRollCheck}
+                                            onChange={(e) => setReqConShtPcsRollCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqPreAOIF").focus();
+                                                }
+                                            }}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
                                     <TableCell></TableCell>
                                 </TableRow>
 
@@ -1950,6 +2692,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqPreAOIFCheck}
                                                         onChange={(e) => setReqPreAOIFCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqPreAOIB").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="F Side"
@@ -1962,6 +2709,11 @@ function ProductMaster() {
                                                         style={{ padding: "0" }}
                                                         checked={ReqPreAOIBCheck}
                                                         onChange={(e) => setReqPreAOIBCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqAOIF").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="B Side"
@@ -1983,10 +2735,15 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqAOIFCheck}
                                                         onChange={(e) => setReqAOIFCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqAOIB").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="F Side"
-                                                id="cbxReqPreAOIF"
+                                                id="cbxReqAOIF"
                                             />
                                             <FormControlLabel
                                                 control={
@@ -1995,10 +2752,15 @@ function ProductMaster() {
                                                         style={{ padding: "0" }}
                                                         checked={ReqAOIBCheck}
                                                         onChange={(e) => setReqAOIBCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqSPIF").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="B Side"
-                                                id="cbxReqPreAOIB"
+                                                id="cbxReqAOIB"
                                             />
                                         </FormGroup>
                                     </TableCell>
@@ -2023,6 +2785,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqSPIFCheck}
                                                         onChange={(e) => setReqSPIFCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqSPIB").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="F Side"
@@ -2035,6 +2802,11 @@ function ProductMaster() {
                                                         style={{ padding: "0" }}
                                                         checked={ReqSPIBCheck}
                                                         onChange={(e) => setReqSPIBCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqAOICoatF").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="B Side"
@@ -2056,6 +2828,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqAOICoatFCheck}
                                                         onChange={(e) => setReqAOICoatFCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqAOICoatB").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="F Side"
@@ -2068,6 +2845,11 @@ function ProductMaster() {
                                                         style={{ padding: "0" }}
                                                         checked={ReqAOICoatBCheck}
                                                         onChange={(e) => setReqAOICoatBCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqReflowF").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="B Side"
@@ -2096,6 +2878,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqReflowFCheck}
                                                         onChange={(e) => setReqReflowFCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqReflowB").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="F Side"
@@ -2108,6 +2895,11 @@ function ProductMaster() {
                                                         style={{ padding: "0" }}
                                                         checked={ReqReflowBCheck}
                                                         onChange={(e) => setReqReflowBCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqXrayF").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="B Side"
@@ -2136,6 +2928,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={ReqXrayFCheck}
                                                         onChange={(e) => setReqXrayFCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqXrayB").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="F Side"
@@ -2148,6 +2945,11 @@ function ProductMaster() {
                                                         style={{ padding: "0" }}
                                                         checked={ReqXrayBCheck}
                                                         onChange={(e) => setReqXrayBCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqXrayOneTime").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="B Side"
@@ -2165,6 +2967,11 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqXrayOneTimeCheck}
                                             onChange={(e) => setReqXrayOneTimeCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqProcControlTime").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -2173,7 +2980,7 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Req. Process Control Time :</Typography>
                                     </TableCell>
@@ -2184,22 +2991,42 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqProcControlTimeCheck}
                                             onChange={ReqProcControlTimeCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqProcControlTimeCheck) {
+                                                        document.getElementById("ProcControlTime").focus();
+                                                    } else {
+                                                        document.getElementById("cbxReqFinalPackingGroup").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>Process Control Time (hrs.) :</Typography>
+                                        <Typography>Process Control Time (Hrs.) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ProcControlTime"
                                             size="small"
                                             fullWidth
                                             value={txtProcControlTime}
                                             disabled={txtProcControlTimeDisabled}
                                             style={{
-                                                backgroundColor: txtProcControlTimeDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtProcControlTimeDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyProcControlTime}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 5) {
+                                                    handlekeyProcControlTime(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqConnShtPcsTime").focus();
+                                                }
+                                            }}
                                             error={ErrorProcControlTime}
                                         />
                                     </TableCell>
@@ -2216,7 +3043,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-c1">
                                     <TableCell>
                                         <Typography>Req. Include Connect Sht&Pcs Time :</Typography>
                                     </TableCell>
@@ -2230,6 +3057,11 @@ function ProductMaster() {
                                             disabled={cbxReqConnShtPcsTimeDisabled}
                                             checked={ReqConnShtPcsTimeCheck}
                                             onChange={(e) => setReqConnShtPcsTimeCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqFinalPackingGroup").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -2242,6 +3074,11 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqFinalPackingGroupCheck}
                                             onChange={(e) => setReqFinalPackingGroupCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqFinInspect").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -2250,7 +3087,7 @@ function ProductMaster() {
                                     <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group">
                                     <TableCell>
                                         <Typography>Req. Final Inspection :</Typography>
                                     </TableCell>
@@ -2261,6 +3098,15 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqFinInspectCheck}
                                             onChange={ReqFinInspectCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqFinInspectCheck) {
+                                                        document.getElementById("FinInspectProc").focus();
+                                                    } else {
+                                                        document.getElementById("cbxReqShtControlPlasma").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -2268,15 +3114,26 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="FinInspectProc"
                                             size="small"
                                             fullWidth
-                                            value={txtFinInspectProc}
+                                            value={txtFinInspectProc.toUpperCase()}
                                             disabled={txtFinInspectProcDisabled}
                                             style={{
-                                                backgroundColor: txtFinInspectProcDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtFinInspectProcDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyFinInspectProc}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 10) {
+                                                    handlekeyFinInspectProc(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqShtControlPlasma").focus();
+                                                }
+                                            }}
                                             error={ErrorFinInspectProc}
                                         />
                                     </TableCell>
@@ -2293,7 +3150,7 @@ function ProductMaster() {
                                     </TableCell>
                                 </TableRow>
 
-                                <TableRow className="special-row">
+                                <TableRow className="group-con">
                                     <TableCell>
                                         <Typography>Sheet Control Plasma Time :</Typography>
                                     </TableCell>
@@ -2304,22 +3161,42 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ReqShtControlPlasmaCheck}
                                             onChange={ReqShtControlPlasmaCheckChanged}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (ReqShtControlPlasmaCheck) {
+                                                        document.getElementById("ShtPlasmaTime").focus();
+                                                    } else {
+                                                        document.getElementById("cbxPlasmaConnShtPcs").focus();
+                                                    }
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>Sheet Control Plasma Time (hrs.) :</Typography>
+                                        <Typography>Sheet Control Plasma Time (Hrs.) :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="ShtPlasmaTime"
                                             size="small"
                                             fullWidth
                                             value={txtShtPlasmaTime}
                                             disabled={txtShtPlasmaTimeDisabled}
                                             style={{
-                                                backgroundColor: txtShtPlasmaTimeDisabled ? "#EEEEEE" : "inherit",
+                                                backgroundColor: txtShtPlasmaTimeDisabled ? "#e0e0e0" : "#fff",
                                             }}
-                                            onChange={handlekeyShtPlasmaTime}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 5) {
+                                                    handlekeyShtPlasmaTime(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxPlasmaConnShtPcs").focus();
+                                                }
+                                            }}
                                             error={ErrorShtPlasmaTime}
                                         />
                                     </TableCell>
@@ -2343,10 +3220,15 @@ function ProductMaster() {
                                     <TableCell>
                                         <Checkbox
                                             size="small"
-                                            id="cbxReqFinInspect"
+                                            id="cbxPlasmaConnShtPcs"
                                             style={{ padding: "0" }}
                                             checked={PlasmaConnShtPcsCheck}
                                             onChange={(e) => setPlasmaConnShtPcsCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("BarcodeGrade").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -2354,11 +3236,22 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="BarcodeGrade"
                                             size="small"
                                             fullWidth
-                                            value={txtBarcodeGrade}
-                                            onChange={handlekeyBarcodeGrade}
+                                            value={txtBarcodeGrade.toUpperCase()}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 10) {
+                                                    handlekeyBarcodeGrade(e);
+                                                }
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqEFPCAOM").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -2382,6 +3275,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "11px" }}
                                                         checked={ReqEFPCAOMCheck}
                                                         onChange={(e) => setReqEFPCAOMCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqEFPCAOI").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="AOM-EFPC"
@@ -2394,6 +3292,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "3px" }}
                                                         checked={ReqEFPCAOICheck}
                                                         onChange={(e) => setReqEFPCAOICheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqEFPCOST").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="AOI-EFPC"
@@ -2406,6 +3309,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "3px" }}
                                                         checked={ReqEFPCOSTCheck}
                                                         onChange={(e) => setReqEFPCOSTCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxReqEFPCAVI").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="OST-EFPC"
@@ -2418,6 +3326,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "3px" }}
                                                         checked={ReqEFPCAVICheck}
                                                         onChange={(e) => setReqEFPCAVICheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxConnShtReqBoardFlg").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="AVI-EFPC"
@@ -2442,6 +3355,11 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ConnShtReqBoardFlg}
                                             onChange={(e) => setConnShtReqBoardFlg(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxAutoPressF").focus();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -2458,6 +3376,11 @@ function ProductMaster() {
                                                         style={{ padding: "0", marginLeft: "10px" }}
                                                         checked={AutoPressFCheck}
                                                         onChange={(e) => setAutoPressFCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxAutoPressB").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="F Side"
@@ -2470,6 +3393,11 @@ function ProductMaster() {
                                                         style={{ padding: "0" }}
                                                         checked={AutoPressBCheck}
                                                         onChange={(e) => setAutoPressBCheck(e.target.checked)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter") {
+                                                                document.getElementById("cbxConnShtserialstatusflg").focus();
+                                                            }
+                                                        }}
                                                     />
                                                 }
                                                 label="B Side"
@@ -2485,11 +3413,37 @@ function ProductMaster() {
 
                                 <TableRow className="special-row">
                                     <TableCell>
+                                        <Typography>Connect Sht&PCS Req Product Status :</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Checkbox
+                                            size="small"
+                                            id="cbxConnShtserialstatusflg"
+                                            style={{ padding: "0" }}
+                                            checked={ConnShtReqProductFlg}
+                                            onChange={(e) => setConnShtReqProductFlg(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    e.preventDefault(); 
+                                                    btnSubmitClick();
+                                                }
+                                            }}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
+                                    <TableCell>
                                         <Typography>Update By :</Typography>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="UpdateBy"
                                             size="small"
                                             fullWidth
                                             value={txtUpdateBy}
@@ -2497,9 +3451,14 @@ function ProductMaster() {
                                                 readOnly: true,
                                             }}
                                             style={{
-                                                backgroundColor: "#EEEEEE",
+                                                backgroundColor: "#e0e0e0",
                                             }}
-                                            onChange={handlekeyUpdateBy}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 30) {
+                                                    handlekeyUpdateBy(e);
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -2507,7 +3466,8 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <TextField
-                                            id="txtfield"
+                                            className="input_txt"
+                                            id="UpdateDate"
                                             size="small"
                                             fullWidth
                                             value={txtUpdateDate}
@@ -2515,9 +3475,14 @@ function ProductMaster() {
                                                 readOnly: true,
                                             }}
                                             style={{
-                                                backgroundColor: "#EEEEEE",
+                                                backgroundColor: "#e0e0e0",
                                             }}
-                                            onChange={handlekeyUpdateDate}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                if (value.length <= 30) {
+                                                    handlekeyUpdateDate(e);
+                                                }
+                                            }}
                                         />
                                     </TableCell>
                                 </TableRow>

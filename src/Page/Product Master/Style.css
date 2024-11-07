@@ -21,10 +21,48 @@
 .TbProductMst tr.special-row td:nth-child(1),
 .TbProductMst tr.special-row td:nth-child(3) {
   background-color: #D2F3E0 ;
+  text-align: right;
 }
 
 .TbProductMst tr.specialrow td:nth-child(1) {
   background-color: #D2F3E0;
+  text-align: right;
+}
+
+.TbProductMst tr.group-con td:nth-child(1),
+.TbProductMst tr.group-con td:nth-child(3) {
+  background-color: #abe0dc ;
+  text-align: right;
+}
+
+.TbProductMst tr.group-c1 td:nth-child(1) {
+  background-color: #abe0dc ;
+  text-align: right;
+  border-right: #fff solid 2px;
+}
+
+.TbProductMst tr.group-c1 td:nth-child(2) {
+  background-color: #abe0dc ;
+}
+
+.TbProductMst tr.group-con td:nth-child(2),
+.TbProductMst tr.group-con td:nth-child(4) {
+  background-color: #abe0dc ;
+  border-left: #fff solid 2px;
+  border-right: #fff solid 2px;
+}
+
+.TbProductMst tr.group td:nth-child(1),
+.TbProductMst tr.group td:nth-child(3) {
+  background-color: #E3E4FA ;
+  text-align: right;
+}
+
+.TbProductMst tr.group td:nth-child(2),
+.TbProductMst tr.group td:nth-child(4) {
+  background-color: #E3E4FA ;
+  border-left: #fff solid 2px;
+  border-right: #fff solid 2px;
 }
 
 #txtfield {
