@@ -2119,11 +2119,7 @@ function fn_ProductMaster() {
         setErrorDupEnd(true);
         setErrorDupEndMessage("Please input duplicate end digit not over serial length.");
         return false; 
-      } else {
-        setErrorDupEnd(false); 
-        setErrorDupEndMessage("");
-
-      }
+      } 
 
       if (ReqCheckPrdShtCheck) {
         if (isNaN(txtCheckPrdShtFrom)) {
