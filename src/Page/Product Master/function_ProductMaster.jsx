@@ -179,6 +179,7 @@ function fn_ProductMaster() {
   const [ReqXrayBCheck, setReqXrayBCheck] = useState(false);
   const [ReqReflowFCheck, setReqReflowFCheck] = useState(false);
   const [ReqReflowBCheck, setReqReflowBCheck] = useState(false);
+  const [ConnShtReqProductFlg, setConnShtReqProductFlg] = useState(false);
 
   //Disabled
   const [txtCheckPrdShtDisabled, settxtCheckPrdShtFromDisabled] = useState(false);
@@ -385,6 +386,41 @@ function fn_ProductMaster() {
       setConnShtReqBoardFlg(false);
       setAutoPressFCheck(false);
       setAutoPressBCheck(false);
+      setConnShtReqProductFlg(false);
+
+      settxtConfigWordDisabled(true);
+      settxtConfigStartDisabled(true);
+      settxtConfigEndDisabled(true);
+      setcbxReqConfigRunDisabled(true);
+
+      settxtStartSeqCodeDisabled(true);
+      settxtStartSeqDigitFromDisabled(true);
+      settxtStartSeqDigitToDisabled(true);
+
+      settxtCheckLotShtFromDisabled(true);
+      settxtCheckLotShtToDisabled(true);
+      settxtVendorLotLengthDisabled(true);
+      settxtDateFromProcDisabled(true);
+      settxtWeekCodeStartDisabled(true);
+      settxtWeekCodeEndDisabled(true);
+
+      settxtLeafScanDisabled(true);
+      settxtRollNoLengthDisabled(true);
+      settxtLeafNoLengthDisabled(true);
+      settxtCheckRollPrdFromDisabled(true);
+      settxtCheckRollPrdToDisabled(true);
+      settxtCheckRollPrdWordDisabled(true);
+      settxtRollCheckPrdLeafFromDisabled(true);
+      settxtRollCheckPrdLeafToDisabled(true);
+      settxtRollCheckLotLeafFromDisabled(true);
+      settxtRollCheckLotLeafToDisabled(true);
+      setcbxLeafReqSerialDisabled(true);
+      setcbxReqCheckPrdRollDisabled(true);
+      setcbxRollReqCheckPrdLeafDisabled(true);
+      setcbxRollReqCheckLotLeafDisabled(true);
+
+      settxtFinInspectProcDisabled(true);
+      settxtShtPlasmaTimeDisabled(true);
 
       // txtUserName.Focus()
     } else {
@@ -702,7 +738,7 @@ function fn_ProductMaster() {
 
   const handlekeyCheckRollPrdTo = (event) => {
     const txtCheckRollPrdTo = event.target.value;
-    txtCheckRollPrdTo(txtCheckRollPrdTo);
+    settxtCheckRollPrdTo(txtCheckRollPrdTo);
     setErroCheckRollPrdTo(false);
     setErrorCheckRollPrdToMessage("");
   };
@@ -806,6 +842,12 @@ function fn_ProductMaster() {
       settxtConfigEndDisabled(true);
       setReqConfigRunCheck(false);
       setcbxReqConfigRunDisabled(true);
+      setErrorConfigWord(false);
+      setErrorConfigWordMessage("");
+      setErrorConfigStart(false);
+      setErrorConfigStartMessage("");
+      setErrorConfigEnd(false);
+      setErrorConfigEndMessage("");
     }
   };
 
@@ -838,11 +880,17 @@ function fn_ProductMaster() {
       settxtCheckLotShtTo("");
       settxtCheckLotShtFromDisabled(true);
       settxtCheckLotShtToDisabled(true);
+      setErrorCheckLotShtFrom(false);
+      setErrorCheckLotShtFromMessage("");
+      setErrorCheckLotShtTo(false);
+      setErrorCheckLotShtToMessage("");
     }
   };
 
   const selDateTypeselChanged = async (value) => {
     setselDateType(value);
+    setErrorselDateType(false);
+    setErrorselDateTypeMessage("");
     if (selDateType === "M") {
       setReqVendorCheck(true);
       setcbxReqVendorDisabled(true);
@@ -890,6 +938,8 @@ function fn_ProductMaster() {
       setcbxPlasmaNotShowTimeDisabled(true);
       setPlasmaNotStartELTCheck(false);
       setPlasmaNotShowTimeCheck(false);
+      setErrorPlasmaTime(false);
+      setErrorPlasmaTimeMessage("");
     }
   };
 
@@ -910,6 +960,12 @@ function fn_ProductMaster() {
       settxtStartSeqDigitFromDisabled(true);
       settxtStartSeqDigitTo("");
       settxtStartSeqDigitToDisabled(true);
+      setErrorStartSeqCode(false);
+      setErrorStartSeqCodeMessage("");
+      setErrorStartSeqDigitFrom(false);
+      setErrorStartSeqDigitFromMessage("");
+      setErrorStartSeqDigitTo(false);
+      setErrorStartSeqDigitToMessage("");
     }
   };
 
@@ -922,6 +978,8 @@ function fn_ProductMaster() {
     } else {
       settxtVendorLotLength("");
       settxtVendorLotLengthDisabled(true);
+      setErrorVendorLotLength(false);
+      setErrorVendorLotLengthMessage("");
     }
   };
 
@@ -980,6 +1038,13 @@ function fn_ProductMaster() {
       settxtRollCheckLotLeafFromDisabled(true);
       settxtRollCheckLotLeafTo("");
       settxtRollCheckLotLeafToDisabled(true);
+
+      setErrorLeafScan(false);
+      setErrorLeafScanMessage("");
+      setErrorRollNoLength(false);
+      setErrorRollNoLengthMessage("");
+      setErrorLeafNoLength(false);
+      setErrorLeafNoLengthhMessage("");
     }
   };
 
@@ -999,6 +1064,8 @@ function fn_ProductMaster() {
       settxtWeekCodeStartDisabled(true);
       settxtWeekCodeEnd("");
       settxtWeekCodeEndDisabled(true);
+      setErrorDateFromProc(false);
+      setErrorDateFromProcMessage("");
     }
   };
 
@@ -1015,6 +1082,10 @@ function fn_ProductMaster() {
       settxtWeekCodeStartDisabled(true);
       settxtWeekCodeEnd("");
       settxtWeekCodeEndDisabled(true);
+      setErrorWeekCodeStart(false);
+      setErrorWeekCodeStartMessage("");
+      setErrorWeekCodeEnd(false);
+      setErrorWeekCodeEndMessage("");
     }
   };
 
@@ -1035,6 +1106,12 @@ function fn_ProductMaster() {
       settxtCheckRollPrdToDisabled(true);
       settxtCheckRollPrdWord("");
       settxtCheckRollPrdWordDisabled(true);
+      setErrorCheckRollPrdFrom(false);
+      setErrorCheckRollPrdFromMessage("");
+      setErroCheckRollPrdTo(false);
+      setErrorCheckRollPrdToMessage("");
+      setErrorCheckRollPrdWord(false);
+      setErrorCheckRollPrdWordMessage("");
     }
   };
 
@@ -1051,6 +1128,10 @@ function fn_ProductMaster() {
       settxtRollCheckPrdLeafFromDisabled(true);
       settxtRollCheckPrdLeafTo("");
       settxtRollCheckPrdLeafToDisabled(true);
+      setErrorRollCheckPrdLeafFrom(false);
+      setErrorRollCheckPrdLeafFromMessage("");
+      setErrorRollCheckPrdLeafTo(false);
+      setErrorRollCheckPrdLeafToMessage("");
     }
   };
 
@@ -1067,6 +1148,10 @@ function fn_ProductMaster() {
       settxtRollCheckLotLeafFromDisabled(true);
       settxtRollCheckLotLeafTo("");
       settxtRollCheckLotLeafToDisabled(true);
+      setErrorRollCheckLotLeafFrom(false);
+      setErrorRollCheckLotLeafFromMessage("");
+      setErrorRollCheckLotLeafTo(false);
+      setErrorRollCheckLotLeafToMessage("");
     }
   };
 
@@ -1081,6 +1166,8 @@ function fn_ProductMaster() {
       settxtProcControlTime("");
       settxtProcControlTimeDisabled(true);
       setcbxReqConnShtPcsTimeDisabled(true);
+      setErrorProcControlTime(false);
+      setErrorProcControlTimeMessage("");
     }
   };
 
@@ -1093,6 +1180,8 @@ function fn_ProductMaster() {
     } else {
       settxtShtPlasmaTime("");
       settxtShtPlasmaTimeDisabled(true);
+      setErrorShtPlasmaTime(false);
+      setErrorShtPlasmaTimeMessage("");
     }
   };
 
@@ -1288,6 +1377,7 @@ function fn_ProductMaster() {
       setConnShtReqBoardFlg(false);
       setAutoPressFCheck(false);
       setAutoPressBCheck(false);
+      setConnShtReqProductFlg(false);
 
       if (Data === "") {
         setpnlMessage(true);
@@ -1582,7 +1672,7 @@ function fn_ProductMaster() {
           setcbxReqCheckPrdRollDisabled(false);
           if (Data.p_prm_conn_roll_prd_flg === "Y") {
             setReqCheckPrdRollCheck(true);
-            settxtCheckRollPrdFrom(p_prm_conn_roll_prd_start);
+            settxtCheckRollPrdFrom(Data.p_prm_conn_roll_prd_start);
             settxtCheckRollPrdFromDisabled(false);
             settxtCheckRollPrdTo(Data.p_prm_conn_roll_prd_end);
             settxtCheckRollPrdToDisabled(false);
@@ -1868,6 +1958,12 @@ function fn_ProductMaster() {
           setAutoPressBCheck(false);
         }
 
+        if (Data.p_prm_sht_serial_status_flg === "Y") {
+          setConnShtReqProductFlg(true);
+        } else {
+          setConnShtReqProductFlg(false);
+        }
+
         setpnlMessage(true);
         setlblMessageColor("darkblue");
         setlblMessage("Data read complete.");
@@ -1889,6 +1985,8 @@ function fn_ProductMaster() {
     } else {
       settxtFinInspectProc("");
       settxtFinInspectProcDisabled(true);
+      setErrorFinInspectProc(false);
+      setErrorFinInspectProcMessage("");
     }
   };
 
@@ -1911,7 +2009,7 @@ function fn_ProductMaster() {
 
       setpnlMessage(true);
       setlblMessageColor("black");
-      setlblMessage("exec...");
+      setlblMessage("edit...");
 
       if (txtProduct === "") {
         setErrorPrdName(true);
@@ -1960,8 +2058,16 @@ function fn_ProductMaster() {
       }
 
       if (ReqConfigCheck) {
-        const start = parseInt(txtConfigEnd);
-        const end = parseInt(txtConfigStart);
+        const start = parseInt(txtConfigStart);
+        const end = parseInt(txtConfigEnd);
+        if (txtConfigStart === "") {
+          setErrorConfigStart(true);
+          setErrorConfigStartMessage("Please input start config digit with numbers.");
+        }
+        if (txtConfigEnd === "") {
+          setErrorConfigEnd(true);
+          setErrorConfigEndMessage("Please input end config digit with numbers.");
+        }
         if (txtConfigWord === "") {
           setErrorConfigWord(true);
           setErrorConfigWordMessage("Please input config word.");
@@ -1977,7 +2083,7 @@ function fn_ProductMaster() {
         } else if (parseInt(txtConfigEnd) > parseInt(txtSerialLength)) {
           setErrorConfigEnd(true);
           setErrorConfigEndMessage("Please input end config digit not over serial length.");
-        } else if (txtConfigWord.length !== (start - 1, end)) {
+        } else if (txtConfigWord.length !== (end - start + 1)) {
           setErrorConfigStart(true);
           setErrorConfigStartMessage("Please input start and end digit same as length of config word.");
         }
@@ -1991,6 +2097,10 @@ function fn_ProductMaster() {
       } else if (isNaN(txtDupStart)) {
         setErrorDupStart(true);
         setErrorDupStartMessage("Please input duplicate start digit with numbers.");
+      } else if (parseInt(txtDupStart) > parseInt(txtDupEnd)) {
+        setErrorDupStart(true);
+        setErrorDupStartMessage("Please input duplicate start less than end of duplicate digit.");
+        return false; 
       } else {
         settxtDupStart(txtDupStart);
       }
@@ -2004,6 +2114,12 @@ function fn_ProductMaster() {
       } else {
         settxtDupEnd(txtDupEnd);
       }
+
+      if (parseInt(txtDupEnd) > parseInt(txtSerialLength)) {
+        setErrorDupEnd(true);
+        setErrorDupEndMessage("Please input duplicate end digit not over serial length.");
+        return false; 
+      } 
 
       if (ReqCheckPrdShtCheck) {
         if (isNaN(txtCheckPrdShtFrom)) {
@@ -2022,13 +2138,21 @@ function fn_ProductMaster() {
       }
 
       if (ReqCheckLotShtCheck) {
+        if (txtCheckLotShtFrom === "") {
+          setErrorCheckLotShtFrom(true);
+          setErrorCheckLotShtFromMessage("Please input sheet lot start digit.");
+        }
+        if (txtCheckLotShtTo === "") {
+          setErrorCheckLotShtTo(true);
+          setErrorCheckLotShtToMessage("Please input sheet lot end digit.");
+        }
         if (isNaN(txtCheckLotShtFrom)) {
           setErrorCheckLotShtFrom(true);
           setErrorCheckLotShtFromMessage("Please input sheet lot start digit.");
         } else if (isNaN(txtCheckLotShtTo)) {
           setErrorCheckLotShtTo(true);
           setErrorCheckLotShtToMessage("Please input sheet lot end digit.");
-        } else if (isNaN(txtCheckLotShtTo) && isNaN(txtCheckLotShtFrom) && parseInt(txtCheckLotShtFrom) > parseInt(txtCheckLotShtTo)) {
+        } else if (parseInt(txtCheckLotShtFrom) > parseInt(txtCheckLotShtTo)) {
           setErrorCheckLotShtFrom(true);
           setErrorCheckLotShtFromMessage("Please input sheet lot start less than end digit.");
         }
@@ -2038,13 +2162,21 @@ function fn_ProductMaster() {
       }
 
       if (ReqControlPlasmaCheck) {
-        if (isNaN(txtPlasmaTime)) {
+        if (txtPlasmaTime === "" || isNaN(txtPlasmaTime)) {
           setErrorPlasmaTime(true);
-          setErrorPlasmaTimeMessage("Please control plasma time.");
+          setErrorPlasmaTimeMessage("Please input control plasma time.");
         }
       }
 
       if (ReqStartSeqCodeCheck) {
+        if (txtStartSeqDigitFrom === "") {
+          setErrorStartSeqDigitFrom(true);
+          setErrorStartSeqDigitFromMessage("Please input start seq. start digit.");
+        }
+        if (txtStartSeqDigitTo === "") {
+          setErrorStartSeqDigitTo(true);
+          setErrorStartSeqDigitToMessage("Please input start seq. end digit.");
+        }
         if (txtStartSeqCode === "") {
           setErrorStartSeqCode(true);
           setErrorStartSeqCodeMessage("Please input start seq. code");
@@ -2054,7 +2186,7 @@ function fn_ProductMaster() {
         } else if (isNaN(txtStartSeqDigitTo)) {
           setErrorStartSeqDigitTo(true);
           setErrorStartSeqDigitToMessage("Please input start seq. end digit.");
-        } else if (isNaN(txtStartSeqDigitTo) && isNaN(txtStartSeqDigitFrom) && parseInt(txtStartSeqDigitFrom) > parseInt(txtStartSeqDigitTo)) {
+        } else if (parseInt(txtStartSeqDigitFrom) > parseInt(txtStartSeqDigitTo)) {
           setErrorStartSeqDigitFrom(true);
           setErrorStartSeqDigitFromMessage("Please input start seq. start less than end digit.");
         }
@@ -2099,13 +2231,21 @@ function fn_ProductMaster() {
         }
 
         if (ReqCheckPrdRollCheck) {
+          if (txtCheckRollPrdFrom === "") {
+            setErrorCheckRollPrdFrom(true);
+            setErrorCheckRollPrdFromMessage("Please input roll PRD. start digit.");
+          }
+          if (txtCheckRollPrdTo === "") {
+            setErroCheckRollPrdTo(true);
+            setErrorCheckRollPrdToMessage("Please input roll PRD. end digit.");
+          }
           if (isNaN(txtCheckRollPrdFrom)) {
             setErrorCheckRollPrdFrom(true);
             setErrorCheckRollPrdFromMessage("Please input roll PRD. start digit.");
           } else if (isNaN(txtCheckRollPrdTo)) {
             setErroCheckRollPrdTo(true);
             setErrorCheckRollPrdToMessage("Please input roll PRD. end digit.");
-          } else if (isNaN(txtCheckRollPrdTo) && isNaN(txtCheckRollPrdFrom) && parseInt(txtCheckRollPrdFrom) > parseInt(txtCheckRollPrdTo)) {
+          } else if (parseInt(txtCheckRollPrdFrom) > parseInt(txtCheckRollPrdTo)) {
             setErrorCheckRollPrdFrom(true);
             setErrorCheckRollPrdFromMessage("Please input roll PRD. start less than end digit.");
           } else if (txtCheckRollPrdWord === "") {
@@ -2122,6 +2262,14 @@ function fn_ProductMaster() {
         }
 
         if (RollReqCheckPrdLeafCheck) {
+          if (txtRollCheckPrdLeafFrom === "") {
+            setErrorRollCheckPrdLeafFrom(true);
+            setErrorRollCheckPrdLeafFromMessage("Please input leaf PRD. start digit.");
+          }
+          if (txtRollCheckPrdLeafTo === "") {
+            setErrorRollCheckPrdLeafTo(true);
+            setErrorRollCheckPrdLeafToMessage("Please input leaf PRD. end digit.");
+          }
           if (isNaN(txtRollCheckPrdLeafFrom)) {
             setErrorRollCheckPrdLeafFrom(true);
             setErrorRollCheckPrdLeafFromMessage("Please input leaf PRD. start digit.");
@@ -2140,6 +2288,14 @@ function fn_ProductMaster() {
         }
 
         if (RollReqCheckLotLeafCheck) {
+          if (txtRollCheckLotLeafFrom === "") {
+            setErrorRollCheckLotLeafFrom(true);
+            setErrorRollCheckLotLeafFromMessage("Please input leaf lot start digit.");
+          }
+          if (txtRollCheckLotLeafTo === "") {
+            setErrorRollCheckLotLeafTo(true);
+            setErrorRollCheckLotLeafToMessage("Please input leaf lot end digit.");
+          }
           if (isNaN(txtRollCheckLotLeafFrom)) {
             setErrorRollCheckLotLeafFrom(true);
             setErrorRollCheckLotLeafFromMessage("Please input leaf lot start digit.");
@@ -2201,13 +2357,21 @@ function fn_ProductMaster() {
       }
 
       if (ReqCheckWeekCodeCheck) {
+        if (txtWeekCodeStart === "") {
+          setErrorWeekCodeStart(true);
+          setErrorWeekCodeStartMessage("Please input week code start digit.");
+        }
+        if (txtWeekCodeEnd === "") {
+          setErrorWeekCodeEnd(true);
+          setErrorWeekCodeEndMessage("Please input week code end digit.");
+        }
         if (isNaN(txtWeekCodeStart)) {
           setErrorWeekCodeStart(true);
           setErrorWeekCodeStartMessage("Please input week code start digit.");
         } else if (isNaN(txtWeekCodeEnd)) {
           setErrorWeekCodeEnd(true);
           setErrorWeekCodeEndMessage("Please input week code end digit.");
-        } else if (isNaN(txtWeekCodeEnd) && isNaN(txtWeekCodeStart) && parseInt(txtWeekCodeStart) > parseInt(txtWeekCodeEnd)) {
+        } else if (parseInt(txtWeekCodeStart) > parseInt(txtWeekCodeEnd)) {
           setErrorWeekCodeStart(true);
           setErrorWeekCodeStartMessage("Please input week code start less than end digit.");
         }
@@ -2457,10 +2621,11 @@ function fn_ProductMaster() {
             cbxAutoPressF: AutoPressFCheck,
             cbxAutoPressB: AutoPressBCheck,
             strplantcode: plantCode,
-            strprdname: txtProduct
+            strprdname: txtProduct,
+            cbxConnshtpcs: ConnShtReqProductFlg
           })
             .then((res) => {
-              console.log("แก้ไขข้อมูลสำเร็จ =", res);
+              console.log("แก้ไขข้อมูลสำเร็จ =", res.data);
               swal("success", "You update data success", "success");
               setlblMessageColor("darkblue");
               setlblMessage("Data Update complete.");
@@ -2468,7 +2633,7 @@ function fn_ProductMaster() {
             })
             .catch((error) => {
               console.error("เกิดข้อผิดพลาด =", error);
-              swal("Error", error.response.data.message, "error");
+              swal("Error", error.res.data.message, "error");
             });
         } else {
           BeginTransFlg = true;
@@ -2586,7 +2751,8 @@ function fn_ProductMaster() {
             cbxReqReflowB: ReqReflowBCheck,
             cbxConnShtReqBoardFlg: ConnShtReqBoardFlg,
             cbxAutoPressF: AutoPressFCheck,
-            cbxAutoPressB: AutoPressBCheck
+            cbxAutoPressB: AutoPressBCheck,
+            cbxConnshtpcs: ConnShtReqProductFlg
           })
             .then((res2) => {
               console.log("บันทึกข้อมูลสำเร็จ =", res2);
@@ -2645,7 +2811,7 @@ function fn_ProductMaster() {
     ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
     ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
     ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage
+    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg
   }
 };
 
