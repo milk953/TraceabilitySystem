@@ -128,11 +128,6 @@ function ELT_Master() {
         </Table>
       </div>
       <br></br>
-     
-      
-      <div className="RejectBtoHome">
-        <a href="/TraceabilitySystem">Return To Menu</a>
-      </div>
     </>
   );
 }
