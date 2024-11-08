@@ -134,6 +134,11 @@ function ConfirmBarcodeGrade() {
                         disabled={txt_lotNo.disbled} //true พิมไม่ได้
                         style={{background:txt_lotNo.style}}
                         onBlur={handletxt_Lotno}
+                         onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handletxt_Lotno();
+                          }
+                        }}
                       />
                     </TableCell>
                     <TableCell>

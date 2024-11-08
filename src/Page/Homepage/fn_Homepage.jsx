@@ -3,7 +3,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Password } from "@mui/icons-material";
 import { set } from "lodash";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { notification } from "antd";
 function fn_Homepage() {
   const navigate = useNavigate();
   const [Showmenu, setShowmenu] = useState("img");
@@ -12,14 +13,17 @@ function fn_Homepage() {
   const [isLoggedIn, setIsLoggedIn] = useState();
   //Login Region
   const [ipAddress, setIpAddress] = useState("");
-  const [menuName , setMenuName] = useState("");
-  const [menuUrl , setMenuUrl] = useState("");
+  const [menuName, setMenuName] = useState("");
+  const [menuUrl, setMenuUrl] = useState("");
 
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
   var UserLogin = localStorage.getItem("UserLogin");
 
   const openLoginModal = () => {
-    if (window.location.pathname === "/TraceabilitySystem" && LoginStatus === false) {
+    if (
+      window.location.pathname === "/TraceabilitySystem" &&
+      LoginStatus === false
+    ) {
       Swal.fire({
         title: "เข้าสู่ระบบ",
         html:
@@ -74,13 +78,19 @@ function fn_Homepage() {
           localStorage.setItem("IDCode", res.data.Datainfo.id_code);
           localStorage.setItem("token", res.data.token);
           Swal.close();
-          Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
-            (result) => {
-              if (result.isConfirmed) {
-                location.reload();
-              }
-            }
-          );
+          // Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
+          //   (result) => {
+          //     if (result.isConfirmed) {
+          //       location.reload();
+          //     }
+          //   }
+          // );
+          notification.success({
+            message: "Success",
+            description: "Login Success",
+            placement: "bottomRight",
+            duration: 3,
+          });
         } else if (res.status === 401) {
           Swal.fire(
             "ผิดพลาด",
@@ -116,48 +126,49 @@ function fn_Homepage() {
       localStorage.setItem("ipAddress", ipAddress);
     }
   }, [ipAddress]);
- 
+
   const MenuHome = async () => {
-    let dataMenu
-    await axios
-    .post("/api/MenuTitle", {
-      login_id: UserLogin,
-    })
-    .then((res) => {
-      dataMenu=res.data
-      
-    });
-    
+    let dataMenu;
     if (UserLogin == "" || UserLogin == null) {
+      console.log('Not login')
       await axios.post("/api/menuHome", {}).then((res) => {
-        
         setmenu(res.data);
+        dataMenu = res.data;
+        console.log("menuHome", res.data);
       });
     } else {
+      // await axios
+      //   .post("/api/MenuTitle", {
+      //     login_id: UserLogin,
+      //   })
+      //   .then((res) => {
+      //     console.log("MenuTitle", res.data);
+      //     dataMenu = res.data;
+      //   });
+
       await axios
         .post("/api/Menuname", {
           login_id: UserLogin,
         })
         .then((res) => {
-          
+          dataMenu = res.data;
+          console.log("Menuname", res.data);
           setmenu(res.data);
         });
     }
-   
+
     const url = window.location.pathname;
     const urlSplit = url.split("/");
     const currentPath = `/${urlSplit[1]}/${urlSplit[2]}`;
     // if (dataMenu && dataMenu.length > 0) {
-      for (let i = 0; i < dataMenu.length; i++) {
-        
-        if (currentPath === dataMenu[i].url) {
-          setMenuUrl(dataMenu[i].url)
-          setMenuName(dataMenu[i].page_title);
-          break; 
-        }
+    for (let i = 0; i < dataMenu.length; i++) {
+      if (currentPath === dataMenu[i].url) {
+        setMenuUrl(dataMenu[i].url);
+        setMenuName(dataMenu[i].page_title);
+        break;
       }
+    }
     // }
-
   };
 
   const OpenMenu = (menuID) => {
@@ -172,10 +183,9 @@ function fn_Homepage() {
     window.location.href = Menu_Select;
   };
   const handleClickPath = (url) => {
-    if(url!='HOME'){
+    if (url != "HOME") {
       window.location.href = url;
-    }
-    else{
+    } else {
       window.location.href = `/TraceabilitySystem`;
     }
     // if (window.location.pathname !== `/${url}`) {
@@ -194,7 +204,7 @@ function fn_Homepage() {
     isLoggedIn,
     menuName,
     menuUrl,
-    handleClickPath
+    handleClickPath,
   };
 }
 

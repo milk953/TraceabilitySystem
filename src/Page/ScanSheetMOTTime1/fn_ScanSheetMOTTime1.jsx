@@ -544,7 +544,6 @@ function fn_ScanSheetMOTTime() {
         }));
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "" }));
-      
         setTimeout(() => {
           fctxtSheetNo.current.focus();
         }, 300);

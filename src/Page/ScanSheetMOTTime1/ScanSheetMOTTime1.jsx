@@ -115,7 +115,7 @@ function ScanSheetMOTTime() {
                             txtMCNo_TextChanged(e.target.value);
                           }
                         }}
-                        onBlur={(e) => {txtMCNo_TextChanged(e.target.value)}}
+                        // onBlur={(e) => {txtMCNo_TextChanged(e.target.value)}}
                       />
                     </TableCell>
                   </TableRow>
@@ -143,7 +143,7 @@ function ScanSheetMOTTime() {
                         }}
                         // inputRef={fctxtLotno}
                         inputRef={(el) => (fctxtLotno.current = el)}
-                        onBlur={txtLotNo_TextChanged}
+                        // onBlur={txtLotNo_TextChanged}
                       />
                     </TableCell>
                     <TableCell>
@@ -185,7 +185,7 @@ function ScanSheetMOTTime() {
                         }}
                         // inputRef={fctxtSheetNo}
                         inputRef={(el) => (fctxtSheetNo.current = el)}
-                        onBlur={txtSheetNo_TextChanged}
+                        // onBlur={txtSheetNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -213,7 +213,7 @@ function ScanSheetMOTTime() {
                             txtCBNo_TextChanged();
                           }
                         }} 
-                        onBlur={txtCBNo_TextChanged}
+                        // onBlur={txtCBNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -242,7 +242,7 @@ function ScanSheetMOTTime() {
                             txtSUSNo_TextChanged();
                           }
                         }} 
-                        onBlur={txtSUSNo_TextChanged}
+                        // onBlur={txtSUSNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
