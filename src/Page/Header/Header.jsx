@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "../Sidebar/sidebar";
 import Avatar from "@mui/material/Avatar";
+import { Space, Typography } from "antd";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -21,8 +22,9 @@ import ImgLoging from "../Header/login.png";
 import ImgLogOut from "../Header/logout.png";
 import ImgTitle from "../Header/checklist.png";
 import ImgBurger from "../Header/menu (3).png";
-import ImgUser from "../Header/user.png";
+import ImgUser from "../Header/data-management.png";
 import "../Common/StyleCommon.css";
+// Typography
 
 function Hearder() {
   const { openLoginModal, menuName } = fn_Homepage();
@@ -105,36 +107,51 @@ function Hearder() {
               sx={{ mr: 2 }}
               onClick={toggleSidebar}
             >
-                <Avatar variant="square" src={ImgBurger} style={{width:25,height:25}} />
+              <Avatar
+                variant="square"
+                src={ImgBurger}
+                style={{ width: 25, height: 25 }}
+              />
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
             {/* <Avatar variant="square" src={ImgTitle} /> */}
-      
+
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 flexGrow: 1,
-                cursor:'pointer'
-                // border: "1px solid red",
               }}
             >
-              <Typography
-                variant="h6"
+              <Typography.Title
+                level={5}
+                style={{
+                  fontSize: "20px",
+                  cursor: "pointer",
+                  color: "#fff",
+                  margin: 0,
+                  // fontFamily: "Montserrat, sans-serif",
+                }}
                 onClick={() => {
                   window.location.href =
                     "http://10.17.70.216/TraceabilitySystem";
                 }}
               >
-                {menuName === ""
-                  ? "TRACEABILITY SYSTEM"
-                  : "TRACEABILITY SYSTEM > "}
-              </Typography>
-              &nbsp;&nbsp;
-              <Typography variant="h6">
-                {menuName === "" ? "" : menuName}
-              </Typography>
+                TRACEABILITY SYSTEM
+              </Typography.Title>
+
+              <Typography.Text
+                style={{
+                  fontSize: "20px",
+                  color: "#fff",
+                  marginLeft: "8px",
+                  // fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                {menuName && `> ${menuName}`}
+              </Typography.Text>
             </div>
+
             {user ? (
               <>
                 {" "}
@@ -161,7 +178,6 @@ function Hearder() {
             ) : (
               <>
                 <Avatar variant="square" src={ImgUser} /> &nbsp;&nbsp;
-
                 <Button
                   className="btnDate"
                   color="inherit"
@@ -174,7 +190,7 @@ function Hearder() {
                   }}
                   onClick={openLoginModal}
                 >
-                  Guess  &nbsp;&nbsp;
+                  Guest &nbsp;&nbsp;
                 </Button>
               </>
             )}

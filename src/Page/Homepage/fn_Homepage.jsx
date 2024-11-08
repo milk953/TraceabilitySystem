@@ -15,6 +15,7 @@ function fn_Homepage() {
   const [ipAddress, setIpAddress] = useState("");
   const [menuName, setMenuName] = useState("");
   const [menuUrl, setMenuUrl] = useState("");
+  const [DataLogin, setDataLogin] = useState("");
 
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
   var UserLogin = localStorage.getItem("UserLogin");
@@ -91,6 +92,9 @@ function fn_Homepage() {
             placement: "bottomRight",
             duration: 3,
           });
+          setDataLogin('Success')
+          // console.log(notification,'login22')
+          // location.reload();
         } else if (res.status === 401) {
           Swal.fire(
             "ผิดพลาด",
@@ -113,6 +117,7 @@ function fn_Homepage() {
         });
       });
   };
+
   const page_load = () => {
     axios.get("/api/getIPaddress").then((res) => {
       setIpAddress(res.data.ip);
@@ -126,6 +131,11 @@ function fn_Homepage() {
       localStorage.setItem("ipAddress", ipAddress);
     }
   }, [ipAddress]);
+
+  // useEffect(() => {
+  //   MenuHome();
+  //   page_load();
+  // }, [DataLogin]);
 
   const MenuHome = async () => {
     let dataMenu;
