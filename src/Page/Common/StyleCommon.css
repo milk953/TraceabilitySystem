@@ -2,6 +2,10 @@
 .Header_CommonBG{ 
     background: hsl(0, 0%, 27%) !important; 
     color: #ffffff !important;
+    font-family: "Comfortaa", serif;
+    /* font-optical-sizing: auto;
+    /* font-weight: <weight>; */
+    /* font-style: normal;  */
 }
 /* Card Scan */
 .Card-Common{

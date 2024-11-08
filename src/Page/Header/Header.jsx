@@ -130,6 +130,7 @@ function Hearder() {
                   cursor: "pointer",
                   color: "#fff",
                   margin: 0,
+                  fontFamily: "Montserrat, sans-serif",
                 }}
                 onClick={() => {
                   window.location.href ="/TraceabilitySystem";

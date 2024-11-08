@@ -62,6 +62,7 @@ function HomePage() {
                           textAlign: "center",
                           transition: "background 0.3s ease",
                           fontSize: "16px",
+                           cursor:'pointer'
                         }}
                         className="hoverable"
                         onClick={() => HandleSL_Menu(item.url)}
@@ -87,6 +88,7 @@ function HomePage() {
                           textAlign: "center",
                           transition: "background 0.3s ease",
                           fontSize: "16px",
+                          cursor:'pointer'
                         }}
                         className="hoverable"
                         onClick={() => HandleSL_Menu(item.url)}
@@ -112,6 +114,8 @@ function HomePage() {
                           textAlign: "center",
                           transition: "background 0.3s ease",
                           fontSize: "16px",
+                           cursor:'pointer',
+                          //  zoom: 1.5
                         }}
                         className="hoverable"
                         onClick={() => HandleSL_Menu(item.url)}
