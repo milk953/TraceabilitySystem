@@ -151,6 +151,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   useEffect(() => {
     Pageload();
   }, []);
+
   function SetFocus(txtField) {
     document.getElementById(`${txtField}`).focus();
     
@@ -163,23 +164,27 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     sethfMode("");
     getData("getProductCombo", "");
     Setmode("Lot");
-    // Fctxtlot.current.focus();
+  
+    Fctxtlot.current.focus();
   };
   const btnBack_Click = () => {
-    location.reload();
+    // location.reload();
+    setGvSerial([]);
+    setPanalSerialState(false);
     setLotValue("");
     setLotState(enableState);
     setProductSelect(productCombo[0].prd_name);
-    Fctxtlot.current.focus();
+    setTimeOut(Fctxtlot)
     sethfMode("lot");
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");
-    setTxtSerial(gvBackSide.map(() => ""))
+    setTxtSerial(gvSerial.map(() => ""))
     if(txtOperator == ""){
       FctxtOperator.current.focus();
     }else{
-      FcgvBackside.current.focus();
+      // FcgvBackside.current.focus();
+      document.getElementById(`txtSerial_0`).focus();
     }
   };
   const btnSave_Click = async () => {
@@ -571,7 +576,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               if (!_bolError  && dtRowLeaf.length > 0) {
                 for (let drRow = 0; drRow < dtRowLeaf.length; drRow++) {
                   (dtRowLeaf[drRow].UPDATE_FLG = "N"),
-                  (dtRowLeaf[drRow].ROW_UPDATE = "N"),
+                  (dtRowLeaf[drRow].ROW_UPDATE = "Y"),
                   (dtRowLeaf[drRow].SCAN_RESULT = "NG"),
                   (dtRowLeaf[drRow].REMARK ="Roll/Sheet not matching product / หมายเลขบาร์โค้ดไม่ตรงกับผลิตภัณฑ์");
                   _intCount += 1;
@@ -728,6 +733,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
     }
   };
+
+  
+  function setTimeOut(txtField) {
+    setTimeout(() => {
+      txtField.current.focus();
+    }, 300);
+
+  }
   const txtLot_Change = async () => {
     let lot = lotValue;
     let dtData = [];
@@ -759,6 +772,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             Setmode("SERIAL");
             setGvSerial(getInitialSerial());
             setGvBackSideState(true);
+            // setTimeOut(FcgvBackside)
+            setTimeOut(FctxtOperator);
             if (hfCheckRollSht == "Y") {
               setPnlRollLeafState(true);
               setTxtRollLeaf("");
@@ -803,7 +818,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                   fctextFieldMachine.current.focus();
                 } else {
                   setPnlMachineState(false);
-                  FcgvBackside.current.focus();
+                  FctxtOperator.current.focus();
+                  
                 }
               }
             } catch (error) {
@@ -891,7 +907,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           Fctxtmcno.current.focus();
         } else {
           setPnlMachineState(false);
-          FcgvBackside.current.focus();
+          setTimeOut(FcgvBackside);
         }
       }
     } else {
@@ -1527,7 +1543,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
     }
     setPanalSerialState(true);
-    console.log("getInitialSerial",newData);
     return newData;
   };
   function SetFocus(txtField) {

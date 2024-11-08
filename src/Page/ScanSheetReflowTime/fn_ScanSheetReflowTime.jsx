@@ -72,9 +72,7 @@ function fn_ScanSheetReflowTime() {
     if (txtmcNo !== "" && txtSheetNo !== "") {
       let strError = "";
       let strStatus = "";
-      if (
-        parseInt(hfConnLeafLength) > 0 &&
-        parseInt(hfConnLeafLength) !== txtSheetNo.length &&
+      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) !== txtSheetNo.length &&
         strStatus !== "F"
       ) {
         strStatus = "F";

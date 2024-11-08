@@ -1,7 +1,8 @@
 import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-
+import { notification } from "antd";
+import { CribSharp } from "@mui/icons-material";
 function fn_ScanSheetBakeTime() {
   //lbl
   const [lblProductName, setLblProductName] = useState("");
@@ -21,15 +22,15 @@ function fn_ScanSheetBakeTime() {
     styled: { backgroundColor: "#dbdede" },
   });
   const [txtmcState, setTxtmcState] = useState({
-    disabled: true,
+    disabled: false,
     styled: { backgroundColor: "#dbdede" },
   });
   const [txtLotNoState, setTxtLotNoState] = useState({
-    disabled: true,
+    disabled: false,
     styled: { backgroundColor: "#dbdede" },
   });
   const [txtSheetNoState, setTxtSheetNoState] = useState({
-    disabled: true,
+    disabled: false,
     styled: { backgroundColor: "#dbdede" },
   });
   const [pnlSaveState, setPnlSaveState] = useState(false);
@@ -54,9 +55,26 @@ function fn_ScanSheetBakeTime() {
   const [hfConnLeafLength, setHfConnLeafLength] = useState("20");
   const [hfFactory, setHfFactory] = useState("A1");
   const plantCode = import.meta.env.VITE_FAC;
+  function setFocus(id) {
+    document.getElementById(id).focus();
+  }
   useEffect(() => {
     PageLoad();
   }, []);
+  useEffect(() => {
+    if (txtLotNoState.Focus) {
+      setFocus("txtLotNoBaking");
+    }
+    if (txtSheetNoState.Focus) {
+      setFocus("txtSheetNoBaking");
+    }
+    if (txtProcessState.Focus) {
+      setFocus("txtProcessBaking");
+    }
+    if (txtmcState.Focus) {
+      setFocus("txtMcBaking");
+    }
+  }, [txtLotNoState.Focus, txtSheetNoState.Focus, txtProcessState.Focus, txtmcState.Focus]);
   const PageLoad = () => {
     setTxtProcess("");
     setTxtmc("");
@@ -85,14 +103,15 @@ function fn_ScanSheetBakeTime() {
       disabled: true,
       styled: { backgroundColor: "#dbdede" },
     });
-    setTxtLotNo('');
+    setTxtLotNo("");
     setTxtLotNoState({
       disabled: false,
       styled: { backgroundColor: "white" },
       Focus: true,
     });
-    FctxtLotNo.current.focus();
-  }
+    setFocus("txtLotNoBaking");
+    // FctxtLotNo.current.focus();
+  };
   const handleTxtProcess_Change = () => {
     if (txtProcess !== "") {
       setTxtmc("");
@@ -101,20 +120,25 @@ function fn_ScanSheetBakeTime() {
         styled: { backgroundColor: "white" },
         Focus: true,
       });
+      setFocus("txtMcBaking");
     } else {
       setTxtProcess("");
-      FctxtProcess.current.focus();
+      setFocus("txtProcessBaking");
     }
   };
   const handleTxtmc_Change = () => {
     if (txtmc !== "") {
       setTxtLotNo("");
+      setTxtmcState({
+        disabled: false,
+        styled: { backgroundColor: "white" },
+      });
       setTxtLotNoState({
         disabled: false,
         styled: { backgroundColor: "white" },
         Focus: true,
       });
-      FctxtLotNo.current.focus();
+      setFocus("txtLotNoBaking");
     } else {
       setTxtmc("");
     }
@@ -139,6 +163,12 @@ function fn_ScanSheetBakeTime() {
             disabled: false,
             styled: { backgroundColor: "white" },
             Focus: true,
+          });
+          notification.error({
+            message: "Error",
+            description: "Not Found Data",
+            placement: "bottomRight",
+            duration: 3,
           });
           return;
         }
@@ -192,7 +222,6 @@ function fn_ScanSheetBakeTime() {
         }
       }
       if (
-
         parseInt(hfConnLeafLength) > 0 &&
         parseInt(hfConnLeafLength) !== txtSheetNo.length &&
         strStatus == "F"
@@ -205,6 +234,7 @@ function fn_ScanSheetBakeTime() {
           txtSheetNo: txtSheetNo,
           txtProcess: txtProcess,
         });
+        console.log(rowCout, "rowCout");
         if (rowCout == 0) {
           strError = await getData("CallSMTBakingRecordTimeResult", {
             strSheetNo: txtSheetNo,
@@ -258,21 +288,37 @@ function fn_ScanSheetBakeTime() {
 
     setLblSheet(`${lblSheet} Delete`);
     setLblRemark(strError);
-    if (strStatus == "P"){  
+    if (strError == "") {
+      notification.success({
+        message: "Success",
+        description: "Delete Success",
+        placement: "bottomRight",
+        duration: 3,
+      });
       setLblResult({ text: "OK", styled: "green" });
     }else{
+      notification.error({
+        message: "Error",
+        description: strError,
+        placement: "bottomRight",
+        duration: 3,
+      });
       setLblResult({ text: "NG", styled: "red" });
     }
+    // if (strStatus == "P") {
+    //   setLblResult({ text: "OK", styled: "green" });
+    // } else {
+    //   setLblResult({ text: "NG", styled: "red" });
+    // }
     setPnlSaveState(false);
     PnlmainEnable();
     setTxtSheetNo("");
-    setTxtSheetNoState({Focus: true});
-
+    setTxtSheetNoState({ Focus: true });
+    setFocus("txtSheetNoBaking");
   };
-  const btnReplace = async () =>{
+  const btnReplace = async () => {
     let strError = "";
     let strStatus = "";
-    console.log(txtSheetNo)
     strError = await getData("CallSMTBakingRecordTimeResult", {
       strSheetNo: txtSheetNo,
       strmachineNo: txtProcess,
@@ -286,6 +332,12 @@ function fn_ScanSheetBakeTime() {
     setLblSheet(`${txtSheetNo} [${currentTime}]`);
     setLblRemark(strError);
     if (strError == "") {
+      notification.success({
+        message: "Success",
+        description: "Replace Success",
+        placement: "bottomRight",
+        duration: 3,
+      });
       setLblResult({ text: "OK", styled: "green" });
     } else {
       setLblResult({ text: "NG", styled: "red" });
@@ -293,8 +345,9 @@ function fn_ScanSheetBakeTime() {
     setPnlSaveState(false);
     PnlmainEnable();
     setTxtSheetNo("");
-    setTxtSheetNoState({Focus: true});
-  }
+    setTxtSheetNoState({ Focus: true });
+    setFocus("txtSheetNoBaking");
+  };
   const btnCancel = () => {
     setPnlSaveState(false);
     PnlmainEnable();
@@ -302,9 +355,9 @@ function fn_ScanSheetBakeTime() {
     setLblRemark("");
     setLblResult("");
     setTxtSheetNo("");
-    setTxtSheetNoState({Focus: true});
-
-  }
+    setTxtSheetNoState({ Focus: true });
+    setFocus("txtSheetNoBaking");
+  };
   function PnlmainDisable() {
     setTxtProcessState({
       disabled: true,
@@ -320,7 +373,7 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "#dbdede" },
     });
   }
-  function PnlmainEnable(){
+  function PnlmainEnable() {
     setTxtProcessState({
       disabled: false,
       styled: { backgroundColor: "#dbdede" },
@@ -335,10 +388,11 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "#dbdede" },
     });
   }
-  
+
   async function getData(type, params) {
     let Result = "";
-    if (type == "prdName") { //ok
+    if (type == "prdName") {
+      //ok
       await axios
         .post("/api/Common/getProductNameByLot", {
           strLot: params,
@@ -349,12 +403,18 @@ function fn_ScanSheetBakeTime() {
           }
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
-    } else if (type == "getSerial") {   //ok FIN 995123423
+    } else if (type == "getSerial") {
+      //ok FIN 995123423
       await axios
         .post(
-          "/api/GetSerialProductByProduct",
+          "/api/Common/GetSerialProductByProduct",
           {
             prdName: params,
           },
@@ -373,13 +433,24 @@ function fn_ScanSheetBakeTime() {
             setHfConnLeafLength(res.data.PRM_CONN_LEAF_LENGTH);
             Result = "OK";
           } else if (res.status == 404) {
-            alert("Not Found Data");
+            notification.error({
+              message: "Error",
+              description: "Not Found Data",
+              placement: "bottomRight",
+              duration: 3,
+            });
           }
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
-    } else if (type == "GetMOTRecordTimeData") { //ok
+    } else if (type == "GetMOTRecordTimeData") {
+      //ok
       await axios
         .post(
           "/api/Common/getMOTRecordTimeData",
@@ -387,7 +458,7 @@ function fn_ScanSheetBakeTime() {
             dataList: {
               strSheetNo: params.txtSheetNo,
               strProcId: params.txtProcess,
-              strPlantCode : plantCode
+              strPlantCode: plantCode,
             },
           },
           {
@@ -400,13 +471,28 @@ function fn_ScanSheetBakeTime() {
           if (res.data != "" && res.status == 200) {
             Result = res.data[0].row_count;
           } else if (res.status == 404) {
-            alert("Not Found Data");
+            notification.error({
+              message: "Error",
+              description: "Not Found Data",
+              placement: "bottomRight",
+              duration: 3,
+            });
           } else {
-            alert("Error");
+            notification.error({
+              message: "Error",
+              description: "Eror",
+              placement: "bottomRight",
+              duration: 3,
+            });
           }
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
     } else if (type == "CallSMTBakingRecordTimeResult") {
       await axios
@@ -420,7 +506,7 @@ function fn_ScanSheetBakeTime() {
               strProduct: params.strProduct,
               strProcess: params.strProcess,
               strFactory: hfFactory,
-              strPlantCode :plantCode
+              strPlantCode: plantCode,
             },
           },
           {
@@ -433,17 +519,23 @@ function fn_ScanSheetBakeTime() {
           Result = res.data.p_error;
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
     } else if (type == "DeleteBakingRecordTimeData") {
-      await axios
+      console.log(params, "params");
+      await axios        
         .post(
           "/api/DeleteBakingRecordTimeData",
           {
             dataList: {
               strSheetNo: params.strSheetNo,
               strProcId: params.strProcId,
-              strPlantCode :plantCode
+              strPlantCode: plantCode,
             },
           },
           {
@@ -454,9 +546,15 @@ function fn_ScanSheetBakeTime() {
         )
         .then((res) => {
           Result = res.data.p_error;
+          alert(Result);
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
     }
     return Result;
@@ -498,8 +596,8 @@ function fn_ScanSheetBakeTime() {
     //btn
     btnDelete,
     btnReplace,
-    btnCancel
-    ,ibtback_click
+    btnCancel,
+    ibtback_click,
   };
 }
 

@@ -110,7 +110,7 @@ function ScanSheetDispenserTime() {
                   size="small"
                   className="DispensertxtField"
                     disabled={txtCBnoState.disabled}
-                    // onBlur={handleTxtSheetNo}
+                    onBlur={txtSheetno_change}
                     sx={txtCBnoState.styled}
                   inputRef={FctxtCBno}
                   value={txtCBno}
