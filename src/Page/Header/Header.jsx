@@ -130,11 +130,9 @@ function Hearder() {
                   cursor: "pointer",
                   color: "#fff",
                   margin: 0,
-                  // fontFamily: "Montserrat, sans-serif",
                 }}
                 onClick={() => {
-                  window.location.href =
-                    "http://10.17.70.216/TraceabilitySystem";
+                  window.location.href ="/TraceabilitySystem";
                 }}
               >
                 TRACEABILITY SYSTEM
