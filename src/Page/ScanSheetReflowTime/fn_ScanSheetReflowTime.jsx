@@ -2,8 +2,7 @@ import axios from "axios";
 import { set } from "lodash";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import Swal from "sweetalert2";
-
+import {notification} from 'antd';
 function fn_ScanSheetReflowTime() {
   const [txtmcNo, setTxtmcNo] = useState("");
   const FctxtmcNo = useRef(null);
@@ -91,7 +90,12 @@ function fn_ScanSheetReflowTime() {
 
           })
           .catch((error) => {
-            Swal.fire("Error", `${error}`, "error")
+            notification.error({
+              message: 'Error',
+              description: `${error}`,
+              duration: 3
+            });
+
           });
 
 
@@ -115,7 +119,11 @@ function fn_ScanSheetReflowTime() {
               console.log(strError)
             })
             .catch((error) => {
-              Swal.fire("Error", `${error}`, "error")
+              notification.error({
+                message: 'Error',
+                description: `${error}`,
+                duration: 3
+              });
             });
           if (strError.split("") == "") {
             const currentTime = new Date().toLocaleTimeString("en-US", {
@@ -162,10 +170,24 @@ function fn_ScanSheetReflowTime() {
       styled: { backgroundColor: "#B2A8A8" },
       open: true,
     });
+    setTxtSheetNoState({
+      disabled: false,
+      styled: { backgroundColor: "white" },
+      state: true,
+    });
+    setLblResult({ text: "", styled: { color: "" } });
+    setLblRemark("");
+    setTimeOut(FctxtSheetNo);
     setLblSheet("");
     setLblRemark("");
     setTxtSheetNo("");
   };
+  
+  function setTimeOut(txtField) {
+    setTimeout(() => {
+      txtField.current.focus();
+    }, 200);
+  }
 
   const btnReplace_Click = async () => {
     var strError = "";
@@ -188,7 +210,11 @@ function fn_ScanSheetReflowTime() {
         console.log(strError)
       })
       .catch((error) => {
-        Swal.fire("Error", `${error}`, "error")
+        notification.error({
+          message: 'Error',
+          description: `${error}`,
+          duration: 3
+        });
       });
     if (strError.split("") == "") {
       const currentTime = new Date().toLocaleTimeString("en-US", {
@@ -196,8 +222,20 @@ function fn_ScanSheetReflowTime() {
       });
       setLblSheet(`${txtSheetNo} [${currentTime}]`);
       setLblResult({ text: "OK", styled: "green" });
+      setLblRemark("");
+      notification.success({
+        message: 'Success',
+        description: 'Replace Success',
+        placement: 'bottomRight',
+        duration: 3
+      });
     } else {
       setLblResult({ text: "NG", styled: "red" });
+      notification.error({
+        message: 'Error',
+        description: `${strError}`,
+        duration: 3
+      });
     }
     setTxtSheetNo("");
     setTxtmcNoState({
@@ -221,16 +259,33 @@ function fn_ScanSheetReflowTime() {
         strError = res.data.p_error;
       })
       .catch((error) => {
-        Swal.fire("Error", `${error}`, "error")
+        notification.error({
+          message: 'Error',
+          description: `${error}`,
+          duration: 3
+        });
       });
     setLblSheet(`${lblSheet} Delete`);
     setLblRemark(strError);
-
-    if (strStatus == "P") {
-      setLblResult({ text: "OK", styled: "green" });
-    } else {
-      setLblResult({ text: "NG", styled: "red" });
+    if (strError == "") {
+      notification.success({  
+        message: 'Success',
+        description: 'Delete Success',
+        placement: 'bottomRight',
+        duration: 3
+      });
+    }else{
+      notification.error({
+        message: 'Error',
+        description: `${strError}`,
+        duration: 3
+      });
     }
+    // if (strStatus == "P") {
+    //   setLblResult({ text: "OK", styled: "green" });
+    // } else {
+    //   setLblResult({ text: "NG", styled: "red" });
+    // }
 
     setTxtSheetNo("");
     setTxtmcNoState({
