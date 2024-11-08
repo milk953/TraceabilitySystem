@@ -185,7 +185,7 @@ function ScanSheetMOTTime() {
                         }}
                         // inputRef={fctxtSheetNo}
                         inputRef={(el) => (fctxtSheetNo.current = el)}
-                        onBlur={txtSheetNo_TextChanged}
+                        // onBlur={txtSheetNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -213,7 +213,7 @@ function ScanSheetMOTTime() {
                             txtCBNo_TextChanged();
                           }
                         }} 
-                        onBlur={txtCBNo_TextChanged}
+                        // onBlur={txtCBNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -242,11 +242,11 @@ function ScanSheetMOTTime() {
                             txtSUSNo_TextChanged();
                           }
                         }} 
-                        onBlur={txtSUSNo_TextChanged}
+                        // onBlur={txtSUSNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
-  
+                  {console.log('lblRemark2',lblRemark,lblResult.value)}
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
                     <TableCell colSpan={3} align="center">
                       <Card
@@ -271,7 +271,7 @@ function ScanSheetMOTTime() {
                         >
                           {lblResult.value}
                         </Typography>
-                        <Typography align="center" style={{ fontSize: "20px",marginTop: "80px" }}>
+                        <Typography align="center" style={{ fontSize: "20px" }}>
                           {lblRemark}
                         </Typography>
                       </Card>

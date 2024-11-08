@@ -70,6 +70,7 @@ function ScanSMTRoollSht() {
     columns,
     txtOperator_TextChanged,
     txtRollLeaf_TextChanged,
+    ibtCancel_Click
   } = Fn_ScanSMTRollSht();
   // console.log('gvScanResult',gvScanResult)
 
@@ -179,7 +180,7 @@ function ScanSMTRoollSht() {
                         // label="Operator. :"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            txtOperator_TextChanged();
+                            txtOperator_TextChanged(e.target.value);
                           }
                         }}
                         fullWidth
@@ -189,7 +190,8 @@ function ScanSMTRoollSht() {
                           settxtOperator(e.target.value);
                           console.log(e.target.value,'txtoper');
                       }}
-                        onBlur={txtOperator_TextChanged}
+                      onBlur={(e) => txtOperator_TextChanged(e.target.value)}
+
                       ></TextField>
                     </TableCell>
                   </TableRow>
@@ -256,10 +258,11 @@ function ScanSMTRoollSht() {
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            txtRollLeaf_TextChanged();
+                            txtRollLeaf_TextChanged(e.target.value);
                           }
                         }}
-                        // onBlur={txtRollLeaf_TextChanged}
+                        
+                        onBlur={(e) => txtRollLeaf_TextChanged(e.target.value)}
                         fullWidth
                       ></TextField>
                     </TableCell>
@@ -275,7 +278,7 @@ function ScanSMTRoollSht() {
 
               <Table
                 className="CSS-GvSerial"
-                style={{ display: GvSerial.visble }}
+                style={{ display: GvSerial.visible }}
                 component={Card}
               >
                 <TableHead>
@@ -337,7 +340,7 @@ function ScanSMTRoollSht() {
                         Save
                       </Button>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel">Cancel</Button>
+                      <Button className="BtCancel" onClick={ibtCancel_Click}>Cancel</Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -353,7 +356,7 @@ function ScanSMTRoollSht() {
                 alignItems: "center",
               }}
             >
-              {gvScanResult.visble == false && (
+              {gvScanResult.visible == false && (
                 <>
                   {" "}
                   <img
@@ -363,7 +366,7 @@ function ScanSMTRoollSht() {
                   />
                 </>
               )}
-              {gvScanResult.visble == true && (
+              {gvScanResult.visible == true && (
                 <>
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                     <Paper

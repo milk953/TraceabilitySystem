@@ -74,7 +74,8 @@ margin-bottom: 30px;
 
 }
 .input_txt .MuiInputBase-input {
-  height: 10px; 
+  height: 10px;
+  background-color: #fff;
 }
 
 

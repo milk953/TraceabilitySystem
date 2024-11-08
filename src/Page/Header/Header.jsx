@@ -17,11 +17,12 @@ import { fn_Homepage } from "../Homepage/fn_Homepage";
 import HomeIcon from "@mui/icons-material/Home";
 import Tooltip from "@mui/material/Tooltip";
 import { LoginOutlined } from "@mui/icons-material";
-import ImgLoging from "../Header/login.png"
-import ImgLogOut from "../Header/logout.png"
-import ImgTitle from "../Header/checklist.png"
-
-import "../Common/StyleCommon.css"
+import ImgLoging from "../Header/login.png";
+import ImgLogOut from "../Header/logout.png";
+import ImgTitle from "../Header/checklist.png";
+import ImgBurger from "../Header/menu (3).png";
+import ImgUser from "../Header/user.png";
+import "../Common/StyleCommon.css";
 
 function Hearder() {
   const { openLoginModal, menuName } = fn_Homepage();
@@ -46,40 +47,40 @@ function Hearder() {
       };
       return (
         <Tooltip title="LogOut">
-          <Avatar 
-            shape="square" 
-            size={64} 
-            src={ImgLoging}  
-            onClick={goHome} 
-            style={{ cursor: 'pointer' }} 
+          <Avatar
+            shape="square"
+            size={64}
+            src={ImgLoging}
+            onClick={goHome}
+            style={{ cursor: "pointer" }}
           />
-        {/* <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} /> */}
-      </Tooltip>
-        
+          {/* <LoginIcon style={{ color: '',cursor:'pointer' }} onClick={goHome} /> */}
+        </Tooltip>
       );
     }
     return (
-    <Tooltip title="Login">
-                <Avatar 
-  shape="square" 
-  size={64} 
-  src={ImgLoging}  
-  onClick={openLoginModal} 
-  style={{ cursor: 'pointer' }} />
-     {/* <LoginIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  /> */}
-    </Tooltip>
-    
+      <Tooltip title="Login">
+        <Avatar
+          shape="square"
+          size={64}
+          src={ImgLoging}
+          onClick={openLoginModal}
+          style={{ cursor: "pointer" }}
+        />
+        {/* <LoginIcon style={{ color: '',cursor:'pointer' }}  onClick={openLoginModal}  /> */}
+      </Tooltip>
     );
   };
   const logOut = () => {
     return (
       <Tooltip title="LogOut">
-                      <Avatar 
-  shape="square" 
-  size={64} 
-  src={ImgLogOut}  
-  onClick={Logout} 
-  style={{ cursor: 'pointer' }} />
+        <Avatar
+          shape="square"
+          size={64}
+          src={ImgLogOut}
+          onClick={Logout}
+          style={{ cursor: "pointer" }}
+        />
       </Tooltip>
     );
   };
@@ -94,10 +95,7 @@ function Hearder() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar
-          position="fixed"
-          className="Header_CommonBG"
-        >
+        <AppBar position="fixed" className="Header_CommonBG">
           <Toolbar>
             <IconButton
               size="large"
@@ -107,53 +105,79 @@ function Hearder() {
               sx={{ mr: 2 }}
               onClick={toggleSidebar}
             >
-              <MenuIcon />
+                <Avatar variant="square" src={ImgBurger} style={{width:25,height:25}} />
             </IconButton>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
-            <Avatar  variant="square" src={ImgTitle} />&nbsp;&nbsp;
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1}}>
-          
-            {menuName === '' ? 'TRACEABILITY SYSTEM' : 'TRACEABILITY SYSTEM :' +' '+ menuName}
-              
-            </Typography>
+            {/* <Avatar variant="square" src={ImgTitle} /> */}
+      
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexGrow: 1,
+                cursor:'pointer'
+                // border: "1px solid red",
+              }}
+            >
+              <Typography
+                variant="h6"
+                onClick={() => {
+                  window.location.href =
+                    "http://10.17.70.216/TraceabilitySystem";
+                }}
+              >
+                {menuName === ""
+                  ? "TRACEABILITY SYSTEM"
+                  : "TRACEABILITY SYSTEM > "}
+              </Typography>
+              &nbsp;&nbsp;
+              <Typography variant="h6">
+                {menuName === "" ? "" : menuName}
+              </Typography>
+            </div>
+            {user ? (
+              <>
+                {" "}
+                {/* <Avatar sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}>
+                  {user.charAt(0)}
+                  {surname.charAt(0)}
+                </Avatar> */}
+                <Avatar variant="square" src={ImgUser} /> &nbsp;&nbsp;
+                <Button
+                  className="btnDate"
+                  color="inherit"
+                  style={{
+                    display: "contents",
+                    alignItems: "start",
+                    justifyContent: "start",
+                    fontSize: "12px",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
+                >
+                  {user} {surname} &nbsp;&nbsp;
+                  <br />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Avatar variant="square" src={ImgUser} /> &nbsp;&nbsp;
 
-            {user ? <> <Avatar
-              sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}
-            >{user.charAt(0)}{surname.charAt(0)}</Avatar>
-            <Button
-              className="btnDate"
-              color="inherit"
-              style={{
-                display: "contents",
-                alignItems: "start",
-                justifyContent: "start",
-                fontSize: "12px",
-                fontFamily: "Roboto, sans-serif",
-              }}
-            >
-              Username : {user}  {surname} &nbsp;&nbsp;
-              <br />
-            </Button></>:<> 
-            <Avatar
-              sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}
-            >G</Avatar>
-            
-            <Button
-              className="btnDate"
-              color="inherit"
-              style={{
-                display: "contents",
-                alignItems: "start",
-                justifyContent: "start",
-                fontSize: "12px",
-                fontFamily: "Roboto, sans-serif",
-              }}
-              onClick={openLoginModal} 
-            >
-              Username : Guess &nbsp;&nbsp;
-            </Button>
-           </>}
-           
+                <Button
+                  className="btnDate"
+                  color="inherit"
+                  style={{
+                    display: "contents",
+                    alignItems: "start",
+                    justifyContent: "start",
+                    fontSize: "12px",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
+                  onClick={openLoginModal}
+                >
+                  Guess  &nbsp;&nbsp;
+                </Button>
+              </>
+            )}
             {user ? logOut() : loginBtn()}
           </Toolbar>
         </AppBar>

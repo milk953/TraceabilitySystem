@@ -100,7 +100,7 @@ function ScanSheetMOTTime() {
                         size="small"
                         fullWidth
                         value={txtMCNo.value}
-                        // inputRef={fctxtMcNo}
+                        
                         inputRef={(el) => (fctxtMcNo.current = el)}
                         disabled={false} //falseพิมได้ 
                         style={txtMCNo.style}
@@ -112,10 +112,10 @@ function ScanSheetMOTTime() {
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            txtMCNo_TextChanged();
+                            txtMCNo_TextChanged(e.target.value);
                           }
                         }}
-                        onBlur={txtMCNo_TextChanged}
+                        // onBlur={(e) => {txtMCNo_TextChanged(e.target.value)}}
                       />
                     </TableCell>
                   </TableRow>
@@ -143,7 +143,7 @@ function ScanSheetMOTTime() {
                         }}
                         // inputRef={fctxtLotno}
                         inputRef={(el) => (fctxtLotno.current = el)}
-                        onBlur={txtLotNo_TextChanged}
+                        // onBlur={txtLotNo_TextChanged}
                       />
                     </TableCell>
                     <TableCell>
@@ -185,7 +185,7 @@ function ScanSheetMOTTime() {
                         }}
                         // inputRef={fctxtSheetNo}
                         inputRef={(el) => (fctxtSheetNo.current = el)}
-                        onBlur={txtSheetNo_TextChanged}
+                        // onBlur={txtSheetNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -213,7 +213,7 @@ function ScanSheetMOTTime() {
                             txtCBNo_TextChanged();
                           }
                         }} 
-                        onBlur={txtCBNo_TextChanged}
+                        // onBlur={txtCBNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -242,7 +242,7 @@ function ScanSheetMOTTime() {
                             txtSUSNo_TextChanged();
                           }
                         }} 
-                        onBlur={txtSUSNo_TextChanged}
+                        // onBlur={txtSUSNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -261,6 +261,7 @@ function ScanSheetMOTTime() {
                       </Card>
                     </TableCell>
                   </TableRow>
+                  {console.log('lblRemark1',lblRemark)}
                   <TableRow style={{ height: "180px" }}>
                     <TableCell colSpan={3}>
                       <Card style={{ background: "#EFBC9B", height: "230px" }}>
@@ -271,7 +272,7 @@ function ScanSheetMOTTime() {
                         >
                           {lblResult.value}
                         </Typography>
-                        <Typography align="center" style={{ fontSize: "20px",marginTop: "80px" }}>
+                        <Typography align="center" style={{ fontSize: "20px", }}>
                           {lblRemark}
                         </Typography>
                       </Card>
