@@ -8,7 +8,7 @@ import {
   Button,
   TableHead,
   Paper,
-  Card
+  Card,
 } from "@mui/material";
 import "./ScanSheetReflowTime.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -50,63 +50,73 @@ function ScanSheetReflowTime() {
     <div>
       <Hearder />
       <h1>123</h1>
-        <div className="pnlMain">
-          <Table id="TableMain" component={Card}>
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={3}>Reflow Control Time</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell id="lbltxt">Machine/Line:</TableCell>
-                <TableCell>
-                  <TextField
-                    size="small"
-                    className="txtField"
-                    disabled={txtmcNoState.disabled}
-                    sx={txtmcNoState.styled}
-                    inputRef={FctxtmcNo}
-                    onChange={(e) => {
-                      setTxtmcNo(e.target.value);
-                    }}
-                    onBlur={handleTxtMcNo}
-                    value={txtmcNo}
-                  ></TextField>
-                </TableCell>
-                <TableCell>
-                  <Button onClick={btnIbtback_Click}>
-                    {" "}
-                    <BackspaceIcon />
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell id="lbltxt">Sheet No.:</TableCell>
-                <TableCell>
-                  <TextField
-                    size="small"
-                    className="txtField"
-                    disabled={txtSheetNoState.disabled}
-                    sx={txtSheetNoState.styled}
-                    value={txtSheetNo}
-                    inputRef={FctxtSheetNo}
-                    onChange={(e) => {
-                      setTxtSheetNo(e.target.value);
-                    }}
-                    onBlur={handleTxtSheetNo}
-                  ></TextField>
-                </TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell colSpan={3} sx={{ textAlign: "center" }}>
-                  {lblSheet}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
+      <div className="pnlMain">
+        <Table id="TableMain" component={Card}>
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan={3}>Reflow Control Time</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell id="lbltxt">Machine/Line:</TableCell>
+              <TableCell>
+                <TextField
+                  size="small"
+                  className="txtField"
+                  disabled={txtmcNoState.disabled}
+                  sx={txtmcNoState.styled}
+                  inputRef={FctxtmcNo}
+                  onChange={(e) => {
+                    setTxtmcNo(e.target.value);
+                  }}
+                  // onBlur={handleTxtMcNo}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleTxtMcNo();
+                    }
+                  }}
+                  value={txtmcNo}
+                ></TextField>
+              </TableCell>
+              <TableCell>
+                <Button onClick={btnIbtback_Click}>
+                  {" "}
+                  <BackspaceIcon />
+                </Button>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell id="lbltxt">Sheet No.:</TableCell>
+              <TableCell>
+                <TextField
+                  size="small"
+                  className="txtField"
+                  disabled={txtSheetNoState.disabled}
+                  sx={txtSheetNoState.styled}
+                  value={txtSheetNo}
+                  inputRef={FctxtSheetNo}
+                  onChange={(e) => {
+                    setTxtSheetNo(e.target.value);
+                  }}
+                  // onBlur={handleTxtSheetNo}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleTxtSheetNo();
+                    }
+                  }}
+                ></TextField>
+              </TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={3} sx={{ textAlign: "center" }}>
+                {lblSheet}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
       <div className="pnlResult">
         <Table id="TableResult" component={Paper}>
           <TableRow>
@@ -140,11 +150,6 @@ function ScanSheetReflowTime() {
           </Table>
         </div>
       )}
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-      >
-        <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
-      </div>
     </div>
   );
 }

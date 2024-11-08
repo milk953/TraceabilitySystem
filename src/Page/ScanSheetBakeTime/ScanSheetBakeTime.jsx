@@ -53,16 +53,7 @@ function ScanSheetBakeTime() {
     btnReplace,
     ibtback_click
   } = fn_ScanSheetBakeTime();
-  useEffect(() => {
-    if (txtmcState.Focus ==true && txtmc==""){
-        Fctxtmc.current.focus();
-    }else if (txtLotNoState.Focus == true && txtLotNo == ""){
-      FctxtLotNo.current.focus();
-    }else if (txtSheetNoState.Focus == true && txtSheetNo == ""){
-      FctxtSheetNo.current.focus();
-    }
-  }, [txtmcState,txtmcState,txtLotNoState,txtSheetNoState]);
-
+  
   return (
     <>
       <Hearder />
@@ -80,15 +71,21 @@ function ScanSheetBakeTime() {
               <TextField
                 size="small"
                 className="txtFieldBaking"
+                id='txtProcessBaking'
                 style={{ width: "200px" }}
                 disabled={txtProcessState.disabled}
-                autoFocus
+  
                 sx={txtProcessState.styled}
                 onChange={(e) => {
                   setTxtProcess(e.target.value);
                 }}
                 inputRef={FctxtProcess}
-                onBlur={handleTxtProcess_Change}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleTxtProcess_Change();
+                  }
+                }}
+                // onBlur={handleTxtProcess_Change}
                 value={txtProcess}
               ></TextField>
             </TableCell>
@@ -100,6 +97,7 @@ function ScanSheetBakeTime() {
               <TextField
                 size="small"
                 className="txtField"
+                id='txtMcBaking'
                 style={{ width: "350px" }}
                 disabled={txtmcState.disabled}
                 sx={txtmcState.styled}
@@ -107,7 +105,12 @@ function ScanSheetBakeTime() {
                 onChange={(e) => {
                   setTxtmc(e.target.value);
                 }}
-                onBlur={handleTxtmc_Change}
+                // onBlur={handleTxtmc_Change}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleTxtmc_Change();
+                  }
+                }}
                 value={txtmc}
               ></TextField>
             </TableCell>
@@ -118,17 +121,18 @@ function ScanSheetBakeTime() {
             <TableCell>
               <TextField
                 size="small"
+                id='txtLotNoBaking'
                 className="txtField"
                 style={{ width: "350px" }}
                 disabled={txtLotNoState.disabled}
                 sx={txtLotNoState.styled}
                 inputRef={FctxtLotNo}
-                onBlur={handleTxtLotNo_Change}
-                // onKeyDown={(e) => {
-                //   if (e.key === "Enter") {
-                //     handleTxtLotNo_Change();
-                //   }
-                // }}
+                // onBlur={handleTxtLotNo_Change}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleTxtLotNo_Change();
+                  }
+                }}
                 onChange={(e) => {
                   setTxtLotNo(e.target.value);
                 }}
@@ -152,6 +156,7 @@ function ScanSheetBakeTime() {
               <TextField
                 size="small"
                 className="txtField"
+                id='txtSheetNoBaking'
                 style={{ width: "350px" }}
                 disabled={txtSheetNoState.disabled}
                 sx={txtSheetNoState.styled}
