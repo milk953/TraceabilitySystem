@@ -518,7 +518,7 @@ function Fn_ScanSMTRollSht() {
         disbled: false,
         style: {},
       }));
-      setlbllog((prevState) => ({ ...prevState, visible: false }));
+      // setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
       setHfMode("SHEET");
     }
@@ -624,7 +624,7 @@ function Fn_ScanSMTRollSht() {
     let _strLot = "";
 
     let _strRollLeaf = txtRollLeaf.value;
-    if (hfConnRollLength == txtRollLeaf.value.length) {
+    if (hfConnRollLength == txtRollLeaf.value.length ) {
       if (txtOperator != "") {
         await axios
           .post("/api/Common/GetRollLeafDuplicate", {
@@ -978,6 +978,14 @@ function Fn_ScanSMTRollSht() {
             }
           }
         }
+        if (!_bolPrdError) {
+          console.log(_bolPrdError, "_bolPrdError1");
+          setgvScanResult((prevState) => ({
+            ...prevState,
+            value: dtSheet,
+            visible: true,
+          }));
+        } 
       } else {
         _bolError = true;
         _strScanResultAll = "NG";
@@ -1026,21 +1034,7 @@ function Fn_ScanSMTRollSht() {
         style: "Green",
       }));
     }
-    if (!_bolPrdError) {
-      console.log(_bolPrdError, "_bolPrdError1");
-      setgvScanResult((prevState) => ({
-        ...prevState,
-        value: dtSheet,
-        visible: true,
-      }));
-    } else {
-      console.log(_bolPrdError, "_bolPrdError2");
-      setgvScanResult((prevState) => ({
-        ...prevState,
-        value: "",
-        visible: true,
-      }));
-    }
+   
     if (hfAutoDownload == "N") {
       await getInitialSheet();
       if (lbllog.value != "") {
@@ -1068,8 +1062,6 @@ function Fn_ScanSMTRollSht() {
       getInitialSheet();
     }
   };
-
-
 
   const handleTextFieldChange = (index, event) => {
     const newData = [...txtLeafNo];
@@ -1172,12 +1164,13 @@ function Fn_ScanSMTRollSht() {
   };
 
   const txtRollLeaf_TextChanged = (RollLeaf) => {
-    setlbllog((prevState) => ({
-      ...prevState,
-      visible: false,
-      value: "",
-    }));
+
     if (RollLeaf != "") {
+      setlbllog((prevState) => ({
+        ...prevState,
+        visible: false,
+        value: "",
+      }));
       setgvScanResult((prevState) => ({
         ...prevState,
         visible: false,
