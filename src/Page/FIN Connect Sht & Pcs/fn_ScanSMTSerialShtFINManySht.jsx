@@ -169,9 +169,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const btnBack_Click = () => {
     // location.reload();
+    setTxtLotRef("");
+    setTxtOperator("");
     setLblResultState(false);
     setGvBackSide([]);
     setGvSerial([]);
+    setTxtSideBack(gvBackSide.map(() => ""));
+    setTxtSideFront(gvBackSide.map(() => ""));
+    setTxtSerial(gvSerial.map(() => ""));
     setPanalSerialState(false);
     setLotValue("");
     setLotState(enableState);
