@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./ReJudgement.css";
 import Hearder from "../Header/Header";
 import { fn_ReJudgement } from "./fn_ReJudgement";
+import { Table as AntTable } from "antd";
 import {
   Button,
   Table,
@@ -39,7 +40,8 @@ function ReJudgement() {
     btnSubmitClick,
     serialState,
     FcSerial,
-    handleExport
+    handleExport,
+    columns
   } = fn_ReJudgement();
   useEffect(() => {
     if (serialState == true) {
@@ -78,7 +80,6 @@ function ReJudgement() {
                   cols="45"
                   value={txtSerialno}
                   onChange={(e) => setTxtSerialno(e.target.value)}
-                  // onBlur={txtSerialnoChange}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       txtSerialnoChange();
@@ -211,7 +212,7 @@ function ReJudgement() {
       <br />
       {pnlTableDisplaySatate && (
         <div className="DReJudgementTableThird">
-          <Table className="ReJudgementTableThird" component={Paper}>
+          {/* <Table className="ReJudgementTableThird" component={Paper}>
             <TableHead>
               <TableRow>
                 <TableCell> Serial No</TableCell>
@@ -246,13 +247,19 @@ function ReJudgement() {
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
+          </Table> */}
+                  <AntTable 
+                columns={columns}
+                dataSource={dtDataSearch}
+                style={{ width:'100%'}}
+                pagination={false}
+                size="small"
+                // bordered
+                className="tableGvResult"
+                />
         </div>
       )}
       <br />
-      {/* <div className="RejectBtoHome">
-        <a href="/">Return To Menu</a>
-      </div> */}
     </>
   );
 }
