@@ -120,7 +120,7 @@ function ScanSMTSerialShtFINManySht() {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell sx={{ width: "400px" }}>Lot No.:</TableCell>
+                    <TableCell >Lot No.:</TableCell>
                     <TableCell>
                       <input
                         className="txtField"
@@ -169,7 +169,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Lot Ref. No.:</TableCell>
+                    <TableCell >Lot Ref. No.:</TableCell>
                     <TableCell>
                       <input
                         size="small"

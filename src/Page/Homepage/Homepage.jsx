@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Col, Row, Divider, Button, Typography,Avatar } from "antd";
+import React, { useEffect } from "react";
+import { Card, Col, Row, Divider, Button, Typography,Avatar, notification } from "antd";
 import './Homepage.css'
 import Hearder from "../Header/Header";
 import { fn_Homepage } from "./fn_Homepage";
@@ -8,8 +8,8 @@ import Work from "../../assets/working-time.png";
 import Maintain from "../../assets/predictive.png";
 import ViewData from "../../assets/analysis.png";
 
-function TEST() {
-  const { Showmenu, menu, OpenMenu, setSL_menu, SL_menu, HandleSL_Menu } =
+function HomePage() {
+  const { Showmenu, menu, OpenMenu, setSL_menu, SL_menu, HandleSL_Menu,checkmenuState,setCheckmenuState } =
     fn_Homepage();
   return (
     <>
@@ -133,4 +133,4 @@ function TEST() {
   );
 }
 
-export default TEST;
+export default HomePage;

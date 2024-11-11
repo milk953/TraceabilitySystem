@@ -169,7 +169,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const btnBack_Click = () => {
     // location.reload();
+    setTxtLotRef("");
+    setTxtOperator("");
+    setLblResultState(false);
+    setGvBackSide([]);
     setGvSerial([]);
+    setTxtSideBack(gvBackSide.map(() => ""));
+    setTxtSideFront(gvBackSide.map(() => ""));
+    setTxtSerial(gvSerial.map(() => ""));
     setPanalSerialState(false);
     setLotValue("");
     setLotState(enableState);
@@ -738,7 +745,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   function setTimeOut(txtField) {
     setTimeout(() => {
       txtField.current.focus();
-    }, 300);
+    }, 200);
 
   }
   const txtLot_Change = async () => {
@@ -773,7 +780,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             setGvSerial(getInitialSerial());
             setGvBackSideState(true);
             // setTimeOut(FcgvBackside)
-            setTimeOut(FctxtOperator);
+            if(txtOperator == ""){setTimeOut(FctxtOperator);}else{setTimeOut(FcgvBackside);}            
             if (hfCheckRollSht == "Y") {
               setPnlRollLeafState(true);
               setTxtRollLeaf("");
@@ -1621,7 +1628,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     width: 150,
     render: (text, record, index) => {
       return (
-        <div style={{ textAlign: 'left' }}>
+        <div style={{ textAlign: 'center' }}>
           {text}
         </div>
       );

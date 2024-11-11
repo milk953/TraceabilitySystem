@@ -205,6 +205,7 @@ function fn_ScanSheetBakeTime() {
     }
   };
   const handleTxtSheetNo_Change = async () => {
+    setLblResult("")
     let rowCout = 0;
     if (lblRemark !== "") {
       setLblRemark("");
@@ -546,7 +547,6 @@ function fn_ScanSheetBakeTime() {
         )
         .then((res) => {
           Result = res.data.p_error;
-          alert(Result);
         })
         .catch((error) => {
           notification.error({

@@ -21,7 +21,7 @@
 }
 .mainTable {
   
-  max-width: 400px;
+  max-width: 500px;
 }
 .mainTable th {
   /* background-color: rgb(243, 8, 8); */
@@ -88,7 +88,7 @@
 .txtField {
   padding: 1px !important;
   font-size: 16px !important;
-  width: 230px !important;
+  width: 220px !important;
 }
 
 #ddlProduct {
