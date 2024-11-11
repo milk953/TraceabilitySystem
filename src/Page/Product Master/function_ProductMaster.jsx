@@ -360,6 +360,7 @@ function fn_ProductMaster() {
         settxtCheckPrdShtFromDisabled(true);
         settxtCheckPrdShtToDisabled(true);
       }
+      settxtSerialStartCode("THA")
       setselCheckIC("N");
       setReqProcControlTimeCheck(false);
       settxtProcControlTime("");
