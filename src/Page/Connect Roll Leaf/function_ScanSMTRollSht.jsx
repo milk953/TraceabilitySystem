@@ -450,7 +450,10 @@ function Fn_ScanSMTRollSht() {
       }));
       setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "none" }));
+      setlbltotalSht('')
       setgvScanResult((prevState) => ({ ...prevState, visible: false,value:'' }));
+      settxtOperator('')
+      setlblCheckRoll((prevState) => ({ ...prevState ,value:'',style:{}}));
       setHfMode("LOT");
       setTimeout(() => {
         fc_txtLotNo.current.focus();
@@ -582,7 +585,7 @@ function Fn_ScanSMTRollSht() {
       await getInitialSheet();
       SetMode("ROLL");
       setTimeout(() => {
-        fc_txtRollleaf.current.focus();
+        fc_txtOperator.current.focus();
       }, 300);
     }
   };
@@ -1071,6 +1074,7 @@ function Fn_ScanSMTRollSht() {
 
   const ibtback_Click = () => {
     SetMode("LOT");
+
   };
 
   const ibtCancel_Click = () => {
@@ -1164,21 +1168,35 @@ function Fn_ScanSMTRollSht() {
   };
 
   const txtRollLeaf_TextChanged = (RollLeaf) => {
-
+    setgvScanResult((prevState) => ({
+      ...prevState,
+      visible: false,
+      value: "",
+    }));
     if (RollLeaf != "") {
-      setlbllog((prevState) => ({
-        ...prevState,
-        visible: false,
-        value: "",
-      }));
-      setgvScanResult((prevState) => ({
-        ...prevState,
-        visible: false,
-        value: "",
-      }));
-      setTimeout(() => {
-        fc_GvSerial.current[0].focus();
-      }, 300);
+      if (hfConnRollLength == txtRollLeaf.value.length ) {
+        setlbllog((prevState) => ({
+          ...prevState,
+          visible: false,
+          value: "",
+        }));
+     
+        setTimeout(() => {
+          fc_GvSerial.current[0].focus();
+        }, 300);
+        
+      }
+      else{
+        setlbllog((prevState) => ({
+          ...prevState,
+          visible: true,
+          value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
+        }));
+        setTimeout(() => {
+          fc_txtRollleaf.current.focus();
+        }, 300);
+      }
+
     }
   
   };

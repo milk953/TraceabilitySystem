@@ -78,7 +78,12 @@ function ReJudgement() {
                   cols="45"
                   value={txtSerialno}
                   onChange={(e) => setTxtSerialno(e.target.value)}
-                  onBlur={txtSerialnoChange}
+                  // onBlur={txtSerialnoChange}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      txtSerialnoChange();
+                    }
+                  }}
                   ref ={FcSerial}
                 ></textarea>
               </TableCell>
@@ -245,9 +250,9 @@ function ReJudgement() {
         </div>
       )}
       <br />
-      <div className="RejectBtoHome">
+      {/* <div className="RejectBtoHome">
         <a href="/">Return To Menu</a>
-      </div>
+      </div> */}
     </>
   );
 }

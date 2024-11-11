@@ -2,6 +2,10 @@
 .Header_CommonBG{ 
     background: hsl(0, 0%, 27%) !important; 
     color: #ffffff !important;
+    font-family: "Comfortaa", serif;
+    /* font-optical-sizing: auto;
+    /* font-weight: <weight>; */
+    /* font-style: normal;  */
 }
 /* Card Scan */
 .Card-Common{
@@ -75,8 +79,12 @@ margin-bottom: 30px;
 }
 .input_txt .MuiInputBase-input {
   height: 10px;
-  background-color: #fff;
 }
+
+.input_txt_Master .MuiInputBase-input {
+    height: 10px;
+    background-color: #fff;
+  }
 
 
 .Select_dropDown .MuiInputBase-input {
@@ -180,6 +188,18 @@ background-color: #e0e0e0;
     text-align: center;
     
 
+}
+
+.ButtonReplace{
+    background: green !important;
+}
+
+.ButtonDelete{
+    background: red !important;
+}
+
+.ButtonCancel{
+    background: gray !important;
 }
 
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {

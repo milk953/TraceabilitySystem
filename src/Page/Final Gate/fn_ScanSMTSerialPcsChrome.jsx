@@ -980,6 +980,7 @@ function fn_ScanSMTSerialPcsChrome() {
                 var endDigit = parseInt(hfSerialEndDigit, 10);
                 _strFixDigit = _strSerial.substring(startDigit - 1, endDigit);
                 if (_strFixDigit != hfSerialDigit) {
+                  console.log('Consolelog1',_strFixDigit,hfSerialDigit)
                   _strMessageUpdate =
                     "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                   _strRemark = "Serial barcode mix product";
@@ -1005,6 +1006,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   _strSerial.substring(0, hfSerialStartCode.length) !==
                   hfSerialStartCode
                 ) {
+                  console.log('Consolelog2')
                   _strMessageUpdate =
                     "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                   _strRemark = "Serial barcode mix product";
@@ -1024,6 +1026,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   parseInt(hfCheckStartSeqEnd)
                 );
                 if (_strStartSeq != hfCheckStartSeqCode) {
+                  console.log('Consolelog3')
                   _strMessageUpdate =
                     "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                   _strRemark = "Serial barcode mix product";
@@ -1057,21 +1060,20 @@ function fn_ScanSMTSerialPcsChrome() {
                 for (
                   let _intRow = _intRowSerial + 1;
                   _intRow < dtSerial.length - 1;
-                  i++
+                  _intRow++
                 ) {
-                  if (
-                    _strSerial.toUpperCase ==
-                    dtSerial[_intRow].SERIAL.trim().toUpperCase
-                  ) {
-                    _strMessageUpdate =
-                      "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
-                    _strRemark = "Serial duplicate in tray  ";
-                    _strScanResultUpdate = "NG";
-                    _strTestResultUpdate = _strTestResult;
-                    dtSerial[drRow].REMARK_UPDATE = _strRemark;
-                    dtSerial[drRow].ROW_UPDATE = "N";
-                    _intCountNG = 1;
-                    _bolError = True;
+                      let isDuplicate = _strSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
+                      if (isDuplicate) {
+                        _strMessageUpdate =
+                        "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+                      _strRemark = "Serial duplicate in tray  ";
+                      _strScanResultUpdate = "NG";
+                      _strTestResultUpdate = _strTestResult;
+                      dtSerial[drRow].REMARK_UPDATE = _strRemark;
+                      dtSerial[drRow].ROW_UPDATE = "N";
+                      _intCountNG = 1;
+                      _bolError = true;
+                      
                   }
                 }
               }
@@ -1283,7 +1285,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     _strTestResultUpdate = _strTestResult;
                     dtSerial[drRow].REMARK_UPDATE = _strRemark;
                     dtSerial[drRow].ROW_UPDATE = "Y";
-                    _bolError = True;
+                    _bolError = true;
                   }
                 }
                 if (hfPlasmaCheck == "Y" && _strRejectGroup != "MASTER") {

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Password } from "@mui/icons-material";
-import { set } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { notification } from "antd";
 function fn_Homepage() {
   const navigate = useNavigate();
   const [Showmenu, setShowmenu] = useState("img");
@@ -15,10 +12,13 @@ function fn_Homepage() {
   const [ipAddress, setIpAddress] = useState("");
   const [menuName, setMenuName] = useState("");
   const [menuUrl, setMenuUrl] = useState("");
-
+  const [DataLogin, setDataLogin] = useState("");
+  const [checkmenuState, setCheckmenuState] = useState({
+    state : false,
+    count : 0
+  });
   var LoginStatus = localStorage.getItem("isLoggedIn") ?? false;
   var UserLogin = localStorage.getItem("UserLogin");
-
   const openLoginModal = () => {
     if (
       window.location.pathname === "/TraceabilitySystem" &&
@@ -78,19 +78,10 @@ function fn_Homepage() {
           localStorage.setItem("IDCode", res.data.Datainfo.id_code);
           localStorage.setItem("token", res.data.token);
           Swal.close();
-          // Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
-          //   (result) => {
-          //     if (result.isConfirmed) {
-          //       location.reload();
-          //     }
-          //   }
-          // );
-          notification.success({
-            message: "Success",
-            description: "Login Success",
-            placement: "bottomRight",
-            duration: 3,
-          });
+          setTimeout(() => {
+            location.reload();
+          }, 100);
+          setDataLogin('Success')
         } else if (res.status === 401) {
           Swal.fire(
             "ผิดพลาด",
@@ -113,6 +104,7 @@ function fn_Homepage() {
         });
       });
   };
+
   const page_load = () => {
     axios.get("/api/getIPaddress").then((res) => {
       setIpAddress(res.data.ip);
@@ -127,6 +119,11 @@ function fn_Homepage() {
     }
   }, [ipAddress]);
 
+  // useEffect(() => {
+  //   MenuHome();
+  //   page_load();
+  // }, [DataLogin]);
+
   const MenuHome = async () => {
     let dataMenu;
     if (UserLogin == "" || UserLogin == null) {
@@ -137,16 +134,7 @@ function fn_Homepage() {
         console.log("menuHome", res.data);
       });
     } else {
-      // await axios
-      //   .post("/api/MenuTitle", {
-      //     login_id: UserLogin,
-      //   })
-      //   .then((res) => {
-      //     console.log("MenuTitle", res.data);
-      //     dataMenu = res.data;
-      //   });
-
-      await axios
+        await axios
         .post("/api/Menuname", {
           login_id: UserLogin,
         })
@@ -154,6 +142,7 @@ function fn_Homepage() {
           dataMenu = res.data;
           console.log("Menuname", res.data);
           setmenu(res.data);
+          setCheckmenuState({state:true,count:1});
         });
     }
 

@@ -10,10 +10,11 @@ import {
   Button,
   TableHead,
   Paper,
-  Card
+  Card,
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetBakeTime.css";
+import { TableView } from "@mui/icons-material";
 function ScanSheetBakeTime() {
   const {
     lblProductName,
@@ -51,17 +52,9 @@ function ScanSheetBakeTime() {
     btnDelete,
     btnCancel,
     btnReplace,
-    ibtback_click
+    ibtback_click,
+    PnlShowresult,
   } = fn_ScanSheetBakeTime();
-  useEffect(() => {
-    if (txtmcState.Focus ==true && txtmc==""){
-        Fctxtmc.current.focus();
-    }else if (txtLotNoState.Focus == true && txtLotNo == ""){
-      FctxtLotNo.current.focus();
-    }else if (txtSheetNoState.Focus == true && txtSheetNo == ""){
-      FctxtSheetNo.current.focus();
-    }
-  }, [txtmcState,txtmcState,txtLotNoState,txtSheetNoState]);
 
   return (
     <>
@@ -80,15 +73,20 @@ function ScanSheetBakeTime() {
               <TextField
                 size="small"
                 className="txtFieldBaking"
-                style={{ width: "200px" }}
+                id="txtProcessBaking"
+                style={{ width: "220px" }}
                 disabled={txtProcessState.disabled}
-                autoFocus
                 sx={txtProcessState.styled}
                 onChange={(e) => {
                   setTxtProcess(e.target.value);
                 }}
                 inputRef={FctxtProcess}
-                onBlur={handleTxtProcess_Change}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleTxtProcess_Change();
+                  }
+                }}
+                // onBlur={handleTxtProcess_Change}
                 value={txtProcess}
               ></TextField>
             </TableCell>
@@ -100,6 +98,7 @@ function ScanSheetBakeTime() {
               <TextField
                 size="small"
                 className="txtField"
+                id="txtMcBaking"
                 style={{ width: "350px" }}
                 disabled={txtmcState.disabled}
                 sx={txtmcState.styled}
@@ -107,7 +106,12 @@ function ScanSheetBakeTime() {
                 onChange={(e) => {
                   setTxtmc(e.target.value);
                 }}
-                onBlur={handleTxtmc_Change}
+                // onBlur={handleTxtmc_Change}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleTxtmc_Change();
+                  }
+                }}
                 value={txtmc}
               ></TextField>
             </TableCell>
@@ -118,17 +122,18 @@ function ScanSheetBakeTime() {
             <TableCell>
               <TextField
                 size="small"
+                id="txtLotNoBaking"
                 className="txtField"
                 style={{ width: "350px" }}
                 disabled={txtLotNoState.disabled}
                 sx={txtLotNoState.styled}
                 inputRef={FctxtLotNo}
-                onBlur={handleTxtLotNo_Change}
-                // onKeyDown={(e) => {
-                //   if (e.key === "Enter") {
-                //     handleTxtLotNo_Change();
-                //   }
-                // }}
+                // onBlur={handleTxtLotNo_Change}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleTxtLotNo_Change();
+                  }
+                }}
                 onChange={(e) => {
                   setTxtLotNo(e.target.value);
                 }}
@@ -143,7 +148,16 @@ function ScanSheetBakeTime() {
           </TableRow>
           <TableRow>
             <TableCell id="lbltxtBaking">Product Name:</TableCell>
-            <TableCell colSpan={3}>{lblProductName}</TableCell>
+            <TableCell>
+              <TextField
+                size="small"
+                className="txtField"
+                style={{ width: "350px", backgroundColor: "lightgray" }}
+                disabled={true}
+                value={lblProductName}
+              ></TextField>
+            </TableCell>
+            {/* <TableCell colSpan={3}>{lblProductName}</TableCell> */}
             <TableCell></TableCell>
           </TableRow>
           <TableRow>
@@ -152,6 +166,7 @@ function ScanSheetBakeTime() {
               <TextField
                 size="small"
                 className="txtField"
+                id="txtSheetNoBaking"
                 style={{ width: "350px" }}
                 disabled={txtSheetNoState.disabled}
                 sx={txtSheetNoState.styled}
@@ -177,6 +192,7 @@ function ScanSheetBakeTime() {
           </TableRow>
         </TableBody>
       </Table>
+       {PnlShowresult && (       
       <div className="pnlResultBaking">
         <Table id="TableResultBaking" component={Paper}>
           <TableRow>
@@ -187,34 +203,30 @@ function ScanSheetBakeTime() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" }}>
+            <TableCell sx={{ fontSize: "34px", padding: "0px" ,whiteSpace: "pre-line" }} >
               {lblRemark}
             </TableCell>
           </TableRow>
         </Table>
       </div>
-      {pnlSaveState && (
-      <div className="pnlSaveBaking">
-        <Table id="TableSaveBaking" component={Paper}>
-          <TableRow>
-            <TableCell>
-              <Button onClick={btnReplace}>Replace</Button>
-            </TableCell>
-            <TableCell>
-              <Button onClick={btnDelete}>Delete</Button>
-            </TableCell>
-            <TableCell>
-              <Button onClick={btnCancel}>Cancel</Button>
-            </TableCell>
-          </TableRow>
-        </Table>
-      </div>
+      )}  
+      { PnlShowresult && pnlSaveState && (
+        <div className="pnlSaveBaking">
+          <Table id="TableSaveBaking" component={Paper}>
+            <TableRow>
+              <TableCell>
+                <Button variant="contained" className="ButtonReplace" onClick={btnReplace}>Replace</Button>
+              </TableCell>
+              <TableCell>
+                <Button variant="contained" className="ButtonDelete" onClick={btnDelete}>Delete</Button>
+              </TableCell>
+              <TableCell>
+                <Button variant="contained" className="ButtonCancel" onClick={btnCancel}>Cancel</Button>
+              </TableCell>
+            </TableRow>
+          </Table>
+        </div>
       )}
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-      >
-        <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
-      </div>
     </>
   );
 }

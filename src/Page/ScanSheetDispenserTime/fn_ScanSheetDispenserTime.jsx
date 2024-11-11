@@ -1,4 +1,5 @@
 import { StopScreenShareRounded } from "@mui/icons-material";
+import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -206,11 +207,7 @@ function fn_ScanSheetDispenserTime() {
     setLblRemark("");
     setPnlSaveState(false);
     if (txtSheetNo != "") {
-      if (
-        parseInt(hfConnLeafLength) > 0 &&
-        parseInt(hfConnLeafLength) != txtSheetNo.length &&
-        strStatus != "F"
-      ) {
+      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) != txtSheetNo.length && strStatus != "F") {
         strError = "Invalid sheet length";
         strStatus = "F";
       }
@@ -224,6 +221,7 @@ function fn_ScanSheetDispenserTime() {
         });
         setTxtCBno("");
         rowCount = getData("GetDispenserRecordTimeData", "");
+        console.log(rowCount);
         if (rowCount == 0) {
         } else {
           setLblSheet(`${txtSheetNo}`);
@@ -259,19 +257,46 @@ function fn_ScanSheetDispenserTime() {
     }
   };
 
-  function getData(Config, Param) {
+  async function getData(Config, Param) {
     if (Config == "DeleteDispenserRecordTimeData") {
-      const res = "";
-      //FPC Param.Sheetno
+      let res = "";
+      await axios
+      .post("/api/Dispenser/DeleteDispenserRecordTimeData",{strSheetNo:Param})
+      .then((res) => {
+        if (res.data.length > 0) {
+          res = res.data;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
       return res;
     } else if (Congif == "CallSMTDispenserRecordTimeResult") {
-      const res = "";
-      // FPC Oracle
+      let res = "";
+      await axios
+      .post("/api/Dispenser/set_smt_proc_flow_dispenser",{strSheetNo:Param.sheet,strUser:Param.user,strStation:Param.station,strCBno:Param.CBno})
+      .then((res) => {
+        if (res.data.length > 0) {
+          res = res.data.p_error;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
       return res;
-    } else if (Config == "GetDispenserRecordTimeData") {
-      const res = "";
-      // FPC Oracle
-      return res;
+    } else if (Config == "GetDispenserRecordTimeData") { // Fininsih
+      let res = "";
+      await axios
+      .get("/api/Dispenser/GetDispenserRecordTimeData?strSheetNo="+Param)
+      .then((res) => {
+        if (res.data.length > 0) {
+          res = res.data.ROW_COUNT;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      return parseInt(res);
     }
   }
 

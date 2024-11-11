@@ -90,15 +90,10 @@ function ScanSMTSerialShtFINManySht() {
     hideImg,
     columns,
   } = fn_ScanSMTSerialShtFINManySht();
-  useEffect(() => {
-    if (gvBackSideState === true) {
-      FcgvBackside.current.focus();
-    }
-  }, [gvBackSideState]);
+
   return (
     <div>
       <Hearder />
-
       <Card
         component={Paper}
         className="Card-Common"
@@ -125,7 +120,7 @@ function ScanSMTSerialShtFINManySht() {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell sx={{ width: "400px" }}>Lot No.:</TableCell>
+                    <TableCell >Lot No.:</TableCell>
                     <TableCell>
                       <input
                         className="txtField"
@@ -174,7 +169,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Lot Ref. No.:</TableCell>
+                    <TableCell >Lot Ref. No.:</TableCell>
                     <TableCell>
                       <input
                         size="small"
@@ -197,8 +192,12 @@ function ScanSMTSerialShtFINManySht() {
                         ref={FctxtOperator}
                         value={txtOperator}
                         onChange={(e) => {
-                          setTxtOperator(e.target.value),
-                            { txtOperator_Change };
+                          setTxtOperator(e.target.value)
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtOperator_Change();
+                          }
                         }}
                       ></input>
                     </TableCell>

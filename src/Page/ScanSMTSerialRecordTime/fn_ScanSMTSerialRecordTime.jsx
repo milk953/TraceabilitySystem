@@ -424,10 +424,10 @@ function fn_ScanSMTSerialRecordTime() {
         if (e.key === 'Enter') {
             e.preventDefault();
             const nextIndex = index + 1;
-            if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
+            if (nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
                 console.log('Calling btnSaveClick', nextIndex);
-            } else if (nextIndex === nextIndex) {
+            } else if (nextIndex === gvSerialData.length) {
 
                 btnSaveClick();
             }

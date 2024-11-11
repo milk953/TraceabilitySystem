@@ -1,7 +1,8 @@
 import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-
+import { notification } from "antd";
+import Swal from "sweetalert2";
 function fn_ScanSheetBakeTime() {
   //lbl
   const [lblProductName, setLblProductName] = useState("");
@@ -18,22 +19,23 @@ function fn_ScanSheetBakeTime() {
   //State
   const [txtProcessState, setTxtProcessState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#dbdede" },
+    styled: { backgroundColor: "white" },
   });
   const [txtmcState, setTxtmcState] = useState({
-    disabled: true,
-    styled: { backgroundColor: "#dbdede" },
+    disabled: false,
+    styled: { backgroundColor: "white" },
   });
   const [txtLotNoState, setTxtLotNoState] = useState({
-    disabled: true,
-    styled: { backgroundColor: "#dbdede" },
+    disabled: false,
+    styled: { backgroundColor: "white" },
   });
   const [txtSheetNoState, setTxtSheetNoState] = useState({
-    disabled: true,
-    styled: { backgroundColor: "#dbdede" },
+    disabled: false,
+    styled: { backgroundColor: "white" },
+    // #dbdede
   });
   const [pnlSaveState, setPnlSaveState] = useState(false);
-
+  const [PnlShowresult, setPnlShowresult] = useState(false);
   // focus item
   const FctxtProcess = useRef(null);
   const Fctxtmc = useRef(null);
@@ -54,9 +56,26 @@ function fn_ScanSheetBakeTime() {
   const [hfConnLeafLength, setHfConnLeafLength] = useState("20");
   const [hfFactory, setHfFactory] = useState("A1");
   const plantCode = import.meta.env.VITE_FAC;
+  function setFocus(id) {
+    document.getElementById(id).focus();
+  }
   useEffect(() => {
     PageLoad();
   }, []);
+  useEffect(() => {
+    if (txtLotNoState.Focus) {
+      setFocus("txtLotNoBaking");
+    }
+    if (txtSheetNoState.Focus) {
+      setFocus("txtSheetNoBaking");
+    }
+    if (txtProcessState.Focus) {
+      setFocus("txtProcessBaking");
+    }
+    if (txtmcState.Focus) {
+      setFocus("txtMcBaking");
+    }
+  }, [txtLotNoState.Focus, txtSheetNoState.Focus, txtProcessState.Focus, txtmcState.Focus]);
   const PageLoad = () => {
     setTxtProcess("");
     setTxtmc("");
@@ -80,19 +99,24 @@ function fn_ScanSheetBakeTime() {
     });
   };
   const ibtback_click = () => {
+    setPnlShowresult(false);
+    setPnlSaveState(false);
+    setLblProductName("");
+    setLblSheet("");
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: true,
       styled: { backgroundColor: "#dbdede" },
     });
-    setTxtLotNo('');
+    setTxtLotNo("");
     setTxtLotNoState({
       disabled: false,
       styled: { backgroundColor: "white" },
       Focus: true,
     });
-    FctxtLotNo.current.focus();
-  }
+    setFocus("txtLotNoBaking");
+    // FctxtLotNo.current.focus();
+  };
   const handleTxtProcess_Change = () => {
     if (txtProcess !== "") {
       setTxtmc("");
@@ -101,20 +125,25 @@ function fn_ScanSheetBakeTime() {
         styled: { backgroundColor: "white" },
         Focus: true,
       });
+      setFocus("txtMcBaking");
     } else {
       setTxtProcess("");
-      FctxtProcess.current.focus();
+      setFocus("txtProcessBaking");
     }
   };
   const handleTxtmc_Change = () => {
     if (txtmc !== "") {
       setTxtLotNo("");
+      setTxtmcState({
+        disabled: false,
+        styled: { backgroundColor: "white" },
+      });
       setTxtLotNoState({
         disabled: false,
         styled: { backgroundColor: "white" },
         Focus: true,
       });
-      FctxtLotNo.current.focus();
+      setFocus("txtLotNoBaking");
     } else {
       setTxtmc("");
     }
@@ -139,6 +168,12 @@ function fn_ScanSheetBakeTime() {
             disabled: false,
             styled: { backgroundColor: "white" },
             Focus: true,
+          });
+          notification.error({
+            message: "Error",
+            description: "Not Found Data",
+            placement: "bottomRight",
+            duration: 3,
           });
           return;
         }
@@ -175,6 +210,7 @@ function fn_ScanSheetBakeTime() {
     }
   };
   const handleTxtSheetNo_Change = async () => {
+    setLblResult("")
     let rowCout = 0;
     if (lblRemark !== "") {
       setLblRemark("");
@@ -192,7 +228,6 @@ function fn_ScanSheetBakeTime() {
         }
       }
       if (
-
         parseInt(hfConnLeafLength) > 0 &&
         parseInt(hfConnLeafLength) !== txtSheetNo.length &&
         strStatus == "F"
@@ -205,6 +240,7 @@ function fn_ScanSheetBakeTime() {
           txtSheetNo: txtSheetNo,
           txtProcess: txtProcess,
         });
+        console.log(rowCout, "rowCout");
         if (rowCout == 0) {
           strError = await getData("CallSMTBakingRecordTimeResult", {
             strSheetNo: txtSheetNo,
@@ -218,16 +254,27 @@ function fn_ScanSheetBakeTime() {
           });
           setLblSheet(`${txtSheetNo} [${currentTime}]`);
           setLblRemark(strError);
+          // setPnlSaveState(true);
+          // setPnlShowresult(true);
           if (strError == "") {
             setLblResult({ text: "OK", styled: "green" });
+            Swal.fire({
+              title: "Success",
+              text: "Save Success",
+              icon: "success",
+              showCancelButton: false,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "OK",
+            })
           } else {
             setLblResult({ text: "NG", styled: "red" });
           }
         } else {
-          setLblSheet(txtSheetNo);
+          // setLblSheet(txtSheetNo);
           setPnlSaveState(true);
+          setPnlShowresult(true)
           PnlmainDisable();
-          setLblRemark("Exists record time, please be confirm.");
+          setLblRemark("Exists record time, \n please be confirm.");
         }
       } else {
         setLblResult({ text: "NG", styled: "red" });
@@ -249,30 +296,97 @@ function fn_ScanSheetBakeTime() {
     }
   };
   const btnDelete = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to Delete this record?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteData();
+      }
+    });
+  };
+  async function deleteData(){
     let strError = "";
     let strStatus = "";
     strError = await getData("DeleteBakingRecordTimeData", {
-      strSheetNo: lblSheet,
+      strSheetNo: txtSheetNo,
       strProcId: txtProcess,
     });
 
     setLblSheet(`${lblSheet} Delete`);
     setLblRemark(strError);
-    if (strStatus == "P"){  
+    if (strError == "") {
+      Swal.fire({
+        title: "Success",
+        text: "Delete Success",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+        timer: 2000,
+      })
+      // notification.success({
+      //   message: "Success",
+      //   description: "Delete Success",
+      //   placement: "bottomRight",
+      //   duration: 3,
+      // });
       setLblResult({ text: "OK", styled: "green" });
     }else{
+      // notification.error({
+      //   message: "Error",
+      //   description: strError,
+      //   placement: "bottomRight",
+      //   duration: 3,
+      // });
+      Swal.fire({
+        title: "Error",
+        text: strError,
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+        timer: 2000,
+      })
       setLblResult({ text: "NG", styled: "red" });
     }
+    // if (strStatus == "P") {
+    //   setLblResult({ text: "OK", styled: "green" });
+    // } else {
+    //   setLblResult({ text: "NG", styled: "red" });
+    // }
     setPnlSaveState(false);
+    setPnlShowresult(false);
     PnlmainEnable();
     setTxtSheetNo("");
-    setTxtSheetNoState({Focus: true});
+    setTxtSheetNoState({ Focus: true });
+    setFocus("txtSheetNoBaking");
+  }
+  const btnReplace = async () => {
 
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to replace this record?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Replace();
+      }
+    });
+    
   };
-  const btnReplace = async () =>{
+  async function Replace(){
     let strError = "";
     let strStatus = "";
-    console.log(txtSheetNo)
     strError = await getData("CallSMTBakingRecordTimeResult", {
       strSheetNo: txtSheetNo,
       strmachineNo: txtProcess,
@@ -286,25 +400,34 @@ function fn_ScanSheetBakeTime() {
     setLblSheet(`${txtSheetNo} [${currentTime}]`);
     setLblRemark(strError);
     if (strError == "") {
+      notification.success({
+        message: "Success",
+        description: "Replace Success",
+        placement: "bottomRight",
+        duration: 3,
+      });
       setLblResult({ text: "OK", styled: "green" });
     } else {
       setLblResult({ text: "NG", styled: "red" });
     }
     setPnlSaveState(false);
+    setPnlShowresult(false);
     PnlmainEnable();
     setTxtSheetNo("");
-    setTxtSheetNoState({Focus: true});
+    setTxtSheetNoState({ Focus: true });
+    setFocus("txtSheetNoBaking");
   }
   const btnCancel = () => {
     setPnlSaveState(false);
+    setPnlShowresult(false);
     PnlmainEnable();
     setLblSheet("");
     setLblRemark("");
     setLblResult("");
     setTxtSheetNo("");
-    setTxtSheetNoState({Focus: true});
-
-  }
+    setTxtSheetNoState({ Focus: true });
+    setFocus("txtSheetNoBaking");
+  };
   function PnlmainDisable() {
     setTxtProcessState({
       disabled: true,
@@ -320,7 +443,7 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "#dbdede" },
     });
   }
-  function PnlmainEnable(){
+  function PnlmainEnable() {
     setTxtProcessState({
       disabled: false,
       styled: { backgroundColor: "#dbdede" },
@@ -335,10 +458,11 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "#dbdede" },
     });
   }
-  
+
   async function getData(type, params) {
     let Result = "";
-    if (type == "prdName") { //ok
+    if (type == "prdName") {
+      //ok
       await axios
         .post("/api/Common/getProductNameByLot", {
           strLot: params,
@@ -349,12 +473,18 @@ function fn_ScanSheetBakeTime() {
           }
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
-    } else if (type == "getSerial") {   //ok FIN 995123423
+    } else if (type == "getSerial") {
+      //ok FIN 995123423
       await axios
         .post(
-          "/api/GetSerialProductByProduct",
+          "/api/Common/GetSerialProductByProduct",
           {
             prdName: params,
           },
@@ -373,13 +503,24 @@ function fn_ScanSheetBakeTime() {
             setHfConnLeafLength(res.data.PRM_CONN_LEAF_LENGTH);
             Result = "OK";
           } else if (res.status == 404) {
-            alert("Not Found Data");
+            notification.error({
+              message: "Error",
+              description: "Not Found Data",
+              placement: "bottomRight",
+              duration: 3,
+            });
           }
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
-    } else if (type == "GetMOTRecordTimeData") { //ok
+    } else if (type == "GetMOTRecordTimeData") {
+      //ok
       await axios
         .post(
           "/api/Common/getMOTRecordTimeData",
@@ -387,7 +528,7 @@ function fn_ScanSheetBakeTime() {
             dataList: {
               strSheetNo: params.txtSheetNo,
               strProcId: params.txtProcess,
-              strPlantCode : plantCode
+              strPlantCode: plantCode,
             },
           },
           {
@@ -400,13 +541,28 @@ function fn_ScanSheetBakeTime() {
           if (res.data != "" && res.status == 200) {
             Result = res.data[0].row_count;
           } else if (res.status == 404) {
-            alert("Not Found Data");
+            notification.error({
+              message: "Error",
+              description: "Not Found Data",
+              placement: "bottomRight",
+              duration: 3,
+            });
           } else {
-            alert("Error");
+            notification.error({
+              message: "Error",
+              description: "Eror",
+              placement: "bottomRight",
+              duration: 3,
+            });
           }
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
     } else if (type == "CallSMTBakingRecordTimeResult") {
       await axios
@@ -420,7 +576,7 @@ function fn_ScanSheetBakeTime() {
               strProduct: params.strProduct,
               strProcess: params.strProcess,
               strFactory: hfFactory,
-              strPlantCode :plantCode
+              strPlantCode: plantCode,
             },
           },
           {
@@ -433,17 +589,23 @@ function fn_ScanSheetBakeTime() {
           Result = res.data.p_error;
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
     } else if (type == "DeleteBakingRecordTimeData") {
-      await axios
+      console.log(params, "params");
+      await axios        
         .post(
           "/api/DeleteBakingRecordTimeData",
           {
             dataList: {
               strSheetNo: params.strSheetNo,
               strProcId: params.strProcId,
-              strPlantCode :plantCode
+              strPlantCode: plantCode,
             },
           },
           {
@@ -456,7 +618,12 @@ function fn_ScanSheetBakeTime() {
           Result = res.data.p_error;
         })
         .catch((error) => {
-          alert(error);
+          notification.error({
+            message: "Error",
+            description: error,
+            placement: "bottomRight",
+            duration: 3,
+          });
         });
     }
     return Result;
@@ -498,8 +665,9 @@ function fn_ScanSheetBakeTime() {
     //btn
     btnDelete,
     btnReplace,
-    btnCancel
-    ,ibtback_click
+    btnCancel,
+    ibtback_click,
+    PnlShowresult
   };
 }
 
