@@ -284,6 +284,7 @@ function ScanSMTSerialSht() {
                                                     <TableCell>
                                                         <TextField
                                                             className="input_txt"
+                                                            id="SideBack"
                                                             size="small"
                                                             fullWidth
                                                             value={txtSideBack[index] || ""}
@@ -332,6 +333,7 @@ function ScanSMTSerialSht() {
                                             <TableCell>
                                                 <TextField
                                                     className="input_txt"
+                                                    id="SideFront"
                                                     size="small"
                                                     fullWidth
                                                     value={txtSideFront}
@@ -461,7 +463,7 @@ function ScanSMTSerialSht() {
                                                     sx={{ borderRight: "1px solid #d9d9d9" }}
                                                     align="center"
                                                 >
-                                                    {index + 1}
+                                                    {gvSerialData[index].SEQ}
                                                 </TableCell>
                                                 <TableCell>
                                                     <TextField
@@ -529,7 +531,7 @@ function ScanSMTSerialSht() {
                                     className="Card-lblResult"
                                     style={{
                                         background: lblResultcolor,
-                                        width: "70%", 
+                                        width: "100%",
                                     }}
                                 >
                                     <Typography
