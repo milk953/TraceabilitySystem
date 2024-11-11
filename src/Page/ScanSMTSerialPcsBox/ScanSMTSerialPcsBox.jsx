@@ -70,7 +70,7 @@ function ScanSMTSerialPcsBox() {
                             txtLot_TextChanged();
                           }
                         }}
-                        onBlur={txtLot_TextChanged}
+                        //onBlur={txtLot_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack"
                       onClick={ibtBack_Click}
@@ -146,7 +146,7 @@ function ScanSMTSerialPcsBox() {
                             txtMachine_TextChanged();
                           }
                         }}
-                        onBlur={txtMachine_TextChanged}
+                        //onBlur={txtMachine_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtMachineBack_Click}
@@ -180,7 +180,7 @@ function ScanSMTSerialPcsBox() {
                             txtOP_TextChanged();
                           }
                         }}
-                        onBlur={txtOP_TextChanged}
+                        //onBlur={txtOP_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtOPBack_Click}
@@ -193,9 +193,10 @@ function ScanSMTSerialPcsBox() {
                     <TableCell align="right">
                       <Typography>Box No.:</Typography>
                     </TableCell>
+                    {console.log(txtBox.disbled,"11111")}
                     <TableCell colSpan={4}>
                       <TextField
-                         className="input_txt"
+                        className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtBox.current = el)}
 
@@ -206,7 +207,8 @@ function ScanSMTSerialPcsBox() {
                             value: e.target.value,
                           }));
                         }}
-                        style={{ backgroundColor: txtBox.disbled ? '#e0e0e0' : 'inherit'}}
+                       
+                        style={{ background: txtBox.disbled ? '#e0e0e0' : 'inherit'}}
                         disabled={txtBox.disbled} //true พิมไม่ได้
                         // inputRef={fntxtBox}
                         onKeyDown={(e) => {
@@ -214,7 +216,7 @@ function ScanSMTSerialPcsBox() {
                             txtBox_TextChanged();
                           }
                         }}
-                        onBlur={txtBox_TextChanged}
+                        //onBlur={txtBox_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtBox_Click}
@@ -248,7 +250,7 @@ function ScanSMTSerialPcsBox() {
                             txtPack_TextChanged();
                           }
                         }}
-                        onBlur={txtPack_TextChanged}
+                        //onBlur={txtPack_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtPack_Click}
@@ -295,7 +297,7 @@ function ScanSMTSerialPcsBox() {
                             txtPcsTray_TextChanged();
                           }
                         }}
-                        onBlur={txtPcsTray_TextChanged}
+                        //onBlur={txtPcsTray_TextChanged}
                       ></TextField>
                       &nbsp; 
                       {lblLastTray.value}
@@ -399,10 +401,10 @@ function ScanSMTSerialPcsBox() {
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
                           value={txtSerial[index]}
-                          onBlur={(event) => {
-                            handleSerialChange(index, event);
+                          //onBlur={(event) => {
+                          //   handleSerialChange(index, event);
                            
-                          }}
+                          // }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {

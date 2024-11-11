@@ -262,26 +262,25 @@ function ScanSheetMOTTime() {
                       </Card>
                     </TableCell>
                   </TableRow>
-                  {console.log('lblRemark1',lblResult.value,'---l',lblRemark)}
-                  {(lblResult.value !== ''|| lblResult.value!=undefined) && (lblRemark !== ''||lblRemark!=undefined) && (
+                  {/* {console.log('lblRemark1',lblResult.value,'---l',lblRemark)} */}
+                  {((lblResult.value !== undefined && lblResult.value !== '') || (lblRemark !== undefined && lblRemark !== '')) && (
                   <TableRow style={{ height: "180px" }} >
                     <TableCell colSpan={3}>
                       <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"
-                          style={{ color:'#fff', marginTop: "40px", fontSize: "90px"  }}
+                          style={{ color:'#fff', marginTop: "30px", fontSize: "90px"  }}
                         >
                           {lblResult.value}
                         </Typography>
-                        {/* marginTop: lblResult.value === '' ? "380px" : "0px", */}
-                        <Typography align="center" style={{ fontSize: "20px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "80px" : "0px"}}>
+                        <Typography align="center" style={{ fontSize: "34px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "65px" : "0px",whiteSpace: "pre-line"}}>
                           {lblRemark}
                         </Typography>
                       </Card>
                     </TableCell>
                   </TableRow>
                   )}
-                  <TableRow  > 
+                  <TableRow  style={{display:pnlSave}} > 
                     {/* style={{display:pnlSave}} */}
                     <TableCell colSpan={3} align="center">
                       <Button variant="contained" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>&nbsp;

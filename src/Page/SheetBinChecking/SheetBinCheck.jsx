@@ -14,6 +14,7 @@ import Hearder from "../Header/Header";
 import {fn_SheetBinCheck} from "./fn_SheetBinCheck"
 function ScanBinCheck() {
 const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht} =fn_SheetBinCheck()
+
   return (
     <div>
       <Hearder />
@@ -71,11 +72,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
           
         </Table>
       </div>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-      >
-        <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
-      </div>
+     
     </div>
   );
 }

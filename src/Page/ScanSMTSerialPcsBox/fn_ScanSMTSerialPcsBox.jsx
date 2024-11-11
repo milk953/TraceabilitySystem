@@ -992,7 +992,7 @@ function fn_ScanSMTSerialPcsBox() {
           console.log("SAVE เข้า 22222",_bolTrayError)
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
             await axios
-            .post("/api/common/GetSerialTestResultManyTable", {
+            .post("/api/common/GetSerialBoxTestResultManyTableOnlyGood", {
               dataList: [
                 {
                   strPlantCode: "5",
@@ -1120,11 +1120,12 @@ function fn_ScanSMTSerialPcsBox() {
                       _bolError = true;
                     }
                     if (hfSerialFixFlag == "Y" && _strScanResultUpdate != "NG") {
+                      
                       _strFixDigit = _strSerial.substring(
-                        parseInt(hfSerialStartDigit, 10) - 1,
-                        parseInt(hfSerialEndDigit, 10)
+                        parseInt(hfSerialStartDigit) - 1,
+                        parseInt(hfSerialEndDigit)
                       );
-                   
+                      console.log("มาแล้วนะคะอิอิ" ,_strFixDigit,hfSerialDigit)
                       if (_strFixDigit != hfSerialDigit) {
                         _strMessageUpdate =
                           "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1139,8 +1140,8 @@ function fn_ScanSMTSerialPcsBox() {
                       if (hfConfigCheck != "Y" && _strScanResultUpdate != "NG") {
                         let _strConfigDigit = "";
                         _strConfigDigit = _strSerial.substring(
-                          parseInt(hfConfigStart, 10) - 1,
-                          parseInt(hfConfigEnd, 10)
+                          parseInt(hfConfigStart) - 1,
+                          parseInt(hfConfigEnd)
                         );
                         if (_strConfigDigit !== hfConfigCode) {
                           _strMessageUpdate =
@@ -1161,6 +1162,7 @@ function fn_ScanSMTSerialPcsBox() {
                         _strSerial.substring(0, hfSerialStartCode.length) !==
                         hfSerialStartCode
                       ) {
+                        console.log(hfSerialStartCode,"เข้านะค้าบบบ",_strSerial.substring(0, hfSerialStartCode.length))
                         _strMessageUpdate =
                           "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                         _strRemark = "Serial barcode mix product";

@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { TableSortLabel } from "@mui/material";
-import { color } from "framer-motion";
 
 function fn_ScanSheetMOTTime() {
   //txt
@@ -77,10 +75,11 @@ function fn_ScanSheetMOTTime() {
   const params = new URLSearchParams(window.location.search);
   const url = window.location.href;
   const partweb = url.split("/")[4].split("?")[0];
-  console.log(partweb);
+  console.log(partweb,'webbbb');
   const CB = params.get("CB");
   const SUS = params.get("SUS");
   let hfZPRNProcID = "";
+  
   if (partweb == "ScanSheetMOTTime") {
     hfZPRNProcID = "1840";
   } else if (partweb == "ScanSheetMOTTime2") {
@@ -267,9 +266,9 @@ function fn_ScanSheetMOTTime() {
           focus: true,
         }));
 
-        setTimeout(() => {
-          fctxtSheetNo.current.focus();
-        }, 300);
+        // setTimeout(() => {
+        //   fctxtSheetNo.current.focus();
+        // }, 300);
       } else {
         settxtlot((prevState) => ({ ...prevState, value: "", focus: true }));
 
@@ -278,12 +277,7 @@ function fn_ScanSheetMOTTime() {
         }, 300);
       }
     }
-    // else {
-    //   settxtlot((prevState) => ({ ...prevState, value: "",focus:true }));
-    //   setTimeout(() => {
-    //     fctxtLotno.current.focus();
-    //   }, 300);
-    // }
+
   };
 
   const txtSheetNo_TextChanged = async () => {
@@ -298,13 +292,6 @@ function fn_ScanSheetMOTTime() {
         const midValue = sheetNo.substring(
           parseInt(hfCheckPrdShtStart) - 1,
           parseInt(hfCheckPrdShtEnd)
-        );
-        console.log(
-          sheetNo,
-          "----",
-          hfCheckPrdAbbr,
-          "hfCheckPrdAbbr",
-          midValue
         );
         if (hfCheckPrdAbbr !== midValue) {
           strStatus = "F";
@@ -359,6 +346,9 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
+            // setTimeout(() => {
+            //   fctxtSheetNo.current.focus();
+            // }, 300);
             setlblRemark("");
             await axios
               .post("/api/CallFPCSheetLeadTimeResult", {
@@ -399,11 +389,11 @@ function fn_ScanSheetMOTTime() {
               }));
             }
           } else {
+            console.log('data2222')
             setlblSheet(txtSheet.value);
             setpnlSave("");
-            /// pnlMain.Enabled = False
             setlblResult("");
-            setlblRemark("Exists record time, please be confirm.");
+            setlblRemark("Exists record time, \n Please be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
               style: { color: "#fff",background:'#FF7F3E' },
@@ -415,9 +405,6 @@ function fn_ScanSheetMOTTime() {
             focus: true,
           }));
 
-          setTimeout(() => {
-            fctxtSheetNo.current.focus();
-          }, 300);
         }
       } else {
         setlblResult((prevState) => ({
@@ -428,16 +415,12 @@ function fn_ScanSheetMOTTime() {
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "", focus: true }));
 
-        setTimeout(() => {
-          fctxtSheetNo.current.focus();
-        }, 300);
+        // setTimeout(() => {
+        //   fctxtSheetNo.current.focus();
+        // }, 300);
       }
     } else {
       settxtSheet((prevState) => ({ ...prevState, value: "", focus: true }));
-
-      setTimeout(() => {
-        fctxtSheetNo.current.focus();
-      }, 300);
     }
   };
 
@@ -449,7 +432,6 @@ function fn_ScanSheetMOTTime() {
       let strStatus = "";
       let rowCount = 0;
       setlblRemark("");
-
       setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
         const sheetNo = txtSheet.value.trim().toUpperCase();
@@ -464,7 +446,7 @@ function fn_ScanSheetMOTTime() {
         }
       }
 
-      const connLeafLength = parseInt(hfConnLeafLength.value, 10);
+      const connLeafLength = parseInt(hfConnLeafLength, 10);
       const sheetNoLength = txtSheet.value.trim().toUpperCase().length;
 
       if (
@@ -537,7 +519,7 @@ function fn_ScanSheetMOTTime() {
             setpnlSave("");
             /// pnlMain.Enabled = False
             setlblResult("");
-            setlblRemark("Exists record time, please be confirm.");
+            setlblRemark("Exists record time, \n Please be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
               style: { color: "#fff",background:'#FF7F3E' },
@@ -546,9 +528,9 @@ function fn_ScanSheetMOTTime() {
           settxtSheet((prevState) => ({ ...prevState, value: "" }));
           settxtCBNo((prevState) => ({ ...prevState, value: "" }));
 
-          setTimeout(() => {
-            fctxtSheetNo.current.focus();
-          }, 300);
+          // setTimeout(() => {
+          //   fctxtSheetNo.current.focus();
+          // }, 300);
         }
       } else {
         setlblResult((prevState) => ({
@@ -558,16 +540,16 @@ function fn_ScanSheetMOTTime() {
         }));
         setlblRemark(strError);
         settxtSheet((prevState) => ({ ...prevState, value: "" }));
-        setTimeout(() => {
-          fctxtSheetNo.current.focus();
-        }, 300);
+        // setTimeout(() => {
+        //   fctxtSheetNo.current.focus();
+        // }, 300);
       }
     } else {
       settxtSheet((prevState) => ({ ...prevState, value: "" }));
 
-      setTimeout(() => {
-        fctxtSheetNo.current.focus();
-      }, 300);
+      // setTimeout(() => {
+      //   fctxtSheetNo.current.focus();
+      // }, 300);
     }
   };
 
@@ -653,7 +635,7 @@ function fn_ScanSheetMOTTime() {
           setlblSheet(txtSheet.value);
           setpnlSave("");
           setlblResult("");
-          setlblRemark("Exists record time, please be confirm.");
+          setlblRemark("Exists record time, \n Please be confirm.");
           setlblResult((prevState) => ({
             ...prevState,
             style: { color: "#fff",background:'#FF7F3E' },
@@ -662,9 +644,9 @@ function fn_ScanSheetMOTTime() {
         settxtSheet((prevState) => ({ ...prevState, value: "" }));
         settxtCBNo((prevState) => ({ ...prevState, value: "" }));
         settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
-        setTimeout(() => {
-          fctxtSheetNo.current.focus();
-        }, 300);
+        // setTimeout(() => {
+        //   fctxtSheetNo.current.focus();
+        // }, 300);
       } else {
         setlblResult((prevState) => ({
           ...prevState,
@@ -675,17 +657,17 @@ function fn_ScanSheetMOTTime() {
         settxtSheet((prevState) => ({ ...prevState, value: "" }));
         settxtCBNo((prevState) => ({ ...prevState, value: "" }));
         settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
-        setTimeout(() => {
-          fctxtSheetNo.current.focus();
-        }, 300);
+        // setTimeout(() => {
+        //   fctxtSheetNo.current.focus();
+        // }, 300);
       }
     } else {
       settxtSheet((prevState) => ({ ...prevState, value: "" }));
       settxtCBNo((prevState) => ({ ...prevState, value: "" }));
       settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
-      setTimeout(() => {
-        fctxtSheetNo.current.focus();
-      }, 300);
+      // setTimeout(() => {
+      //   fctxtSheetNo.current.focus();
+      // }, 300);
     }
   };
 
@@ -756,9 +738,9 @@ function fn_ScanSheetMOTTime() {
         value: "",
       }));
     }
-    setTimeout(() => {
-      fctxtSheetNo.current.focus();
-    }, 300);
+    // setTimeout(() => {
+    //   fctxtSheetNo.current.focus();
+    // }, 300);
   };
 
   const BtClick_Replace = async () => {
@@ -822,69 +804,82 @@ function fn_ScanSheetMOTTime() {
       }));
     }
 
-    setTimeout(() => {
-      fctxtSheetNo.current.focus();
-    }, 300);
+    // setTimeout(() => {
+    //   fctxtSheetNo.current.focus();
+    // }, 300);
   };
 
   const BtClick_Delete = async () => {
     let strError = "";
     let strStatus = "";
-
-    await axios
-      .post("/api/DeleteMOTRecordTimeData", {
-        data: {
-          _strPlantCode: Fac,
-          _strSheetNo: lblSheet,
-          _strProcID: hfZPRNProcID,
-        },
-      })
-      .then((res) => {
-        console.log("dele ", res.data);
-        // if(res.data.length>0)
-        strError = res.data.p_error;
-      });
-    setlblSheet(lblSheet + " Delete");
-    setlblRemark(strError);
-    if (strStatus == "P") {
-      setlblResult((prevState) => ({
+    Swal.fire({
+      title: "Are you sure to Delete this Data?",
+      // text: "Are you sure to Delete this Data!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then(async(result)  => {
+      if (result.isConfirmed) {
+        await axios
+        .post("/api/DeleteMOTRecordTimeData", {
+          data: {
+            _strPlantCode: Fac,
+            _strSheetNo: lblSheet,
+            _strProcID: hfZPRNProcID,
+          },
+        })
+        .then((res) => {
+          strError = res.data.p_error;
+        });
+      setlblSheet(lblSheet + " Delete");
+      setlblRemark(strError);
+      // if (strStatus == "P") {
+      //   setlblResult((prevState) => ({
+      //     ...prevState,
+      //     style: { color: "#fff",background:'#059212' },
+      //     value: "OK",
+      //   }));
+      // } else {
+      //   setlblResult((prevState) => ({
+      //     ...prevState,
+      //     style: { color: "#fff",background:'red' },
+      //     value: "NG",
+      //   }));
+      // }
+      setpnlSave("none");
+      settxtSheet((prevState) => ({
         ...prevState,
-        style: { color: "#fff",background:'#059212' },
-        value: "OK",
-      }));
-    } else {
-      setlblResult((prevState) => ({
-        ...prevState,
-        style: { color: "#fff",background:'red' },
-        value: "NG",
-      }));
-    }
-    setpnlSave("none");
-
-    settxtSheet((prevState) => ({
-      ...prevState,
-      value: "",
-    }));
-    if (txtCBNo.visble == "") {
-      settxtCBNo((prevState) => ({
-        ...prevState,
-        disbled: false,
-        style: { background: "" },
         value: "",
       }));
-    }
-    if (txtSUSNo.visble == "") {
-      settxtSUSNo((prevState) => ({
-        ...prevState,
-        disbled: false,
-        style: { background: "" },
-        value: "",
-      }));
-    }
+      if (txtCBNo.visble == "") {
+        settxtCBNo((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
+      }
+      if (txtSUSNo.visble == "") {
+        settxtSUSNo((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
+      }
+        Swal.fire({
+          title: "Delete Success!",
+          icon: "success"
+        });
+      }
+    });
 
-    setTimeout(() => {
-      fctxtSheetNo.current.focus();
-    }, 300);
+
+    // setTimeout(() => {
+    //   fctxtSheetNo.current.focus();
+    // }, 300);
   };
 
   return {

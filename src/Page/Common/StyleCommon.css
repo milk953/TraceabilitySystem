@@ -81,6 +81,11 @@ margin-bottom: 30px;
   height: 10px;
 }
 
+.input_txt_Master .MuiInputBase-input {
+    height: 10px;
+    background-color: #fff;
+  }
+
 
 .Select_dropDown .MuiInputBase-input {
     height: 12px; 
