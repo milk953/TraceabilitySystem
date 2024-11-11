@@ -34,7 +34,7 @@ function fn_ScanSheetBakeTime() {
     styled: { backgroundColor: "#dbdede" },
   });
   const [pnlSaveState, setPnlSaveState] = useState(false);
-
+  const [PnlShowresult, setPnlShowresult] = useState(false);
   // focus item
   const FctxtProcess = useRef(null);
   const Fctxtmc = useRef(null);
@@ -98,6 +98,8 @@ function fn_ScanSheetBakeTime() {
     });
   };
   const ibtback_click = () => {
+    setLblProductName("");
+    setLblSheet("");
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: true,
@@ -257,8 +259,9 @@ function fn_ScanSheetBakeTime() {
         } else {
           setLblSheet(txtSheetNo);
           setPnlSaveState(true);
+          setPnlShowresult(true)
           PnlmainDisable();
-          setLblRemark("Exists record time, please be confirm.");
+          setLblRemark("Exists record time, \n please be confirm.");
         }
       } else {
         setLblResult({ text: "NG", styled: "red" });
@@ -312,6 +315,7 @@ function fn_ScanSheetBakeTime() {
     //   setLblResult({ text: "NG", styled: "red" });
     // }
     setPnlSaveState(false);
+    setPnlShowresult(false);
     PnlmainEnable();
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
@@ -344,6 +348,7 @@ function fn_ScanSheetBakeTime() {
       setLblResult({ text: "NG", styled: "red" });
     }
     setPnlSaveState(false);
+    setPnlShowresult(false);
     PnlmainEnable();
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
@@ -351,6 +356,7 @@ function fn_ScanSheetBakeTime() {
   };
   const btnCancel = () => {
     setPnlSaveState(false);
+    setPnlShowresult(false);
     PnlmainEnable();
     setLblSheet("");
     setLblRemark("");
@@ -598,6 +604,7 @@ function fn_ScanSheetBakeTime() {
     btnReplace,
     btnCancel,
     ibtback_click,
+    PnlShowresult
   };
 }
 
