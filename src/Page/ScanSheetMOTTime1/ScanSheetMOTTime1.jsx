@@ -262,7 +262,7 @@ function ScanSheetMOTTime() {
                       </Card>
                     </TableCell>
                   </TableRow>
-                  {console.log('lblRemark1',lblResult.value,'---l',lblRemark)}
+                  {/* {console.log('lblRemark1',lblResult.value,'---l',lblRemark)} */}
                   {((lblResult.value !== undefined && lblResult.value !== '') || (lblRemark !== undefined && lblRemark !== '')) && (
                   <TableRow style={{ height: "180px" }} >
                     <TableCell colSpan={3}>
