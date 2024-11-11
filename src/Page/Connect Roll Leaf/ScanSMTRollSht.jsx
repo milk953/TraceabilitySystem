@@ -152,6 +152,7 @@ function ScanSMTRoollSht() {
                     <TableCell align="right">
                       <Typography>Check Roll :</Typography>
                     </TableCell>
+                    {console.log(lblCheckRoll)}
                     <TableCell colSpan={1}>
                       {" "}
                       <div style={lblCheckRoll.style}>

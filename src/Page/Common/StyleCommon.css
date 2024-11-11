@@ -186,6 +186,18 @@ background-color: #e0e0e0;
 
 }
 
+.ButtonReplace{
+    background: green !important;
+}
+
+.ButtonDelete{
+    background: red !important;
+}
+
+.ButtonCancel{
+    background: gray !important;
+}
+
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {
     background-color: #f9f9f9;
   
