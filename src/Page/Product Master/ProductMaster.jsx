@@ -92,7 +92,7 @@ function ProductMaster() {
                 className="Card-Common"
                 sx={{
                     display: "flex",
-                    width: "1480px",
+                    width: "1470px",
                     flexDirection: "column"
                 }}
             >
@@ -156,7 +156,7 @@ function ProductMaster() {
                                             size="small"
                                             fullWidth
                                             style={{
-                                                width: "430px",
+                                                width: "420px",
                                             }}
                                             value={txtProduct.toUpperCase()}
                                             onChange={handleKeyProductName}
@@ -177,6 +177,9 @@ function ProductMaster() {
                                         >
                                             Retrive
                                         </Button>
+                                    </TableCell>
+                                    <TableCell style={{ width: "420px" }}>
+
                                     </TableCell>
                                 </TableRow>
 
@@ -217,8 +220,8 @@ function ProductMaster() {
                                             id="ChkStartDig"
                                             size="small"
                                             value={txtChkStartDig}
+                                            fullWidth
                                             style={{
-                                                width: "450px",
                                                 backgroundColor: "#fff"
                                             }}
                                             onChange={(e) => {
@@ -258,9 +261,6 @@ function ProductMaster() {
                                             id="shtlot"
                                             size="small"
                                             fullWidth
-                                            style={{
-                                                backgroundColor: "#fff"
-                                            }}
                                             value={txtShtLot}
                                             onChange={(e) => {
                                                 const value = e.target.value;
@@ -404,7 +404,7 @@ function ProductMaster() {
                                                 <TextField
                                                     {...params}
                                                     size="small"
-                                                    sx={{ textAlign: "left" }}
+                                                    sx={{ textAlign: "left", backgroundColor: "#fff" }}
                                                     error={ErrorselSheetType}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
@@ -488,7 +488,7 @@ function ProductMaster() {
                                                 <TextField
                                                     {...params}
                                                     size="small"
-                                                    sx={{ textAlign: "left" }}
+                                                    sx={{ textAlign: "left", backgroundColor: "#fff" }}
                                                     error={ErrorselDateType}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
@@ -693,7 +693,7 @@ function ProductMaster() {
                                                 <TextField
                                                     {...params}
                                                     size="small"
-                                                    sx={{ textAlign: "left" }}
+                                                    sx={{ textAlign: "left", backgroundColor: "#fff" }}
                                                     error={ErrorLaminationSide}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
@@ -2026,21 +2026,9 @@ function ProductMaster() {
                                                 if (ReqCheckWeekCodeCheck) {
                                                     document.getElementById("WeekCodeStart").focus();
                                                 } else {
-                                                    document.getElementById("cbxReqConRollLeaf").focus();
+                                                    document.getElementById("cbxReqSheetMC").focus();
                                                 }
                                             }}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>Req. Connect Machine :</Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Checkbox
-                                            size="small"
-                                            id="cbxReqSheetMC"
-                                            style={{ padding: "0" }}
-                                            checked={ReqSheetMCCheck}
-                                            onChange={(e) => setReqSheetMCCheck(e.target.checked)}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -2100,7 +2088,7 @@ function ProductMaster() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    document.getElementById("cbxReqConRollLeaf").focus();
+                                                    document.getElementById("cbxReqSheetMC").focus();
                                                 }
                                             }}
                                             error={ErrorWeekCodeEnd}
@@ -2121,6 +2109,30 @@ function ProductMaster() {
                                             {ErrorWeekCodeEndMessage}
                                         </Typography>
                                     </TableCell>
+                                </TableRow>
+
+                                <TableRow className="special-row">
+                                    <TableCell>
+                                        <Typography>Req. Connect Machine :</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Checkbox
+                                            size="small"
+                                            id="cbxReqSheetMC"
+                                            style={{ padding: "0" }}
+                                            checked={ReqSheetMCCheck}
+                                            onChange={(e) => setReqSheetMCCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqConRollLeaf").focus();
+                                                }
+                                            }}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                    <TableCell style={{ padding: "3px" }}></TableCell>
                                 </TableRow>
 
                                 <TableRow className="group">
@@ -3000,7 +3012,7 @@ function ProductMaster() {
                                                     if (ReqProcControlTimeCheck) {
                                                         document.getElementById("ProcControlTime").focus();
                                                     } else {
-                                                        document.getElementById("cbxReqFinalPackingGroup").focus();
+                                                        document.getElementById("cbxReqFinInspect").focus();
                                                     }
                                                 }
                                             }}
@@ -3061,23 +3073,6 @@ function ProductMaster() {
                                             disabled={cbxReqConnShtPcsTimeDisabled}
                                             checked={ReqConnShtPcsTimeCheck}
                                             onChange={(e) => setReqConnShtPcsTimeCheck(e.target.checked)}
-                                            onKeyDown={(e) => {
-                                                if (e.key === "Enter") {
-                                                    document.getElementById("cbxReqFinalPackingGroup").focus();
-                                                }
-                                            }}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>Req. Final Gate Packing Group :</Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Checkbox
-                                            size="small"
-                                            id="cbxReqFinalPackingGroup"
-                                            style={{ padding: "0" }}
-                                            checked={ReqFinalPackingGroupCheck}
-                                            onChange={(e) => setReqFinalPackingGroupCheck(e.target.checked)}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     document.getElementById("cbxReqFinInspect").focus();
@@ -3253,7 +3248,7 @@ function ProductMaster() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    document.getElementById("cbxReqEFPCAOM").focus();
+                                                    document.getElementById("cbxReqFinalPackingGroup").focus();
                                                 }
                                             }}
                                         />
@@ -3265,6 +3260,23 @@ function ProductMaster() {
                                 </TableRow>
 
                                 <TableRow className="special-row">
+                                    <TableCell>
+                                        <Typography>Req. Final Gate Packing Group :</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Checkbox
+                                            size="small"
+                                            id="cbxReqFinalPackingGroup"
+                                            style={{ padding: "0" }}
+                                            checked={ReqFinalPackingGroupCheck}
+                                            onChange={(e) => setReqFinalPackingGroupCheck(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxReqEFPCAOM").focus();
+                                                }
+                                            }}
+                                        />
+                                    </TableCell>
                                     <TableCell>
                                         <Typography>Final Gate Req. EFPC: AOM,AOI,OST,AVI :</Typography>
                                     </TableCell>
@@ -3428,7 +3440,7 @@ function ProductMaster() {
                                             onChange={(e) => setConnShtReqProductFlg(e.target.checked)}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    e.preventDefault(); 
+                                                    e.preventDefault();
                                                     btnSubmitClick();
                                                 }
                                             }}
