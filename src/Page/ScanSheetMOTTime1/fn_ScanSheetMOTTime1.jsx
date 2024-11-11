@@ -403,7 +403,7 @@ function fn_ScanSheetMOTTime() {
             setpnlSave("");
             /// pnlMain.Enabled = False
             setlblResult("");
-            setlblRemark("Exists record time, please be confirm.");
+            setlblRemark("Exists record time, \n Please be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
               style: { color: "#fff",background:'#FF7F3E' },
@@ -537,7 +537,7 @@ function fn_ScanSheetMOTTime() {
             setpnlSave("");
             /// pnlMain.Enabled = False
             setlblResult("");
-            setlblRemark("Exists record time, please be confirm.");
+            setlblRemark("Exists record time, \n Please be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
               style: { color: "#fff",background:'#FF7F3E' },
@@ -653,7 +653,7 @@ function fn_ScanSheetMOTTime() {
           setlblSheet(txtSheet.value);
           setpnlSave("");
           setlblResult("");
-          setlblRemark("Exists record time, please be confirm.");
+          setlblRemark("Exists record time, \n Please be confirm.");
           setlblResult((prevState) => ({
             ...prevState,
             style: { color: "#fff",background:'#FF7F3E' },
@@ -830,57 +830,70 @@ function fn_ScanSheetMOTTime() {
   const BtClick_Delete = async () => {
     let strError = "";
     let strStatus = "";
-
-    await axios
-      .post("/api/DeleteMOTRecordTimeData", {
-        data: {
-          _strPlantCode: Fac,
-          _strSheetNo: lblSheet,
-          _strProcID: hfZPRNProcID,
-        },
-      })
-      .then((res) => {
-        console.log("dele ", res.data);
-        // if(res.data.length>0)
-        strError = res.data.p_error;
-      });
-    setlblSheet(lblSheet + " Delete");
-    setlblRemark(strError);
-    if (strStatus == "P") {
-      setlblResult((prevState) => ({
+    Swal.fire({
+      title: "Are you sure to Delete this Data?",
+      // text: "Are you sure to Delete this Data!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then(async(result)  => {
+      if (result.isConfirmed) {
+        await axios
+        .post("/api/DeleteMOTRecordTimeData", {
+          data: {
+            _strPlantCode: Fac,
+            _strSheetNo: lblSheet,
+            _strProcID: hfZPRNProcID,
+          },
+        })
+        .then((res) => {
+          strError = res.data.p_error;
+        });
+      setlblSheet(lblSheet + " Delete");
+      setlblRemark(strError);
+      // if (strStatus == "P") {
+      //   setlblResult((prevState) => ({
+      //     ...prevState,
+      //     style: { color: "#fff",background:'#059212' },
+      //     value: "OK",
+      //   }));
+      // } else {
+      //   setlblResult((prevState) => ({
+      //     ...prevState,
+      //     style: { color: "#fff",background:'red' },
+      //     value: "NG",
+      //   }));
+      // }
+      setpnlSave("none");
+      settxtSheet((prevState) => ({
         ...prevState,
-        style: { color: "#fff",background:'#059212' },
-        value: "OK",
-      }));
-    } else {
-      setlblResult((prevState) => ({
-        ...prevState,
-        style: { color: "#fff",background:'red' },
-        value: "NG",
-      }));
-    }
-    setpnlSave("none");
-
-    settxtSheet((prevState) => ({
-      ...prevState,
-      value: "",
-    }));
-    if (txtCBNo.visble == "") {
-      settxtCBNo((prevState) => ({
-        ...prevState,
-        disbled: false,
-        style: { background: "" },
         value: "",
       }));
-    }
-    if (txtSUSNo.visble == "") {
-      settxtSUSNo((prevState) => ({
-        ...prevState,
-        disbled: false,
-        style: { background: "" },
-        value: "",
-      }));
-    }
+      if (txtCBNo.visble == "") {
+        settxtCBNo((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
+      }
+      if (txtSUSNo.visble == "") {
+        settxtSUSNo((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
+      }
+        Swal.fire({
+          title: "Delete Success!",
+          icon: "success"
+        });
+      }
+    });
+
 
     setTimeout(() => {
       fctxtSheetNo.current.focus();

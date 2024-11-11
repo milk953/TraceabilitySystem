@@ -279,8 +279,8 @@ function ScanSheetMOTTime() {
                     </TableCell>
                   </TableRow>
                   )}
-                  <TableRow  style={{display:pnlSave}}>
-                    <TableCell colSpan={3} align="center">
+                  <TableRow  >
+                    <TableCell colSpan={3} align="center" style={{display:pnlSave}}>
                       <Button variant="contained" onClick={BtClick_Replace} >Replace</Button>&nbsp;
                       <Button variant="contained"onClick={BtClick_Delete} >Delete</Button>&nbsp;
                       <Button variant="contained" onClick={BtClick_Cancel}>Cancel</Button>&nbsp;
