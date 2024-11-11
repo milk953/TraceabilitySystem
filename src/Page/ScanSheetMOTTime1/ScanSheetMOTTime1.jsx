@@ -28,6 +28,7 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
+import "../Common/StyleCommon.css";
 import "../ScanSheetMOTTime1/ScanSheetMOTTime1.css"
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -261,28 +262,31 @@ function ScanSheetMOTTime() {
                       </Card>
                     </TableCell>
                   </TableRow>
-                  {console.log('lblRemark1',lblRemark)}
-                  <TableRow style={{ height: "180px" }}>
+                  {console.log('lblRemark1',lblResult.value,'---l',lblRemark)}
+                  {(lblResult.value !== ''|| lblResult.value!=undefined) && (lblRemark !== ''||lblRemark!=undefined) && (
+                  <TableRow style={{ height: "180px" }} >
                     <TableCell colSpan={3}>
-                      <Card style={{ background: "#EFBC9B", height: "230px" }}>
+                      <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"
-                          style={{ ...lblResult.style, marginTop: "40px", fontSize: "90px"  }}
-                        
+                          style={{ color:'#fff', marginTop: "40px", fontSize: "90px"  }}
                         >
                           {lblResult.value}
                         </Typography>
-                        <Typography align="center" style={{ fontSize: "20px", }}>
+                        {/* marginTop: lblResult.value === '' ? "380px" : "0px", */}
+                        <Typography align="center" style={{ fontSize: "20px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "80px" : "0px"}}>
                           {lblRemark}
                         </Typography>
                       </Card>
                     </TableCell>
                   </TableRow>
-                  <TableRow  style={{display:pnlSave}}>
+                  )}
+                  <TableRow  > 
+                    {/* style={{display:pnlSave}} */}
                     <TableCell colSpan={3} align="center">
-                      <Button variant="contained" onClick={BtClick_Replace} >Replace</Button>&nbsp;
-                      <Button variant="contained"onClick={BtClick_Delete} >Delete</Button>&nbsp;
-                      <Button variant="contained" onClick={BtClick_Cancel}>Cancel</Button>&nbsp;
+                      <Button variant="contained" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>&nbsp;
+                      <Button variant="contained"onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>&nbsp;
+                      <Button variant="contained" onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>&nbsp;
                     </TableCell>
                   </TableRow>
                 </TableBody>

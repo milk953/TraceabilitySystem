@@ -261,22 +261,24 @@ function ScanSheetMOTTime() {
                       </Card>
                     </TableCell>
                   </TableRow>
-                  <TableRow style={{ height: "180px" }}>
+                  {lblResult.value !== '' && lblRemark !== '' && (
+                  <TableRow style={{ height: "180px" }} >
                     <TableCell colSpan={3}>
-                      <Card style={{ background: "#EFBC9B", height: "230px" }}>
+                      <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"
-                          style={{marginTop: "40px", fontSize: "90px"  }}
-                          // { }
+                          style={{ color:'#fff', marginTop: "40px", fontSize: "90px"  }}
                         >
                           {lblResult.value}
                         </Typography>
-                        <Typography align="center" style={{ fontSize: "20px" }}>
+                        {/* marginTop: lblResult.value === '' ? "380px" : "0px", */}
+                        <Typography align="center" style={{ fontSize: "20px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "80px" : "0px"}}>
                           {lblRemark}
                         </Typography>
                       </Card>
                     </TableCell>
                   </TableRow>
+                  )}
                   <TableRow  style={{display:pnlSave}}>
                     <TableCell colSpan={3} align="center">
                       <Button variant="contained" onClick={BtClick_Replace} >Replace</Button>&nbsp;
