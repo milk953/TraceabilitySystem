@@ -8,16 +8,18 @@ import Work from "../../assets/working-time.png";
 import Maintain from "../../assets/predictive.png";
 import ViewData from "../../assets/analysis.png";
 
-function TEST() {
+function Homepage() {
   const { Showmenu, menu, OpenMenu, setSL_menu, SL_menu, HandleSL_Menu } =
     fn_Homepage();
   return (
     <>
       <Hearder />
+    
       <div className="Background"> 
         <div className="col_style">
-          <Divider style={{fontSize:'25px',fontWeight:'bold'} }orientation="center">TRACEABILITY SYSTEM</Divider>
-          <div className="Space">
+          
+          {/* <div className="Space"> */}
+         
             <Row  className="RowCardHeader">
               <Col >
                 <Card
@@ -46,6 +48,7 @@ function TEST() {
                 </Card>
               </Col>
             </Row>
+            <Card style={{ height: '600px', overflowY: 'auto' }}>
             <Row className="RowCardHeader">
               <Col>
                 <Card className="CardMenu">
@@ -122,11 +125,12 @@ function TEST() {
                 </Card>
               </Col>
             </Row>
-          </div>
+            </Card>
+          {/* </div> */}
         </div>
       </div>
     </>
   );
 }
 
-export default TEST;
+export default Homepage;
