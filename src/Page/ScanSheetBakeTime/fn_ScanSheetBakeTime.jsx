@@ -2,7 +2,7 @@ import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { notification } from "antd";
-import { CribSharp } from "@mui/icons-material";
+import Swal from "sweetalert2";
 function fn_ScanSheetBakeTime() {
   //lbl
   const [lblProductName, setLblProductName] = useState("");
@@ -19,19 +19,20 @@ function fn_ScanSheetBakeTime() {
   //State
   const [txtProcessState, setTxtProcessState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#dbdede" },
+    styled: { backgroundColor: "white" },
   });
   const [txtmcState, setTxtmcState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#dbdede" },
+    styled: { backgroundColor: "white" },
   });
   const [txtLotNoState, setTxtLotNoState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#dbdede" },
+    styled: { backgroundColor: "white" },
   });
   const [txtSheetNoState, setTxtSheetNoState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#dbdede" },
+    styled: { backgroundColor: "white" },
+    // #dbdede
   });
   const [pnlSaveState, setPnlSaveState] = useState(false);
   const [PnlShowresult, setPnlShowresult] = useState(false);
@@ -98,6 +99,8 @@ function fn_ScanSheetBakeTime() {
     });
   };
   const ibtback_click = () => {
+    setPnlShowresult(false);
+    setPnlSaveState(false);
     setLblProductName("");
     setLblSheet("");
     setTxtSheetNo("");
@@ -251,13 +254,23 @@ function fn_ScanSheetBakeTime() {
           });
           setLblSheet(`${txtSheetNo} [${currentTime}]`);
           setLblRemark(strError);
+          // setPnlSaveState(true);
+          // setPnlShowresult(true);
           if (strError == "") {
             setLblResult({ text: "OK", styled: "green" });
+            Swal.fire({
+              title: "Success",
+              text: "Save Success",
+              icon: "success",
+              showCancelButton: false,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "OK",
+            })
           } else {
             setLblResult({ text: "NG", styled: "red" });
           }
         } else {
-          setLblSheet(txtSheetNo);
+          // setLblSheet(txtSheetNo);
           setPnlSaveState(true);
           setPnlShowresult(true)
           PnlmainDisable();
@@ -283,30 +296,63 @@ function fn_ScanSheetBakeTime() {
     }
   };
   const btnDelete = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to Delete this record?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteData();
+      }
+    });
+  };
+  async function deleteData(){
     let strError = "";
     let strStatus = "";
     strError = await getData("DeleteBakingRecordTimeData", {
-      strSheetNo: lblSheet,
+      strSheetNo: txtSheetNo,
       strProcId: txtProcess,
     });
 
     setLblSheet(`${lblSheet} Delete`);
     setLblRemark(strError);
     if (strError == "") {
-      notification.success({
-        message: "Success",
-        description: "Delete Success",
-        placement: "bottomRight",
-        duration: 3,
-      });
+      Swal.fire({
+        title: "Success",
+        text: "Delete Success",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+        timer: 2000,
+      })
+      // notification.success({
+      //   message: "Success",
+      //   description: "Delete Success",
+      //   placement: "bottomRight",
+      //   duration: 3,
+      // });
       setLblResult({ text: "OK", styled: "green" });
     }else{
-      notification.error({
-        message: "Error",
-        description: strError,
-        placement: "bottomRight",
-        duration: 3,
-      });
+      // notification.error({
+      //   message: "Error",
+      //   description: strError,
+      //   placement: "bottomRight",
+      //   duration: 3,
+      // });
+      Swal.fire({
+        title: "Error",
+        text: strError,
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+        timer: 2000,
+      })
       setLblResult({ text: "NG", styled: "red" });
     }
     // if (strStatus == "P") {
@@ -320,8 +366,25 @@ function fn_ScanSheetBakeTime() {
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
     setFocus("txtSheetNoBaking");
-  };
+  }
   const btnReplace = async () => {
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to replace this record?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Replace();
+      }
+    });
+    
+  };
+  async function Replace(){
     let strError = "";
     let strStatus = "";
     strError = await getData("CallSMTBakingRecordTimeResult", {
@@ -353,7 +416,7 @@ function fn_ScanSheetBakeTime() {
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
     setFocus("txtSheetNoBaking");
-  };
+  }
   const btnCancel = () => {
     setPnlSaveState(false);
     setPnlShowresult(false);

@@ -192,7 +192,6 @@ function ScanSheetBakeTime() {
           </TableRow>
         </TableBody>
       </Table>
-      {console.log(PnlShowresult,'PnlShowresult')}
        {PnlShowresult && (       
       <div className="pnlResultBaking">
         <Table id="TableResultBaking" component={Paper}>
@@ -204,7 +203,7 @@ function ScanSheetBakeTime() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" }}>
+            <TableCell sx={{ fontSize: "34px", padding: "0px" ,whiteSpace: "pre-line" }} >
               {lblRemark}
             </TableCell>
           </TableRow>
@@ -216,13 +215,13 @@ function ScanSheetBakeTime() {
           <Table id="TableSaveBaking" component={Paper}>
             <TableRow>
               <TableCell>
-                <Button onClick={btnReplace}>Replace</Button>
+                <Button variant="contained" className="ButtonReplace" onClick={btnReplace}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={btnDelete}>Delete</Button>
+                <Button variant="contained" className="ButtonDelete" onClick={btnDelete}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={btnCancel}>Cancel</Button>
+                <Button variant="contained" className="ButtonCancel" onClick={btnCancel}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>
