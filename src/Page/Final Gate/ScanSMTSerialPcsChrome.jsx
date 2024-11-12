@@ -97,7 +97,7 @@ function ScanSMTRoollSht() {
                             txtLot_TextChanged();
                           }
                         }}
-                        onBlur={txtLot_TextChanged}
+                        // onBlur={txtLot_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
                         <BackspaceIcon />
@@ -157,7 +157,7 @@ function ScanSMTRoollSht() {
                             txtPackingNo_TextChanged();
                           }
                         }}
-                        onBlur={txtPackingNo_TextChanged}
+                        // onBlur={txtPackingNo_TextChanged}
                       ></TextField>
                       <Button
                         className="Bt_ibtBack"
@@ -267,9 +267,9 @@ function ScanSMTRoollSht() {
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
                           value={txtSerial[index]}
-                          onBlur={(event) => {
-                            handleSerialChange(index, event);
-                          }}
+                          // onBlur={(event) => {
+                          //   handleSerialChange(index, event);
+                          // }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {

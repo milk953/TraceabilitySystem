@@ -1764,13 +1764,18 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        
+        if(text=='')
+          return text;
+        else{
+          return (
+            < Tag  className={text === "OK" ? "Tag-OK" : text === "NG" ||"NO"? "Tag-NG" : ""} >
+            {text}
+          </Tag>
+          );
+        }
+
        
-        return (
-          < Tag  className={text === "OK" ? "Tag-OK" : text === "NG" ||"NO"? "Tag-NG" : ""} >
-          {text}
-        </Tag>
-        );
+       
       },
       align: "center",
     },
