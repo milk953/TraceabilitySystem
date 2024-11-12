@@ -456,6 +456,7 @@ function fn_ScanSMTSerialSht() {
     if (hfMode === "SERIAL") {
       await setSerialData();
       settxtgvSerial("");
+      settxtSideBack("");
     }
   };
 
