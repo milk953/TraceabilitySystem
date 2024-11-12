@@ -1,4 +1,5 @@
 import axios from "axios";
+import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -26,106 +27,118 @@ function fn_ReJudgement() {
   const IpAddress = localStorage.getItem("ipAddress");
   const columns = [
     {
-    title: "Serial No",
-    dataIndex: "rej_serial_no",
-    key: "rej_serial_no",
-    align: "center",
-    width:60,
-    render: (text, record, index) => {
-      return text;
+      title: "Serial No",
+      dataIndex: "rej_serial_no",
+      key: "rej_serial_no",
+      align: "center",
+      width: 60,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Reason",
-    dataIndex: "rem_reject_name",
-    key: "rem_reject_name",
-    align: "center",
-    width: 120,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Reason",
+      dataIndex: "rem_reject_name",
+      key: "rem_reject_name",
+      align: "center",
+      width: 120,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Operator",
-    dataIndex: "rej_operator_code",
-    key: "rej_operator_code",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Operator",
+      dataIndex: "rej_operator_code",
+      key: "rej_operator_code",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Inspect Count	",
-    dataIndex: "rej_inspect_count",
-    key: "rej_inspect_count",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Inspect Count	",
+      dataIndex: "rej_inspect_count",
+      key: "rej_inspect_count",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Sheet Front",
-    dataIndex: "sht_front_no",
-    key: "sht_front_no",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Sheet Front",
+      dataIndex: "sht_front_no",
+      key: "sht_front_no",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Sheet Back",
-    dataIndex: "sht_back_no",
-    key: "sht_back_no",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Sheet Back",
+      dataIndex: "sht_back_no",
+      key: "sht_back_no",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Pcs No",
-    dataIndex: "sht_pcs_no",
-    key: "sht_pcs_no",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Pcs No",
+      dataIndex: "sht_pcs_no",
+      key: "sht_pcs_no",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Re-Judgement",
-    dataIndex: "tou_touch_up_result",
-    key: "tou_touch_up_result",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Re-Judgement",
+      dataIndex: "tou_touch_up_result",
+      key: "tou_touch_up_result",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Qualified",
-    dataIndex: "tou_operator_code",
-    key: "tou_operator_code",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Qualified",
+      dataIndex: "tou_operator_code",
+      key: "tou_operator_code",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-  {
-    title: "Re-Judgement Count",
-    dataIndex: "tou_touch_up_count",
-    key: "tou_touch_up_count",
-    align: "center",
-    width: 80,
-    render: (text, record, index) => {
-      return text;
+    {
+      title: "Re-Judgement Count",
+      dataIndex: "tou_touch_up_count",
+      key: "tou_touch_up_count",
+      align: "center",
+      width: 80,
+      render: (text, record, index) => {
+        return text;
+      },
     },
-  },
-];
+  ];
+  function SetFocus(txtField) {
+    document.getElementById(`${txtField}`).focus();
+  }
+  function Setdisable(type, txtField) {
+    if (type == "disable") {
+      document.getElementById(`${txtField}`).disabled = true;
+      document.getElementById(`${txtField}`).className = "styleDisable";
+    } else {
+      document.getElementById(`${txtField}`).disabled = false;
+      document.getElementById(`${txtField}`).className = "styleEnable";
+    }
+  }
   useEffect(() => {
     PageLoad();
   }, []);
@@ -134,13 +147,24 @@ function fn_ReJudgement() {
   };
   const handleRDChange = (event) => {
     setRdSelect(event.target.value);
+    if (event.target.value == "rdPcsno") {
+      Setdisable("disable", "txtLotnoRejudege");
+      Setdisable("enable", "txtSerialnoRejudege");
+      SetFocus("txtSerialnoRejudege");
+      setLot("");
+    } else {
+      Setdisable("disable", "txtSerialnoRejudege");
+      Setdisable("enable", "txtLotnoRejudege");
+      SetFocus("txtLotnoRejudege");
+      setTxtSerialno("");
+    }
   };
   const txtSerialnoChange = async () => {
     console.log(txtSerialno);
     console.log(lot);
   };
   const btnRetrieveClick = async () => {
-    await SearchData();
+    await SearchData("");
   };
   const btnSubmitClick = async () => {
     if (
@@ -208,36 +232,44 @@ function fn_ReJudgement() {
 
     setSerialState(true);
   }
-  async function SearchData() {
+  async function SearchData(CheckFirst) {
     setLblResult({ text: "", styled: { color: "black" } });
     let txtSerialnoValue = txtSerialno.trim().toLocaleUpperCase();
     let strSerialAll = txtSerialnoValue.replace(/\r?\n/g, ",").split(",");
+    console.log(strSerialAll);
     let i;
     let _strLotno = "";
 
     if (rdSelect == "rdPcsno") {
-      for (let i = 0; i < strSerialAll.length; i++) {
-        if (strSerialAll[i].length > 0) {
-          let duplicateFound = false;
-          for (let j = 0; j < dtDataSearch.length; j++) {
-            if (strSerialAll[i] === dtDataSearch[j].rej_serial_no) {
-              duplicateFound = true;
-              break;
+      if (CheckFirst == "") {
+        for (let i = 0; i < strSerialAll.length; i++) {
+          if (strSerialAll[i].length > 0) {
+            let duplicateFound = false;
+            for (let j = 0; j < dtDataSearch.length; j++) {
+              if (strSerialAll[i] === dtDataSearch[j].rej_serial_no) {
+                duplicateFound = true;
+                break;
+              }
+            }
+            if (duplicateFound) {
+              setLblResult({
+                text: "Duplicate serial no.",
+                styled: { color: "red" },
+              });
+            } else {
+              await getData("getSearch", {
+                Serialno: strSerialAll[i],
+                rdFlg: "PcsNo",
+              });
             }
           }
-          if (duplicateFound) {
-            setLblResult({
-              text: "Duplicate serial no.",
-              styled: { color: "red" },
-            });
-          } else {
-            await getData("getSearch", {
-              Serialno: strSerialAll[i],
-              rdFlg: "PcsNo",
-            });
-          }
+          // setTxtSerialno("");
         }
-        // setTxtSerialno("");
+      }else{
+        await getData("getSearch", {
+          Serialno: strSerialAll[i],
+          rdFlg: "PcsNo",
+        });
       }
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
@@ -392,7 +424,7 @@ function fn_ReJudgement() {
                 if (result.isConfirmed) {
                   console.log("btnSubmitClick");
                   setPnlTableDisplaySatate(true);
-                  btnRetrieveClick();
+                  SearchData("1");
                 }
               }
             );
@@ -428,7 +460,7 @@ function fn_ReJudgement() {
     FcSerial,
     serialState,
     handleExport,
-    columns
+    columns,
   };
 }
 

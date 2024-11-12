@@ -41,14 +41,14 @@ function ReJudgement() {
     serialState,
     FcSerial,
     handleExport,
-    columns
+    columns,
   } = fn_ReJudgement();
   useEffect(() => {
     if (serialState == true) {
       FcSerial.current.focus();
     }
-    console.log(serialState,'serialState');
-  },[]);
+    console.log(serialState, "serialState");
+  }, []);
   return (
     <>
       <Hearder />
@@ -75,17 +75,19 @@ function ReJudgement() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    width: "300px",
                   }}
                   rows="5"
                   cols="45"
                   value={txtSerialno}
+                  id="txtSerialnoRejudege"
                   onChange={(e) => setTxtSerialno(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       txtSerialnoChange();
                     }
                   }}
-                  ref ={FcSerial}
+                  ref={FcSerial}
                 ></textarea>
               </TableCell>
               <TableCell
@@ -113,6 +115,7 @@ function ReJudgement() {
               </TableCell>
               <TableCell sx={{ width: "350px" }}>
                 <input
+                  id="txtLotnoRejudege"
                   style={{
                     width: "300px",
                     border: "1px solid black",
@@ -139,7 +142,11 @@ function ReJudgement() {
           <td>Reason</td>
           <td>Operator</td>
           <td rowSpan={5} style={{ verticalAlign: "middle", width: "60px" }}>
-            <Button variant="contained" color="primary" onClick={btnSubmitClick}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={btnSubmitClick}
+            >
               Submit
             </Button>
           </td>
@@ -212,51 +219,15 @@ function ReJudgement() {
       <br />
       {pnlTableDisplaySatate && (
         <div className="DReJudgementTableThird">
-          {/* <Table className="ReJudgementTableThird" component={Paper}>
-            <TableHead>
-              <TableRow>
-                <TableCell> Serial No</TableCell>
-                <TableCell> Reason</TableCell>
-                <TableCell> Operator</TableCell>
-                <TableCell> Inspect Count</TableCell>
-                <TableCell> Sheet Front</TableCell>
-                <TableCell> Sheet Back</TableCell>
-                <TableCell> Pcs No</TableCell>
-                <TableCell> Re-Judgement</TableCell>
-                <TableCell> Qualified</TableCell>
-                <TableCell> Re-Judgement Count</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {dtDataSearch.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>{row.rej_serial_no}</TableCell>
-                  <TableCell>{row.rem_reject_name}</TableCell>
-                  <TableCell>{row.rej_operator_code}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {row.rej_inspect_count}
-                  </TableCell>
-                  <TableCell>{row.sht_front_no}</TableCell>
-                  <TableCell>{row.sht_back_no}</TableCell>
-                  <TableCell>{row.sht_pcs_no}</TableCell>
-                  <TableCell>{row.tou_touch_up_result}</TableCell>
-                  <TableCell>{row.tou_operator_code}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {row.tou_touch_up_count}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table> */}
-                  <AntTable 
-                columns={columns}
-                dataSource={dtDataSearch}
-                style={{ width:'100%'}}
-                pagination={false}
-                size="small"
-                // bordered
-                className="tableGvResult"
-                />
+          <AntTable
+            columns={columns}
+            dataSource={dtDataSearch}
+            style={{ width: "100%" }}
+            pagination={false}
+            size="small"
+            // bordered
+            className="tableGvResult"
+          />
         </div>
       )}
       <br />

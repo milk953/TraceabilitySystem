@@ -42,3 +42,17 @@
 .ReJudgementTableThird th{
   text-align: center;
 }
+.styleEnable {
+  background-color: White;
+  font-weight: normal;
+  /* font-size: 11pt; */
+  color: Black;
+  text-transform: uppercase;
+}
+.styleDisable {
+  background-color: Silver;
+  font-weight: normal;
+  /* font-size: 11pt; */
+  width: 130px;
+  color: Black;
+}
