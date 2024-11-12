@@ -240,11 +240,13 @@ function fn_ScanSMTSerialPcsChrome() {
             })
             .then((res) => {
               dtLotProduct = res.data.flat().flat();
+            
             });
-          if (dtLotProduct > 0) {
+          if (dtLotProduct[0].length > 0) {
             if (dtLotProduct[0][2] == "Y") {
               setHfTestResultFlag("N");
             }
+            console.log(dtLotProduct[0][3],'dtLotProductdtLotProduct',dtLotProduct[0].length)
             setHfLotAll(dtLotProduct[0][3]);
           }
           setlblLot(_strLot);
@@ -1058,11 +1060,24 @@ function fn_ScanSMTSerialPcsChrome() {
               }
               if (!_bolError) {
                 for (
-                  let _intRow = _intRowSerial + 1;
-                  _intRow < dtSerial.length - 1;
+                  let _intRow = _intRowSerial + 1 ;
+                  _intRow < dtSerial.length-1 ;
                   _intRow++
                 ) {
-                      let isDuplicate = _strSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
+                  console.log(_intRow,'_intRow')
+                  // let isDuplicate = dtSheet.some((item, index) => index !== i && _strShtNo.toUpperCase() === item.SHT_NO.toString().trim().toUpperCase());
+                  // let isDuplicate = dtSerial.some((item, index) => {
+                  //   console.log(`Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`);
+                  //   // console.log(`Comparing with _strSerial: ${_strSerial}`);
+                    
+                  //   return index !== _intRow && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase();
+                  // });
+                      // let isDuplicate = dtSerial.some((item, index) => index !==_intRow && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
+                      let isDuplicate = dtSerial.some((item, index) => {
+                        console.log(`Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`);
+                        return index !== _intRowSerial && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase();
+                      });
+                      
                       if (isDuplicate) {
                         _strMessageUpdate =
                         "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
@@ -1078,8 +1093,8 @@ function fn_ScanSMTSerialPcsChrome() {
                 }
               }
               if (!_bolError && hfCheckPrdSht == "Y") {
-                let strSheetLot;
-                let _strShtNo;
+                let strSheetLot='';
+                let _strShtNo='';
                 await axios
                   .post("/api/Common/GetSheetNoBySerialNo", {
                     data: {
@@ -1089,11 +1104,16 @@ function fn_ScanSMTSerialPcsChrome() {
                     },
                   })
                   .then((res) => {
-                    _strShtNo = res.data;
-                    console.log("GetSheetNoBySerialNo", res.data);
+                    _strShtNo = res.data._strsheet
+                    strSheetLot = res.data.lot_no
+                    console.log("GetSheetNoBySerialNo", strSheetLot,_strShtNo);
                   });
+                  console.log('Sub111',hfCheckPrdAbbr,'----',_strShtNo.substring(
+                    parseInt(hfCheckPrdShtStart) - 1,
+                    parseInt(hfCheckPrdShtEnd)
+                  ))
                 if (
-                  _strShtNo.trim() !== "" &&
+                  _strShtNo !== "" &&
                   hfCheckPrdAbbr !==
                     _strShtNo.substring(
                       parseInt(hfCheckPrdShtStart) - 1,
@@ -1110,6 +1130,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   _intCountNG = 1;
                   _bolError = true;
                 } else if (_strShtNo == "") {
+                  console.log('ตรงนี้1')
                   _strMessageUpdate =
                     "No data connect sheet / ไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
                   _strRemark = "No data connect sheet  ";
@@ -1120,6 +1141,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   _intCountNG = 1;
                   _bolError = true;
                 } else if (hfLotAll.indexOf(strSheetLot) === -1) {
+                  console.log('Lot indexof ',hfLotAll,strSheetLot)
                   _strMessageUpdate =
                     "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                   _strRemark = "Lot not same connect sheet  ";
@@ -1171,6 +1193,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     _bolError = true;
                   }
                 } else {
+                  console.log('ตรงนี้2')
                   _strMessageUpdate =
                     "No data connect sheet / ไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
                   _strRemark = "No data connect sheet";
@@ -1741,13 +1764,18 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
+        if(text=='')
+          return text;
+        else{
+          return (
+            < Tag  className={text === "OK" ? "Tag-OK" : text === "NG" ||"NO"? "Tag-NG" : ""} >
+            {text}
+          </Tag>
+          );
+        }
 
        
-        return (
-          < Tag  className={text === "OK" ? "Tag-OK" : text === "NG" ||"NO"? "Tag-NG" : ""} >
-          {text}
-        </Tag>
-        );
+       
       },
       align: "center",
     },

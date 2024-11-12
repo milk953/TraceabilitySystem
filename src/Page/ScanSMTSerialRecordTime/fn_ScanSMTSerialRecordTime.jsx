@@ -857,18 +857,31 @@ function fn_ScanSMTSerialRecordTime() {
                                 }
 
                                 if (!bolError) {
-                                    for (let intRow = _intRowSerial + 1; intRow < dtSerial.length; intRow++) {
-                                        if (_strSerial === dtSerial[intRow].SERIAL) {
-                                            _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
-                                            _strRemark = "Serial duplicate in tray  ";
-                                            _strScanResultUpdate = "NG";
-                                            _strTestResultUpdate = _strTestResult;
-                                            dtSerial[i].REMARK_UPDATE = _strRemark;
-                                            dtSerial[i].ROW_UPDATE = "N";
+                                    // for (let intRow = _intRowSerial + 1; intRow < dtSerial.length; intRow++) {
+                                    //     if (_strSerial === dtSerial[intRow].SERIAL) {
+                                    //         _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+                                    //         _strRemark = "Serial duplicate in tray  ";
+                                    //         _strScanResultUpdate = "NG";
+                                    //         _strTestResultUpdate = _strTestResult;
+                                    //         dtSerial[i].REMARK_UPDATE = _strRemark;
+                                    //         dtSerial[i].ROW_UPDATE = "N";
 
-                                            _intCountNG = 1;
-                                            setbolError(true);
-                                        }
+                                    //         _intCountNG = 1;
+                                    //         setbolError(true);
+                                    //     }
+                                    // }
+                                    let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
+                                    console.log(isDuplicate)
+                                    if (isDuplicate) {
+                                        _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+                                        _strRemark = "Serial duplicate in tray  ";
+                                        _strScanResultUpdate = "NG";
+                                        _strTestResultUpdate = _strTestResult;
+                                        dtSerial[i].REMARK_UPDATE = _strRemark;
+                                        dtSerial[i].ROW_UPDATE = "N";
+
+                                        _intCountNG = 1;
+                                        setbolError(true);
                                     }
                                 }
 
