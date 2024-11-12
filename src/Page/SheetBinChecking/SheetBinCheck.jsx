@@ -41,8 +41,12 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
                     onChange={(e) => {
                       settxtSheetNo(e.target.value);
                     }}
-                   
-                    onBlur={txtSheetNo_TextChanged}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        txtSheetNo_TextChanged();
+                      }
+                    }}
+                    // onBlur={txtSheetNo_TextChanged}
                   ></TextField>
                 </TableCell>
                 <TableCell></TableCell>
