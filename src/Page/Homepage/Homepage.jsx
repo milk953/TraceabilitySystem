@@ -14,10 +14,12 @@ function HomePage() {
   return (
     <>
       <Hearder />
+    
       <div className="Background"> 
         <div className="col_style">
-          <Divider style={{fontSize:'25px',fontWeight:'bold'} }orientation="center">TRACEABILITY SYSTEM</Divider>
-          <div className="Space">
+          
+          {/* <div className="Space"> */}
+         
             <Row  className="RowCardHeader">
               <Col >
                 <Card
@@ -46,6 +48,7 @@ function HomePage() {
                 </Card>
               </Col>
             </Row>
+            <Card style={{ height: '600px', overflowY: 'auto' }}>
             <Row className="RowCardHeader">
               <Col>
                 <Card className="CardMenu">
@@ -126,7 +129,8 @@ function HomePage() {
                 </Card>
               </Col>
             </Row>
-          </div>
+            </Card>
+          {/* </div> */}
         </div>
       </div>
     </>
@@ -134,3 +138,5 @@ function HomePage() {
 }
 
 export default HomePage;
+
+

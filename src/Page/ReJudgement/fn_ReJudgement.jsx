@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
+
 import * as XLSX from "xlsx";
 function fn_ReJudgement() {
   const [lblResult, setLblResult] = useState({
@@ -23,6 +24,108 @@ function fn_ReJudgement() {
   const [resultComboSelected, setResultComboSelected] = useState("");
   const Fac = import.meta.env.VITE_FAC;
   const IpAddress = localStorage.getItem("ipAddress");
+  const columns = [
+    {
+    title: "Serial No",
+    dataIndex: "rej_serial_no",
+    key: "rej_serial_no",
+    align: "center",
+    width:60,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Reason",
+    dataIndex: "rem_reject_name",
+    key: "rem_reject_name",
+    align: "center",
+    width: 120,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Operator",
+    dataIndex: "rej_operator_code",
+    key: "rej_operator_code",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Inspect Count	",
+    dataIndex: "rej_inspect_count",
+    key: "rej_inspect_count",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Sheet Front",
+    dataIndex: "sht_front_no",
+    key: "sht_front_no",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Sheet Back",
+    dataIndex: "sht_back_no",
+    key: "sht_back_no",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Pcs No",
+    dataIndex: "sht_pcs_no",
+    key: "sht_pcs_no",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Re-Judgement",
+    dataIndex: "tou_touch_up_result",
+    key: "tou_touch_up_result",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Qualified",
+    dataIndex: "tou_operator_code",
+    key: "tou_operator_code",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Re-Judgement Count",
+    dataIndex: "tou_touch_up_count",
+    key: "tou_touch_up_count",
+    align: "center",
+    width: 80,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+];
   useEffect(() => {
     PageLoad();
   }, []);
@@ -98,10 +201,11 @@ function fn_ReJudgement() {
         IP: IpAddress,
         strOperatorReason: txtOperator,
         strTouinspecCont: dtDataSearch[i].tou_touch_up_count,
-        strTouTouchup: txtQualified,
+        strTouTouchup: cbReJustment,
         strOperatorTOU: dtDataSearch[i].tou_operator_code,
       });
     }
+
     setSerialState(true);
   }
   async function SearchData() {
@@ -137,7 +241,7 @@ function fn_ReJudgement() {
       }
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
-      await getData("getSearch", { Serialno: lot, rdFlg: "lot" }); //900035953
+      await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" }); //900035953
     }
     setPnlTableDisplaySatate(true);
   }
@@ -153,9 +257,9 @@ function fn_ReJudgement() {
         "Pcs No",
         "Re-Judgement",
         "Qualified",
-        "Re-Judgement Count"
+        "Re-Judgement Count",
       ];
-      console.log(dtDataSearch)
+      console.log(dtDataSearch);
       const data = dtDataSearch.map((row) => [
         row.rej_serial_no,
         row.rem_reject_name,
@@ -286,8 +390,9 @@ function fn_ReJudgement() {
             Swal.fire("Success", "Data Read Complete", "success").then(
               (result) => {
                 if (result.isConfirmed) {
-                  setDtDataSearch([]);
-                  setPnlTableDisplaySatate(false);
+                  console.log("btnSubmitClick");
+                  setPnlTableDisplaySatate(true);
+                  btnRetrieveClick();
                 }
               }
             );
@@ -322,7 +427,8 @@ function fn_ReJudgement() {
     btnSubmitClick,
     FcSerial,
     serialState,
-    handleExport
+    handleExport,
+    columns
   };
 }
 

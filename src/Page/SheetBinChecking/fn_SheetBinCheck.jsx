@@ -18,6 +18,7 @@ const hfTimeControl = "1"
 const hfSPIPeriod = "10"
 const hfConnLeafLength = "20"
 
+
 const txtSheetNo_TextChanged = async () => {
     if (txtSheetNo.trim().toUpperCase() !== "") {
         await axios
@@ -58,6 +59,11 @@ const txtSheetNo_TextChanged = async () => {
         FctxtSht.current.focus();
     }
 }
+useEffect(() => {
+  setTimeout(() => {
+    FctxtSht.current.focus();
+  }, 300);
+}, []);
 
   return {
     txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht
