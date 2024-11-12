@@ -319,6 +319,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 })
                     .then((res) => {
                         _strReturn = res.data;
+                        console.log("มาไหม", _strReturn)
                     });
                 dtSerial[i].FRONT_SHEET_NO = _strReturn.FRONT_SHEET_NO;
                 dtSerial[i].BACK_SHEET_NO = _strReturn.BACK_SHEET_NO;
@@ -326,7 +327,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 dtSerial[i].ROLL_LEAF_NO = _strReturn.ROLL_LEAF_NO;
             }
 
-            console.log("มาไหม", _strReturn)
+            
 
             let _intRowSerial = 0;
             for (let i = 0; i < dtSerial.length; i++) {
@@ -407,6 +408,7 @@ function fn_ScanSMTSerialBackendConfirm() {
         }
 
         inputgvSerial.current[0]?.focus();
+        settxtgvSerial("");
     };
 
     const getInputSerial = async () => {
@@ -551,13 +553,13 @@ function fn_ScanSMTSerialBackendConfirm() {
 
     const handleKeygvSerial = (e, index) => {
         if (e.key === 'Enter') {
-            e.preventDefault(); 
+            e.preventDefault();
             const nextIndex = index + 1;
             if (nextIndex < txtTotalPCS && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick',nextIndex);
+                console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === nextIndex) {
-                
+
                 btnSaveClick();
             }
         }
@@ -565,48 +567,53 @@ function fn_ScanSMTSerialBackendConfirm() {
 
     const columns = [
         {
-          title: "No.",
-          dataIndex: "SEQ",
-          key: "No.",
-          align: "center",
-          render: (text, record, index) => {
-            return text;
-          },
+            title: "No.",
+            dataIndex: "SEQ",
+            key: "No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
         },
         {
-          title: "Serial No.",
-          dataIndex: "SERIAL",
-          key: "Serial No.",
-          align: "center",
-          render: (text, record, index) => {
-            return text;
-          },
+            title: "Serial No.",
+            dataIndex: "SERIAL",
+            key: "Serial No.",
+            align: "center",
+            render: (text, record, index) => {
+                return text;
+            },
         },
         {
-          title: "Scan Result",
-          key: "Scan Result",
-          dataIndex: "SCAN_RESULT",
-    
-          render: (text, record, index) => {
-            return (
-              < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
-                {text}
-              </Tag>
-            );
-          },
-          align: "center",
+            title: "Scan Result",
+            key: "Scan Result",
+            dataIndex: "SCAN_RESULT",
+
+            render: (text, record, index) => {
+                return text ? (
+                    <Tag
+                        className={
+                            text === "OK" ? "Tag-OK" :
+                                text === "NG" ? "Tag-NG" : ""
+                        }
+                    >
+                        {text}
+                    </Tag>
+                ) : null;
+            },
+            align: "center",
         },
         {
-          title: "Remark",
-          key: "Remark",
-          dataIndex: "REMARK",
-    
-          render: (text, record, index) => {
-            return text;
-          },
-          align: "center",
+            title: "Remark",
+            key: "Remark",
+            dataIndex: "REMARK",
+
+            render: (text, record, index) => {
+                return text;
+            },
+            align: "center",
         },
-      ];
+    ];
 
     return {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtTotalPCS, settxtTotalPCS, lblLog, visiblelog, lblResultcolor, lblResult,

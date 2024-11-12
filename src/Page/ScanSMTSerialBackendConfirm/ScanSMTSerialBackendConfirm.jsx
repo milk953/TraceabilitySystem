@@ -48,8 +48,7 @@ function ScanSMTSerialBackendConfirm() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
-                        marginTop: "-10px"
+                        marginLeft: "0px",
                     }}
                 >
                     <TableContainer
