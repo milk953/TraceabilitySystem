@@ -83,7 +83,6 @@ function ScanSMTSerialSpotHeat() {
                             handletxt_Lotno();
                           }
                         }}
-                       //  onBlur={handletxt_Lotno}
                       />
                     </TableCell>
                     <TableCell>
@@ -142,7 +141,6 @@ function ScanSMTSerialSpotHeat() {
                             handleTotal_Sht();
                           }
                         }}
-                       //  onBlur={ handleTotal_Sht}
                       />
                     </TableCell>
                   </TableRow>
@@ -194,10 +192,6 @@ function ScanSMTSerialSpotHeat() {
                             onChange={(event) =>
                               handleSerialChange(index, event)
                             }
-                           //  onBlur={(event) => {
-                            //   handleSerialChange(index, event);
-                             
-                            // }}
                             onKeyDown={(event) => {
                               if (event.key === "Enter") {
                                 event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter

@@ -41,25 +41,21 @@ function fn_ScanAutoBendingTime() {
       setlblRemark((prevState) => ({ ...prevState, value: "", disbled:false}));
       setpnlResult(false)
       setpnlDetail(false)
-      setpnlMain(false)
+      setpnlMain(true)
       setgvBendingVisible(false)
       fcMCno.current.focus();
       
     }, []);
 
+
+
     useEffect(() => {
-      
-      if(gvBending !== ""){
-        if (gvBending.length > 0 && fcLotNo.current) {
-        fcLotNo.current.focus();
-      } 
-      }
-      // if(gvSerial !== "") {
+      if(txtLotNo.value !== "") {
       //   console.log("เข้ามาจ้า")
         if(gvSerial.length >0 ){
         fcGvSerial_txtSerial_0.current[0].focus();
       } 
-      // }
+      }
      
     }, [gvBending,gvSerial.length]);
 
@@ -80,17 +76,24 @@ function fn_ScanAutoBendingTime() {
         })
         .then((res) =>{
       dtBending  =res.data
+      console.log(dtBending,"dtBending")
         });
         if(dtBending.length > 0){
           setgvBending(dtBending);
           sethfSerialCount(dtBending.length)
           settxtLotNo((prevState) => ({ ...prevState, value: "",disbled:false}));
-          fcLotNo.current.focus();
+          setTimeout(() => {
+            fcLotNo.current.focus();
+          }, 300);
+       
         }else{
           setpnlResult(true)
           setlblResult((prevState) => ({ ...prevState, value: "NG", style: { backgroundColor: 'yellow' , color:'red', fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
           setlblRemark((prevState) => ({ ...prevState, value:`Machine ${txtMCNo.value} not found in master!`,style: { fontSize: '30px', padding: '0px' ,textAlign: 'center'}}));
-          fcMCno.current.focus();
+          setTimeout(() => {
+            fcMCno.current.focus();
+          }, 300);
+          
         }
       }
     }
@@ -125,11 +128,18 @@ function fn_ScanAutoBendingTime() {
           setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'Yellow',color:"red" ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
           setlblRemark((prevState) => ({ ...prevState, value: 'LOT   '+txtLotNo.value+'  not found!' }));
           settxtLotNo((prevState) => ({ ...prevState, value: '' }));
-          fcLotNo.current.focus();
+          setTimeout(() => {
+            fcLotNo.current.focus();
+          }, 300);
+         
         }
 
       }else{
         settxtLotNo((prevState) => ({ ...prevState, value: '' }));
+         setTimeout(() => {
+            fcLotNo.current.focus();
+          }, 300);
+         
         // fcLotNo.current.focus();
       }
     }
@@ -184,10 +194,12 @@ function fn_ScanAutoBendingTime() {
       settxtSerial(newValues);
     };
     const ibtback_Click = async () => {
-      console.log('......')
       settxtMCNo((prevState) => ({ ...prevState, disbled: false  }));
       settxtLotNo((prevState) => ({ ...prevState, value: "", disbled: false }));
-      fcLotNo.current.focus()
+      setTimeout(() => {
+        fcLotNo.current.focus();
+      }, 300);
+     
     };
     const btnSave_Click = async () => {
       setSerialData()

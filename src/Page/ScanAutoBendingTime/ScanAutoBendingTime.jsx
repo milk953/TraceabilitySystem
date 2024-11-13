@@ -14,6 +14,7 @@ import {
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../ScanAutoBendingTime/ScanAutoBendingTime.css"
 import {fn_ScanAutoBendingTime} from './fn_ScanAutoBendingTime'
+import "../Common/StyleCommon.css";
 function ScanAutoBendingTime() {
 const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemark,handletxtMCNo_TextChanged
   ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,pnlDetail,pnlResult,gvBending,gvBendingVisible
@@ -29,21 +30,27 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
+          <TableRow >
             <TableCell id="lbltxtBaking">Machine No :</TableCell>
             <TableCell>
               <TextField
                 size="small"
+                
                 // className="txtFieldbending"
-                style={{ width: "350px" ,padding:'0px'}}
+             
                 disabled={txtMCNo.disbled}
+                style={{ width: "350px" ,padding:'0px',backgroundColor: txtMCNo.disbled ? '#e0e0e0' : 'inherit',}}
                 // autoFocus
                 // sx={txtProcessState.styled}
                 onChange={(e) => {
                   settxtMCNo((prevState)=>({...prevState,value:e.target.value}));
                 }}
                 inputRef={fcMCno}
-                onBlur={handletxtMCNo_TextChanged}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handletxtMCNo_TextChanged();
+                  }
+                }}
                 value={txtMCNo.value}
               ></TextField>
             </TableCell>
@@ -54,14 +61,18 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
             <TableCell>
               <TextField
                 size="small"
-                style={{ width: "350px" }}
+                style={{ width: "350px", backgroundColor: txtLotNo.disbled ? '#e0e0e0' : 'inherit', }}
                 disabled={txtLotNo.disbled}
-                // sx={txtmcState.styled}
+              
                 inputRef={fcLotNo}
                 onChange={(e) => {
                   settxtLotNo((prevState)=>({...prevState,value:e.target.value}));
+                }} 
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handletxtLotNo_TextChanged();
+                  }
                 }}
-                onBlur={handletxtLotNo_TextChanged}
                 value={txtLotNo.value}
               ></TextField>
             </TableCell>
@@ -125,14 +136,21 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
                           //  inputRef={fcGvSerial_txtSerial_0}
                           inputRef={(el) => (fcGvSerial_txtSerial_0.current[index] = el)}
                             value={txtSerial[index]}
-                            onChange={(event) =>
-                              handleSerialChange(index, event)
-                            }
+                            onChange={(event) => {
+                              const value = event.target.value;
+                              // ตรวจสอบค่าให้รับเฉพาะตัวอักษรและตัวเลข
+                              if (/^[a-zA-Z0-9]*$/.test(value)) {
+                                handleSerialChange(index, event); // ส่งค่าให้ฟังก์ชัน handleSerialChange
+                              }
+                            }}
                             onKeyDown={(event) => {
                               if (event.key === "Enter") {
                                 event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
                                 if (index < gvSerial.length - 1) {
                                   fcGvSerial_txtSerial_0.current[index + 1].focus();
+                                }else{
+                                  btnSave_Click()
+                                  event.target.blur();
                                 }
                               }
                             }}
@@ -151,7 +169,8 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
         <Table  >
           <tr>
             <td align="center">
-              <Button variant="contained" onClick={btnSave_Click}  >Save</Button>
+              <Button variant="contained"  onClick={btnSave_Click} 
+              style={{ backgroundColor: 'green', color: 'white' }} >Save</Button>
             </td>
             <td align="center">
               <Button variant="contained" onClick={btnCancel} >Cancel</Button>
@@ -217,11 +236,7 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
           </TableBody>
         </Table>
       </div>)}
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-      >
-        <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
-      </div>
+      
     </>
   );
 }

@@ -111,7 +111,6 @@ function fn_ScanSMTSerialSpotHeat() {
       getInitialSerial();
     }
   }, [hfSerialCount]);
-console.log()
   const GetProductData = async () => {
     axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
@@ -134,12 +133,14 @@ console.log()
         })
         .then((res) => {
           strPrdName = res.data.prdName[0];
+          console.log(strPrdName,"strPrdName")
         });
       if (strPrdName != null) {
         setlblLog("");
         setpnlLog(false);
         settxtLot((prevState) => ({ ...prevState, value: strLot }));
         const dataDT = await GetProductSerialMaster(strPrdName);
+        console.log("เข้านะ")
 
         try {
           const isInArray = Product.some(
@@ -160,7 +161,6 @@ console.log()
             }));
           } else {
             SetMode("SERIAL");
-            fcGvSerial_txtSerial_0.current[0].focus();
           }
         } catch (error) {
           const intProduct = strPrdName.indexOf("-", 12);
@@ -419,6 +419,9 @@ console.log()
         setpnlLog(false);
         setvisiblepnlSerial(true);
         setHfMode("SERIAL");
+        setTimeout(() => {
+          fcGvSerial_txtSerial_0.current[0].focus();
+        }, 300);
         getInitialSerial();
         break;
 
@@ -473,7 +476,9 @@ console.log()
 
     strLotData = txtLot.value.split(";");
     _strLot = strLotData[0];
+    console.log(strLotData,"_strLot",_strLot)
     if (txtLot.value != "" && dtSerial.length > 0) {
+      console.log("มาจ้า")
       let _intRowSerial = 0;
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         if (dtSerial[drRow].SERIAL !== "") {
@@ -492,8 +497,10 @@ console.log()
 
               .then((res) => {
                 _strSerialResult = res.data;
+                console.log(_strSerialResult,"_strSerialResult")
                 if (_strSerialResult !== "OK") {
                   _strScanResultUpdate = _strSerialResult;
+                  console.log()
 
                   if (_strSerialResult == "NG") {
                     _strMessageUpdate =
