@@ -86,6 +86,7 @@ import ScanConfirmMagazineP1 from "./Page/ScanConfirmMagazineP1/ScanConfirmMagaz
 import P1ConnectBoard from "./Page/P1 Connect Board/P1ConnectBoard";
 import AOIManualConfirmP1 from "./Page/AOIManualConfirmP1/AOIManualConfirmP1";
 import ScanSMTConfirmMOTP1 from "./Page/ScanSMTConfirmMOTP1/ScanSMTConfirmMOTP1";
+import {LoadingProvider} from "./loading/fn_loading";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -122,6 +123,7 @@ const App = () => {
       });
   };
   return (
+    <LoadingProvider>
       <BrowserRouter>
         <Routes>
         <Route path="/TraceabilitySystem" element={<Homepage />} />
@@ -227,6 +229,7 @@ const App = () => {
           
         </Routes>
       </BrowserRouter>
+      </LoadingProvider>
   );
 };
  

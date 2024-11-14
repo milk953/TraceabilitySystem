@@ -281,10 +281,10 @@ function ScanSheetMOTTime() {
                   )}
                   <TableRow  >
                     <TableCell colSpan={3} align="center" style={{display:pnlSave}}>
-                      <Button variant="contained" onClick={BtClick_Replace} >Replace</Button>&nbsp;
-                      <Button variant="contained"onClick={BtClick_Delete} >Delete</Button>&nbsp;
-                      <Button variant="contained" onClick={BtClick_Cancel}>Cancel</Button>&nbsp;
-                    </TableCell>
+                    <Button variant="contained" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>&nbsp;
+                      <Button variant="contained"onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>&nbsp;
+                      <Button variant="contained" onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>&nbsp;
+                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

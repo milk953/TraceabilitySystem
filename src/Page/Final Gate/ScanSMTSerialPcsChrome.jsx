@@ -208,7 +208,7 @@ function ScanSMTRoollSht() {
                             txtPcsTray_TextChanged();
                           }
                         }}
-                        onBlur={txtPcsTray_TextChanged}
+                        // onBlur={txtPcsTray_TextChanged}
                       />
                       &nbsp;<p style={{ margin: 0 }}>{lblLastTray}</p>{" "}
                       {/* ลบ margin ออกจาก p */}
