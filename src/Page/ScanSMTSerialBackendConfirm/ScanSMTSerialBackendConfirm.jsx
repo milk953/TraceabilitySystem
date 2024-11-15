@@ -193,12 +193,7 @@ function ScanSMTSerialBackendConfirm() {
                         <div className="divgvSerialBack" style={{ position: "relative" }}>
                             <TableContainer
                                 component={Paper}
-                                style={{
-                                    width: "100%",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "space-between",
-                                }}
+                                className="CSS-GvSerial"
                             >
                                 <Table>
                                     <TableHead>
@@ -281,7 +276,7 @@ function ScanSMTSerialBackendConfirm() {
                                     className="Card-lblResult"
                                     style={{
                                         background: lblResultcolor,
-                                        width: "70%",
+                                        width: "100%",
                                     }}
                                 >
                                     <Typography
