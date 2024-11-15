@@ -25,6 +25,7 @@ import {
 import { Table as AntTable } from 'antd';
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
+import confirmImg from "/src/assets/confirm.png";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime.css";
 import Hearder from "../Header/Header";
@@ -40,7 +41,9 @@ function ScanSMTSerialRecordTime() {
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
         ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
-        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial, columns
+        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial, columns, pnlOPReJudge, pnlAreaRejudge, txtOPRejudge, settxtOPRejudge, txtAreaRejudge,
+        settxtAreaRejudge, ibtOPRejudgeDisabled, txtOPRejudgeDisabled, ibtAreaRejudgeDisabled, ibtAreaConfirmDisabled, txtAreaRejudgeDisabled, inputOPRejudge,
+        inputAreaRejudge, handleChangeOPRejudge, handleChangeAreaRejudge, ibtOPRejudgeClick, ibtAreaRejudgeClick, ibtAreaConfirmClick
     } = fn_ScanSMTSerialRecordTime();
 
     return (
@@ -53,14 +56,13 @@ function ScanSMTSerialRecordTime() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
-                        marginTop: "-10px"
+                        marginLeft: "-9px",
                     }}
                 >
                     <TableContainer
                         component={Paper}
                         style={{
-                            width: "450px",
+                            width: "490px",
                             margin: "4px",
                         }}
                     >
@@ -132,7 +134,10 @@ function ScanSMTSerialRecordTime() {
                                                 }}
                                                 value={txtMachine}
                                                 onChange={(e) => {
-                                                    settxtMachine(e.target.value);
+                                                    const value = e.target.value;
+                                                    if (value.length <= 25) {
+                                                        settxtMachine(value);
+                                                    }
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.key === "Enter") {
@@ -170,7 +175,10 @@ function ScanSMTSerialRecordTime() {
                                             }}
                                             value={txtOperator}
                                             onChange={(e) => {
-                                                settxtOperator(e.target.value);
+                                                const value = e.target.value;
+                                                if (value.length <= 100) {
+                                                    settxtOperator(value);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -191,6 +199,105 @@ function ScanSMTSerialRecordTime() {
                                         </Button>
                                     </TableCell>
                                 </TableRow>
+
+                                {pnlOPReJudge && (
+                                    <TableRow>
+                                        <TableCell>
+                                            <Typography>OP-Rejudgement :</Typography>
+                                        </TableCell>
+                                        <TableCell colSpan={3}>
+                                            <TextField
+                                                className="input_txt"
+                                                size="small"
+                                                fullWidth
+                                                inputRef={inputOPRejudge}
+                                                disabled={txtOPRejudgeDisabled}
+                                                style={{
+                                                    backgroundColor: txtOPRejudgeDisabled ? "#e0e0e0" : "inherit",
+                                                }}
+                                                value={txtOPRejudge.toUpperCase()}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 100) {
+                                                        settxtOPRejudge(value);
+                                                    }
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        handleChangeOPRejudge();
+                                                    }
+                                                }}
+                                            />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button
+                                                className="Bt_ibtBack"
+                                                disabled={ibtOPRejudgeDisabled}
+                                                onClick={ibtOPRejudgeClick}
+                                            >
+                                                <Tooltip title="Lock" placement="right-end">
+                                                    <BackspaceIcon className="Icon_ibtBack" />
+                                                </Tooltip>
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+
+                                {pnlAreaRejudge && (
+                                    <TableRow>
+                                        <TableCell>
+                                            <Typography>Area-Rejudgement :</Typography>
+                                        </TableCell>
+                                        <TableCell colSpan={3}>
+                                            <TextField
+                                                className="input_txt"
+                                                size="small"
+                                                fullWidth
+                                                inputRef={inputAreaRejudge}
+                                                disabled={txtAreaRejudgeDisabled}
+                                                style={{
+                                                    width: "230px",
+                                                    backgroundColor: txtAreaRejudgeDisabled ? "#e0e0e0" : "inherit",
+                                                }}
+                                                value={txtAreaRejudge.toUpperCase()}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 100) {
+                                                        settxtAreaRejudge(value);
+                                                    }
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        handleChangeAreaRejudge();
+                                                    }
+                                                }}
+                                            />
+                                            <Button
+                                                onClick={ibtAreaConfirmClick}
+                                                disabled={ibtAreaConfirmDisabled}
+                                                style={{ padding: 0, minWidth: 0 }}
+                                            >
+                                                <img
+                                                    src={confirmImg}
+                                                    alt="Example"
+                                                    style={{ width: "30px", height: "30px", marginLeft: "6px" }}
+                                                />
+                                            </Button>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button
+                                                className="Bt_ibtBack"
+                                                disabled={ibtAreaRejudgeDisabled}
+                                                onClick={ibtAreaRejudgeClick}
+                                            >
+                                                <Tooltip title="Lock" placement="right-end">
+                                                    <BackspaceIcon className="Icon_ibtBack" />
+                                                </Tooltip>
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+
                                 <TableRow>
                                     <TableCell>
                                         <Typography>Total Pcs. :</Typography>
@@ -364,7 +471,7 @@ function ScanSMTSerialRecordTime() {
                     <Paper
                         elevation={2}
                         style={{
-                            width: "450px",
+                            width: "490px",
                             margin: "auto",
                             height: "40px",
                             display: 'flex',
@@ -393,6 +500,7 @@ function ScanSMTSerialRecordTime() {
                         <Typography
                             style={{
                                 fontSize: "18px",
+                                color: "green"
                             }}
                         >
                             {lblLotTotal}
@@ -403,7 +511,7 @@ function ScanSMTSerialRecordTime() {
                         <Paper
                             elevation={3}
                             style={{
-                                width: "450px",
+                                width: "490px",
                                 margin: "auto",
                                 height: "40px",
                                 display: 'flex',
@@ -414,7 +522,8 @@ function ScanSMTSerialRecordTime() {
                             <Typography
                                 style={{
                                     fontSize: "20px",
-                                    marginLeft: "200px"
+                                    marginLeft: "200px",
+                                    color: "black"
                                 }}
                             >
                                 {lblOP}
@@ -527,7 +636,7 @@ function ScanSMTSerialRecordTime() {
                                     className="Card-lblResult"
                                     style={{
                                         background: lblResultcolor,
-                                        width: "70%",
+                                        width: "100%",
                                     }}
                                 >
                                     <Typography

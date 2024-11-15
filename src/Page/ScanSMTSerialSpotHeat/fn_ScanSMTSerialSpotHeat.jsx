@@ -350,6 +350,7 @@ function fn_ScanSMTSerialSpotHeat() {
 
   const btnCancel_Click = async () => {
     await SetMode("SERIAL");
+    setvisiblegvScanResult(false)
     fcGvSerial_txtSerial_0.current[0].focus();
   };
 

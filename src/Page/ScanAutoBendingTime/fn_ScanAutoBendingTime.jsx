@@ -1,5 +1,6 @@
 import React, { useState,useRef,useEffect } from 'react'
 import axios from 'axios'
+
 import { color } from 'framer-motion'
 
 function fn_ScanAutoBendingTime() {
@@ -9,8 +10,8 @@ function fn_ScanAutoBendingTime() {
     const [lblProductName,setlblProductName] = useState({value: "",disbled: "",visble: "",style: "",})
     const [lblResult ,setlblResult]  = useState({value: "",disbled: "",visble: "",style: "",})
     const [lblRemark,setlblRemark]  = useState({value: "",disbled: "",visble: "",style: "",})
-    const [txtSerial,settxtSerial]  = useState("")
-    
+    // const [txtSerial,settxtSerial]  = useState("")
+
     const [hfURL,sethfURL] =useState("")
     const [hfSerialCount ,sethfSerialCount] =useState("")
     const plantcode = '5'
@@ -29,7 +30,8 @@ function fn_ScanAutoBendingTime() {
 
     const [gvBending,setgvBending] =useState("")
     const [gvSerial,setgvSerial] =useState("")
-
+    const [txtSerial, settxtSerial] = useState(Array(gvSerial.length).fill(""));
+    
    const IP = localStorage.getItem("ipAddress");
    const currentTime = new Date().toLocaleTimeString("en-GB", { hour12: false });
     const  IsPostBack = ""
@@ -153,6 +155,7 @@ function fn_ScanAutoBendingTime() {
       }
       // setvisiblgvSerial(true);
       setgvSerial(dtData); 
+      settxtSerial( Array(dtData.length).fill(""))
       if(dtData.length>0){
         setpnlDetail(true)
       }
@@ -163,6 +166,8 @@ function fn_ScanAutoBendingTime() {
     };
     const btnCancel = async () => {
    getInitialSerial()
+   setpnlResult(false)
+   fcGvSerial_txtSerial_0.current[0].focus();
     };
     const getInputSerial = async () => {
       let dtData = [];
@@ -196,6 +201,9 @@ function fn_ScanAutoBendingTime() {
     const ibtback_Click = async () => {
       settxtMCNo((prevState) => ({ ...prevState, disbled: false  }));
       settxtLotNo((prevState) => ({ ...prevState, value: "", disbled: false }));
+      setlblProductName((prevState) => ({ ...prevState, value: ""}));
+      setpnlDetail(false)
+      setpnlResult(false)
       setTimeout(() => {
         fcLotNo.current.focus();
       }, 300);

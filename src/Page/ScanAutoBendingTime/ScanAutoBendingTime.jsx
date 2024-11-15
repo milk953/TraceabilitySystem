@@ -15,6 +15,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../ScanAutoBendingTime/ScanAutoBendingTime.css"
 import {fn_ScanAutoBendingTime} from './fn_ScanAutoBendingTime'
 import "../Common/StyleCommon.css";
+import Swal from "sweetalert2";
 function ScanAutoBendingTime() {
 const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemark,handletxtMCNo_TextChanged
   ,handletxtLotNo_TextChanged,fcLotNo,fcMCno,gvSerial,txtSerial,handleSerialChange,ibtback_Click,btnSave_Click,pnlDetail,pnlResult,gvBending,gvBendingVisible
@@ -139,9 +140,18 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
                             onChange={(event) => {
                               const value = event.target.value;
                               // ตรวจสอบค่าให้รับเฉพาะตัวอักษรและตัวเลข
-                              if (/^[a-zA-Z0-9]*$/.test(value)) {
+                              if (/['"]/g.test(value)) {
+                                // แสดง Alert เมื่อมีการใส่เครื่องหมาย ' หรือ "
+                                Swal.fire({
+                                  title: "Special characters like ' and \" are not allowed.",
+                                  icon: "error",
+                                  timer: 2000,
+                                  showConfirmButton: false,
+                                });
+                              } else {
                                 handleSerialChange(index, event); // ส่งค่าให้ฟังก์ชัน handleSerialChange
                               }
+                              
                             }}
                             onKeyDown={(event) => {
                               if (event.key === "Enter") {
@@ -178,8 +188,7 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
           </tr>
         </Table>
       </div>
-      )}  
-    
+      )} 
       {pnlResult &&(
       <div className="pnlResult-Auto">
         <Table component={Paper}  >

@@ -6,7 +6,9 @@ import { color } from "framer-motion";
 import { green } from "@mui/material/colors";
 import styled from "styled-components";
 import { Tag } from "antd";
+import {useLoading} from "../../loading/fn_loading";
 import "../Common/StyleCommon.css";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
@@ -146,6 +148,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const [hfFQC, setHfFQC] = useState("");
   const [hfOP, setHfOP] = useState("");
   // const [hfFQC, setHfFQC] = useState("");
+  const {showLoading,hideLoading} = useLoading();
 
   const params = new URLSearchParams(window.location.search);
   const FQC = params.get("FQC");
@@ -312,6 +315,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               setlblSerialNG((prevState) => ({ ...prevState, value: "0" }));
             });
           if (dtLotPassCount.length > 0) {
+            console.log(dtLotPassCount,"dtLotPassCount")
             setlblLotTotal((prevState) => ({...prevState, value: dtLotPassCount,}));
           }
           let dtLotProduct = [];
@@ -565,6 +569,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
+        console.log(res.data[0],"DATAPR1")
         if (dtProductSerial != null) {
           setHfSerialLength(dtProductSerial.slm_serial_length);
           serial_length = dtProductSerial.slm_serial_length;
@@ -636,6 +641,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           }));
         }
       });
+      console.log(prm_check_weekcode_flg,"prm_check_weekcode_flg")
     await axios
       .post("/api/Common/GetSerialBoxProductByProduct", {
         prdName: PrdName,
@@ -643,6 +649,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
       .then((res) => {
         dtProductBox = res.data[0];
+        console.log(dtProductBox,"dtProductBox1")
         if (dtProductBox != "") {
        
           if (
@@ -692,7 +699,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     return 0;
   };
   const SetMode = (_strType) => {
-    console.log(_strType,"_strType")
     switch (_strType) {
       case "LOT":
         settxtLot((prevState) => ({
@@ -1287,6 +1293,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     }
   };
   const btnSave_Click = () => {
+  
     setSerialDataTray();
   };
 
@@ -1308,8 +1315,9 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     let _intRowSerial = 0;
     let _intCountOK = 0;
     let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
-    console.log(hfSerialLength,'hfSerialLength')
+    
     if (!_bolTrayError) {
+      showLoading('กำลังบันทึก กรุณารอสักครู่')
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         await axios
           .post("/api/Common/GetSerialBoxTestResultManyTableOnlyGood", {
@@ -1326,10 +1334,12 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           })
           .then((res) => {
             dtSerial[drRow] = res.data
+            console.log(res.data,"DATA")
           
         
           });
       }  console.log(dtSerial,"DTserial")
+      
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         await axios
           .post("/api/GetExistsBoxSerial", {
@@ -1337,9 +1347,11 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           })
           .then((res) => {
             dtSerial[drRow].BOX_PACK = res.data
+            console.log(res.data,"GetExistsBoxSerial'")
           });
+          console.log(hfCheckWeekCode,"hfCheckWeekCode")
         if (hfCheckWeekCode == "Y") {
-       
+     
           await axios
             .post("/api/common/GetWeekCodebyLot", {
               _strLot: _strLot,
@@ -1349,9 +1361,12 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             })
             .then((res) => {
               setHfWeekCode(res.data);
+              console.log(res.data,"GetWeekCodebyLot")
             });
         }}
+        hideLoading();
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
+          console.log("เข้า")
         
           if (dtSerial[drRow].SERIAL !== "") {
             let _intCount = 0;

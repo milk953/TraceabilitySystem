@@ -164,7 +164,7 @@ function fn_ReJudgement() {
     console.log(lot);
   };
   const btnRetrieveClick = async () => {
-    await SearchData("");
+    await SearchData();
   };
   const btnSubmitClick = async () => {
     if (
@@ -232,7 +232,7 @@ function fn_ReJudgement() {
 
     setSerialState(true);
   }
-  async function SearchData(CheckFirst) {
+  async function SearchData() {
     setLblResult({ text: "", styled: { color: "black" } });
     let txtSerialnoValue = txtSerialno.trim().toLocaleUpperCase();
     let strSerialAll = txtSerialnoValue.replace(/\r?\n/g, ",").split(",");
@@ -241,7 +241,7 @@ function fn_ReJudgement() {
     let _strLotno = "";
 
     if (rdSelect == "rdPcsno") {
-      if (CheckFirst == "") {
+
         for (let i = 0; i < strSerialAll.length; i++) {
           if (strSerialAll[i].length > 0) {
             let duplicateFound = false;
@@ -265,12 +265,6 @@ function fn_ReJudgement() {
           }
           // setTxtSerialno("");
         }
-      }else{
-        await getData("getSearch", {
-          Serialno: strSerialAll[i],
-          rdFlg: "PcsNo",
-        });
-      }
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
       await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" }); //900035953
@@ -424,7 +418,7 @@ function fn_ReJudgement() {
                 if (result.isConfirmed) {
                   console.log("btnSubmitClick");
                   setPnlTableDisplaySatate(true);
-                  SearchData("1");
+                  btnRetrieveClick();
                 }
               }
             );

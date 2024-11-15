@@ -52,7 +52,12 @@ function ELT_Master() {
           <TableCell  style={{padding: '8px', width: '80%' }} >
             <TextField size="small" style={{width:'100%'}} value={txtSerialNo_TextChanged}
             onChange={(e) => settxtSerialNo_TextChanged(e.target.value)}
-            onBlur={Search_Data}
+            // onBlur={Search_Data}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                Search_Data();
+              }
+            }}
             inputRef={FctxtSerial}
             > 
             

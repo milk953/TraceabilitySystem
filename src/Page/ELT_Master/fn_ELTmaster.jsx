@@ -18,10 +18,10 @@ function fn_ELTmaster() {
 
   let IP = "";
   let plant_code = import.meta.env.VITE_FAC;
-
+  IP = localStorage.getItem("ipAddress");
+ 
   useEffect(() => {
     let Idcode = localStorage.getItem("IDCode");
-    IP = localStorage.getItem("ipAddress");
     sethfUserName(Idcode);
     PageLoad();
   }, []);
@@ -76,7 +76,8 @@ function fn_ELTmaster() {
             settxtSerialNo_TextChanged("");
             FctxtSerial.current.focus();
           }
-        } else {
+        } 
+        else {
           setlblResult({
             text: "Data Read Complete",
             styled: { color: "black"  , fontSize:'50px' },
@@ -89,9 +90,10 @@ function fn_ELTmaster() {
     if (selectddlReason1.trim() == "") {
       setlblResult({
         text: "Please select before reject reason.",
-        styled: { color: "red" },
+        styled: { color: "red" , fontSize:'50px'},
       });
     } else {
+      console.log(IP,"IP",hfUserName)
       await axios
         .post(
           "/api/ELTmaster/Submit_ELT",

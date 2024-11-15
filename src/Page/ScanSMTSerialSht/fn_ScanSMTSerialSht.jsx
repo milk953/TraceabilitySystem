@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
+import Swal from 'sweetalert2';
 
 function fn_ScanSMTSerialSht() {
   const [txtLotNo, settxtLotNo] = useState("");
@@ -124,7 +125,7 @@ function fn_ScanSMTSerialSht() {
   //inputRef
   const inputLot = useRef([]);
   const ddlProduct = useRef(null);
-  const inputRollLeaf = useRef(null);
+  const inputRollLeaf = useRef([]);
   const inputMachineNo = useRef(null);
   const inputSideBack = useRef([]);
   const inputgvSerial = useRef([]);
@@ -206,7 +207,9 @@ function fn_ScanSMTSerialSht() {
             if (datagetPd.prm_conn_roll_sht_flg === "Y") {
               setpnlRollLeaf(true);
               settxtRollLeaf("");
-              inputRollLeaf.current?.focus();
+              setTimeout(() => {
+                inputRollLeaf.current.focus();
+              }, 200);
             } else {
               SetMode("SERIAL");
               settxtMachineNo("");
@@ -370,6 +373,7 @@ function fn_ScanSMTSerialSht() {
   const handleChangeRollLeaf = async () => {
     setpnlLog(false);
     setlblLog("");
+    console.log(hfConnRollLength, "hfConnRollLength")
     if (txtRollLeaf !== "" && txtRollLeaf.length === parseInt(hfConnRollLength)) {
       let strRollProduct = hfRollNo + hfCheckRollPrd;
       if (hfCheckRollPrdFlg === "Y") {
@@ -463,6 +467,8 @@ function fn_ScanSMTSerialSht() {
   const btnCancelClick = async () => {
     SetMode("SERIAL");
     inputgvSerial.current[0].focus();
+    setgvScanData([]);
+    setgvScanResult(false);
   };
 
   const SetMode = async (strType) => {
@@ -512,12 +518,17 @@ function fn_ScanSMTSerialSht() {
       setpnlBoard(false);
     }
 
+    console.log("hfShtScan", hfShtScan)
     for (let intSht = 1; intSht <= hfShtScan; intSht++) {
       let drRowSht = {
         SHEET: "",
         SEQ: 0,
         TYPE: "SHT"
       };
+      if (drRowSht.SEQ === 0) {
+        drRowSht.SEQ = "";
+      }
+
       if (hfBarcodeSide === "F") {
         drRowSht.SHEET = `Front Side ${intSht}:`;
       } else {
@@ -535,17 +546,6 @@ function fn_ScanSMTSerialSht() {
         dtData.push(drRow);
       }
     }
-
-    // for (let intSht = 1; intSht <= parseInt(hfShtScan); intSht++) {
-    //   for (let intRow = 1; intRow <= parseInt(hfSerialCount); intRow++) {
-    //     var data = {
-    //       SHEET: intSht.toString(),
-    //       SEQ: intRow,
-    //       TYPE: "PCS",
-    //     };
-    //     dtData.push(data);
-    //   }
-    // }
 
     setgvSerialData(dtData);
     console.log("gvserialdata:", dtData)
@@ -606,13 +606,20 @@ function fn_ScanSMTSerialSht() {
         _strShtNoBack = dtSerial[i].BACK_SIDE;
         _strShtNoFront = dtSerial[i].FRONT_SIDE;
 
+        if (_strShtNoFront === undefined) {
+          setpnlLog(true);
+          setlblLog("Please input Sheet Side");
+          setTimeout(() => {
+            inputgvSerial.current[0].focus();
+          }, 200);
+        }
+
         if (hfSheetType === "D" && _strShtNoBack === _strShtNoFront) {
           _strScanResultAll = "NG";
           _strErrorAll = "Double Product sheet F,B not same";
           _bolError = true;
         }
 
-        console.log(dtSerial[i].SEQ, "hhhhhh")
         if (hfCheckPrdSht === "Y" && dtSerial[i].SEQ === 1 && !_bolError) {
           if (hfCheckPrdAbbr !== _strShtNoBack.substring(parseInt(hfCheckPrdShtStart) - 1, parseInt(hfCheckPrdShtEnd)
           )) {
@@ -733,15 +740,15 @@ function fn_ScanSMTSerialSht() {
 
           if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
 
-            // for (let _intRow = _intRowSerial + 1; _intRow < dtSerial.length; _intRow++) {
-            //   console.log("////", dtSerial[_intRow].SERIAL)
-            //   if (_strSerial === dtSerial[_intRow].SERIAL) {
-            //     _strScanResultUpdate = "NG";
-            //     _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
-            //     _strScanResultAll = "NG";
-            //     _bolError = true;
-            //   }
-            // }
+            for (let _intRow = _intRowSerial + 1; _intRow < dtSerial.length; _intRow++) {
+              console.log("////", dtSerial[_intRow].SERIAL)
+              if (_strSerial === dtSerial[_intRow].SERIAL) {
+                _strScanResultUpdate = "NG";
+                _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
+                _strScanResultAll = "NG";
+                _bolError = true;
+              }
+            }
 
             let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
             console.log(isDuplicate)
@@ -883,13 +890,14 @@ function fn_ScanSMTSerialSht() {
         for (let i = 0; i < dtSerial.length; i++) {
           await axios.post("/api/Common/setseriallotshtelttable", {
             dataList: {
-              strSheetNo: "",
+              //strSheetNo: "",
               strPrdName: selProduct,
               strPlantCode: plantCode,
               strSideF: dtSerial[i].FRONT_SIDE,
               strSideB: dtSerial[i].BACK_SIDE,
               strPcsno: dtSerial[i].SEQ,
               strSerialNo: dtSerial[i].SERIAL,
+              strIntSerialLength: hfSerialLength
             },
           })
             .then((res) => {
@@ -1001,11 +1009,7 @@ function fn_ScanSMTSerialSht() {
               _strUpdateError = "Problem sheet from RBMP";
               _strErrorAll = "Problem sheet from RBMP";
             } else {
-              let dtRowLeaf = await getConnectRollSheetData(
-                dtSerial,
-                selProduct,
-                txtRollLeaf
-              );
+              let dtRowLeaf = await getConnectRollSheetData(dtSerial);
               let _intCount = 0;
               let _strRollLeaf = txtRollLeaf.toUpperCase().trim();
               await axios.post("/api/ScanFin/GetRollLeafDuplicate", {
@@ -1013,9 +1017,12 @@ function fn_ScanSMTSerialSht() {
                 _dtRollLeaf: dtRowLeaf,
               })
                 .then((res) => {
-                  _intCount = res.data;
+                  _intCount = res.data.intCount;
                 });
-              if (_intCount = 1) {
+
+              console.log(_intCount, "_intCount")
+              if (_intCount === 1) {
+                console.log(_intCount, "_intCount")
                 _bolError = true;
                 _strScanResultAll = "NG";
                 for (let i = 0; i < dtRowLeaf.length; i++) {
@@ -1061,8 +1068,7 @@ function fn_ScanSMTSerialSht() {
                   dtRowLeaf[i].SCAN_RESULT = "OK";
                   dtRowLeaf[i].REMARK = "";
                   _intCount += 1
-                }
-                for (let i = 0; i < dtRowLeaf.length; i++) {
+
                   let _intRow = 0;
                   await axios.post("/api/Common/SetRollLeafTrayTable", {
                     strRowUpdate: dtRowLeaf[i].ROW_UPDATE,
@@ -1117,8 +1123,8 @@ function fn_ScanSMTSerialSht() {
 
             if (_strUpdateError !== "") {
               _strScanResultAll = "NG";
-            } else if (hfPlasmaConnShtPcs === "Y") {
-              for (let i = 0; i < dtSerial.length; i++) {
+            }
+            else if (hfPlasmaConnShtPcs === "Y") {
                 await axios.post("/api/Common/setSerialRecordTimeTrayTable", {
                   dataList:
                   {
@@ -1144,7 +1150,6 @@ function fn_ScanSMTSerialSht() {
                 if (_strUpdateError !== "") {
                   _strScanResultAll = "NG";
                 }
-              }
             }
           }
         } else {
@@ -1201,7 +1206,6 @@ function fn_ScanSMTSerialSht() {
 
     for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
       intRow = intRow + 1;
-      console.log("getinput", txtgvSerial[intSeq])
 
       if (gvSerialData[intSeq].TYPE === "SHT") {
         strFrontSide = txtgvSerial[intSeq];
@@ -1342,6 +1346,7 @@ function fn_ScanSMTSerialSht() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
+        console.log(res.data[0], "////////")
         if (dtProductSerial !== null) {
           sethfSerialLength(dtProductSerial.slm_serial_length);
           sethfSerialFixFlag(dtProductSerial.slm_fix_flag);
@@ -1449,7 +1454,7 @@ function fn_ScanSMTSerialSht() {
     }
   };
 
-  const getConnectRollSheetData = async (_dtSerial, _strProduct, _strRollLeaf) => {
+  const getConnectRollSheetData = async (dtSerial) => {
     let _dtData = [];
     let _intRollRow = 1;
     let _intRow = 0;
@@ -1458,47 +1463,47 @@ function fn_ScanSMTSerialSht() {
 
     _strRollNo = hfRollNo;
 
-    for (let i = 0; i < _dtSerial.length; i++) {
-      if (_dtSerial[i].FRONT_SIDE !== _strShtNoOld) {
-        _intRow += 1;
+    for (let i = 0; i < dtSerial.length; i++) {
+      if (dtSerial[i].FRONT_SIDE !== _strShtNoOld) {
+        _intRow++;
         let _drShtRow = {
           ROLL_SEQ: _intRollRow,
           SHT_SEQ: _intRow,
           LOT_NO: txtLotNo,
           ROLL_NO: _strRollNo,
-          ROLL_LEAF: _strRollLeaf,
-          SHT_NO: _dtSerial[i].FRONT_SIDE,
+          ROLL_LEAF: txtRollLeaf,
+          SHT_NO: dtSerial[i].FRONT_SIDE,
           SCAN_RESULT: "",
           REMARK: "",
           ROW_UPDATE: "Y",
           UPDATE_FLG: "N",
           MACHINE: txtMachineNo,
-          PRODUCT: _strProduct,
+          PRODUCT: selProduct,
           DATA_TYPE: "SHT"
         }
         _dtData.push(_drShtRow);
 
-        if (_dtSerial[i].FRONT_SIDE !== _dtSerial[i].BACK_SIDE) {
-          _intRow += 1;
+        if (dtSerial[i].FRONT_SIDE !== dtSerial[i].BACK_SIDE) {
+          _intRow++;
           let _drShtRow2 = {
             ROLL_SEQ: _intRollRow,
             SHT_SEQ: _intRow,
             LOT_NO: txtLotNo,
             ROLL_NO: _strRollNo,
-            ROLL_LEAF: _strRollLeaf,
-            SHT_NO: _dtSerial[i].BACK_SIDE,
+            ROLL_LEAF: txtRollLeaf,
+            SHT_NO: dtSerial[i].BACK_SIDE,
             SCAN_RESULT: "",
             REMARK: "",
             ROW_UPDATE: "Y",
             UPDATE_FLG: "N",
             MACHINE: txtMachineNo,
-            PRODUCT: _strProduct,
+            PRODUCT: selProduct,
             DATA_TYPE: "SHT"
           }
           _dtData.push(_drShtRow2);
         }
       }
-      _strShtNoOld = _dtSerial[i].FRONT_SIDE;
+      _strShtNoOld = dtSerial[i].FRONT_SIDE;
     }
     console.log("_dtData", _dtData);
     return _dtData;
@@ -1565,11 +1570,11 @@ function fn_ScanSMTSerialSht() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        return (
+        return text ? (
           < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
             {text}
           </Tag>
-        );
+        ) : null;
       },
       align: "center",
     },

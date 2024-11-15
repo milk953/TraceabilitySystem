@@ -262,7 +262,7 @@ function ScanSMTSerialSpotHeat() {
               <>
                 <Paper
                   className="Card-lblResult"
-                  elevation={3}
+                  // elevation={3}
                   style={{ background: lblResult.text !=='OK'? "#BA0900":"#059212",}}
                   
                 
