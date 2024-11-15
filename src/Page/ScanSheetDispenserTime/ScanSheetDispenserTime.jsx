@@ -12,7 +12,7 @@ import {
   Button,
   TableHead,
   Paper,
-  Card
+  Card,
 } from "@mui/material";
 function ScanSheetDispenserTime() {
   const {
@@ -38,17 +38,26 @@ function ScanSheetDispenserTime() {
     txtSheetNoState,
     txtmcNoState,
     txtMcno_change,
-    txtSheetno_change
+    txtSheetno_change,
+    handleCbNoChange,
+    txtCbno_change
   } = fn_ScanSheetDispenserTime();
   useEffect(() => {
     if (txtmcNo == "" && txtmcNoState.focused == true) {
       Fctxtmcno.current.focus();
-    }else if (txtSheetNo == "" && txtSheetNoState.focused == true) {
+    } else if (txtSheetNo == "" && txtSheetNoState.focused == true) {
       FctxtSheetNo.current.focus();
-    }else if(txtCBno == "" && txtCBnoState.focused == true) {
+    } else if (txtCBno == "" && txtCBnoState.focused == true) {
       FctxtCBno.current.focus();
     }
-  }, [txtmcNoState,txtmcNo,txtSheetNoState,txtSheetNo,txtCBnoState,txtCBno]);
+  }, [
+    txtmcNoState,
+    txtmcNo,
+    txtSheetNoState,
+    txtSheetNo,
+    txtCBnoState,
+    txtCBno,
+  ]);
   return (
     <div>
       <Hearder />
@@ -67,10 +76,15 @@ function ScanSheetDispenserTime() {
                 <TextField
                   size="small"
                   className="DispensertxtField"
-                    disabled={txtmcNoState.disabled}
-                    sx={txtmcNoState.styled}
+                  disabled={txtmcNoState.disabled}
+                  sx={txtmcNoState.styled}
                   inputRef={Fctxtmcno}
-                    onBlur={txtMcno_change}
+                  // onBlur={txtMcno_change}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                      txtMcno_change();
+                    }
+                  }}
                   onChange={(e) => {
                     setTxtmcNo(e.target.value);
                   }}
@@ -90,37 +104,50 @@ function ScanSheetDispenserTime() {
                 <TextField
                   size="small"
                   className="DispensertxtField"
-                    disabled={txtSheetNoState.disabled}
-                    sx={txtSheetNoState.styled}
-                    onBlur={txtSheetno_change}
+      
+                  disabled={txtSheetNoState.disabled}
+                  sx={txtSheetNoState.styled}
+                  // onBlur={txtSheetno_change}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                      txtSheetno_change();
+                    }
+                  }}
                   inputRef={FctxtSheetNo}
                   value={txtSheetNo}
                   onChange={(e) => {
-                    setTxtSheetNo(e.target.value);
+                    setTxtSheetNo(e.target.value.trim());
                   }}
                 ></TextField>
               </TableCell>
 
               <TableCell></TableCell>
             </TableRow>
-            {txtCBnoState.open  && <TableRow>
-              <TableCell id="Dispenserlbltxt">CB No.</TableCell>
-              <TableCell>
-                <TextField
-                  size="small"
-                  className="DispensertxtField"
+            {txtCBnoState.open && (
+              <TableRow>
+                <TableCell id="Dispenserlbltxt">CB No.</TableCell>
+                <TableCell>
+                  <TextField
+                    size="small"
+                    className="DispensertxtField"
                     disabled={txtCBnoState.disabled}
-                    onBlur={txtSheetno_change}
+                    // onBlur={txtSheetno_change}                    
                     sx={txtCBnoState.styled}
-                  inputRef={FctxtCBno}
-                  value={txtCBno}
-                  onChange={(e) => {
-                    setTxtCBno(e.target.value);
-                  }}
-                ></TextField>
-              </TableCell>
-              <TableCell></TableCell>
-            </TableRow> }
+                    inputRef={FctxtCBno}
+                    value={txtCBno}
+                    onChange={(e) => {
+                      handleCbNoChange(e);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key == "Enter") {
+                        txtCbno_change()
+                      }
+                    }}
+                  ></TextField>
+                </TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            )}
             <TableRow>
               <TableCell colSpan={3} sx={{ textAlign: "center" }}>
                 {lblSheet}
@@ -162,14 +189,7 @@ function ScanSheetDispenserTime() {
           </Table>
         </div>
       )}
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-      >
-        <Button sx={{ fontSize: "11px" }} onClick={btnReturn_Click}>
-          {" "}
-          Return to Menu
-        </Button>
-      </div>
+     
     </div>
   );
 }
