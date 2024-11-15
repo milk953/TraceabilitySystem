@@ -305,13 +305,15 @@ function fn_ScanSMTPlasmaStopStart() {
           })
             .then((res) => {
               intSerialCount = res.data.row_count;
-              console.log("มาดิ", intSerialCount);
-            })
+            });
           _strScanType = "PARTIAL";
         } else {
           _strScanType = "PACKING";
         }
+
+        console.log("มาดิ", intSerialCount);
         if (intSerialCount > 0) {
+          console.log(intSerialCount)
           axios.post("/api/setStartStopRecordTimeByPartialNo", {
             strPlantCode: plantCode,
             strPartialNo: _strPartialNo,
