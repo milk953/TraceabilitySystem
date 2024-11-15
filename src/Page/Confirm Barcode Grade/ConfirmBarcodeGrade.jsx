@@ -156,8 +156,9 @@ function ConfirmBarcodeGrade() {
                           // inputRef={fcProduct}
 
                           className="Select_dropDown"
+                          disabled={SlProduct.disbled}
                           value={SlProduct.value}
-                          // style={{background:SlProduct.style}}
+                          style={{background:SlProduct.style}}
                           onChange={(e, value) => handleSL_Product(value)}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
