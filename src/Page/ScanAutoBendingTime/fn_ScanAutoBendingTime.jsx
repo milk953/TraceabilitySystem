@@ -1,5 +1,6 @@
 import React, { useState,useRef,useEffect } from 'react'
 import axios from 'axios'
+
 import { color } from 'framer-motion'
 
 function fn_ScanAutoBendingTime() {
@@ -9,8 +10,8 @@ function fn_ScanAutoBendingTime() {
     const [lblProductName,setlblProductName] = useState({value: "",disbled: "",visble: "",style: "",})
     const [lblResult ,setlblResult]  = useState({value: "",disbled: "",visble: "",style: "",})
     const [lblRemark,setlblRemark]  = useState({value: "",disbled: "",visble: "",style: "",})
-    const [txtSerial,settxtSerial]  = useState("")
-    
+    // const [txtSerial,settxtSerial]  = useState("")
+
     const [hfURL,sethfURL] =useState("")
     const [hfSerialCount ,sethfSerialCount] =useState("")
     const plantcode = '5'
@@ -29,7 +30,8 @@ function fn_ScanAutoBendingTime() {
 
     const [gvBending,setgvBending] =useState("")
     const [gvSerial,setgvSerial] =useState("")
-
+    const [txtSerial, settxtSerial] = useState(Array(gvSerial.length).fill(""));
+    
    const IP = localStorage.getItem("ipAddress");
    const currentTime = new Date().toLocaleTimeString("en-GB", { hour12: false });
     const  IsPostBack = ""
@@ -41,25 +43,21 @@ function fn_ScanAutoBendingTime() {
       setlblRemark((prevState) => ({ ...prevState, value: "", disbled:false}));
       setpnlResult(false)
       setpnlDetail(false)
-      setpnlMain(false)
+      setpnlMain(true)
       setgvBendingVisible(false)
       fcMCno.current.focus();
       
     }, []);
 
+
+
     useEffect(() => {
-      
-      if(gvBending !== ""){
-        if (gvBending.length > 0 && fcLotNo.current) {
-        fcLotNo.current.focus();
-      } 
-      }
-      // if(gvSerial !== "") {
+      if(txtLotNo.value !== "") {
       //   console.log("เข้ามาจ้า")
         if(gvSerial.length >0 ){
         fcGvSerial_txtSerial_0.current[0].focus();
       } 
-      // }
+      }
      
     }, [gvBending,gvSerial.length]);
 
@@ -80,17 +78,24 @@ function fn_ScanAutoBendingTime() {
         })
         .then((res) =>{
       dtBending  =res.data
+      console.log(dtBending,"dtBending")
         });
         if(dtBending.length > 0){
           setgvBending(dtBending);
           sethfSerialCount(dtBending.length)
           settxtLotNo((prevState) => ({ ...prevState, value: "",disbled:false}));
-          fcLotNo.current.focus();
+          setTimeout(() => {
+            fcLotNo.current.focus();
+          }, 300);
+       
         }else{
           setpnlResult(true)
           setlblResult((prevState) => ({ ...prevState, value: "NG", style: { backgroundColor: 'yellow' , color:'red', fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
           setlblRemark((prevState) => ({ ...prevState, value:`Machine ${txtMCNo.value} not found in master!`,style: { fontSize: '30px', padding: '0px' ,textAlign: 'center'}}));
-          fcMCno.current.focus();
+          setTimeout(() => {
+            fcMCno.current.focus();
+          }, 300);
+          
         }
       }
     }
@@ -125,11 +130,18 @@ function fn_ScanAutoBendingTime() {
           setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'Yellow',color:"red" ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
           setlblRemark((prevState) => ({ ...prevState, value: 'LOT   '+txtLotNo.value+'  not found!' }));
           settxtLotNo((prevState) => ({ ...prevState, value: '' }));
-          fcLotNo.current.focus();
+          setTimeout(() => {
+            fcLotNo.current.focus();
+          }, 300);
+         
         }
 
       }else{
         settxtLotNo((prevState) => ({ ...prevState, value: '' }));
+         setTimeout(() => {
+            fcLotNo.current.focus();
+          }, 300);
+         
         // fcLotNo.current.focus();
       }
     }
@@ -143,6 +155,7 @@ function fn_ScanAutoBendingTime() {
       }
       // setvisiblgvSerial(true);
       setgvSerial(dtData); 
+      settxtSerial( Array(dtData.length).fill(""))
       if(dtData.length>0){
         setpnlDetail(true)
       }
@@ -153,6 +166,8 @@ function fn_ScanAutoBendingTime() {
     };
     const btnCancel = async () => {
    getInitialSerial()
+   setpnlResult(false)
+   fcGvSerial_txtSerial_0.current[0].focus();
     };
     const getInputSerial = async () => {
       let dtData = [];
@@ -184,10 +199,15 @@ function fn_ScanAutoBendingTime() {
       settxtSerial(newValues);
     };
     const ibtback_Click = async () => {
-      console.log('......')
       settxtMCNo((prevState) => ({ ...prevState, disbled: false  }));
       settxtLotNo((prevState) => ({ ...prevState, value: "", disbled: false }));
-      fcLotNo.current.focus()
+      setlblProductName((prevState) => ({ ...prevState, value: ""}));
+      setpnlDetail(false)
+      setpnlResult(false)
+      setTimeout(() => {
+        fcLotNo.current.focus();
+      }, 300);
+     
     };
     const btnSave_Click = async () => {
       setSerialData()

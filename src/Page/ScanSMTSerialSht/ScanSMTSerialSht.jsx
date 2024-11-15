@@ -93,11 +93,6 @@ function ScanSMTSerialSht() {
                                                     handleChangeLot();
                                                 }
                                             }}
-                                            onBlur={() => {
-                                                if (txtLotNo !== "") {
-                                                    handleChangeLot();
-                                                }
-                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -151,7 +146,6 @@ function ScanSMTSerialSht() {
                                                     handleChangeLotRef();
                                                 }
                                             }}
-                                            onBlur={handleChangeLotRef}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -196,7 +190,6 @@ function ScanSMTSerialSht() {
                                                             handleChangeRollLeaf();
                                                         }
                                                     }}
-                                                    onBlur={handleChangeRollLeaf}
                                                 />
                                             </TableCell>
                                         </TableRow>
@@ -238,7 +231,6 @@ function ScanSMTSerialSht() {
                                                         handleChangeMachine();
                                                     }
                                                 }}
-                                                onBlur={handleChangeMachine}
                                             />
                                         </TableCell>
                                     </TableRow>

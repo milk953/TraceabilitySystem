@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { values } from "lodash";
 
 function fn_ScanSheetMOTTime() {
   //txt
@@ -80,9 +81,9 @@ function fn_ScanSheetMOTTime() {
   const SUS = params.get("SUS");
   let hfZPRNProcID = "";
   
-  if (partweb == "ScanSheetMOTTime") {
+  if (partweb.toUpperCase() == "ScanSheetMOTTime") {
     hfZPRNProcID = "1840";
-  } else if (partweb == "ScanSheetMOTTime2") {
+  } else if (partweb.toUpperCase() == "ScanSheetMOTTime2") {
     hfZPRNProcID = "1841";
   }
   const Fac = import.meta.env.VITE_FAC;
@@ -99,13 +100,13 @@ function fn_ScanSheetMOTTime() {
       ...prevState,
       value: "",
       disbled: true,
-      style: { background: "#EEEEEE" },
+      style: { background: "#e0e0e0" },
     }));
     settxtSheet((prevState) => ({
       ...prevState,
       value: "",
       disbled: true,
-      style: { background: "#EEEEEE" },
+      style: { background: "#e0e0e0" },
     }));
 
     setlblRemark("");
@@ -121,7 +122,7 @@ function fn_ScanSheetMOTTime() {
           value: "",
           disbled: true,
           visble: "",
-          style: { background: "#EEEEEE" },
+          style: { background: "#e0e0e0" },
         }));
       } else {
         settxtCBNo((prevState) => ({ ...prevState, visble: "none" }));
@@ -135,7 +136,7 @@ function fn_ScanSheetMOTTime() {
           value: "",
           disbled: true,
           visble: "",
-          style: { background: "#EEEEEE" },
+          style: { background: "#e0e0e0" },
         }));
       } else {
         settxtSUSNo((prevState) => ({ ...prevState, visble: "none" }));
@@ -152,7 +153,7 @@ function fn_ScanSheetMOTTime() {
       ...prevState,
       value: "",
       disbled: true,
-      style: { background: "#eeeeee" },
+      style: { background: "#e0e0e0" },
     }));
     settxtlot((prevState) => ({
       ...prevState,
@@ -164,7 +165,7 @@ function fn_ScanSheetMOTTime() {
         ...prevState,
         disbled: true,
         value: "",
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
     }
     if (txtSUSNo.visble == "") {
@@ -172,7 +173,7 @@ function fn_ScanSheetMOTTime() {
         ...prevState,
         disbled: true,
         value: "",
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
     }
     if (MotMachince != "") {
@@ -226,13 +227,13 @@ function fn_ScanSheetMOTTime() {
           ...prevState,
           value: _strLot,
           disbled: true,
-          style: { background: "#EEEEEE" },
+          style: { background: "#e0e0e0" },
         }));
 
         settxtMCNo((prevState) => ({
           ...prevState,
           disbled: true,
-          style: { background: "#EEEEEE" },
+          style: { background: "#e0e0e0" },
         }));
 
         settxtSheet((prevState) => ({
@@ -266,9 +267,9 @@ function fn_ScanSheetMOTTime() {
           focus: true,
         }));
 
-        // setTimeout(() => {
-        //   fctxtSheetNo.current.focus();
-        // }, 300);
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       } else {
         settxtlot((prevState) => ({ ...prevState, value: "", focus: true }));
 
@@ -319,7 +320,7 @@ function fn_ScanSheetMOTTime() {
             style: { background: "" },
             value: "",
           }));
-
+          settxtSheet((prevState)=>({...prevState,disbled:true,style:{background:'#e0e0e0'}}))
           fctxtCBNo.current.focus();
         } else if (txtSUSNo.visble == "") {
           settxtSUSNo((prevState) => ({
@@ -346,9 +347,9 @@ function fn_ScanSheetMOTTime() {
             });
 
           if (rowCount == 0) {
-            // setTimeout(() => {
-            //   fctxtSheetNo.current.focus();
-            // }, 300);
+            setTimeout(() => {
+              fctxtSheetNo.current.focus();
+            }, 300);
             setlblRemark("");
             await axios
               .post("/api/CallFPCSheetLeadTimeResult", {
@@ -399,12 +400,8 @@ function fn_ScanSheetMOTTime() {
               style: { color: "#fff",background:'#FF7F3E' },
             }));
           }
-          settxtSheet((prevState) => ({
-            ...prevState,
-            value: "",
-            focus: true,
-          }));
-
+          settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:'',value:''}}))
+          fctxtSheetNo.current.blur(); //cancel focus
         }
       } else {
         setlblResult((prevState) => ({
@@ -413,19 +410,18 @@ function fn_ScanSheetMOTTime() {
           style: { color: "#fff",background:'red' },
         }));
         setlblRemark(strError);
-        settxtSheet((prevState) => ({ ...prevState, value: "", focus: true }));
+        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:'',value:''}}))
 
-        // setTimeout(() => {
-        //   fctxtSheetNo.current.focus();
-        // }, 300);
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       }
     } else {
-      settxtSheet((prevState) => ({ ...prevState, value: "", focus: true }));
+      settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:'',value:''}}))
     }
   };
 
   const txtCBNo_TextChanged = async () => {
-    console.log(txtCBNo.value, "txtcbno");
     if (txtSheet.value != "" && txtCBNo.value != "") {
       console.log("เข้าtxtCBNo", hfCheckPrdSht);
       let strError = "";
@@ -525,12 +521,10 @@ function fn_ScanSheetMOTTime() {
               style: { color: "#fff",background:'#FF7F3E' },
             }));
           }
-          settxtSheet((prevState) => ({ ...prevState, value: "" }));
+          settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
           settxtCBNo((prevState) => ({ ...prevState, value: "" }));
-
-          // setTimeout(() => {
-          //   fctxtSheetNo.current.focus();
-          // }, 300);
+          fctxtCBNo.current.blur();
+         
         }
       } else {
         setlblResult((prevState) => ({
@@ -539,17 +533,17 @@ function fn_ScanSheetMOTTime() {
           style: { color: "#fff",background:'red' },
         }));
         setlblRemark(strError);
-        settxtSheet((prevState) => ({ ...prevState, value: "" }));
-        // setTimeout(() => {
-        //   fctxtSheetNo.current.focus();
-        // }, 300);
+        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       }
     } else {
-      settxtSheet((prevState) => ({ ...prevState, value: "" }));
+      settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
 
-      // setTimeout(() => {
-      //   fctxtSheetNo.current.focus();
-      // }, 300);
+      setTimeout(() => {
+        fctxtSheetNo.current.focus();
+      }, 300);
     }
   };
 
@@ -641,12 +635,11 @@ function fn_ScanSheetMOTTime() {
             style: { color: "#fff",background:'#FF7F3E' },
           }));
         }
-        settxtSheet((prevState) => ({ ...prevState, value: "" }));
+        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
         settxtCBNo((prevState) => ({ ...prevState, value: "" }));
         settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
-        // setTimeout(() => {
-        //   fctxtSheetNo.current.focus();
-        // }, 300);
+        // fctxtSheetNo.current.blur();
+        fctxtSUSNo.current.blur();
       } else {
         setlblResult((prevState) => ({
           ...prevState,
@@ -654,20 +647,20 @@ function fn_ScanSheetMOTTime() {
           style: { color: "#fff",background:'red' },
         }));
         setlblRemark(strError);
-        settxtSheet((prevState) => ({ ...prevState, value: "" }));
+        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
         settxtCBNo((prevState) => ({ ...prevState, value: "" }));
         settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
-        // setTimeout(() => {
-        //   fctxtSheetNo.current.focus();
-        // }, 300);
+        setTimeout(() => {
+          fctxtSheetNo.current.focus();
+        }, 300);
       }
     } else {
-      settxtSheet((prevState) => ({ ...prevState, value: "" }));
+      settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
       settxtCBNo((prevState) => ({ ...prevState, value: "" }));
       settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
-      // setTimeout(() => {
-      //   fctxtSheetNo.current.focus();
-      // }, 300);
+      setTimeout(() => {
+        fctxtSheetNo.current.focus();
+      }, 300);
     }
   };
 
@@ -689,7 +682,7 @@ function fn_ScanSheetMOTTime() {
     settxtSheet((prevState) => ({
       ...prevState,
       disbled: true,
-      style: { background: "#EEEEEE" },
+      style: { background: "#e0e0e0" },
       value: "",
     }));
 
@@ -697,7 +690,7 @@ function fn_ScanSheetMOTTime() {
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
         value: "",
       }));
     }
@@ -705,7 +698,7 @@ function fn_ScanSheetMOTTime() {
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: true,
-        style: { background: "#EEEEEE" },
+        style: { background: "#e0e0e0" },
       }));
     }
 
@@ -738,12 +731,15 @@ function fn_ScanSheetMOTTime() {
         value: "",
       }));
     }
-    // setTimeout(() => {
-    //   fctxtSheetNo.current.focus();
-    // }, 300);
+    setTimeout(() => {
+      fctxtSheetNo.current.focus();
+    }, 300);
   };
 
   const BtClick_Replace = async () => {
+    setTimeout(() => {
+      fctxtSheetNo.current.focus();
+    }, 300);
     let strError = "";
     let strStatus = "";
     console.log("lblSheet", lblSheet);
@@ -763,7 +759,7 @@ function fn_ScanSheetMOTTime() {
         strStatus = res.data.strStatus;
       });
 
-    setlblSheet(lblSheet + "Replace");
+    setlblSheet(lblSheet + " Replace");
     setlblRemark(strError);
 
     setpnlSave("none");
@@ -804,9 +800,9 @@ function fn_ScanSheetMOTTime() {
       }));
     }
 
-    // setTimeout(() => {
-    //   fctxtSheetNo.current.focus();
-    // }, 300);
+    setTimeout(() => {
+      fctxtSheetNo.current.focus();
+    }, 300);
   };
 
   const BtClick_Delete = async () => {
@@ -871,15 +867,17 @@ function fn_ScanSheetMOTTime() {
       }
         Swal.fire({
           title: "Delete Success!",
-          icon: "success"
+          icon: "success",
+          timer: 2000, 
+          showConfirmButton: false, 
         });
       }
     });
 
 
-    // setTimeout(() => {
-    //   fctxtSheetNo.current.focus();
-    // }, 300);
+    setTimeout(() => {
+      fctxtSheetNo.current.focus();
+    }, 300);
   };
 
   return {

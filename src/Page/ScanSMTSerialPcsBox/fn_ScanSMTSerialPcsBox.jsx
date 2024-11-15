@@ -1268,17 +1268,19 @@ function fn_ScanSMTSerialPcsBox() {
               }
             }
             // บรรทัดที่ 842
+            console.log(_strScanResultUpdate,'เข้าจ้า',hfSerialEndDigit,hfWeekCodeType)
             if (
               _strSerial.length == parseInt(hfSerialLength) &&
               _strScanResultUpdate != "NG"
             ) {
+             
               let _strFixDigit;
               const res = await axios.post("/api/Common/GetCheckSumSerial", {
                 _str_Serial: _strSerial,
                 _str_DateType: hfWeekCodeType,
                 _intEngRevEndDigit: Number(hfSerialEndDigit),
               });
-              if (!res.data) {
+              if (res.data == false) {
                 _strMessageUpdate =
                   "Serial invalid check sum / หมายเลขบาร์โค้ดมีค่าตรวจสอบไม่ถูกค้อง";
                 _strRemark = "Serial invalid check sum";
@@ -1296,6 +1298,7 @@ function fn_ScanSMTSerialPcsBox() {
                 );
                 console.log("มาแล้วนะคะอิอิ", _strFixDigit, hfSerialDigit);
                 if (_strFixDigit != hfSerialDigit) {
+                  console.log()
                   _strMessageUpdate =
                     "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                   _strRemark = "Serial barcode mix product";

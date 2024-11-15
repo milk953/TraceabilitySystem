@@ -871,7 +871,7 @@ function fn_ScanSMTSerialPcsChrome() {
           })
           .then((res) => {
             dtSerial[i] = res.data;
-            console.log("GetSerialTestResultManyTable", dtSerial[i]);
+            console.log("GetSerialTestResultManyTable-----", dtSerial[i]);
           });
       }
       if (hfCheckWeekCode == "Y") {
@@ -1160,6 +1160,7 @@ function fn_ScanSMTSerialPcsChrome() {
                 let _RearSheetBarcode;
                 let _strMessage = "";
                 let _intShtSeq;
+                console.log(dtSerial,'กงนี้้้้้')
                 if (dtSerial[drRow].FRONT_SHEET_NO != "") {
                   _FrontSheetBarcode = dtSerial[drRow].FRONT_SHEET_NO;
                   _RearSheetBarcode = dtSerial[drRow].BACK_SHEET_NO;

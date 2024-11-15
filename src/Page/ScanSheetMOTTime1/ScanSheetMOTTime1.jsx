@@ -101,9 +101,9 @@ function ScanSheetMOTTime() {
                         size="small"
                         fullWidth
                         value={txtMCNo.value}
-                        
+                        // style={{}}
                         inputRef={(el) => (fctxtMcNo.current = el)}
-                        disabled={false} //falseพิมได้ 
+                        disabled={txtMCNo.disbled} //falseพิมได้ 
                         style={txtMCNo.style}
                         onChange={(e) => {
                           settxtMCNo((prevState) => ({

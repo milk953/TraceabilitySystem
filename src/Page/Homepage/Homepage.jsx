@@ -48,7 +48,7 @@ function HomePage() {
                 </Card>
               </Col>
             </Row>
-            <Card style={{ height: '600px', overflowY: 'auto' }}>
+            <Card style={{ height: '600px', overflowY: 'auto',background:'#f5f5f5' }}>
             <Row className="RowCardHeader">
               <Col>
                 <Card className="CardMenu">

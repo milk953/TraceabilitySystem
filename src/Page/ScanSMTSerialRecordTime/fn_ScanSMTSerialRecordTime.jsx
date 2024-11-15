@@ -24,6 +24,10 @@ function fn_ScanSMTSerialRecordTime() {
     const [pnlRackNo, setpnlRackNo] = useState(false);
     const [lblOP, setlblOP] = useState("");
     const [pnlOP, setpnlOP] = useState(false);
+    const [pnlOPReJudge, setpnlOPReJudge] = useState(false);
+    const [pnlAreaRejudge, setpnlAreaRejudge] = useState(false);
+    const [txtOPRejudge, settxtOPRejudge] = useState("");
+    const [txtAreaRejudge, settxtAreaRejudge] = useState("");
 
     //hiddenfield
     const hfUserID = localStorage.getItem("hfUserID");
@@ -70,6 +74,9 @@ function fn_ScanSMTSerialRecordTime() {
     const [hfSerialStartCode, sethfSerialStartCode] = useState("");
     const [hfSerialInfo, sethfSerialInfo] = useState("");
     const [hfOP, sethfOP] = useState("");
+    const [hfProcRejudge, sethfProcRejudge] = useState("ZFIN");
+    const [hfOPRejudge, sethfOPRejudge] = useState("");
+    const [hfAreaRejudge, sethfAreaRejudge] = useState("");
 
     //Table
     const [pnlSerial, setpnlSerial] = useState(false);
@@ -88,6 +95,11 @@ function fn_ScanSMTSerialRecordTime() {
     const [isibtMCBackDisabled, setisibtMCBackDisabled] = useState(false);
     const [isibtOperatorDisabled, setisibtOperatorDisabled] = useState(false);
     const [isibtPcsBackDisabled, setisibtPcsBackDisabled] = useState(false);
+    const [ibtOPRejudgeDisabled, setibtOPRejudgeDisabled] = useState(false);
+    const [txtOPRejudgeDisabled, settxtOPRejudgeDisabled] = useState(false);
+    const [ibtAreaRejudgeDisabled, setibtAreaRejudgeDisabled] = useState(false);
+    const [ibtAreaConfirmDisabled, setibtAreaConfirmDisabled] = useState(false);
+    const [txtAreaRejudgeDisabled, settxtAreaRejudgeDisabled] = useState(false);
 
     //inputRef
     const inputMachine = useRef(null);
@@ -98,6 +110,8 @@ function fn_ScanSMTSerialRecordTime() {
     const ddlProduct = useRef(null);
     const inputgvSerial = useRef([]);
     const inputRackNo = useRef(null);
+    const inputOPRejudge = useRef(null);
+    const inputAreaRejudge = useRef(null);
 
     const plantCode = import.meta.env.VITE_FAC;
     const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
@@ -115,11 +129,27 @@ function fn_ScanSMTSerialRecordTime() {
 
         const queryParams = new URLSearchParams(window.location.search);
         const op = queryParams.get("OP");
+        const oprejudge = queryParams.get("OP-REJUDGE");
+        const arearejudge = queryParams.get("AREA-REJUDGE");
 
         if (op !== null) {
-            set(op);
+            sethfOP(op);
         } else {
             sethfOP("");
+        }
+        if (oprejudge !== null) {
+            sethfOPRejudge(oprejudge);
+            setpnlOPReJudge(true);
+        } else {
+            sethfOPRejudge("");
+            setpnlOPReJudge(false);
+        }
+        if (arearejudge !== null) {
+            sethfAreaRejudge(arearejudge);
+            setpnlAreaRejudge(true);
+        } else {
+            sethfAreaRejudge("");
+            setpnlAreaRejudge(false);
         }
 
         SetMode("RECORD");
@@ -154,6 +184,10 @@ function fn_ScanSMTSerialRecordTime() {
 
     const ibtMCBackClick = () => {
         SetMode("MC");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setpnlSerial(false);
+        setgvSerialData([]);
     };
 
     const handleChangeOperator = () => {
@@ -162,22 +196,149 @@ function fn_ScanSMTSerialRecordTime() {
             settxtOperator(Operator);
             if (hfOP !== "") {
                 const strOPData = lblOP.toUpperCase().split(",");
+                let bolError = false;
                 for (let intRow = 0; intRow < strOPData.length; intRow++) {
                     if (strOPData[intRow] === txtOperator) {
-                        setbolError(true);
+                        bolError = true;
                         break;
                     }
                 }
                 if (!bolError) {
                     if (strOPData.length === parseInt(hfOP)) {
                         setlblOP(lblOP + txtOperator);
-                        settxtOperator(lblOP + txtOperator);
-                        SetMode("PCS");
+                        settxtOperator(lblOP);
+
+                        if (hfOPRejudge !== "") {
+                            SetMode("OP-REJUDGE");
+                        } else if (hfAreaRejudge !== "") {
+                            SetMode("AREA-REJUDGE");
+                        } else {
+                            SetMode("PCS");
+                        }
                     } else {
                         setlblOP(lblOP + txtOperator + ",");
                         settxtOperator("");
                         inputOperator.current.focus();
                     }
+                } else {
+                    settxtOperator("");
+                    inputOperator.current.focus();
+                }
+            } else {
+                if (hfOPRejudge !== "") {
+                    SetMode("OP-REJUDGE");
+                } else if (hfAreaRejudge !== "") {
+                    SetMode("AREA-REJUDGE");
+                } else {
+                    SetMode("PCS");
+                }
+            }
+        }
+    };
+
+    const ibtOperatorClick = () => {
+        SetMode("OP");
+    };
+
+    const handleChangeOPRejudge = async () => {
+        if (txtOPRejudge !== "") {
+            settxtOPRejudge(txtOPRejudge.toUpperCase().trim());
+            if (hfOPRejudge !== "") {
+                let bolError = false;
+
+                let dt = [];
+                await axios.post("/api/RecordTime/GetOperatorRecordTimeData", {
+                    strplancode: plantCode,
+                    strProc: hfProcRejudge,
+                    strOperator: txtOPRejudge
+                })
+                    .then((res) => {
+                        dt = res.data;
+                    })
+                console.log(dt, "dt");
+                if (dt.length > 0) {
+                    if (dt[0].COUNT_OP > 0) {
+                        let strOPData = lblOP.toUpperCase().trim().split(";");
+                        for (let intRow = 0; intRow < strOPData.length; intRow++) {
+                            if (strOPData[intRow] === txtOPRejudge) {
+                                bolError = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        bolError = true;
+                    }
+                } else {
+                    bolError = true;
+                }
+
+                if (!bolError) {
+                    if (strOPData.length === parseInt(hfOPRejudge)) {
+                        setlblOP(lblOP + txtOPRejudge);
+                        settxtOPRejudge(lblOP);
+                        if (hfAreaRejudge !== "") {
+                            SetMode("AREA-REJUDGE");
+                        } else {
+                            SetMode("PCS");
+                        }
+                    } else {
+                        setlblOP(lblOP + txtOPRejudge);
+                        settxtOPRejudge("");
+                        setTimeout(() => {
+                            if (inputOPRejudge.current) {
+                                inputOPRejudge.current.focus();
+                            }
+                        }, 200);
+                    }
+                } else {
+                    settxtOPRejudge("");
+                    setTimeout(() => {
+                        if (inputOPRejudge.current) {
+                            inputOPRejudge.current.focus();
+                        }
+                    }, 200);
+                }
+            } else {
+                if (hfAreaRejudge !== "") {
+                    SetMode("AREA-REJUDGE");
+                } else {
+                    SetMode("PCS");
+                }
+            }
+        }
+    };
+
+    const handleChangeAreaRejudge = async () => {
+        if (txtAreaRejudge !== "") {
+            settxtAreaRejudge(txtAreaRejudge.toUpperCase().trim());
+            if (hfAreaRejudge !== "") {
+                let bolError = false;
+                let strOPData = lblOP.toUpperCase().trim().split(";");
+                for (let intRow = 0; intRow < strOPData.length; intRow++) {
+                    if (strOPData[intRow] === txtAreaRejudge) {
+                        bolError = true;
+                        break;
+                    }
+                }
+                if (!bolError) {
+                    if (strOPData.length === parseInt(hfAreaRejudge)) {
+                        setlblOP(lblOP + txtAreaRejudge);
+                        settxtAreaRejudge(lblOP);
+                        SetMode("PCS");
+                    } else {
+                        setlblOP(lblOP + txtAreaRejudge + ",");
+                        settxtAreaRejudge("");
+                        setTimeout(() => {
+                                inputAreaRejudge.current.focus();
+                        }, 200);
+                    }
+                } else {
+                    settxtAreaRejudge("");
+                    setTimeout(() => {
+                        if (inputAreaRejudge.current) {
+                            inputAreaRejudge.current.focus();
+                        }
+                    }, 200);
                 }
             } else {
                 SetMode("PCS");
@@ -185,8 +346,27 @@ function fn_ScanSMTSerialRecordTime() {
         }
     };
 
-    const ibtOperatorClick = () => {
-        SetMode("OP");
+    const ibtOPRejudgeClick = async () => {
+        SetMode("OP_REJUDGE");
+    };
+
+    const ibtAreaRejudgeClick = async () => {
+        SetMode("AREA_REJUDGE");
+    };
+
+    const ibtAreaConfirmClick = async () => {
+        if (lblOP !== "") {
+            setlblOP(lblOP + txtAreaRejudge);
+            settxtAreaRejudge(lblOP);
+            SetMode("PCS");
+        } else {
+            settxtAreaRejudge("");
+            setTimeout(() => {
+                if (inputAreaRejudge.current) {
+                    inputAreaRejudge.current.focus();
+                }
+            }, 200);
+        }
     };
 
     const handleChangeTotalPcs = () => {
@@ -453,6 +633,13 @@ function fn_ScanSMTSerialRecordTime() {
             settxtOperator("");
             setistxtOpDisabled(true);
             setisibtOperatorDisabled(true);
+            setibtOPRejudgeDisabled(true);
+            settxtOPRejudgeDisabled(true);
+            settxtOPRejudge("");
+            setibtAreaRejudgeDisabled(true);
+            setibtAreaConfirmDisabled(true);
+            settxtAreaRejudgeDisabled(true);
+            settxtAreaRejudge("");
             settxtTotalPcs("");
             setistxtTotalPcsDisabled(true);
             settxtLotNo("");
@@ -472,6 +659,13 @@ function fn_ScanSMTSerialRecordTime() {
             settxtOperator("");
             setistxtOpDisabled(false);
             setisibtOperatorDisabled(false);
+            setibtOPRejudgeDisabled(true);
+            settxtOPRejudgeDisabled(true);
+            settxtOPRejudge("");
+            setibtAreaRejudgeDisabled(true);
+            setibtAreaConfirmDisabled(true);
+            settxtAreaRejudgeDisabled(true);
+            settxtAreaRejudge("");
             settxtTotalPcs("");
             setistxtTotalPcsDisabled(true);
             settxtLotNo("");
@@ -489,11 +683,86 @@ function fn_ScanSMTSerialRecordTime() {
                 setpnlOP(false);
             }
             inputOperator.current.focus();
+        } else if (strType === "OP-REJUDGE") {
+            setistxtMachineDisabled(true);
+            setisibtMCBackDisabled(false);
+            setistxtOpDisabled(true);
+            setisibtOperatorDisabled(false);
+            setibtOPRejudgeDisabled(false);
+            settxtOPRejudgeDisabled(false);
+            settxtOPRejudge("");
+            setibtAreaRejudgeDisabled(true);
+            setibtAreaConfirmDisabled(true);
+            settxtAreaRejudgeDisabled(true);
+            settxtAreaRejudge("");
+            settxtTotalPcs("");
+            setistxtTotalPcsDisabled(true);
+            settxtLotNo("");
+            setlblOP("");
+            setistxtLotDisabled(true);
+            settxtRackNo("");
+            setistxtRackDisabled(true);
+            setisselProDisabled(true);
+            setisibtPcsBackDisabled(false);
+            setpnlSerial(false);
+            setgvSerialData([]);
+            sethfMode("OP-REJUDGE");
+
+            if (hfOPRejudge !== "") {
+                setpnlOP(true);
+            } else {
+                setpnlOP(false);
+            }
+            setTimeout(() => {
+                if (inputOPRejudge.current) {
+                    inputOPRejudge.current.focus();
+                }
+            }, 200);
+
+        } else if (strType === "AREA-REJUDGE") {
+            setistxtMachineDisabled(true);
+            setisibtMCBackDisabled(false);
+            setistxtOpDisabled(true);
+            setisibtOperatorDisabled(false);
+            setibtOPRejudgeDisabled(true);
+            settxtOPRejudgeDisabled(false);
+            setibtAreaRejudgeDisabled(false);
+            setibtAreaConfirmDisabled(false);
+            settxtAreaRejudgeDisabled(false);
+            settxtAreaRejudge("");
+            settxtTotalPcs("");
+            setistxtTotalPcsDisabled(true);
+            settxtLotNo("");
+            setlblOP("");
+            setistxtLotDisabled(true);
+            settxtRackNo("");
+            setistxtRackDisabled(true);
+            setisselProDisabled(true);
+            setisibtPcsBackDisabled(false);
+            setpnlSerial(false);
+            setgvSerialData([]);
+            sethfMode("AREA-REJUDGE");
+
+            if (hfAreaRejudge !== "") {
+                setpnlOP(true);
+            } else {
+                setpnlOP(false);
+            }
+            setTimeout(() => {
+                if (inputAreaRejudge.current) {
+                    inputAreaRejudge.current.focus();
+                }
+            }, 200);
         } else if (strType === "PCS") {
             setistxtMachineDisabled(true);
             setisibtMCBackDisabled(false);
             setistxtOpDisabled(true);
             setisibtOperatorDisabled(false);
+            setibtOPRejudgeDisabled(true);
+            settxtOPRejudgeDisabled(false);
+            setibtAreaRejudgeDisabled(true);
+            setibtAreaConfirmDisabled(true);
+            settxtAreaRejudgeDisabled(false);
             settxtTotalPcs("");
             setistxtTotalPcsDisabled(false);
             settxtLotNo("");
@@ -504,6 +773,7 @@ function fn_ScanSMTSerialRecordTime() {
             setisibtPcsBackDisabled(false);
             setlblOP("");
             setpnlSerial(false);
+            setpnlOP(false);
             setgvSerialData([]);
             sethfMode("PCS");
             inputTotalPcs.current.focus();
@@ -641,9 +911,6 @@ function fn_ScanSMTSerialRecordTime() {
         return dtData;
     };
 
-    const [bolTrayError, setbolTrayError] = useState(false);
-    const [bolError, setbolError] = useState(false);
-
     const setSerialDataTray = async () => {
         let _strFileError = "";
         const dtSerial = await getInputSerial();
@@ -652,7 +919,8 @@ function fn_ScanSMTSerialRecordTime() {
         let _strTray = " ";
         let _strScanResultAll = "OK";
         let _intRowSerial = 0;
-
+        let bolError = false;
+        let bolTrayError = false;
         let dtLotPassCount = [];
 
         setlblLog("");
@@ -667,7 +935,7 @@ function fn_ScanSMTSerialRecordTime() {
                 setlblLotTotal("");
                 setlblResult("NG");
                 _strScanResultAll = "NG";
-                setbolTrayError(true);
+                bolTrayError = true;
             }
         }
 
@@ -725,7 +993,7 @@ function fn_ScanSMTSerialRecordTime() {
                         let _strReject2 = "";
                         let _strTouchUp = "";
 
-                        setbolError(false);
+                        bolError = false;
 
                         let _strTestResult = "NO";
 
@@ -733,9 +1001,9 @@ function fn_ScanSMTSerialRecordTime() {
                             if (hfCheckPrdSht === "Y" && !bolError) {
                                 const start = parseInt(hfCheckPrdShtStart);
                                 const end = parseInt(hfCheckPrdShtEnd);
-                                const substring = _strSerial.substring(start - 1, end);
+                                const CheckPrdSht = _strSerial.substring(start - 1, end);
 
-                                if (hfCheckPrdAbbr !== substring) {
+                                if (hfCheckPrdAbbr !== CheckPrdSht) {
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับผลิตภัณฑ์อื่น";
                                     _strRemark = "Sheet barcode mix product";
                                     _strScanResultUpdate = "NG";
@@ -744,7 +1012,7 @@ function fn_ScanSMTSerialRecordTime() {
                                     dtSerial[i].REMARK_UPDATE = _strRemark;
                                     dtSerial[i].ROW_UPDATE = "Y";
 
-                                    setbolError(true);
+                                    bolError = true;
                                 } else {
                                     _strMessageUpdate = "";
                                     _strRemark = "";
@@ -762,7 +1030,7 @@ function fn_ScanSMTSerialRecordTime() {
                                 dtSerial[i].REMARK_UPDATE = _strRemark;
                                 dtSerial[i].ROW_UPDATE = "Y";
 
-                                setbolError(true);
+                                bolError = true;
                             }
                         } else {
                             // Check format serial no
@@ -784,7 +1052,7 @@ function fn_ScanSMTSerialRecordTime() {
                                         dtSerial[i].ROW_UPDATE = "Y";
 
                                         _intCountNG = 1;
-                                        setbolError(true);
+                                        bolError = true;
                                     }
 
                                     if (hfConfigCheck === "Y" && _strScanResultUpdate !== "NG") {
@@ -801,12 +1069,12 @@ function fn_ScanSMTSerialRecordTime() {
                                             dtSerial[i].ROW_UPDATE = "Y";
 
                                             _intCountNG = 1;
-                                            setbolError(true);
+                                            bolError = true;
                                         }
                                     }
 
                                     if (hfSerialStartCode !== "" && _strScanResultUpdate !== "NG") {
-                                        if (_strSerial.substring(1, hfSerialStartCode.length) !== hfSerialStartCode) {
+                                        if (_strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
                                             _strScanResultUpdate = "NG";
@@ -815,7 +1083,7 @@ function fn_ScanSMTSerialRecordTime() {
                                             dtSerial[i].ROW_UPDATE = "Y";
 
                                             _intCountNG = 1;
-                                            setbolError(true);
+                                            bolError = true;
                                         }
                                     }
                                 }
@@ -834,7 +1102,7 @@ function fn_ScanSMTSerialRecordTime() {
                                         dtSerial[i].ROW_UPDATE = "Y";
 
                                         _intCountNG = 1;
-                                        setbolError(true);
+                                        bolError = true;
                                     }
                                 }
 
@@ -852,7 +1120,7 @@ function fn_ScanSMTSerialRecordTime() {
                                         dtSerial[i].ROW_UPDATE = "Y";
 
                                         _intCountNG = 1;
-                                        setbolError(true);
+                                        bolError = true;
                                     }
                                 }
 
@@ -867,7 +1135,7 @@ function fn_ScanSMTSerialRecordTime() {
                                     //         dtSerial[i].ROW_UPDATE = "N";
 
                                     //         _intCountNG = 1;
-                                    //         setbolError(true);
+                                    //         bolError = true;
                                     //     }
                                     // }
                                     let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
@@ -881,7 +1149,7 @@ function fn_ScanSMTSerialRecordTime() {
                                         dtSerial[i].ROW_UPDATE = "N";
 
                                         _intCountNG = 1;
-                                        setbolError(true);
+                                        bolError = true;
                                     }
                                 }
 
@@ -901,7 +1169,7 @@ function fn_ScanSMTSerialRecordTime() {
                                 dtSerial[i].REMARK_UPDATE = _strRemark;
                                 dtSerial[i].ROW_UPDATE = "Y";
 
-                                setbolError(true);
+                                bolError = true;
                             }
                         }
 
@@ -919,7 +1187,7 @@ function fn_ScanSMTSerialRecordTime() {
                         dtSerial[i].SCAN_RESULT = "NG";
                         dtSerial[i].ROW_UPDATE = "N";
                         _strScanResultAll = "NG";
-                        setbolError(true);
+                        bolError = true;
                     }
                 }
                 _intRowSerial = _intRowSerial + 1;
@@ -940,6 +1208,8 @@ function fn_ScanSMTSerialRecordTime() {
                             strProgram: "frm_ScanSMTSerialRecordTime",
                             strPlantCode: plantCode,
                             strStation: hfUserStation,
+                            strOPRejudge: txtOPRejudge,
+                            strAreaRejudge: txtAreaRejudge,
                             data: [{
                                 SERIAL: dtSerial[i].SERIAL,
                                 MACHINE: dtSerial[i].MACHINE,
@@ -996,11 +1266,17 @@ function fn_ScanSMTSerialRecordTime() {
     const btnSaveClick = () => {
         if (hfMode === "SERIAL") {
             setSerialDataTray();
+            settxtgvSerial("");
         }
     };
 
     const btnCancelClick = () => {
         SetMode("SERIAL");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setTimeout(() => {
+            inputgvSerial.current[0].focus();
+        }, 200);
     };
 
     const columns = [
@@ -1055,7 +1331,9 @@ function fn_ScanSMTSerialRecordTime() {
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
         ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
-        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial, columns
+        btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial, columns, pnlOPReJudge, pnlAreaRejudge, txtOPRejudge, settxtOPRejudge, txtAreaRejudge,
+        settxtAreaRejudge, ibtOPRejudgeDisabled, txtOPRejudgeDisabled, ibtAreaRejudgeDisabled, ibtAreaConfirmDisabled, txtAreaRejudgeDisabled, inputOPRejudge,
+        inputAreaRejudge, handleChangeOPRejudge, handleChangeAreaRejudge, ibtOPRejudgeClick, ibtAreaRejudgeClick, ibtAreaConfirmClick
     }
 };
 
