@@ -98,11 +98,12 @@ function fn_ScanSheetOvenTime() {
         .then((res) => {
           console.log(res, "res");
           strError = res.data.p_error;
+          alert(strError)
           console.log(strError)
         })
-        .catch((error) => {
-          Swal.fire("Error", `${error}`, "error")
-        });
+        // .catch((error) => {
+        //   Swal.fire("Error", `${error}`, "error")
+        // });
       }
 
       setLblRemark(strError)
