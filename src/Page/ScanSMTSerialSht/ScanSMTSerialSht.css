@@ -8,6 +8,22 @@
     display: flex;
 }
 
+.TableBarcode{
+    width:  450px !important;
+    
+}
+
+.TableBarcode th{
+    padding: 3px !important;
+    background-color: #8c8c8c !important ;
+    border-radius: 5px  5px 0 0!important;
+    color: #fff;
+}
+
+.TableBarcode td{
+    padding: 4px 4px 4px 4px!important;
+}
+
 .TbScanSMTSerialShtPcs {
     margin: auto;
     width: 700px;

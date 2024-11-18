@@ -50,8 +50,7 @@ function ScanSMTSerialShtMaster() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
-                        marginTop: "-10px"
+                        marginLeft: "-8px",
                     }}
                 >
                     <TableContainer
@@ -92,11 +91,6 @@ function ScanSMTSerialShtMaster() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    handleChangeLot();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                if (txtLotNo !== "") {
                                                     handleChangeLot();
                                                 }
                                             }}
@@ -155,7 +149,6 @@ function ScanSMTSerialShtMaster() {
                                                     handleChangeLotRef();
                                                 }
                                             }}
-                                            onBlur={handleChangeLotRef}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -178,7 +171,6 @@ function ScanSMTSerialShtMaster() {
                                                     handleChangeMasterCode();
                                                 }
                                             }}
-                                            onBlur={handleChangeMasterCode}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -223,7 +215,6 @@ function ScanSMTSerialShtMaster() {
                                                             handleChangeRollLeaf();
                                                         }
                                                     }}
-                                                    onBlur={handleChangeRollLeaf}
                                                 />
                                             </TableCell>
                                         </TableRow>
@@ -250,7 +241,6 @@ function ScanSMTSerialShtMaster() {
                                                         handleChangeMachine();
                                                     }
                                                 }}
-                                                onBlur={handleChangeMachine}
                                             />
                                         </TableCell>
                                     </TableRow>
@@ -401,7 +391,7 @@ function ScanSMTSerialShtMaster() {
                                                     sx={{ borderRight: "1px solid #d9d9d9" }}
                                                     align="center"
                                                 >
-                                                    {index + 1}
+                                                    {gvSerialData[index].SEQ}
                                                 </TableCell>
                                                 <TableCell>
                                                     <TextField
@@ -470,7 +460,7 @@ function ScanSMTSerialShtMaster() {
                                     className="Card-lblResult"
                                     style={{
                                         background: lblResultcolor,
-                                        width: "70%", 
+                                        width: "100%", 
                                     }}
                                 >
                                     <Typography
