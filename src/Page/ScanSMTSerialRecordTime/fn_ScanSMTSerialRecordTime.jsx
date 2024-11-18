@@ -188,6 +188,8 @@ function fn_ScanSMTSerialRecordTime() {
         setgvScanData([]);
         setpnlSerial(false);
         setgvSerialData([]);
+        getProductData();
+        setlblLot("");
     };
 
     const handleChangeOperator = () => {

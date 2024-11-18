@@ -960,7 +960,8 @@ function fn_ScanSMTSerialPcsChrome() {
             if (hfSerialFixFlag == "Y" && _strScanResultUpdate != "NG") {
               var startDigit = parseInt(hfSerialStartDigit, 10);
               var endDigit = parseInt(hfSerialEndDigit, 10);
-              _strFixDigit = _strSerial.substring(startDigit - 1, endDigit);
+              _strFixDigit = _strSerial.substring(parseInt(startDigit) - 1, parseInt(endDigit));
+              console.log('ตรงนี่1',_strFixDigit,hfSerialDigit)
               if (_strFixDigit != hfSerialDigit) {
                 _strMessageUpdate =
                   "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -977,9 +978,10 @@ function fn_ScanSMTSerialPcsChrome() {
                 var configStart = parseInt(hfConfigStart, 10);
                 var configEnd = parseInt(hfConfigEnd, 10);
                 _strConfigDigit = _strSerial.substring(
-                  configStart - 1,
-                  configEnd
+                  parseInt( configStart) - 1,
+                  parseInt(configEnd)
                 );
+                console.log('ตรงนี่2',_strStartSeq,hfCheckStartSeqCode)
                 if (_strStartSeq != hfCheckStartSeqCode) {
                   _strMessageUpdate =
                     "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1013,15 +1015,27 @@ function fn_ScanSMTSerialPcsChrome() {
             }
             if (!_bolError) {
               for (
-                let _intRow = _intRowSerial + 1;
-                _intRow < dtSerial.length - 1;
-                i++
+                let _intRow = _intRowSerial ;
+                _intRow < dtSerial.length ;
+                _intRow++
               ) {
-                if (
-                  _strSerial.toUpperCase ==
-                  dtSerial[_intRow].SERIAL.trim().toUpperCase
-                ) {
-                  _strMessageUpdate =
+                // if (
+                //   _strSerial.toUpperCase ==
+                //   dtSerial[_intRow].SERIAL.trim().toUpperCase
+                // ) {
+                  let isDuplicate = dtSerial.some((item, index) => {
+                    console.log(
+                      `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
+                    );
+                    return (
+                      index !== _intRowSerial &&
+                      _strSerial.toUpperCase() === item.SERIAL.toUpperCase()
+                    );
+                  });
+                  // let isDuplicate = _strSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
+                  if (isDuplicate) {
+                    console.log('ซ้ำ1',_strSerial)
+                    _strMessageUpdate =
                     "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                   _strRemark = "Serial duplicate in tray  ";
                   _strScanResultUpdate = "NG";
@@ -1029,13 +1043,15 @@ function fn_ScanSMTSerialPcsChrome() {
                   dtSerial[drRow].REMARK_UPDATE = _strRemark;
                   dtSerial[drRow].ROW_UPDATE = "N";
                   _intCountNG = 1;
-                  _bolError = True;
-                }
+                  _bolError = true;
+                  }
+            
+                
               }
             }
             if (!_bolError && hfCheckPrdSht == "Y") {
-              let strSheetLot;
-              let _strShtNo;
+              let strSheetLot='';
+              let _strShtNo='';
               await axios
                 .post("/api/Common/GetSheetNoBySerialNo", {
                   data: {
@@ -1045,11 +1061,11 @@ function fn_ScanSMTSerialPcsChrome() {
                   },
                 })
                 .then((res) => {
-                  _strShtNo = res.data;
+                  _strShtNo = res.data._strsheet;
                   console.log("GetSheetNoBySerialNo", res.data);
                 });
               if (
-                _strShtNo.trim() !== "" &&
+                _strShtNo !== "" &&
                 hfCheckPrdAbbr !==
                   _strShtNo.substring(
                     parseInt(hfCheckPrdShtStart) - 1,
@@ -1235,7 +1251,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   _strTestResultUpdate = _strTestResult;
                   dtSerial[drRow].REMARK_UPDATE = _strRemark;
                   dtSerial[drRow].ROW_UPDATE = "Y";
-                  _bolError = True;
+                  _bolError = true;
                 }
               }
               if (hfPlasmaCheck == "Y" && _strRejectGroup != "MASTER") {
