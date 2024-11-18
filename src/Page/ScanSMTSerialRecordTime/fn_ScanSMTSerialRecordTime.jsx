@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
+import {useLoading} from "../../loading/fn_loading";
 
 function fn_ScanSMTSerialRecordTime() {
     const [selectedrbt, setselectedrbt] = useState("");
@@ -109,7 +110,7 @@ function fn_ScanSMTSerialRecordTime() {
     const inputTray = useRef(null);
     const ddlProduct = useRef(null);
     const inputgvSerial = useRef([]);
-    const inputRackNo = useRef(null);
+    const inputRackNo = useRef([]);
     const inputOPRejudge = useRef(null);
     const inputAreaRejudge = useRef(null);
 
@@ -117,6 +118,7 @@ function fn_ScanSMTSerialRecordTime() {
     const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
     const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
     const _strTagNewLine = "/";
+    const {showLoading,hideLoading} = useLoading();
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
@@ -256,11 +258,12 @@ function fn_ScanSMTSerialRecordTime() {
                 })
                     .then((res) => {
                         dt = res.data;
-                    })
+                    });
                 console.log(dt, "dt");
                 if (dt.length > 0) {
-                    if (dt[0].COUNT_OP > 0) {
-                        let strOPData = lblOP.toUpperCase().trim().split(";");
+                    console.log(dt[0].count_op)
+                    if (dt[0].count_op > 0) {
+                        let strOPData = lblOP.toUpperCase().split(";");
                         for (let intRow = 0; intRow < strOPData.length; intRow++) {
                             if (strOPData[intRow] === txtOPRejudge) {
                                 bolError = true;
@@ -592,9 +595,6 @@ function fn_ScanSMTSerialRecordTime() {
         if (!istxtLotDisabled) {
             inputLot.current.focus();
         }
-        if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
-            inputgvSerial.current[0].focus();
-        }
     }, [
         istxtMachineDisabled,
         istxtOpDisabled,
@@ -653,7 +653,9 @@ function fn_ScanSMTSerialRecordTime() {
             setpnlSerial(false);
             setgvSerialData([]);
             sethfMode("MC");
-            inputMachine.current.focus();
+            setTimeout(() => {
+                inputMachine.current.focus();
+              }, 200);
         } else if (strType === "OP") {
             setistxtMachineDisabled(true);
             setisibtMCBackDisabled(false);
@@ -693,7 +695,7 @@ function fn_ScanSMTSerialRecordTime() {
             setibtOPRejudgeDisabled(false);
             settxtOPRejudgeDisabled(false);
             settxtOPRejudge("");
-            setibtAreaRejudgeDisabled(true);
+            setibtAreaRejudgeDisabled(false);
             setibtAreaConfirmDisabled(true);
             settxtAreaRejudgeDisabled(true);
             settxtAreaRejudge("");
@@ -847,13 +849,16 @@ function fn_ScanSMTSerialRecordTime() {
 
         if (dtData.length > 0) {
             if (selectedrbt === "rbtRecordTime") {
-                if (inputgvSerial.current[0]) {
+                setTimeout(() => {
                     inputgvSerial.current[0].focus();
-                }
+                }, 200);
             } else {
                 settxtRackNo("");
                 setistxtRackDisabled(false);
                 inputRackNo.current.focus();
+                setTimeout(() => {
+                    inputRackNo.current.focus();
+                }, 200);
             }
         }
         console.log("gvserialdata:", dtData)
@@ -926,6 +931,7 @@ function fn_ScanSMTSerialRecordTime() {
         let dtLotPassCount = [];
 
         setlblLog("");
+        showLoading('กำลังบันทึก กรุณารอสักครู่');
 
         if (_strLot !== "") {
             if (_strLot.length === 9 && _strPrdName !== "") {
@@ -1257,6 +1263,7 @@ function fn_ScanSMTSerialRecordTime() {
         }
 
         getInitialSerial();
+        hideLoading();
     };
 
     const handleChangeSerial = (index, event) => {
@@ -1276,6 +1283,7 @@ function fn_ScanSMTSerialRecordTime() {
         SetMode("SERIAL");
         setgvScanResult(false);
         setgvScanData([]);
+        settxtgvSerial("");
         setTimeout(() => {
             inputgvSerial.current[0].focus();
         }, 200);
@@ -1332,10 +1340,10 @@ function fn_ScanSMTSerialRecordTime() {
         istxtTotalPcsDisabled, istxtLotDisabled, isselProDisabled, istxtMachineDisabled, handleChangerbt, istxtRackDisabled, isibtMCBackDisabled,
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
-        ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
+        ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, inputRackNo, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
         btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial, columns, pnlOPReJudge, pnlAreaRejudge, txtOPRejudge, settxtOPRejudge, txtAreaRejudge,
         settxtAreaRejudge, ibtOPRejudgeDisabled, txtOPRejudgeDisabled, ibtAreaRejudgeDisabled, ibtAreaConfirmDisabled, txtAreaRejudgeDisabled, inputOPRejudge,
-        inputAreaRejudge, handleChangeOPRejudge, handleChangeAreaRejudge, ibtOPRejudgeClick, ibtAreaRejudgeClick, ibtAreaConfirmClick
+        inputAreaRejudge, handleChangeOPRejudge, handleChangeAreaRejudge, ibtOPRejudgeClick, ibtAreaRejudgeClick, ibtAreaConfirmClick, 
     }
 };
 
