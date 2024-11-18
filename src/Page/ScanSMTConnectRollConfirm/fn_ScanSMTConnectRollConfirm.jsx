@@ -171,6 +171,8 @@ function fn_ScanSMTConnectRollConfirm() {
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึก กรุณารอสักครู่...");
       await setSerialData();
+      const newValues = []; 
+      setTxtSerial(newValues); 
       await new Promise((resolve) => setTimeout(resolve, 1000));
       hideLoading();
     }
@@ -178,9 +180,6 @@ function fn_ScanSMTConnectRollConfirm() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    // const newValues2 = txtSerial.map(value => value?.trim().toUpperCase());
-    console.log("newValues : ", newValues);
-    // console.log("newValues2 : ", newValues2);
     newValues[index] = event.target.value;
     setTxtSerial(newValues);
   };

@@ -60,7 +60,6 @@ function ScanSMTConnectRollConfirm() {
     columns,
     lblRemark,
   } = fn_ScanSMTConnectRollConfirm();
-  console.log(pnlSerial,"pnlSerialpnlSerial")
   return (
     <div>
       <Hearder />
@@ -86,6 +85,7 @@ function ScanSMTConnectRollConfirm() {
                         id="txtLot_ScanSMTConnectRollConfirm_focus"
                         className="input_txt"
                         size="small"
+                        autoComplete="off"
                         fullWidth
                         disabled={txtLot.disbled}
                         style={txtLot.style}
@@ -208,6 +208,7 @@ function ScanSMTConnectRollConfirm() {
                               //  key={`text_${index}`}
                               key={index}
                               size="small"
+                               autoComplete="off"
                               fullWidth
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
