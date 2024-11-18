@@ -40,7 +40,7 @@ function ScanSMTSerialRecordTime() {
         istxtTotalPcsDisabled, istxtLotDisabled, isselProDisabled, istxtMachineDisabled, handleChangerbt, istxtRackDisabled, isibtMCBackDisabled,
         isibtOperatorDisabled, isibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, pnlMachine, pnlRackNo, Productdata, ibtMCBackClick,
         handleChangeOperator, ibtOperatorClick, handleChangeTotalPcs, handleChangerbtPcsSht, ibtPcsBackClick, selrbtPcsSht, ddlProduct, handleChangeLot,
-        ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, settxtgvSerial, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
+        ibtBackClick, handleChangeProduct, hfSerialCount, txtgvSerial, inputRackNo, inputgvSerial, handleChangeSerial, lblResultcolor, gvScanData,
         btnSaveClick, btnCancelClick, pnlOP, lblOP, handleKeygvSerial, columns, pnlOPReJudge, pnlAreaRejudge, txtOPRejudge, settxtOPRejudge, txtAreaRejudge,
         settxtAreaRejudge, ibtOPRejudgeDisabled, txtOPRejudgeDisabled, ibtAreaRejudgeDisabled, ibtAreaConfirmDisabled, txtAreaRejudgeDisabled, inputOPRejudge,
         inputAreaRejudge, handleChangeOPRejudge, handleChangeAreaRejudge, ibtOPRejudgeClick, ibtAreaRejudgeClick, ibtAreaConfirmClick
@@ -448,6 +448,7 @@ function ScanSMTSerialRecordTime() {
                                                 className="input_txt"
                                                 size="small"
                                                 fullWidth
+                                                inputRef={inputRackNo}
                                                 disabled={istxtRackDisabled}
                                                 style={{
                                                     backgroundColor: istxtRackDisabled ? "#e0e0e0" : "inherit",
@@ -459,6 +460,9 @@ function ScanSMTSerialRecordTime() {
                                                 onKeyDown={(e) => {
                                                     if (e.key === "Enter") {
                                                         settxtRackNo(e.target.value);
+                                                        setTimeout(() => {
+                                                            inputgvSerial.current[0].focus();
+                                                        }, 200);
                                                     }
                                                 }}
                                             />
