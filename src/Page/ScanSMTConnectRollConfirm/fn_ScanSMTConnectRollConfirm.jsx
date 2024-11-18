@@ -3,8 +3,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { color } from "framer-motion";
 import { Tag } from "antd";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanSMTConnectRollConfirm() {
+  const { showLoading, hideLoading } = useLoading();
   const hfUserFactory = "";
   const [hfFlowID, setHfFlowID] = useState("0016");
   const [hfSerialCount, setHfSerialCount] = useState("");
@@ -146,6 +148,7 @@ function fn_ScanSMTConnectRollConfirm() {
       value: Product[0].prd_name,
     }));
     setLblShtCount("");
+    setLblRemark("");
     SetMode("LOT");
     fnSetFocus("txtLot_ScanSMTConnectRollConfirm_focus");
   };
@@ -157,12 +160,18 @@ function fn_ScanSMTConnectRollConfirm() {
 
   const btnSave_Click = async () => {
     if (hfMode == "SERIAL") {
+      showLoading("กำลังบันทึก กรุณารอสักครู่...");
       await setSerialData();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      hideLoading();
     }
   };
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
+    // const newValues2 = txtSerial.map(value => value?.trim().toUpperCase());
+    console.log("newValues : ", newValues);
+    // console.log("newValues2 : ", newValues2);
     newValues[index] = event.target.value;
     setTxtSerial(newValues);
   };
@@ -320,7 +329,10 @@ function fn_ScanSMTConnectRollConfirm() {
     setLblRemark("");
     _strLotData = txtLot.value.trim().toUpperCase().split(";");
     _strLot = _strLotData[0];
+    console.log("dtSerial 1 : ", dtSerial);
+    console.log("dtSheet 2 : ", dtSheet);
     if (txtLot.value !== "" && dtSerial.length > 0) {
+      console.log("Check NG 1 : ");
       _strScanResultAll = "NG";
       setLblRemark("");
       let _intRowSerial = 0;
@@ -336,10 +348,19 @@ function fn_ScanSMTConnectRollConfirm() {
           let _strSerialDup = "";
           for (let j = 0; j < dtSheet.length; j++) {
             const drShtRow = dtSheet[j];
+            console.log(
+              "drShtRow 1 : ",
+              drShtRow.ROLL_LEAF_NO,
+              "drShtRow 2 : ",
+              drShtRow.SHEET_NO,
+              "drShtRow 3 : ",
+              drShtRow.DATA_REMARK
+            );
             if (
               drShtRow.SHEET_NO === _strSerial &&
               drShtRow.DATA_REMARK === ""
             ) {
+              console.log("Check NG 2 : ", _strScanResultAll);
               drShtRow.SCAN_RESULT = "OK";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -351,6 +372,7 @@ function fn_ScanSMTConnectRollConfirm() {
               drShtRow.SHEET_NO === _strSerial &&
               drShtRow.DATA_REMARK !== ""
             ) {
+              console.log("Check NG 3 : ");
               drShtRow.SCAN_RESULT = "NG";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -360,7 +382,20 @@ function fn_ScanSMTConnectRollConfirm() {
               _bolUpdate = true;
             }
           }
-
+          console.log(
+            _strSerial.length,
+            parseInt(hfConnLeafLength),
+            "สำคัญ : ",
+            "_strLot :",
+            _strLot,
+            "_strSerial : ",
+            _strSerial,
+            "_strSerial.substring : ",
+            _strSerial.substring(
+              parseInt(hfCheckLotShtStart) - 1,
+              parseInt(hfCheckLotShtEnd)
+            )
+          );
           if (
             _strSerial.length === parseInt(hfConnLeafLength) &&
             lblRemark === "" &&
@@ -370,8 +405,8 @@ function fn_ScanSMTConnectRollConfirm() {
               if (
                 _strLot !==
                 _strSerial.substring(
-                  parseInt(hfCheckLotShtStart),
-                  parseInt(hfCheckLotShtEnd) + 1
+                  parseInt(hfCheckLotShtStart) - 1,
+                  parseInt(hfCheckLotShtEnd)
                 )
               ) {
                 setLblRemark("MIX LOT");
@@ -410,10 +445,11 @@ function fn_ScanSMTConnectRollConfirm() {
               },
             })
             .then((res) => {
-              strError = res.data;
+              strError = res.data[0].p_error;
             });
         }
         if (strError !== "") {
+          console.log("Check NG 4 : ", strError);
           _strScanResultAll = "NG";
         }
         if (_intOK == parseInt(lblTotalSht, 10)) {
@@ -434,21 +470,28 @@ function fn_ScanSMTConnectRollConfirm() {
               strResult: "F",
             })
             .then((res) => {
-              strError = res.data;
+              strError = res.data[0].p_error;
             });
         }
-
+        console.log(
+          "Check NG 5 : ",
+          strError,
+          _strScanResultAll,
+          _strScanResultAll.slice(0, 2)
+        );
         setLblResult((prevState) => ({
           ...prevState,
           value: _strScanResultAll,
         }));
 
         if (_strScanResultAll.slice(0, 2) === "NG") {
+          console.log("Check NG 5 : NG ");
           setLblResult((prevState) => ({
             ...prevState,
             style: { color: "red" },
           }));
         } else {
+          console.log("Check NG 5 : OK ");
           setLblResult((prevState) => ({
             ...prevState,
             style: { color: "green" },
@@ -513,7 +556,11 @@ function fn_ScanSMTConnectRollConfirm() {
           let data = res.data.prdName[0];
           strPrdName = data;
         });
-      if (strPrdName !== "" && strPrdName !== undefined && strPrdName !== null) {
+      if (
+        strPrdName !== "" &&
+        strPrdName !== undefined &&
+        strPrdName !== null
+      ) {
         setLblPnlLog((prevState) => ({
           ...prevState,
           value: "",
@@ -599,12 +646,14 @@ function fn_ScanSMTConnectRollConfirm() {
   const getInputSerial = async () => {
     const dtData = [];
     for (let intRow = 0; intRow < gvSerial.value.length; intRow++) {
-      const serial = txtSerial[intRow];
+      const serial = txtSerial[intRow]?.trim().toUpperCase();
+      console.log("serialserialserialserial :", serial);
       dtData.push({
         SEQ: intRow + 1,
         SERIAL: serial,
       });
     }
+    console.log("dtData : ", dtData);
     return dtData;
   };
 
@@ -616,11 +665,17 @@ function fn_ScanSMTConnectRollConfirm() {
       intRow = intRow + 1;
       const row = {
         SEQ: intRow,
-        ROLL_LEAF_NO: gvScanResult.value[intSeq].roll_leaf_no,
-        SHEET_NO: gvScanResult.value[intSeq].sheet_no,
-        SCAN_RESULT: gvScanResult.value[intSeq].scan_result,
-        REMARK: gvScanResult.value[intSeq].remark,
-        DATA_REMARK: gvScanResult.value[intSeq].date_remark,
+        ROLL_LEAF_NO: gvScanResult.value[intSeq].roll_leaf_no
+          .trim()
+          .toUpperCase(),
+        SHEET_NO: gvScanResult.value[intSeq].sheet_no.trim().toUpperCase(),
+        SCAN_RESULT: gvScanResult.value[intSeq].scan_result
+          .trim()
+          .toUpperCase(),
+        REMARK: gvScanResult.value[intSeq].remark.trim().toUpperCase(),
+        DATA_REMARK: gvScanResult.value[intSeq].date_remark
+          .trim()
+          .toUpperCase(),
       };
       dtData.push(row);
     }
@@ -640,6 +695,7 @@ function fn_ScanSMTConnectRollConfirm() {
         },
       });
       dtSheet = res.data;
+      console.log("getShtDataBylot dtSheet : ", dtSheet);
       if (dtSheet.length > 0) {
         setGvScanResult((prevState) => ({
           ...prevState,
@@ -724,7 +780,7 @@ function fn_ScanSMTConnectRollConfirm() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
-        console.log("dtProductSerial", dtProductSerial);
+        console.log("dtProductSerial : ", dtProductSerial);
         if (dtProductSerial != null) {
           setHfSerialLength(dtProductSerial.slm_serial_length);
           setHfSerialFixFlag(dtProductSerial.slm_fix_flag);
@@ -812,13 +868,15 @@ function fn_ScanSMTConnectRollConfirm() {
       key: "Scan Result",
       dataIndex: "scan_result",
       render: (text, record, index) => {
-        return text !== ' '  ? (
+        return text !== " " ? (
           <Tag
             className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
           >
             {text}
           </Tag>
-        ) : '';
+        ) : (
+          ""
+        );
       },
       align: "center",
     },
@@ -862,6 +920,7 @@ function fn_ScanSMTConnectRollConfirm() {
     pnlSerial,
     btnSave_Click,
     columns,
+    lblRemark,
   };
 }
 
