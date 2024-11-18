@@ -734,6 +734,7 @@ function fn_ScanSMTSerialShtCopy() {
     }
     getCountDataBylot(txtlotNo);
     setTxtRollLeaf("");
+    setTxtbackSide(gvBackSide.map(() => ""));
     setTxtMachineNo("");
     setTxtButtonFix("");
     setTxtTopFix("");

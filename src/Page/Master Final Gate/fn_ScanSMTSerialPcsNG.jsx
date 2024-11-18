@@ -703,9 +703,12 @@ function fn_ScanSMTSerialPcsNG() {
     setPanalSerialState(false);
     setMode("LOT");
     SetFocus("txtLot");
+    setTxtSerial(gvSerial.map(() => ""));
   };
   const handle_Cancel_Click = () => {
-    setMode("SERIAL");
+    // setMode("SERIAL");
+    setTxtSerial(gvSerial.map(() => ""));
+    SetFocus("txtSerial_0");
   };
   const handle_Save_Click = () => {
     // if (_strEventArgument != "SAVE" && hfMode == "SERIAL") {
