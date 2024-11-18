@@ -60,6 +60,7 @@ function ScanSMTConnectRollConfirm() {
     columns,
     lblRemark,
   } = fn_ScanSMTConnectRollConfirm();
+  console.log(pnlSerial,"pnlSerialpnlSerial")
   return (
     <div>
       <Hearder />
@@ -155,7 +156,7 @@ function ScanSMTConnectRollConfirm() {
                         variant="body1"
                         style={{
                           width: "100%",
-                          color: "#FF0066",
+                          color: "#059212",
                           display: "flex",
                           justifyContent: "center",
                         }}
@@ -210,10 +211,15 @@ function ScanSMTConnectRollConfirm() {
                               fullWidth
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
-                              value={txtSerial[index]}
+                              value={txtSerial[index] || ""}
                               onChange={(event) =>
                                 handleSerialChange(index, event)
                               }
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  btnSave_Click();
+                                }
+                              }}
                             />
                           </TableCell>
                         </TableRow>
