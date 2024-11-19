@@ -641,7 +641,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           }));
         }
       });
-      console.log(prm_check_weekcode_flg,"prm_check_weekcode_flg")
     await axios
       .post("/api/Common/GetSerialBoxProductByProduct", {
         prdName: PrdName,
@@ -1197,6 +1196,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           })
           .then((res) => {
             _dtTrayCount = res.data[0].BOX_COUNT;
+            console.log(_dtTrayCount,"_dtTrayCount")
           });
             if (_dtTrayCount.length > 0) {
               setlblBoxTotal((prevState) => ({
@@ -1204,6 +1204,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                 value: _dtTrayCount,
               }));
             }
+            console.log(lblBoxTotal.value,"ได้อะไร",lblBoxFull.value)
             if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
               setlblBoxStatus((prevState) => ({
                 ...prevState,
@@ -1432,6 +1433,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                 }
               }
               // บรรทัดที่ 842
+              console.log(_strScanResultUpdate,"ตรงนี้จ้า บรรทัด 1436",_strSerial.length,hfSerialLength)
               if (
                 _strSerial.length == parseInt(hfSerialLength) &&
                 _strScanResultUpdate != "NG"
@@ -1442,7 +1444,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                   _str_DateType: hfWeekCodeType,
                   _intEngRevEndDigit: Number(hfSerialEndDigit),
                 });
-                if (!res.data) {
+                console.log(res.data,"ตรงนี้จ้า 1447")
+                if (res.data == false) {
                   _strMessageUpdate =
                     "Serial invalid check sum / หมายเลขบาร์โค้ดมีค่าตรวจสอบไม่ถูกค้อง";
                   _strRemark = "Serial invalid check sum";
@@ -1453,6 +1456,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                   _intCountNG = 1;
                   _bolError = true;
                 }
+                
                 if (hfSerialFixFlag == "Y" && _strScanResultUpdate != "NG") {
                   _strFixDigit = _strSerial.substring(
                     parseInt(hfSerialStartDigit, 10) - 1,
@@ -2190,11 +2194,13 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       })
       .then((res) => {
         _dtTrayCount = res.data;
+        console.log(res.data,"DATARES")
       });
     if (_dtTrayCount > 0) {
       setlblBoxTotal((prevState) => ({...prevState,value: _dtTrayCount.BOX_COUNT, }));
       setlblPackingTotal((prevState) => ({...prevState,value: _dtTrayCount.PACKING_COUNT,}));
     }
+    console.log(lblBoxTotal.value,"เท่าไหร่",lblBoxFull.value)
     if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
       setlblBoxStatus((prevState) => ({...prevState, value: "OK",}));
     } else {

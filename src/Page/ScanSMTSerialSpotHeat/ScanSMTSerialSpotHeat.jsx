@@ -61,7 +61,7 @@ function ScanSMTSerialSpotHeat() {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell align="left">
+                    <TableCell align="right">
                       <Typography>Lot No. :</Typography>
                     </TableCell>
                   
@@ -94,7 +94,7 @@ function ScanSMTSerialSpotHeat() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="left">
+                    <TableCell align="right">
                       <Typography>Product :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
@@ -123,7 +123,7 @@ function ScanSMTSerialSpotHeat() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="left">
+                    <TableCell align="right">
                       <Typography>Total Sht :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>

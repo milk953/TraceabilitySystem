@@ -276,6 +276,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     sethfMaxSeq("0");
     await Search_Data();
     if(lblGroup.value > 0){
+      console.log(lblGroup.value,"lblGroup.value")
        if (lblGroup.value == "") {
       settxtSerialRefer((prevState) => ({ ...prevState, value: "" }));
       settxtSerialReplace((prevState) => ({ ...prevState, disbled: true }));
@@ -305,6 +306,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       })
       .then((res) => {
         sbSql = res.data;
+        console.log(res.data,"DATA")
       });
     if (sbSql.length > 0) {
       setlblGroup((prevState) => ({ ...prevState, value: sbSql[0].group_no }));
@@ -323,9 +325,11 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     let _strRemark = "";
    
     if (_strSerial.length == parseInt(hfSerialLength, 10)) {
-   
+   console.log("เข้า")
       let _strFixDigit = "";
+      console.log(hfSerialFixFlag,"hfSerialFixFlag")
       if (hfSerialFixFlag == "Y") {
+       
         const startDigit = parseInt(hfSerialStartDigit, 10);
         const endDigit = parseInt(hfSerialEndDigit, 10);
         _strFixDigit = _strSerial.substring(startDigit - 1, endDigit);
