@@ -177,7 +177,6 @@ function fn_ScanSMTConnectShtConfirm() {
     }
   };
   const handle_Save_Click = async () => {
-    // console.log(txtSerial,'txtSerial');
     setSerialData();
   };
   const handle_Cancel_Click = async () => {
@@ -254,7 +253,7 @@ function fn_ScanSMTConnectShtConfirm() {
     } else if (type == "GetLotSheetDataAllByLot") {
       let dtSheet = [];
       await axios
-        .post("/api/common/GetLotRollLeafDataAllByLot", {
+        .post("/api/common/GetLotSheetDataAllByLot", {
           dataList: {
             strLotNo: params,
             strPlantCode: Fac,

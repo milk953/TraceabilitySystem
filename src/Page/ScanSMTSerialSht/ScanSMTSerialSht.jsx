@@ -51,7 +51,7 @@ function ScanSMTSerialSht() {
                 className="Card-Common"
                 sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between">
+                <Box >
                     <TableContainer
                         component={Paper}
                         style={{
@@ -62,7 +62,7 @@ function ScanSMTSerialSht() {
                         <Table className="TbScanSMTSerialShtPcs">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell colSpan={5} align="center">
+                                    <TableCell colSpan={3} align="center">
                                         <Typography variant="h6">
                                             SMT Connect Sht & Pcs
                                         </Typography>
@@ -74,7 +74,7 @@ function ScanSMTSerialSht() {
                                     <TableCell>
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell>
                                         <TextField
                                             className="input_txt"
                                             size="small"
@@ -107,7 +107,7 @@ function ScanSMTSerialSht() {
                                     <TableCell>
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell>
                                         <Autocomplete
                                             className="Select_dropDown"
                                             disabled={selProDisabled}
@@ -132,7 +132,7 @@ function ScanSMTSerialSht() {
                                     <TableCell>
                                         <Typography>Lot Ref. No. :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell>
                                         <TextField
                                             className="input_txt"
                                             size="small"

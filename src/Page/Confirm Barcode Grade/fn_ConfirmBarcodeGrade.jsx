@@ -3,7 +3,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
 import {useLoading} from "../../loading/fn_loading";
-// import { useLoading } from "../../component/loading/fn_loading";
 
 function fn_ConfirmBarcodeGrade() {
 
@@ -609,6 +608,14 @@ function fn_ConfirmBarcodeGrade() {
     settxt_lotNo((prevState) => ({ ...prevState, value: "", disbled: false }));
     setdataGvSerial((prevState) => ({ ...prevState, visble: true }));
     setSlProduct((prevState) => ({ ...prevState, value: Product[0].prd_name }));
+    settxtLotRef((prevState)=>({...prevState,value:''}))
+    settxtOperator((prevState)=>({...prevState,value:''}))
+    setlblTotalPcs((prevState)=>({...prevState,value:''}))
+    setlblTotalSht((prevState)=>({...prevState,value:''}))
+    settxtSideBack((prevState)=>({...prevState,visble:false,value:Array(hfShtScan).fill("")}))
+    settxtSideFront(Array(hfShtScan).fill(""))
+    setgvScanResult((prevState)=>({...prevState,visble:false,value:[]}))
+
     await SetMode("LOT");
     setTimeout(() => {
       fcLotNo.current.focus();
@@ -618,10 +625,13 @@ function fn_ConfirmBarcodeGrade() {
   const btnCancel_Click = async () => {
     settxtSideFront(Array(hfShtScan).fill(""))
     settxtSideBack((prevState) => ({ ...prevState, visble: true,value:Array(hfShtScan).fill("") }));
+    setgvScanResult((prevState)=>({...prevState,visble:false,value:[]}))
     await SetMode("SERIAL");
     setTimeout(() => {
       fcGvSerial_txtSerial_0[0].current.focus();
     }, 300);
+    
+    // set
   };
 
   const btnSave_Click = async () => {
@@ -1284,8 +1294,6 @@ function fn_ConfirmBarcodeGrade() {
           _strScanResultAll = "NG";
           _bolError = true;
           if (_strReturn != "NG") {
-            // setvisibleLog(true);
-            // setlblLog(_strReturn);
             setlblLog((prevState) => ({
               ...prevState,
               visble: true,
@@ -1297,6 +1305,12 @@ function fn_ConfirmBarcodeGrade() {
 
       if (!Check_Master && hfCheckSheetELT == "Y") {
         let _strReturn = "";
+        await axios
+        .post("/api/Common/SetSerialRecordTimeTrayTableTest", {
+          dataList: dtSerial})
+          .then((res) => {
+            console.log('test2222',res.data)
+          })
         for (let i = 0; i < dtSerial.length; i++) {
           await axios
             .post("/api/Common/setseriallotshtelttable", {

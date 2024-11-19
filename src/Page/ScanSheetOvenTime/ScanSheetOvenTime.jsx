@@ -10,7 +10,7 @@ import {
   Button,
   TableHead,
   Paper,
-  Card
+  Card,
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetOvenTime.css";
@@ -29,16 +29,16 @@ function ScanSheetOvenTime() {
     txtmcNoState,
     txtSheetNoState,
     handleTxtMcNo,
-    handleTxtSheetNo
+    handleTxtSheetNo,
   } = fn_ScanSheetOvenTime();
   useEffect(() => {
-
     if (txtmcNo == "" && txtmcNoState.styled.focus == true) {
       FctxtmcNo.current.focus();
-    }if (txtSheetNo == "" && txtSheetNoState.styled.focus == true) {
+    }
+    if (txtSheetNo == "" && txtSheetNoState.styled.focus == true) {
       FctxtSheetNo.current.focus();
     }
-  }, [txtmcNoState,txtSheetNoState]);
+  }, [txtmcNoState, txtSheetNoState]);
   return (
     <div>
       <Hearder />
@@ -65,7 +65,12 @@ function ScanSheetOvenTime() {
                   onChange={(e) => {
                     setTxtmcNo(e.target.value);
                   }}
-                  onBlur={handleTxtMcNo}
+                  // onBlur={handleTxtMcNo}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleTxtMcNo();
+                    }
+                  }}
                   value={txtmcNo}
                 ></TextField>
               </TableCell>
@@ -89,7 +94,12 @@ function ScanSheetOvenTime() {
                   onChange={(e) => {
                     setTxtSheetNo(e.target.value);
                   }}
-                    onBlur={handleTxtSheetNo}
+                  // onBlur={handleTxtSheetNo}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleTxtSheetNo();
+                    }}
+                  }
                 ></TextField>
               </TableCell>
               <TableCell></TableCell>
@@ -112,7 +122,9 @@ function ScanSheetOvenTime() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" ,color:lblRemark.styled}}>
+            <TableCell
+              sx={{ fontSize: "34px", padding: "0px", color: lblRemark.styled }}
+            >
               {lblRemark.text}
             </TableCell>
           </TableRow>
@@ -123,7 +135,8 @@ function ScanSheetOvenTime() {
       >
         <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
       </div>
-    // </div>
+      //{" "}
+    </div>
   );
 }
 

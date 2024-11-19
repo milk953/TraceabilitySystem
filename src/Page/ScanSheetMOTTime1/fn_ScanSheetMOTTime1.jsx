@@ -76,11 +76,11 @@ function fn_ScanSheetMOTTime() {
   const params = new URLSearchParams(window.location.search);
   const url = window.location.href;
   const partweb = url.split("/")[4].split("?")[0];
-  console.log(partweb,'webbbb');
+  console.log(partweb, "webbbb");
   const CB = params.get("CB");
   const SUS = params.get("SUS");
   let hfZPRNProcID = "";
-  
+
   if (partweb.toUpperCase() == "ScanSheetMOTTime") {
     hfZPRNProcID = "1840";
   } else if (partweb.toUpperCase() == "ScanSheetMOTTime2") {
@@ -278,7 +278,6 @@ function fn_ScanSheetMOTTime() {
         }, 300);
       }
     }
-
   };
 
   const txtSheetNo_TextChanged = async () => {
@@ -320,7 +319,11 @@ function fn_ScanSheetMOTTime() {
             style: { background: "" },
             value: "",
           }));
-          settxtSheet((prevState)=>({...prevState,disbled:true,style:{background:'#e0e0e0'}}))
+          settxtSheet((prevState) => ({
+            ...prevState,
+            disbled: true,
+            style: { background: "#e0e0e0" },
+          }));
           fctxtCBNo.current.focus();
         } else if (txtSUSNo.visble == "") {
           settxtSUSNo((prevState) => ({
@@ -373,56 +376,75 @@ function fn_ScanSheetMOTTime() {
                 strError = res.data.strReturn;
                 strStatus = res.data.strStatus;
               });
-
-            setlblSheet(txtSheet.value + " " + currentTime);
+            setlblSheet(txtSheet.value + " [" + currentTime+"] Save Success");
             setlblRemark(strError);
             if (strStatus == "P") {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { color: "#fff",background:'#059212' },
+                style: { color: "#fff", background: "#059212" },
               }));
             } else {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "NG",
-                style: { color: "#fff",background:'red' },
+                style: { color: "#fff", background: "red" },
               }));
             }
           } else {
-            console.log('data2222')
+            console.log("data2222");
             setlblSheet(txtSheet.value);
             setpnlSave("");
             setlblResult("");
-            setlblRemark("Exists record time, \n Please be confirm.");
+            setlblRemark("Exists record time,\nPlease be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
-              style: { color: "#fff",background:'#FF7F3E' },
+              style: { color: "#fff", background: "#F3C623" },
             }));
           }
-          settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:'',value:''}}))
+          settxtSheet((prevState) => ({
+            ...prevState,
+            disbled: false,
+            style: { background: "" },
+            value: "",
+          }));
           fctxtSheetNo.current.blur(); //cancel focus
         }
       } else {
         setlblResult((prevState) => ({
           ...prevState,
           value: "NG",
-          style: { color: "#fff",background:'red' },
+          style: { color: "#fff", background: "red" },
         }));
         setlblRemark(strError);
-        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:'',value:''}}))
+        settxtSheet((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
 
         setTimeout(() => {
           fctxtSheetNo.current.focus();
         }, 300);
       }
     } else {
-      settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:'',value:''}}))
+      settxtSheet((prevState) => ({
+        ...prevState,
+        disbled: false,
+        style: { background: "" },
+        value: "",
+      }));
     }
   };
 
   const txtCBNo_TextChanged = async () => {
     if (txtSheet.value != "" && txtCBNo.value != "") {
+      settxtCBNo((prevState) => ({
+        ...prevState,
+        disbled: true,
+        style: { background: "#e0e0e0" },
+      }));
       console.log("เข้าtxtCBNo", hfCheckPrdSht);
       let strError = "";
       let strStatus = "";
@@ -495,19 +517,19 @@ function fn_ScanSheetMOTTime() {
                 strStatus = res.data.strStatus;
               });
 
-            setlblSheet(txtSheet.value + " " + currentTime);
+              setlblSheet(txtSheet.value + " [" + currentTime+"] Save Success");
             setlblRemark(strError);
             if (strStatus == "P") {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { color: "#fff",background:'#059212' },
+                style: { color: "#fff", background: "#059212" },
               }));
             } else {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "NG",
-                style: { color: "#fff",background:'red' },
+                style: { color: "#fff", background: "red" },
               }));
             }
           } else {
@@ -515,31 +537,50 @@ function fn_ScanSheetMOTTime() {
             setpnlSave("");
             /// pnlMain.Enabled = False
             setlblResult("");
-            setlblRemark("Exists record time, \n Please be confirm.");
+            setlblRemark("Exists record time,\nPlease be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
-              style: { color: "#fff",background:'#FF7F3E' },
+              style: { color: "#fff", background: "#F3C623" },
             }));
           }
-          settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
-          settxtCBNo((prevState) => ({ ...prevState, value: "" }));
+          settxtSheet((prevState) => ({
+            ...prevState,
+            disbled: false,
+            style: { background: "" },
+            value: "",
+          }));
+          settxtCBNo((prevState) => ({
+            ...prevState,
+            value: "",
+            disbled: false,
+            style: { background: "" },
+          }));
           fctxtCBNo.current.blur();
-         
         }
       } else {
         setlblResult((prevState) => ({
           ...prevState,
           value: "NG",
-          style: { color: "#fff",background:'red' },
+          style: { color: "#fff", background: "red" },
         }));
         setlblRemark(strError);
-        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
+        settxtSheet((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
         setTimeout(() => {
           fctxtSheetNo.current.focus();
         }, 300);
       }
     } else {
-      settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
+      settxtSheet((prevState) => ({
+        ...prevState,
+        disbled: false,
+        style: { background: "" },
+        value: "",
+      }));
 
       setTimeout(() => {
         fctxtSheetNo.current.focus();
@@ -549,6 +590,11 @@ function fn_ScanSheetMOTTime() {
 
   const txtSUSNo_TextChanged = async () => {
     if (txtSheet.value != "" && txtCBNo.value != "") {
+      settxtSUSNo((prevState) => ({
+        ...prevState,
+        disbled: true,
+        style: { background: "#e0e0e0" },
+      }));
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
@@ -610,54 +656,102 @@ function fn_ScanSheetMOTTime() {
               strStatus = res.data.strStatus;
             });
 
-          setlblSheet(txtSheet.value + " " + currentTime);
+          setlblSheet(txtSheet.value + " [" + currentTime+"] Save Success");
           setlblRemark(strError);
           if (strStatus == "P") {
             setlblResult((prevState) => ({
               ...prevState,
               value: "OK",
-              style: { color: "#fff",background:'#059212' },
+              style: { color: "#fff", background: "#059212" },
             }));
           } else {
             setlblResult((prevState) => ({
               ...prevState,
               value: "NG",
-              style: { color: "#fff",background:'red' },
+              style: { color: "#fff", background: "red" },
             }));
           }
+          setTimeout(() => {
+            fctxtSheetNo.current.focus();
+          }, 300);
         } else {
           setlblSheet(txtSheet.value);
           setpnlSave("");
           setlblResult("");
-          setlblRemark("Exists record time, \n Please be confirm.");
+          setlblRemark("Exists record time,\nPlease be confirm.");
           setlblResult((prevState) => ({
             ...prevState,
-            style: { color: "#fff",background:'#FF7F3E' },
+            style: { color: "#fff", background: "#F3C623" },
           }));
         }
-        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
-        settxtCBNo((prevState) => ({ ...prevState, value: "" }));
-        settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
+        settxtSheet((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
+        settxtCBNo((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+          style: { background: "" },
+        }));
+        settxtSUSNo((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+          style: { background: "" },
+        }));
         // fctxtSheetNo.current.blur();
         fctxtSUSNo.current.blur();
       } else {
         setlblResult((prevState) => ({
           ...prevState,
           value: "NG",
-          style: { color: "#fff",background:'red' },
+          style: { color: "#fff", background: "red" },
         }));
         setlblRemark(strError);
-        settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
-        settxtCBNo((prevState) => ({ ...prevState, value: "" }));
-        settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
+        settxtSheet((prevState) => ({
+          ...prevState,
+          disbled: false,
+          style: { background: "" },
+          value: "",
+        }));
+        settxtCBNo((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+          style: { background: "" },
+        }));
+        settxtSUSNo((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+          style: { background: "" },
+        }));
         setTimeout(() => {
           fctxtSheetNo.current.focus();
         }, 300);
       }
     } else {
-      settxtSheet((prevState)=>({...prevState,disbled:false,style:{background:''},value:''}))
-      settxtCBNo((prevState) => ({ ...prevState, value: "" }));
-      settxtSUSNo((prevState) => ({ ...prevState, value: "" }));
+      settxtSheet((prevState) => ({
+        ...prevState,
+        disbled: false,
+        style: { background: "" },
+        value: "",
+      }));
+      settxtCBNo((prevState) => ({
+        ...prevState,
+        value: "",
+        disbled: false,
+        style: { background: "" },
+      }));
+      settxtSUSNo((prevState) => ({
+        ...prevState,
+        value: "",
+        disbled: false,
+        style: { background: "" },
+      }));
       setTimeout(() => {
         fctxtSheetNo.current.focus();
       }, 300);
@@ -701,9 +795,9 @@ function fn_ScanSheetMOTTime() {
         style: { background: "#e0e0e0" },
       }));
     }
-
+    setlblProductName("");
     setTimeout(() => {
-      fctxtLotno.current.focus();
+      fctxtMcNo.current.focus();
     }, 300);
   };
 
@@ -758,8 +852,7 @@ function fn_ScanSheetMOTTime() {
         strError = res.data.strReturn;
         strStatus = res.data.strStatus;
       });
-
-    setlblSheet(lblSheet + " Replace");
+    setlblSheet(lblSheet + " [" + currentTime+"] Replace Success");
     setlblRemark(strError);
 
     setpnlSave("none");
@@ -767,13 +860,13 @@ function fn_ScanSheetMOTTime() {
     if (strStatus == "P") {
       setlblResult((prevState) => ({
         ...prevState,
-        style: { color: "#fff",background:'#059212' },
+        style: { color: "#fff", background: "#059212" },
         value: "OK",
       }));
     } else {
       setlblResult((prevState) => ({
         ...prevState,
-        style: { color: "#fff",background:'red' },
+        style: { color: "#fff", background: "red" },
         value: "NG",
       }));
     }
@@ -815,65 +908,54 @@ function fn_ScanSheetMOTTime() {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes"
-    }).then(async(result)  => {
+      confirmButtonText: "Yes",
+    }).then(async (result) => {
       if (result.isConfirmed) {
         await axios
-        .post("/api/DeleteMOTRecordTimeData", {
-          data: {
-            _strPlantCode: Fac,
-            _strSheetNo: lblSheet,
-            _strProcID: hfZPRNProcID,
-          },
-        })
-        .then((res) => {
-          strError = res.data.p_error;
-        });
-      setlblSheet(lblSheet + " Delete");
-      setlblRemark(strError);
-      // if (strStatus == "P") {
-      //   setlblResult((prevState) => ({
-      //     ...prevState,
-      //     style: { color: "#fff",background:'#059212' },
-      //     value: "OK",
-      //   }));
-      // } else {
-      //   setlblResult((prevState) => ({
-      //     ...prevState,
-      //     style: { color: "#fff",background:'red' },
-      //     value: "NG",
-      //   }));
-      // }
-      setpnlSave("none");
-      settxtSheet((prevState) => ({
-        ...prevState,
-        value: "",
-      }));
-      if (txtCBNo.visble == "") {
-        settxtCBNo((prevState) => ({
+          .post("/api/DeleteMOTRecordTimeData", {
+            data: {
+              _strPlantCode: Fac,
+              _strSheetNo: lblSheet,
+              _strProcID: hfZPRNProcID,
+            },
+          })
+          .then((res) => {
+            strError = res.data.p_error;
+          });
+        setlblSheet(lblSheet + " Delete Success");
+        setlblRemark(strError);
+        setpnlSave("none");
+        settxtSheet((prevState) => ({
           ...prevState,
-          disbled: false,
-          style: { background: "" },
           value: "",
         }));
-      }
-      if (txtSUSNo.visble == "") {
-        settxtSUSNo((prevState) => ({
-          ...prevState,
-          disbled: false,
-          style: { background: "" },
-          value: "",
-        }));
-      }
+        if (txtCBNo.visble == "") {
+          settxtCBNo((prevState) => ({
+            ...prevState,
+            disbled: false,
+            style: { background: "" },
+            value: "",
+          }));
+        }
+        if (txtSUSNo.visble == "") {
+          settxtSUSNo((prevState) => ({
+            ...prevState,
+            disbled: false,
+            style: { background: "" },
+            value: "",
+          }));
+        }
         Swal.fire({
           title: "Delete Success!",
           icon: "success",
-          timer: 2000, 
-          showConfirmButton: false, 
+          timer: 2000,
+          showConfirmButton: false,
         });
       }
+      setTimeout(() => {
+        fctxtSheetNo.current.focus();
+      }, 300);
     });
-
 
     setTimeout(() => {
       fctxtSheetNo.current.focus();

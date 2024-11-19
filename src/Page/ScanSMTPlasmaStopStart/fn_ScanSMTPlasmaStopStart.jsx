@@ -288,7 +288,7 @@ function fn_ScanSMTPlasmaStopStart() {
       _strTimeType = "START"
     }
 
-    axios.post("/api/getStartStopRecordTimeByPackingNo", {
+    await axios.post("/api/getStartStopRecordTimeByPackingNo", {
       strPlantCode: plantCode,
       strLotNo: txtLotNo,
       strPackingNo: _strPartialNo,
@@ -297,54 +297,58 @@ function fn_ScanSMTPlasmaStopStart() {
       .then((res) => {
         intSerialCount = res.data.row_count;
         console.log("มาเปล่า", intSerialCount);
-        if (intSerialCount === 0) {
-          axios.post("/api/getStartStopRecordTimeByPartialNo", {
-            strPlantCode: plantCode,
-            strPartialNo: _strPartialNo,
-            strTimeType: _strTimeType
-          })
-            .then((res) => {
-              intSerialCount = res.data.row_count;
-              console.log("มาดิ", intSerialCount);
-            })
-          _strScanType = "PARTIAL";
-        } else {
-          _strScanType = "PACKING";
-        }
-        if (intSerialCount > 0) {
-          axios.post("/api/setStartStopRecordTimeByPartialNo", {
-            strPlantCode: plantCode,
-            strPartialNo: _strPartialNo,
-            strLotNo: _strLotNo,
-            strTimeType: _strTimeType,
-            strScanType: _strScanType,
-            strUser: hfUserName
-          })
-            .then((res) => {
-              _strErrorUpdate = res.data.p_error;
-              console.log("มาไหม", _strErrorUpdate)
-              if (_strErrorUpdate !== "") {
-                setlblLog(_strErrorUpdate);
-                setvisiblelog(true);
-                SetMode("PARTIAL_NG");
-              } else {
-                setlblStatus(_strTimeType);
-                if (_strTimeType === "STOP") {
-                  setlblStatusColor("red");
-                } else {
-                  setlblStatusColor("green");
-                }
-                SetMode("PARTIAL_OK");
-              }
-            })
-            .catch((error) => {
-              alert(error);
-            });
-        } else {
-          setlblLog("Not found serial no. ");
-          SetMode("PARTIAL_NG");
-        }
+      });
+
+    if (intSerialCount === 0) {
+      await axios.post("/api/getStartStopRecordTimeByPartialNo", {
+        strPlantCode: plantCode,
+        strPartialNo: _strPartialNo,
+        strTimeType: _strTimeType
       })
+        .then((res) => {
+          intSerialCount = res.data.row_count;
+          console.log("มาดิ", intSerialCount);
+        });
+      _strScanType = "PARTIAL";
+
+    } else {
+      _strScanType = "PACKING";
+    }
+
+    if (intSerialCount > 0) {
+      console.log(intSerialCount)
+      axios.post("/api/setStartStopRecordTimeByPartialNo", {
+        strPlantCode: plantCode,
+        strPartialNo: _strPartialNo,
+        strLotNo: _strLotNo,
+        strTimeType: _strTimeType,
+        strScanType: _strScanType,
+        strUser: hfUserName
+      })
+        .then((res) => {
+          _strErrorUpdate = res.data.p_error;
+          console.log("มาไหม", _strErrorUpdate)
+          if (_strErrorUpdate !== "") {
+            setlblLog(_strErrorUpdate);
+            setvisiblelog(true);
+            SetMode("PARTIAL_NG");
+          } else {
+            setlblStatus(_strTimeType);
+            if (_strTimeType === "STOP") {
+              setlblStatusColor("red");
+            } else {
+              setlblStatusColor("green");
+            }
+            SetMode("PARTIAL_OK");
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      setlblLog("Not found serial no. ");
+      SetMode("PARTIAL_NG");
+    }
 
   };
 

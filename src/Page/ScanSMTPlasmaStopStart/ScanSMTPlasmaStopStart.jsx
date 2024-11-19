@@ -47,8 +47,7 @@ function ScanSMTPlasmaStopStart() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
-                        marginTop: "-14px"
+                        marginLeft: "-8px",
                     }}
                 >
                     <TableContainer

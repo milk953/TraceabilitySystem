@@ -272,7 +272,7 @@ function ScanSheetMOTTime() {
                           {lblResult.value}
                         </Typography>
                         {/* marginTop: lblResult.value === '' ? "380px" : "0px", */}
-                        <Typography align="center" style={{ fontSize: "20px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "80px" : "0px"}}>
+                        <Typography align="center" style={{ fontSize: "34px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "80px" : "0px"}}>
                           {lblRemark}
                         </Typography>
                       </Card>
