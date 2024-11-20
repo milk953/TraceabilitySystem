@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import Hearder from "../Header/Header";
 import "./Reject.css";
+// import "../Common/StyleCommon.css";
 import { fn_Reject } from "./fn_Reject";
 import Checkbox from "@mui/material/Checkbox";
+import { Table as AntTable, Select, Button, Avatar } from "antd";
+import excel from "/src/assets/excel.png";
 import {
   TextField,
   Table,
   TableBody,
   TableCell,
   TableRow,
-  Button,
   TableHead,
   Paper,
 } from "@mui/material";
 import Radio from "@mui/material/Radio";
+import { SearchOutlined } from "@ant-design/icons";
 function Reject() {
   const {
     rdSelect,
@@ -30,17 +33,15 @@ function Reject() {
     lot,
     handleRetrice_Click,
     handleCheckboxChange,
-    selectAll,
     selectedRows,
     handleSelectAll,
     handleExport,
     setCbSelected,
     cbSelected,
-    ip,
-    Fac,
     setTxtOperator,
     txtOperator,
     handleSubmit_Click,
+    columns,
   } = fn_Reject();
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -53,6 +54,13 @@ function Reject() {
       </h3>
       <div className="DRejectTableFirst">
         <Table className="RejectTableFirst" component={Paper}>
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                Rejcet
+              </TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             <TableRow>
               <TableCell sx={{ width: "130px" }}>Piece No. 1,2,3,...</TableCell>
@@ -70,18 +78,18 @@ function Reject() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    width: "300px",
                   }}
                   rows="5"
                   cols="45"
                   value={txtSerialno}
                   onChange={(e) => setTxtSerialno(e.target.value)}
-                  // onBlur={txtSerialnoChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      txtSerialnoChange();
-                    }
-                  }
-                }
+                  id="txtPieceNoReject"
+                  // onKeyDown={(e) => {
+                  //   if (e.key === "Enter") {
+                  //     txtSerialnoChange();
+                  //   }
+                  // }}
                 ></textarea>
               </TableCell>
               <TableCell
@@ -89,11 +97,11 @@ function Reject() {
                 sx={{ verticalAlign: "middle", textAlign: "center" }}
               >
                 <Button
-                  variant="contained"
-                  color="primary"
+                  type="primary"
+                  icon={<SearchOutlined />}
                   onClick={handleRetrice_Click}
                 >
-                  Retrieve
+                  Search
                 </Button>
               </TableCell>
             </TableRow>
@@ -117,6 +125,7 @@ function Reject() {
                   type="text"
                   size="20"
                   value={lot}
+                  id="txtLotnoReject"
                   onChange={(e) => setLot(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
@@ -142,20 +151,28 @@ function Reject() {
           <TableBody>
             <TableRow>
               <TableCell>
-                <select
-                  onChange={(e) => setCbSelected(e.target.value)}
+                <Select
+                  style={{
+                    width: 380,
+                    textAlign: "left",
+                    padding: "0px 5px 0px 0px",
+                  }}
                   value={cbSelected}
-                >
-                  {rejectCombo.map((option, index) => (
-                    <option key={index} value={`${option.rejcet_code}`}>
-                      {option.rejcet_code === "DELETE"
-                        ? "DELETE"
-                        : option.rejcet_code === " "
-                        ? ""
-                        : `${option.rejcet_code} : ${option.rejcet_name}`}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(value) => {
+                    setCbSelected(value);
+                  }}
+                  options={
+                    rejectCombo.map((option, index) => ({
+                      value: `${option.rejcet_code}`,
+                      label:
+                        option.rejcet_code === "DELETE"
+                          ? "DELETE"
+                          : option.rejcet_code === " "
+                          ? ""
+                          : `${option.rejcet_code} : ${option.rejcet_name}`,
+                    })) || []
+                  }
+                ></Select>
               </TableCell>
               <TableCell sx={{ width: "100px" }}>
                 <input
@@ -172,8 +189,7 @@ function Reject() {
               </TableCell>
               <TableCell sx={{ width: "100px" }}>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  style={{ backgroundColor: "green",width:"90px",color:"white" }}
                   onClick={handleSubmit_Click}
                 >
                   Submit
@@ -181,8 +197,7 @@ function Reject() {
               </TableCell>
               <TableCell sx={{ width: "100px" }}>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  icon={<Avatar shape="square" src={excel} size="small" />}
                   onClick={handleExport}
                 >
                   Export
@@ -195,48 +210,14 @@ function Reject() {
       <br></br>
       {pnlTableDisplaySatate && (
         <div className="DRejectTableThird">
-          <Table className="RejectTableThird" component={Paper}>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Checkbox
-                    {...label}
-                    onChange={handleSelectAll}
-                    checked={selectedRows.length ==  dtDataSearch.length}
-                  />
-                </TableCell>
-                <TableCell> Serial No</TableCell>
-                <TableCell> Reason</TableCell>
-                <TableCell> Inspect Count</TableCell>
-                <TableCell> Sheet Front</TableCell>
-                <TableCell> Sheet Back</TableCell>
-                <TableCell> Pcs No</TableCell>
-                <TableCell> MPE Result</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {dtDataSearch.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Checkbox
-                      {...label}
-                      onChange={(e) =>
-                        handleCheckboxChange(e, row.rem_serial_no)
-                      }
-                      checked={selectedRows.includes(row.rem_serial_no)}
-                    />
-                  </TableCell>
-                  <TableCell>{row.rem_serial_no}</TableCell>
-                  <TableCell>{row.rem_reject_name}</TableCell>
-                  <TableCell>{row.rej_inspect_count}</TableCell>
-                  <TableCell>{row.front_no}</TableCell>
-                  <TableCell>{row.back_no}</TableCell>
-                  <TableCell>{row.pcs_no}</TableCell>
-                  <TableCell>{row.mpe_result}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <AntTable
+            columns={columns}
+            dataSource={dtDataSearch}
+            style={{ width: "100%" }}
+            pagination={false}
+            size="small"
+            className="tableGvResult"
+          />
         </div>
       )}
       <br></br>
@@ -339,7 +320,7 @@ function Reject() {
                     />
                   </TableCell>
                   <TableCell>
-                    <Button variant="contained" color="primary">
+                    <Button type="primary" icon={<SearchOutlined />}>
                       Submit
                     </Button>
                   </TableCell>
@@ -349,9 +330,6 @@ function Reject() {
           </div>
         </div>
       )}
-      {/* <div className="RejectBtoHome">
-        <a href="/">Return To Menu</a>
-      </div> */}
     </>
   );
 }

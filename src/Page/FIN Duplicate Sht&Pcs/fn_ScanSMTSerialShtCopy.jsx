@@ -351,7 +351,7 @@ function fn_ScanSMTSerialShtCopy() {
         
         }
         // Check sheet plasma time control
-        if ( parseInt(dtSerial[i].SEQ) == 1 && !_bolError){          
+        if (hfShtPlasmaTimeFlg == 'Y' && parseInt(dtSerial[i].SEQ) == 1 && !_bolError){          
           _strErrorAll = await getData("GetConnectShtPlasmaTime",{ShtnoF:_strShtNoFront,ShtnoB:_strShtNoBack,lot:_strLot,shfShtPlasmaTime:parseFloat(hfShtPlasmaTime),plantCode:plantCode})
           if(_strErrorAll !== 'NG'){
             _strScanResultAll = "NG";

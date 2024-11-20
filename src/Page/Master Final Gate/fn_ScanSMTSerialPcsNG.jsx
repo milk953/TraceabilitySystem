@@ -1095,7 +1095,6 @@ function fn_ScanSMTSerialPcsNG() {
                     "GetSheetDataBySerialNo",
                     _strSerial
                   );
-                  console.log(_dtShtData, "_dtShtData");
                   if (_dtShtData != "") {
                     _FrontSheetBarcode = _dtShtData.sheet_no_front;
                     _RearSheetBarcode = _dtShtData.sheet_no_back;
