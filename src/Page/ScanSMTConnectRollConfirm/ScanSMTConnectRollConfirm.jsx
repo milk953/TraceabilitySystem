@@ -58,6 +58,7 @@ function ScanSMTConnectRollConfirm() {
     pnlSerial,
     btnSave_Click,
     columns,
+    lblRemark,
   } = fn_ScanSMTConnectRollConfirm();
   return (
     <div>
@@ -84,6 +85,7 @@ function ScanSMTConnectRollConfirm() {
                         id="txtLot_ScanSMTConnectRollConfirm_focus"
                         className="input_txt"
                         size="small"
+                        autoComplete="off"
                         fullWidth
                         disabled={txtLot.disbled}
                         style={txtLot.style}
@@ -154,7 +156,7 @@ function ScanSMTConnectRollConfirm() {
                         variant="body1"
                         style={{
                           width: "100%",
-                          color: "#FF0066",
+                          color: "#059212",
                           display: "flex",
                           justifyContent: "center",
                         }}
@@ -206,13 +208,19 @@ function ScanSMTConnectRollConfirm() {
                               //  key={`text_${index}`}
                               key={index}
                               size="small"
+                               autoComplete="off"
                               fullWidth
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
-                              value={txtSerial[index]}
+                              value={txtSerial[index] || ""}
                               onChange={(event) =>
                                 handleSerialChange(index, event)
                               }
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" && (txtSerial[index] !== "" && txtSerial[index] !== null && txtSerial[index] !== undefined) ) {
+                                  btnSave_Click();
+                                }
+                              }}
                             />
                           </TableCell>
                         </TableRow>
@@ -263,7 +271,9 @@ function ScanSMTConnectRollConfirm() {
                       className="Card-lblResult"
                       elevation={3}
                       style={{
-                        background: "#ff4d4f",
+                        background:
+                          lblResult.value === "OK" ? "#059212" : "#ff4d4f",
+
                         display: gvScanResult,
                       }}
                     >
@@ -272,6 +282,23 @@ function ScanSMTConnectRollConfirm() {
                         style={{ paddingTop: "5px", color: "#fff" }}
                       >
                         {lblResult.value}
+                      </Typography>
+                    </Paper>
+                  )}
+                  {lblRemark !== "" && (
+                    <Paper
+                      className="Card-lblResult"
+                      elevation={3}
+                      style={{
+                        background: lblRemark === "" ? "#059212" : "#ff4d4f",
+                        display: gvScanResult,
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        style={{ paddingTop: "5px", color: "#fff" }}
+                      >
+                        {lblRemark}
                       </Typography>
                     </Paper>
                   )}

@@ -47,8 +47,7 @@ function ScanSMTPlasmaStopStart() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
-                        marginTop: "-14px"
+                        marginLeft: "-8px",
                     }}
                 >
                     <TableContainer
@@ -63,7 +62,7 @@ function ScanSMTPlasmaStopStart() {
                                 <TableRow>
                                     <TableCell colSpan={4} align="center">
                                         <Typography variant="h6">
-                                            Start/Stop Record Time
+                                            Stop/Start Record Time
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
@@ -89,11 +88,6 @@ function ScanSMTPlasmaStopStart() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    handleChangeLot();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                if (txtLotNo !== "") {
                                                     handleChangeLot();
                                                 }
                                             }}
@@ -210,7 +204,6 @@ function ScanSMTPlasmaStopStart() {
                                                     handleChangePartial();
                                                 }
                                             }}
-                                            onBlur={handleChangePartial}
                                         />
                                     </TableCell>
                                 </TableRow>

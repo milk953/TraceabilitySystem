@@ -64,11 +64,11 @@ function ScanSMTSerialShtCopy() {
     gvScanResult,
     columns
   } = fn_ScanSMTSerialShtCopy();
-  useEffect(() => {
-    if (gvBackSideState == true) {
-      document.getElementById("txtbackSide_0").focus();
-    }
-  }, [gvBackSideState]);
+  // useEffect(() => {
+  //   if (gvBackSideState == true) {
+  //     document.getElementById("txtbackSide_0").focus();
+  //   }
+  // }, [gvBackSideState]);
   return (
     <>
       <Header />

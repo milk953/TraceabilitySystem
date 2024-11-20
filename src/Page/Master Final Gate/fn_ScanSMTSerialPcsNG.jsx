@@ -1,6 +1,5 @@
 import { Tag } from "antd";
 import axios from "axios";
-import { set } from "lodash";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -86,7 +85,8 @@ function fn_ScanSMTSerialPcsNG() {
   var hfCheckEFPCOST = "";
   var hfCheckEFPCAVI = "";
   //inpage
-  var hfLotAll = "";
+  // let hfLotAll ;
+  const [hfLotAll, SetHfLotAll] = useState("");
   //hiding Variable
   const DUPLICATE_CHECK_FLG = "0";
   const FINAL_GATE_SPECIAL_FLG = "1";
@@ -162,7 +162,8 @@ function fn_ScanSMTSerialPcsNG() {
             if (dtLotProduct[2] == "Y") {
               hfTestResultFlag = "N";
             }
-            hfLotAll = dtLotProduct[3];
+            // hfLotAll = dtLotProduct[0][3];
+            SetHfLotAll(dtLotProduct[0][3]);
           }
           setLblLot(strLot);
           if (ddlproduct.some((x) => x.prd_name == strPrdName)) {
@@ -406,15 +407,21 @@ function fn_ScanSMTSerialPcsNG() {
       return dtData;
     } else if (type == "GetSheetNoBySerialNo") {
       let response = "";
+      let response2 = "";
       await axios
         .post("/api/common/GetSheetNoBySerialNo", {
-          strSerialno: params,
-          strPlantCode: Fac,
+          data:{
+            strSerial: params,
+            strPlantCode: Fac
+          }
+          
         })
         .then((res) => {
-          response = res.data.sheet_no;
+          console.log(res.data);
+          response = res.data._strsheet;
+          response2 = res.data.lot_no;
         });
-      return response;
+        return { response, response2 };
     } else if (type == "GetSheetDataBySerialNo") {
       let response = [];
       await axios
@@ -696,9 +703,12 @@ function fn_ScanSMTSerialPcsNG() {
     setPanalSerialState(false);
     setMode("LOT");
     SetFocus("txtLot");
+    setTxtSerial(gvSerial.map(() => ""));
   };
   const handle_Cancel_Click = () => {
-    setMode("SERIAL");
+    // setMode("SERIAL");
+    setTxtSerial(gvSerial.map(() => ""));
+    SetFocus("txtSerial_0");
   };
   const handle_Save_Click = () => {
     // if (_strEventArgument != "SAVE" && hfMode == "SERIAL") {
@@ -880,13 +890,9 @@ function fn_ScanSMTSerialPcsNG() {
                   _bolError = true;
                 }
                 if (hfSerialFixFlag == "Y" && _strScanResultUpdate != "NG") {
-                  _strFixDigit = _strSerial.substring(
-                    parseInt(hfSerialStartDigit) - 1,
-                    parseInt(hfSerialEndDigit)
-                  );
+                  _strFixDigit = _strSerial.substring(parseInt(hfSerialStartDigit) - 1,parseInt(hfSerialEndDigit));
                   if (_strFixDigit != hfSerialDigit) {
-                    _strMessageUpdate =
-                      "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
+                    _strMessageUpdate ="Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                     _strRemark = "Serial barcode mix product";
                     _strScanResultUpdate = "NG";
                     _strTestResultUpdate = _strTestResult;
@@ -901,7 +907,7 @@ function fn_ScanSMTSerialPcsNG() {
                       parseInt(hfConfigStart) - 1,
                       parseInt(hfConfigEnd)
                     );
-                    if (_strConfigDigit != hfConfigCode) {
+                    if (strConfigDigit != hfConfigCode) {
                       _strMessageUpdate =
                         "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                       _strRemark = "Serial barcode mix product";
@@ -916,7 +922,7 @@ function fn_ScanSMTSerialPcsNG() {
                 }
                 if (hfSerialStartCode != "" && _strScanResultUpdate != "NG") {
                   if (
-                    _strSerial.substring(0, strSerialStartCodeLength) !=
+                    _strSerial.substring(0,( hfSerialStartCode.length)) !=
                     hfSerialStartCode
                   ) {
                     _strMessageUpdate =
@@ -937,7 +943,7 @@ function fn_ScanSMTSerialPcsNG() {
                     parseInt(hfCheckStartSeqEnd) -
                     parseInt(hfCheckStartSeqStart) +
                     1;
-                  _strStartSeq = _strSerial.substring(start, start + length);
+                  _strStartSeq = _strSerial.substring(start,parseInt(hfCheckStartSeqEnd));
                   if (_strStartSeq != hfCheckStartSeqCode) {
                     _strMessageUpdate =
                       "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -957,7 +963,7 @@ function fn_ScanSMTSerialPcsNG() {
                     parseInt(hfCheckWeekCodeEnd) -
                     parseInt(hfCheckWeekCodeStart) +
                     1;
-                  _strWeekCode = _strSerial.substring(start, start + length);
+                  _strWeekCode = _strSerial.substring(start, parseInt(hfCheckWeekCodeEnd));
                   if (_strWeekCode != hfWeekCode) {
                     _strMessageUpdate =
                       "Serial barcode mix week code / หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
@@ -990,8 +996,9 @@ function fn_ScanSMTSerialPcsNG() {
                   }
                 }
                 if (!_bolError && hfCheckPrdSht == "Y") {
-                  let strSheetLot = "";
-                  let _strShtNo = await getData(
+                  // let strSheetLot = "";
+                  // let _strShtNo="";
+                  const { response: _strShtNo, response2: strSheetLot } = await getData(
                     "GetSheetNoBySerialNo",
                     _strSerial
                   );
@@ -1019,10 +1026,7 @@ function fn_ScanSMTSerialPcsNG() {
                     dtSerial[i].ROW_UPDATE = "Y";
                     _intCountNG = 1;
                     _bolError = true;
-                  } else if (
-                    hfLotAll.toLowerCase().indexOf(strSheetLot.toLowerCase()) <=
-                    0
-                  ) {
+                  } else if (!hfLotAll.includes(strSheetLot)) {
                     _strMessageUpdate =
                       "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                     _strRemark = "Lot not same connect sheet  ";
@@ -1034,11 +1038,7 @@ function fn_ScanSMTSerialPcsNG() {
                     _bolError = true;
                   }
                 }
-                if (
-                  !_bolError &&
-                  hfPlasmaCheck == "Y" &&
-                  _strRejectGroup != "MASTER"
-                ) {
+                if (!_bolError &&hfPlasmaCheck == "Y" &&_strRejectGroup != "MASTER") {
                   let _dblPlasmatime = 0;
                   const responseDBL = await getData("GetPlasmaTimeBySerialNo", {
                     strSerial: _strSerial,
@@ -1095,7 +1095,6 @@ function fn_ScanSMTSerialPcsNG() {
                     "GetSheetDataBySerialNo",
                     _strSerial
                   );
-                  console.log(_dtShtData, "_dtShtData");
                   if (_dtShtData != "") {
                     _FrontSheetBarcode = _dtShtData.sheet_no_front;
                     _RearSheetBarcode = _dtShtData.sheet_no_back;

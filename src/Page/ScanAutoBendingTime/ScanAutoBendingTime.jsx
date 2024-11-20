@@ -85,7 +85,7 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
           </TableRow>
         <TableRow>
             <TableCell id="lbltxtBaking">Product Name:</TableCell>
-            <TableCell colSpan={3} sx={{fontSize:'20px',fontWeight:'bold'}}>
+            <TableCell colSpan={3} sx={{fontSize:'20px'}}>
                 {lblProductName.value}
 
             </TableCell>
@@ -104,9 +104,9 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
         <Table component={Paper}>
           <TableHead>
             <TableRow>
-            <TableCell sx={{ width: '10%' }} align="center">No.</TableCell>
-              <TableCell sx={{ width: '30%' }} align="center">Bending No.</TableCell>
-              <TableCell align="center">Serial No.</TableCell>
+            <TableCell sx={{ width: '10%',fontWeight:'bold' }} align="center">No.</TableCell>
+              <TableCell sx={{ width: '30%',fontWeight:'bold' }} align="center">Bending No.</TableCell>
+              <TableCell sx={{ width: '30%',fontWeight:'bold' }} align="center">Serial No.</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -170,6 +170,16 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
                           </TableRow>
                         )
                       )}
+                      <tr>
+            <td align="center">
+              <Button variant="contained"  onClick={btnSave_Click} 
+              style={{ backgroundColor: 'green', color: 'white' }} >Save</Button>
+            </td>
+            <td align="center">
+              <Button variant="contained" onClick={btnCancel} 
+              style={{ backgroundColor: 'red', color: 'white' }}>Cancel</Button>
+            </td>
+          </tr>
           </TableBody>
         </Table>
          )}  
@@ -177,15 +187,7 @@ const {txtMCNo,settxtMCNo,txtLotNo,settxtLotNo,lblProductName,lblResult,lblRemar
       {pnlDetail&&(
       <div className="TableSave-bending" >
         <Table  >
-          <tr>
-            <td align="center">
-              <Button variant="contained"  onClick={btnSave_Click} 
-              style={{ backgroundColor: 'green', color: 'white' }} >Save</Button>
-            </td>
-            <td align="center">
-              <Button variant="contained" onClick={btnCancel} >Cancel</Button>
-            </td>
-          </tr>
+          
         </Table>
       </div>
       )} 

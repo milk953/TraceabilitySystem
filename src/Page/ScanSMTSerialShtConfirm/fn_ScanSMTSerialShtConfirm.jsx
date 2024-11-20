@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanSMTSerialShtConfirm() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -89,6 +90,7 @@ function fn_ScanSMTSerialShtConfirm() {
     const plantCode = import.meta.env.VITE_FAC;
     const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
     const _strTagNewLine = "/";
+    const { showLoading, hideLoading } = useLoading();
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
@@ -185,6 +187,10 @@ function fn_ScanSMTSerialShtConfirm() {
         settxtLotDisabled(false);
         setpnlSerial(false);
         setselProduct(Productdata[0].prd_name);
+        setlblTotalSht("");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setlblResult("");
         SetMode("LOT");
         inputLot.current.focus();
     };
@@ -335,12 +341,17 @@ function fn_ScanSMTSerialShtConfirm() {
 
     const btnSaveClick = async () => {
         if (hfMode === "SERIAL") {
-            setSerialData();
+            await setSerialData();
+            settxtgvSerial("");
         }
     };
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
+        settxtgvSerial("");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setlblResult("");
         inputgvSerial.current[0].focus();
     };
 
@@ -408,8 +419,7 @@ function fn_ScanSMTSerialShtConfirm() {
 
         const strLotData = txtLotNo.toUpperCase().split(";");
         _strLot = strLotData[0];
-
-        console.log("มาไหม", dtSerial)
+        showLoading('กำลังบันทึก กรุณารอสักครู่');
 
         if (txtLotNo !== "" && dtSerial.length > 0) {
             let _intRowSerial = 0;
@@ -454,7 +464,7 @@ function fn_ScanSMTSerialShtConfirm() {
                             const end = parseInt(hfSerialEndDigit);
                             _strFixDigit = _strSerial.substring(start - 1, end);
 
-                            console.log(_strFixDigit,hfSerialDigit)
+                            console.log(_strFixDigit,hfSerialDigit, "1")
                             if (_strFixDigit !== hfSerialDigit) {
                                 _strScanResultUpdate = "NG";
                                 _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -465,6 +475,7 @@ function fn_ScanSMTSerialShtConfirm() {
                                 const start = parseInt(hfConfigStart);
                                 const end = parseInt(hfConfigEnd);
                                 _strConfigDigit = _strSerial.substring(start - 1, end);
+                                console.log(_strConfigDigit,hfConfigCode, "2")
                                 if (_strConfigDigit !== hfConfigCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -473,7 +484,8 @@ function fn_ScanSMTSerialShtConfirm() {
                                 }
                             }
 
-                            if (hfSerialStartCode.trim() !== "" && !_bolError) {
+                            if (hfSerialStartCode !== "" && !_bolError) {
+                                console.log(hfSerialStartCode.length,hfSerialStartCode, "3")
                                 if (_strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -487,6 +499,7 @@ function fn_ScanSMTSerialShtConfirm() {
                                 const start = parseInt(hfCheckStartSeqStart);
                                 const end = parseInt(hfCheckStartSeqEnd);
                                 _strStartSeq = _strSerial.substring(start - 1, end);
+                                console.log(_strStartSeq.length,hfCheckStartSeqCode, "4")
                                 if (_strStartSeq !== hfCheckStartSeqCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -571,6 +584,7 @@ function fn_ScanSMTSerialShtConfirm() {
         getCountDataBylot(_strLot);
 
         inputgvSerial.current[0].focus();
+        hideLoading();
     };
 
     const getInputSerial = async () => {
@@ -653,11 +667,17 @@ function fn_ScanSMTSerialShtConfirm() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-                return (
-                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
-                        {text}
-                    </Tag>
-                );
+                if (text == '')
+                    return text;
+                else {
+                    return (
+                        <Tag
+                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                        >
+                            {text}
+                        </Tag>
+                    );
+                }
             },
             align: "center",
         },

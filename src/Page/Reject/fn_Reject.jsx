@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Checkbox } from "antd";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
+import { breadcrumbsClasses } from "@mui/material";
 function fn_Reject() {
   //visible state
   const [pnlTouchupState, setPnlTouchupState] = useState(false);
@@ -16,7 +18,7 @@ function fn_Reject() {
   const [ip, setIp] = useState("");
   const [Fac, setFac] = useState("");
   const [txtOperator, setTxtOperator] = useState("");
-
+  const [searchafterSubmit, setSearchafterSubmit] = useState([]);
   //display state
   const [lblResult, setLblResult] = useState({
     text: "",
@@ -37,22 +39,66 @@ function fn_Reject() {
     }
   }, []);
   // function
+  function SetFocus(txtField) {
+    document.getElementById(`${txtField}`).focus();
+  }
   const handleRDChange = (event) => {
-    setRdSelect(event.target.value);
+    if (event.target.value == "rdLotNo") {
+      setTxtSerialno("");
+      setRdSelect(event.target.value);
+      // Setdisable
+      Setdisable("disable", "txtPieceNoReject");
+      Setdisable("enable", "txtLotnoReject");
+      SetFocus("txtLotnoReject");
+    } else {
+      setTxtSerialno("");
+      setLot("");
+      setRdSelect(event.target.value);
+      Setdisable("enable", "txtPieceNoReject");
+      Setdisable("disable", "txtLotnoReject");
+      SetFocus("txtPieceNoReject");
+    }
   };
+  function Setdisable(type, txtField) {
+    if (type == "disable") {
+      document.getElementById(`${txtField}`).disabled = true;
+      document.getElementById(`${txtField}`).className = "styleDisable";
+    } else {
+      document.getElementById(`${txtField}`).disabled = false;
+      document.getElementById(`${txtField}`).className = "styleEnable";
+    }
+  }
   const PageLoad = async () => {
     await getData("GetCombo");
+    Setdisable("disable", "txtLotnoReject");
   };
   const txtSerialnoChange = async () => {
     await SearchData();
   };
-  async function SearchData() {
+  async function SearchData(flg, filteredData) {
     setLblResult({ text: "", styled: { color: "black" } });
     let txtSerialnoValue = txtSerialno.trim().toLocaleUpperCase();
     let strSerialAll = txtSerialnoValue.replace(/\r?\n/g, ",").split(",");
+
     let i;
     let _strLotno = "";
-
+    if (flg != "") {
+      if (rdSelect == "rdPcsno") {
+        setTimeout(() => {
+          setDtDataSearch([]);
+          for (let i = 0; i < strSerialAll.length; i++) {
+            getData("GetSearchbySerialno", { Serialno: strSerialAll[i] });
+          }
+        }, 500);
+        console.log(dtDataSearch, "searchafterSubmit");
+        return;
+      } else {
+        setSearchafterSubmit(lot);
+        setDtDataSearch([]);
+        await getData("GetSearchbyLot", { Lotno: filteredData });
+        return;
+      }
+    }
     if (rdSelect == "rdPcsno") {
       for (let i = 0; i < strSerialAll.length; i++) {
         if (strSerialAll[i].length > 0) {
@@ -72,7 +118,7 @@ function fn_Reject() {
             await getData("GetSearchbySerialno", { Serialno: strSerialAll[i] });
           }
         }
-        setTxtSerialno("");
+        // setTxtSerialno("");
       }
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
@@ -99,6 +145,13 @@ function fn_Reject() {
       );
     }
   };
+  const rowSelection = {
+    selectedRowKeys: selectedRows,
+    onChange: (selectedRowKeys) => {
+      setSelectedRows(selectedRowKeys);
+    },
+  };
+
   const handleExport = async () => {
     console.log(selectedRows);
     const filteredData = dtDataSearch.filter((item) =>
@@ -149,7 +202,7 @@ function fn_Reject() {
     }
   };
   const handleRetrice_Click = async () => {
-    await SearchData();
+    await SearchData("", "");
   };
   const handleSubmit_Click = async () => {
     // Swal  confirm btn
@@ -197,6 +250,12 @@ function fn_Reject() {
         strIp: ip,
         strPlantCode: Fac,
       });
+    }
+    setDtDataSearch([]);
+    if (rdSelect == "rdPcsno") {
+      SearchData("submit", filteredData);
+    } else {
+      SearchData("submit", lot);
     }
   }
 
@@ -304,7 +363,7 @@ function fn_Reject() {
           }
         )
         .then((res) => {
-          console.log(res, "res")
+          console.log(res, "res");
           if (res.status === 200) {
             if (cbSelected == "DELETE") {
               setLblResult({
@@ -314,8 +373,6 @@ function fn_Reject() {
               Swal.fire("Success", "Data Delete Complete.", "success").then(
                 (result) => {
                   if (result.isConfirmed) {
-                    setDtDataSearch([]);
-                    SearchData();
                   }
                 }
               );
@@ -324,14 +381,19 @@ function fn_Reject() {
                 text: "Data save Complete.",
                 styled: { color: "black" },
               });
-              Swal.fire("Success", "Data Read Complete", "success").then(
-                (result) => {
-                  if (result.isConfirmed) {
-                    setDtDataSearch([]);
-                    SearchData();
-                  }
-                }
-              );
+              setTimeout(() => {
+                SearchData("submit", lot);
+              }, 500);
+              // Swal.fire("Success", "Data Read Complete", "success").then(
+              //   (result) => {
+              //     if (result.isConfirmed) {
+              //       // setDtDataSearch([]);
+              //       if (rdSelect != "rdPcsno") {
+              //         SearchData("submit", lot);
+              //       }
+              //     }
+              //   }
+              // );
             }
           }
         })
@@ -340,6 +402,110 @@ function fn_Reject() {
         });
     }
   }
+  const columns = [
+    {
+      width: 60,
+      align: "center",
+      title: (
+        <Checkbox
+          onChange={(e) => {
+            if (e.target.checked) {
+              const allKeys = dtDataSearch.map((item) => item.rem_serial_no);
+              setSelectedRows(allKeys);
+            } else {
+              setSelectedRows([]);
+            }
+          }}
+          checked={selectedRows.length === dtDataSearch.length}
+        />
+      ),
+      dataIndex: "rem_serial_no",
+      render: (text, record) => (
+        <Checkbox
+          onChange={(e) => {
+            if (e.target.checked) {
+              setSelectedRows((prev) => [...prev, record.rem_serial_no]);
+            } else {
+              setSelectedRows((prev) =>
+                prev.filter((key) => key !== record.rem_serial_no)
+              );
+            }
+          }}
+          checked={selectedRows.includes(record.rem_serial_no)}
+        />
+      ),
+    },
+    {
+      title: "Serial No",
+      dataIndex: "rem_serial_no",
+      key: "rem_serial_no",
+      align: "center",
+      width: 100,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Reason",
+      dataIndex: "rem_reject_name",
+      key: "rem_reject_name",
+      align: "center",
+      width: 200,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Inspect Count",
+      dataIndex: "rej_inspect_count",
+      key: "rej_inspect_count",
+      align: "center",
+      width: 60,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Sheet Front",
+      dataIndex: "front_no",
+      key: "front_no",
+      align: "center",
+      width: 60,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Sheet Back",
+      dataIndex: "back_no",
+      key: "back_no",
+      align: "center",
+      width: 60,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Pcs No",
+      dataIndex: "pcs_no",
+      key: "pcs_no",
+      align: "center",
+      width: 60,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "MPE Result",
+      dataIndex: "mpe_result",
+      key: "mpe_result",
+      align: "center",
+      width: 60,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+  ];
   return {
     rdSelect,
     handleRDChange,
@@ -366,6 +532,7 @@ function fn_Reject() {
     setTxtOperator,
     txtOperator,
     handleSubmit_Click,
+    columns,
   };
 }
 

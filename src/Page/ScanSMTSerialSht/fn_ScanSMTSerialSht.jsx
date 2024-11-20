@@ -466,9 +466,11 @@ function fn_ScanSMTSerialSht() {
 
   const btnCancelClick = async () => {
     SetMode("SERIAL");
-    inputgvSerial.current[0].focus();
+    inputSideBack.current[0].focus();
     setgvScanData([]);
     setgvScanResult(false);
+    settxtgvSerial("");
+    settxtSideBack("");
   };
 
   const SetMode = async (strType) => {
@@ -849,7 +851,8 @@ function fn_ScanSMTSerialSht() {
                 });
             }
           } else {
-            _strMessageUpdate = "Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว"
+            _strMessageUpdate = "Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว";
+            _strScanResultUpdate = "NG";
           }
 
           dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
@@ -942,6 +945,7 @@ function fn_ScanSMTSerialSht() {
             if (CONNECT_SERIAL_ERROR.includes(_strSerial)) {
               _strMessageUpdate = "Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว";
               _strScanResultUpdate = "OK";
+              console.log("มาหรือเปล่า")
             }
 
             if (AUTO_SCAN_CHECK_FLG === "1" &&
