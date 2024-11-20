@@ -23,12 +23,12 @@
 .DRejectTableSecond {
   display: flex;
   margin: auto;
-  width: 900px;
+  width: 730px;
 }
 
 .RejectTableSecond {
   margin: auto;
-  width: 900px;
+  width: 730px !important;
 }
 .RejectTableSecond td {
   padding: 5px;
@@ -68,4 +68,18 @@
 .RejectBtoHome {
   display: flex;
   justify-content: center;
+}
+.styleEnable {
+  background-color: White;
+  font-weight: normal;
+  /* font-size: 11pt; */
+  color: Black;
+  text-transform: uppercase;
+}
+.styleDisable {
+  background-color: Silver;
+  font-weight: normal;
+  /* font-size: 11pt; */
+  width: 130px;
+  color: Black;
 }

@@ -144,6 +144,8 @@ function fn_ReJudgement() {
   }, []);
   const PageLoad = async () => {
     await getData("getResultCombo", "");
+    Setdisable("disable", "txtLotnoRejudege");
+    SetFocus("txtSerialnoRejudege");
   };
   const handleRDChange = (event) => {
     setRdSelect(event.target.value);
@@ -159,12 +161,8 @@ function fn_ReJudgement() {
       setTxtSerialno("");
     }
   };
-  const txtSerialnoChange = async () => {
-    console.log(txtSerialno);
-    console.log(lot);
-  };
   const btnRetrieveClick = async () => {
-    await SearchData();
+    await SearchData("");
   };
   const btnSubmitClick = async () => {
     if (
@@ -229,45 +227,68 @@ function fn_ReJudgement() {
         strOperatorTOU: dtDataSearch[i].tou_operator_code,
       });
     }
-
+    setDtDataSearch([]);
     setSerialState(true);
+    if (rdSelect == "rdPcsno") {
+      setTimeout(() => {
+        SearchData("submit");
+      }, 1000);
+    }
+    else if (rdSelect == "rdLotNo") {
+      setTimeout(() => {
+        SearchData("submitlot");
+      }
+      , 1000);
+    }
   }
-  async function SearchData() {
+  async function SearchData(flg) {
     setLblResult({ text: "", styled: { color: "black" } });
     let txtSerialnoValue = txtSerialno.trim().toLocaleUpperCase();
     let strSerialAll = txtSerialnoValue.replace(/\r?\n/g, ",").split(",");
-    console.log(strSerialAll);
     let i;
     let _strLotno = "";
-
+    if (flg == "submit") {
+      console.log(strSerialAll);
+      for (let i = 0; i < strSerialAll.length; i++) {
+        if (strSerialAll[i].length > 0) {
+          await getData("getSearch", {
+            Serialno: strSerialAll[i],
+            rdFlg: "PcsNo",
+          });
+        }
+      }
+      return;
+    }else if (flg == "submitlot") {
+      await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" });
+      return
+    }
     if (rdSelect == "rdPcsno") {
-
-        for (let i = 0; i < strSerialAll.length; i++) {
-          if (strSerialAll[i].length > 0) {
-            let duplicateFound = false;
-            for (let j = 0; j < dtDataSearch.length; j++) {
-              if (strSerialAll[i] === dtDataSearch[j].rej_serial_no) {
-                duplicateFound = true;
-                break;
-              }
-            }
-            if (duplicateFound) {
-              setLblResult({
-                text: "Duplicate serial no.",
-                styled: { color: "red" },
-              });
-            } else {
-              await getData("getSearch", {
-                Serialno: strSerialAll[i],
-                rdFlg: "PcsNo",
-              });
+      for (let i = 0; i < strSerialAll.length; i++) {
+        if (strSerialAll[i].length > 0) {
+          let duplicateFound = false;
+          for (let j = 0; j < dtDataSearch.length; j++) {
+            if (strSerialAll[i] === dtDataSearch[j].rej_serial_no) {
+              duplicateFound = true;
+              break;
             }
           }
-          // setTxtSerialno("");
+          if (duplicateFound) {
+            setLblResult({
+              text: "Duplicate serial no.",
+              styled: { color: "red" },
+            });
+          } else {
+            await getData("getSearch", {
+              Serialno: strSerialAll[i],
+              rdFlg: "PcsNo",
+            });
+          }
         }
+        // setTxtSerialno("");
+      }
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
-      await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" }); //900035953
+      await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" });
     }
     setPnlTableDisplaySatate(true);
   }
@@ -285,7 +306,6 @@ function fn_ReJudgement() {
         "Qualified",
         "Re-Judgement Count",
       ];
-      console.log(dtDataSearch);
       const data = dtDataSearch.map((row) => [
         row.rej_serial_no,
         row.rem_reject_name,
@@ -351,8 +371,6 @@ function fn_ReJudgement() {
           },
         })
         .then((res) => {
-          console.log(res.data);
-
           if (params.rdFlg == "PcsNo") {
             const updatedData = {
               ...res.data[0],
@@ -407,21 +425,19 @@ function fn_ReJudgement() {
           }
         )
         .then((res) => {
-          console.log(res.data);
           if (res.status == 200) {
             setLblResult({
               text: "Data save Complete.",
               styled: { color: "black" },
             });
-            Swal.fire("Success", "Data Read Complete", "success").then(
-              (result) => {
-                if (result.isConfirmed) {
-                  console.log("btnSubmitClick");
-                  setPnlTableDisplaySatate(true);
-                  btnRetrieveClick();
-                }
-              }
-            );
+            Swal.fire({
+              title: "Success",
+              text: "Data save Complete.",
+              icon: "success",
+              timer: 1000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
           }
         });
     }
@@ -437,7 +453,7 @@ function fn_ReJudgement() {
     setTxtSerialno,
     lot,
     setLot,
-    txtSerialnoChange,
+
     pnlTableDisplaySatate,
     resultCombo,
     resultComboSelected,

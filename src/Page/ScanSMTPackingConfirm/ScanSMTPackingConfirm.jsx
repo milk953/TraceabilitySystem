@@ -66,7 +66,6 @@ function ScanSMTPackingConfirm() {
   return (
     <div>
       <Hearder />
-      <h1>Packing Confirm Sheet</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
@@ -101,7 +100,8 @@ function ScanSMTPackingConfirm() {
                             txtLot_TextChanged();
                           }
                         }}
-                        onBlur={txtLot_TextChanged}
+                        // onBlur={txtLot_TextChanged}
+                        
                       ></TextField>
                       <Button
                        className="Bt_ibtBack"
@@ -209,9 +209,9 @@ function ScanSMTPackingConfirm() {
                           fullWidth
                           inputRef={(el) => (fngvSerial_txtSerial_0.current[index] = el)}
                           value={txtSerial[index]}
-                          onBlur={(event) => {
-                            handleSerialChange(index, event);
-                          }}
+                          // onBlur={(event) => {
+                          //   handleSerialChange(index, event);
+                          // }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
@@ -278,7 +278,7 @@ function ScanSMTPackingConfirm() {
 
              
               <>
-                {lblResult.value !=="" &&(
+                {pnlgvScanResult &&(
                   <Paper
                     className=".Card-Result"
                     style={{
