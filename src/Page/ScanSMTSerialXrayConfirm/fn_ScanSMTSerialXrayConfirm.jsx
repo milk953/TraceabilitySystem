@@ -3,8 +3,14 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { color } from "framer-motion";
 import { Tag } from "antd";
+import { useLoading } from "../../loading/fn_loading";
+
 function fn_ScanSMTSerialXrayConfirm() {
+
+  const { showLoading, hideLoading } = useLoading();
+
   let hfSerialCountBackup = "";
+  let statusBackupCount = false;
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
   const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
@@ -130,13 +136,10 @@ function fn_ScanSMTSerialXrayConfirm() {
   }, []);
 
   const handleSerialChange = async (index, event) => {
-    console.log("เข้ามาทำงานใน handleSerialChange ");
     const newValues = [...txtSerial];
     newValues[index] = event.target.value;
     setTxtSerial(newValues);
-    console.log("เข้ามาทำงานใน handleSerialChange ", index, "index", index + 1);
     if (event.key === "Enter") {
-      console.log("เข้ามาทำงานใน handleSerialChange Enter");
       fnSetFocus(`gvSerial_txtSerial_${index + 1}`);
     }
   };
@@ -164,18 +167,31 @@ function fn_ScanSMTSerialXrayConfirm() {
       ...prevState,
       value: Product[0].prd_name,
     }));
+    setGvScanResult((prevState) => ({
+      ...prevState,
+      value: [],
+      visble: false,
+    }));
+    const newValues = [];
+    setTxtSerial(newValues);
     SetMode("LOT");
     fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
   };
 
   const btnCancel_Click = async () => {
+    statusBackupCount = true;
+    const newValues = [];
+    setTxtSerial(newValues);
     SetMode("SERIAL");
     fnSetFocus("gvSerial_txtSerial_0");
   };
 
   const btnSave_Click = async () => {
     if (hfMode == "SERIAL") {
+      showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่..."); 
       await setSerialData();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      hideLoading();
     }
   };
 
@@ -340,7 +356,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     let strPrdName = "";
     strLotData = txtLot.value.toUpperCase().split(";");
     if (strLotData.length >= 2) {
-      strLot = strLotData[0];
+      strLot = strLotData[0].trim();
       await axios
         .post("/api/Common/getProductNameByLot", {
           strLot: strLot,
@@ -365,16 +381,6 @@ function fn_ScanSMTSerialXrayConfirm() {
         try {
           setDdlProduct((prevState) => ({ ...prevState, value: strPrdName }));
           await getProductSerialMaster(strPrdName);
-          console.log(
-            "XYZ+++",
-            strPrdName,
-            "||",
-            txtTotalPCS.value,
-            "||",
-            hfSerialCountBackup,
-            ">>",
-            hfSerialCount
-          );
           if (txtTotalPCS.value === "") {
             setTxtTotalPCS((prevState) => ({
               ...prevState,
@@ -387,11 +393,12 @@ function fn_ScanSMTSerialXrayConfirm() {
         } catch (ex) {
           console.error(ex);
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
+          console.log("intProduct : ", intProduct);
           if (intProduct > 0) {
             strPrdName =
               strPrdName.slice(0, intProduct) +
               strPrdName.slice(intProduct + 1, intProduct + 11);
-
+              console.log("strPrdName : ", strPrdName);
             try {
               setDdlProduct((prevState) => ({
                 ...prevState,
@@ -457,6 +464,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       setHfMode("LOT");
       fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
     }
+    
   };
 
   const txtTotalPCS_TextChanged = async () => {
@@ -475,21 +483,12 @@ function fn_ScanSMTSerialXrayConfirm() {
   const getInitialSerial = async () => {
     let dtData = [];
     const hfSerialCountData =
-      hfSerialCount == "" ? hfSerialCountBackup : hfSerialCount;
-    console.log(
-      "txtTotalPCS.value hfSerialCountBackup",
-      hfSerialCountBackup,
-      ">>",
-      hfSerialCount,
-      ">>",
-      hfSerialCountData
-    );
+      statusBackupCount === true ? hfSerialCount : hfSerialCountBackup;
     for (let intRow = 1; intRow <= parseInt(hfSerialCountData, 10); intRow++) {
       dtData.push({
         SEQ: intRow,
       });
     }
-    console.log("dtData", dtData);
     setGvSerial((prevState) => ({ ...prevState, value: dtData, visble: true }));
     return 0;
   };
@@ -499,9 +498,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     let strFrontSide = "";
     for (let intRow = 0; intRow < gvSerial.value.length; intRow++) {
       const serial = txtSerial[intRow];
-      console.log("serial แสดงมันออกมา", serial);
-      const scanresult =
-        serial !== "" && serial !== undefined && serial !== null ? "-" : "";
+      const scanresult = serial &&  serial.trim() !== "" && serial.trim() !== undefined && serial.trim() !== null ? "-" : "";
       dtData.push({
         seq: intRow + 1,
         serial: serial,
@@ -509,12 +506,10 @@ function fn_ScanSMTSerialXrayConfirm() {
         remark: "",
       });
     }
-    console.log("getInputSerial แสดงมันออกมา dtData ", dtData);
     return dtData;
   };
 
   const setSerialData = async () => {
-    console.log("เข้ามายัง setSerialData");
     let dtSerial = await getInputSerial();
     let _strLotData = "";
     let _strLot = "";
@@ -529,8 +524,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     let _bolError = false;
     _strLotData = txtLot.value.trim().toUpperCase().split(";");
     _strLot = _strLotData[0];
-    console.log(_strLot, "เข้ามายัง setSerialData dtSerial", dtSerial);
-    if (txtLot.value !== "" && dtSerial.length > 0) {
+    if (txtLot.value.trim() !== "" && dtSerial.length > 0) {
       let _intRowSerial = 0;
       await axios
         .post("/api/GetSerialXRayResult", {
@@ -539,10 +533,7 @@ function fn_ScanSMTSerialXrayConfirm() {
         .then((res) => {
           _strScanResultAll = res.data;
         });
-      console.log(
-        "เข้ามายัง setSerialData _strScanResultAll",
-        _strScanResultAll
-      );
+
       if (_strScanResultAll !== "OK") {
         _strScanResultAll === "NG";
         _bolError = true;
@@ -559,32 +550,18 @@ function fn_ScanSMTSerialXrayConfirm() {
           let _strScanResultUpdate = "";
           let _inCountSeq = 0;
           let _strSerialResult = "";
-          console.log(
-            "เข้ามายัง setSerialData _strSerial",
-            "(",
-            _strSerial,
-            ")",
-            _strScanResultAll
-          );
           if (
             !CONNECT_SERIAL_ERROR.includes(_strSerial) &&
             _strScanResultAll === "OK"
           ) {
-            console.log("เข้ามายัง CONNECT_SERIAL_ERROR แล้วนะ", _strSerial);
             await axios
               .post("/api/GetSerialXRaySheetResult", {
                 strsheetno: _strSerial,
               })
               .then((res) => {
                 _strScanResultUpdate = res.data;
-                console.log(
-                  "เข้ามายัง setSerialData _strScanResultUpdate",
-                  "(",
-                  _strScanResultUpdate,
-                  ")"
-                );
               });
-            if (_strSerialResult === "OK") {
+              if (_strScanResultUpdate === "OK") {
               drRow.scan_result = "PASS X-RAY";
               drRow.remark = "Sheet นี้ผ่าน X-RAY";
             }
@@ -608,6 +585,7 @@ function fn_ScanSMTSerialXrayConfirm() {
         }));
       }
       if (_strErrorAll !== "") {
+        console.log("แสดงผลลัพธ์ที่ได้ _strErrorAll : ",lblResult.value + `\n` + _strErrorAll, " : ")
         setLblResult((prevState) => ({
           ...prevState,
           value: lblResult.value + `\n` + _strErrorAll,
@@ -618,6 +596,7 @@ function fn_ScanSMTSerialXrayConfirm() {
         value: dtSerial,
         visble: true,
       }));
+      statusBackupCount = true;
       await getInitialSerial();
       setLblPnlLog((prevState) => ({
         ...prevState,
@@ -686,9 +665,7 @@ function fn_ScanSMTSerialXrayConfirm() {
         })
         .then((res) => {
           dtProductSerial = res.data[0];
-          console.log("dtProductSerial", dtProductSerial);
           if (dtProductSerial != null) {
-            console.log("เข้ามาแล้วทำไมไม่ set วะ");
             setHfSerialLength(dtProductSerial.slm_serial_length);
             setHfSerialFixFlag(dtProductSerial.slm_fix_flag);
             setHfSerialDigit(dtProductSerial.slm_fix_digit);

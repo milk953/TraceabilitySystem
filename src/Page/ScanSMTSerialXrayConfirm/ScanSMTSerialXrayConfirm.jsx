@@ -217,7 +217,7 @@ function ScanSMTSerialXrayConfirm() {
                               fullWidth
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
-                              value={txtSerial[index]}
+                              value={txtSerial[index] || ""}
 
                               onKeyDown={(event) => {
                                 if (event.key === "Enter") {
@@ -256,7 +256,7 @@ function ScanSMTSerialXrayConfirm() {
                 alignItems: "center",
               }}
             >
-              {gvScanResult.visble == false && (
+              {gvScanResult.visble === false && (
                 <>
                   <img
                     className="Img_GvResult"
@@ -273,13 +273,13 @@ function ScanSMTSerialXrayConfirm() {
                       className="Card-lblResult"
                       elevation={3}
                       style={{
-                        background: lblResult.value == "NG" ?   "#BA0900":"#059212",
+                        background: lblResult.value == "OK" ? "#059212":"#BA0900", 
                        display: gvScanResult.visble ? "" : "none",
                       }}
                     >
                       <Typography
                         variant="h4"
-                        style={{ paddingTop: "5px", color: "#fff" }}
+                         style={{ paddingTop: "5px", color: "#fff" }}
                       >
                         {lblResult.value}
                       </Typography>
