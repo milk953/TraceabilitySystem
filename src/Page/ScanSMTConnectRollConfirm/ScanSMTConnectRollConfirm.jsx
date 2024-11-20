@@ -85,6 +85,7 @@ function ScanSMTConnectRollConfirm() {
                         id="txtLot_ScanSMTConnectRollConfirm_focus"
                         className="input_txt"
                         size="small"
+                        autoComplete="off"
                         fullWidth
                         disabled={txtLot.disbled}
                         style={txtLot.style}
@@ -155,7 +156,7 @@ function ScanSMTConnectRollConfirm() {
                         variant="body1"
                         style={{
                           width: "100%",
-                          color: "#FF0066",
+                          color: "#059212",
                           display: "flex",
                           justifyContent: "center",
                         }}
@@ -207,13 +208,19 @@ function ScanSMTConnectRollConfirm() {
                               //  key={`text_${index}`}
                               key={index}
                               size="small"
+                               autoComplete="off"
                               fullWidth
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
-                              value={txtSerial[index]}
+                              value={txtSerial[index] || ""}
                               onChange={(event) =>
                                 handleSerialChange(index, event)
                               }
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  btnSave_Click();
+                                }
+                              }}
                             />
                           </TableCell>
                         </TableRow>

@@ -216,26 +216,50 @@ function fn_ScanAutoBendingTime() {
     const setSerialData = async () => {
     let dtSerial = await getInputSerial();
     let strError = [];
-    if(dtSerial.length >0 ){
-      for(let i=0 ; i < dtSerial.length; i++){ 
-        dtSerial[i].PLANTCODE = "5"
-        dtSerial[i].strUser = IP
+    if (dtSerial.length > 0) {
+      // ตัวแปรสำหรับเช็คว่ามี SERIAL ว่างทั้งหมดหรือไม่
+      let allSerialsEmpty = true;
+      // Loop เพื่ออัปเดต PLANTCODE, strUser และตรวจสอบ SERIAL
+      for (let i = 0; i < dtSerial.length; i++) {
+        dtSerial[i].PLANTCODE = "5";
+        dtSerial[i].strUser = IP;
+        // ถ้าเจอ SERIAL ที่ไม่ว่าง ให้ตั้ง allSerialsEmpty เป็น false
+        if (dtSerial[i].SERIAL) {
+          allSerialsEmpty = false;
+        }
       }
-     await axios
-    .post("/api/BendingTime/SetSerialBendingData", {
-     dataList: dtSerial,
-  })
-  .then((res) =>{
-    strError  =res.data
-   
-  });
+    
+      // ถ้าพบว่า SERIAL ทั้งหมดเป็นค่าว่าง ให้แจ้งเตือน
+      if (allSerialsEmpty) {
+       //check 
+      } else {
+        // กรองเฉพาะรายการที่มี SERIAL ไม่ว่าง
+        const validSerials = dtSerial.filter(item => item.SERIAL);
+    
+        // ตรวจสอบว่ามีรายการที่ SERIAL ไม่ว่างหรือไม่
+        if (validSerials.length > 0) {
+          await axios
+            .post("/api/BendingTime/SetSerialBendingData", {
+              dataList: validSerials,
+            })
+            .then((res) => {
+              strError = res.data;
+            })
+            .catch((error) => {
+              console.error("Error sending data:", error);
+            });
+        }
+      }
     }
+    
+    
     setpnlResult(true)
     if(strError !== ""){
-      setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'yellow' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'red'}}));
-      setlblRemark((prevState) => ({ ...prevState, value:strError}));
+      console.log(strError,"strError")
+      setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
+      setlblRemark((prevState) => ({ ...prevState, value:'Please Input Serial',style: { fontSize: '40px', padding: '0px' ,  textAlign: 'center' }}));
     }
-    else{ setlblResult((prevState) => ({ ...prevState, value:"OK",  disbled: false , style: { backgroundColor: 'Yellow' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'green'}}));
+    else{ setlblResult((prevState) => ({ ...prevState, value:"OK",  disbled: false , style: { backgroundColor: 'green' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
     setlblRemark((prevState) => ({ ...prevState, value:currentTime , style: { fontSize: '40px', padding: '0px' ,  textAlign: 'center' } }));}
     getInitialSerial();
     }
