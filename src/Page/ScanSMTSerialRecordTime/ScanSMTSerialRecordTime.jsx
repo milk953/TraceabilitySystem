@@ -56,7 +56,8 @@ function ScanSMTSerialRecordTime() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-9px",
+                        marginLeft: "-6px",
+                        marginTop: "-10px"
                     }}
                 >
                     <TableContainer
@@ -319,6 +320,7 @@ function ScanSMTSerialRecordTime() {
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     handleChangeTotalPcs();
+                                                    document.getElementById("selpcssht").focus();
                                                 }
                                             }}
                                             InputProps={{
@@ -335,6 +337,7 @@ function ScanSMTSerialRecordTime() {
                                             row
                                             value={selrbtPcsSht}
                                             onChange={handleChangerbtPcsSht}
+                                            onKeyDown={handleChangerbtPcsSht}
                                         >
                                             <FormControlLabel
                                                 value="rbtPcs"
@@ -345,6 +348,7 @@ function ScanSMTSerialRecordTime() {
                                                                 fontSize: 19,
                                                             },
                                                         }}
+                                                        id="selpcssht"
                                                         checked={selrbtPcsSht === "rbtPcs"}
                                                     />
                                                 }
@@ -361,6 +365,7 @@ function ScanSMTSerialRecordTime() {
                                                             },
                                                         }}
                                                         checked={selrbtPcsSht === "rbtSht"}
+                                                        id="selpcssht"
                                                     />
                                                 }
                                                 label="SHT"
@@ -388,6 +393,7 @@ function ScanSMTSerialRecordTime() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
+                                            id="lotno"
                                             inputRef={inputLot}
                                             fullWidth
                                             value={txtLotNo}
@@ -517,22 +523,29 @@ function ScanSMTSerialRecordTime() {
                             style={{
                                 width: "490px",
                                 margin: "auto",
-                                height: "40px",
+                                height: "auto",
                                 display: 'flex',
                                 alignItems: 'center',
                                 marginLeft: "24px",
+                                padding: "0 10px",
+                                boxSizing: "border-box",
                             }}
                         >
                             <Typography
                                 style={{
                                     fontSize: "20px",
-                                    marginLeft: "200px",
-                                    color: "black"
+                                    marginLeft: "0",
+                                    color: "black",
+                                    overflow: "hidden",
+                                    wordWrap: "break-word",
+                                    lineHeight: "1.5",
+                                    flexGrow: 1,
                                 }}
                             >
                                 {lblOP}
                             </Typography>
                         </Paper>
+
                     )}
 
                     {visiblelog && (

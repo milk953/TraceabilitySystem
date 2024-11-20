@@ -49,7 +49,7 @@ function ScanSMTSerialShtConfirm() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
+                        marginLeft: "-6px",
                         marginTop: "-10px"
                     }}
                 >
@@ -255,7 +255,7 @@ function ScanSMTSerialShtConfirm() {
                                     className="Card-lblResult"
                                     style={{
                                         background: lblResultcolor,
-                                        width: "70%",
+                                        width: "100%",
                                     }}
                                 >
                                     <Typography

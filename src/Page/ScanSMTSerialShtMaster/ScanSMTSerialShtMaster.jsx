@@ -50,7 +50,7 @@ function ScanSMTSerialShtMaster() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-8px",
+                        marginLeft: "-6px",
                     }}
                 >
                     <TableContainer
