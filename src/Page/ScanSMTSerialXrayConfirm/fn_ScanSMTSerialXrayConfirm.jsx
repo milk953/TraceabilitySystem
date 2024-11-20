@@ -6,7 +6,6 @@ import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanSMTSerialXrayConfirm() {
-
   const { showLoading, hideLoading } = useLoading();
 
   let hfSerialCountBackup = "";
@@ -187,10 +186,20 @@ function fn_ScanSMTSerialXrayConfirm() {
   };
 
   const btnSave_Click = async () => {
+    let CheckValue = false;
     if (hfMode == "SERIAL") {
-      showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่..."); 
-      await setSerialData();
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
+      if (Array.isArray(txtSerial)) {
+        const Value = txtSerial.some((item) => item.trim() !== "");
+        CheckValue = Value;
+        console.log("190567332",Value)
+      }
+      if (txtSerial !== "" && CheckValue !== false) {
+        await setSerialData();
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      } else {
+        fnSetFocus("gvSerial_txtSerial_0");
+      }
       hideLoading();
     }
   };
@@ -398,7 +407,7 @@ function fn_ScanSMTSerialXrayConfirm() {
             strPrdName =
               strPrdName.slice(0, intProduct) +
               strPrdName.slice(intProduct + 1, intProduct + 11);
-              console.log("strPrdName : ", strPrdName);
+            console.log("strPrdName : ", strPrdName);
             try {
               setDdlProduct((prevState) => ({
                 ...prevState,
@@ -464,7 +473,6 @@ function fn_ScanSMTSerialXrayConfirm() {
       setHfMode("LOT");
       fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
     }
-    
   };
 
   const txtTotalPCS_TextChanged = async () => {
@@ -498,7 +506,13 @@ function fn_ScanSMTSerialXrayConfirm() {
     let strFrontSide = "";
     for (let intRow = 0; intRow < gvSerial.value.length; intRow++) {
       const serial = txtSerial[intRow];
-      const scanresult = serial &&  serial.trim() !== "" && serial.trim() !== undefined && serial.trim() !== null ? "-" : "";
+      const scanresult =
+        serial &&
+        serial.trim() !== "" &&
+        serial.trim() !== undefined &&
+        serial.trim() !== null
+          ? "-"
+          : "";
       dtData.push({
         seq: intRow + 1,
         serial: serial,
@@ -561,7 +575,7 @@ function fn_ScanSMTSerialXrayConfirm() {
               .then((res) => {
                 _strScanResultUpdate = res.data;
               });
-              if (_strScanResultUpdate === "OK") {
+            if (_strScanResultUpdate === "OK") {
               drRow.scan_result = "PASS X-RAY";
               drRow.remark = "Sheet นี้ผ่าน X-RAY";
             }
@@ -585,7 +599,11 @@ function fn_ScanSMTSerialXrayConfirm() {
         }));
       }
       if (_strErrorAll !== "") {
-        console.log("แสดงผลลัพธ์ที่ได้ _strErrorAll : ",lblResult.value + `\n` + _strErrorAll, " : ")
+        console.log(
+          "แสดงผลลัพธ์ที่ได้ _strErrorAll : ",
+          lblResult.value + `\n` + _strErrorAll,
+          " : "
+        );
         setLblResult((prevState) => ({
           ...prevState,
           value: lblResult.value + `\n` + _strErrorAll,

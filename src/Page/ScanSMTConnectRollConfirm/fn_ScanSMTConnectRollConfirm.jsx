@@ -152,8 +152,8 @@ function fn_ScanSMTConnectRollConfirm() {
       value: [],
       visble: false,
     }));
-    const newValues = []; 
-    setTxtSerial(newValues); 
+    const newValues = [];
+    setTxtSerial(newValues);
     setLblShtCount("");
     setLblRemark("");
     SetMode("LOT");
@@ -168,12 +168,22 @@ function fn_ScanSMTConnectRollConfirm() {
   };
 
   const btnSave_Click = async () => {
+    let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึก กรุณารอสักครู่...");
-      await setSerialData();
-      const newValues = []; 
-      setTxtSerial(newValues); 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (Array.isArray(txtSerial)) {
+      const Value = txtSerial.some((item) => item.trim() !== "");
+      CheckValue = Value;
+      console.log("190567332",Value)
+    }
+      if (txtSerial !== "" && CheckValue !== false) {
+        await setSerialData();
+        const newValues = [];
+        setTxtSerial(newValues);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      } else {
+        fnSetFocus("gvSerial_txtSerial_0");
+      }
       hideLoading();
     }
   };

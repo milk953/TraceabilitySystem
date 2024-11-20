@@ -164,7 +164,7 @@ function ScanSMTSerialXrayConfirm() {
                         variant="body1"
                         style={{
                           width: "100%",
-                      
+
                           display: "flex",
                           justifyContent: "center",
                         }}
@@ -218,13 +218,16 @@ function ScanSMTSerialXrayConfirm() {
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
                               value={txtSerial[index] || ""}
-
                               onKeyDown={(event) => {
-                                if (event.key === "Enter") {
+                                if (event.key === "Enter" && (txtSerial[index] !== "" && txtSerial[index] !== null && txtSerial[index] !== undefined)) {
                                   handleSerialChange(index, event);
                                 }
                               }}
-                              onChange={(event) => handleSerialChange(index, event)}
+                              onChange={(event) =>
+                                handleSerialChange(index, event)
+                              }
+
+               
                             />
                           </TableCell>
                         </TableRow>
@@ -269,23 +272,28 @@ function ScanSMTSerialXrayConfirm() {
               {gvScanResult.visble === true && (
                 <>
                   {lblResult.value !== "" && (
-                    <Paper
-                      className="Card-lblResult"
-                      elevation={3}
-                      style={{
-                        background: lblResult.value == "OK" ? "#059212":"#BA0900", 
-                       display: gvScanResult.visble ? "" : "none",
-                      }}
+                    <div
+                      style={{ display: "flex", gap: "10px", width: "100%" }}
                     >
-                      <Typography
-                        variant="h4"
-                         style={{ paddingTop: "5px", color: "#fff" }}
+                      <Paper
+                        className="Card-lblResult"
+                        elevation={3}
+                        style={{
+                          background:
+                            lblResult.value == "OK" ? "#059212" : "#BA0900",
+                          display: gvScanResult.visble ? "" : "none",
+                        }}
                       >
-                        {lblResult.value}
-                      </Typography>
-                    </Paper>
+                        <Typography
+                          variant="h4"
+                          style={{ paddingTop: "5px", color: "#fff" }}
+                        >
+                          {lblResult.value}
+                        </Typography>
+                      </Paper>
+                    </div>
                   )}
-                  
+
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}
