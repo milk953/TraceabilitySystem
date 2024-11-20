@@ -115,7 +115,7 @@ function ScanSheetMOTTime() {
                             txtTotalPcs_TextChanged();
                           }
                         }}
-                        onBlur={txtTotalPcs_TextChanged}
+                        // onBlur={txtTotalPcs_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -165,9 +165,9 @@ function ScanSheetMOTTime() {
                           fullWidth
                           inputRef={(el) => (fc_txtSerialOld.current[index] = el)}
                           value={txtSerialNo[index]}
-                          onBlur={(event) => {
-                            handleSerialOldChange(index, event);
-                          }}
+                          // onBlur={(event) => {
+                          //   handleSerialOldChange(index, event);
+                          // }}
                           onChange={(event) =>
                             handleSerialOldChange(index, event)
                           }
@@ -192,9 +192,9 @@ function ScanSheetMOTTime() {
                           fullWidth
                           inputRef={(el) => (fc_txtSerialNew.current[index] = el)}
                           value={txtSerialNoNew[index]}
-                          onBlur={(event) => {
-                            handleSerialNewChange(index, event);
-                          }}
+                          // onBlur={(event) => {
+                          //   handleSerialNewChange(index, event);
+                          // }}
                           onChange={(event) =>
                             handleSerialNewChange(index, event)
                           }
