@@ -192,7 +192,6 @@ function fn_ScanSMTSerialXrayConfirm() {
       if (Array.isArray(txtSerial)) {
         const Value = txtSerial.some((item) => item.trim() !== "");
         CheckValue = Value;
-        console.log("190567332",Value)
       }
       if (txtSerial !== "" && CheckValue !== false) {
         await setSerialData();
@@ -767,7 +766,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       render: (text, record, index) => {
         return text !== "" ? (
           <Tag
-            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+            className={text === "PASS X-RAY" ? "Tag-OK" : text === "-" ? "Tag-NG" : ""}
           >
             {text}
           </Tag>
@@ -790,6 +789,7 @@ function fn_ScanSMTSerialXrayConfirm() {
   ];
 
   function fnSetFocus(txtField) {
+    console.log("txtField : ", txtField);
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
     }, 300);

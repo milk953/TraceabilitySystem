@@ -83,6 +83,7 @@ function ScanSMTSerialXrayConfirm() {
                         className="input_txt"
                         size="small"
                         fullWidth
+                        autoComplete="off"
                         disabled={txtLot.disbled}
                         style={txtLot.style}
                         value={txtLot.value}
@@ -115,6 +116,7 @@ function ScanSMTSerialXrayConfirm() {
                           id="ddlProduct_ScanSMTConnectRollConfirm_focus"
                           size="small"
                           className="Select_dropDown"
+                          autoComplete="off"
                           value={ddlProduct.value}
                           style={ddlProduct.style}
                           disabled={ddlProduct.disbled}
@@ -141,6 +143,7 @@ function ScanSMTSerialXrayConfirm() {
                     <TableCell>
                       <TextField
                         id="lblTotalSht_ScanSMTSerialXrayConfirm_focus"
+                        autoComplete="off"
                         className="input_txt"
                         size="small"
                         value={txtTotalPCS.value}
@@ -215,19 +218,33 @@ function ScanSMTSerialXrayConfirm() {
                               key={index}
                               size="small"
                               fullWidth
+                              autoComplete="off"
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
                               value={txtSerial[index] || ""}
                               onKeyDown={(event) => {
-                                if (event.key === "Enter" && (txtSerial[index] !== "" && txtSerial[index] !== null && txtSerial[index] !== undefined)) {
-                                  handleSerialChange(index, event);
+                                console.log(
+                                  "index : ",
+                                  index,
+                                  "index + 1 : ",
+                                  index + 1
+                                );
+                                if (
+                                  event.key === "Enter" &&
+                                  txtSerial[index] !== "" &&
+                                  txtSerial[index] !== null &&
+                                  txtSerial[index] !== undefined
+                                ) {
+                                  if (txtTotalPCS.value == index + 1) {
+                                    btnSave_Click();
+                                  } else {
+                                    handleSerialChange(index, event);
+                                  }
                                 }
                               }}
                               onChange={(event) =>
                                 handleSerialChange(index, event)
                               }
-
-               
                             />
                           </TableCell>
                         </TableRow>

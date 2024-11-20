@@ -174,7 +174,6 @@ function fn_ScanSMTConnectRollConfirm() {
       if (Array.isArray(txtSerial)) {
       const Value = txtSerial.some((item) => item.trim() !== "");
       CheckValue = Value;
-      console.log("190567332",Value)
     }
       if (txtSerial !== "" && CheckValue !== false) {
         await setSerialData();
