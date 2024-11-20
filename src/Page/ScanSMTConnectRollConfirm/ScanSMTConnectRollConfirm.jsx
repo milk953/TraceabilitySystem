@@ -217,7 +217,7 @@ function ScanSMTConnectRollConfirm() {
                                 handleSerialChange(index, event)
                               }
                               onKeyDown={(e) => {
-                                if (e.key === "Enter") {
+                                if (e.key === "Enter" && (txtSerial[index] !== "" && txtSerial[index] !== null && txtSerial[index] !== undefined) ) {
                                   btnSave_Click();
                                 }
                               }}

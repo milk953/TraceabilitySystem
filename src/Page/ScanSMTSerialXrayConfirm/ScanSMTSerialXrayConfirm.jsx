@@ -83,6 +83,7 @@ function ScanSMTSerialXrayConfirm() {
                         className="input_txt"
                         size="small"
                         fullWidth
+                        autoComplete="off"
                         disabled={txtLot.disbled}
                         style={txtLot.style}
                         value={txtLot.value}
@@ -115,6 +116,7 @@ function ScanSMTSerialXrayConfirm() {
                           id="ddlProduct_ScanSMTConnectRollConfirm_focus"
                           size="small"
                           className="Select_dropDown"
+                          autoComplete="off"
                           value={ddlProduct.value}
                           style={ddlProduct.style}
                           disabled={ddlProduct.disbled}
@@ -141,6 +143,7 @@ function ScanSMTSerialXrayConfirm() {
                     <TableCell>
                       <TextField
                         id="lblTotalSht_ScanSMTSerialXrayConfirm_focus"
+                        autoComplete="off"
                         className="input_txt"
                         size="small"
                         value={txtTotalPCS.value}
@@ -164,7 +167,7 @@ function ScanSMTSerialXrayConfirm() {
                         variant="body1"
                         style={{
                           width: "100%",
-                      
+
                           display: "flex",
                           justifyContent: "center",
                         }}
@@ -215,16 +218,33 @@ function ScanSMTSerialXrayConfirm() {
                               key={index}
                               size="small"
                               fullWidth
+                              autoComplete="off"
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
-                              value={txtSerial[index]}
-
+                              value={txtSerial[index] || ""}
                               onKeyDown={(event) => {
-                                if (event.key === "Enter") {
-                                  handleSerialChange(index, event);
+                                console.log(
+                                  "index : ",
+                                  index,
+                                  "index + 1 : ",
+                                  index + 1
+                                );
+                                if (
+                                  event.key === "Enter" &&
+                                  txtSerial[index] !== "" &&
+                                  txtSerial[index] !== null &&
+                                  txtSerial[index] !== undefined
+                                ) {
+                                  if (txtTotalPCS.value == index + 1) {
+                                    btnSave_Click();
+                                  } else {
+                                    handleSerialChange(index, event);
+                                  }
                                 }
                               }}
-                              onChange={(event) => handleSerialChange(index, event)}
+                              onChange={(event) =>
+                                handleSerialChange(index, event)
+                              }
                             />
                           </TableCell>
                         </TableRow>
@@ -256,7 +276,7 @@ function ScanSMTSerialXrayConfirm() {
                 alignItems: "center",
               }}
             >
-              {gvScanResult.visble == false && (
+              {gvScanResult.visble === false && (
                 <>
                   <img
                     className="Img_GvResult"
@@ -269,23 +289,28 @@ function ScanSMTSerialXrayConfirm() {
               {gvScanResult.visble === true && (
                 <>
                   {lblResult.value !== "" && (
-                    <Paper
-                      className="Card-lblResult"
-                      elevation={3}
-                      style={{
-                        background: lblResult.value == "NG" ?   "#BA0900":"#059212",
-                       display: gvScanResult.visble ? "" : "none",
-                      }}
+                    <div
+                      style={{ display: "flex", gap: "10px", width: "100%" }}
                     >
-                      <Typography
-                        variant="h4"
-                        style={{ paddingTop: "5px", color: "#fff" }}
+                      <Paper
+                        className="Card-lblResult"
+                        elevation={3}
+                        style={{
+                          background:
+                            lblResult.value == "OK" ? "#059212" : "#BA0900",
+                          display: gvScanResult.visble ? "" : "none",
+                        }}
                       >
-                        {lblResult.value}
-                      </Typography>
-                    </Paper>
+                        <Typography
+                          variant="h4"
+                          style={{ paddingTop: "5px", color: "#fff" }}
+                        >
+                          {lblResult.value}
+                        </Typography>
+                      </Paper>
+                    </div>
                   )}
-                  
+
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}
