@@ -162,12 +162,18 @@ function fn_Change_PartialNo() {
         if (strError != "") {
           
           setTimeout(() => {
-            setlblResult((prevState) => ({
-              ...prevState,
-              visble: "",
-              value: strError,
-              style: "#BA0900",
-            }));
+            // setlblResult((prevState) => ({
+            //   ...prevState,
+            //   visble: "",
+            //   value: strError,
+            //   style: "#BA0900",
+            // }));
+            Swal.fire({
+              title: strError,
+              icon: "error",
+              // timer: 2000,
+              // showConfirmButton: false,
+            });
             setloading(false); 
             
           }, 500);
@@ -227,24 +233,36 @@ function fn_Change_PartialNo() {
                 }
 
                 if (Str_ErrorUpdate != "") {
-                  setlblResult((prevState) => ({
-                    ...prevState,
-                    visble: "",
-                    value: Str_ErrorUpdate,
-                    style: "#BA0900",
-                  }));
+                  Swal.fire({
+                    title: Str_ErrorUpdate,
+                    icon: "error",
+                    // timer: 2000,
+                    // showConfirmButton: false,
+                  });
+                  // setlblResult((prevState) => ({
+                  //   ...prevState,
+                  //   visble: "",
+                  //   value: Str_ErrorUpdate,
+                  //   style: "#BA0900",
+                  // }));
                 }
               });
             
           }
         }
         if (strError == "") {
-          setlblResult((prevState) => ({
-            ...prevState,
-            visble: "",
-            value: "Change Serial Successed",
-            style: "#059212",
-          }));
+          Swal.fire({
+            title: 'Change Serial Successed',
+            icon: "success",
+            // timer: 2000,
+            // showConfirmButton: false,
+          });
+          // setlblResult((prevState) => ({
+          //   ...prevState,
+          //   visble: "",
+          //   value: "Change Serial Successed",
+          //   style: "#059212",
+          // }));
           getInitialSerial();
          
         }

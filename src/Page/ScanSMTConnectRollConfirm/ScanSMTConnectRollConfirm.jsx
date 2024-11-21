@@ -59,6 +59,7 @@ function ScanSMTConnectRollConfirm() {
     btnSave_Click,
     columns,
     lblRemark,
+    showSheetNo,
   } = fn_ScanSMTConnectRollConfirm();
   return (
     <div>
@@ -71,7 +72,7 @@ function ScanSMTConnectRollConfirm() {
                 <TableHead>
                   <TableCell colSpan={4} align="center">
                     <Typography variant="h6">
-                      Confirm Connect Roll&Leaf
+                    Confirm Roll Leaf
                     </Typography>
                   </TableCell>
                 </TableHead>
@@ -161,6 +162,7 @@ function ScanSMTConnectRollConfirm() {
                           justifyContent: "center",
                         }}
                       >
+                        <span style={{ color: "#059212" }}>OK : </span> &nbsp;
                         {lblShtCount}
                       </Typography>
                     </TableCell>
@@ -208,7 +210,7 @@ function ScanSMTConnectRollConfirm() {
                               //  key={`text_${index}`}
                               key={index}
                               size="small"
-                               autoComplete="off"
+                              autoComplete="off"
                               fullWidth
                               id={`gvSerial_txtSerial_${index}`}
                               className="input_txt"
@@ -217,7 +219,12 @@ function ScanSMTConnectRollConfirm() {
                                 handleSerialChange(index, event)
                               }
                               onKeyDown={(e) => {
-                                if (e.key === "Enter") {
+                                if (
+                                  e.key === "Enter" &&
+                                  txtSerial[index] !== "" &&
+                                  txtSerial[index] !== null &&
+                                  txtSerial[index] !== undefined
+                                ) {
                                   btnSave_Click();
                                 }
                               }}
@@ -281,7 +288,7 @@ function ScanSMTConnectRollConfirm() {
                         variant="h4"
                         style={{ paddingTop: "5px", color: "#fff" }}
                       >
-                        {lblResult.value}
+                        {showSheetNo} <span> : </span>{lblResult.value}
                       </Typography>
                     </Paper>
                   )}

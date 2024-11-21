@@ -1143,7 +1143,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       let _strBox;
 
       _strBox = txtBox.value.toUpperCase().split(";");
-      if (_strBox.length >= 1) {
+      if (_strBox.length > 1) {
         _strItem = _strBox[0];
         _strBoxNo = _strBox[1];
         await axios
@@ -1552,11 +1552,11 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                   for (
                     let _intRow = _intRowSerial + 1;
                     _intRow < dtSerial.length - 1;
-                    i++
+                    _intRow++
                   ) {
                     if (
                       _strSerial.toUpperCase ==
-                      dtSerial[_intRow].SERIAL.trim().toUpperCase
+                      dtSerial[_intRow].SERIAL
                     ) {
                       _strMessageUpdate =
                         "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
@@ -1566,7 +1566,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                       dtSerial[drRow].REMARK_UPDATE = _strRemark;
                       dtSerial[drRow].ROW_UPDATE = "N";
                       _intCountNG = 1;
-                      _bolError = True;
+                      _bolError = true;
                     }
                   }
                 }
@@ -1606,7 +1606,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                       "No data connect sheet / ไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
                     _strRemark = "No data connect sheet  ";
                     _strScanResultUpdate = "NG";
-                    _strTestResultUpdate = _strTestResul
+                    _strTestResultUpdate = _strTestResult
                     dtSerial[drRow].REMARK_UPDATE = _strRemark;
                     dtSerial[drRow].ROW_UPDATE = "Y";
                     _intCountNG = 1;

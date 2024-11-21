@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanSMTSerialBackendConfirm() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -89,6 +90,8 @@ function fn_ScanSMTSerialBackendConfirm() {
 
     const plantCode = import.meta.env.VITE_FAC;
     const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
+    const FINAL_GATE_SPI_AOI_XRAY_1_TIME = "Y";
+    const { showLoading, hideLoading } = useLoading();
 
     useEffect(() => {
         PageLoad();
@@ -191,6 +194,9 @@ function fn_ScanSMTSerialBackendConfirm() {
         settxtLotDisabled(false);
         setpnlSerial(false);
         setselProduct(Productdata[0].prd_name);
+        setgvSerialData([]);
+        setgvScanResult(false);
+        setgvScanData([]);
         SetMode("LOT");
         inputLot.current.focus();
     };
@@ -267,6 +273,8 @@ function fn_ScanSMTSerialBackendConfirm() {
             settxtTotalDisabled(false);
             setvisiblelog(false);
             setpnlSerial(true);
+            setgvScanResult(false);
+            setgvScanData([]);
             sethfMode("SERIAL");
             await getInitialSerial();
         } else if (strType === "SERIAL_ERROR") {
@@ -310,6 +318,7 @@ function fn_ScanSMTSerialBackendConfirm() {
         let _bolError = false;
         const strLotData = txtLotNo.trim().toUpperCase().split(";");
         _strLot = strLotData[0];
+        showLoading('กำลังบันทึก กรุณารอสักครู่');
 
         if (txtLotNo !== "" && dtSerial.length > 0) {
             for (let i = 0; i < dtSerial.length; i++) {
@@ -356,7 +365,9 @@ function fn_ScanSMTSerialBackendConfirm() {
                             pcsPosition: _intShtSeq,
                             frontSheetNumber: _FrontSheetBarcode,
                             rearSheetNumber: _RearSheetBarcode,
-                            Message: _strMessage
+                            Message: _strMessage,
+                            finalgatespiaoixray1time: FINAL_GATE_SPI_AOI_XRAY_1_TIME,
+                            strSerial: _strSerial
                         })
                             .then((res) => {
                                 _strSerialResult = res.data.backen_result;
@@ -409,6 +420,7 @@ function fn_ScanSMTSerialBackendConfirm() {
 
         inputgvSerial.current[0]?.focus();
         settxtgvSerial("");
+        hideLoading();
     };
 
     const getInputSerial = async () => {
@@ -590,16 +602,17 @@ function fn_ScanSMTSerialBackendConfirm() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-                return text ? (
-                    <Tag
-                        className={
-                            text === "OK" ? "Tag-OK" :
-                                text === "NG" ? "Tag-NG" : ""
-                        }
-                    >
-                        {text}
-                    </Tag>
-                ) : null;
+                if (text == '')
+                    return text;
+                else {
+                    return (
+                        <Tag
+                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                        >
+                            {text}
+                        </Tag>
+                    );
+                }
             },
             align: "center",
         },

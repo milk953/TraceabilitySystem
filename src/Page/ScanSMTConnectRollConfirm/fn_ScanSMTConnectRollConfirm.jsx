@@ -8,6 +8,7 @@ import { useLoading } from "../../loading/fn_loading";
 function fn_ScanSMTConnectRollConfirm() {
   const { showLoading, hideLoading } = useLoading();
   const hfUserFactory = "";
+  const [showSheetNo, setShowSheetNo] = useState("");
   const [hfFlowID, setHfFlowID] = useState("0016");
   const [hfSerialCount, setHfSerialCount] = useState("");
   const [hfAutoScan, setHfAutoScan] = useState("");
@@ -152,8 +153,9 @@ function fn_ScanSMTConnectRollConfirm() {
       value: [],
       visble: false,
     }));
-    const newValues = []; 
-    setTxtSerial(newValues); 
+    setShowSheetNo("");
+    const newValues = [];
+    setTxtSerial(newValues);
     setLblShtCount("");
     setLblRemark("");
     SetMode("LOT");
@@ -168,12 +170,22 @@ function fn_ScanSMTConnectRollConfirm() {
   };
 
   const btnSave_Click = async () => {
+    let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึก กรุณารอสักครู่...");
-      await setSerialData();
-      const newValues = []; 
-      setTxtSerial(newValues); 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (Array.isArray(txtSerial)) {
+        const Value = txtSerial.some((item) => item.trim() !== "");
+        CheckValue = Value;
+      }
+      setShowSheetNo(txtSerial[0]);
+      if (txtSerial !== "" && CheckValue !== false) {
+        await setSerialData();
+        const newValues = [];
+        setTxtSerial(newValues);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      } else {
+        fnSetFocus("gvSerial_txtSerial_0");
+      }
       hideLoading();
     }
   };
@@ -930,6 +942,7 @@ function fn_ScanSMTConnectRollConfirm() {
     btnSave_Click,
     columns,
     lblRemark,
+    showSheetNo,
   };
 }
 

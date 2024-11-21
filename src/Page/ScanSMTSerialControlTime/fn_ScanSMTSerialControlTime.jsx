@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanSMTSerialControlTime() {
     const [txtMachine, settxtMachine] = useState("");
@@ -60,9 +61,9 @@ function fn_ScanSMTSerialControlTime() {
     const [hfProcControlTimeCheck, sethfProcControlTimeCheck] = useState("");
     const [hfProcControlTime, sethfProcControlTime] = useState("");
     const [hfConnShtPcsTime, sethfConnShtPcsTime] = useState("");
-    const [hfProcControl, sethfProcControl] = useState("");
+    const [hfProcControl, sethfProcControl] = useState("%");
     const [hfSerialStartCode, sethfSerialStartCode] = useState("");
-    const [hfBarcodeNotFound, sethfBarcodeNotFound] = useState("");
+    const [hfBarcodeNotFound, sethfBarcodeNotFound] = useState("NO/NG BC");
 
     //Table
     const [pnlSerial, setpnlSerial] = useState(false);
@@ -94,6 +95,7 @@ function fn_ScanSMTSerialControlTime() {
     const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
     const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
     const _strTagNewLine = "/";
+    const { showLoading, hideLoading } = useLoading();
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
@@ -124,6 +126,11 @@ function fn_ScanSMTSerialControlTime() {
 
     const ibtBackMCClick = () => {
         SetMode("MC");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setlblResult("");
+        setlblLot("");
+        setselProduct(Productdata[0].prd_name);
     };
 
     const handleChangeOperator = () => {
@@ -136,6 +143,12 @@ function fn_ScanSMTSerialControlTime() {
 
     const ibtBackOPClick = () => {
         SetMode("OP");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setlblResult("");
+        setlblLot("");
+        settxtLotNo("");
+        setselProduct(Productdata[0].prd_name);
     };
 
     const handleChangeTotalPcs = () => {
@@ -151,6 +164,12 @@ function fn_ScanSMTSerialControlTime() {
     const ibtPcsBackClick = () => {
         sethfSerialCount("0");
         SetMode("PCS");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setlblResult("");
+        setlblLot("");
+        setselProduct(Productdata[0].prd_name);
+        settxtLotNo("");
     };
 
     const handleChangeLot = async () => {
@@ -233,6 +252,9 @@ function fn_ScanSMTSerialControlTime() {
         setpnlSerial(false);
         setselProduct(Productdata[0].prd_name);
         SetMode("LOT");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setlblResult("");
         inputLot.current.focus();
     };
 
@@ -271,6 +293,7 @@ function fn_ScanSMTSerialControlTime() {
         let dtLotPassCount = [];
 
         setlblLog("");
+        showLoading('กำลังบันทึก กรุณารอสักครู่');
 
         if (_strLot !== "") {
             if (_strLot.length === 9 && _strPrdName !== "") {
@@ -368,6 +391,7 @@ function fn_ScanSMTSerialControlTime() {
                                         const start = parseInt(hfConfigStart);
                                         const end = parseInt(hfConfigEnd);
                                         _strConfigDigit = _strSerial.substring(start - 1, end);
+                                        console.log(_strConfigDigit, hfConfigCode, "hfConfigCode")
                                         if (_strConfigDigit !== hfConfigCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
@@ -379,8 +403,8 @@ function fn_ScanSMTSerialControlTime() {
                                     }
                                 }
 
-                                if (hfSerialStartCode.trim() !== "" && _strScanResultUpdate !== "NG") {
-                                    if (_strSerial.substring(1, hfSerialStartCode.length) !== hfSerialStartCode) {
+                                if (hfSerialStartCode !== "" && _strScanResultUpdate !== "NG") {
+                                    if (_strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                         _strRemark = "Serial barcode mix product";
                                         _strScanResultUpdate = "NG";
@@ -438,6 +462,7 @@ function fn_ScanSMTSerialControlTime() {
                                     _strRemark = "";
                                     _strScanResultUpdate = "OK";
                                 }
+
                             } else {
                                 _strMessageUpdate = "Serial not matching product" + _strTagNewLine + "หมายเลขบาร์โค้ดไม่ตรงตามที่กำหนดไว้";
                                 _strRemark = "Serial barcode not matching product";
@@ -471,6 +496,7 @@ function fn_ScanSMTSerialControlTime() {
             if (_strScanResultAll === "OK") {
                 let _strErrorUpdate = "";
                 for (let i = 0; i < dtSerial.length; i++) {
+                    let _strScanResultUpdate = dtSerial[i].SCAN_RESULT;
                     axios.post("/api/setSerialProcControlTimeTable", {
                         strPlantCode: plantCode,
                         strProc: hfProcControl,
@@ -485,12 +511,15 @@ function fn_ScanSMTSerialControlTime() {
                     })
                         .then((res) => {
                             _strErrorUpdate = res.data.p_error;
+                            console.log("มาไหมม", _strErrorUpdate)
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
                                 setlblResultcolor("#BA0900");
                                 setlblLog(_strErrorUpdate);
                                 setvisiblelog(true);
+                            } else {
+                                _strScanResultUpdate = "OK";
                             }
                         })
                         .catch((error) => {
@@ -515,6 +544,7 @@ function fn_ScanSMTSerialControlTime() {
         }
 
         await getInitialSerial();
+        hideLoading();
     };
 
     const getProductSerialMaster = async (strPrdName) => {
@@ -797,11 +827,17 @@ function fn_ScanSMTSerialControlTime() {
         console.log(hfMode)
         if (hfMode === "SERIAL") {
             setSerialDataTray();
+            settxtgvSerial("");
+            inputgvSerial.current[0].focus();
         }
     };
 
     const btnCancelClick = () => {
         SetMode("SERIAL");
+        inputgvSerial.current[0].focus();
+        setgvScanData([]);
+        setgvScanResult(false);
+        settxtgvSerial("");
     };
 
     const columns = [
@@ -829,11 +865,17 @@ function fn_ScanSMTSerialControlTime() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-                return (
-                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
-                        {text}
-                    </Tag>
-                );
+                if (text == '')
+                    return text;
+                else {
+                    return (
+                        <Tag
+                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                        >
+                            {text}
+                        </Tag>
+                    );
+                }
             },
             align: "center",
         },

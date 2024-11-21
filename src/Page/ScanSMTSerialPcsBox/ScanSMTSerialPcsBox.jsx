@@ -33,7 +33,6 @@ function ScanSMTSerialPcsBox() {
   return (
     <div>
       <Hearder />
-      <h1>Packing Gate</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
@@ -193,7 +192,6 @@ function ScanSMTSerialPcsBox() {
                     <TableCell align="right">
                       <Typography>Box No.:</Typography>
                     </TableCell>
-                    {console.log(txtBox.disbled,"11111")}
                     <TableCell colSpan={4}>
                       <TextField
                         className="input_txt"
@@ -493,118 +491,6 @@ function ScanSMTSerialPcsBox() {
                
               </Paper>
               </div>
-                
-              
-              {/* <Table
-                className="CSS-GvScanResult-FinalGate"
-                // style={{ display: gvScanResult }}
-                component={Card}
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                     
-                    >
-                      No.
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                    >
-                      Serial No.
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                     
-                    >
-                      Re-Judgement 1
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                     
-                    >
-                       Result
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                    
-                    >
-                      Re-Judgement 2
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                     
-                    >
-                       Test Result
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                     
-                    >
-                       Scan Result
-                    </TableCell>
-                    <TableCell >Remark </TableCell>
-                  </TableRow>
-                </TableHead>
-            
-                {Array.from(
-                        { length: gvScanResult.length },
-                        (_, index) => (
-                          <TableRow key={index}>
-                            <TableCell
-                              align="center"
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult[index].SEQ}
-                            </TableCell>
-                            <TableCell
-                            align="center"
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult[index].SERIAL}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult[index].REJECT}
-                            </TableCell>
-                            <TableCell
-                            align="center"
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult[index].TOUCH_UP}
-                            </TableCell>
-                            <TableCell
-                            align="center"
-                            sx={{
-                              borderRight: "1px solid #d9d9d9"
-                            }}
-                            
-                            >
-                              {gvScanResult[index].REJECT2}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" ,textAlign:'center'}}
-                            >
-                              {gvScanResult[index].TEST_RESULT}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9",textAlign:'center' ,  backgroundColor: 
-                                gvScanResult[index].SCAN_RESULT === "NG" ? '#ff4d4f' : 
-                                gvScanResult[index].SCAN_RESULT === "OK" ? 'green' : 
-                                'transparent' }}
-                            >
-                              {gvScanResult[index].SCAN_RESULT}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult[index].REMARK}
-                            </TableCell>
-                          </TableRow>
-                        )
-                      )}
-              </Table> */}
               <br/>
                       <AntTable 
                 columns={columns}
