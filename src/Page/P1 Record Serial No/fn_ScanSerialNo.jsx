@@ -258,11 +258,12 @@ function fn_ScanSerialNo() {
       return result;
     } else if (type == "SetManualSerialNo") {
       let result = "";
+      console.log(params, "params");
       await axios
         .post("/api/ScanFin/SetManualSerialNo", {
           dataList: {
-            strSerialNo: params.dtSerial.SERIAL,
-            strProduct: magazine,
+            strSerialNo: params.SERIAL,
+            strProduct: product,
             strPlantCode: Fac,
             strLotNo: lotNo,
             strStation: userStation,
@@ -439,7 +440,7 @@ function fn_ScanSerialNo() {
       hiddenParams.hfMode = "MAGAZINE";
       SetFocus("txtMagazine");
     } else if (strType == "SERIAL") {
-      Setdisable("disable", "txtMagazine");
+      // Setdisable("disable", "txtMagazine");
       setBtnMagBack(false);
       Setdisable("disable", "txtPCS");
       setGvSerialState(true);
@@ -522,7 +523,7 @@ function fn_ScanSerialNo() {
             }
             let _strFixDigit = '';
             if (hiddenParams.hfSerialFixFlag == "Y" && _strScanResultAll !== 'NG'){
-               _strFixDigit = _strSerial.substring(parseInt(hiddenParams.hfSerialStartDigit), parseInt(hiddenParams.hfSerialEndDigit) + 1);
+               _strFixDigit = _strSerial.substring(parseInt(hiddenParams.hfSerialStartDigit) -1 , parseInt(hiddenParams.hfSerialEndDigit));
                if(_strFixDigit !== hiddenParams.hfSerialDigit){
                 _strScanResultAll = "NG"
                 dtSerial[i].SCAN_RESULT = "NG";
@@ -533,7 +534,7 @@ function fn_ScanSerialNo() {
                if (hiddenParams.hfConfigCheck == 'Y' && _strScanResultAll !== 'NG'){
                 console.log('_strConfigDigit')
                 let _strConfigDigit = '';
-                _strConfigDigit = _strSerial.substring(parseInt(hiddenParams.hfConfigStart), parseInt(hiddenParams.hfConfigEnd) + 1);
+                _strConfigDigit = _strSerial.substring(parseInt(hiddenParams.hfConfigStart) -1 , parseInt(hiddenParams.hfConfigEnd));
                 if(_strConfigDigit !== hiddenParams.hfConfigCode){
                   _strScanResultAll = "NG"
                   dtSerial[i].REMARK = "Serial barcode mix product" + _strTagNewLine +"หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
@@ -546,7 +547,7 @@ function fn_ScanSerialNo() {
             if(hiddenParams.hfCheckStartSeq == 'Y' && _strScanResultAll !== 'NG'){
               let _strStartSeq = '';
               console.log('hfCheckStartSeq')
-              _strStartSeq = _strSerial.substring(parseInt(hiddenParams.hfCheckStartSeqStart), parseInt(hiddenParams.hfCheckStartSeqEnd) + 1);
+              _strStartSeq = _strSerial.substring(parseInt(hiddenParams.hfCheckStartSeqStart) -1 , parseInt(hiddenParams.hfCheckStartSeqEnd));
               if(_strStartSeq !== hiddenParams.hfCheckStartSeqCode){
                 _strScanResultAll = "NG"
                 dtSerial[i].REMARK = "Serial barcode mix product" + _strTagNewLine +"หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -558,7 +559,7 @@ function fn_ScanSerialNo() {
             if (hiddenParams.hfWeekCode =='Y' && _strScanResultAll !== 'NG'){
               console.log('hfWeekCode')
               let _strWeekCode = '';
-              _strWeekCode = _strSerial.substring(parseInt(hiddenParams.hfCheckWeekCodeStart), parseInt(hiddenParams.hfCheckWeekCodeEnd) + 1);
+              _strWeekCode = _strSerial.substring(parseInt(hiddenParams.hfCheckWeekCodeStart) -1 , parseInt(hiddenParams.hfCheckWeekCodeEnd));
               if(_strWeekCode !== hiddenParams.hfWeekCode){
                 _strScanResultAll = "NG"
                 dtSerial[i].REMARK = "Serial duplicate in tray" + _strTagNewLine +"หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
@@ -596,20 +597,24 @@ function fn_ScanSerialNo() {
         });
       } else {
         console.log(dtSerial, "dtSerial");
-        _strErrorUpdate = getData("SetManualSerialNo", dtSerial); 
-        if (_strErrorUpdate !== '') {
-          setLblResult({
-            value: "Error : " + _strErrorUpdate,
-            styled: { color: "white" },
-          });
-        }else{
-          setLblResult({
-            value: '',
-            styled: { color: "white" },
-          });
-        }
+        for(let x = 0; x < dtSerial.length; x++){
+          let _strErrorUpdate = await getData("SetManualSerialNo", dtSerial[x]); 
+          if (_strErrorUpdate !== '') {
+            setLblResult({
+              value: "Error : " + _strErrorUpdate,
+              styled: { color: "white" },
+            });
+          }else{
+            setLblResult({
+              value: 'OK',
+              styled: { color: "white" },
+            });
+          }
+        }        
+       
       }
       setLblResultState(true);
+      setHideImg(false);
       setGvSerialResult(dtSerial);
       console.log(dtSerial, "dtSerial");
       let result = await getData("GetCountSerialByLotMagazine", lotNo);

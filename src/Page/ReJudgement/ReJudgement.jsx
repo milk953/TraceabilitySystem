@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import "./ReJudgement.css";
 import Hearder from "../Header/Header";
 import { fn_ReJudgement } from "./fn_ReJudgement";
-import { Table as AntTable, Select } from "antd";
+import "../Common/StyleCommon.css";
+import excel from "/src/assets/excel.png";
+import { Table as AntTable, Select,Button,Avatar } from "antd";
 import {
-  Button,
   Table,
   Paper,
   TableBody,
@@ -14,7 +15,7 @@ import {
   TableHead,
   Card,
 } from "@mui/material";
-import { SevenK } from "@mui/icons-material";
+import { SearchOutlined } from "@ant-design/icons";
 function ReJudgement() {
   const {
     lblResult,
@@ -42,6 +43,7 @@ function ReJudgement() {
     FcSerial,
     handleExport,
     columns,
+    btnCancelClick
   } = fn_ReJudgement();
   useEffect(() => {
     if (serialState == true) {
@@ -56,10 +58,15 @@ function ReJudgement() {
         {lblResult.text}
       </h3>
       <div className="DReJudgementTableFirst">
-        <Table className="ReJudgementTableFirst" component={Paper}>
+        <Table className="ReJudgementTableFirst" component={Card}>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ textAlign: "center" }} colSpan={4}>Re-Judgement</TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell sx={{ width: "130px" }}>Piece No. 1,2,3,...</TableCell>
+              <TableCell sx={{ width: "130px",textAlign:'right' }}>Piece No. 1,2,3,...</TableCell>
               <TableCell sx={{ width: "30px" }}>
                 <Radio
                   checked={rdSelect === "rdPcsno"}
@@ -94,16 +101,23 @@ function ReJudgement() {
                 sx={{ verticalAlign: "middle", textAlign: "center" }}
               >
                 <Button
-                  variant="contained"
-                  color="primary"
+                   type="primary"
+                   icon={<SearchOutlined />}
                   onClick={btnRetrieveClick}
                 >
-                  Retrieve
+                  Search
+                </Button>
+                <Button
+                  type="primary"
+                  style={{ width: "95px", background: "red" }}
+                  onClick={btnCancelClick}
+                >
+                  Cancel
                 </Button>
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell sx={{ textAlign: "center" }}>Lot No.</TableCell>
+              <TableCell sx={{ textAlign: "center",textAlign:'right' }}>Lot No.</TableCell>
               <TableCell>
                 <Radio
                   checked={rdSelect === "rdLotNo"}
@@ -139,7 +153,7 @@ function ReJudgement() {
       <Table className="ReJudgementTableSecond" component={Card}>
         <TableBody>
           <TableRow>
-            <TableCell sx={{ textAlign: "center" }}>Reason</TableCell>
+            <TableCell sx={{ textAlign: "center" ,textAlign:'right' }}>Reason : </TableCell>
             <TableCell>
               {" "}
               <Select
@@ -155,13 +169,13 @@ function ReJudgement() {
                 options={resultCombo.map((option) => ({
                   value: option.rejcet_code,
                   label:
-                    option.rejcet_code.trim() === ""
-                      ? ""
+                    option.rejcet_code.trim() === "------ SELECT ------"
+                      ? "------ SELECT ------"
                       : `${option.rejcet_code} : ${option.rejcet_name}`,
                 }))}
               />
             </TableCell>
-            <TableCell sx={{ textAlign: "center" }}>Operator</TableCell>
+            <TableCell sx={{ textAlign: "center",textAlign:'right' }}>Operator : </TableCell>
             <TableCell>
               <input
                 value={txtOperator}
@@ -177,7 +191,7 @@ function ReJudgement() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ textAlign: "center" }}>Re-Judgement</TableCell>
+            <TableCell sx={{ textAlign: "center",textAlign:'right'  }}>Re-Judgement : </TableCell>
             <TableCell>
               <Select
                 style={{
@@ -190,14 +204,14 @@ function ReJudgement() {
                   setCbReJustment(value);
                 }}
                 options={[
-                  { value: " ", label: "" },
+                  { value: "------ SELECT ------", label: "------ SELECT ------" },
                   { value: "OK", label: "OK" },
                   { value: "NG", label: "NG" },
                   { value: "DELETE", label: "DELETE" },
                 ]}
               />
             </TableCell>
-            <TableCell sx={{ textAlign: "center" }}>Qualified</TableCell>
+            <TableCell sx={{ textAlign: "center" ,textAlign:'right' }}>Qualified : </TableCell>
             <TableCell>
               <input
                 value={txtQualified}
@@ -215,16 +229,18 @@ function ReJudgement() {
           <TableRow>
             <TableCell sx={{ textAlign: "center"}} colSpan={4}>
               <Button
-                variant="contained"
-                color="primary"
+               style={{
+                backgroundColor: "green",
+                width: "90px",
+                color: "white",
+              }}
                 onClick={btnSubmitClick}
               >
                 Submit
               </Button>
               &nbsp;
               <Button
-                variant="contained"
-                color="primary"
+                  icon={<Avatar shape="square" src={excel} size="small" />}
                 onClick={handleExport}
               >
                 Export
@@ -234,120 +250,6 @@ function ReJudgement() {
         </TableBody>
       </Table>
       &nbsp;
-      {/* <Table className="ReJudgementTableSecond" component={Paper}>
-        <tr>
-          <td>Reason</td>
-          <td>Operator</td>
-          <td rowSpan={5} style={{ verticalAlign: "middle", width: "60px" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={btnSubmitClick}
-            >
-              Submit
-            </Button>
-          </td>
-          <td rowSpan={5} style={{ verticalAlign: "middle", width: "60px" }}>
-            <Button variant="contained" color="primary" onClick={handleExport}>
-              Export
-            </Button>
-          </td>
-        </tr>
-        <tr>
-          <td style={{ width: "550px" }}>
-            <select
-              onChange={(e) => setResultComboSelected(e.target.value)}
-              value={resultComboSelected}
-            >
-              {resultCombo.map((item, index) => (
-                <option key={index} value={`${item.rejcet_code}`}>
-                  {item.rejcet_code === " "
-                    ? ""
-                    : `${item.rejcet_code} : ${item.rejcet_name}`}
-                </option>
-              ))}
-            </select> 
-            <Select
-              style={{
-                width: 380,
-                textAlign: "left",
-                padding: "0px 5px 0px 0px",
-              }}
-              value={resultComboSelected}
-              onChange={(value) => {
-                setResultComboSelected(value);
-              }}
-              options={resultCombo.map((option) => ({
-                value: option.rejcet_code,
-                label:
-                  option.rejcet_code.trim() === ""
-                    ? ""
-                    : `${option.rejcet_code} : ${option.rejcet_name}`,
-              }))}
-            />
-          </td>
-          <td style={{ padding: "10px" }}>
-            <input
-              value={txtOperator}
-              onChange={(e) => setTxtOperator(e.target.value)}
-              style={{
-                width: "120px",
-                border: "1px solid black",
-                margin: "0px",
-              }}
-              type="text"
-              size="20"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Re-Judgement</td>
-          <td>Qualified</td>
-        </tr>
-        <tr>
-          <td>
-            <select
-              onChange={(e) => setCbReJustment(e.target.value)}
-              value={cbReJustment}
-            >
-              <option value=" "> </option>
-              <option value="OK">OK</option>
-              <option value="NG">NG</option>
-              <option value="DELETE">DELETE</option>
-            </select> 
-            <Select
-              style={{
-                width: 380,
-                textAlign: "left",
-                padding: "0px 5px 0px 0px",
-              }}
-              value={cbReJustment}
-              onChange={(value) => {
-                setCbReJustment(value);
-              }}
-              options={[
-                { value: " ", label: "" },
-                { value: "OK", label: "OK" },
-                { value: "NG", label: "NG" },
-                { value: "DELETE", label: "DELETE" },
-              ]}
-            />
-          </td>
-          <td style={{ padding: "10px" }}>
-            <input
-              value={txtQualified}
-              onChange={(e) => setTxtQualified(e.target.value)}
-              style={{
-                width: "120px",
-                border: "1px solid black",
-                margin: "0px",
-              }}
-              type="text"
-              size="20"
-            />
-          </td>
-        </tr>
-      </Table> */}
       <br />
       {pnlTableDisplaySatate && (
         <div className="DReJudgementTableThird">

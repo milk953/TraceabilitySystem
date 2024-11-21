@@ -19,8 +19,8 @@ function fn_ScanSMTConnectShtConfirm() {
   const [lblResultState, setLblResultState] = useState(false);
   const [lblResult, setLblResult] = useState("");
   const [gvScanResult, setGvScanResult] = useState([]);
-  const [lblShtCount, setLblShtCount] = useState();
-  const [lblTotalSht, setlblTotalSht] = useState();
+  const [lblShtCount, setLblShtCount] = useState(0);
+  const [lblTotalSht, setlblTotalSht] = useState(0);
   const [gvResutlState, setGvResutlState] = useState(false);
   //hidden collect data
   const [hfUserID, sethfUserID] = useState("");
@@ -97,7 +97,7 @@ function fn_ScanSMTConnectShtConfirm() {
       setLblError("");
       setHideImg(false);
       setGvResutlState(true);
-      getCountDataBylot(txtLot);
+      // getCountDataBylot(txtLot);
       setMode("SERIAL");
     } else {
       setProductSelected(ddlproduct[0].prd_name);
@@ -156,12 +156,14 @@ function fn_ScanSMTConnectShtConfirm() {
     let dtSheet = [];
     dtSheet = await getData("GetLotSheetDataAllByLot", strLot);
     setGvScanResult(dtSheet);
-    setLblShtCount(0);
+    let count = 0;
     for (let i = 0; i < dtSheet.length; i++) {
-      if (dtSheet[i].SCAN_RESULT == "OK") {
-        setLblShtCount(lblShtCount + 1);
+      if (dtSheet[i].scan_result == "OK") {
+        count += 1;
+        // setLblShtCount((prevSeq) => lblShtCount + 1);
       }
     }
+    setLblShtCount(count);
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
@@ -187,6 +189,8 @@ function fn_ScanSMTConnectShtConfirm() {
   const handle_ibtnBack_Click = async () => {
     setTxtLot("");
     setMode("LOT");
+    setlblTotalSht(0);
+    setLblShtCount(0);
     setGvResutlState(false);
     setProductSelected(ddlproduct[0].prd_name);
     setHideImg(true);
@@ -403,8 +407,8 @@ function fn_ScanSMTConnectShtConfirm() {
     },
     {
       title: "Sheet No. Back",
-      dataIndex: "sheet_no_front",
-      key: "sheet_no_front",
+      dataIndex: "sheet_no_back",
+      key: "sheet_no_back",
       align: "left",
       width: 200,
       render: (text, record, index) => {

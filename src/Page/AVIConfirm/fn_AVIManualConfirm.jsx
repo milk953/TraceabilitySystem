@@ -19,8 +19,9 @@ function fn_AVIManualConfirm() {
   const pieceNoRef = useRef(null);
   const [resultState, setResultState] = useState(false);
   const [ip, setIp] = useState("");
-  const [resultSelect, setResultSelect] = useState("");
+  const [resultSelect, setResultSelect] = useState("--- SELECT ---");
   const [getSearchData, setGetSearchData] = useState([]);
+  const [seq, setSeq] = useState(1);
   const [updateFlg, setUpdateFlg] = useState(false);
   // const [dataNotfound, setDataNotfound] = useState([]);
   let dataNotfound = [];
@@ -35,88 +36,113 @@ function fn_AVIManualConfirm() {
   }
   const btnRetrieveClick = async () => {
     if (pieceNo == "") {
+      Swal.fire({
+        title: "Please input serial no.",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     } else {
-      SearchData();
+      setResultState(true);
+      setEltTypeState({
+        styled: { disable: true, backgroundColor: "#B2A8A8" },
+      });
+      await SearchData();
+      setPieceNo("");
     }
   };
   const handleResultSelect = (e) => {
-    setResultSelect(e.target.value);
+    setResultSelect(e);
   };
   const btnSubmitClick = async () => {
     setLblResult("");
-    if (resultSelect == "") {
+    if (resultSelect == "" || resultSelect == "--- SELECT ---") {
       setLblResult("Please select result.");
+      Swal.fire({
+        title: "Please select result.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
     if (result == "") {
       setLblResult("Please input serial no.");
+      Swal.fire({
+        title: "Please input serial no.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
-    for (let x = 0; x < result.length; x++) {
-      await getData("getData", { serial: result[x].CHE_SERIAL_NO });
-    }
-    for (let i = 0; i < result.length; i++) {
-      const updatedData = result.map((item) => {
-        const match = dataNotfound.find(
-          (element) => element.dataNotfound === item.CHE_SERIAL_NO
-        );
-        return match
-          ? { ...item, remark: "Not Found Data", color: "red" }
-          : {
-              ...item,
-              result: resultSelect,
-              remark: "Update complete.",
-              color: "green",
-            };
-      });
-      setResult(updatedData);
+    for(let i = 0; i < result.length; i++){
+      if(result[i].result == ""){
+        result[i].remark = "not found data";
+        result[i].color = "red";
+      }else{
+       const resultUpdate =  await getData("updateData", {serial: result[i].serial, elttype: eltTypeSelect, results: resultSelect, ip: ip});
+       if(resultUpdate == ''){
+          result[i].result = resultSelect;
+          result[i].inspection_count = parseInt(result[i].inspection_count) + 1;
+          result[i].remark = "update complete.";
+          result[i].color = "green";
+       }
+      }
     }
     setPieceNo("");
     setEltTypeState({
       styled: { disable: false, backgroundColor: "white" },
     });
+    setResultSelect("--- SELECT ---");
     pieceNoRef.current.focus();
   };
+  
   const SearchData = async () => {
     let updatedData = [];
     if (lblResult != "" && lblResult != "Dupplicate serial no.") {
       setResult([]);
       setLblResult("");
     } else {
-      let isDuplicate = false;
-      for (let i = 0; i < result.length; i++) {
-        if (result[i].CHE_SERIAL_NO === pieceNo && updateFlg == false) {
-          setLblResult("Dupplicate serial no.");
-          isDuplicate = true;
-          pieceNoRef.current.focus();
-          break;
+      const resultRes = await getData("getDataSearch", { serial: pieceNo });
+      const isDuplicate = result.some((item) => item.serial === pieceNo);
+      if (!isDuplicate) {
+        console.log(resultRes, "resultRes");
+        if (resultRes.length > 0) {
+          setResult((prev) => [
+            ...prev,
+            {
+              seq: seq,
+              serial: pieceNo,
+              result: resultRes[0].che_prod_result,
+              inspection_count: resultRes[0].che_inspect_count,
+              inspection_date: resultRes[0].che_inspect_date,
+              remark: "",
+              color: "",
+            },
+          ]);
+        } else {
+          setResult((prev) => [
+            ...prev,
+            {
+              seq: seq,
+              serial: pieceNo,
+              result: "",
+              inspection_count: "",
+              inspection_date: "",
+              remark: "",
+              color: "",
+            },
+          ]);
         }
-      }
-      if (!isDuplicate && updateFlg == false) {
-        const newSeq =
-          result.length > 0 ? result[result.length - 1].SEQ + 1 : 1;
-        const newData = {
-          SEQ: newSeq,
-          CHE_SERIAL_NO: pieceNo,
-        };
-        const updatedData = [...result, newData];
-        setResult(updatedData);
-      } else if (updateFlg == true) {
-        setResult([]);
-        const newSeq =
-          result.length > 0 ? result[result.length - 1].SEQ + 1 : 1;
-        const newData = {
-          SEQ: newSeq,
-          CHE_SERIAL_NO: pieceNo,
-        };
-        const updatedData = [newData];
-        setResult(updatedData);
-        setUpdateFlg(false);
+        setSeq((prevSeq) => prevSeq + 1); 
+        setLblResult("");
+      } else {
+        console.log("Duplicate serial: ", pieceNo);
+        setLblResult("Dupplicate serial no.");
       }
     }
-
-    // console.log(updatedData);
   };
   const handlePieceChange = async () => {
     if (pieceNo == "") {
@@ -129,6 +155,19 @@ function fn_AVIManualConfirm() {
       setPieceNo("");
     }
   };
+  const handleBtnCancel = () => {
+    setEltTypeState({
+      styled: { disable: false, backgroundColor: "white" },
+    });
+    setResult([]);
+    setSeq(1);
+    setEltTypeSelect(eltType[0].elt_type);
+    setResultState(false);
+    setResultSelect("--- SELECT ---");
+    setPieceNo("");
+    setLblResult("");
+    pieceNoRef.current.focus();
+  };
   async function getData(type, params) {
     if (type == "getELTType") {
       await axios
@@ -140,7 +179,8 @@ function fn_AVIManualConfirm() {
         .catch((error) => {
           console.log(error);
         });
-    } else if (type == "getData") {
+    } else if (type == "getDataSearch") {
+      let result = [];
       await axios
         .post(
           "/api/AVIconfirm/getData",
@@ -159,18 +199,23 @@ function fn_AVIManualConfirm() {
         )
         .then((res) => {
           if (res.status == 200) {
-            setGetSearchData(res.data);
-            getData("updateData", {
-              serial: params.serial,
-              elttype: eltTypeSelect,
-              results: resultSelect,
-              ip: ip,
-            });
+            result = res.data;
+            // setGetSearchData(res.data);
+            // setResult(res.data);
+            // setResultState(true);
+            // getData("updateData", {
+            //   serial: params.serial,
+            //   elttype: eltTypeSelect,
+            //   results: resultSelect,
+            //   ip: ip,
+            // });
           } else if (res.status == 204) {
             dataNotfound.push({ dataNotfound: params.serial });
           }
         });
+      return result;
     } else if (type == "updateData") {
+      let result = '';
       await axios
         .post("/api/AVIconfirm/updateData", {
           dataList: {
@@ -182,19 +227,77 @@ function fn_AVIManualConfirm() {
           },
         })
         .then((res) => {
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: "update complete.",
-          }).then(() => {
-            setUpdateFlg(true);
-          });
+          result = res.data.result;
         })
         .catch((error) => {
           console.log(error);
         });
+        return result;
     }
+    
   }
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "seq",
+      key: "seq",
+      align: "center",
+      width: 50,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Serial No",
+      dataIndex: "serial",
+      key: "serial",
+      align: "center",
+      width: 200,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Result",
+      dataIndex: "result",
+      key: "result",
+      align: "center",
+      width: 100,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Inspection Count",
+      dataIndex: "inspection_count",
+      key: "inspection_count",
+      align: "center",
+      width: 150,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Inspection Date",
+      dataIndex: "inspection_date",
+      key: "inspection_date",
+      align: "center",
+      width: 150,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Remark",
+      dataIndex: "remark",
+      key: "remark",
+      align: "center",
+      width: 150,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+  ];
 
   return {
     eltType,
@@ -214,6 +317,9 @@ function fn_AVIManualConfirm() {
     handleResultSelect,
     btnSubmitClick,
     dataNotfound,
+    handleBtnCancel,
+    getSearchData,
+    columns
   };
 }
 

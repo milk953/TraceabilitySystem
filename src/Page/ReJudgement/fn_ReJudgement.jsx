@@ -1,5 +1,4 @@
 import axios from "axios";
-import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -17,12 +16,14 @@ function fn_ReJudgement() {
   const [pnlTableDisplaySatate, setPnlTableDisplaySatate] = useState(false);
   const [txtOperator, setTxtOperator] = useState("");
   const [txtQualified, setTxtQualified] = useState("");
-  const [cbReJustment, setCbReJustment] = useState("");
+  const [cbReJustment, setCbReJustment] = useState("------ SELECT ------");
 
   const FcSerial = useRef(null);
   const [serialState, setSerialState] = useState(false);
   const [resultCombo, setResultCombo] = useState([]);
-  const [resultComboSelected, setResultComboSelected] = useState("");
+  const [resultComboSelected, setResultComboSelected] = useState(
+    "------ SELECT ------"
+  );
   const Fac = import.meta.env.VITE_FAC;
   const IpAddress = localStorage.getItem("ipAddress");
   const columns = [
@@ -161,16 +162,88 @@ function fn_ReJudgement() {
       setTxtSerialno("");
     }
   };
+  const btnCancelClick = () => {
+    setLblResult({ text: "", styled: { color: "black" } });
+    setCbReJustment("------ SELECT ------");
+    setTxtQualified("");
+    setTxtOperator("");
+    setResultComboSelected("------ SELECT ------");
+    setDtDataSearch([]);
+    setPnlTableDisplaySatate(false);
+    if (rdSelect == "rdPcsno") {
+      setTxtSerialno("");
+      SetFocus("txtSerialnoRejudege");
+    } else {
+      setLot("");
+      SetFocus("txtLotnoRejudege");
+    }
+  };
   const btnRetrieveClick = async () => {
-    await SearchData("");
+    if (rdSelect == "rdPcsno") {
+      if (txtSerialno == "") {
+        setLblResult({
+          text: "Please input serial no.",
+          styled: { color: "red" },
+        });
+        Swal.fire({
+          title: "Error",
+          text: "Please input serial no.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        return;
+      } else {
+        await SearchData("");
+      }
+    } else {
+      if (lot == "") {
+        setLblResult({
+          text: "Please input Lot no.",
+          styled: { color: "red" },
+        });
+        Swal.fire({
+          title: "Error",
+          text: "Please input lot no.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        return;
+      } else {
+        await SearchData("");
+      }
+    }
   };
   const btnSubmitClick = async () => {
+    setLblResult({ text: "", styled: { color: "black" } });
     if (
       txtOperator != "" &&
       resultComboSelected != "" &&
       txtQualified != "" &&
       cbReJustment != ""
     ) {
+      if (resultComboSelected == "------ SELECT ------") {
+        Swal.fire({
+          title: "Error",
+          text: "Please select  reason.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        return;
+      }
+      if (cbReJustment == "------ SELECT ------") {
+        Swal.fire({
+          title: "Error",
+          text: "Please select Re-judgement.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        return;
+      }
+
       Swal.fire({
         title: "Are you confirm submit?",
         text: "Are you sure to submit this data",
@@ -189,25 +262,50 @@ function fn_ReJudgement() {
           text: "Please input operator Code.",
           styled: { color: "red" },
         });
-        Swal.fire("Error", "Please input operator Code.", "error");
+
+        Swal.fire({
+          title: "Error",
+          text: "Please input operator Code.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       } else if (resultComboSelected == "") {
         setLblResult({
           text: "Please select reject code . ",
           styled: { color: "red" },
         });
-        Swal.fire("Error", "Please select reject reason.", "error");
+        Swal.fire({
+          title: "Error",
+          text: "Please select reject reason.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       } else if (txtQualified == "") {
         setLblResult({
           text: "Please input Qualified Code.",
           styled: { color: "red" },
         });
-        Swal.fire("Error", "Please input Qualified Code.", "error");
+        Swal.fire({
+          title: "Error",
+          text: "Please input Qualified Code.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       } else if (cbReJustment == "") {
         setLblResult({
           text: "Please select Re-judgement. ",
           styled: { color: "red" },
         });
-        Swal.fire("Error", "Please select Re-judgement. ", "error");
+        Swal.fire({
+          title: "Error",
+          text: "Please select Re-judgement.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     }
   };
@@ -232,13 +330,11 @@ function fn_ReJudgement() {
     if (rdSelect == "rdPcsno") {
       setTimeout(() => {
         SearchData("submit");
-      }, 1000);
-    }
-    else if (rdSelect == "rdLotNo") {
+      }, 2000);
+    } else if (rdSelect == "rdLotNo") {
       setTimeout(() => {
         SearchData("submitlot");
-      }
-      , 1000);
+      }, 2000);
     }
   }
   async function SearchData(flg) {
@@ -258,9 +354,9 @@ function fn_ReJudgement() {
         }
       }
       return;
-    }else if (flg == "submitlot") {
+    } else if (flg == "submitlot") {
       await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" });
-      return
+      return;
     }
     if (rdSelect == "rdPcsno") {
       for (let i = 0; i < strSerialAll.length; i++) {
@@ -339,7 +435,13 @@ function fn_ReJudgement() {
 
       XLSX.writeFile(wb, filename);
     } else {
-      Swal.fire("Error", "Please select data to export", "error");
+      Swal.fire({
+        title: "Error",
+        text: "Please select data to export",
+        icon: "error",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -435,7 +537,7 @@ function fn_ReJudgement() {
               text: "Data save Complete.",
               icon: "success",
               timer: 1000,
-              timerProgressBar: true,
+              // timerProgressBar: true,
               showConfirmButton: false,
             });
           }
@@ -471,6 +573,7 @@ function fn_ReJudgement() {
     serialState,
     handleExport,
     columns,
+    btnCancelClick
   };
 }
 
