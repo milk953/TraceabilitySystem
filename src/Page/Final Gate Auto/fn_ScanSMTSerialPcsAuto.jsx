@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import {useLoading} from "../../loading/fn_loading";  
 function fn_ScanSMTSerialPcsChrome() {
+  const {showLoading,hideLoading} = useLoading();
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
     value: "",
@@ -830,6 +832,7 @@ function fn_ScanSMTSerialPcsChrome() {
   };
 
   const setSerialDataTray = async () => {
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
     try {
     let dtSerial = getInputSerial();
     let _strLot = lblLot.trim().toUpperCase();
@@ -1647,8 +1650,10 @@ function fn_ScanSMTSerialPcsChrome() {
       }));
     }
     await getInitialSerial();
-    }
+    hideLoading();
+  }
     catch (error) {
+      hideLoading();
       // console.error('An error occurred while fetching serial data:', error);
       Swal.fire({
         title: error,
