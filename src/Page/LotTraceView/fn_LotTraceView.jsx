@@ -114,7 +114,7 @@ function fn_LotTraceView() {
     style: {},
   });
   //   txtRollNo  tr1 tr2 gvMaterial lblTitleShtFront lblTitleShtBack
-  //
+  
   //Focus
   const fc_txtLotNo = useRef(null);
 

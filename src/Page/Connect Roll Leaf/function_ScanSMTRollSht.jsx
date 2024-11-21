@@ -2,7 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import {useLoading} from "../../loading/fn_loading";  
+
 function Fn_ScanSMTRollSht() {
+  const {showLoading,hideLoading} = useLoading();
   const [txt_lotNo, settxt_lotNo] = useState({
     value: "",
     disbled: "",
@@ -617,6 +620,8 @@ function Fn_ScanSMTRollSht() {
   };
 
   const setRollSheetData = async () => {
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
+    try{
     let _strFileError = "";
     let dtSheet = getInputSheet();
     let _bolPrdError = false;
@@ -1064,6 +1069,16 @@ function Fn_ScanSMTRollSht() {
       ExportGridToCSV(dtSheet, columns);
       getInitialSheet();
     }
+    hideLoading();
+  }
+  catch (error) {
+    console.error('An error occurred while fetching serial data:', error);
+    Swal.fire({
+      title: error,
+      icon: "error",
+    });
+    hideLoading();
+  }
   };
 
   const handleTextFieldChange = (index, event) => {
@@ -1078,6 +1093,7 @@ function Fn_ScanSMTRollSht() {
   };
 
   const ibtCancel_Click = () => {
+
     setgvScanResult((prevState) => ({
       ...prevState,
       visible: false,

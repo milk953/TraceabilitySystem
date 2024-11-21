@@ -157,6 +157,7 @@ function fn_ScanSMTPlasmaStopStart() {
     setselProduct(Productdata[0].prd_name);
     SetMode("LOT");
     inputLot.current.focus();
+    setselectedrbt("rbtStop");
   };
 
   const handleChangeProduct = async (value) => {
@@ -346,6 +347,7 @@ function fn_ScanSMTPlasmaStopStart() {
           alert(error);
         });
     } else {
+      setvisiblelog(true);
       setlblLog("Not found serial no. ");
       SetMode("PARTIAL_NG");
     }
@@ -380,7 +382,9 @@ function fn_ScanSMTPlasmaStopStart() {
       settxtPartialNo("");
       setlblPatialNo("");
       setpnlStatus(false);
-      inputPartial.current.focus();
+      setTimeout(() => {
+        inputPartial.current.focus();
+    }, 200);
     } else if (strType === "PARTIAL_OK") {
       settxtPartialDisabled(false);
       settxtPartialNo("");

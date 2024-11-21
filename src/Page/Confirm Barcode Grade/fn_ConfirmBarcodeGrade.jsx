@@ -609,7 +609,12 @@ function fn_ConfirmBarcodeGrade() {
     setdataGvSerial((prevState) => ({ ...prevState, visble: true }));
     setSlProduct((prevState) => ({ ...prevState, value: Product[0].prd_name }));
     settxtLotRef((prevState)=>({...prevState,value:''}))
-    settxtOperator((prevState)=>({...prevState,value:''}))
+    settxtOperator((prevState) => ({
+      ...prevState,
+      value: '',
+      style:'',
+      disbled:false
+    }))
     setlblTotalPcs((prevState)=>({...prevState,value:''}))
     setlblTotalSht((prevState)=>({...prevState,value:''}))
     settxtSideBack((prevState)=>({...prevState,visble:false,value:Array(hfShtScan).fill("")}))
@@ -623,12 +628,13 @@ function fn_ConfirmBarcodeGrade() {
   };
 
   const btnCancel_Click = async () => {
+
     settxtSideFront(Array(hfShtScan).fill(""))
     settxtSideBack((prevState) => ({ ...prevState, visble: true,value:Array(hfShtScan).fill("") }));
     setgvScanResult((prevState)=>({...prevState,visble:false,value:[]}))
     await SetMode("SERIAL");
     setTimeout(() => {
-      fcGvSerial_txtSerial_0[0].current.focus();
+      fcGvBackSide_txtsideback_0.current[0].focus();
     }, 300);
     
     // set
@@ -873,6 +879,7 @@ function fn_ConfirmBarcodeGrade() {
           UPDATE_FLG: "N",
           MACHINE: txtMachineNo.value,
           PRODUCT: SlProduct.value,
+          PLANT_CODE:Fac
         });
       }
     }
@@ -1006,7 +1013,8 @@ function fn_ConfirmBarcodeGrade() {
 
   const setSerialData = async () => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
-    const dtSerial = await getInputSerial();
+    try{
+    let dtSerial = await getInputSerial();
     console.log("dtserial", dtSerial);
     let _strLotData = "";
     let _strLotRefData = "";
@@ -1305,6 +1313,11 @@ function fn_ConfirmBarcodeGrade() {
 
       if (!Check_Master && hfCheckSheetELT == "Y") {
         let _strReturn = "";
+        // dtSerial.strIntSerialLength =hfSerialLength
+        dtSerial=dtSerial.map(item => ({
+          ...item,
+          strIntSerialLength: hfSerialLength,
+        }));
         await axios
         .post("/api/Common/SetSerialRecordTimeTrayTableTest", {
           dataList: dtSerial})
@@ -1655,7 +1668,16 @@ function fn_ConfirmBarcodeGrade() {
       }
     }
     hideLoading();
- 
+  }
+  catch (error) {
+    console.error('An error occurred while fetching serial data:', error);
+    Swal.fire({
+      title: error,
+      icon: "error",
+    });
+    hideLoading();
+  }
+  
   };
 
   const columns = [

@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import {useLoading} from "../../loading/fn_loading";  
 function fn_ScanSMTSerialPcsChrome() {
+  const {showLoading,hideLoading} = useLoading();
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
     value: "",
@@ -830,6 +832,8 @@ function fn_ScanSMTSerialPcsChrome() {
   };
 
   const setSerialDataTray = async () => {
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
+    try {
     let dtSerial = getInputSerial();
     let _strLot = lblLot.trim().toUpperCase();
     let _strPrdName = Sl_Product.value;
@@ -841,7 +845,7 @@ function fn_ScanSMTSerialPcsChrome() {
     let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
 
     if (!_bolTrayError) {
-      for (let i = 0; i < dtSerial.length; i++) {
+      // for (let i = 0; i < dtSerial.length; i++) {
         await axios
           .post("/api/common/GetSerialTestResultManyTable", {
             dataList: [
@@ -849,13 +853,12 @@ function fn_ScanSMTSerialPcsChrome() {
                 strPlantCode: Fac,
                 strPrdname: _strPrdName,
                 strWeekCodeType: hfWeekCodeType,
-                strSerial: dtSerial[i].SERIAL,
               },
             ],
-            dtSerial: dtSerial[i],
+            dtSerial: dtSerial,
           })
           .then((res) => {
-            dtSerial[i] = res.data;
+            dtSerial= res.data;
           });
 
         if (hfCheckWeekCode == "Y") {
@@ -870,7 +873,7 @@ function fn_ScanSMTSerialPcsChrome() {
               setHfWeekCode(res.data);
             });
         }
-      }
+      // }
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         if (dtSerial[drRow].SERIAL != "") {
           let _intCount = 0;
@@ -1516,33 +1519,64 @@ function fn_ScanSMTSerialPcsChrome() {
       }
       let _strErrorUpdate = "";
       if (_strScanResultAll == "OK") {
-        for (let i = 0; i < dtSerial.length; i++) {
-          await axios
-            .post("/api/Common/setseriallottraytable", {
-              dataList: {
-                strPlantCode: Fac,
-                strPrdName: _strPrdName,
-                strLot: _strLot,
-                strUserID: hfUserID,
-                data: [
-                  {
-                    SERIAL: dtSerial[i].SERIAL,
-                    UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                    ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                    REJECT_CODE: dtSerial[i].REJECT_CODE,
-                    TEST_RESULT: dtSerial[i].TEST_RESULT,
-                    REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-                    SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-                    PACKING_NO: dtSerial[i].PACKING_NO,
-                    MASTER_NO: dtSerial[i].MASTER_NO,
-                  },
-                ],
-              },
-            })
-            .then((res) => {
-              _strErrorUpdate = res.data.p_error;
-              console.log("setseriallottraytable", res.data);
-            });
+        // for (let i = 0; i < dtSerial.length; i++) {
+        //   await axios
+        //     .post("/api/Common/setseriallottraytable", {
+        //       dataList: {
+        //         strPlantCode: Fac,
+        //         strPrdName: _strPrdName,
+        //         strLot: _strLot,
+        //         strUserID: hfUserID,
+        //         data: [
+        //           {
+        //             SERIAL: dtSerial[i].SERIAL,
+        //             UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+        //             ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+        //             REJECT_CODE: dtSerial[i].REJECT_CODE,
+        //             TEST_RESULT: dtSerial[i].TEST_RESULT,
+        //             REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
+        //             SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+        //             PACKING_NO: dtSerial[i].PACKING_NO,
+        //             MASTER_NO: dtSerial[i].MASTER_NO,
+        //           },
+        //         ],
+        //       },
+        //     })
+        //     .then((res) => {
+        //       _strErrorUpdate = res.data.p_error;
+        //       console.log("setseriallottraytable", res.data);
+        //     });
+        // }
+        const promises = dtSerial.map(item => 
+          axios.post("/api/Common/setseriallottraytable", {
+            dataList: {
+              strPlantCode: Fac,
+              strPrdName: _strPrdName,
+              strLot: _strLot,
+              strUserID: hfUserID,
+              data: [{
+                SERIAL: item.SERIAL,
+                UPDATE_FLG: item.UPDATE_FLG,
+                ROW_UPDATE: item.ROW_UPDATE,
+                REJECT_CODE: item.REJECT_CODE,
+                TEST_RESULT: item.TEST_RESULT,
+                REMARK_UPDATE: item.REMARK_UPDATE,
+                SCAN_RESULT: item.SCAN_RESULT,
+                PACKING_NO: item.PACKING_NO,
+                MASTER_NO: item.MASTER_NO,
+              }],
+            },
+          })
+        );
+        
+        try {
+          const responses = await Promise.all(promises);
+          responses.forEach(res => {
+            _strErrorUpdate = res.data.p_error;
+            // console.log("setseriallottraytable", res.data);
+          });
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาดในการส่งข้อมูล", error);
         }
         if (_strErrorUpdate != "") {
           setlblResult((prevState) => ({
@@ -1616,6 +1650,16 @@ function fn_ScanSMTSerialPcsChrome() {
       }));
     }
     await getInitialSerial();
+    hideLoading();
+  }
+    catch (error) {
+      hideLoading();
+      // console.error('An error occurred while fetching serial data:', error);
+      Swal.fire({
+        title: error,
+        icon: "error",
+      });
+    }
   };
 
   const columns = [
