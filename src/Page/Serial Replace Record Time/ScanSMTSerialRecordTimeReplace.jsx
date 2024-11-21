@@ -102,6 +102,7 @@ function ScanSMTSerialRecordTimeReplace() {
                             onChange={(e, value) =>
                               ddlProduct_SelectedIndexChanged(value)
                             }
+                            
                             options={ddlProduct.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField

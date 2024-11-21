@@ -396,6 +396,9 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     await getProductSerialMaster(selectvalue);
+    setTimeout(() => {
+      fntxtSerialRefer.current.focus();
+    }, 300);
 
   };
   const getInputSerial = async () => {
@@ -479,8 +482,10 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       .then((res) => {
         setlblResult((prevState) => ({...prevState,value: "Data record time save complete.", style: { paddingTop: "6px", color: "blue",fontWeight:'bold' }}));
         setTimeout(() => {
-            // txtSerialRefer.current.focus();
+            txtSerialRefer.current.focus();
           }, 300);
+          setgvSerialReplace([])
+        setpnlgvSerialReplace(false)
         
       });
     }
