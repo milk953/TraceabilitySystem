@@ -726,7 +726,7 @@ function fn_ScanSMTSerialPcsChrome() {
   };
 
   const ibtPackingBack_Click = async () => {
-    setgvScanResult((prevState) => ({
+        setgvScanResult((prevState) => ({
       ...prevState,
       visble: false,
       value: '',
