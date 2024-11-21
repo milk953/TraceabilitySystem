@@ -229,13 +229,14 @@ function ScanSMTSerialXrayConfirm() {
                                   "index + 1 : ",
                                   index + 1
                                 );
-                                if (
-                                  event.key === "Enter" &&
-                                  txtSerial[index] !== "" &&
-                                  txtSerial[index] !== null &&
-                                  txtSerial[index] !== undefined
-                                ) {
-                                  if (txtTotalPCS.value == index + 1) {
+                                if (event.key === "Enter") {
+                                  if (
+                                    txtTotalPCS.value == index + 1 
+                                  ) {
+                                    // &&
+                                    // txtSerial[index] !== "" &&
+                                    // txtSerial[index] !== null &&
+                                    // txtSerial[index] !== undefined
                                     btnSave_Click();
                                   } else {
                                     handleSerialChange(index, event);

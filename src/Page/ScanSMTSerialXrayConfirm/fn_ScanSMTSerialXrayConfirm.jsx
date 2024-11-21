@@ -136,7 +136,7 @@ function fn_ScanSMTSerialXrayConfirm() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim();
     setTxtSerial(newValues);
     if (event.key === "Enter") {
       fnSetFocus(`gvSerial_txtSerial_${index + 1}`);
@@ -186,11 +186,12 @@ function fn_ScanSMTSerialXrayConfirm() {
   };
 
   const btnSave_Click = async () => {
+    console.log("txtSerialtxtSerialtxtSerialtxtSerial",txtSerial)
     let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
       if (Array.isArray(txtSerial)) {
-        const Value = txtSerial.some((item) => item.trim() !== "");
+        const Value = txtSerial.some((item) => item !== "");
         CheckValue = Value;
       }
       if (txtSerial !== "" && CheckValue !== false) {
