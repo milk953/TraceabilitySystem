@@ -8,6 +8,7 @@ import { useLoading } from "../../loading/fn_loading";
 function fn_ScanSMTConnectRollConfirm() {
   const { showLoading, hideLoading } = useLoading();
   const hfUserFactory = "";
+  const [showSheetNo, setShowSheetNo] = useState("");
   const [hfFlowID, setHfFlowID] = useState("0016");
   const [hfSerialCount, setHfSerialCount] = useState("");
   const [hfAutoScan, setHfAutoScan] = useState("");
@@ -152,6 +153,7 @@ function fn_ScanSMTConnectRollConfirm() {
       value: [],
       visble: false,
     }));
+    setShowSheetNo("");
     const newValues = [];
     setTxtSerial(newValues);
     setLblShtCount("");
@@ -172,9 +174,10 @@ function fn_ScanSMTConnectRollConfirm() {
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึก กรุณารอสักครู่...");
       if (Array.isArray(txtSerial)) {
-      const Value = txtSerial.some((item) => item.trim() !== "");
-      CheckValue = Value;
-    }
+        const Value = txtSerial.some((item) => item.trim() !== "");
+        CheckValue = Value;
+      }
+      setShowSheetNo(txtSerial[0]);
       if (txtSerial !== "" && CheckValue !== false) {
         await setSerialData();
         const newValues = [];
@@ -939,6 +942,7 @@ function fn_ScanSMTConnectRollConfirm() {
     btnSave_Click,
     columns,
     lblRemark,
+    showSheetNo,
   };
 }
 
