@@ -120,7 +120,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       await GetProductData();
     };
     fetchData();
-    getProductSerialMaster();
+   
     settxtSerialRefer((prevState) => ({...prevState,value: "",disbled: false,}));
     settxtSerialReplace((prevState) => ({
       ...prevState,
@@ -138,7 +138,8 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   const GetProductData = async () => {
     await axios.get("/api/Common/GetProductData").then(async (res) => {
       let data = res.data.flat();
-      setddlProduct(data);
+      setddlProduct(data); 
+      getProductSerialMaster(data[0].prd_name);
       setselectddlProduct((prevState) => ({
         ...prevState,
         value: data[0].prd_name,
@@ -146,6 +147,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     });
   };
   const getProductSerialMaster = async (PrdName) => {
+    console.log(PrdName,"PrdName")
     let dtProductSerial = [];
     setHfSerialLength("0");
     setHfSerialFixFlag("N");
@@ -206,6 +208,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
+        console.log(res.data[0],"RESDATA : ")
         if (dtProductSerial != null) {
           setHfSerialLength(dtProductSerial.slm_serial_length);
           setHfSerialFixFlag(dtProductSerial.slm_fix_flag);
@@ -263,14 +266,16 @@ function fn_ScanSMTSerialRecordTimeReplace() {
           setHfCheckFinInspect(dtProductSerial.prm_fin_gate_inspect_flg);
           setHfCheckFinInspectProc(dtProductSerial.prm_fin_gate_inspect_proc);
           setHfSerialCountOriginal(dtProductSerial.slm_serial_count);  
-       
+       console.log(dtProductSerial,"dtProductSerial")
         }
 
       });
      
     return 0;
   };
+
   const txtSerialNo_TextChanged = async () => {
+    console.log("OK",txtSerialRefer.value,hfSerialLength)
     setlblGroup((prevState) => ({ ...prevState, value: "" }));
     setlblStartTime((prevState) => ({ ...prevState, value: "" }));
     sethfMaxSeq("0");
@@ -293,7 +298,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   };
   const Search_Data = async () => {
     let DBOpenFlg = false;
-    let _strLotNo = txtSerialReplace.value.trim().toUpperCase();
+    // let _strLotNo = txtSerialReplace.value.trim().toUpperCase();
     // let _strSerialAll=input.trim().toUpperCase().replace(/\r\n/g, ',').split(',');
     let sbSql = [];
 
@@ -301,7 +306,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       .post("/api/SearchDataRecord", {
         dataList: {
           strPlantCode: FAC,
-          strSheetNo: txtSerialRefer.value,
+          strSheetNo: txtSerialReplace.value.trim().toUpperCase(),
         },
       })
       .then((res) => {
@@ -323,30 +328,37 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   const txtSerialReplace_TextChanged = async () => {
     let _strSerial = txtSerialReplace.value.trim().toUpperCase();
     let _strRemark = "";
-   
+   console.log(_strSerial.length,"มีค่า",parseInt(hfSerialLength, 10),hfSerialLength)
     if (_strSerial.length == parseInt(hfSerialLength, 10)) {
    console.log("เข้า")
       let _strFixDigit = "";
       console.log(hfSerialFixFlag,"hfSerialFixFlag")
       if (hfSerialFixFlag == "Y") {
-       
         const startDigit = parseInt(hfSerialStartDigit, 10);
         const endDigit = parseInt(hfSerialEndDigit, 10);
         _strFixDigit = _strSerial.substring(startDigit - 1, endDigit);
+        console.log(_strFixDigit,"_strFixDigit",hfSerialDigit)
         if (_strFixDigit !== hfSerialDigit) {
+          console.log(_strFixDigit,"_strFixDigit1111",hfSerialDigit)
           _strRemark = "Serial barcode mix product";
         }
+        console.log(hfConfigCheck,"////",_strRemark)
         if (hfConfigCheck == "Y" && _strRemark == "") {
+         
           let _strConfigDigit = "";
           const startConfig = parseInt(hfConfigStart, 10);
           const endConfig = parseInt(hfConfigEnd, 10);
           _strConfigDigit = _strSerial.substring(startConfig - 1, endConfig);
+          console.log(_strConfigDigit,"เข้าจ้า",_strConfigDigit,hfConfigCode)
           if (_strConfigDigit !== hfConfigCode) {
+            console.log("เข้ามาทำไมคะ")
             _strRemark = "Serial barcode mix product";
           }
         }
+        console.log(hfSerialStartCode,"HHHH",_strRemark,_strSerial)
         if (hfSerialStartCode.trim() !== "" && _strRemark == "") {
-          if ( _strSerial.substring(0, hfSerialStartCode) !== hfSerialStartCode) {
+          console.log(_strSerial.substring(0, hfSerialStartCode.length),"HHHH333",hfSerialStartCode)
+          if ( _strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
             _strRemark = "Serial barcode mix product";
           }
         }
@@ -448,6 +460,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   const BtnSubmit1_Click = async () => {
     let dtData = await getUpdateSerial() ;
     for(let drRow = 0; drRow < dtData.length;drRow++){
+      console.log(dtData[drRow].SERIAL_NO,"SERIAL")
       await axios
       .post("/api/SetInsert_SerialConfirm", 
         {

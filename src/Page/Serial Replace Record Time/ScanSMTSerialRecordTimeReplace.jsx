@@ -105,7 +105,7 @@ function ScanSMTSerialRecordTimeReplace() {
                             options={ddlProduct.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
-                              //   inputRef={(el) => (fnddlProduct.current = el)}
+                               // inputRef={(el) => (fnddlProduct.current = el)}
                                 {...params}
                               size="small"
                               sx={{ textAlign: "left" }}
@@ -120,7 +120,6 @@ function ScanSMTSerialRecordTimeReplace() {
                       <Typography>Reference Serial No.:</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      {console.log(txtSerialRefer.disbled,"DIASBLE",fntxtSerialReplace.disbled)}
                       <TextField
                         size="small"
                         
@@ -213,7 +212,6 @@ function ScanSMTSerialRecordTimeReplace() {
                 </TableHead>
                 <TableBody>
                   {/* <TableRow> */}
-                  {console.log(gvSerialReplace,"gvSerialReplace")}
                   {Array.from(
                         { length: gvSerialReplace.length },
                         (_, index) => (
