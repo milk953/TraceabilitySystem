@@ -1318,12 +1318,12 @@ function fn_ConfirmBarcodeGrade() {
           ...item,
           strIntSerialLength: hfSerialLength,
         }));
-        await axios
-        .post("/api/Common/SetSerialRecordTimeTrayTableTest", {
-          dataList: dtSerial})
-          .then((res) => {
-            console.log('test2222',res.data)
-          })
+        // await axios
+        // .post("/api/Common/SetSerialRecordTimeTrayTableTest", {
+        //   dataList: dtSerial})
+        //   .then((res) => {
+        //     console.log('test2222',res.data)
+        //   })
         for (let i = 0; i < dtSerial.length; i++) {
           await axios
             .post("/api/Common/setseriallotshtelttable", {

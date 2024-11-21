@@ -875,7 +875,7 @@ function fn_ScanSMTSerialPcsChrome() {
   const setSerialDataTray = async () => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     try{
-    let dtSerial = getInputSerial();
+    let data = getInputSerial();
     let _strLot = lblLot.trim().toUpperCase();
     let _strPrdName = Sl_Product.value;
     let _strTray;
@@ -885,8 +885,10 @@ function fn_ScanSMTSerialPcsChrome() {
     let _intRowSerial = 0;
     let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
     let datHfWeekCode=''
+    let dtSerial=[]
     if (!_bolTrayError) {
       // for (let i = 0; i < dtSerial.length; i++) {
+        console.log("GetSerialTestResultManyTable97", data);
         await axios
           .post("/api/common/GetSerialTestResultManyTable", {
             dataList: [
@@ -897,11 +899,15 @@ function fn_ScanSMTSerialPcsChrome() {
                 // strSerial: '',
               },
             ],
-            dtSerial: dtSerial,
+            dtSerial: data,
           })
           .then((res) => {
-            dtSerial= res.data;
-            console.log("GetSerialTestResultManyTable99", res.data);
+           
+           
+            dtSerial.push(res.data) 
+            console.log("GetSerialTestResultManyTable98", dtSerial);
+            dtSerial = dtSerial.flat(); 
+            console.log("GetSerialTestResultManyTable99",  dtSerial);
           });
       // }
       if (hfCheckWeekCode == "Y") {
@@ -927,7 +933,7 @@ function fn_ScanSMTSerialPcsChrome() {
           let _strRemark = "";
           let _strError = "";
           let _strSerial = (dtSerial[drRow].SERIAL !== undefined && dtSerial[drRow].SERIAL !== null) ? dtSerial[drRow].SERIAL : '';
-          console.log
+          // console.log
           let _dtSerialAll;
           let _bolScanDouble = false;
           let _bolScanDuplicate = false;
