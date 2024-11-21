@@ -72,7 +72,7 @@ function ScanSMTConnectRollConfirm() {
                 <TableHead>
                   <TableCell colSpan={4} align="center">
                     <Typography variant="h6">
-                      Confirm Connect Roll&Leaf
+                    Confirm Roll Leaf
                     </Typography>
                   </TableCell>
                 </TableHead>
