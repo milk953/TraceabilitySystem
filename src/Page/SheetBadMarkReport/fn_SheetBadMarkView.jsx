@@ -23,7 +23,7 @@ function fn_SheetBadMarkView() {
     if (type === "fnLotSheetBadmarkData") {
       let dtData = [];
       await axios
-        .post("/api/SheetBadmarkReport/fnLotSheetBadmarkData", {
+        .post("/api/SheetBadmarkReport/s", {
           dataList: {
             strPlantCode: Fac,
             strLotNo: params.lot,

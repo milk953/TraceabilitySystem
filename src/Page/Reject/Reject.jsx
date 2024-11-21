@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Hearder from "../Header/Header";
+import "../Common/StyleCommon.css";
 import "./Reject.css";
 // import "../Common/StyleCommon.css";
 import { fn_Reject } from "./fn_Reject";
-import Checkbox from "@mui/material/Checkbox";
 import { Table as AntTable, Select, Button, Avatar } from "antd";
 import excel from "/src/assets/excel.png";
 import {
-  TextField,
   Table,
   TableBody,
   TableCell,
@@ -42,6 +41,7 @@ function Reject() {
     txtOperator,
     handleSubmit_Click,
     columns,
+    handleBtnCancel_Click,
   } = fn_Reject();
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -56,15 +56,15 @@ function Reject() {
         <Table className="RejectTableFirst" component={Paper}>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={4} align="center">
-                Rejcet
+              <TableCell colSpan={4} align="center" >
+                Reject
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell sx={{ width: "130px" }}>Piece No. 1,2,3,...</TableCell>
-              <TableCell sx={{ width: "30px" }}>
+              <TableCell sx={{ width: "130px" ,textAlign:'right'}}>Piece No. 1,2,3,...</TableCell>
+              <TableCell sx={{ width: "30px", }}>
                 <Radio
                   checked={rdSelect === "rdPcsno"}
                   onChange={handleRDChange}
@@ -85,11 +85,6 @@ function Reject() {
                   value={txtSerialno}
                   onChange={(e) => setTxtSerialno(e.target.value)}
                   id="txtPieceNoReject"
-                  // onKeyDown={(e) => {
-                  //   if (e.key === "Enter") {
-                  //     txtSerialnoChange();
-                  //   }
-                  // }}
                 ></textarea>
               </TableCell>
               <TableCell
@@ -103,10 +98,17 @@ function Reject() {
                 >
                   Search
                 </Button>
+                <Button
+                  type="primary"
+                  style={{ width: "95px", background: "red" }}
+                  onClick={handleBtnCancel_Click}
+                >
+                  Cancel
+                </Button>
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell sx={{ textAlign: "center" }}>Lot No.</TableCell>
+              <TableCell sx={{ textAlign: "right" }}>Lot No.</TableCell>
               <TableCell>
                 <Radio
                   checked={rdSelect === "rdLotNo"}
@@ -141,19 +143,13 @@ function Reject() {
       <br></br>
       <div className="DRejectTableSecond">
         <Table className="RejectTableSecond" component={Paper}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Reason</TableCell>
-              <TableCell>Operator</TableCell>
-              <TableCell colSpan={2}></TableCell>
-            </TableRow>
-          </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>
+            <TableRow >
+              <TableCell sx={{ textAlign: "right" }}>Reason :</TableCell>
+              <TableCell >
                 <Select
                   style={{
-                    width: 380,
+                    width: 300,
                     textAlign: "left",
                     padding: "0px 5px 0px 0px",
                   }}
@@ -168,18 +164,19 @@ function Reject() {
                         option.rejcet_code === "DELETE"
                           ? "DELETE"
                           : option.rejcet_code === " "
-                          ? ""
+                          ? "----- SELECT-----"
                           : `${option.rejcet_code} : ${option.rejcet_name}`,
                     })) || []
                   }
                 ></Select>
               </TableCell>
-              <TableCell sx={{ width: "100px" }}>
+              <TableCell sx={{ textAlign: "right" }}>Operator :</TableCell>
+              <TableCell sx={{ width: "200px" }}>
                 <input
                   value={txtOperator}
                   onChange={(e) => setTxtOperator(e.target.value)}
                   style={{
-                    width: "100px",
+                    width: "200px",
                     border: "1px solid black",
                     margin: "0px",
                   }}
@@ -187,15 +184,20 @@ function Reject() {
                   size="20"
                 />
               </TableCell>
-              <TableCell sx={{ width: "100px" }}>
+            </TableRow>
+            <TableRow>
+              <TableCell sx={{ textAlign: "center" }} colSpan={4}>
                 <Button
-                  style={{ backgroundColor: "green",width:"90px",color:"white" }}
+                  style={{
+                    backgroundColor: "green",
+                    width: "90px",
+                    color: "white",
+                  }}
                   onClick={handleSubmit_Click}
                 >
                   Submit
                 </Button>
-              </TableCell>
-              <TableCell sx={{ width: "100px" }}>
+                &nbsp;
                 <Button
                   icon={<Avatar shape="square" src={excel} size="small" />}
                   onClick={handleExport}

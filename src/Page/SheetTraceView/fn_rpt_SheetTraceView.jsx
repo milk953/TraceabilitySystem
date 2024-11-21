@@ -90,6 +90,7 @@ function fn_rpt_SheetTraceView() {
     const [hypLotNoUrl ,sethypLotNoUrl]=useState('')
     // ENV import.meta.env.
     
+    const fntxtSheetNo =useRef([])
     
     const SERIAL_DATABASE_SWITCH =import.meta.env.VITE_SERIAL_DATABASE_SWITCH 
     const FAC = import.meta.env.VITE_FAC
@@ -103,6 +104,9 @@ function fn_rpt_SheetTraceView() {
             // btnRetrive1(SHEETNO)
             ViewData(SHEETNO)
         }
+        setTimeout(() => {
+            fntxtSheetNo.current.focus();
+          }, 300);
       }, []);
 
       useEffect(() => {
@@ -115,6 +119,7 @@ function fn_rpt_SheetTraceView() {
       
 
     const Clear_View = () =>{
+       
         setbtnSPI((prevState) => ({...prevState,value: " ",style:{}}));
         settxtSPICnt("");
         settxtSPITime("");
@@ -219,6 +224,7 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
+                console.log(res.data,"DATA1")
             });
             if (dt && dt.length > 0) {
                 if ( dt[0].lss_lot_no !== null) { 
@@ -227,8 +233,9 @@ function fn_rpt_SheetTraceView() {
                   Product = dt[0].lss_product_name
                   sethypLotNo(dt[0].lss_lot_no);
                   //   hypLotNo.href = "./rpt_LotTraceView.aspx?LOT=" + dt[0].Item0;
-          
+                  console.log(dt[0].lss_machine_no,"OK",dt[0].lss_machine_no)
                   if (dt[0].lss_machine_no && dt[0].lss_machine_no.trim() !== "") {
+                  
                     setlblTitleMachine((prevState) => ({...prevState,value: "",visible:false}));
                     setlblShtMachine((prevState) => ({...prevState,value: dt[0].lss_machine_no.trim(),visible:false}));
                   }
@@ -243,9 +250,11 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
+                console.log(res.data,"GetProductSheet")
               
             });
             if(dt != ""){
+                console.log(dt,"dt444",dt[0].shn_product_name)
                 if(dt[0].shn_product_name !== null){
                     settxtProduct(dt[0].shn_product_name)
                     console.log(dt[0].shn_product_name,"dt[0].lss_product_name1")
@@ -835,9 +844,10 @@ function fn_rpt_SheetTraceView() {
     }
     const btnClear =() =>{
         Clear_View();
+        settxtSheetNo("")
     }
     const btnRetrive =() =>{
-        Clear_View()
+        // Clear_View()
         sethypLotNo("");
         sethypLotNoUrl("")
         ViewData(txtSheetNo)
@@ -849,7 +859,7 @@ function fn_rpt_SheetTraceView() {
         setselectddlCavity(dropdawn)
         if(txtSheetNo.trim() !== "")
         {    
-            Clear_View()
+            // Clear_View()
             if(dropdawn > 0){
                 ViewDataPcs(txtSheetNo);
             }else{
@@ -1449,7 +1459,7 @@ function fn_rpt_SheetTraceView() {
     btnAOI,txtAOICnt,txtAOITime,txtAOIMachine,btnXRay,txtXRayCnt,txtXRayTime,txtXRayMachine,
     btnAOICOA,txtAOICOACnt,txtAOICOATime,txtAOICOAMachine,btnSMTInt,txtSMTIntCnt,txtSMTIntTime,txtSMTIntMachine,tblData1,
     btnAllLInk,ddlCavity_SelectedIndexChanged,
-    lblCavity,txtAOIEFPCMachine,columnstblData1,
+    lblCavity,txtAOIEFPCMachine,columnstblData1,fntxtSheetNo
 
     // onClick={() => btnAllLInk('AOI')}
 

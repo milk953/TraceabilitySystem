@@ -42,13 +42,12 @@ const{
     btnPre,TxtPreCnt,txtPreTime,txtPreMachine,btnReflow,txtReflowCnt,txtReflowTime,txtReflowMachine,
     btnAOI,txtAOICnt,txtAOITime,txtAOIMachine,btnXRay,txtXRayCnt,txtXRayTime,txtXRayMachine,
     btnAOICOA,txtAOICOACnt,txtAOICOATime,txtAOICOAMachine,btnSMTInt,txtSMTIntCnt,txtSMTIntTime,txtSMTIntMachine,tblData1,
-    btnAllLInk,ddlCavity_SelectedIndexChanged,lblCavity,
+    btnAllLInk,ddlCavity_SelectedIndexChanged,lblCavity,fntxtSheetNo,
     txtAOIEFPCMachine,columnstblData1
 }=fn_rpt_SheetTraceView();
     return (
         <div>
             <Header />
-            <h1>View Trace (Piece)</h1>
             <Card
                 component={Paper}
                 className="Card-Common"
@@ -86,21 +85,22 @@ const{
                                             size="small"
                                             sx={{ width: "123%" }}
                                         // inputRef={(el) => (inputShtNo.current = el)}
+                                        inputRef={(el) => (fntxtSheetNo.current = el)}
                                         value={txtSheetNo}
                                         onChange={(e) => {
                                             settxtSheetNo(e.target.value);
                                         }}
-                                        // onBlur={() => {
-                                        //     if (txtSheetNo !== "") {
-                                        //         btnShtDeleteClick();
-                                        //     }
-                                        // }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                btnRetrive();
+                                            }
+                                          }}
                                         />
                                     </TableCell>
                                     <TableCell align="center">
                                         <Button
                                             variant="contained"
-                                            sx={{ width: "20%" }}
+                                            sx={{ width: "30%" }}
                                         onClick={btnRetrive}
                                         >
                                             Retrive
@@ -116,30 +116,7 @@ const{
                                         </Button>
                                     </TableCell>
                                 </TableRow>
-                                {/* <TableRow>
-                                    <TableCell align="right" colSpan={4}>
-                                        <Typography>
-                                            Piece Chip :
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <TextField
-                                            // className="TxtField"
-                                            size="small"
-                                            sx={{ width: "123%" }}
-                                        // inputRef={(el) => (inputShtNo.current = el)}
-                                        // value={txtSheetNo}
-                                        // onChange={(e) => {
-                                        //     settxtSheetNo(e.target.value);
-                                        // }}
-                                        // onBlur={() => {
-                                        //     if (txtSheetNo !== "") {
-                                        //         btnShtDeleteClick();
-                                        //     }
-                                        // }}
-                                        />
-                                    </TableCell>
-                                </TableRow> */}
+                             
                             </TableBody>
                         </Table>
                     </div>
@@ -159,7 +136,7 @@ const{
                                         <TextField
                                             className="input_txt"
                                             size="small"
-                                            style={{ width: "194px" }}
+                                            style={{ width: "194px" ,backgroundColor:'#e0e0e0'}}
                                             value={txtProduct}
                                             onChange={(e) => {
                                                 settxtProduct(e.target.value);

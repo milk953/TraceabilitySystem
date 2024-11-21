@@ -3,7 +3,6 @@ import axios from "axios";
 import { Checkbox } from "antd";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
-import { breadcrumbsClasses } from "@mui/material";
 function fn_Reject() {
   //visible state
   const [pnlTouchupState, setPnlTouchupState] = useState(false);
@@ -14,7 +13,7 @@ function fn_Reject() {
   const [txtSerialno, setTxtSerialno] = useState("");
   const [lot, setLot] = useState("");
   const [dtDataSearch, setDtDataSearch] = useState([]);
-  const [cbSelected, setCbSelected] = useState("");
+  const [cbSelected, setCbSelected] = useState("------SELECT------");
   const [ip, setIp] = useState("");
   const [Fac, setFac] = useState("");
   const [txtOperator, setTxtOperator] = useState("");
@@ -151,7 +150,20 @@ function fn_Reject() {
       setSelectedRows(selectedRowKeys);
     },
   };
-
+  const handleBtnCancel_Click = () => {
+    setDtDataSearch([]);
+    setPnlTableDisplaySatate(false);
+    setLblResult({ text: "", styled: { color: "black" } });
+    setTxtOperator("");
+    setCbSelected("------SELECT------");
+    if (rdSelect == "rdLotNo") {
+      setLot("");
+      SetFocus("txtLotnoReject");
+    } else {
+      setTxtSerialno("");
+      SetFocus("txtPieceNoReject");
+    }
+  };
   const handleExport = async () => {
     console.log(selectedRows);
     const filteredData = dtDataSearch.filter((item) =>
@@ -198,7 +210,13 @@ function fn_Reject() {
 
       XLSX.writeFile(wb, filename);
     } else {
-      Swal.fire("Error", "Please select data to export", "error");
+      Swal.fire({
+        title: "Error",
+        text: "Please select data to export",
+        icon: "error",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     }
   };
   const handleRetrice_Click = async () => {
@@ -206,14 +224,25 @@ function fn_Reject() {
   };
   const handleSubmit_Click = async () => {
     // Swal  confirm btn
+    if (cbSelected == " " || cbSelected == "" || cbSelected == '------SELECT------') {
+      Swal.fire({
+        title: "Error",
+        text: "Please select reason ",
+        icon: "error",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      return;
+    }
     if (txtOperator != "" && cbSelected != "") {
       Swal.fire({
         title: "Are you confirm submit?",
         text: "Are you sure to submit this data",
         icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
+        showCancelButton: false,
+        confirmButtonText: "No",
         cancelButtonText: "No",
+        timer: 2000,
       }).then((result) => {
         if (result.isConfirmed) {
           SubmitData();
@@ -225,13 +254,25 @@ function fn_Reject() {
           text: "Please input operator Code . ",
           styled: { color: "red" },
         });
-        Swal.fire("Error", "Please input operator Code . ", "error");
+        Swal.fire({
+          title: "Error",
+          text: "Please input operator Code . ",
+          icon: "error",
+          timer: 2000,
+          showConfirmButton: false,
+        });
       } else if (cbSelected == "") {
         setLblResult({
           text: "Please select reject code . ",
           styled: { color: "red" },
         });
-        Swal.fire("Error", "Please select reject code . ", "error");
+        Swal.fire({
+          title: "Error",
+          text: "Please select reason ",
+          icon: "error",
+          timer: 2000,
+          showConfirmButton: false,
+        });
       }
     }
   };
@@ -271,7 +312,13 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
-          Swal.fire("Error", error.message, "error");
+          Swal.fire({
+            title: "Error",
+            text: error.message,
+            icon: "error",
+            timer: 2000,
+            showConfirmButton: false
+          });
         });
     } else if (Select == "GetSearchbySerialno") {
       await axios
@@ -306,7 +353,14 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
-          Swal.fire("Error", error.message, "error");
+
+          Swal.fire({
+            title: "Error",
+            text: error.message,
+            icon: "error",
+            timer: 2000,
+            showConfirmButton: false
+          });
         });
     } else if (Select == "GetSearchbyLot") {
       await axios
@@ -330,7 +384,13 @@ function fn_Reject() {
               styled: { color: "black" },
             });
           } else if (response.status == 404) {
-            Swal.fire("Not Found Data", "Please input lot again !", "error");
+            Swal.fire({
+              title: "Not Found Data",
+              text: "Please input lot again !",
+              icon: "error",
+              timer: 2000,
+              showConfirmButton: false
+            });
           }
         })
 
@@ -339,7 +399,13 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
-          Swal.fire("Error", error.message, "error");
+          Swal.fire({
+            title: "Error",
+            text: error.message,
+            icon: "error",
+            timer: 2000,
+            showConfirmButton: false
+          });
         });
     } else if (Select == "SetSubmitData") {
       console.log(params);
@@ -370,12 +436,16 @@ function fn_Reject() {
                 text: "Data Delete Complete..",
                 styled: { color: "black" },
               });
-              Swal.fire("Success", "Data Delete Complete.", "success").then(
-                (result) => {
-                  if (result.isConfirmed) {
-                  }
-                }
-              );
+              Swal.fire({
+                title: "Success",
+                text:  "Data Delete Complete.",
+                icon: "success",
+                timer: 2000,
+                showConfirmButton: false
+              });
+              setTimeout(() => {
+                SearchData("submit", lot);
+              }, 500);
             } else {
               setLblResult({
                 text: "Data save Complete.",
@@ -384,16 +454,6 @@ function fn_Reject() {
               setTimeout(() => {
                 SearchData("submit", lot);
               }, 500);
-              // Swal.fire("Success", "Data Read Complete", "success").then(
-              //   (result) => {
-              //     if (result.isConfirmed) {
-              //       // setDtDataSearch([]);
-              //       if (rdSelect != "rdPcsno") {
-              //         SearchData("submit", lot);
-              //       }
-              //     }
-              //   }
-              // );
             }
           }
         })
@@ -533,6 +593,7 @@ function fn_Reject() {
     txtOperator,
     handleSubmit_Click,
     columns,
+    handleBtnCancel_Click,
   };
 }
 
