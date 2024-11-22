@@ -13,8 +13,8 @@ import excel from "/src/assets/excel.png";
 import { fn_Material_Trace } from "./fn_Material_Trace.jsx";
 
 function LotTraceView() {
-  const { tblData1, txtLotNo, columnstblData1,ViewData,loading  } = fn_Material_Trace();
-
+  const { tblData1, txtLotNo, columnstblData1,ViewData,loading ,settxtLotNo ,Clear} = fn_Material_Trace();
+console.log(loading,'loaddd')
   return (
     <>
       <Hearder />
@@ -25,7 +25,14 @@ function LotTraceView() {
           placeholder="Vendor Lot NO :"
           style={{ width: "250px" }}
           value={txtLotNo}
-
+          onChange={(e) => {
+            settxtLotNo(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              ViewData(e.target.value)
+            }
+          }}
         />{" "}
                  <Button
           type="primary"
@@ -35,7 +42,14 @@ function LotTraceView() {
           disabled={loading ? true : false}
         >
           Retrive
-        </Button>
+        </Button>                    <Button
+          type="primary"
+          danger
+          icon={<UndoOutlined />}
+          onClick={() => Clear()}
+        >
+          Clear
+        </Button>  
 
         <br />
         

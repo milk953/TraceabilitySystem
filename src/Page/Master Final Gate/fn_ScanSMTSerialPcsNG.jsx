@@ -812,23 +812,30 @@ function fn_ScanSMTSerialPcsNG() {
         if (hfCheckWeekCode == "Y") {
           hfWeekCode = await getData("GetWeekCodebyLot", { strLot: _strLot });
         }
-        for (let x = 0; x < dtSerial.length; x++) {
-          dtSerial[x] = await getData("GetSerialManyTable", {
-            dtSerial: dtSerial[x],
-            strPlantCode: Fac,
-            strPrdname: _strPrdName,
-            strWeekCodeType: "U",
-            strSerial: dtSerial[x].SERIAL,
-          });
-        }
+        // for (let x = 0; x < dtSerial.length; x++) {
+          // dtSerial[x] = await getData("GetSerialManyTable", {
+          //   dtSerial: dtSerial[x],
+          //   strPlantCode: Fac,
+          //   strPrdname: _strPrdName,
+          //   strWeekCodeType: "U",
+          //   strSerial: dtSerial[x].SERIAL,
+          // });
+          console.log(dtSerial,'dtSerialbefore');
+          let dtResponse = await getData("GetSerialManyTable", {
+            dataList: [
+              {
+                strPlantCode: Fac,
+                strPrdname: _strPrdName,
+                strWeekCodeType: hfWeekCodeType,
+                // strSerial: '',
+              },
+            ],
+            dtSerial: dtSerial,
+          })
+          dtSerial = dtResponse.length ? [...dtResponse] : [];
+          console.log(dtSerial,'dtSerialafter');
+        // }
         for (let i = 0; i < dtSerial.length; i++) {
-          dtSerial[i] = await getData("GetSerialManyTable", {
-            dtSerial: dtSerial[i],
-            strPlantCode: Fac,
-            strPrdname: _strPrdName,
-            strWeekCodeType: "U",
-            strSerial: dtSerial[i].SERIAL,
-          });
           if (dtSerial[i].SERIAL != "") {
             let _intCount = 0;
             let _intCountOK = 0;
@@ -1451,11 +1458,11 @@ function fn_ScanSMTSerialPcsNG() {
               ) {
                 dtSerial[insertDt].REMARK = "duplicate serial";
               }
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: `Error : ${_strErrorUpdate}`,
-              });
+              // Swal.fire({
+              //   icon: "error",
+              //   title: "Error",
+              //   text: `Error : ${_strErrorUpdate}`,
+              // });
             }
           }
         }
