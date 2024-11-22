@@ -114,7 +114,7 @@ function ScanSMTRoollSht() {
                             handleLotxt_Lotno();
                           }
                         }}
-                        onBlur={handleLotxt_Lotno}
+                        // onBlur={handleLotxt_Lotno}
                       ></TextField>
                     </TableCell>
                     <TableCell>
@@ -191,7 +191,7 @@ function ScanSMTRoollSht() {
                           settxtOperator(e.target.value);
                           console.log(e.target.value,'txtoper');
                       }}
-                      onBlur={(e) => txtOperator_TextChanged(e.target.value)}
+                      // onBlur={(e) => txtOperator_TextChanged(e.target.value)}
 
                       ></TextField>
                     </TableCell>
@@ -209,7 +209,7 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxtTotalLeaf(e.target.value);
                         }}
-                        onBlur={handletxtTotalLeaf}
+                        // onBlur={handletxtTotalLeaf}
                       ></TextField>
                     </TableCell>
                     <TableCell align="right">
@@ -263,7 +263,7 @@ function ScanSMTRoollSht() {
                           }
                         }}
                         
-                        onBlur={(e) => txtRollLeaf_TextChanged(e.target.value)}
+                        // onBlur={(e) => txtRollLeaf_TextChanged(e.target.value)}
                         fullWidth
                       ></TextField>
                     </TableCell>
@@ -316,9 +316,9 @@ function ScanSMTRoollSht() {
                           }
                           // inputRef={(el) => (fc_txtSerial.current[index] = el)}
                           // value={txtSerial[index]}
-                          onBlur={(event) => {
-                            handleTextFieldChange(index, event);
-                          }}
+                          // onBlur={(event) => {
+                          //   handleTextFieldChange(index, event);
+                          // }}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
