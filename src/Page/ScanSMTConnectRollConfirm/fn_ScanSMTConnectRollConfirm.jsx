@@ -889,12 +889,25 @@ function fn_ScanSMTConnectRollConfirm() {
       key: "Scan Result",
       dataIndex: "scan_result",
       render: (text, record, index) => {
+        // return text !== " " ? (
+        //   <Tag
+        //    className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+
+        //   >
+        //     {text}
+        //   </Tag>
+        // ) : (
+        //   ""
+        // );
         return text !== " " ? (
-          <Tag
-            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+          <span
+            style={{
+              color:
+                text === "OK" ? "green" : text === "NG" ? "red" : "inherit",
+            }}
           >
             {text}
-          </Tag>
+          </span>
         ) : (
           ""
         );

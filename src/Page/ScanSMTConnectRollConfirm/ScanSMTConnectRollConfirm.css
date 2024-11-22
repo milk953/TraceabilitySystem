@@ -7,8 +7,22 @@
     padding-left: 5px !important;
 } */
 
+.row-red {
+
+  color: red;
+}
+
+.row-red .ant-table-cell {
+  color: red; 
+}
 
 
+.row-green {
 
+  color: green; 
+}
+.row-green .ant-table-cell {
+  color: green; 
+}
 
   

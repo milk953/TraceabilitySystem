@@ -288,7 +288,7 @@ function ScanSMTConnectRollConfirm() {
                         variant="h4"
                         style={{ paddingTop: "5px", color: "#fff" }}
                       >
-                        {showSheetNo} <span> : </span>{lblResult.value}
+                        {lblResult.value}
                       </Typography>
                     </Paper>
                   )}
@@ -399,6 +399,7 @@ function ScanSMTConnectRollConfirm() {
                     size="small"
                     bordered
                     className="tableGvResult"
+                    rowClassName={(record) => (record.scan_result === "NG" ? "row-red" : record.scan_result ===  "OK" ? "row-green" : "")}
                   />
                 </>
               )}
