@@ -224,6 +224,29 @@ function fn_Reject() {
   };
   const handleSubmit_Click = async () => {
     // Swal  confirm btn
+    if(rdSelect == "rdLotNo"){
+      if (lot == "" || lot == " ") {
+        Swal.fire({
+          title: "Error",
+          text: "Please input lot no.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        return;
+      }
+    }else if (rdSelect == "rdPcsno") {
+      if (txtSerialno == "" || txtSerialno == " ") {
+        Swal.fire({
+          title: "Error",
+          text: "Please input serial no.",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        return;
+      }
+    }
     if (cbSelected == " " || cbSelected == "" || cbSelected == '------SELECT------') {
       Swal.fire({
         title: "Error",
