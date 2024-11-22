@@ -14,7 +14,7 @@ import Header from "../Header/Header";
 import React, { useEffect } from "react";
 import { fn_ScanSMTConnectShtConfirm } from "./fn_ScanSMTConnectShtConfirm";
 import Pageimg from "/src/assets/1.jpg";
-
+import "../Common/StyleCommon.css";
 import { Typography } from "antd";
 import "./ScanSMTConnectShtConfirm.css";
 function ScanSMTConnectShtConfirm() {
@@ -53,18 +53,18 @@ function ScanSMTConnectShtConfirm() {
   return (
     <div>
       <Header />
-      <h1>Confirm Sht&Pcs</h1>
       <Card
         component={Paper}
-        style={{
-          margin: "auto",
-          width: "95%",
-          maxWidth: "1450px",
-          marginTop: "50px",
-          minHeight: "200px",
-          padding: "20px",
-          overflow: "auto",
-        }}
+        className="Card-Common"
+        // style={{
+        //   margin: "auto",
+        //   width: "95%",
+        //   maxWidth: "1450px",
+        //   marginTop: "50px",
+        //   minHeight: "200px",
+        //   padding: "20px",
+        //   overflow: "auto",
+        // }}
       >
         <table>
           <tr>
