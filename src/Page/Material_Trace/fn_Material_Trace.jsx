@@ -23,8 +23,9 @@ function fn_Material_Trace() {
 
   //เข้ามาแล้วSearch
   useEffect(() => {
-  if(Vender_lot==null||Vender_lot!=''){
-    console
+    
+  if(Vender_lot!=null&&Vender_lot!=''){
+    console.log(Vender_lot)
     settxtLotNo(Vender_lot)
     ViewData(Vender_lot)
   }
@@ -74,6 +75,13 @@ function fn_Material_Trace() {
       </a>
     );
   };
+
+  const Clear = () => {
+    setloading(false)
+    settblData1('')
+    settxtLotNo('')
+    
+  }
 
   const columnstblData1= [
     {
@@ -126,7 +134,7 @@ function fn_Material_Trace() {
 
 
 
-  return { tblData1, txtLotNo, columnstblData1,ViewData,loading };
+  return { tblData1, txtLotNo, columnstblData1,ViewData,loading ,settxtLotNo,Clear};
 }
 
 export { fn_Material_Trace };

@@ -43,6 +43,7 @@ function ScanSheetMOTTime() {
     lblRemark,
     fc_txtSheet,
     txtSheetNo_TextChanged,
+    ibt_back
   } = fn_ScanSheetAOIXrayConfirm();
 
   return (
@@ -88,11 +89,12 @@ function ScanSheetMOTTime() {
                             txtSheetNo_TextChanged();
                           }
                         }}
-                        onBlur={txtSheetNo_TextChanged}
+                        // onBlur={txtSheetNo_TextChanged}
                       />
                     </TableCell>
                     <TableCell>
-                      <BackspaceIcon style={{ marginLeft: "10px" }} />
+    
+                    <BackspaceIcon style={{ marginLeft: "10px" }} onClick={ibt_back} />
                     </TableCell>
                   </TableRow>
                   <TableRow>

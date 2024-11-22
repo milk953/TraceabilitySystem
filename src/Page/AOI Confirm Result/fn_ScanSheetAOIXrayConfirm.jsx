@@ -34,7 +34,7 @@ function fn_ScanSheetAOIXrayConfirm() {
         })
         .then((res) => {
           let data = res.data[0];
-          
+          console.log(data,'data')
           if (res.data.length > 0) {
             strAOI = data.aoi_result            ;
             strXray = data.xray_result;
@@ -42,7 +42,7 @@ function fn_ScanSheetAOIXrayConfirm() {
           }
         });
       setlblSheet(txtSheetNo + " " + currentTime);
-      console.log(strResult,'data')
+
       setlblResult(strResult);
       setlblRemark("AOI : " + strAOI + " X-Ray : " + strXray);
       settxtSheetNo("");
@@ -56,6 +56,16 @@ function fn_ScanSheetAOIXrayConfirm() {
       }, 300);
   };
 
+  const ibt_back = async () => {
+    settxtSheetNo("");
+    setlblResult("");
+    setlblSheet("");
+    setlblRemark("");
+    setTimeout(() => {
+        fc_txtSheet.current.focus();
+      }, 300);
+  }
+
   return {
     settxtSheetNo,
     txtSheetNo,
@@ -64,6 +74,7 @@ function fn_ScanSheetAOIXrayConfirm() {
     lblRemark,
     fc_txtSheet,
     txtSheetNo_TextChanged,
+    ibt_back
   };
 }
 

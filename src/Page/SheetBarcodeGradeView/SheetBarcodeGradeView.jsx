@@ -184,7 +184,7 @@ function SheetBarcodeGradeView() {
               columns={columns}
               pagination={false}
               size="small"
-              scroll={{ x: "max-content", y: 450 }}
+              scroll={{ x: "max-content", y: 350 }}
               bordered
             />
           </div>

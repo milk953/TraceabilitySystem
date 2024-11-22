@@ -1519,34 +1519,7 @@ function fn_ScanSMTSerialPcsChrome() {
       }
       let _strErrorUpdate = "";
       if (_strScanResultAll == "OK") {
-        // for (let i = 0; i < dtSerial.length; i++) {
-        //   await axios
-        //     .post("/api/Common/setseriallottraytable", {
-        //       dataList: {
-        //         strPlantCode: Fac,
-        //         strPrdName: _strPrdName,
-        //         strLot: _strLot,
-        //         strUserID: hfUserID,
-        //         data: [
-        //           {
-        //             SERIAL: dtSerial[i].SERIAL,
-        //             UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-        //             ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-        //             REJECT_CODE: dtSerial[i].REJECT_CODE,
-        //             TEST_RESULT: dtSerial[i].TEST_RESULT,
-        //             REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-        //             SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-        //             PACKING_NO: dtSerial[i].PACKING_NO,
-        //             MASTER_NO: dtSerial[i].MASTER_NO,
-        //           },
-        //         ],
-        //       },
-        //     })
-        //     .then((res) => {
-        //       _strErrorUpdate = res.data.p_error;
-        //       console.log("setseriallottraytable", res.data);
-        //     });
-        // }
+       
         const promises = dtSerial.map(item => 
           axios.post("/api/Common/setseriallottraytable", {
             dataList: {
