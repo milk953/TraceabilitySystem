@@ -167,7 +167,6 @@ function fn_ScanSMTSerialPcsChrome() {
   const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE =import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE
   const Fac = import.meta.env.VITE_FAC;
   //PageLoad----------
   useEffect(() => {
@@ -824,9 +823,7 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const getInputSerial = () => {
     let dtData = [];
-    let intRow;
     for (let intSht = 0; intSht < gvSerial.value.length; intSht++) {
-      intRow++;
       dtData.push({
         SEQ: intSht + 1,
         SERIAL: txtSerial[intSht],
@@ -849,8 +846,6 @@ function fn_ScanSMTSerialPcsChrome() {
         SHEET_PCS_NO: 0,
         ROLL_LEAF_NO: "",
       });
-      // isDuplicate = dtSheet.some((item, index) => index !== i && _strShtNo.toUpperCase() === item.SHT_NO.toString().trim().toUpperCase());
-
       // if (dtData[intSht].SERIAL != "") {
       //   for( let intNo=0;intNo>intRow - 2;intNo++){
 
@@ -862,17 +857,6 @@ function fn_ScanSMTSerialPcsChrome() {
       //               Exit For
       //           End If
       //       Next
-      if (dtData.SERIAL !== "") {
-        for (let intNo = 0; intNo < intRow - 1; intNo++) {
-          if (
-            dtData.SERIAL ===
-            (txtSerial[intNo] ? txtSerial[intNo].trim().toUpperCase() : "")
-          ) {
-            dtData.ROW_COUNT = 9;
-            break;
-          }
-        }
-      }
     }
     return dtData;
   };
@@ -883,24 +867,10 @@ function fn_ScanSMTSerialPcsChrome() {
     settxtSerial(newValues);
   };
 
-    // const setSerialDataTray = async () => {
-    //   showLoading("กำลังบันทึก กรุณารอสักครู่");
-    //   try {
-        
-    //   }catch (error) {
-    //         console.error("An error occurred while fetching serial data:", error);
-    //         Swal.fire({
-    //           title: error,
-    //           icon: "error",
-    //         });
-    //         hideLoading();
-    //       }
-    //   }
-
   const setSerialDataTray = async () => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     try {
-      let dtSerial = getInputSerial();
+      let data = getInputSerial();
       let _strLot = lblLot.trim().toUpperCase();
       let _strPrdName = Sl_Product.value;
       let _strTray;
@@ -910,8 +880,13 @@ function fn_ScanSMTSerialPcsChrome() {
       let _intRowSerial = 0;
       let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
       let datHfWeekCode = "";
-      // let dtSerial=[]
+      let dtSerial = [];
+      let dtSerialTEST = [];
+      let dtSerialSET = [];
+      let eyetest = [];
       if (!_bolTrayError) {
+        // for (let i = 0; i < dtSerial.length; i++) {
+        console.log("GetSerialTestResultManyTable97", data);
         await axios
           .post("/api/common/GetSerialTestResultManyTable", {
             dataList: [
@@ -922,14 +897,23 @@ function fn_ScanSMTSerialPcsChrome() {
                 // strSerial: '',
               },
             ],
-            dtSerial: dtSerial,
+            dtSerial: data,
           })
           .then((res) => {
-            console.log("GetSerialTestResultManyTable98", res.data);
-            dtSerial = res.data;
+            eyetest = res.data;
+            console.log("res.datares.data",res.data)
+            dtSerialTEST.push(res.data);
+            dtSerialSET = dtSerialTEST.flat();
+            console.log("dtSerialSET", dtSerialSET);
+
+            // dtSerial.push(res.data)
+            // console.log("GetSerialTestResultManyTable98", dtSerial);
+            dtSerial = res.data.flat();
+            console.log("GetSerialTestResultManyTable99", dtSerial);
           });
         // }
         if (hfCheckWeekCode == "Y") {
+          console.log(hfCheckWeekCode,"LLLLLLLL")
           await axios
             .post("/api/common/GetWeekCodebyLot", {
               _strLot: _strLot,
@@ -979,7 +963,6 @@ function fn_ScanSMTSerialPcsChrome() {
             _bolError = false;
 
             let _strTestResult = "NO";
-            console.log('hfTestResultFlag',hfTestResultFlag)
             if (hfTestResultFlag == "Y") {
               _strTestResult = dtSerial[drRow].TEST_RESULT;
               _strTypeTestResult = dtSerial[drRow].TYPE_TEST_RESULT;
@@ -1629,13 +1612,15 @@ function fn_ScanSMTSerialPcsChrome() {
                 _strMessageUpdate = "";
               }
             }
+           
             dtSerial[drRow].REJECT = _strReject1;
             dtSerial[drRow].TOUCH_UP = _strTouchUp;
             dtSerial[drRow].REJECT2 = _strReject2;
             dtSerial[drRow].SCAN_RESULT = _strScanResultUpdate;
             dtSerial[drRow].TEST_RESULT = _strTestResultUpdate;
             dtSerial[drRow].REMARK = _strMessageUpdate;
-
+            // dtSerial[drRow].REMARK = '';
+            console.log(dtSerial[drRow].REMARK, "มาจ้าาาาา",dtSerialSET,'eyetest',eyetest);
             if (_strScanResultUpdate == "NG") {
               _strScanResultAll = "NG";
             }
@@ -1646,7 +1631,7 @@ function fn_ScanSMTSerialPcsChrome() {
           }
           _intRowSerial = _intRowSerial + 1;
         }
-// -----------------------------------------------------------------------
+
         setlblResult((prevState) => ({
           ...prevState,
           value: _strScanResultAll,

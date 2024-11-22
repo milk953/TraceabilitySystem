@@ -63,7 +63,7 @@ function ScanAVIConfirmResult() {
               >
                 <TableHead>
                   <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">AVI Verify Monitoring</Typography>
+                    <Typography variant="h6">AVI Result Checking</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>

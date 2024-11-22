@@ -73,7 +73,9 @@ function fn_Change_Serial() {
         const Result = await getInputSerial();
         dtData = Result.dtData;
         strError = Result.strError;
-        if (strError.trim !== "") {
+        console.log("Result" , Result)
+        if (strError.trim() !== "") {
+          console.log("strError.trim")
           setLblResult((prevState) => ({
             ...prevState,
             value: strError,
