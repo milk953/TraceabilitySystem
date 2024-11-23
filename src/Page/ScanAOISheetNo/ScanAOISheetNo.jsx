@@ -95,11 +95,6 @@ function ScanAOISheetNo() {
                                                     handleChangeOperator();
                                                 }
                                             }}
-                                            onBlur={() => {
-                                                if (txtOperator !== "") {
-                                                    handleChangeOperator();
-                                                }
-                                            }}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -137,7 +132,6 @@ function ScanAOISheetNo() {
                                                     handleChangeTotalPcs();
                                                 }
                                             }}
-                                            onBlur={handleChangeTotalPcs}
 
                                         />
                                     </TableCell>
@@ -161,7 +155,6 @@ function ScanAOISheetNo() {
                                                     handleChangeNo();
                                                 }
                                             }}
-                                            onBlur={handleChangeNo}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -199,7 +192,6 @@ function ScanAOISheetNo() {
                                                     handleChangeLeaf();
                                                 }
                                             }}
-                                            onBlur={handleChangeLeaf}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -225,7 +217,6 @@ function ScanAOISheetNo() {
                                                     handleChangeLayer();
                                                 }
                                             }}
-                                            onBlur={handleChangeLayer}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -262,7 +253,6 @@ function ScanAOISheetNo() {
                                                     handleChangeLotNo();
                                                 }
                                             }}
-                                            onBlur={handleChangeLotNo}
                                         />
                                     </TableCell>
                                     <TableCell>

@@ -131,7 +131,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                     strPrdName = res.data.prdName[0];
                 });
             console.log("PrdName:", strPrdName);
-            if (strPrdName !== "") {
+            if (strPrdName !== undefined) {
                 setlblLog("");
                 setvisiblelog(false);
                 settxtLotNo(strLot);
@@ -194,6 +194,7 @@ function fn_ScanSMTSerialBackendConfirm() {
         settxtLotDisabled(false);
         setpnlSerial(false);
         setselProduct(Productdata[0].prd_name);
+        settxtgvSerial("");
         setgvSerialData([]);
         setgvScanResult(false);
         setgvScanData([]);
@@ -217,6 +218,7 @@ function fn_ScanSMTSerialBackendConfirm() {
     const handleChangeTotalPCS = () => {
         if (!isNaN(txtTotalPCS)) {
             SetMode("SERIAL");
+            settxtgvSerial("");
             inputgvSerial.current[0].focus();
         } else {
             settxtTotalPCS("");
@@ -250,6 +252,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             settxtTotalDisabled(false);
             setvisiblelog(false);
             setpnlSerial(false);
+            settxtgvSerial("");
             sethfMode("LOT");
             inputLot.current.focus();
         } else if (strType === "LOT_ERROR") {
@@ -371,6 +374,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                         })
                             .then((res) => {
                                 _strSerialResult = res.data.backen_result;
+                                //_strMessage = res.data.message;
                             });
                         console.log(_strSerialResult);
 

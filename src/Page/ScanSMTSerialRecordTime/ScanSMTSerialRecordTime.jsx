@@ -56,7 +56,7 @@ function ScanSMTSerialRecordTime() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-6px",
+                        marginLeft: "-5px",
                         marginTop: "-10px"
                     }}
                 >
@@ -133,10 +133,10 @@ function ScanSMTSerialRecordTime() {
                                                 style={{
                                                     backgroundColor: istxtMachineDisabled ? "#e0e0e0" : "inherit",
                                                 }}
-                                                value={txtMachine}
+                                                value={txtMachine.toUpperCase()}
                                                 onChange={(e) => {
                                                     const value = e.target.value;
-                                                    if (value.length <= 25) {
+                                                    if (value.length <= 25 && !/[ก-๙]/.test(value)) {
                                                         settxtMachine(value);
                                                     }
                                                 }}
@@ -177,7 +177,7 @@ function ScanSMTSerialRecordTime() {
                                             value={txtOperator}
                                             onChange={(e) => {
                                                 const value = e.target.value;
-                                                if (value.length <= 100) {
+                                                if (value.length <= 100 && !/[ก-๙]/.test(value)) {
                                                     settxtOperator(value);
                                                 }
                                             }}
@@ -219,7 +219,7 @@ function ScanSMTSerialRecordTime() {
                                                 value={txtOPRejudge.toUpperCase()}
                                                 onChange={(e) => {
                                                     const value = e.target.value;
-                                                    if (value.length <= 100) {
+                                                    if (value.length <= 100 && !/[ก-๙]/.test(value)) {
                                                         settxtOPRejudge(value);
                                                     }
                                                 }}
@@ -263,7 +263,7 @@ function ScanSMTSerialRecordTime() {
                                                 value={txtAreaRejudge.toUpperCase()}
                                                 onChange={(e) => {
                                                     const value = e.target.value;
-                                                    if (value.length <= 100) {
+                                                    if (value.length <= 100 && !/[ก-๙]/.test(value)) {
                                                         settxtAreaRejudge(value);
                                                     }
                                                 }}
@@ -315,12 +315,14 @@ function ScanSMTSerialRecordTime() {
                                             value={txtTotalPcs}
                                             disabled={istxtTotalPcsDisabled}
                                             onChange={(e) => {
-                                                settxtTotalPcs(e.target.value);
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    settxtTotalPcs(value);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     handleChangeTotalPcs();
-                                                    document.getElementById("selpcssht").focus();
                                                 }
                                             }}
                                             InputProps={{
@@ -459,7 +461,7 @@ function ScanSMTSerialRecordTime() {
                                                 style={{
                                                     backgroundColor: istxtRackDisabled ? "#e0e0e0" : "inherit",
                                                 }}
-                                                value={txtRackNo}
+                                                value={txtRackNo.toUpperCase()}
                                                 onChange={(e) => {
                                                     settxtRackNo(e.target.value);
                                                 }}
@@ -553,7 +555,7 @@ function ScanSMTSerialRecordTime() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "453px",
+                                width: "490px",
                                 marginLeft: "23px",
                             }}
                         >
