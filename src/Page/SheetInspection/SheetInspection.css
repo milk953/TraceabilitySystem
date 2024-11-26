@@ -37,9 +37,11 @@
 }
 
 .tableGvDataXOut {
-    width: 68%;
+    width: 100%; 
+    max-width: 1140px;
     box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
-    padding-left: 35px;
+    margin-left: 50px;
+    display: block;
 }
 
 .tableGvDataXOut .ant-table-thead>tr>th {

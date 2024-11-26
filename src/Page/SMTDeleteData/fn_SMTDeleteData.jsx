@@ -54,6 +54,7 @@ function fn_SMTDeleteData() {
 
   const btnShtDeleteClick = async () => {
     if (txtSheetNo.trim() !== "") {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); 
       const result = await Swal.fire({
         title: 'Are you confirm delete?',
         showCancelButton: true,
@@ -61,9 +62,11 @@ function fn_SMTDeleteData() {
         cancelButtonText: 'No',
         icon: 'warning',
       });
+      console.log(result);
 
       if (result.isConfirmed) {
         Delete_Data("SHEET");
+        document.getElementById("rollleaf").focus();
       }
     } else {
       setpnlForm(true);
@@ -74,6 +77,7 @@ function fn_SMTDeleteData() {
 
   const btnRollDeleteClick = async () => {
     if (txtRollLeaf.trim() !== "") {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); 
       const result = await Swal.fire({
         title: 'Are you confirm delete?',
         showCancelButton: true,
@@ -99,7 +103,7 @@ function fn_SMTDeleteData() {
       if (strType === "SHEET") {
         await axios.post("/api/SMTDeleteData/DeleteDataSheet", {
           strplantcode: plantCode,
-          strsheetno: txtSheetNo.trim().toUpperCase()
+          strsheetno: txtSheetNo
         })
           .then((res) => {
             let dtdelsht = res.data;
@@ -113,7 +117,7 @@ function fn_SMTDeleteData() {
       } else {
         await axios.post("/api/SMTDeleteData/DeleteDataRollleaf", {
           strplantcode: plantCode,
-          strrollleaf: txtRollLeaf.trim().toUpperCase()
+          strrollleaf: txtRollLeaf
         })
           .then((res) => {
             let dtdelrollleaf = res.data;

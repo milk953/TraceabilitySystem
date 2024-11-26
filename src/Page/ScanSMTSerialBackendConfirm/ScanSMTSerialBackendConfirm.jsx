@@ -103,7 +103,7 @@ function ScanSMTSerialBackendConfirm() {
                                     <TableCell>
                                         <Button className="Bt_ibtBack" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
-                                                <BackspaceIcon className="Icon_ibtBack"/>
+                                                <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
                                         </Button>
                                     </TableCell>
@@ -151,7 +151,10 @@ function ScanSMTSerialBackendConfirm() {
                                                     width: "60px"
                                                 }}
                                                 onChange={(e) => {
-                                                    settxtTotalPCS(e.target.value);
+                                                    const newValue = e.target.value;
+                                                    if (/^\d*$/.test(newValue)) {
+                                                        settxtTotalPCS(newValue);
+                                                    }
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.key === "Enter") {

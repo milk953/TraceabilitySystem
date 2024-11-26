@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx';
 import { Tag } from "antd";
+import ExcelJS from "exceljs";
+import Swal from "sweetalert2";
 
 function fn_ScanSheetInspect() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -75,7 +77,15 @@ function fn_ScanSheetInspect() {
 
     const ClearLot = () => {
         settxtLotNo("");
-        inputLot.current.focus();
+        settxtRollNo("");
+        settxtScanBy("");
+        settxtWeekCode("");
+        setistxtLotDisabled(false);
+        setpnlSerial(false);
+        SetMode("LOT");
+        setTimeout(() => {
+            inputLot.current.focus();
+        }, 200);
     }
 
     const handleLotNo = async () => {
@@ -86,7 +96,7 @@ function fn_ScanSheetInspect() {
         const strLotData = txtLotNo.toUpperCase().split(";");
         strLot = strLotData[0];
 
-        if (strLot != "") {
+        if (strLot !== "") {
             settxtLotNo(strLot);
             await axios.post("/api/Common/getProductDataByLot", {
                 strLot: strLot,
@@ -151,8 +161,9 @@ function fn_ScanSheetInspect() {
 
     useEffect(() => {
         if (exportReady) {
-            ExportToExcel();
-            setExportReady(false); 
+            const fileName = hfControlBy === "LOT" ? `${txtProduct}_${txtLotNo}` : `${txtProduct}_${txtRollNo}`;
+            ExportToExcel(`${fileName}.xlsx`);
+            setExportReady(false);
         }
     }, [exportReady, gvExportData]);
 
@@ -172,42 +183,135 @@ function fn_ScanSheetInspect() {
         }
     };
 
-    const dataTableexport = [...gvExportData];
-    // console.log("gvexport:", dataTableexport);
-    const ExportToExcel = () => {
-        const ScanSheetInspect = [
-            [
-                "Seq",
-                "Roll No.",
-                "Lot No.",
-                "Product",
-                "Scan Date",
-                "Shift",
-                "Week Code",
-                "Bin No.",
-                "Sheet No.",
-                "Update Date",
-            ],
-            ...dataTableexport.map((item) => [
-                item.seq,
-                item.roll_no,
-                item.lot_no,
-                item.product,
-                item.scan_date,
-                item.shift,
-                item.week_code,
-                item.bin_no,
-                item.sheet_no,
-                item.update_date,
-            ])
-        ];
-        const ws = XLSX.utils.aoa_to_sheet(ScanSheetInspect);
-        const wb = XLSX.utils.book_new();
+    //Export
+    const ExportToExcel = async (nameFile) => {
+        if (gvExportData.length <= 0) {
+            Swal.fire({
+                icon: "error",
+                title: "No Data Export!",
+            });
 
-        const fileName = hfControlBy === "LOT" ? `${txtProduct}_${txtLotNo}` : `${txtProduct}_${txtRollNo}`;
-        XLSX.utils.book_append_sheet(wb, ws, fileName);
-        XLSX.writeFile(wb, `${fileName}.xlsx`);
+        } else {
+            console.log(nameFile, "nameFile");
+            exportExcelFile(gvExportData, nameFile);
+        }
     };
+
+    const exportExcelFile = (data, namefile) => {
+        const workbook = new ExcelJS.Workbook();
+        const sheet = workbook.addWorksheet("My Sheet");
+        sheet.properties.defaultRowHeight = 20;
+
+        // สร้างคอลัมน์แบบ dynamic
+        const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
+            header: key.toUpperCase(), // ทำให้ header เป็นตัวพิมพ์ใหญ่
+            key: key,
+            width: 10, // กำหนดขนาดความกว้างเริ่มต้น
+            style: { alignment: { horizontal: "center" } },
+        }));
+
+        sheet.columns = dynamicColumns;
+
+        // ถ้าไม่มีข้อมูลก็สร้างแถวว่าง
+        if (data.length === 0) {
+            const emptyRow = {};
+            dynamicColumns.forEach((col) => (emptyRow[col.key] = "")); // เติมค่าค่าว่าง
+            data.push(emptyRow);
+        }
+
+        // ใส่ข้อมูลลงใน sheet
+        data.forEach((row) => {
+            const newRow = sheet.addRow(row);
+            newRow.eachCell({ includeEmpty: true }, (cell) => {
+                // includeEmpty เพื่อให้ทุก cell รวมถึงที่ว่างมีเส้นขอบ
+                cell.alignment = { horizontal: "center" };
+
+                // เพิ่มเส้นขอบให้ทุก cell
+                cell.border = {
+                    top: { style: "thin" },
+                    left: { style: "thin" },
+                    bottom: { style: "thin" },
+                    right: { style: "thin" },
+                };
+            });
+        });
+
+        // จัดรูปแบบให้แถวแรก (header)
+        const firstRow = sheet.getRow(1);
+        firstRow.eachCell({ includeEmpty: true }, (cell) => {
+            cell.fill = {
+                type: "pattern",
+                pattern: "solid",
+                fgColor: { argb: "FFFF00" }, // สีพื้นหลังเหลือง
+            };
+            cell.font = {
+                name: "Roboto",
+                size: 9,
+                bold: true,
+            };
+
+            // เพิ่มเส้นขอบให้ header
+            cell.border = {
+                top: { style: "thin" },
+                left: { style: "thin" },
+                bottom: { style: "thin" },
+                right: { style: "thin" },
+            };
+        });
+
+        // กำหนดความกว้างของคอลัมน์ให้พอดีกับข้อความ
+        sheet.columns.forEach((column) => {
+            let maxWidth = column.header.length; // เริ่มต้นความกว้างจากความยาวของ header
+            data.forEach((row) => {
+                const cellValue = String(row[column.key] || ""); // แปลงค่าเป็นสตริง
+                maxWidth = Math.max(maxWidth, cellValue.length); // คำนวณความกว้างสูงสุด
+            });
+            column.width = maxWidth + 2; // เพิ่มขนาดพิเศษเล็กน้อยเพื่อความสบาย
+        });
+
+        // สร้างไฟล์ Excel
+        workbook.xlsx.writeBuffer().then((buffer) => {
+            const blob = new Blob([buffer], { type: "application/octet-stream" });
+            saveAs(blob, `${namefile}`);
+        });
+    };
+
+    // const dataTableexport = [...gvExportData];
+    // // console.log("gvexport:", dataTableexport);
+    // const ExportToExcel = () => {
+    //     const ScanSheetInspect = [
+    //         [
+    //             "Seq",
+    //             "Roll No.",
+    //             "Lot No.",
+    //             "Product",
+    //             "Scan Date",
+    //             "Shift",
+    //             "Week Code",
+    //             "Bin No.",
+    //             "Sheet No.",
+    //             "Update Date",
+    //         ],
+    //         ...dataTableexport.map((item) => [
+    //             item.seq,
+    //             item.roll_no,
+    //             item.lot_no,
+    //             item.product,
+    //             item.scan_date,
+    //             item.shift,
+    //             item.week_code,
+    //             item.bin_no,
+    //             item.sheet_no,
+    //             item.update_date,
+    //         ])
+    //     ];
+    //     const ws = XLSX.utils.aoa_to_sheet(ScanSheetInspect);
+    //     const wb = XLSX.utils.book_new();
+
+    //     const fileName = hfControlBy === "LOT" ? `${txtProduct}_${txtLotNo}` : `${txtProduct}_${txtRollNo}`;
+    //     XLSX.utils.book_append_sheet(wb, ws, fileName);
+    //     XLSX.writeFile(wb, `${fileName}.xlsx`);
+    // };
 
     const ibtDateRefresh = async () => {
         fetchData();
@@ -230,7 +334,7 @@ function fn_ScanSheetInspect() {
     const handleselShtBin = async (value) => {
         setselBinNo(value);
         selShtXOut.current?.focus();
-        console.log(value,'handleselShtBin')
+        console.log(value, 'handleselShtBin')
     };
 
     useEffect(() => {
@@ -239,13 +343,14 @@ function fn_ScanSheetInspect() {
         }
     }, [selBinNo]);
 
-    const [boolDup, setboolDup] = useState(false);
+    //const [boolDup, setboolDup] = useState(false);
 
     const handleShtNo = async () => {
 
         let strError = "";
         let strCheckValue = "";
         let strSheetNo = txtShtNo.toUpperCase().trim();
+        let boolDup = false;
 
         if (txtShtNo.trim() != "") {
             if (txtWeekCode.length !== 4) {
@@ -255,17 +360,14 @@ function fn_ScanSheetInspect() {
                 setlabellog("Please input scan by.");
                 SetMode("SHEET_ERROR");
             } else {
-                try {
-                    const res = await axios.post("/api/Common/getproductshtinspectdup", {
-                        strLotno: txtLotNo,
-                        strSheetno: strSheetNo
+                await axios.post("/api/Common/getproductshtinspectdup", {
+                    strLotno: txtLotNo,
+                    strSheetno: strSheetNo
+                })
+                    .then((res) => {
+                        boolDup = res.data;
                     });
-                    const data = res.data;
-                    setboolDup(data);
-                } catch (error) {
-                    console.error('Error getinspectdup:', error.message);
-                }
-                console.log("boolDup",boolDup);
+                console.log("boolDup", boolDup);
                 if (boolDup) {
                     setlabellog("Please confirm for delete?");
                     SetMode("SHEET_CONFIRM");
@@ -337,12 +439,12 @@ function fn_ScanSheetInspect() {
                 strBinNo: selBinNo,
             });
             const data = res.data;
-            
+
             setgvScanData(data);
             if (data.length > 0) {
                 setgvScanResult(true);
             }
-            console.log("naaa", data.length,data);
+            console.log("naaa", data.length, data);
         } catch (error) {
             console.error('Error fetching getProductShtIn:', error.message);
         }
@@ -433,6 +535,7 @@ function fn_ScanSheetInspect() {
             setvisiblelog(false);
             setpnlSuccess(false);
             setpnlSerial(false);
+            setgvScanResult(false);
             setgvScanData([]);
             sethfMode("LOT");
             inputLot.current.focus();
