@@ -86,7 +86,7 @@ function PieceTraceView() {
                                 <TableRow>
                                     <TableCell align="right" colSpan={4}>
                                         <Typography>
-                                            Sheet No. :
+                                            Piece No. :
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="center">

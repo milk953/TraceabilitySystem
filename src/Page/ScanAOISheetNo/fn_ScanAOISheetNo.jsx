@@ -123,17 +123,69 @@ function fn_ScanAOISheetNo() {
         SetMode("LEAF");
     };
 
+    // const handleChangeLotNo = async () => {
+    //     setlblProduct("");
+    //     sethfRollNo("");
+    //     let _strLotAll = txtLotNo.toUpperCase().trim().split(";");
+    //     if (txtLotNo.trim() !== "") {
+    //         settxtLotNo(_strLotAll[0]);
+    //         if (txtLotNo.length === 9) {
+    //             let dtLotData = [];
+    //             await axios.post("/api/Common/getProductDataByLot", {
+    //                 strLot: txtLotNo,
+    //             })
+    //                 .then((res) => {
+    //                     dtLotData = res.data.flat().flat();
+    //                 });
+    //             if (dtLotData.length > 0) {
+    //                 setlblProduct(dtLotData[0][0]);
+    //                 sethfRollNo(dtLotData[0][1]);
+    //             }
+
+    //             await axios.post("/api/ScanAOISheetNo/GetAOISheetCountbyLot", {
+    //                 strlotno: txtLotNo,
+    //                 strlayer: txtLayer
+    //             })
+    //                 .then((res) => {
+    //                     settxtNo(res.data);
+    //                 });
+
+    //             let data = [];
+    //             await axios.post("/api/ScanAOISheetNo/GetAOISheetDataByLot", {
+    //                 strlotno: txtLotNo,
+    //                 strlayer: txtLayer
+    //             })
+    //                 .then((res) => {
+    //                     data = res.data;
+    //                 });
+    //             setgvScanResult(prevState => ({ ...prevState, visible: true, value: data }));
+    //             SetMode("SERIAL");
+    //         } else {
+    //             SetMode("LOT");
+    //         }
+    //     } else {
+    //         SetMode("LOT");
+    //     }
+    // };
+
     const handleChangeLotNo = async () => {
         setlblProduct("");
         sethfRollNo("");
-        if (txtLotNo.trim() !== "") {
-            let _strLotAll = txtLotNo.toUpperCase().trim().split(";");
-            settxtLotNo(_strLotAll[0]);
-            if (txtLotNo.length === 9) {
+
+        let trimmedLotNo = txtLotNo.toUpperCase().trim();
+        if (trimmedLotNo.includes(";")) {
+            
+            trimmedLotNo = trimmedLotNo.split(";")[0];
+        }
+
+        if (trimmedLotNo !== "") {
+            settxtLotNo(trimmedLotNo); 
+            if (trimmedLotNo.length === 9) {
                 let dtLotData = [];
-                await axios.post("/api/Common/getProductDataByLot", {
-                    strLot: txtLotNo,
-                })
+                await axios
+                    .post("/api/Common/getProductDataByLot", {
+                        strLot: trimmedLotNo,
+                    })
                     .then((res) => {
                         dtLotData = res.data.flat().flat();
                     });
@@ -142,24 +194,31 @@ function fn_ScanAOISheetNo() {
                     sethfRollNo(dtLotData[0][1]);
                 }
 
-                await axios.post("/api/ScanAOISheetNo/GetAOISheetCountbyLot", {
-                    strlotno: txtLotNo,
-                    strlayer: txtLayer
-                })
+                await axios
+                    .post("/api/ScanAOISheetNo/GetAOISheetCountbyLot", {
+                        strlotno: trimmedLotNo,
+                        strlayer: txtLayer,
+                    })
                     .then((res) => {
                         settxtNo(res.data);
                     });
 
                 let data = [];
-                await axios.post("/api/ScanAOISheetNo/GetAOISheetDataByLot", {
-                    strlotno: txtLotNo,
-                    strlayer: txtLayer
-                })
+                await axios
+                    .post("/api/ScanAOISheetNo/GetAOISheetDataByLot", {
+                        strlotno: trimmedLotNo,
+                        strlayer: txtLayer,
+                    })
                     .then((res) => {
                         data = res.data;
                     });
-                setgvScanResult(prevState => ({ ...prevState, visible: true, value: data }));
+                setgvScanResult((prevState) => ({
+                    ...prevState,
+                    visible: true,
+                    value: data,
+                }));
                 SetMode("SERIAL");
+                //settxtLotNo("");
             } else {
                 SetMode("LOT");
             }
@@ -167,6 +226,7 @@ function fn_ScanAOISheetNo() {
             SetMode("LOT");
         }
     };
+
 
     const ibtLotBack_Click = async () => {
         SetMode("LOT");
@@ -195,18 +255,20 @@ function fn_ScanAOISheetNo() {
             settxtOperatorDisabled(false);
             settxtTotalPcs("");
             settxtTotalPcsDisabled(true);
+            settxtNo("");
             settxtLeaf("");
             settxtLeafDisabled(true);
             settxtLayer("");
             settxtLayerDisabled(true);
             settxtLotNo("");
             settxtLotNoDisabled(true);
+            setlblProduct("");
             setibtLotBack(prevState => ({ ...prevState, disabled: true }));
             setibtOperator(prevState => ({ ...prevState, disabled: true }));
             setibtLayerBack(prevState => ({ ...prevState, disabled: true }));
             setibtback(prevState => ({ ...prevState, disabled: true }));
             setpnlSerial(false);
-            setgvScanResult(prevState => ({ ...prevState, value: [] }));
+            setgvScanResult(prevState => ({ ...prevState, visible: false, value: [] }));
             sethfMode("OP");
             setTimeout(() => {
                 inputOperator.current.focus();
@@ -226,7 +288,8 @@ function fn_ScanAOISheetNo() {
             setibtback(prevState => ({ ...prevState, disabled: false }));
             setpnlSerial(false);
             setgvSerial([]);
-            setgvScanResult(prevState => ({ ...prevState, value: GetAOISheetDataByLot("", "") }));
+            setgvScanResult(prevState => ({ ...prevState,visible: false, value: [] }));
+            setlblProduct("");
             sethfMode("PCS");
             setTimeout(() => {
                 inputTotalPcs.current.focus();
@@ -245,7 +308,8 @@ function fn_ScanAOISheetNo() {
             setibtLayerBack(prevState => ({ ...prevState, disabled: true }));
             setpnlSerial(false);
             setgvSerial([]);
-            setgvScanResult(prevState => ({ ...prevState, value: GetAOISheetDataByLot("", "") }));
+            setgvScanResult(prevState => ({ ...prevState,visible: false, value: [] }));
+            setlblProduct("");
             sethfMode("LEAF");
             setTimeout(() => {
                 inputLeaf.current.focus();
@@ -263,7 +327,8 @@ function fn_ScanAOISheetNo() {
             setibtLayerBack(prevState => ({ ...prevState, disabled: true }));
             setpnlSerial(false);
             setgvSerial([]);
-            setgvScanResult(prevState => ({ ...prevState, value: GetAOISheetDataByLot("", "") }));
+            setgvScanResult(prevState => ({ ...prevState,visible: false, value: [] }));
+            setlblProduct("");
             sethfMode("LAYER");
             setTimeout(() => {
                 inputLayer.current.focus();
@@ -280,7 +345,9 @@ function fn_ScanAOISheetNo() {
             setibtLayerBack(prevState => ({ ...prevState, disabled: false }));
             setpnlSerial(false);
             setgvSerial([]);
-            setgvScanResult(prevState => ({ ...prevState, value: GetAOISheetDataByLot("", txtLayer) }));
+            //setgvScanResult(prevState => ({ ...prevState, value: GetAOISheetDataByLot("", txtLayer) }));
+            setgvScanResult(prevState => ({ ...prevState,visible: false, value: [] }));
+            setlblProduct("");
             sethfMode("LOT");
             setTimeout(() => {
                 inputLot.current.focus();
@@ -305,6 +372,7 @@ function fn_ScanAOISheetNo() {
                 dtData.push(drRow);
             }
             setgvSerial(dtData);
+            console.log(gvSerial.length);
             if (gvSerial.length > 0) {
                 setTimeout(() => {
                     inputSerial.current.focus();
@@ -493,11 +561,11 @@ function fn_ScanAOISheetNo() {
         if (e.key === 'Enter') {
             e.preventDefault();
             const nextIndex = index + 1;
-            if (nextIndex < hfSerialCount && inputSerial.current[nextIndex]
+            if (nextIndex < gvSerial.length && inputSerial.current[nextIndex]
             ) {
                 inputSerial.current[nextIndex].focus();
                 console.log('Calling btnSaveClick', nextIndex);
-            } else if (nextIndex === nextIndex) {
+            } else if (nextIndex === gvSerial.length) {
                 btnSave_Click();
                 e.target.blur();
             }

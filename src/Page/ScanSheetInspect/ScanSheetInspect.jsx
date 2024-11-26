@@ -52,7 +52,7 @@ function ScanSheetInspect() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
+                        marginLeft: "-5px",
                         marginTop: "-10px"
                     }}
                 >
@@ -94,11 +94,6 @@ function ScanSheetInspect() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    handleLotNo();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                if (txtLotNo !== "") {
                                                     handleLotNo();
                                                 }
                                             }}
@@ -182,7 +177,7 @@ function ScanSheetInspect() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    settxtScanBy(e.target.value);
+                                                    inputScanDate.current.focus();
                                                 }
                                             }}
                                         />
@@ -204,7 +199,7 @@ function ScanSheetInspect() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    settxtScanDate(e.target.value);
+                                                    document.getElementById("shift").focus();
                                                 }
                                             }}
                                         />
@@ -229,6 +224,7 @@ function ScanSheetInspect() {
                                         <Autocomplete
                                             className="Select_dropDown"
                                             size="small"
+                                            id="shift"
                                             options={['A', 'B']}
                                             value={selShift}
                                             defaultValue='A'
@@ -241,6 +237,7 @@ function ScanSheetInspect() {
                                                         if (e.key === "Enter") {
                                                             e.preventDefault();
                                                             setselShift(params.inputProps.value);
+                                                            document.getElementById("weekcode").focus();
                                                         }
                                                     }}
                                                 />
@@ -255,6 +252,7 @@ function ScanSheetInspect() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="weekcode"
                                             size="small"
                                             fullWidth
                                             value={txtWeekCode}
@@ -263,7 +261,7 @@ function ScanSheetInspect() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    settxtWeekCode(e.target.value);
+                                                    document.getElementById("binno").focus();
                                                 }
                                             }}
                                         />
@@ -277,6 +275,7 @@ function ScanSheetInspect() {
                                         {console.log(selBinNo,'kkkkkk')}
                                         <Autocomplete
                                             className="Select_dropDown"
+                                            id="binno"
                                             size="small"
                                             style={{
                                                 backgroundColor: isBinNoDisabled ? "#e0e0e0" : "inherit",
@@ -287,12 +286,13 @@ function ScanSheetInspect() {
                                             isOptionEqualToValue={(option, value) => option === value || (value === "" && option === "-select-")}
                                             renderInput={(params) => (
                                                 <TextField {...params}
-                                                    // onKeyDown={(e) => {
-                                                    //     if (e.key === "Enter") {
-                                                    //         e.preventDefault();
-                                                    //         setselBinNo(params.inputProps.value);
-                                                    //     }
-                                                    // }}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            e.preventDefault();
+                                                            inputShtNo.current.focus();
+                                                        }
+                                                    }}
+                                                    id="binno"
                                                     inputRef={ddlShtBin}
                                                     size="small"
                                                     sx={{ textAlign: "left" }}
@@ -322,7 +322,6 @@ function ScanSheetInspect() {
                                                     handleShtNo();
                                                 }
                                             }}
-                                            onBlur={handleShtNo}
                                             style={{
                                                 backgroundColor: isShtNoDisabled ? "#e0e0e0" : "inherit",
                                             }}

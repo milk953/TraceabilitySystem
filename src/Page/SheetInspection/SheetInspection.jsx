@@ -48,8 +48,8 @@ function SheetInspection() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
-                        marginTop: "-10px"
+                        marginLeft: "-6px",
+                        marginTop: "-10px",
                     }}
                 >
                     <TableContainer
