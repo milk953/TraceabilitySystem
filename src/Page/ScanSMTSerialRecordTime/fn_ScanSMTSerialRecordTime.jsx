@@ -416,7 +416,7 @@ function fn_ScanSMTSerialRecordTime() {
             strLot: strLot,
         })
             .then((res) => {
-                strPrdName = res.data.prdName;
+                strPrdName = res.data.prdName[0];
             });
         console.log("PrdName:", strPrdName);
         if (strPrdName !== "") {

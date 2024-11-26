@@ -255,6 +255,7 @@ function fn_ScanAVIConfirmResult() {
     visble: false,
   });
   const showResult = async (dtResult) => {
+    console.log("showResult , dtResult : ",dtResult);
     setShowtableRow((prevState) => ({
       ...prevState,
       visble: true,
@@ -382,6 +383,7 @@ function fn_ScanAVIConfirmResult() {
   //----------------------------------------  เนื้อหาของ const DataTable ส่วนนี้เก็บไว้ก่อนอาจต้องใช้  {
   const [tableData, setTableData] = useState(null);
   const DataTable = async (dtResult) => {
+    console.log("DataTable , dtResult : ",dtResult);
     if (!dtResult || dtResult.length === 0) {
       return null;
     }
