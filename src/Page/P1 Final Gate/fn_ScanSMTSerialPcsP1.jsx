@@ -334,6 +334,8 @@ function fn_ScanSMTSerialPcsP1() {
             strSerial: params.SERIAL,
           },
           dtSerial: params.dtSerial,
+        }).then((res) => {
+          dtData = res.data;
         });
 
         return dtData;
@@ -363,14 +365,21 @@ function fn_ScanSMTSerialPcsP1() {
         return result;
       } else if (type == "GetSheetNoBySerialNo") {
         let response = "";
-        await axios
-          .post("/api/common/GetSheetNoBySerialNo", {
-            data:{strSerial: params,strPlantCode: Fac} 
-          })
-          .then((res) => {
-            response = res.data;
-          });
-        return response;
+      let response2 = "";
+      await axios
+        .post("/api/common/GetSheetNoBySerialNo", {
+          data:{
+            strSerial: params,
+            strPlantCode: Fac
+          }
+          
+        })
+        .then((res) => {
+          console.log(res.data);
+          response = res.data._strsheet;
+          response2 = res.data.lot_no;
+        });
+        return { response, response2 };
       } else if (type == "GetPlasmaTimeBySerialNo") {
         let response = 0;
         await axios
@@ -602,23 +611,35 @@ function fn_ScanSMTSerialPcsP1() {
     let _strScanResultAll = "OK";
     let _intRowSerial = 0;
     if(!_bolTrayError){
-      for (let i = 0; i < dtSerial.length; i++) {
-        await axios
-          .post("/api/common/GetSerialTestResultManyTable", {
-            dataList: [
-              {
-                strPlantCode: Fac,
-                strPrdname: _strPrdName,
-                strWeekCodeType: hiddenParams.hfWeekCodeType,
-                strSerial: dtSerial[i].SERIAL,
-              },
-            ],
-            dtSerial: dtSerial[i],
-          })
-          .then((res) => {
-            dtSerial[i] = res.data;
-          });
-      }
+      // for (let i = 0; i < dtSerial.length; i++) {
+      //   await axios
+      //     .post("/api/common/GetSerialTestResultManyTable", {
+      //       dataList: [
+      //         {
+      //           strPlantCode: Fac,
+      //           strPrdname: _strPrdName,
+      //           strWeekCodeType: hiddenParams.hfWeekCodeType,
+      //           strSerial: dtSerial[i].SERIAL,
+      //         },
+      //       ],
+      //       dtSerial: dtSerial[i],
+      //     })
+      //     .then((res) => {
+      //       dtSerial[i] = res.data;
+      //     });
+      // }
+      let dtResponse = await getData("GetSerialTestResultManyTable", {
+        dataList: [
+          {
+            strPlantCode: Fac,
+            strPrdname: _strPrdName,
+            strWeekCodeType: hiddenParams.hfWeekCodeType,
+            // strSerial: '',
+          },
+        ],
+        dtSerial: dtSerial,
+      })
+      dtSerial = dtResponse.length ? [...dtResponse] : [];
 
       if (hiddenParams.hfWeekCodeType == "Y") {
         hiddenParams.hfWeekCode = await getData("GetWeekCodebyLot", {
@@ -763,24 +784,29 @@ function fn_ScanSMTSerialPcsP1() {
               }
             }
             if(!_bolError){
-              for(let _intRow = _intRowSerial; _intRow < dtSerial.length; _intRow++){
-                if(_strSerial == dtSerial[i].SERIAL){
+              for(let _intRow = _intRowSerial+1; _intRow < dtSerial.length; _intRow++){
+                if(_strSerial == dtSerial[_intRow].SERIAL){
                   _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                   _strRemark = "Serial duplicate in tray  ";
                   _strScanResultUpdate = "NG";
                   _strTestResultUpdate = _strTestResult;
-                  dtSerial[i].REMARK_UPDATE = _strRemark; 
-                  dtSerial[i].ROW_UPDATE = "N";
+                  dtSerial[_intRow].REMARK_UPDATE = _strRemark; 
+                  dtSerial[_intRow].ROW_UPDATE = "N";
                   _intCountNG = 1;
                   _bolError = true;
                 }
               }
             }
             if (!_bolError && hiddenParams.hfCheckPrdSht == 'Y'){
-              let strSheetLot ='';
-              let _strShtNo_V = await getData("GetSheetNoBySerialNo", _strSerial);
-              let _strShtNo = _strShtNo_V._strsheet
-              strSheetLot = _strShtNo_V.lot_no;
+              // let strSheetLot ='';
+              // let _strShtNo_V = await getData("GetSheetNoBySerialNo", _strSerial);
+              
+              // let _strShtNo = _strShtNo_V._strsheet
+              // strSheetLot = _strShtNo_V.lot_no;
+              const { response: _strShtNo, response2: strSheetLot } = await getData(
+                "GetSheetNoBySerialNo",
+                _strSerial
+              );
               if (_strShtNo !== "" && hiddenParams.hfCheckPrdAbbr !== _strShtNo.substring(parseInt(hiddenParams.hfCheckPrdShtStart) - 1, parseInt(hiddenParams.hfCheckPrdShtEnd))){
                 _strMessageUpdate = "Change serial barcode mix product" + _strTagNewLine + "เปลี่ยนหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                 _strRemark = "Change serial barcode mix product  ";
@@ -790,7 +816,7 @@ function fn_ScanSMTSerialPcsP1() {
                 dtSerial[i].ROW_UPDATE = "Y";
                 _intCountNG = 1;
                 _bolError = true;
-              }else if(_strShtNo !== ''){
+              }else if(_strShtNo == ''){
                 _strMessageUpdate = "No data connect sheet" + _strTagNewLine + "ไม่มีข้อมูลแสกนประกบกับหมายเลขชีส";
                 _strRemark = "No data connect sheet  ";
                 _strScanResultUpdate = "NG";
@@ -799,7 +825,8 @@ function fn_ScanSMTSerialPcsP1() {
                 dtSerial[i].ROW_UPDATE = "Y";
                 _intCountNG = 1;
                 _bolError = true;
-              }else if(!hiddenParams.hfLotAll.includes(strSheetLot)){
+              // }else if(!hiddenParams.hfLotAll.includes(strSheetLot)){
+              }else if (hiddenParams.hfLotAll.indexOf(strSheetLot) >= 0) {
                 _strMessageUpdate = "Lot not same connect sheet" + _strTagNewLine + "ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                 _strRemark = "Lot not same connect sheet  ";
                 _strScanResultUpdate = "NG";
@@ -810,7 +837,7 @@ function fn_ScanSMTSerialPcsP1() {
                 _bolError = true;
               }
             }
-            if(!_bolError && hiddenParams.hfPlasmaCheck == 'Y'){
+            if(!_bolError && (hiddenParams.hfPlasmaCheck == 'Y')){
             let _dblPlasmaTime ;
               _dblPlasmaTime = await getData("GetPlasmaTimeBySerialNo", {
                 strSerial: _strSerial,
@@ -827,9 +854,10 @@ function fn_ScanSMTSerialPcsP1() {
                 dtSerial[i].ROW_UPDATE = "Y";
                 _intCountNG = 1;
                 _bolError = true;
-              }else if(parseFloat(hiddenParams.hfPlasmaTime) < _dblPlasmaTime){
-                _strMessageUpdate = "Plasma time over " + hfPlasmaTime.Value + " hr." + _strTagNewLine + "เวลาพลาสม่าเกิน " + hfPlasmaTime.Value + " ชม.";
-                _strRemark = "Plasma time over " + hfPlasmaTime.Value + " hr.";
+              }else if(parseFloat(hiddenParams.hfPlasmaTime) < parseInt(_dblPlasmaTime)){
+                console.log(parseInt(hiddenParams.hfPlasmaTime),':::::12345:::' ,parseInt(_dblPlasmaTime));
+                _strMessageUpdate = "Plasma time over " + hiddenParams.hfPlasmaTime + " hr." + _strTagNewLine + "เวลาพลาสม่าเกิน " + hiddenParams.hfPlasmaTime + " ชม.";
+                _strRemark = "Plasma time over " + hiddenParams.hfPlasmaTime + " hr.";
                 _strScanResultUpdate = "NG";
                 _strTestResultUpdate = _strTestResult;
                 dtSerial[i].REMARK_UPDATE = _strRemark;
