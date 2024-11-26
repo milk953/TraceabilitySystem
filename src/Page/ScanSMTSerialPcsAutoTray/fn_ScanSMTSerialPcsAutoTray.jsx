@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx';
 import { Tag } from "antd";
+import ExcelJS from "exceljs";
+import Swal from "sweetalert2";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanSMTSerialPcsAutoTray() {
 
@@ -119,6 +122,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
     const FINAL_GATE_MASTER_FLG = import.meta.env.VITE_FINAL_GATE_MASTER_FLG;
     const FINAL_GATE_MASTER_TIME = import.meta.env.VITE_FINAL_GATE_MASTER_TIME;
     const WORKING_START_TIME = import.meta.env.VITE_WORKING_START_TIME;
+
+    const { showLoading, hideLoading } = useLoading();
 
     useEffect(() => {
         PageLoad();
@@ -299,8 +304,16 @@ function fn_ScanSMTSerialPcsAutoTray() {
         settxtLot("");
         settxtLotDisabled(false);
         setpnlSerial(false);
+        settxtgvSerial("");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setselProduct(Productdata[0].prd_name);
+        settxtPackingNo("");
+        settxtPcsTray("");
         SetMode("LOT");
-        inputLot.current.focus();
+        setTimeout(() => {
+            inputLot.current.focus();
+        }, 200);
     };
 
     const handleChangeProduct = async (value) => {
@@ -360,6 +373,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
     const ibtPackingBackClick = () => {
         SetMode("PACK");
+        setgvScanResult(false);
+        setgvScanData([]);
+        setlblSerialNG("0");
     };
 
     const handleChangePcsTray = () => {
@@ -432,18 +448,27 @@ function fn_ScanSMTSerialPcsAutoTray() {
             settxtPackingNo("");
             settxtPackingNoDisabled(false);
             setpnlPackingGroup(true);
+            setlblLotTotal("0");
             setvisiblelog(false);
             setpnlSerial(false);
+            settxtgvSerial("");
             setgvSerialData([]);
-            if (inputPackingNo.current) {
+            setTimeout(() => {
                 inputPackingNo.current.focus();
-            }
+            }, 200);
         } else if (strType === "SERIAL") {
             settxtLotDisabled(true);
             setvisiblelog(false);
             setpnlSerial(true);
+            setgvScanResult(false);
+            setgvScanData([]);
+            setlblResult("");
+            setlblTime("");
             sethfMode("SERIAL");
             await getInitialSerial();
+            setTimeout(() => {
+                inputgvSerial.current[0].focus();
+            }, 200);
         } else if (strType === "SERIAL_ERROR") {
             settxtLotDisabled(true);
             setvisiblelog(true);
@@ -479,6 +504,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
         let _strScanResultAll = "OK";
         let _intRowSerial = 0;
         let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
+        showLoading("กำลังบันทึก กรุณารอสักครู่");
 
         if (!_bolTrayError) {
 
@@ -585,7 +611,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const end = parseInt(hfSerialEndDigit);
                             _strFixDigit = _strSerial.substring(start - 1, end);
 
-                            console.log(_strFixDigit, hfSerialDigit);
+                            console.log("1", _strFixDigit, hfSerialDigit);
                             if (_strFixDigit !== hfSerialDigit) {
                                 _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
@@ -603,6 +629,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 const start = parseInt(hfConfigStart);
                                 const end = parseInt(hfConfigEnd);
                                 _strConfigDigit = _strSerial.substring(start - 1, end);
+                                console.log("2", _strConfigDigit, hfConfigCode);
                                 if (_strConfigDigit !== hfConfigCode) {
                                     _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                     _strRemark = "Serial barcode mix product";
@@ -617,8 +644,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             }
                         }
 
-                        if (hfSerialStartCode.trim() !== "" && _strScanResultUpdate !== "NG") {
+                        if (hfSerialStartCode !== "" && _strScanResultUpdate !== "NG") {
                             if (_strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
+                                console.log("3", hfSerialStartCode.length, hfSerialStartCode);
                                 _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
                                 _strScanResultUpdate = "NG";
@@ -636,6 +664,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const start = parseInt(hfCheckStartSeqStart);
                             const end = parseInt(hfCheckStartSeqEnd);
                             _strStartSeq = _strSerial.substring(start - 1, end);
+                            console.log("4", _strStartSeq, hfCheckStartSeqCode);
                             if (_strStartSeq !== hfCheckStartSeqCode) {
                                 _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
@@ -700,6 +729,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const start = parseInt(hfCheckPrdShtStart);
                             const end = parseInt(hfCheckPrdShtEnd);
                             _strPrdSht = _strShtNo.substring(start - 1, end);
+                            console.log(_strShtNo, hfCheckPrdAbbr)
                             if (_strShtNo !== "" && hfCheckPrdAbbr !== _strPrdSht) {
                                 _strMessageUpdate = "Change serial barcode mix product / เปลี่ยนหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Change serial barcode mix product  ";
@@ -720,7 +750,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                                 _intCountNG = 1;
                                 _bolError = true;
-                            } else if (hfLotAll.indexOf(strSheetLot) <= 0) {
+                            } else if (hfLotAll && !hfLotAll.includes(strSheetLot)) {
                                 _strMessageUpdate = "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                                 _strRemark = "Lot not same connect sheet  ";
                                 _strScanResultUpdate = "NG";
@@ -767,6 +797,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                                 _intCountNG = 1;
                                 _bolError = true;
+                                console.log(parseFloat(hfPlasmaTime), "hfplasmatime")
                             } else if (parseFloat(hfPlasmaTime) < _dblPlasmaTime && hfPlasmaHideTime === "N") {
                                 _strMessageUpdate = "Plasma time over " + hfPlasmaTime + " hr. / เวลาพลาสม่าเกิน " + hfPlasmaTime + " ชม.";
                                 _strRemark = "Plasma time over " + hfPlasmaTime + " hr.";
@@ -1138,7 +1169,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
             }
         }
 
-        setlblLotTotal("0");
         let dtLotPassCount = [];
         let dtPackPassCount = [];
         if (hfCheckPackingNo === "Y") {
@@ -1159,6 +1189,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 });
             if (dtLotPassCount.length > 0) {
                 setlblLotTotal(dtLotPassCount);
+            } else {
+                setlblLotTotal("0");
             }
             if (dtPackPassCount.length > 0) {
                 const newLotCount = dtPackPassCount;
@@ -1183,12 +1215,13 @@ function fn_ScanSMTSerialPcsAutoTray() {
         if (!_bolTrayError) {
             setgvScanResult(true);
             setgvScanData(dtSerial);
-
-            if (gvScanData.length > 0) {
-                ExportGridToCSV();
-            }
         } else {
             setgvScanData([]);
+        }
+
+        console.log(gvScanData.length, "gvscanData")
+        if (gvScanData.length > 0) {
+            ExportGridToCSV('ELTResult.csv');
         }
 
         settxtPcsTray(hfSerialCountOriginal);
@@ -1196,6 +1229,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
         setlblLastTray("Not Use");
 
         getInitialSerial();
+
+        hideLoading();
     };
 
     const getInputSerial = async () => {
@@ -1482,51 +1517,103 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === nextIndex) {
                 btnSaveClick();
-                e.target.blur();
             }
         }
     };
 
     const btnHiddenClick = () => {
-        ExportGridToCSV();
+        ExportGridToCSV('ELTResult.csv');
     };
 
-    const dataTableexport = [...gvScanData];
-    const ExportGridToCSV = async () => {
-        const ScanResult = [
-            [
-                "No.",
-                "Serial No.",
-                "Re-Judgement 1",
-                "Result",
-                "Re-Judgement 2",
-                "Test Result",
-                "Scan Result",
-                "Remark",
-            ],
-            ...dataTableexport.map((item) => [
-                item.SEQ,
-                item.SERIAL,
-                item.REJECT,
-                item.TOUCH_UP,
-                item.REJECT2,
-                item.TEST_RESULT,
-                item.SCAN_RESULT,
-                item.REMARK,
-            ])
-        ];
+    //Export
+    const ExportGridToCSV = async (nameFile) => {
+        if (gvScanData.length <= 0) {
+            Swal.fire({
+                icon: "error",
+                title: "No Data Export!",
+            });
+        } else {
+            exportExcelFile(gvScanData, nameFile);
+        }
+    };
 
-        const ws = XLSX.utils.aoa_to_sheet(ScanResult);
-        const csvContent = XLSX.utils.sheet_to_csv(ws);
-        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const link = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.setAttribute('download', 'ELTResult.csv');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+    const exportExcelFile = (data, namefile) => {
+        const workbook = new ExcelJS.Workbook();
+        const sheet = workbook.addWorksheet("My Sheet");
+        sheet.properties.defaultRowHeight = 20;
+
+        // สร้างคอลัมน์แบบ dynamic
+        const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
+            header: key.toUpperCase(), // ทำให้ header เป็นตัวพิมพ์ใหญ่
+            key: key,
+            width: 10, // กำหนดขนาดความกว้างเริ่มต้น
+            style: { alignment: { horizontal: "center" } },
+        }));
+
+        sheet.columns = dynamicColumns;
+
+        // ถ้าไม่มีข้อมูลก็สร้างแถวว่าง
+        if (data.length === 0) {
+            const emptyRow = {};
+            dynamicColumns.forEach((col) => (emptyRow[col.key] = "")); // เติมค่าค่าว่าง
+            data.push(emptyRow);
+        }
+
+        // ใส่ข้อมูลลงใน sheet
+        data.forEach((row) => {
+            const newRow = sheet.addRow(row);
+            newRow.eachCell({ includeEmpty: true }, (cell) => {
+                // includeEmpty เพื่อให้ทุก cell รวมถึงที่ว่างมีเส้นขอบ
+                cell.alignment = { horizontal: "center" };
+
+                // เพิ่มเส้นขอบให้ทุก cell
+                cell.border = {
+                    top: { style: "thin" },
+                    left: { style: "thin" },
+                    bottom: { style: "thin" },
+                    right: { style: "thin" },
+                };
+            });
+        });
+
+        // จัดรูปแบบให้แถวแรก (header)
+        const firstRow = sheet.getRow(1);
+        firstRow.eachCell({ includeEmpty: true }, (cell) => {
+            cell.fill = {
+                type: "pattern",
+                pattern: "solid",
+                fgColor: { argb: "FFFF00" }, // สีพื้นหลังเหลือง
+            };
+            cell.font = {
+                name: "Roboto",
+                size: 9,
+                bold: true,
+            };
+
+            // เพิ่มเส้นขอบให้ header
+            cell.border = {
+                top: { style: "thin" },
+                left: { style: "thin" },
+                bottom: { style: "thin" },
+                right: { style: "thin" },
+            };
+        });
+
+        // กำหนดความกว้างของคอลัมน์ให้พอดีกับข้อความ
+        sheet.columns.forEach((column) => {
+            let maxWidth = column.header.length; // เริ่มต้นความกว้างจากความยาวของ header
+            data.forEach((row) => {
+                const cellValue = String(row[column.key] || ""); // แปลงค่าเป็นสตริง
+                maxWidth = Math.max(maxWidth, cellValue.length); // คำนวณความกว้างสูงสุด
+            });
+            column.width = maxWidth + 2; // เพิ่มขนาดพิเศษเล็กน้อยเพื่อความสบาย
+        });
+
+        // สร้างไฟล์ Excel
+        workbook.xlsx.writeBuffer().then((buffer) => {
+            const blob = new Blob([buffer], { type: "application/octet-stream" });
+            saveAs(blob, `${namefile}`);
+        });
     };
 
     return {

@@ -126,9 +126,10 @@ function fn_ScanSMTSerialShtConfirm() {
             })
                 .then((res) => {
                     strPrdName = res.data.prdName[0];
+                    console.log(res.data);
                 });
             console.log("PrdName:", strPrdName);
-            if (strPrdName !== "") {
+            if (strPrdName !== undefined) {
                 setlblLog("");
                 setvisiblelog(false);
                 settxtLotNo(strLot);
@@ -186,6 +187,7 @@ function fn_ScanSMTSerialShtConfirm() {
         settxtLotNo("");
         settxtLotDisabled(false);
         setpnlSerial(false);
+        settxtgvSerial("");
         setselProduct(Productdata[0].prd_name);
         setlblTotalSht("");
         setgvScanResult(false);

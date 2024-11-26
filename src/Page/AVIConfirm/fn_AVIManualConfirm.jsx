@@ -28,7 +28,7 @@ function fn_AVIManualConfirm() {
   let SearchDataTest = [];
   useEffect(() => {
     Pageload();
-    setUsername(localStorage.getItem("Username") || "");
+    setUsername(localStorage.getItem("IDCode") || "");
     setIp(localStorage.getItem("ipAddress") || "");
   }, []);
   async function Pageload() {
@@ -36,12 +36,12 @@ function fn_AVIManualConfirm() {
   }
   const btnRetrieveClick = async () => {
     if (pieceNo == "") {
-      Swal.fire({
-        title: "Please input serial no.",
-        icon: "warning",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      // Swal.fire({
+      //   title: "Please input serial no.",
+      //   icon: "warning",
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // });
       return;
     } else {
       setResultState(true);
@@ -58,23 +58,23 @@ function fn_AVIManualConfirm() {
   const btnSubmitClick = async () => {
     setLblResult("");
     if (resultSelect == "" || resultSelect == "--- SELECT ---") {
-      setLblResult("Please select result.");
-      Swal.fire({
-        title: "Please select result.",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      setLblResult("Please select Result.");
+      // Swal.fire({
+      //   title: "Please select result.",
+      //   icon: "error",
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // });
       return;
     }
     if (result == "") {
       setLblResult("Please input serial no.");
-      Swal.fire({
-        title: "Please input serial no.",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      // Swal.fire({
+      //   title: "Please input serial no.",
+      //   icon: "error",
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // });
       return;
     }
     for(let i = 0; i < result.length; i++){
@@ -161,7 +161,7 @@ function fn_AVIManualConfirm() {
     });
     setResult([]);
     setSeq(1);
-    setEltTypeSelect(eltType[0].elt_type);
+    // setEltTypeSelect(eltType[0].elt_type);
     setResultState(false);
     setResultSelect("--- SELECT ---");
     setPieceNo("");
@@ -200,14 +200,7 @@ function fn_AVIManualConfirm() {
         .then((res) => {
           if (res.status == 200) {
             result = res.data;
-            // setGetSearchData(res.data);
-            // setResult(res.data);
-            // setResultState(true);
-            // getData("updateData", {
-            //   serial: params.serial,
-            //   elttype: eltTypeSelect,
-            //   results: resultSelect,
-            //   ip: ip,
+          
             // });
           } else if (res.status == 204) {
             dataNotfound.push({ dataNotfound: params.serial });

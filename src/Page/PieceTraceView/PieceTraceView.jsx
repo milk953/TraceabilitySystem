@@ -86,21 +86,26 @@ function PieceTraceView() {
                                 <TableRow>
                                     <TableCell align="right" colSpan={4}>
                                         <Typography>
-                                            Sheet No. :
+                                            Piece No. :
                                         </Typography>
                                     </TableCell>
-                                    <TableCell align="center">
+                                    <TableCell align="left">
                                         <TextField
                                             // className="TxtField"
                                             size="small"
-                                            sx={{ width: "123%" }}
+                                            sx={{ width: "100%" }}
                                             value={txtSerialNo || ""}
                                             onChange={(e) => {
                                                 settxtSerialNo(e.target.value);
                                             }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    btnRetrive_Click();
+                                                }
+                                            }}
                                         />
                                     </TableCell>
-                                    <TableCell align="center">
+                                    <TableCell align="left">
                                         <Button
                                             variant="contained"
                                             sx={{ width: "20%" }}
@@ -148,7 +153,7 @@ function PieceTraceView() {
                     </div>
 
                     <div className="divTbProduct">
-                        <Table>
+                        <Table style={{marginRight: "120px"}}>
                             <TableBody>
                                 <TableRow>
                                     <TableCell>
@@ -160,7 +165,7 @@ function PieceTraceView() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
-                                            style={{ width: "194px" }}
+                                            style={{ width: "180px" }}
                                             value={txtProduct}
                                             onChange={(e) => {
                                                 settxtProduct(e.target.value);
@@ -222,7 +227,7 @@ function PieceTraceView() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
-                                            style={{ width: "194px" }}
+                                            style={{ width: "180px" }}
                                             value={txtPcsNo}
                                             onChange={(e) => {
                                                 settxtPcsNo(e.target.value);
@@ -238,7 +243,7 @@ function PieceTraceView() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
-                                            style={{ width: "194px" }}
+                                            style={{ width: "185px" }}
                                             value={txtShtType}
                                             onChange={(e) => {
                                                 settxtShtType(e.target.value);
@@ -266,16 +271,16 @@ function PieceTraceView() {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell rowSpan={"2"}>Type</TableCell>
-                                        <TableCell rowSpan={"2"}> Process</TableCell>
-                                        <TableCell colSpan={"3"}>Front side</TableCell>
-                                        <TableCell colSpan={"3"}>Back side</TableCell>
+                                        <TableCell rowSpan={"2"} style={{width: "200px"}}> Process</TableCell>
+                                        <TableCell colSpan={"3"} style={{width: "500px"}}>Front side</TableCell>
+                                        <TableCell colSpan={"3"} style={{width: "500px"}}>Back side</TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell>Result</TableCell>
-                                        <TableCell>C</TableCell>
+                                        <TableCell style={{width: "80px"}}>C</TableCell>
                                         <TableCell>Reg Time</TableCell>
                                         <TableCell>Result</TableCell>
-                                        <TableCell>C</TableCell>
+                                        <TableCell style={{width: "80px"}}>C</TableCell>
                                         <TableCell>Reg Time</TableCell>
                                     </TableRow>
                                 </TableHead>

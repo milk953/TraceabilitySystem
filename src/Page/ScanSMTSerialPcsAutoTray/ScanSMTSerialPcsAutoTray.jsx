@@ -52,8 +52,8 @@ function ScanSMTSerialPcsAutoTray() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
-                        marginTop: "-14px"
+                        marginLeft: "-6px",
+                        marginTop: "-10px"
                     }}
                 >
                     <TableContainer
@@ -97,7 +97,6 @@ function ScanSMTSerialPcsAutoTray() {
                                                     handleChangeLot();
                                                 }
                                             }}
-                                            onBlur={handleChangeLot}
                                         />
                                     </TableCell>
                                     <TableCell>
@@ -158,7 +157,6 @@ function ScanSMTSerialPcsAutoTray() {
                                                         handleChangePackingNo();
                                                     }
                                                 }}
-                                                onBlur={handleChangePackingNo}
                                             />
                                         </TableCell>
                                         <TableCell>
@@ -215,7 +213,6 @@ function ScanSMTSerialPcsAutoTray() {
                                                         handleChangePcsTray();
                                                     }
                                                 }}
-                                                onBlur={handleChangePcsTray}
                                             />
                                             <Typography style={{ marginLeft: "10px" }}>
                                                 {lblLastTray}
@@ -283,7 +280,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <TextField
-                                                        id="input_txt"
+                                                        className="input_txt"
                                                         size="small"
                                                         fullWidth
                                                         value={txtgvSerial[index] || ""}

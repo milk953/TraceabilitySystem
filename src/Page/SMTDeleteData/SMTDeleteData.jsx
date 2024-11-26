@@ -83,7 +83,7 @@ function SMTDeleteData() {
                     }}
                 >
                     <Table className="TbSMTDel">
-                        <TableHead sx={{backgroundColor: "#2E073F"}}>
+                        <TableHead sx={{ backgroundColor: "#2E073F" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
                                     <Typography variant="h6">
@@ -111,9 +111,11 @@ function SMTDeleteData() {
                                         onChange={(e) => {
                                             settxtSheetNo(e.target.value);
                                         }}
-                                        onBlur={() => {
-                                            if (txtSheetNo !== "") {
-                                                btnShtDeleteClick();
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                if (txtSheetNo !== "") {
+                                                    btnShtDeleteClick();
+                                                }
                                             }
                                         }}
                                     />
@@ -148,7 +150,7 @@ function SMTDeleteData() {
                     }}
                 >
                     <Table className="TbSMTDel">
-                        <TableHead sx={{backgroundColor: "#001F3F"}}>
+                        <TableHead sx={{ backgroundColor: "#001F3F" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
                                     <Typography variant="h6">
@@ -165,15 +167,17 @@ function SMTDeleteData() {
                                 <TableCell>
                                     <TextField
                                         className="customTxtField"
+                                        id="rollleaf"
                                         size="small"
                                         fullWidth
                                         value={txtRollLeaf}
                                         onChange={(e) => {
                                             settxtRollLeaf(e.target.value);
                                         }}
-                                        onBlur={() => {
-                                            if (txtRollLeaf !== "") {
-                                                btnShtDeleteClick();
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                btnRollDeleteClick();
+                                                
                                             }
                                         }}
                                     />
@@ -207,7 +211,7 @@ function SMTDeleteData() {
                     }}
                 >
                     <Table className="TbSMTDel">
-                        <TableHead sx={{backgroundColor: "#1A3636"}}>
+                        <TableHead sx={{ backgroundColor: "#1A3636" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
                                     <Typography variant="h6">
@@ -359,7 +363,7 @@ function SMTDeleteData() {
                     }}
                 >
                     <Table className="TbSMTDel">
-                        <TableHead sx={{backgroundColor: "#3B3030"}}>
+                        <TableHead sx={{ backgroundColor: "#3B3030" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
                                     <Typography variant="h6">

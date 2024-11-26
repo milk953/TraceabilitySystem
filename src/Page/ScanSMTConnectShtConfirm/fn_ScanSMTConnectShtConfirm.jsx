@@ -277,7 +277,8 @@ function fn_ScanSMTConnectShtConfirm() {
           drSerialCount = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          // Swal.fire("Error", error.message);
+          alert(error.message);
         });
       return drSerialCount;
     } else if (type == "SetConfirmConnectShtPcs") {
@@ -294,11 +295,12 @@ function fn_ScanSMTConnectShtConfirm() {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: error.message,
-          });
+        //   Swal.fire({
+        //     icon: "error",
+        //     title: "Error",
+        //     text: error.message,
+        //   });
+        alert(error.message);
         });
       return result;
     }
