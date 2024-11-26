@@ -37,7 +37,7 @@ function ScanAOISheetNo() {
         lblResult, lblResultcolor, gvScanResult, txtOperatorDisabled, txtTotalPcsDisabled, txtLeafDisabled, txtLayerDisabled, txtLotNoDisabled,
         inputOperator, inputTotalPcs, inputLeaf, inputLayer, inputLot, inputSerial, handleChangeOperator, ibtOperator_Click, handleChangeTotalPcs,
         handleChangeNo, ibtBack_Click, handleChangeLeaf, handleChangeLayer, ibtLayerBack_Click, handleChangeLotNo, ibtLotBack_Click, handleChangeSerial,
-        btnSave_Click, btnCancel_Click, columns, handleKeygvSerial
+        btnSave_Click, btnCancel_Click, columns, handleKeygvSerial, gvReject, columnsgvReject
     } = fn_ScanAOISheetNo();
 
     return (
@@ -50,7 +50,7 @@ function ScanAOISheetNo() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
+                        marginLeft: "-5px",
                         marginTop: "-10px"
                     }}
                 >
@@ -88,7 +88,10 @@ function ScanAOISheetNo() {
                                                 backgroundColor: txtOperatorDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             onChange={(e) => {
-                                                settxtOperator(e.target.value);
+                                                const newValue = e.target.value;
+                                                if (newValue.length <= 30) {
+                                                    settxtOperator(newValue);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -122,10 +125,13 @@ function ScanAOISheetNo() {
                                             disabled={txtTotalPcsDisabled}
                                             style={{
                                                 width: "80px",
-                                                backgroundColor: txtTotalPcsDisabled ? "#e0e0e0" : "inherit",
+                                                backgroundColor: txtTotalPcsDisabled ? "#e0e0e0" : "inherit"
                                             }}
                                             onChange={(e) => {
-                                                settxtTotalPcs(e.target.value);
+                                                const newValue = e.target.value;
+                                                if (/^\d*$/.test(newValue) && newValue.length <= 3) {
+                                                    settxtTotalPcs(newValue);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -147,8 +153,14 @@ function ScanAOISheetNo() {
                                             style={{
                                                 width: "80px"
                                             }}
+                                            // onChange={(e) => {
+                                            //     settxtNo(e.target.value);
+                                            // }}
                                             onChange={(e) => {
-                                                settxtNo(e.target.value);
+                                                const newValue = e.target.value;
+                                                if (/^\d*$/.test(newValue) && newValue.length <= 3) {
+                                                    settxtNo(newValue);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -380,6 +392,21 @@ function ScanAOISheetNo() {
                                 style={{ marginLeft: "35%", }}
                                 src={Pageimg} // Import the image
                                 alt="Description of the image"
+                            />
+                        </>
+                    )}
+
+                    {gvReject.visible && (
+                        <>
+                            <AntTable
+                                columns={columnsgvReject}
+                                dataSource={gvReject.value}
+                                rowKey={(record) => record.SEQ}
+                                style={{ width: '90%', marginLeft: "70px" }}
+                                pagination={false}
+                                size="small"
+                                bordered
+                                className="tableGvResult"
                             />
                         </>
                     )}
