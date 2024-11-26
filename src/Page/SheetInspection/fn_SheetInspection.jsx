@@ -33,13 +33,13 @@ function fn_SheetInspection() {
             setpnlGridWidth("1620px");
             setgvDataXOut(prevState => ({ ...prevState, visible: true }));
             setgvDataSheet(prevState => ({ ...prevState, visible: false }));
-            getDataXOutResult();
+            await getDataXOutResult();
             console.log()
         } else {
             setpnlGridWidth("1020px");
             setgvDataSheet(prevState => ({ ...prevState, visible: true }));
             setgvDataXOut(prevState => ({ ...prevState, visible: false }));
-            getDataXOutResult();
+            await getDataXOutResult();
         }
     };
 
@@ -165,6 +165,7 @@ function fn_SheetInspection() {
                 .then((res) => {
                     dtData = res.data;
                 });
+                console.log(dtData)
             setgvDataSheet(prevState => ({ ...prevState, value: dtData }));
         }
     };
