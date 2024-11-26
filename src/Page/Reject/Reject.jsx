@@ -131,7 +131,7 @@ function Reject() {
                   onChange={(e) => setLot(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      txtSerialnoChange();
+                      handleRetrice_Click();
                     }
                   }}
                 />
@@ -174,6 +174,7 @@ function Reject() {
               <TableCell sx={{ width: "200px" }}>
                 <input
                   value={txtOperator}
+                  id='txtOperatorReject'
                   onChange={(e) => setTxtOperator(e.target.value)}
                   style={{
                     width: "200px",

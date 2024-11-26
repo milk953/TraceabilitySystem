@@ -125,13 +125,7 @@ function AVIManualConfirm() {
         </div>
         <div className="DAVITableSecond">
           <Table className="AVITableSecond" component={Card}>
-            {/* <TableHead>
-              <TableRow>
-                <TableCell>Result</TableCell>
-                <TableCell>Operator</TableCell>
-                <TableCell colSpan={2}></TableCell>
-              </TableRow>
-            </TableHead> */}
+
             <TableBody>
               <TableRow>
                 <TableCell sx={{ textAlign: "right" }}>Result :</TableCell>
