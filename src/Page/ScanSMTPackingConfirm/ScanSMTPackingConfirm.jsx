@@ -61,7 +61,8 @@ function ScanSMTPackingConfirm() {
     ddlProduct_SelectedIndexChanged,
     handleSerialChange,
     lblRemark,
-    columns
+    columns,
+
   } = fn_ScanSMTPackingConfirm();
   return (
     <div>
@@ -142,11 +143,13 @@ function ScanSMTPackingConfirm() {
                     <TableCell align="right">
                       <Typography>Total Sheet. :</Typography>
                     </TableCell>
-                    <TableCell align="center" sx={{backgroundColor:'#d5f5e3 ' }}>
+                    <TableCell  sx={{width:'150px' }}>
                       {lblTotalSht.value}
                     </TableCell>
-                    <TableCell align="center" sx={{ backgroundColor:'#fcf3cf'}}>
-                      {lblShtCount.value}
+                    <TableCell 
+                    // align="center" 
+                    sx={{ color:'green'}}>
+                     OK :  {lblShtCount.value}
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -249,6 +252,7 @@ function ScanSMTPackingConfirm() {
                   </TableRow>
                 </TableBody>
               </Table>)}
+           
             </Grid>
             <Grid
               item
@@ -276,9 +280,9 @@ function ScanSMTPackingConfirm() {
               </>
               )} 
 
-             
+           
               <>
-                {pnlgvScanResult &&(
+                {lblResult.value !== "" &&(
                   <Paper
                     className=".Card-Result"
                     style={{
@@ -289,7 +293,7 @@ function ScanSMTPackingConfirm() {
                   >
                     <Typography
                       variant="h4"
-                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',color:lblResult.value !== "OK" ? '#BA0900' : '#059212',fontSize:'70px'}}
+                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',fontSize:'70px',color:'white'}}
                     >
                    
                    {lblResult.value}
@@ -297,7 +301,7 @@ function ScanSMTPackingConfirm() {
                     </Typography>
                     <Typography
                       variant="h4"
-                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',color: '#BA0900'}}
+                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',color:'white'}}
                     >
                    
                    {lblRemark.value}

@@ -18,10 +18,14 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
   return (
     <div>
       <Hearder />
-      <h1>SheetBinCheck</h1>
+      <h1></h1>
+   <div className="Pageshow-SheetBin">
         <div className="pnlMain1">
+         
           <Table id="TableMain1" component={Paper}>
+     
             <TableHead>
+              
               <TableRow>
                 <TableCell colSpan={3}>Sheet Bin Checking</TableCell>
               </TableRow>
@@ -76,7 +80,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
           
         </Table>
       </div>
-     
+     </div>
     </div>
   );
 }

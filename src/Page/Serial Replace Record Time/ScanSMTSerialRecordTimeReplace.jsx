@@ -32,6 +32,7 @@ import "./ScanSMTSerialRecordTimeReplace.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Common/StyleCommon.css";
+import  '../SheetBinChecking/SheetBinCheck.css'
 import {fn_ScanSMTSerialRecordTimeReplace} from './fn_ScanSMTSerialRecordTimeReplace'
 import { color } from "framer-motion";
 function ScanSMTSerialRecordTimeReplace() {
@@ -53,23 +54,17 @@ function ScanSMTSerialRecordTimeReplace() {
     handleSetSerial,
     lblGroup ,gvSerialReplace ,
     setlblSerial,fntxtSerialReplace,fntxtSerialRefer,
-    columns} =fn_ScanSMTSerialRecordTimeReplace()
+    columns,checkresult,fnddlProduct,BtnSubmit1_Cancel} =fn_ScanSMTSerialRecordTimeReplace()
   return (
     <div>
       <Hearder />
-      <h1>Replace Recode Time</h1>
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
               
              
-                <Typography
-                  variant="h5"
-                  style={ lblResult.style }
-                >
-                  {lblResult.value}
-                </Typography>
+               
            
               <Table
                 component={Card}
@@ -106,7 +101,7 @@ function ScanSMTSerialRecordTimeReplace() {
                             options={ddlProduct.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
-                               // inputRef={(el) => (fnddlProduct.current = el)}
+                               inputRef={(el) => (fnddlProduct.current = el)}
                                 {...params}
                               size="small"
                               sx={{ textAlign: "left" }}
@@ -191,6 +186,22 @@ function ScanSMTSerialRecordTimeReplace() {
                   </TableRow>
                 </TableBody>
               </Table>
+              {(checkresult  &&
+                <Paper
+                elevation={3}
+                className="Card-ResultSerialTime"
+                style={{backgroundColor: 
+                  lblResult.value === "Data Read Complete" || 
+                  lblResult.value === "Data record time save complete."
+                    ? "green"  
+                    : "red",   }}
+              >
+                <Typography style={{
+                    ...lblResult.style,fontSize:'30px'
+               }}>{lblResult.value}</Typography>
+           
+              </Paper>
+              )}
               {pnlgvSerialReplace &&(
               <Table
                 className="CSS-GvSerial"
@@ -243,10 +254,19 @@ function ScanSMTSerialRecordTimeReplace() {
                       >
                         Submit
                       </Button>
+                      &nbsp;&nbsp;
+                      <Button
+                        className="BtCancel"
+                        onClick={BtnSubmit1_Cancel}
+                      >
+                        CANCEL
+                      </Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>)}
+              {console.log(lblResult.value,"lblResult.value",lblResult.style)}
+              
               {/* <AntTable
                     columns={columns}
                     dataSource={gvRow.value}
@@ -257,14 +277,14 @@ function ScanSMTSerialRecordTimeReplace() {
                     // style={{width:'70%',display:gvRow.visble}}
                   /> */}
             </Grid>
-            {/* <Grid item xs={10} md={7} >             */}
-
-            {/* </Grid> */}
           </Grid>
         </Box>
+        
       </Card>
       {/* </Card> */}
+  
     </div>
+    
   );
 }
 

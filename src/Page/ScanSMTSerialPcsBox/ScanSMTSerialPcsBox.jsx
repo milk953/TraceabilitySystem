@@ -52,10 +52,9 @@ function ScanSMTSerialPcsBox() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        style={{ ...txtLot.style, backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit', // สีพื้นหลังเมื่อ disabled
+                        style={{ ...txtLot.style, backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit', 
                           }}
-                        disabled={txtLot.disbled} //true พิมไม่ได้
-                        //inputRef={fntxtLot}
+                        disabled={txtLot.disbled}
                         inputRef={(el) => (fntxtLot.current = el)}
                         value={txtLot.value}
                         onChange={(e) => {
@@ -69,7 +68,6 @@ function ScanSMTSerialPcsBox() {
                             txtLot_TextChanged();
                           }
                         }}
-                        //onBlur={txtLot_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack"
                       onClick={ibtBack_Click}
@@ -87,10 +85,8 @@ function ScanSMTSerialPcsBox() {
                       <FormControl fullWidth>
                         <Autocomplete
                          className="Select_dropDown"
-                            // inputRef={fc_SlProduct}
                           value={selectddlProduct.value}
-                        
-                          disabled={dis_ddlProduct} //true พิมไม่ได้
+                          disabled={dis_ddlProduct} 
                           sx={{
                             '& .MuiAutocomplete-input': {
                               backgroundColor: dis_ddlProduct ? '#e0e0e0' : 'inherit',
@@ -108,7 +104,6 @@ function ScanSMTSerialPcsBox() {
                           options={ddlProduct.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
-                            // inputRef={(el) => (fc_SlProduct.current = el)}
                               {...params}
                               size="small"
                               sx={{ textAlign: "left" }}
@@ -138,14 +133,12 @@ function ScanSMTSerialPcsBox() {
                         }}
 
                         style={{  backgroundColor: txtMachine.disbled ? '#e0e0e0' : 'inherit', }}
-                        disabled={txtMachine.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
+                        disabled={txtMachine.disbled} 
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtMachine_TextChanged();
                           }
                         }}
-                        //onBlur={txtMachine_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtMachineBack_Click}
@@ -172,14 +165,12 @@ function ScanSMTSerialPcsBox() {
                           }));
                         }}
                         style={{backgroundColor: txtOP.disbled ? '#e0e0e0' : 'inherit' }}
-                        disabled={txtOP.disbled} //true พิมไม่ได้
-                        // inputRef={fc_txtLotNo}
+                        disabled={txtOP.disbled} 
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtOP_TextChanged();
                           }
                         }}
-                        //onBlur={txtOP_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtOPBack_Click}
@@ -207,14 +198,12 @@ function ScanSMTSerialPcsBox() {
                         }}
                        
                         style={{ background: txtBox.disbled ? '#e0e0e0' : 'inherit'}}
-                        disabled={txtBox.disbled} //true พิมไม่ได้
-                        // inputRef={fntxtBox}
+                        disabled={txtBox.disbled} 
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtBox_TextChanged();
                           }
                         }}
-                        //onBlur={txtBox_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtBox_Click}
@@ -231,7 +220,6 @@ function ScanSMTSerialPcsBox() {
                       <TextField
                          className="input_txt"
                         size="small"
-                        // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
                         value={txtPack.value}
                         onChange={(e) => {
@@ -241,14 +229,13 @@ function ScanSMTSerialPcsBox() {
                           }));
                         }}
                         style={{backgroundColor: txtPack.disbled ? '#e0e0e0' : 'inherit' }}
-                        disabled={txtPack.disbled} //true พิมไม่ได้
+                        disabled={txtPack.disbled}
                         inputRef={fntxtPack}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtPack_TextChanged();
                           }
                         }}
-                        //onBlur={txtPack_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtPack_Click}
@@ -282,25 +269,25 @@ function ScanSMTSerialPcsBox() {
                         inputRef={(el) => (fntxtTray.current = el)}
                         value={txtPcsTray.value}
                         onChange={(e) => {
-                          settxtPcsTray((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
+                          const newValue = e.target.value;
+                          if (/^\d*$/.test(newValue)) {
+                            settxtPcsTray((prevState) => ({
+                              ...prevState,
+                              value: newValue,
+                            }));
+                          }
                         }}
                         style={{backgroundColor: txtPcsTray.disbled ? '#e0e0e0' : 'inherit',  width: "60px" }}
-                        disabled={txtPcsTray.disbled} //true พิมไม่ได้
-                        // // inputRef={fc_txtLotNo}
+                        disabled={txtPcsTray.disbled} 
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtPcsTray_TextChanged();
                           }
                         }}
-                        //onBlur={txtPcsTray_TextChanged}
                       ></TextField>
                       &nbsp; 
                       {lblLastTray.value}
                     </TableCell>
-                    {/* <TableCell style={{ width: "70px",}}></TableCell> */}
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography style={{color:'red'}}>NG :</Typography>
                     </TableCell>
@@ -360,12 +347,10 @@ function ScanSMTSerialPcsBox() {
                 {lblLog.value}
               </Paper>
               )} 
-              {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
               {pnlSerial && (
               <Table
                 className="CSS-GvSerial"
                 style={{ marginTop: "20px",
-                  //  display: gvSerial.visble
                    }}
                 component={Card}
               >
@@ -380,7 +365,6 @@ function ScanSMTSerialPcsBox() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody >
-                  {/* <TableRow> */}
 
                   {Array.from({ length: gvSerial.length }, (_, index) => (
                     
@@ -399,14 +383,11 @@ function ScanSMTSerialPcsBox() {
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
                           value={txtSerial[index]}
-                          //onBlur={(event) => {
-                          //   handleSerialChange(index, event);
-                           
-                          // }}
+                        
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
-                              event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
+                              event.preventDefault(); 
                               if (index < gvSerial.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
                               } else{
@@ -433,7 +414,6 @@ function ScanSMTSerialPcsBox() {
                 </TableBody>
               </Table>)}
             </Grid>
-            {/* border:'1PX SOLID green' */}
             <Grid
               item
               xs={10}
@@ -455,13 +435,12 @@ function ScanSMTSerialPcsBox() {
                   height: "300px",
                   marginBottom: "30px",
                 }}
-                src={Pageimg} // Import the image
+                src={Pageimg} 
                 alt="Description of the image"
               />
               </>
               )} 
 
-              {/* visiblegvScanResult */}
               {pnlgvScanResult && (
                 <>
                         <div style={{ display: "flex", gap: "10px", width: "100%" }}>

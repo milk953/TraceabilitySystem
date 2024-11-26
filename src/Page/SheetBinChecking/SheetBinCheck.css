@@ -8,6 +8,7 @@
     border: 1px red solid;
 }
 .pnlMain1 {
+
   display: flex;
   margin: auto;
   /* margin-top: 80px; */
@@ -49,4 +50,7 @@
 .txtField1 {
   width: 300px;
   padding: 1px;
+}
+.Pageshow-SheetBin{
+margin-top: 6%;
 }

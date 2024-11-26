@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import { color } from "framer-motion";
 import { Tag } from "antd";
+import { set } from "lodash";
 function fn_ScanSMTSerialRecordTimeReplace() {
   const [ddlProduct, setddlProduct] = useState([]);
   const [selectddlProduct, setselectddlProduct] = useState({
@@ -31,11 +32,11 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   });
   const [lblResult, setlblResult] = useState({
     value: "",
-    disbled: "",
+    visibled: false,
     style: {},
   });
   const [lblSerial, setlblSerial] = useState("");
-  
+  const [checkresult, setcheckresult] = useState(false);
   // data
   const [gvSerialReplace, setgvSerialReplace] = useState([]);
   // visible show
@@ -109,6 +110,8 @@ function fn_ScanSMTSerialRecordTimeReplace() {
 
   const fntxtSerialReplace = useRef([]);
   const fntxtSerialRefer = useRef([]);
+  const fnddlProduct = useRef([]);
+
   // UseEffect
   useEffect(() => {
     let ID = localStorage.getItem("ipAddress");
@@ -120,8 +123,12 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       await GetProductData();
     };
     fetchData();
-   
-    settxtSerialRefer((prevState) => ({...prevState,value: "",disbled: false,}));
+
+    settxtSerialRefer((prevState) => ({
+      ...prevState,
+      value: "",
+      disbled: false,
+    }));
     settxtSerialReplace((prevState) => ({
       ...prevState,
       value: "",
@@ -131,14 +138,14 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     setlblStartTime((prevState) => ({ ...prevState, value: "" }));
     sethfMaxSeq("0");
     setTimeout(() => {
-        fntxtSerialRefer.current.focus();
-      }, 300);
+      fntxtSerialRefer.current.focus();
+    }, 300);
   }, []);
 
   const GetProductData = async () => {
     await axios.get("/api/Common/GetProductData").then(async (res) => {
       let data = res.data.flat();
-      setddlProduct(data); 
+      setddlProduct(data);
       getProductSerialMaster(data[0].prd_name);
       setselectddlProduct((prevState) => ({
         ...prevState,
@@ -147,7 +154,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     });
   };
   const getProductSerialMaster = async (PrdName) => {
-    console.log(PrdName,"PrdName")
+    console.log(PrdName, "PrdName");
     let dtProductSerial = [];
     setHfSerialLength("0");
     setHfSerialFixFlag("N");
@@ -208,7 +215,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
-        console.log(res.data[0],"RESDATA : ")
+        console.log(res.data[0], "RESDATA : ");
         if (dtProductSerial != null) {
           setHfSerialLength(dtProductSerial.slm_serial_length);
           setHfSerialFixFlag(dtProductSerial.slm_fix_flag);
@@ -265,119 +272,148 @@ function fn_ScanSMTSerialRecordTimeReplace() {
           setHfCheckXrayOneTime(dtProductSerial.prm_sht_xray_1_time_flg);
           setHfCheckFinInspect(dtProductSerial.prm_fin_gate_inspect_flg);
           setHfCheckFinInspectProc(dtProductSerial.prm_fin_gate_inspect_proc);
-          setHfSerialCountOriginal(dtProductSerial.slm_serial_count);  
-       console.log(dtProductSerial,"dtProductSerial")
+          setHfSerialCountOriginal(dtProductSerial.slm_serial_count);
+          console.log(dtProductSerial, "dtProductSerial");
         }
-
       });
-     
+
     return 0;
   };
-
+  useEffect(() => {}, [lblGroup.value]);
   const txtSerialNo_TextChanged = async () => {
-    console.log("OK",txtSerialRefer.value,hfSerialLength)
+    console.log("OK", txtSerialRefer.value, hfSerialLength);
     setlblGroup((prevState) => ({ ...prevState, value: "" }));
     setlblStartTime((prevState) => ({ ...prevState, value: "" }));
     sethfMaxSeq("0");
-    await Search_Data();
-    if(lblGroup.value > 0){
-      console.log(lblGroup.value,"lblGroup.value")
-       if (lblGroup.value == "") {
+    let datalblGroup = await Search_Data();
+    console.log("search ma", datalblGroup);
+    if (
+      datalblGroup == "" ||
+      datalblGroup == null ||
+      datalblGroup == undefined
+    ) {
+      console.log(datalblGroup, "lblGroup.value");
       settxtSerialRefer((prevState) => ({ ...prevState, value: "" }));
       settxtSerialReplace((prevState) => ({ ...prevState, disbled: true }));
-      setTimeout(() => { fntxtSerialRefer.current.focus();}, 300);
-    }}else{
-    settxtSerialReplace((prevState) => ({...prevState,value: "",disbled: false,}));
-    setTimeout(() => {
-      fntxtSerialReplace.current.focus();
-    }, 300);
-    } 
-    
-   
-   
+      setTimeout(() => {
+        fntxtSerialRefer.current.focus();
+      }, 300);
+    } else {
+      settxtSerialReplace((prevState) => ({
+        ...prevState,
+        value: "",
+        disbled: false,
+      }));
+      setTimeout(() => {
+        fntxtSerialReplace.current.focus();
+      }, 300);
+    }
   };
   const Search_Data = async () => {
     let DBOpenFlg = false;
-    // let _strLotNo = txtSerialReplace.value.trim().toUpperCase();
-    // let _strSerialAll=input.trim().toUpperCase().replace(/\r\n/g, ',').split(',');
     let sbSql = [];
-
+    let datalblGroup;
     await axios
       .post("/api/SearchDataRecord", {
         dataList: {
           strPlantCode: FAC,
-          strSheetNo: txtSerialReplace.value.trim().toUpperCase(),
+          strSheetNo: txtSerialRefer.value,
         },
       })
       .then((res) => {
         sbSql = res.data;
-        console.log(res.data,"DATA")
+        console.log(res.data, "DATA");
       });
     if (sbSql.length > 0) {
+      datalblGroup = sbSql[0].group_no;
       setlblGroup((prevState) => ({ ...prevState, value: sbSql[0].group_no }));
-      setlblStartTime((prevState) => ({...prevState,value: sbSql[0].start_time,}));
-      sethfMaxSeq(sbSql[0].max_seq); setlblResult((prevState) => ({ ...prevState,value: "Data Read Complete",
-        style: { paddingTop: "6px", color: "black",fontWeight:'bold' },
+      setlblStartTime((prevState) => ({
+        ...prevState,
+        value: sbSql[0].start_time,
       }));
-    } else{
-      setlblResult((prevState) => ({...prevState,value: "Data record time not found",style: { paddingTop: "6px", color: "red",fontWeight:'bold' }}));
+      sethfMaxSeq(sbSql[0].max_seq);
+      // setlblResult((prevState) => ({
+      //   ...prevState,
+      //   value: "Data Read Complete",
+      //   style: { paddingTop: "10px", fontWeight: "bold", color: "white" },
+      // }));
+      setcheckresult(false);
+    } else {
+      setlblResult((prevState) => ({
+        ...prevState,
+        value: "Data record time not found",
+        style: { paddingTop: "10px", fontWeight: "bold", color: "white" },
+        visibled: true,
+      }));
+      setcheckresult(true);
     }
 
-   
+    return datalblGroup;
   };
   const txtSerialReplace_TextChanged = async () => {
     let _strSerial = txtSerialReplace.value.trim().toUpperCase();
     let _strRemark = "";
-   console.log(_strSerial.length,"มีค่า",parseInt(hfSerialLength, 10),hfSerialLength)
+
     if (_strSerial.length == parseInt(hfSerialLength, 10)) {
-   console.log("เข้า")
       let _strFixDigit = "";
-      console.log(hfSerialFixFlag,"hfSerialFixFlag")
       if (hfSerialFixFlag == "Y") {
         const startDigit = parseInt(hfSerialStartDigit, 10);
         const endDigit = parseInt(hfSerialEndDigit, 10);
         _strFixDigit = _strSerial.substring(startDigit - 1, endDigit);
-        console.log(_strFixDigit,"_strFixDigit",hfSerialDigit)
         if (_strFixDigit !== hfSerialDigit) {
-          console.log(_strFixDigit,"_strFixDigit1111",hfSerialDigit)
           _strRemark = "Serial barcode mix product";
+          setcheckresult(true);
         }
-        console.log(hfConfigCheck,"////",_strRemark)
+        console.log(hfConfigCheck, "////", _strRemark);
         if (hfConfigCheck == "Y" && _strRemark == "") {
-         
           let _strConfigDigit = "";
           const startConfig = parseInt(hfConfigStart, 10);
           const endConfig = parseInt(hfConfigEnd, 10);
           _strConfigDigit = _strSerial.substring(startConfig - 1, endConfig);
-          console.log(_strConfigDigit,"เข้าจ้า",_strConfigDigit,hfConfigCode)
+          console.log(
+            _strConfigDigit,
+            "เข้าจ้า",
+            _strConfigDigit,
+            hfConfigCode
+          );
           if (_strConfigDigit !== hfConfigCode) {
-            console.log("เข้ามาทำไมคะ")
             _strRemark = "Serial barcode mix product";
+            setcheckresult(true);
           }
         }
-        console.log(hfSerialStartCode,"HHHH",_strRemark,_strSerial)
+        console.log(hfSerialStartCode, "HHHH", _strRemark, _strSerial);
         if (hfSerialStartCode.trim() !== "" && _strRemark == "") {
-          console.log(_strSerial.substring(0, hfSerialStartCode.length),"HHHH333",hfSerialStartCode)
-          if ( _strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
+          console.log(
+            _strSerial.substring(0, hfSerialStartCode.length),
+            "HHHH333",
+            hfSerialStartCode
+          );
+          if (
+            _strSerial.substring(0, hfSerialStartCode.length) !==
+            hfSerialStartCode
+          ) {
             _strRemark = "Serial barcode mix product";
           }
         }
       }
       if (hfCheckStartSeq == "Y" && _strRemark == "") {
-        
         let _strStartSeq = "";
         _strStartSeq = _strSerial.substring(
           parseInt(hfCheckStartSeqStart) - 1, // ลดค่าเพื่อให้ตรงกับ 0-based index
-          parseInt(hfCheckStartSeqStart) - 1 + 
-          (parseInt(hfCheckStartSeqEnd) - parseInt(hfCheckStartSeqStart)) + 1
+          parseInt(hfCheckStartSeqStart) -
+            1 +
+            (parseInt(hfCheckStartSeqEnd) - parseInt(hfCheckStartSeqStart)) +
+            1
         );
-        
+
         if (_strStartSeq !== hfCheckStartSeqCode) {
           _strRemark = "Serial barcode mix product";
+          setcheckresult(true);
         }
       }
     } else {
       _strRemark = "Serial barcode not matching product";
+      setcheckresult(true);
     }
     if (_strRemark == "") {
       let InputSerial = await getInputSerial();
@@ -385,13 +421,21 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       setpnlgvSerialReplace(true);
       settxtSerialReplace((prevState) => ({ ...prevState, value: "" }));
     } else {
-      setlblResult((prevState) => ({...prevState,value: _strRemark, style: { paddingTop: "6px", color: "red",fontWeight:'bold' }}));
+      setlblResult((prevState) => ({
+        ...prevState,
+        value: _strRemark,
+        style: {
+          paddingTop: "10px",
+          fontWeight: "bold",
+          color: "white",
+          visibled: true,
+        },
+      }));
       settxtSerialReplace((prevState) => ({ ...prevState, value: "" }));
     }
-
     setTimeout(() => {
-        fntxtSerialReplace.current.focus();
-      }, 300);
+      fntxtSerialReplace.current.focus();
+    }, 300);
   };
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
@@ -399,45 +443,45 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     setTimeout(() => {
       fntxtSerialRefer.current.focus();
     }, 300);
-
   };
   const getInputSerial = async () => {
     let dtData = [];
-    let intRow = 0
-    let strFrontSide =""
-    let boolDuplicate = false
+    let intRow = 0;
+    let strFrontSide = "";
+    let boolDuplicate = false;
     for (let intSeq = 0; intSeq < gvSerialReplace.length; intSeq++) {
-      intRow +=1
+      intRow += 1;
       dtData.push({
-        SEQ: intRow ,
-        SERIAL_NO:  gvSerialReplace[intSeq].SERIAL_NO,
+        SEQ: intRow,
+        SERIAL_NO: gvSerialReplace[intSeq].SERIAL_NO,
       });
-      if(txtSerialReplace.value.trim().toUpperCase() == gvSerialReplace.SERIAL_NO ){
-        boolDuplicate = true
+      if (
+        txtSerialReplace.value.trim().toUpperCase() == gvSerialReplace.SERIAL_NO
+      ) {
+        boolDuplicate = true;
       }
     }
     if (!boolDuplicate) {
-      intRow +=1
+      intRow += 1;
       dtData.push({
-        SEQ: intRow ,
+        SEQ: intRow,
         SERIAL_NO: txtSerialReplace.value,
       });
       setlblResult((prevState) => ({
         ...prevState,
         value: "",
       }));
-  
+      setcheckresult(false);
       // เพิ่ม serial ใหม่เข้าไปใน gvSerialReplace เพื่อเก็บค่าที่ใส่เพิ่ม
       gvSerialReplace.push({
         SEQ: gvSerialReplace + 1,
-        SERIAL_NO: txtSerialReplace.value
+        SERIAL_NO: txtSerialReplace.value,
       });
-  
     } else {
       setlblResult((prevState) => ({
         ...prevState,
         value: "Serial no. duplicate.",
-        style: { paddingTop: "6px", color: "red", fontWeight: 'bold' },
+        style: { paddingTop: "10px", fontWeight: "bold", color: "white" },
       }));
     }
 
@@ -447,12 +491,11 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   const getUpdateSerial = async () => {
     let dtData = [];
 
-    let strFrontSide =""
-    let boolDuplicate = false
+    let strFrontSide = "";
+    let boolDuplicate = false;
     for (let intRow = 0; intRow < gvSerialReplace.length; intRow++) {
-    
       dtData.push({
-        SEQ: intRow+1 ,
+        SEQ: intRow + 1,
         SERIAL_NO: gvSerialReplace[intRow].SERIAL_NO,
       });
     }
@@ -461,12 +504,11 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   };
 
   const BtnSubmit1_Click = async () => {
-    let dtData = await getUpdateSerial() ;
-    for(let drRow = 0; drRow < dtData.length;drRow++){
-      console.log(dtData[drRow].SERIAL_NO,"SERIAL")
+    let dtData = await getUpdateSerial();
+    for (let drRow = 0; drRow < dtData.length; drRow++) {
+      console.log(dtData[drRow].SERIAL_NO, "SERIAL");
       await axios
-      .post("/api/SetInsert_SerialConfirm", 
-        {
+        .post("/api/SetInsert_SerialConfirm", {
           dataList: [
             {
               Plantcode: FAC,
@@ -474,23 +516,36 @@ function fn_ScanSMTSerialRecordTimeReplace() {
               DDL_PRODUCT: selectddlProduct.value,
               IP_ADDRESS: hfUserID,
               SEQ: dtData[drRow].SEQ,
-              txt_Serial:txtSerialRefer.value
-            }
-          ]
-        }
-      )
-      .then((res) => {
-        setlblResult((prevState) => ({...prevState,value: "Data record time save complete.", style: { paddingTop: "6px", color: "blue",fontWeight:'bold' }}));
-        setTimeout(() => {
-            txtSerialRefer.current.focus();
-          }, 300);
-          setgvSerialReplace([])
-        setpnlgvSerialReplace(false)
-        
-      });
+              txt_Serial: txtSerialRefer.value,
+            },
+          ],
+        })
+        .then((res) => {
+          setlblResult((prevState) => ({
+            ...prevState,
+            value: "Data record time save complete.",
+            style: { paddingTop: "10px", fontWeight: "bold", color: "white" },
+          }));
+          setcheckresult(true);
+          setgvSerialReplace([]);
+          setpnlgvSerialReplace(false);
+        });
     }
-  
+    setTimeout(() => {
+      fntxtSerialRefer.current.focus();
+    }, 300);
   };
+  const BtnSubmit1_Cancel = () =>{
+setpnlgvSerialReplace(false)
+setgvSerialReplace([])
+settxtSerialRefer((prevState) => ({ ...prevState, value: "" }));
+setlblGroup((prevState) => ({ ...prevState, value: "" }));
+setlblStartTime((prevState) => ({ ...prevState, value: "" }));
+setTimeout(() => {
+  fntxtSerialRefer.current.focus();
+}, 300);
+
+  }
 
   const handleSetSerial = async (index, event) => {
     // const newValues = [...txtSerialReplace.value];
@@ -513,12 +568,10 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       key: "Serial No.",
       align: "left",
       render: (text, record, index) => {
-          return text;
+        return text;
       },
     },
-    
   ];
-
 
   return {
     columns,
@@ -536,9 +589,16 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     pnlgvSerialReplace,
     lblStartTime,
     lblResult,
-    lblGroup ,
-    setlblSerial,lblSerial,handleSetSerial,
-    fntxtSerialReplace,fntxtSerialRefer,gvSerialReplace 
+    lblGroup,
+    setlblSerial,
+    lblSerial,
+    handleSetSerial,
+    fntxtSerialReplace,
+    fntxtSerialRefer,
+    gvSerialReplace,
+    checkresult,
+    fnddlProduct,
+    BtnSubmit1_Cancel
   };
 }
 

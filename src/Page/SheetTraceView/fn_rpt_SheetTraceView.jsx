@@ -1067,6 +1067,7 @@ function fn_rpt_SheetTraceView() {
                     })
                     .then((res) => {
                       dtData = res.data;
+                      console.log(res.data,"SPI1")
                     });
                     if(SPI_Maker == "CKD"){
                         PanelNo =  (intPcsNo - 1).toString().trim();
