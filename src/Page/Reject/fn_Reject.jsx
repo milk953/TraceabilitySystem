@@ -3,11 +3,12 @@ import axios from "axios";
 import { Checkbox } from "antd";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
+import {useLoading} from "../../loading/fn_loading";
 function fn_Reject() {
   //visible state
   const [pnlTouchupState, setPnlTouchupState] = useState(false);
   const [pnlTableDisplaySatate, setPnlTableDisplaySatate] = useState(false);
-
+  const {showLoading,hideLoading} = useLoading();
   //collection
   const [rejectCombo, setRejectCombo] = useState([]);
   const [txtSerialno, setTxtSerialno] = useState("");
@@ -69,7 +70,10 @@ function fn_Reject() {
   }
   const PageLoad = async () => {
     await getData("GetCombo");
+    let idCode = localStorage.getItem("IDCode");
+    setTxtOperator(idCode);  
     Setdisable("disable", "txtLotnoReject");
+    Setdisable("disable", "txtOperatorReject");
   };
   const txtSerialnoChange = async () => {
     await SearchData();
@@ -154,7 +158,6 @@ function fn_Reject() {
     setDtDataSearch([]);
     setPnlTableDisplaySatate(false);
     setLblResult({ text: "", styled: { color: "black" } });
-    setTxtOperator("");
     setCbSelected("------SELECT------");
     if (rdSelect == "rdLotNo") {
       setLot("");
@@ -210,12 +213,9 @@ function fn_Reject() {
 
       XLSX.writeFile(wb, filename);
     } else {
-      Swal.fire({
-        title: "Error",
+      setLblResult({
         text: "Please select data to export",
-        icon: "error",
-        timer: 2000,
-        showConfirmButton: false,
+        styled: { color: "red" },
       });
     }
   };
@@ -223,37 +223,29 @@ function fn_Reject() {
     await SearchData("", "");
   };
   const handleSubmit_Click = async () => {
-    // Swal  confirm btn
     if(rdSelect == "rdLotNo"){
       if (lot == "" || lot == " ") {
-        Swal.fire({
-          title: "Error",
+        setLblResult({
           text: "Please input lot no.",
-          icon: "error",
-          timer: 1500,
-          showConfirmButton: false,
+          styled: { color: "red" },
         });
+        SetFocus("txtLotnoReject");
         return;
       }
     }else if (rdSelect == "rdPcsno") {
       if (txtSerialno == "" || txtSerialno == " ") {
-        Swal.fire({
-          title: "Error",
+        setLblResult({
           text: "Please input serial no.",
-          icon: "error",
-          timer: 1500,
-          showConfirmButton: false,
+          styled: { color: "red" },
         });
+        SetFocus("txtPieceNoReject");       
         return;
       }
     }
     if (cbSelected == " " || cbSelected == "" || cbSelected == '------SELECT------') {
-      Swal.fire({
-        title: "Error",
-        text: "Please select reason ",
-        icon: "error",
-        timer: 1500,
-        showConfirmButton: false,
+      setLblResult({
+        text: "Please select Reason",
+        styled: { color: "red" },
       });
       return;
     }
@@ -262,10 +254,9 @@ function fn_Reject() {
         title: "Are you confirm submit?",
         text: "Are you sure to submit this data",
         icon: "warning",
-        showCancelButton: false,
-        confirmButtonText: "No",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
         cancelButtonText: "No",
-        timer: 2000,
       }).then((result) => {
         if (result.isConfirmed) {
           SubmitData();
@@ -277,24 +268,10 @@ function fn_Reject() {
           text: "Please input operator Code . ",
           styled: { color: "red" },
         });
-        Swal.fire({
-          title: "Error",
-          text: "Please input operator Code . ",
-          icon: "error",
-          timer: 2000,
-          showConfirmButton: false,
-        });
       } else if (cbSelected == "") {
         setLblResult({
-          text: "Please select reject code . ",
+          text: "Please select Reason ",
           styled: { color: "red" },
-        });
-        Swal.fire({
-          title: "Error",
-          text: "Please select reason ",
-          icon: "error",
-          timer: 2000,
-          showConfirmButton: false,
         });
       }
     }
@@ -335,13 +312,6 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
-          Swal.fire({
-            title: "Error",
-            text: error.message,
-            icon: "error",
-            timer: 2000,
-            showConfirmButton: false
-          });
         });
     } else if (Select == "GetSearchbySerialno") {
       await axios
@@ -376,14 +346,6 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
-
-          Swal.fire({
-            title: "Error",
-            text: error.message,
-            icon: "error",
-            timer: 2000,
-            showConfirmButton: false
-          });
         });
     } else if (Select == "GetSearchbyLot") {
       await axios
@@ -407,12 +369,9 @@ function fn_Reject() {
               styled: { color: "black" },
             });
           } else if (response.status == 404) {
-            Swal.fire({
-              title: "Not Found Data",
+            setLblResult({
               text: "Please input lot again !",
-              icon: "error",
-              timer: 2000,
-              showConfirmButton: false
+              styled: { color: "red" },
             });
           }
         })
@@ -422,16 +381,9 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
-          Swal.fire({
-            title: "Error",
-            text: error.message,
-            icon: "error",
-            timer: 2000,
-            showConfirmButton: false
-          });
         });
     } else if (Select == "SetSubmitData") {
-      console.log(params);
+      showLoading('กำลังบันทึก กรุณารอสักครู่')
       await axios
         .post(
           "/api/reject/setsubmitdata",
@@ -459,29 +411,32 @@ function fn_Reject() {
                 text: "Data Delete Complete..",
                 styled: { color: "black" },
               });
-              Swal.fire({
-                title: "Success",
-                text:  "Data Delete Complete.",
-                icon: "success",
-                timer: 2000,
-                showConfirmButton: false
-              });
-              setTimeout(() => {
+              
+              setTimeout(() => {                
                 SearchData("submit", lot);
+                hideLoading();
               }, 500);
+              
             } else {
+              
               setLblResult({
                 text: "Data save Complete.",
                 styled: { color: "black" },
               });
-              setTimeout(() => {
+              setTimeout(() => {                
                 SearchData("submit", lot);
+                hideLoading();
               }, 500);
+              
             }
           }
         })
         .catch((error) => {
-          Swal.fire("Error", error.message, "error");
+          hideLoading();
+          setLblResult({
+            text: error.message,
+            styled: { color: "red" },
+          });
         });
     }
   }

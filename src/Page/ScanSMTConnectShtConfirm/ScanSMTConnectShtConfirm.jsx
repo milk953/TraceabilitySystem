@@ -56,15 +56,6 @@ function ScanSMTConnectShtConfirm() {
       <Card
         component={Paper}
         className="Card-Common"
-        // style={{
-        //   margin: "auto",
-        //   width: "95%",
-        //   maxWidth: "1450px",
-        //   marginTop: "50px",
-        //   minHeight: "200px",
-        //   padding: "20px",
-        //   overflow: "auto",
-        // }}
       >
         <table>
           <tr>
@@ -134,7 +125,7 @@ function ScanSMTConnectShtConfirm() {
                       >
                         <tr
                           style={{
-                            background: "#8DECB4",
+                            // background: "#8DECB4",
                             width: "115px",
                             borderRadius: "5%",
                             height: "30px",
@@ -142,15 +133,17 @@ function ScanSMTConnectShtConfirm() {
                         >
                           <td> {lblTotalSht}</td>
                         </tr>
+                        
                         <tr
                           style={{
-                            background: "#FFF5E0",
+                            // background: "#FFF5E0",
                             width: "115px",
                             borderRadius: "5%",
                             height: "30px",
+                            color: "green",
                           }}
                         >
-                          <td>{lblShtCount}</td>
+                          <td>OK : {lblShtCount}</td>
                         </tr>
                       </table>
                     </TableCell>

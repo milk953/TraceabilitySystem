@@ -4,7 +4,7 @@ import Hearder from "../Header/Header";
 import { fn_ReJudgement } from "./fn_ReJudgement";
 import "../Common/StyleCommon.css";
 import excel from "/src/assets/excel.png";
-import { Table as AntTable, Select,Button,Avatar } from "antd";
+import { Table as AntTable, Select, Button, Avatar } from "antd";
 import {
   Table,
   Paper,
@@ -43,7 +43,7 @@ function ReJudgement() {
     FcSerial,
     handleExport,
     columns,
-    btnCancelClick
+    btnCancelClick,
   } = fn_ReJudgement();
   useEffect(() => {
     if (serialState == true) {
@@ -61,12 +61,16 @@ function ReJudgement() {
         <Table className="ReJudgementTableFirst" component={Card}>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ textAlign: "center" }} colSpan={4}>Re-Judgement</TableCell>
+              <TableCell sx={{ textAlign: "center" }} colSpan={4}>
+                Re-Judgement
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell sx={{ width: "130px",textAlign:'right' }}>Piece No. 1,2,3,...</TableCell>
+              <TableCell sx={{ width: "130px", textAlign: "right" }}>
+                Piece No. 1,2,3,...
+              </TableCell>
               <TableCell sx={{ width: "30px" }}>
                 <Radio
                   checked={rdSelect === "rdPcsno"}
@@ -101,8 +105,8 @@ function ReJudgement() {
                 sx={{ verticalAlign: "middle", textAlign: "center" }}
               >
                 <Button
-                   type="primary"
-                   icon={<SearchOutlined />}
+                  type="primary"
+                  icon={<SearchOutlined />}
                   onClick={btnRetrieveClick}
                 >
                   Search
@@ -117,7 +121,9 @@ function ReJudgement() {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell sx={{ textAlign: "center",textAlign:'right' }}>Lot No.</TableCell>
+              <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+                Lot No.
+              </TableCell>
               <TableCell>
                 <Radio
                   checked={rdSelect === "rdLotNo"}
@@ -140,7 +146,7 @@ function ReJudgement() {
                   onChange={(e) => setLot(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      txtSerialnoChange();
+                      btnRetrieveClick();
                     }
                   }}
                 />
@@ -153,7 +159,9 @@ function ReJudgement() {
       <Table className="ReJudgementTableSecond" component={Card}>
         <TableBody>
           <TableRow>
-            <TableCell sx={{ textAlign: "center" ,textAlign:'right' }}>Reason : </TableCell>
+            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+              Reason :{" "}
+            </TableCell>
             <TableCell>
               {" "}
               <Select
@@ -175,10 +183,13 @@ function ReJudgement() {
                 }))}
               />
             </TableCell>
-            <TableCell sx={{ textAlign: "center",textAlign:'right' }}>Operator : </TableCell>
+            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+              Operator :{" "}
+            </TableCell>
             <TableCell>
               <input
                 value={txtOperator}
+                id="txtOperatorRejudege"
                 onChange={(e) => setTxtOperator(e.target.value)}
                 style={{
                   width: "120px",
@@ -191,7 +202,9 @@ function ReJudgement() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ textAlign: "center",textAlign:'right'  }}>Re-Judgement : </TableCell>
+            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+              Re-Judgement :
+            </TableCell>
             <TableCell>
               <Select
                 style={{
@@ -204,16 +217,22 @@ function ReJudgement() {
                   setCbReJustment(value);
                 }}
                 options={[
-                  { value: "------ SELECT ------", label: "------ SELECT ------" },
+                  {
+                    value: "------ SELECT ------",
+                    label: "------ SELECT ------",
+                  },
                   { value: "OK", label: "OK" },
                   { value: "NG", label: "NG" },
                   { value: "DELETE", label: "DELETE" },
                 ]}
               />
             </TableCell>
-            <TableCell sx={{ textAlign: "center" ,textAlign:'right' }}>Qualified : </TableCell>
+            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+              Qualified :{" "}
+            </TableCell>
             <TableCell>
               <input
+                id="txtQualifiedRejudege"
                 value={txtQualified}
                 onChange={(e) => setTxtQualified(e.target.value)}
                 style={{
@@ -227,20 +246,20 @@ function ReJudgement() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ textAlign: "center"}} colSpan={4}>
+            <TableCell sx={{ textAlign: "center" }} colSpan={4}>
               <Button
-               style={{
-                backgroundColor: "green",
-                width: "90px",
-                color: "white",
-              }}
+                style={{
+                  backgroundColor: "green",
+                  width: "90px",
+                  color: "white",
+                }}
                 onClick={btnSubmitClick}
               >
                 Submit
               </Button>
               &nbsp;
               <Button
-                  icon={<Avatar shape="square" src={excel} size="small" />}
+                icon={<Avatar shape="square" src={excel} size="small" />}
                 onClick={handleExport}
               >
                 Export
