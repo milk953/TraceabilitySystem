@@ -262,6 +262,9 @@ function fn_ScanSMTSerialPcsP1() {
 
   const ibtBack_Click = () => {
     setddlProductState(false);
+    console.log(ddlproduct)
+    setlblResultState(false);
+    setProductSelected(ddlproduct[0].prd_name);
     setScanLot("");
     Setdisable("enable", "P1FGScanLot");
     setpanalSerialState(false);
@@ -480,6 +483,7 @@ function fn_ScanSMTSerialPcsP1() {
         (hiddenParams.hfSerialEndDigit = data[0].slm_fix_end_digit),
         (hiddenParams.hfTrayFlag = data[0].slm_tray_flag),
         (hiddenParams.hfTrayLength = data[0].slm_tray_length),
+        
         (hiddenParams.hfTestResultFlag = data[0].slm_test_result_flag),
         // (hiddenParams.hfSerialCount = data[0].slm_serial_count), // เปลี่ยนกลับ
         (hiddenParams.hfSerialCount = 3),
@@ -520,6 +524,7 @@ function fn_ScanSMTSerialPcsP1() {
         (hiddenParams.hfSerialStartCode = data[0].prm_serial_start_code),
         (hiddenParams.hfSerialInfo = data[0].prm_additional_info);
     }
+    console.log(data)
   }
   function Setdisable(type, txtField) {
     if (type == "disable") {
@@ -611,30 +616,12 @@ function fn_ScanSMTSerialPcsP1() {
     let _strScanResultAll = "OK";
     let _intRowSerial = 0;
     if(!_bolTrayError){
-      // for (let i = 0; i < dtSerial.length; i++) {
-      //   await axios
-      //     .post("/api/common/GetSerialTestResultManyTable", {
-      //       dataList: [
-      //         {
-      //           strPlantCode: Fac,
-      //           strPrdname: _strPrdName,
-      //           strWeekCodeType: hiddenParams.hfWeekCodeType,
-      //           strSerial: dtSerial[i].SERIAL,
-      //         },
-      //       ],
-      //       dtSerial: dtSerial[i],
-      //     })
-      //     .then((res) => {
-      //       dtSerial[i] = res.data;
-      //     });
-      // }
       let dtResponse = await getData("GetSerialTestResultManyTable", {
         dataList: [
           {
             strPlantCode: Fac,
             strPrdname: _strPrdName,
             strWeekCodeType: hiddenParams.hfWeekCodeType,
-            // strSerial: '',
           },
         ],
         dtSerial: dtSerial,
@@ -784,25 +771,40 @@ function fn_ScanSMTSerialPcsP1() {
               }
             }
             if(!_bolError){
-              for(let _intRow = _intRowSerial+1; _intRow < dtSerial.length; _intRow++){
-                if(_strSerial == dtSerial[_intRow].SERIAL){
-                  _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
-                  _strRemark = "Serial duplicate in tray  ";
-                  _strScanResultUpdate = "NG";
-                  _strTestResultUpdate = _strTestResult;
-                  dtSerial[_intRow].REMARK_UPDATE = _strRemark; 
-                  dtSerial[_intRow].ROW_UPDATE = "N";
-                  _intCountNG = 1;
-                  _bolError = true;
-                }
+              // for(let _intRow = _intRowSerial+1; _intRow < dtSerial.length; _intRow++){
+              //   if(_strSerial == dtSerial[_intRow].SERIAL){
+              //     _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+              //     _strRemark = "Serial duplicate in tray  ";
+              //     _strScanResultUpdate = "NG";
+              //     _strTestResultUpdate = _strTestResult;
+              //     dtSerial[_intRow].REMARK_UPDATE = _strRemark; 
+              //     dtSerial[_intRow].ROW_UPDATE = "N";
+              //     _intCountNG = 1;
+              //     _bolError = true;
+              //   }
+              // }
+              let isDuplicate = dtSerial.some((item, index) => {
+                _intCountNG = 1;
+                console.log(`Checking duplicate ${index+1}: ${item.SERIAL} -----  ${_strSerial}`);
+                return (
+                  index !== _intRowSerial &&
+                  _strSerial ===
+                    item.SERIAL
+                );
+              });
+              if (isDuplicate) {
+                _strMessageUpdate =
+                  "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+                _strRemark = "Serial duplicate in tray  ";
+                _strScanResultUpdate = "NG";
+                _strTestResultUpdate = _strTestResult;
+                dtSerial[i].REMARK_UPDATE = _strRemark;
+                dtSerial[i].ROW_UPDATE = "N";
+                _intCountNG = 1;
+                _bolError = true;
               }
             }
             if (!_bolError && hiddenParams.hfCheckPrdSht == 'Y'){
-              // let strSheetLot ='';
-              // let _strShtNo_V = await getData("GetSheetNoBySerialNo", _strSerial);
-              
-              // let _strShtNo = _strShtNo_V._strsheet
-              // strSheetLot = _strShtNo_V.lot_no;
               const { response: _strShtNo, response2: strSheetLot } = await getData(
                 "GetSheetNoBySerialNo",
                 _strSerial
@@ -892,6 +894,7 @@ function fn_ScanSMTSerialPcsP1() {
               }
             }
             if(!_bolError){
+              console.log(hiddenParams.hfTestResultFlag,'HfResultflg',);
               if(hiddenParams.hfTestResultFlag == 'Y'){
                 if(_strTouchUp == 'NG'){
                   if(_strTestResult == 'NG'){
@@ -1010,7 +1013,7 @@ function fn_ScanSMTSerialPcsP1() {
         });
       }else {
         setLblResult({
-          value: '',
+          value: 'OK',
           styled: { color: "white" },
         });
       }
@@ -1058,6 +1061,7 @@ function fn_ScanSMTSerialPcsP1() {
     if(!_bolTrayError){
       setGvSerialResult(dtSerial);
       setlblResultState(true);
+      setHideImg(false);
       // if(hiddenParams.hfExportCSV == 'Y'){
 
       // }

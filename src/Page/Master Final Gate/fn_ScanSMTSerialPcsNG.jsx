@@ -1138,38 +1138,25 @@ function fn_ScanSMTSerialPcsNG() {
                   }
                 }
                 if (!_bolError) {
+                  console.log(hfTestResultFlag, "hfTestResultFlag");
                   if (hfTestResultFlag == "Y") {
                     if (_strTouchUp == "NG" && _strRejectGroup != "MASTER") {
                       if (_strTestResult == "OK") {
-                        _strMessageUpdate =
-                          "Touch up result was fail / ผล Touch up ชิ้นงานแสดงไม่ผ่าน";
+                        _strMessageUpdate ="Touch up result was fail / ผล Touch up ชิ้นงานแสดงไม่ผ่าน";
                       } else {
-                        _strMessageUpdate =
-                          "Touch up result was fail " +
-                          _strTypeTestResult +
-                          "/ ผล Touch up ชิ้นงานแสดงไม่ผ่าน " +
-                          _strTypeTestResult;
+                        _strMessageUpdate ="Touch up result was fail " +_strTypeTestResult +"/ ผล Touch up ชิ้นงานแสดงไม่ผ่าน " +_strTypeTestResult;
                       }
-                      _strRemark =
-                        "Touch up result was fail" + _strTypeTestResult;
+                      _strRemark ="Touch up result was fail" + _strTypeTestResult;
                       _strScanResultUpdate = "NG";
                       _strTestResultUpdate = _strTestResult;
                       dtSerial[i].REMARK_UPDATE = _strRemark;
                       dtSerial[i].ROW_UPDATE = "Y";
                       _bolError = true;
-                    } else if (
-                      _strTouchUp == "NO" &&
-                      _strRejectGroup != "MASTER"
-                    ) {
+                    } else if (_strTouchUp == "NO" && _strRejectGroup != "MASTER") {
                       if (_strTestResult == "OK") {
-                        _strMessageUpdate =
-                          "Not found touch up result / ไม่พบผล Touch up ชิ้นงาน";
+                        _strMessageUpdate ="Not found touch up result / ไม่พบผล Touch up ชิ้นงาน";
                       } else {
-                        _strMessageUpdate =
-                          "Not found touch up result " +
-                          _strTypeTestResult +
-                          "/ ไม่พบผล Touch up ชิ้นงาน " +
-                          _strTypeTestResult;
+                        _strMessageUpdate ="Not found touch up result " +_strTypeTestResult +"/ ไม่พบผล Touch up ชิ้นงาน " +_strTypeTestResult;
                       }
                       _strRemark = "Not found touch up result";
                       _strScanResultUpdate = "NG";
@@ -1184,13 +1171,8 @@ function fn_ScanSMTSerialPcsNG() {
                         dtSerial[i].REMARK_UPDATE = _strRemark;
                         dtSerial[i].ROW_UPDATE = "Y";
                       } else {
-                        _strMessageUpdate =
-                          "Duplicate scan serial " +
-                          _strTypeTestResult +
-                          "/ แสกนบาร์โค้ดของชิ้นงานซ้ำ" +
-                          _strTypeTestResult;
-                        _strRemark =
-                          "Duplicate scan serial " + _strTypeTestResult;
+                        _strMessageUpdate ="Duplicate scan serial " +_strTypeTestResult +"/ แสกนบาร์โค้ดของชิ้นงานซ้ำ" +_strTypeTestResult;
+                        _strRemark ="Duplicate scan serial " + _strTypeTestResult;
                         _strScanResultUpdate = "NG";
                         _strTestResultUpdate = _strTestResult;
 
@@ -1198,12 +1180,8 @@ function fn_ScanSMTSerialPcsNG() {
                         dtSerial[i].ROW_UPDATE = "Y";
                         _bolError = true;
                       }
-                    } else if ((_strTestResult = "NG")) {
-                      _strMessageUpdate =
-                        "Test result was fail " +
-                        _strTypeTestResult +
-                        "/ ผลทดสอบชิ้นงานแสดงไม่ผ่าน " +
-                        _strTypeTestResult;
+                    } else if ((_strTestResult == "NG")) {
+                      _strMessageUpdate ="Test result was fail " +_strTypeTestResult +"/ ผลทดสอบชิ้นงานแสดงไม่ผ่าน " +_strTypeTestResult;
                       _strRemark = "Test result was fail" + _strTypeTestResult;
                       _strScanResultUpdate = "NG";
                       _strTestResultUpdate = _strTestResult;
@@ -1212,13 +1190,8 @@ function fn_ScanSMTSerialPcsNG() {
                       dtSerial[i].ROW_UPDATE = "Y";
                       _bolError = true;
                     } else {
-                      _strMessageUpdate =
-                        "Not found test result " +
-                        _strTypeTestResult +
-                        "/ ไม่พบผลทดสอบชิ้นงาน " +
-                        _strTypeTestResult;
-                      _strRemark =
-                        "Not found test result " + _strTypeTestResult;
+                      _strMessageUpdate ="Not found test result " +_strTypeTestResult +"/ ไม่พบผลทดสอบชิ้นงาน " +_strTypeTestResult;
+                      _strRemark ="Not found test result " + _strTypeTestResult;
                       _strScanResultUpdate = "NG";
                       _strTestResultUpdate = _strTestResult;
 
@@ -1234,14 +1207,8 @@ function fn_ScanSMTSerialPcsNG() {
                       dtSerial[i].REMARK_UPDATE = _strRemark;
                       dtSerial[i].ROW_UPDATE = "Y";
                     } else {
-                      _strMessageUpdate =
-                        "Duplicate scan serial " +
-                        _strTypeTestResult +
-                        '/' +
-                        "แสกนบาร์โค้ดของชิ้นงานซ้ำ" +
-                        _strTypeTestResult;
-                      _strRemark =
-                        "Duplicate scan serial " + _strTypeTestResult;
+                      _strMessageUpdate ="Duplicate scan serial " +_strTypeTestResult +'/' +"แสกนบาร์โค้ดของชิ้นงานซ้ำ" +_strTypeTestResult;
+                      _strRemark ="Duplicate scan serial " + _strTypeTestResult;
                       _strScanResultUpdate = "NG";
                       _strTestResultUpdate = _strTestResult;
 

@@ -15,6 +15,7 @@ import "./ScanSMTSerialPcsNG.css";
 import { Typography ,Table as AntTable  } from "antd";
 import { fn_ScanSMTSerialPcsNG } from "./fn_ScanSMTSerialPcsNG";
 import Pageimg from "/src/assets/1.jpg";
+import "../Common/StyleCommon.css";
 function ScanSMTSerialPcsNG() {
   const {
     hideImg,
@@ -49,18 +50,18 @@ function ScanSMTSerialPcsNG() {
   return (
     <div>
       <Header />
-      <h1>ScanSMTRoollSht</h1>
       <Card
         component={Paper}
-        style={{
-          margin: "auto",
-          width: "95%",
-          maxWidth: "1450px",
-          marginTop: "50px",
-          minHeight: "200px",
-          padding: "20px",
-          overflow: "auto",
-        }}
+        // style={{
+        //   margin: "auto",
+        //   width: "95%",
+        //   maxWidth: "1450px",
+        //   marginTop: "50px",
+        //   minHeight: "200px",
+        //   padding: "20px",
+        //   overflow: "auto",
+        // }}
+      className="Card-Common"
       >
         <table>
           <tr>
