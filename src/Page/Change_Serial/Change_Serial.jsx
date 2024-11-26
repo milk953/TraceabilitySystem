@@ -94,11 +94,14 @@ function Change_Serial() {
                         fullWidth
                         value={txtTotalPcs.value}
                         onChange={(e) => {
+                          const inputValue = e.target.value.trim(); 
+                          const numericValue = inputValue.replace(/\D/g, ""); 
                           setTxtTotalPcs((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: numericValue, 
                           }));
                         }}
+                        
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtTotalPcs_TextChanged();
