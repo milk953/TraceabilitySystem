@@ -77,7 +77,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                             txtLot_TextChanged();
                           }
                         }}
-                        onBlur={txtLot_TextChanged}
+                       // onBlur={txtLot_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack"
                       onClick={ibtBack_Click}
@@ -154,7 +154,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                             txtMachine_TextChanged();
                           }
                         }}
-                        onBlur={txtMachine_TextChanged}
+                        //onBlur={txtMachine_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack"
                       onClick={ibtMachineBack_Click}
@@ -188,7 +188,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                             txtOP_TextChanged();
                           }
                         }}
-                        onBlur={txtOP_TextChanged}
+                        //onBlur={txtOP_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtOPBack_Click}
@@ -222,7 +222,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                             txtBox_TextChanged();
                           }
                         }}
-                        onBlur={txtBox_TextChanged}
+                        //onBlur={txtBox_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtBox_Click}
@@ -256,7 +256,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                             txtPack_TextChanged();
                           }
                         }}
-                        onBlur={txtPack_TextChanged}
+                        //onBlur={txtPack_TextChanged}
                       ></TextField>
                       <Button className="Bt_ibtBack" 
                       onClick={ibtPack_Click}
@@ -303,7 +303,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                             txtPcsTray_TextChanged();
                           }
                         }}
-                        onBlur={txtPcsTray_TextChanged}
+                        //onBlur={txtPcsTray_TextChanged}
                       ></TextField>
                       &nbsp; 
                       {lblLastTray.value}
@@ -417,10 +417,10 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                           fullWidth
                           inputRef={(el) => (fc_txtSerial.current[index] = el)}
                           value={txtSerial[index]}
-                          onBlur={(event) => {
-                            handleSerialChange(index, event);
+                          // onBlur={(event) => {
+                          //   handleSerialChange(index, event);
                            
-                          }}
+                          // }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {

@@ -282,7 +282,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   ];
 
   const txtLot_TextChanged = async () => {
-    console.log(txtLot.value,"txtLot.value")
     if (txtLot.value !== "") {
       let _strPrdName = "";
       let _strLot = "";
@@ -304,7 +303,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           await axios
             .post("/api/Common/getSerialPassByLot", {
               strLotNo: _strLot,
-              strPlantCode: "5",
+              strPlantCode: FAC,
             })
             .then((res) => {
               dtLotPassCount = res.data.lotcount;
@@ -312,7 +311,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               setlblSerialNG((prevState) => ({ ...prevState, value: "0" }));
             });
           if (dtLotPassCount.length > 0) {
-            console.log(dtLotPassCount,"dtLotPassCount")
             setlblLotTotal((prevState) => ({...prevState, value: dtLotPassCount,}));
           }
           let dtLotProduct = [];
@@ -567,7 +565,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
-        console.log(res.data[0],"DATAPR1")
         if (dtProductSerial != null) {
           setHfSerialLength(dtProductSerial.slm_serial_length);
           serial_length = dtProductSerial.slm_serial_length;
@@ -646,7 +643,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
       .then((res) => {
         dtProductBox = res.data[0];
-        console.log(dtProductBox,"dtProductBox1")
         if (dtProductBox != "") {
        
           if (
@@ -889,7 +885,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
      
         break;
       case "BOX":
-        console.log("เข้าเนี่ยยยย")
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
         settxtBox((prevState) => ({
           ...prevState,
@@ -1149,28 +1144,34 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       let _strError = "";
       let _dblBoxQty = 0;
       let _strBox;
+      let datalbTotal = 0;
+      let datalblFull = 0;
 
       _strBox = txtBox.value.toUpperCase().split(";");
       if (_strBox.length > 1) {
         _strItem = _strBox[0];
         _strBoxNo = _strBox[1];
+        let dataBOX_COUNT=0
         await axios
               .post("/api/Common/GetBoxCount", {
                 prdName: selectddlProduct.value,
                 boxNo: _strBoxNo,
               })
               .then((res) => {
-                console.log(res.data,"มาแล้วววววววว")
-                _dblBoxQty = res.data[0].BOX_QTY;
-                let data = res.data[0].BOX_COUNT
-            if (data <= 0) {
-              _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
-            } else {
-              setlblBoxFull((prevState) => ({...prevState, value: _dblBoxQty,}));
-            }
+                datalblFull = res.data[0].BOX_QTY;
+                 datalbTotal = res.data[0].BOX_COUNT
+           
           });
+          if (dataBOX_COUNT <= 0) {
+            console.log(_dblBoxQty,"//_dblBoxQty0")
+            _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
+          } else {
+            setlblBoxFull((prevState) => ({...prevState, value: datalblFull,}));
+            console.log(_dblBoxQty,"//_dblBoxQty")
+          }
       } else {
         _strBoxNo = txtBox.value;
+        let dataBOX_COUNT=0
         
         await axios
         .post("/api/Common/GetBoxCount", {
@@ -1178,19 +1179,21 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           boxNo: _strBoxNo,
         })
         .then((res) => {
-          console.log(res.data,"มาแล้วววววววว")
-          _dblBoxQty = res.data[0].BOX_QTY;
-          let data = res.data[0].BOX_COUNT
-            if (data <= 0) {
-              _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
-            } else {
-              setlblBoxFull((prevState) => ({
-                ...prevState,
-                value: _dblBoxQty,
-              }));
-            }
+          datalblFull = res.data[0].BOX_QTY;
+          datalbTotal = res.data[0].BOX_COUNT
+           
           });
+          if (datalbTotal <= 0) {
+            _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
+          } else {
+
+            setlblBoxFull((prevState) => ({
+              ...prevState,
+              value: datalblFull,
+            }));
+          }
       }
+      console.log(datalblFull,"BOCCCC")
       settxtBox((prevState) => ({...prevState,value: _strBoxNo,}));
       setlblBox((prevState) => ({...prevState,value: _strBoxNo,}));
       if (_strError == "") {
@@ -1199,21 +1202,21 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         await axios
           .post("/api/Common/GetCountTrayByBoxPacking", {
             prdName: selectddlProduct.value,
-            boxNo: lblBox.value,
+            boxNo: txtBox.value,
             srtPack: "",
           })
           .then((res) => {
-            _dtTrayCount = res.data[0].BOX_COUNT;
-            console.log(_dtTrayCount,"_dtTrayCount")
+            datalbTotal = res.data[0].BOX_COUNT;
+            console.log(_dtTrayCount,"_dtTrayCount",res.data[0].BOX_COUNT)
           });
-            if (_dtTrayCount.length > 0) {
-              setlblBoxTotal((prevState) => ({
-                ...prevState,
-                value: _dtTrayCount,
+            if (datalbTotal > 0) {
+              setlblBoxTotal((prevState) => ({...prevState,
+                value: datalbTotal,
               }));
             }
-            console.log(lblBoxTotal.value,"ได้อะไร",lblBoxFull.value)
-            if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
+            console.log(datalbTotal,"BBBB",datalblFull)
+            if (parseFloat(datalbTotal) == parseFloat(datalblFull)) {
+              console.log("เข้าจ้า")
               setlblBoxStatus((prevState) => ({
                 ...prevState,
                 value: "OK",
@@ -1402,7 +1405,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     .post("/api/common/GetSerialBoxTestResultManyTableOnlyGood", {
       dataList: [
         {
-          strPlantCode: "5",
+          strPlantCode: FAC,
           strPrdname: _strPrdName,
           strWeekCodeType: hfWeekCodeType,
           // strSerial: dtSerial[drRow].SERIAL,
@@ -1412,7 +1415,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     })
     .then((res) => {
       dtSerial = res.data;
-      console.log("DATA:",res.data)
     });
 
   await axios
@@ -1450,7 +1452,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       hideLoading();
       scrollToTop();
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-        console.log("เข้า")
       
         if (dtSerial[drRow].SERIAL !== "") {
           let _intCount = 0;
@@ -1493,7 +1494,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           }
           const duplicateStart = parseInt(hfDuplicateStart, 10);
           const duplicateEnd = parseInt(hfDuplicateEnd, 10);
-          console.log(_strSerial,"_strSerial")
           const strFghSerialNo = _strSerial.substring(
             duplicateStart - 1,
             duplicateEnd
@@ -1516,7 +1516,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               }
             }
             // บรรทัดที่ 842
-            console.log(_strScanResultUpdate,"ตรงนี้จ้า บรรทัด 1436",_strSerial.length,hfSerialLength)
             if (
               _strSerial.length == parseInt(hfSerialLength) &&
               _strScanResultUpdate != "NG"
@@ -1527,7 +1526,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                 _str_DateType: hfWeekCodeType,
                 _intEngRevEndDigit: Number(hfSerialEndDigit),
               });
-              console.log(res.data,"ตรงนี้จ้า 1447")
               if (res.data == false) {
                 _strMessageUpdate =
                   "Serial invalid check sum / หมายเลขบาร์โค้ดมีค่าตรวจสอบไม่ถูกค้อง";
@@ -1722,7 +1720,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                   })
                   .then((res) => {
                     _dtShtData = res.data;
-                    console.log(_dtShtData,"_dtShtData")
                   });
                 if (_dtShtData != "") {
                   _FrontSheetBarcode = _dtShtData.sheet_no_front;
@@ -1770,7 +1767,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               // -------------------------
         
               if (!_bolError) {
-                console.log(hfTestResultFlag,"hfTestResultFlag")
                 if (hfTestResultFlag == "Y") {
                   if (_strTouchUp == "NG" && _strRejectGroup == "MASTER") {
                     if (_strTestResult == "OK") {
@@ -2081,7 +2077,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           dtSerial[drRow].SCAN_RESULT = _strScanResultUpdate;
           dtSerial[drRow].TEST_RESULT = _strTestResultUpdate;
           dtSerial[drRow].REMARK = _strMessageUpdate;
-          console.log(dtSerial,"สักที")
 
           if (_strScanResultUpdate == "NG") {
             _strScanResultAll = "NG";
@@ -2101,7 +2096,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       setlblLog((prevState) => ({...prevState, value: "",}));
       setpnlLog(false);
       if (_strScanResultAll !== "NG") {
-        console.log(parseFloat(lblBoxTotal.value + _intCountOK),"//////////////o",parseFloat(lblBoxFull.value))
         if (parseFloat(lblBoxTotal.value + _intCountOK) > parseFloat(lblBoxFull.value) ) {
           
           setlblLog((prevState) => ({...prevState,value: "Box was full / กล่องเต็มแล้ว",}));
@@ -2161,7 +2155,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           })
           .then((res) => {
             _strErrorUpdate = res.data.p_error;
-            console.log(_strErrorUpdate,"_strErrorUpdatelll")
           })};
         if (_strErrorUpdate != "") {
           setlblResult((prevState) => ({ ...prevState, value: "Error :" + _strErrorUpdate,style: { color: "Red" }, }));
@@ -2169,7 +2162,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           // ติดที่ SetBoxPackingSerialTray ใน PCTTTEST.FPC ทำใน PROCEDURE
           // บรรทัด 1359
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-            console.log(_strPrdName,lblBox.value,lblPacking.value,"SERIAL",dtSerial[drRow].SERIAL,"/////",hfUserID,hfUserStation,_strScanResultAll,"TEST_FOR")
           await axios
           .post("/api/Common/SetBoxPackingSerialTray", {
            
@@ -2183,7 +2175,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
            
           })
           .then((res) => {
-            console.log(res.data)
             if(res.data!='OK'&&res.data!=''){
               dtSerial[drRow].SCAN_RESULT="NG"
               dtSerial[drRow].REMARK = res.data
@@ -2197,7 +2188,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             setlblResult((prevState) => ({...prevState,value: "Error :" + _strErrorUpdate,style: { color: "Red" }, }));
           } else {
             if (FQC == "Y") {
-              console.log()
               await axios
                 .post("/api/Common/getSerialRecordTimeTrayTable", {
                   strPlantCode: FAC,
@@ -2206,6 +2196,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                 })
                 .then((res) => {
                   console.log(res.data.row_count);
+                //  dtSerial[drRow].ROW_COUNT = 
                 });
               await axios
                 .post("/api/Common/setSerialRecordTimeTrayTable", {
@@ -2244,7 +2235,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   await axios
     .post("/api/Common/getSerialPassByLot", {
       strLotNo: _strLot,
-      strPlantCode: "5",
+      strPlantCode: FAC,
     })
     .then((res) => {
       dtLotPassCount = res.data.lotcount;
@@ -2279,13 +2270,11 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     })
     .then((res) => {
       _dtTrayCount = res.data;
-      console.log(res.data,"DATARES")
     });
   if (_dtTrayCount > 0) {
     setlblBoxTotal((prevState) => ({...prevState,value: _dtTrayCount.BOX_COUNT, }));
     setlblPackingTotal((prevState) => ({...prevState,value: _dtTrayCount.PACKING_COUNT,}));
   }
-  console.log(lblBoxTotal.value,"เท่าไหร่",lblBoxFull.value)
   if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
     setlblBoxStatus((prevState) => ({...prevState, value: "OK",}));
   } else {
