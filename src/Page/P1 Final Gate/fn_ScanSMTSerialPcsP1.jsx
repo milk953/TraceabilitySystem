@@ -18,7 +18,7 @@ function fn_ScanSMTSerialPcsP1() {
     hfSerialEndDigit: "0",
     hfTrayFlag: "",
     hfTrayLength: "0",
-    hfTestResultFlag: "",
+    hfTestResultFlag: "Y",
     hfConfigCheck: "N",
     hfConfigCode: "",
     hfConfigStart: "0",
@@ -330,17 +330,16 @@ function fn_ScanSMTSerialPcsP1() {
       } else if (type == "GetSerialTestResultManyTable") {
         let dtData = [];
         await axios.post("/api/common/GetSerialTestResultManyTable", {
-          dataList: {
+          dataList: [{
             strPlantCode: Fac,
-            strPrdname: params.strPrdname,
-            strWeekCodeType: params.strWeekCodeType,
-            strSerial: params.SERIAL,
-          },
+            strPrdname: params.dataList[0].strPrdname,
+            strWeekCodeType: params.dataList[0].strWeekCodeType,
+          }],
           dtSerial: params.dtSerial,
         }).then((res) => {
           dtData = res.data;
         });
-
+        console.log(dtData, "GetSerialTestResultManyTable");
         return dtData;
       } else if (type == "GetWeekCodebyLot") {
         let response = "";
@@ -428,8 +427,11 @@ function fn_ScanSMTSerialPcsP1() {
             strSPIF:params.strSPIF,
             strSPIB:params.strSPIB,
           }).then((res) => {
-          setSerialMaster(res.data);
-        });
+            result1 = res.data[0].result_v;
+            result2 = res.data[0]._message;
+          });
+          console.log(result1, result2, "Get_SPI_AOI_RESULT_P1");
+          return { result1, result2 };
       } else if (type == "getProductSerialMaster") {
         await axios
           .post("/api/Common/GetSerialProductByProduct", {
@@ -524,7 +526,6 @@ function fn_ScanSMTSerialPcsP1() {
         (hiddenParams.hfSerialStartCode = data[0].prm_serial_start_code),
         (hiddenParams.hfSerialInfo = data[0].prm_additional_info);
     }
-    console.log(data)
   }
   function Setdisable(type, txtField) {
     if (type == "disable") {
@@ -556,7 +557,7 @@ function fn_ScanSMTSerialPcsP1() {
     let dtData = [];
     for (let i = 0; i < gvSerial.length; i++) {
       let row = {
-        SEQ: i + 1,
+        SEQ: i,
         SERIAL: txtSerial[i],
         REJECT: "",
         TOUCH_UP: "",
@@ -626,8 +627,9 @@ function fn_ScanSMTSerialPcsP1() {
         ],
         dtSerial: dtSerial,
       })
-      dtSerial = dtResponse.length ? [...dtResponse] : [];
+      dtSerial = await dtResponse.length ? [...dtResponse] : [];
 
+      console.log(dtResponse, "dtSerial");
       if (hiddenParams.hfWeekCodeType == "Y") {
         hiddenParams.hfWeekCode = await getData("GetWeekCodebyLot", {
           strLot: _strLot,
@@ -806,8 +808,7 @@ function fn_ScanSMTSerialPcsP1() {
             }
             if (!_bolError && hiddenParams.hfCheckPrdSht == 'Y'){
               const { response: _strShtNo, response2: strSheetLot } = await getData(
-                "GetSheetNoBySerialNo",
-                _strSerial
+                "GetSheetNoBySerialNo",_strSerial
               );
               if (_strShtNo !== "" && hiddenParams.hfCheckPrdAbbr !== _strShtNo.substring(parseInt(hiddenParams.hfCheckPrdShtStart) - 1, parseInt(hiddenParams.hfCheckPrdShtEnd))){
                 _strMessageUpdate = "Change serial barcode mix product" + _strTagNewLine + "เปลี่ยนหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -869,9 +870,10 @@ function fn_ScanSMTSerialPcsP1() {
               }
             }
             if(!_bolError && hiddenParams.hfCheckSPIAOI == 'Y'){
-              let _Result = '';
-              let _strMessage = '';
-              _Result,_strMessage = await getData("Get_SPI_AOI_RESULT_P1", {
+              // let _Result = '';
+              // let _strMessage = '';
+
+              const { result1: _Result, result2: _strMessage } = await getData("Get_SPI_AOI_RESULT_P1", {
                 strSerialNo: _strSerial,
                 strPlantCode: Fac,
                 strPreAOIF: hiddenParams.hfCheckPreAOIF,
@@ -881,6 +883,7 @@ function fn_ScanSMTSerialPcsP1() {
                 strSPIF: hiddenParams.hfCheckSPIF,
                 strSPIB: hiddenParams.hfCheckSPIB,
               });
+              console.log(_Result,'_Result',_strMessage,'_strMessage');
               if(_Result == 'NG'){
                 _strScanResultUpdate = _Result;
                 _strMessageUpdate = _strMessage;
