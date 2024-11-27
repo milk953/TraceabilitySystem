@@ -179,20 +179,12 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     if (OP !== null) {
       setHfOP(OP);
     } else {
-      // setHfOP("");
       setHfOP(1);
     }
     
     SetMode("LOT");
-
-    // PageLoad();
   }, []);
-  // useEffect(() => {
-  //   if (gvSerial.length > 0) {
-  //     fc_txtSerial.current[0].focus();
-  //     getInitialSerial();
-  //   }
-  // }, [gvSerial.length, ddlProduct]);
+
 
   useEffect(() => {
     getInitialSerial();
@@ -254,7 +246,10 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       align: "center",
 
       render: (text, record, index) => {
-        return text;
+        if (!record.SERIAL) {
+          return null; 
+        }
+        return text; 
     },
     },
     {
@@ -263,16 +258,14 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        const backgroundColor =
-          record.SCAN_RESULT === "NG" ? "#f50" : 
-          record.SCAN_RESULT === "OK" ? "#87d068" : 
-          "transparent";
-        
-        return (
-          < Tag  className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
-          {text}
-        </Tag>
-        );
+          const backgroundColor =
+          record.SCAN_RESULT === "NG"
+            ? "#BA0900"
+            : record.SCAN_RESULT === "OK"
+            ? "#87d068"
+            : "transparent";
+
+        return <Tag color={backgroundColor}>{text}</Tag>;
       },
       align: "center",
     },
@@ -287,12 +280,15 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       align: "center",
     },
   ];
+
   const txtLot_TextChanged = async () => {
+    console.log(txtLot.value,"txtLot.value")
     if (txtLot.value !== "") {
       let _strPrdName = "";
       let _strLot = "";
       let _strLotAll = txtLot.value.toUpperCase().split(";");
       if (_strLotAll.length > 2) {
+       
         _strLot = _strLotAll[0];
         _strPrdName = selectddlProduct.value;
         setHfTestResultFlag("Y");
@@ -335,6 +331,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           }
           setlblLot((prevState) => ({ ...prevState, value: _strLot }));
           try {
+         
             const isInArray = ddlProduct.some(
               (item) => item.prd_name === _strPrdName
             );
@@ -1082,21 +1079,30 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       style: { enableState },
       disbled: false,
     }));
-
+    setpnlgvScanResult(false)
     setpnlSerial(false);
     SetMode("LOT");
     setTimeout(() => {
       fntxtLot.current.focus();
     }, 300);
+    settxtPcsTray((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
   };
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
  
   const txtOP_TextChanged = () => {
-    let OP = txtOP.value.trim().toUpperCase(); // ตัดช่องว่างและแปลงเป็นตัวพิมพ์ใหญ่
+    let OP = txtOP.value.trim().toUpperCase(); 
     let lbl = "";
     if (OP !== "") {
       if (hfOP !== "") {
-        let strOPData = lblOP.value.trim().toUpperCase().split(","); // แยกข้อความที่มีอยู่ใน lblOP ด้วยเครื่องหมายจุลภาค
+        let strOPData = lblOP.value.trim().toUpperCase().split(","); 
         let bolError = false;
 
         for (let intRow = 0; intRow < strOPData.length; intRow++) {
@@ -1296,8 +1302,27 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     }
   };
   const btnSave_Click = () => {
+    const hasAnyInput = Array.from(fc_txtSerial.current).some(input => input.value.trim() !== "");
+    if (hasAnyInput == true) {
+      if (hfMode == "SERIAL") {
+        setSerialDataTray();
+    } 
+    }else {
+      setlblLog((prevState) => ({
+        ...prevState,
+        value: "Please Input Serial No.",
+      }));
+      setpnlLog(true)
+      setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+      }, 300);
+    }
+
+    
   
-    setSerialDataTray();
+  
+
+    
   };
 
   const handleSerialChange = async (index, event) => {
@@ -1423,6 +1448,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
 
       hideLoading();
+      scrollToTop();
       for (let drRow = 0; drRow < dtSerial.length; drRow++) {
         console.log("เข้า")
       
@@ -1742,7 +1768,9 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                 }
               }
               // -------------------------
+        
               if (!_bolError) {
+                console.log(hfTestResultFlag,"hfTestResultFlag")
                 if (hfTestResultFlag == "Y") {
                   if (_strTouchUp == "NG" && _strRejectGroup == "MASTER") {
                     if (_strTestResult == "OK") {
@@ -2274,6 +2302,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   setlblLastTray((prevState) => ({...prevState,value: "Not Use",}));
   getInitialSerial();
   hideLoading();
+  
     }
     catch (error) {
       console.error("An error occurred while fetching serial data:", error);
@@ -2343,6 +2372,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   };
   const btnCancel = async () => {
     SetMode("SERIAL");
+    setpnlgvScanResult(false)
   };
 
   return {

@@ -162,6 +162,13 @@ function fn_ScanSMTSerialPcsBox() {
   const fntxtPack = useRef([]);
   const fc_txtSerial = useRef([]);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   // disable
   const [dis_ddlProduct, setdis_ddlProduct] = useState(false);
 
@@ -414,7 +421,7 @@ function fn_ScanSMTSerialPcsBox() {
           await axios
             .post("/api/Common/getSerialPassByLot", {
               strLotNo: _strLot,
-              strPlantCode: "5",
+              strPlantCode: FAC,
             })
             .then((res) => {
               dtLotPassCount = res.data.lotcount;
@@ -556,9 +563,7 @@ function fn_ScanSMTSerialPcsBox() {
             ...prevState,
             value:
               _strLot +
-              " invalid lot no.!/" +
-              _strLot +
-              "หมายเลขล็อตไม่ถูกต้อง",
+              " invalid lot no.! " 
           }));
           setlblLot((prevState) => ({ ...prevState, value: "" }));
           setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
@@ -614,10 +619,14 @@ function fn_ScanSMTSerialPcsBox() {
         setSerialDataTray();
     } 
     }else {
-      Swal.fire({
-        title: 'Please scan serial no',
-        icon: "error",
-      });
+      setlblLog((prevState) => ({
+        ...prevState,
+        value: "Please Input Serial No.",
+      }));
+      setpnlLog(true)
+      setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+      }, 300);
     }
       
   };
@@ -678,6 +687,7 @@ function fn_ScanSMTSerialPcsBox() {
           .then((res) => {
             _dblBoxQty = res.data[0].BOX_QTY;
             let data = res.data[0].BOX_COUNT;
+            console.log(res.data,"DATABOX")
             if (data <= 0) {
               _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
             } else {
@@ -847,6 +857,7 @@ function fn_ScanSMTSerialPcsBox() {
 
   const ibtOPBack_Click = () => {
     SetMode("OP");
+    settxtOP((prevState) => ({ ...prevState, value: "" }));
     setpnlgvScanResult(false);
   };
 
@@ -1165,7 +1176,9 @@ function fn_ScanSMTSerialPcsBox() {
     }
     setgvSerial(dtData);
     settxtSerial(Array(gvSerial.length).fill(""));
+
     if (gvSerial.length > 0) {
+      
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
       }, 300);
@@ -1193,7 +1206,7 @@ function fn_ScanSMTSerialPcsBox() {
           .post("/api/common/GetSerialBoxTestResultManyTable", {
             dataList: [
               {
-                strPlantCode: "5",
+                strPlantCode: FAC,
                 strPrdname: _strPrdName,
                 strWeekCodeType: hfWeekCodeType,
                 // strSerial: dtSerial[drRow].SERIAL,
@@ -1986,13 +1999,16 @@ function fn_ScanSMTSerialPcsBox() {
                 }));
               } else {
                 if (FQC == "Y") {
+                  console.log("เข้าจ้า",dtSerial[drRow])
                   await axios
                     .post("/api/Common/getSerialRecordTimeTrayTable", {
                       strPlantCode: FAC,
                       SERIAL: dtSerial[drRow].SERIAL,
                       MACHINE: dtSerial[drRow].MACHINE,
                     })
-                    .then((res) => {});
+                    .then((res) => {
+
+                    });
                   await axios
                     .post("/api/Common/setSerialRecordTimeTrayTable", {
                       dataList: {
@@ -2103,6 +2119,7 @@ function fn_ScanSMTSerialPcsBox() {
       setlblLastTray((prevState) => ({ ...prevState, value: "Not Use" }));
       getInitialSerial();
       hideLoading();
+      // scrollToTop();
       return 0;
     } catch (error) {
       console.error("An error occurred while fetching serial data:", error);
@@ -2111,6 +2128,7 @@ function fn_ScanSMTSerialPcsBox() {
         icon: "error",
       });
       hideLoading();
+      // scrollToTop();
     }
   };
 
@@ -2309,9 +2327,9 @@ function fn_ScanSMTSerialPcsBox() {
       .post("/api/Common/GetSerialBoxProductByProduct", {
         prdName: PrdName,
       })
-
       .then((res) => {
         dtProductBox = res.data[0];
+        console.log(res.data[0],"res.data[0]")
         if (dtProductBox != "") {
           if (
             serial_digit !== dtProductBox.SLM_FIX_DIGIT ||
