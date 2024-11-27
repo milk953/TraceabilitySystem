@@ -27,12 +27,12 @@ function fn_Change_Serial() {
     visble: false,
     style: {},
   });
-
   const [txtSerialNoOld, setTxtSerialNoOld] = useState("");
   const [txtSerialNoNew, setTxtSerialNoNew] = useState("");
   const [hfSerialCount, setHfSerialCount] = useState("");
   const plantCode = import.meta.env.VITE_FAC;
   const IP = localStorage.getItem("ipAddress");
+  let txtTotalPcsCheck = "N";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,9 +73,9 @@ function fn_Change_Serial() {
         const Result = await getInputSerial();
         dtData = Result.dtData;
         strError = Result.strError;
-        console.log("Result" , Result)
+        console.log("Result", Result);
         if (strError.trim() !== "") {
-          console.log("strError.trim")
+          console.log("strError.trim");
           setLblResult((prevState) => ({
             ...prevState,
             value: strError,
@@ -133,7 +133,7 @@ function fn_Change_Serial() {
                   res.data[0].response,
                   res.data[0].p_lblresult.length
                 );
-                Out2 = res.data[0].p_lblresult.length
+                Out2 = res.data[0].p_lblresult.length;
                 if (res.data[0].p_lblresult.length > 0) {
                   setLblResult((prevState) => ({
                     ...prevState,
@@ -188,9 +188,9 @@ function fn_Change_Serial() {
                   }
                 }
               });
-              if (Out2 > 0) {
-                return
-              }
+            if (Out2 > 0) {
+              return;
+            }
           }
           for (let i = 0; i < dtData.length; i++) {
             const drRow = dtData[i];
@@ -247,10 +247,35 @@ function fn_Change_Serial() {
     });
   };
 
+  const BtnCancle_Click = async () => {
+    console.log("BtnCancle_Click", txtSerialNoOld, txtSerialNoNew);
+    txtTotalPcsCheck = "Y";
+    // const newValues = Array(txtSerialNoOld.length).fill("");
+    const newValues = [];
+    setTxtSerialNoOld(newValues);
+    setTxtSerialNoNew(newValues);
+    setGvSerial((prevState) => ({
+      ...prevState,
+      value: [],
+    }));
+    setTxtTotalPcs((prevState) => ({
+      ...prevState,
+      value: "1",
+    }));
+    setLblResult((prevState) => ({
+      ...prevState,
+      value: "",
+      disbled: "",
+      visble: false,
+    }));
+    await getInitialSerial();
+  };
+
   const getInitialSerial = async () => {
-    console.log("เข้ามาละ getInitialSerial");
+    console.log("เข้ามาละ getInitialSerial", txtTotalPcsCheck);
+    const DatatxtTotalPcs = txtTotalPcsCheck === "Y" ? "1" : txtTotalPcs.value;
     let dtData = [];
-    for (let intRow = 1; intRow <= parseInt(txtTotalPcs.value); intRow++) {
+    for (let intRow = 1; intRow <= parseInt(DatatxtTotalPcs); intRow++) {
       dtData.push({ SEQ: intRow });
     }
     setGvSerial((prevState) => ({ ...prevState, value: dtData, visble: true }));
@@ -259,11 +284,11 @@ function fn_Change_Serial() {
       value: dtData,
       visble: true,
     }));
-    setHfSerialCount(txtTotalPcs.value);
+    setHfSerialCount(DatatxtTotalPcs);
     console.log("gvSerial.value.length", dtData.length);
     if (dtData.length > 0) {
       console.log("เข้ามาใน Focus");
-      fnSetFocus("gvSerial_txtSerialNo_0");
+      fnSetFocus("gvSerial_txtSerialNoOld_0");
     }
 
     return 0;
@@ -276,8 +301,10 @@ function fn_Change_Serial() {
     let strFrontSide = "";
     let strError = "";
     for (let intSeq = 0; intSeq < gvSerial.value.length; intSeq++) {
-      const serialGV = txtSerialNoOld[intSeq] || "";
-      const serialNEW = txtSerialNoNew[intSeq] || "";
+      const serialGV = (txtSerialNoOld[intSeq] || "").trim().toUpperCase();
+      const serialNEW = (txtSerialNoNew[intSeq] || "").trim().toUpperCase();
+      // const serialGV = (txtSerialNoOld[intSeq] || "").replace(/\s+/g, "").toUpperCase();  -- ลบช่องว่างทั้งหมด
+      
       const drRow = {
         SEQ: gvSerial.value[intSeq].SEQ,
         SERIAL_OLD: serialGV,
@@ -307,12 +334,19 @@ function fn_Change_Serial() {
   const handleSerialOldChange = async (index, event) => {
     const newValues = [...txtSerialNoOld];
     newValues[index] = event.target.value;
+    // newValues[index] = event.target.value.trim();
     setTxtSerialNoOld(newValues);
+    if (event.key === "Enter") {
+      fnSetFocus(`gvSerial_txtSerialNoOld_${index + 1}`);
+    }
   };
   const handleSerialNewChange = async (index, event) => {
     const newValues = [...txtSerialNoNew];
     newValues[index] = event.target.value;
     setTxtSerialNoNew(newValues);
+    if (event.key === "Enter") {
+      fnSetFocus(`gvSerial_txtSerialNoNew_${index + 1}`);
+    }
   };
 
   function fnSetFocus(txtField) {
@@ -327,12 +361,14 @@ function fn_Change_Serial() {
     setTxtTotalPcs,
     txtTotalPcs_TextChanged,
     BtnSubmit_Click,
+    BtnCancle_Click,
     txtSerialNoOld,
     handleSerialOldChange,
     txtSerialNoNew,
     handleSerialNewChange,
     lblResult,
     gvNewSerial,
+    fnSetFocus,
   };
 }
 

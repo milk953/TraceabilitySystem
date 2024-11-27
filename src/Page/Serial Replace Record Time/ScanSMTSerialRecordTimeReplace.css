@@ -13,4 +13,20 @@
     padding: 4px 4px 4px 4px!important;
  
 }
+.Card-ResultSerialTime{
+    height: 80px;
+    text-align: center;
+    padding-top: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'center';
+    height: '100%';
+    text-align: 'center';
+    width:50%;
+   
+
+    
+}
 

@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
+import Swal from "sweetalert2";
 
 function fn_ScanSMTPackingConfirm() {
   const [txtLot, settxtLot] = useState({ value: "", disbled: "", style: {} });
@@ -33,6 +34,7 @@ function fn_ScanSMTPackingConfirm() {
   });
   const [lblLog, setlblLog] = useState({ value: "", disbled: "", style: {} });
   const [txtSerial, settxtSerial] = useState("");
+  // const [lblLot , setlblLot ]= useState("");
   // data table
   const [gvSerial, setgvSerial] = useState([]);
   const [gvScanResult, setgvScanResult] = useState([]);
@@ -40,6 +42,7 @@ function fn_ScanSMTPackingConfirm() {
   const [pnlLog, setpnlLog] = useState("");
   const [pnlSerial, setpnlSerial] = useState("");
   const [pnlgvScanResult, setpnlgvScanResult] = useState("");
+  // const [pnlLot,setpnlLot] = useState(false);
  
   //
   const fntxtLot = useRef([]);
@@ -78,23 +81,40 @@ function fn_ScanSMTPackingConfirm() {
   const ibtBack_Click = async () => {
     settxtLot((prevState) => ({ ...prevState, value: "", disbled: false }));
     setpnlSerial(false);
+    // setpnlLot(false)
     SetMode("LOT");
     setpnlgvScanResult(false);
     setTimeout(() => {
       fntxtLot.current.focus();
     }, 300);
+    fetchData();
   };
 
   const btnCancel_Click = async () => {
     SetMode("SERIAL");
+    setlblResult((prevState) => ({ ...prevState, value: "" }));
     fngvSerial_txtSerial_0.current[0].focus();
-    setpnlgvScanResult(false);
+    
+    // setpnlgvScanResult(false);
 
   };
   const btnSave_Click = async () => {
-    if (hfMode == "SERIAL") {
-      setSerialData();
+    const hasAnyInput = Array.from(fngvSerial_txtSerial_0.current).some(input => input.value.trim() !== "");
+    if (hasAnyInput == true) {
+      if (hfMode == "SERIAL") {
+        setSerialData();
+      }
+    }else {
+      setpnlLog(true)
+      setlblLog((prevState) => ({
+        ...prevState,
+        value: "Please input sheet no.",
+      }));
+      fngvSerial_txtSerial_0.current[0].focus();
+    //  setpnlLot(true)
+    //  setlblLot("Please Input Sheet No.")
     }
+  
   };
   const SetMode = (_strType) => {
     switch (_strType) {
@@ -201,8 +221,22 @@ function fn_ScanSMTPackingConfirm() {
             setTimeout(() => {
               fngvSerial_txtSerial_0.current[0].focus();
             }, 300);
+          }else {
+            setselectddlProduct((prevState) => ({
+              ...prevState,
+              value: ddlProduct[0].prd_name,
+            }));
+            settxtLot((prevState) => ({ ...prevState, value: "" }));
+            //setgvSerial([])
+            setlblLog((prevState) => ({ ...prevState, value: "Invalid lot no." }));
+            setpnlLog(true);
+            sethfMode("LOT");
+            setTimeout(() => {
+              fntxtLot.current.focus();
+            }, 300);
           }
         } catch (error) {
+          console.log("OK111")
           const intProduct = strPrdName.indexOf("-", 12);
           if (intProduct > 0) {
             strPrdName =
@@ -239,20 +273,7 @@ function fn_ScanSMTPackingConfirm() {
             fnddlProduct.current.focus();
           }, 300);
         }
-      } else {
-        setselectddlProduct((prevState) => ({
-          ...prevState,
-          value: ddlProduct[0].prd_name,
-        }));
-        settxtLot((prevState) => ({ ...prevState, value: "" }));
-        //setgvSerial([])
-        setlblLog((prevState) => ({ ...prevState, value: "Invalid lot no." }));
-        setpnlLog(true);
-        sethfMode("LOT");
-        setTimeout(() => {
-          fntxtLot.current.focus();
-        }, 300);
-      }
+      } 
     } else {
       setselectddlProduct((prevState) => ({
         ...prevState,
@@ -575,6 +596,9 @@ function fn_ScanSMTPackingConfirm() {
     ddlProduct_SelectedIndexChanged,
     handleSerialChange,
     columns,
+    // pnlLot,
+    // lblLot
+    
   };
 }
 
