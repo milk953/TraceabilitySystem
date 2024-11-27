@@ -206,7 +206,7 @@ function fn_ScanSMTSerialPcsNG() {
       SetFocus("txtLot");
     }
   };
-  async function setSerialMaster(item) {
+  async function setSerialMaster(item) { 
     hfSerialLength = "0";
     hfSerialFixFlag = "N";
     hfSerialDigit = "";
