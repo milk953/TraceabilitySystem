@@ -41,12 +41,14 @@ function Change_Serial() {
     setTxtTotalPcs,
     txtTotalPcs_TextChanged,
     BtnSubmit_Click,
+    BtnCancle_Click,
     txtSerialNoOld,
     handleSerialOldChange,
     txtSerialNoNew,
     handleSerialNewChange,
     lblResult,
     gvNewSerial,
+    fnSetFocus,
   } = fn_Change_Serial();
 
   return (
@@ -94,14 +96,13 @@ function Change_Serial() {
                         fullWidth
                         value={txtTotalPcs.value}
                         onChange={(e) => {
-                          const inputValue = e.target.value.trim(); 
-                          const numericValue = inputValue.replace(/\D/g, ""); 
+                          const inputValue = e.target.value.trim();
+                          const numericValue = inputValue.replace(/\D/g, ""); // กรองเฉพาะตัวเลข
                           setTxtTotalPcs((prevState) => ({
                             ...prevState,
-                            value: numericValue, 
+                            value: numericValue, // อัปเดตเฉพาะค่าตัวเลข
                           }));
                         }}
-                        
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtTotalPcs_TextChanged();
@@ -153,9 +154,18 @@ function Change_Serial() {
                               key={index}
                               size="small"
                               fullWidth
-                              id={`gvSerial_txtSerialNo_${index}`}
+                              id={`gvSerial_txtSerialNoOld_${index}`}
                               className="input_txt"
-                              value={txtSerialNoOld[index]}
+                              value={txtSerialNoOld[index] || ""}
+                              onKeyDown={(event) => {
+                                if (event.key === "Enter") {
+                                  if (txtTotalPcs.value == index + 1) {
+                                    fnSetFocus(`gvSerial_txtSerialNoNew_${0}`);
+                                  } else {
+                                    handleSerialOldChange(index, event);
+                                  }
+                                }
+                              }}
                               onChange={(event) =>
                                 handleSerialOldChange(index, event)
                               }
@@ -166,8 +176,18 @@ function Change_Serial() {
                               key={index}
                               size="small"
                               fullWidth
+                              id={`gvSerial_txtSerialNoNew_${index}`}
                               className="input_txt"
-                              value={txtSerialNoNew[index]}
+                              value={txtSerialNoNew[index] || ""}
+                              onKeyDown={(event) => {
+                                if (event.key === "Enter") {
+                                  if (txtTotalPcs.value == index + 1) {
+                                    BtnSubmit_Click();
+                                  } else {
+                                    handleSerialNewChange(index, event);
+                                  }
+                                }
+                              }}
                               onChange={(event) =>
                                 handleSerialNewChange(index, event)
                               }
@@ -177,10 +197,24 @@ function Change_Serial() {
                       )
                     )}
                   <TableRow>
-                    <TableCell colSpan={3} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={BtnSubmit_Click}>
+                    <TableCell
+                      colSpan={6}
+                      style={{ textAlign: "center", verticalAlign: "middle" }}
+                    >
+                      <Button
+                        className="BtSave"
+                        onClick={BtnSubmit_Click}
+                        style={{ margin: "0 10px" }}
+                      >
                         Submit
-                      </Button>{" "}
+                      </Button>
+                      <Button
+                        className="BtCancel"
+                        style={{ margin: "0 10px" }}
+                        onClick={BtnCancle_Click}
+                      >
+                        Cancel
+                      </Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
