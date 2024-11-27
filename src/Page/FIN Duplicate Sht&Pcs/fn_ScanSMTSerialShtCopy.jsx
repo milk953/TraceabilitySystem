@@ -1,9 +1,7 @@
 import axios from "axios";
 import { Tag } from "antd";
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
-
+import {useLoading} from "../../loading/fn_loading";
 function fn_ScanSMTSerialShtCopy() {
   //hidden parameter
   const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
@@ -16,6 +14,7 @@ function fn_ScanSMTSerialShtCopy() {
   const [hfUserID, sethfUserID] = useState("");
   const [hfUserStation, sethfUserStation] = useState("");
   const [hfMode, sethfMode] = useState("");
+  const {showLoading,hideLoading} = useLoading();
   var hfSerialCount = "";
   var hfShtScan = "";
   var hfBarcodeSide = "";
@@ -124,7 +123,12 @@ function fn_ScanSMTSerialShtCopy() {
   const [gvSerial, setGvSerial] = useState([]);
   const [gvScanResult, setGvScanResult] = useState([]);
   const [txtSerial, setTxtSerial] = useState(gvSerial.map(() => ""));
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
   //Funtion
   useEffect(() => {
     PageLoad();
@@ -162,7 +166,8 @@ function fn_ScanSMTSerialShtCopy() {
 
   const handle_Cancel_Click = async () => {
     setMode("SERIAL");
-    SetFocus("txtSerial_0");
+    setTxtbackSide(gvBackSide.map(() => ""));
+    SetFocus("txtbackSide_0");
     setTxtSerial(gvSerial.map(() => ""));
   };
   const handle_txtlotNo_Change = async (e) => {
@@ -190,7 +195,6 @@ function fn_ScanSMTSerialShtCopy() {
           if (ddlProduct.some((item) => item.prd_name === strPrdname)) {
             setProductSelected(strPrdname);
           } else {
-            alert("x");
           }
 
           await getData("getProductSerialMaster", strPrdname);
@@ -213,7 +217,6 @@ function fn_ScanSMTSerialShtCopy() {
             }
           }
         } catch (error) {
-          console.log(error, "error");
           setLblError("Product" + strPrdname + "not found");
           setLblErrorState(true);
           SetFocus("ddlProductFinCopy");
@@ -300,14 +303,13 @@ function fn_ScanSMTSerialShtCopy() {
     let _strLotRef = _strLotRefData[0];
     let _strShtNoBack = "";
     let _strShtNoFront = "";
-    let _strTray = " ";
+    let _strTray = " ";0
     let _intSeq = 1;
     let _strScanResultAll = "OK";
     let _strErrorAll = "";
     let _strUpdateError = "";
     let _bolError = false;
     hfWeekCode = "";
-
     setLblErrorState(false);
     if (txtlotNo != '' && dtSerial != ''){
       if (hfCheckWeekCode == 'Y'){
@@ -465,7 +467,6 @@ function fn_ScanSMTSerialShtCopy() {
           }else{
             _strMessageUpdate = "Bad mark piece" + _strTagNewLine + "ชิ้นงานเสียทำเครื่องหมายไว้แล้ว"
           }
-          console.log(_strScanResultUpdate,'_strScanResultUpdate')
           dtSerial[i].SCAN_RESULT = _strScanResultUpdate
           dtSerial[i].REMARK = _strMessageUpdate
         }
@@ -487,7 +488,6 @@ function fn_ScanSMTSerialShtCopy() {
       for(let x =0 ;x<dtSerial.length;x++){
         if (hfCheckSheetELT == "Y" && _bolError == false) {
           let _strReturn = "";
-          console.log(hfSerialLength,'hfSerialLength')
           _strReturn = await getData("SetSerialLotShtELTTable", {
             
             strSheetNo: dtSerial[x].SHEET,
@@ -513,7 +513,6 @@ function fn_ScanSMTSerialShtCopy() {
       }
       if(!_bolError){
         for(let y=0;y<dtSerial.length;y++){
-          console.log('in',dtSerial[y])
           if(dtSerial[y].SERIAL !== ''){
             let _intCount = 0;
             let _intCountOK = 0;
@@ -562,7 +561,7 @@ function fn_ScanSMTSerialShtCopy() {
               if (_Result =='NG'){
                 _strScanResultUpdate = _Result
               }
-              _strMessageUpdate = _Message //แก้ massage use Ref
+              _strMessageUpdate = _Message 
             }
             if (_strError !== ''){
               _strMessageUpdate = _strError
@@ -571,7 +570,6 @@ function fn_ScanSMTSerialShtCopy() {
             }
             dtSerial[y].SCAN_RESULT = _strScanResultUpdate
             dtSerial[y].REMARK = _strMessageUpdate
-            console.log('in',dtSerial[y])
             if(_strScanResultUpdate == 'NG'){
               _strScanResultAll = "NG"
             }
@@ -659,6 +657,7 @@ function fn_ScanSMTSerialShtCopy() {
       
         if(!_bolError && _strUpdateError ==''){
           // 'Sucha modify 31-Aug-2016 update slowly
+          showLoading('กำลังบันทึก กรุณารอสักครู่')
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
             if (dtSerial[drRow].SERIAL != ''){
               _strUpdateError = await getData("SetSerialLotShtTable", {
@@ -676,7 +675,7 @@ function fn_ScanSMTSerialShtCopy() {
                 REMARK: dtSerial[drRow].REMARK,
                 LOT: _strLot,
               })
-            }            
+            }        
             if (_strUpdateError != "") {
               _strScanResultAll = "NG";
             } else if (hfPlasmaConnShtPcs == "Y") {
@@ -698,13 +697,16 @@ function fn_ScanSMTSerialShtCopy() {
               }
             }
           }
+          
+          hideLoading();
+          scrollToTop();
         }
       }
       setLblResultState(true);
       setHideImg(false);
       setLblError(_strErrorAll);
       if (_strScanResultAll == "NG") {
-        setLblErrorState(true);
+        // setLblErrorState(true);
         setlblResult({
                 text: _strScanResultAll,
                 styled: { backgroundColor: "red", color: "white" },
@@ -716,6 +718,7 @@ function fn_ScanSMTSerialShtCopy() {
           styled: { backgroundColor: "red", color: "white" },
         });
       } else {
+        setLblErrorState(false);
         setlblResult({
           text: _strScanResultAll,
           styled: { backgroundColor: "green", color: "white" },
@@ -747,6 +750,7 @@ function fn_ScanSMTSerialShtCopy() {
     } else {
       SetFocus('txtbackSide_0')
     }
+    scrollToTop();
   }
   async function UpdateGvSerial(txtSerial) {
     const combinedData = gvSerial.map((item, index) => ({
@@ -788,7 +792,7 @@ function fn_ScanSMTSerialShtCopy() {
           dtData = res.data;
         })
         .catch((error) => {
-          // Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return dtData;
     } else if (type == "GetLotSerialCountData") {
@@ -801,7 +805,7 @@ function fn_ScanSMTSerialShtCopy() {
           drSerialCount = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return drSerialCount;
     } else if (type == "getProductSerialMaster") {
@@ -811,7 +815,7 @@ function fn_ScanSMTSerialShtCopy() {
           setSerialMaster(res.data);
         })
         .catch((error) => {
-          // Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
     } else if (type == "GetWeekCodebyLot") {
       let result = "";
@@ -847,7 +851,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = res.data.error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return result;
     }
@@ -863,7 +867,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = res.data.sheet_count;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return result;
     } else if (type == "GetSerialDuplicateConnectSht") {
@@ -881,11 +885,10 @@ function fn_ScanSMTSerialShtCopy() {
           result2= res.data.strSerialNoDup;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return [result1,result2];
     } else if (type == "SetSerialLotShtELTTable") {
-      console.log(params,'params')
       let result = "";
       await axios
         .post("/api/Common/SetSerialLotShtELTTable", {
@@ -904,7 +907,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return result;
     } else if (type == "Get_SPI_AOI_RESULT") {
@@ -924,7 +927,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return result;
     } else if (type == "GetRollLeafScrapRBMP") {
@@ -937,7 +940,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = res.data.SCRAP_FLG;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return result;
     } else if (type == "GetRollLeafDuplicate") {
@@ -951,7 +954,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = res.data.intCount;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
         return result;  
     } else if (type == "SetRollLeafTrayTable") {
@@ -979,7 +982,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setLblError(error.message);
         });
       return result;
     } else if (type == "SetSerialLotShtTable"){
@@ -1001,7 +1004,7 @@ function fn_ScanSMTSerialShtCopy() {
       }).then((res) => {
         result = res.data.p_error;
       }).catch((error) => {
-        Swal.fire("Error", error.message);
+        setLblError(error.message);
       })
       return result;
     } else if (type == 'GetShippingSerialNo'){
@@ -1017,7 +1020,6 @@ function fn_ScanSMTSerialShtCopy() {
       ).then((res) => {
         result = res.data
       }).catch((error) => {
-        console.error(error)
       })
      return result 
     }
@@ -1167,7 +1169,7 @@ function fn_ScanSMTSerialShtCopy() {
         hfShtPlasmaTimeFlg = res.prm_sht_plasma_time_flg;
         hfShtPlasmaTime = res.prm_sht_plasma_time;
         hfSheetType = res.prm_sheet_type;
-        hfPlasmaConnShtPcs = res.prm_conn_shtpcs_plasma_time_flg;
+        hfPlasmaConnShtPcs = res.prm_conn_shtpcs_plasma_flg;
         hfSerialInfo = res.prm_additional_info;
         hfCheckXrayF = res.prm_sht_xray_f;
         hfCheckXrayB = res.prm_sht_xray_b;
@@ -1196,7 +1198,7 @@ function fn_ScanSMTSerialShtCopy() {
       const newRow = {
         SEQ: i.toString(),
         TITLE:
-          hfBarcodeSide === "F" ? `Back/Front ${i} : ` : `Front/Back ${i} : `,
+          hfBarcodeSide === "F" ? `Back Side ${i} : ` : `Front Side ${i} : `,
       };
       dtData.push(newRow);
     }
@@ -1370,7 +1372,7 @@ function fn_ScanSMTSerialShtCopy() {
       } else if (txtbackSide[i-1] != "" && strFrontSide != "") {
         let dtRow = {
           SHEET: gvSerial[i].SHEET,
-          BACK_SIDE: txtbackSide[i-1] || '',
+          BACK_SIDE: txtbackSide[0] || '',
           FRONT_SIDE: strFrontSide,
           SEQ: gvSerial[i].SEQ,
           SERIAL: txtSerial[i],
@@ -1440,16 +1442,12 @@ function fn_ScanSMTSerialShtCopy() {
     width: 80,
     padding: '0px 0px 0px 0px',
     render: (text, record, index) => {
-      const backgroundColor =
-        record.SCAN_RESULT === "NG" ? "#f50" : 
-        record.SCAN_RESULT === "OK" ? "#87d068" : 
-        "transparent";
+      // const backgroundColor =
+      //   record.SCAN_RESULT === "NG" ? "#f50" : 
+      //   record.SCAN_RESULT === "OK" ? "#87d068" : 
+      //   "transparent";
       
-      return (
-        < Tag style={{width:100,textAlign:'center',padding:'0px 0px 0px 0px'}}  color={backgroundColor} >
-          {text}
-        </Tag>
-      );
+      return text;
     },
   },
   {
@@ -1463,6 +1461,14 @@ function fn_ScanSMTSerialShtCopy() {
     },
   },
 ];
+const getRowClassName = (record) => {
+  if (record.SCAN_RESULT === "NG") {
+    return 'row-red';
+  } else if (record.SCAN_RESULT === "OK") {
+    return 'row-green';
+  }
+  return '';
+};
   return {
     handle_txtlotNo_Change,
     gvBackSideState,
@@ -1508,7 +1514,8 @@ function fn_ScanSMTSerialShtCopy() {
     handle_txtRollleaf_Change,
     lblResult,
     gvScanResult,
-    columns
+    columns,
+    getRowClassName
   };
 }
 

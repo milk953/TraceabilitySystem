@@ -62,18 +62,15 @@ function ScanSMTSerialShtCopy() {
     handle_txtRollleaf_Change,
     lblResult,
     gvScanResult,
-    columns
+    columns,
+    getRowClassName
   } = fn_ScanSMTSerialShtCopy();
-  // useEffect(() => {
-  //   if (gvBackSideState == true) {
-  //     document.getElementById("txtbackSide_0").focus();
-  //   }
-  // }, [gvBackSideState]);
   return (
     <>
       <Header />
-      <h1>FIN Connect Sht & Pcs</h1>
-      <Card component={Paper} className="FinCopyMainCard">
+      <Card component={Paper} 
+      className="Card-Common"
+      >
         <table>
           <tr>
             <td className="FinCopytxtFtable">
@@ -81,7 +78,7 @@ function ScanSMTSerialShtCopy() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      FIN Connect Sht & Pcs
+                    FIN Duplicate Sht&Pcs
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -417,6 +414,7 @@ function ScanSMTSerialShtCopy() {
                   style={{ width: "980pxs",marginTop:"10px" }}
                   pagination={false}
                   size="small"
+                  rowClassName={getRowClassName}
                 />
                   &nbsp; &nbsp;
                 </div>

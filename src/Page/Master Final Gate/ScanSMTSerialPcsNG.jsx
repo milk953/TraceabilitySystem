@@ -45,7 +45,8 @@ function ScanSMTSerialPcsNG() {
     gvSerialResult,
     lblResult,
     columns,
-    lblErrorState
+    lblErrorState,
+    getRowClassName
   } = fn_ScanSMTSerialPcsNG();
   return (
     <div>
@@ -316,6 +317,7 @@ function ScanSMTSerialPcsNG() {
                   style={{ width: "980pxs",marginTop:"10px" }}
                   pagination={false}
                   size="small"
+                  rowClassName={getRowClassName}
                 />
                   &nbsp; &nbsp;
                 </div>

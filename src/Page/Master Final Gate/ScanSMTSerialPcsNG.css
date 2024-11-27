@@ -89,3 +89,11 @@
   font-size: 80px;
   /* height: 0px; */
 }
+
+.row-red {
+  color: red;
+}
+
+.row-green {
+  color: green;
+}
