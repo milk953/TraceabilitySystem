@@ -210,6 +210,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         })
                         .then((res) => {
                             dtLotProduct = res.data.flat().flat();
+                            console.log("dtLotProductres", dtLotProduct);
                         });
                     if (dtLotProduct.length > 0) {
                         if (dtLotProduct[0][2] === "Y") {
@@ -405,6 +406,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
+        setlblSerialNG("0");
     };
 
     const SetMode = async (strType) => {
@@ -506,6 +508,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
         let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
         showLoading("กำลังบันทึก กรุณารอสักครู่");
 
+        console.log(dtSerial, "dtSerial");
+
         if (!_bolTrayError) {
 
             if (hfCheckWeekCode === "Y") {
@@ -516,7 +520,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
                     _strSerialInfo: hfSerialInfo
                 })
                     .then((res) => {
-                        console.log(res.data);
                         sethfWeekCode(res.data);
                     });
             }
@@ -561,6 +564,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         _strTouchUp = dtSerial[i].TOUCH_UP;
                         _strRejectGroup = dtSerial[i].REMARK;
                     }
+                    console.log(_strRejectGroup)
 
                     if (DUPLICATE_CHECK_FLG === "1") {
                         let _strSerialSegment = "";
@@ -777,6 +781,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 .then((res) => {
                                     _dblPlasmaTime = res.data.plasma_time;
                                 });
+                                console.log(_dblPlasmaTime);
                             if (_dblPlasmaTime === 0) {
                                 _strMessageUpdate = _strMessageUpdate + " Skip Plasma / งานไม่ผ่านพลาสม่า";
                                 _strRemark = "Skip Plasma";
@@ -1271,6 +1276,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             }
             dtData.push(drRow);
         }
+        console.log(dtData)
         return dtData;
     };
 
@@ -1469,13 +1475,17 @@ function fn_ScanSMTSerialPcsAutoTray() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-
-
-                return (
-                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
-                        {text}
-                    </Tag>
-                );
+                if (text == '')
+                    return text;
+                else {
+                    return (
+                        <Tag
+                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                        >
+                            {text}
+                        </Tag>
+                    );
+                }
             },
             align: "center",
         },
