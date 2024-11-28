@@ -58,6 +58,12 @@ function ScanSMTRoollSht() {
     lblResult,
     lblTime,
     columns,
+    settxtMachine,
+    txtMachine,
+    settxtOP,
+    txtOP,
+    txtOP_TextChanged,
+    txtMachine_TextChanged,fc_txtMachine,fc_txtOP,ibtOPBack_Click,ibtMachineBack_Click
   } = fn_ScanSMTSerialPcsChrome();
   return (
     <div>
@@ -82,7 +88,7 @@ function ScanSMTRoollSht() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        style={{ ...txtLot.style, width: "75%"}}
+                        style={{ ...txtLot.style, width: "75%" }}
                         disabled={txtLot.disbled} //true พิมไม่ได้
                         inputRef={(el) => (fc_txtLotNo.current = el)}
                         value={txtLot.value}
@@ -132,7 +138,77 @@ function ScanSMTRoollSht() {
                       </FormControl>
                     </TableCell>
                   </TableRow>
-
+                  {/* style={{ display: txtPackingNo.visble }}   ซ่อนTableRow */}
+                  <TableRow style={{ display: txtMachine.visble }}>
+                    <TableCell align="right">
+                      <Typography>Machine No :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={4}>
+                      <TextField
+                        className="input_txt"
+                        size="small"
+                        inputRef={(el) => (fc_txtMachine.current = el)}
+                        value={txtMachine.value}
+                        onChange={(e) => {
+                          settxtMachine((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        style={{ ...txtMachine.style, width: "75%" }}
+                        disabled={txtMachine.disbled} //true พิมไม่ได้
+                        // // inputRef={fc_txtLotNo}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtMachine_TextChanged();
+                          }
+                        }}
+                        // onBlur={txtPackingNo_TextChanged}
+                      ></TextField>
+                      <Button
+                        className="Bt_ibtBack"
+                        onClick={ibtMachineBack_Click}
+                      >
+                        <BackspaceIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  {/* style={{ display: txtPackingNo.visble }} */}
+               
+                  <TableRow style={{ display: txtOP.visble  }}>
+                    <TableCell align="right" style={{ width: "120px" }}>
+                      <Typography> OP/Partial No. :</Typography>
+                    </TableCell>
+                    <TableCell colSpan={4}>
+                      <TextField
+                        className="input_txt"
+                        size="small"
+                        inputRef={(el) => (fc_txtOP.current = el)}
+                        value={txtOP.value}
+                        onChange={(e) => {
+                          settxtOP((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        style={{ ...txtOP.style, width: "75%" }}
+                        disabled={txtOP.disbled} //true พิมไม่ได้
+                        // inputRef={fc_txtLotNo}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtOP_TextChanged();
+                          }
+                        }}
+                        // onBlur={txtPackingNo_TextChanged}
+                      ></TextField>
+                      <Button
+                        className="Bt_ibtBack"
+                        onClick={ibtOPBack_Click}
+                      >
+                        <BackspaceIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                   <TableRow style={{ display: txtPackingNo.visble }}>
                     <TableCell align="right">
                       <Typography>Packing No :</Typography>
@@ -149,7 +225,7 @@ function ScanSMTRoollSht() {
                             value: e.target.value,
                           }));
                         }}
-                        style={{ ...txtPackingNo.style, width: "75%"}}
+                        style={{ ...txtPackingNo.style, width: "75%" }}
                         disabled={txtPackingNo.disbled} //true พิมไม่ได้
                         // inputRef={fc_txtLotNo}
                         onKeyDown={(e) => {
@@ -223,7 +299,7 @@ function ScanSMTRoollSht() {
               </Table>
 
               {/* {lbllog.visble == true && ( */}
-             
+
               <Paper
                 elevation={3}
                 className="Card-lblLog"
@@ -273,7 +349,7 @@ function ScanSMTRoollSht() {
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
-                              event.preventDefault(); 
+                              event.preventDefault();
                               if (index < gvSerial.value.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
                               } else {
@@ -320,7 +396,7 @@ function ScanSMTRoollSht() {
                       height: "260px",
                       marginBottom: "30px",
                     }}
-                    src={Pageimg} 
+                    src={Pageimg}
                     alt="Description of the image"
                   />
                 </>
@@ -359,7 +435,7 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-               
+
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}

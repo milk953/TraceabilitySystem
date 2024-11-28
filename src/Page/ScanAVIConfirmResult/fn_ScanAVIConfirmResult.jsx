@@ -123,6 +123,7 @@ function fn_ScanAVIConfirmResult() {
       };
       await GetProductDataAVIResultConfirm();
       await GetTestTypeAVIResultConfirm();
+      fnSetFocus("txtSerialBarcode");
     };
     fetchData();
   }, []);

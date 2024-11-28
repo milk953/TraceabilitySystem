@@ -752,6 +752,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       SetMode("SERIAL");
     } else {
       SetMode("PACK");
+      console
     }
   };
 
@@ -801,6 +802,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   };
 
   const setSerialDataTray = async () => {
+
     try {
       showLoading("กำลังบันทึก กรุณารอสักครู่");
       let dtSerial = await getInputSerial();
@@ -1229,7 +1231,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   _bolError = true;
                 }
               }
-              console.log("_intCountDup1", _bolError);
+              console.log("_intCountDup1", _bolError,hfTestResultFlag,_strTouchUp);
               if (!_bolError) {
                 if (hfTestResultFlag == "Y") {
                   if (_strTouchUp == "NG" && _strRejectGroup != "MASTER") {

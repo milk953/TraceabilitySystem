@@ -84,6 +84,7 @@ function ScanConfirmMagazineP1() {
                         className="input_txt"
                         size="small"
                         fullWidth
+                        autoComplete="off"
                         disabled={txtOperator.disabled}
                         style={txtOperator.style}
                         value={txtOperator.value}
@@ -120,6 +121,7 @@ function ScanConfirmMagazineP1() {
                         className="input_txt"
                         size="small"
                         fullWidth
+                        autoComplete="off"
                         disabled={txtLotNo.disabled}
                         style={txtLotNo.style}
                         value={txtLotNo.value}
@@ -156,6 +158,7 @@ function ScanConfirmMagazineP1() {
                         className="input_txt"
                         size="small"
                         fullWidth
+                        autoComplete="off"
                         disabled={txtMagNo.disabled}
                         style={txtMagNo.style}
                         value={txtMagNo.value}

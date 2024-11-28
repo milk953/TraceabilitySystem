@@ -94,6 +94,7 @@ function Change_Serial() {
                         className="input_txt"
                         style={{ width: "50%" }}
                         fullWidth
+                        autoComplete="off"
                         value={txtTotalPcs.value}
                         onChange={(e) => {
                           const inputValue = e.target.value.trim();
@@ -154,6 +155,7 @@ function Change_Serial() {
                               key={index}
                               size="small"
                               fullWidth
+                              autoComplete="off"
                               id={`gvSerial_txtSerialNoOld_${index}`}
                               className="input_txt"
                               value={txtSerialNoOld[index] || ""}
@@ -176,6 +178,7 @@ function Change_Serial() {
                               key={index}
                               size="small"
                               fullWidth
+                              autoComplete="off"
                               id={`gvSerial_txtSerialNoNew_${index}`}
                               className="input_txt"
                               value={txtSerialNoNew[index] || ""}

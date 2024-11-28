@@ -127,7 +127,7 @@ function fn_ScanConfirmMagazineP1() {
     if (txtOperator.value.trim() !== "") {
       setTxtOperator((prevState) => ({
         ...prevState,
-        value: txtOperator.value.trim(),
+        value: txtOperator.value.trim().toUpperCase(),
       }));
       SetMode("LOT");
     }
@@ -339,7 +339,7 @@ function fn_ScanConfirmMagazineP1() {
           ...prevState,
           value: data,
         }));
-        FN_ExportGridView("Serail_" + txtLotNo.value + ".xls", data);
+        FN_ExportGridView("Serail_" + txtLotNo.value + ".xlsx", data);
       });
   };
 
