@@ -130,6 +130,7 @@ function ScanAVIConfirmResult() {
                         className="input_txt"
                         size="small"
                         fullWidth
+                        autoComplete="off"
                         disabled={txtSerialBarcode.disbled}
                         style={txtSerialBarcode.style}
                         value={txtSerialBarcode.value}
@@ -187,18 +188,18 @@ function ScanAVIConfirmResult() {
         </Box>
       </Card>
       {ShowtableRow.visble && (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
-          marginTop: "10px",
-        }}
-      >
-        <table style={{ height: "100%", width: "90%" }}>
-          <tbody>{ShowtableRow.value}</tbody>
-        </table>
-      </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            marginTop: "10px",
+          }}
+        >
+          <table style={{ height: "100%", width: "90%" }}>
+            <tbody>{ShowtableRow.value}</tbody>
+          </table>
+        </div>
       )}
       {/* <div>
         <table>
