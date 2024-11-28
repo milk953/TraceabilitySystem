@@ -339,8 +339,8 @@ function fn_ScanSMTSerialPcsNG() {
         hfCheckFinInspect = res.prm_fin_gate_inspect_flg;
         hfCheckFinInspectProc = res.prm_fin_gate_inspect_proc;
         hfReqBoardNo = res.prm_conn_sht_board_flg;
-        // hfPlasmaCheck = res.prm_plasma_time_flg;
-        hfPlasmaCheck = "Y";
+        hfPlasmaCheck = res.prm_plasma_time_flg;
+        // hfPlasmaCheck = "Y";
         hfPlasmaTime = res.prm_plasma_time;
         hfPlasmaHideTime = res.prm_plasma_time_hide_time;
         hfPlasmaHideTime = res.rpm_final_aoi_spi_flg;
@@ -1598,24 +1598,7 @@ function fn_ScanSMTSerialPcsNG() {
       align: "center",
       width: 50,
       render: (text, record, index) => {
-        // const backgroundColor =
-        //   record.SCAN_RESULT === "NG"
-        //     ? "#f50"
-        //     : record.SCAN_RESULT === "OK"
-        //     ? "#87d068"
-        //     : "transparent";
-
-        return text;       // <Tag
-          //   style={{
-          //     width: 100,
-          //     textAlign: "center",
-          //     padding: "0px 0px 0px 0px",
-          //   }}
-          //   color={backgroundColor}
-          // >
-          //   {text}
-          // </Tag>
-
+        return text;       
       },
     },
     {

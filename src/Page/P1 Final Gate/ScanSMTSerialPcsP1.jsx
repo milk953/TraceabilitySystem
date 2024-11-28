@@ -48,7 +48,8 @@ function ScanSMTSerialPcsP1() {
     btnCancel_Click,
     btnSvae_Click,
     handletxtSerialChange,
-    columns
+    columns,
+    getRowClassName
   } = fn_ScanSMTSerialPcsP1();
   useEffect(() => {
     if(panalSerialState == true){
@@ -306,6 +307,7 @@ function ScanSMTSerialPcsP1() {
                     dataSource={gvSerialResult}
                     style={{ width: "980pxs", marginTop: "10px" }}
                     pagination={false}
+                    rowClassName={getRowClassName}
                     size="small"
                   />
                   &nbsp; &nbsp;

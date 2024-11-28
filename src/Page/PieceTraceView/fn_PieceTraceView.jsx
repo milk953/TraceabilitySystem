@@ -240,7 +240,8 @@ function fn_PieceTraceView() {
 
   useEffect(() => {
     if (SerialSearch !== "") {
-      btnRetrive_Click();
+      Clear_View();
+      ViewData();
     }
   }, [SerialSearch]);
 
@@ -251,6 +252,7 @@ function fn_PieceTraceView() {
       console.log("Serial", Serial);
       settxtSerialNo(Serial);
       setSerialSearch(Serial);
+      //ViewData();
     }
   };
 
@@ -473,7 +475,8 @@ function fn_PieceTraceView() {
     let StrResult = "";
     let ELT_Count = 0;
     let strFinalGateStation = "";
-    const SerialNo = txtSerialNo.toUpperCase().trim();
+    let SerialNo = txtSerialNo.toUpperCase().trim();
+    console.log(SerialNo, "SerialNo")
 
     try {
       if (SERIAL_DATABASE_SWITCH === 1) {
@@ -484,7 +487,7 @@ function fn_PieceTraceView() {
 
       await axios.post("/api/ViewTracePiece/GetSerialNo", {
         strplantcode: "G",
-        strserialno: txtSerialNo
+        strserialno: SerialNo
       })
         .then((res) => {
           dtSerial = res.data;
@@ -530,7 +533,7 @@ function fn_PieceTraceView() {
       if (dtPrd.length === 0) {
         await axios.post("/api/ViewTracePiece/getproductname", {
           strplantcode: plantCode,
-          strserialno: txtSerialNo
+          strserialno: SerialNo
         })
           .then((res) => {
             dt = res.data;
@@ -548,7 +551,7 @@ function fn_PieceTraceView() {
       }
 
       //Get SMT_PRODUCT_MST
-      console.log(txtProduct, "Produckj");
+      //console.log(txtProduct, "Produckj");
       await axios.post("/api/ViewTracePiece/getproductmst", {
         strprdname: dtPrd.product_name
       })
@@ -558,7 +561,7 @@ function fn_PieceTraceView() {
         });
 
 
-      if (dt1 !== "") {
+      if (dt1 !== null) {
         SheetType = dt1.sheet_type;
         console.log("SheetType", SheetType)
         BarcodeSide = dt1.lamination_side;
@@ -604,7 +607,7 @@ function fn_PieceTraceView() {
         }
 
         ELT_Count = dt1.elt_count;
-        if (ELT_Count === 3) {
+        if (dt1.elt_count === 3) {
           //api/ViewTracePiece trc_checker_header3 ไม่ใช้แล้ว
           setlblSerialChip(prevState => ({ ...prevState, visible: true }));
           settxtSerialChip(prevState => ({ ...prevState, visible: true }));
@@ -650,7 +653,7 @@ function fn_PieceTraceView() {
             if (SheetType === "S") {
               if (BarcodeSide === "F") {
                 sethypMaterialF(prevState => ({ ...prevState, visible: true, value: "Material" }));
-                let link= `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
+                let link = `http://10.17.100.236/Reports/report/Traceability%20Reports/N1/Valor/PcbTraceReference%20by%20Serial?PcbID=${hypSheetNoF}&BlockNo=${txtPcsNo}`;
                 window.open(link, '_blank');
               } else {
                 sethypMaterialB(prevState => ({ ...prevState, visible: true, value: "Material" }));
@@ -723,11 +726,10 @@ function fn_PieceTraceView() {
           console.log("dt4", dt4)
         }
 
-        if (dt3.length > 0) {
-          dt3 = dt3[0];
+        if (dt4.length > 0) {
           StrResult = "";
-          for (let i = 0; i < dt3.length; i++) {
-            StrResult = dt3[i].sp_result;
+          for (let i = 0; i < dt4.length; i++) {
+            StrResult = dt4[i].result;
             if (StrResult === "NG" || StrResult === "FAIL" ||
               StrResult === "BADMARK" || StrResult === "SKIP") {
               break;
@@ -737,17 +739,17 @@ function fn_PieceTraceView() {
           if (StrResult !== "NG" || StrResult !== "FAIL" ||
             StrResult !== "BADMARK" || StrResult !== "SKIP"
           ) {
-            for (let i = 0; i < dt3.length; i++) {
-              StrResult = dt3[i].sp_result;
+            for (let i = 0; i < dt4.length; i++) {
+              StrResult = dt4[i].result;
               const firstChar = StrResult.charAt(0).toUpperCase();
               if (firstChar === "E" || firstChar === "W") {
                 break;
               }
             }
           }
-
-          settxtSPICntF(dt3.int_count);
-          settxtSPITimeF(dt3.inspect_date);
+          dt4 = dt4[0];
+          settxtSPICntF(dt4.int_count);
+          settxtSPITimeF(dt4.inspect_date);
           setbtnSPIF(prevState => ({ ...prevState, value: StrResult }));
 
           const result = StrResult.toUpperCase();
@@ -783,6 +785,7 @@ function fn_PieceTraceView() {
               dt5 = res.data;
             });
 
+            console.log("dt5", dt5)
           if (dt5.length > 0) {
             dt5 = dt5[0];
             StrResult = "BADMARK"
@@ -799,7 +802,8 @@ function fn_PieceTraceView() {
       }
 
       //SPI Back
-      if (hypSheetNoB !== "") {
+      console.log(dt2.back_sheet_no, "hypSheetNoB")
+      if (dt2.back_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getspiback", {
           strplantcode: plantCode,
           strprdname: dtPrd.product_name,
@@ -810,11 +814,13 @@ function fn_PieceTraceView() {
             dt6 = res.data;
           });
 
+          console.log("dt6", dt6)
+
         if (dt6.length === 0) {
           if (SPI_Maker === "CKD") {
-            PanelNo = String(Math.max(0, parseInt(txtPcsNo, 10) - 1)).trim();
+            PanelNo = String(Math.max(0, parseInt(dt2.pcs_no, 10) - 1)).trim();
           } else {
-            PanelNo = txtPcsNo;
+            PanelNo = dt2.pcs_no;
           }
 
           await axios.post("/api/ViewTracePiece/getspiresult", {
@@ -828,11 +834,10 @@ function fn_PieceTraceView() {
           console.log("dt7", dt7)
         }
 
-        if (dt6.length > 0) {
-          dt6 = dt6[0];
+        if (dt7.length > 0) {
           StrResult = "";
-          for (i = 0; i < dt6.length; i++) {
-            StrResult = dt6[i].result;
+          for (let i = 0; i < dt7.length; i++) {
+            StrResult = dt7[i].result;
             if (StrResult === "NG" || StrResult === "FAIL" ||
               StrResult === "BADMARK" || StrResult === "SKIP"
             ) {
@@ -843,8 +848,8 @@ function fn_PieceTraceView() {
           if (StrResult !== "NG" || StrResult !== "FAIL" ||
             StrResult !== "BADMARK" || StrResult !== "SKIP"
           ) {
-            for (let i = 0; i < dt6.length; i++) {
-              StrResult = dt6[i].result;
+            for (let i = 0; i < dt7.length; i++) {
+              StrResult = dt7[i].result;
               const firstChar = StrResult.charAt(0).toUpperCase();
               if (firstChar === "E" || firstChar === "W") {
                 break;
@@ -852,11 +857,12 @@ function fn_PieceTraceView() {
             }
           }
 
+          dt7 = dt7[0];
           setbtnSPIB(prevState => ({ ...prevState, value: StrResult }));
-          settxtSPICntB(dt6.int_count);
-          settxtSPITimeB(dt6.inspect_date);
+          settxtSPICntB(dt7.int_count);
+          settxtSPITimeB(dt7.inspect_date);
 
-          const result = StrResult.toUpperCase();
+          const result = StrResult;
 
           switch (result) {
             case "GOOD":
@@ -1207,9 +1213,9 @@ function fn_PieceTraceView() {
           }
         }
       }
-      console.log("bbbbbbbb", btnAOIF);
+      console.log("bbbbbbbb", btnAOIF.value);
 
-      if (btnAOIF === "" && btnAOIB === "") {
+      if (btnAOIF.value === "" && btnAOIB.value === "") {
         await axios.post("/api/ViewTracePiece/getaoi2", {
           strplantcode: plantCode,
           strsheetno: SerialNo
@@ -1465,7 +1471,7 @@ function fn_PieceTraceView() {
       if (dt30.length > 0) {
         dt30 = dt30[0];
         setbtnReject1(dt30.reject_code);
-        if (btnReject1 !== "") {
+        if (dt30.reject_code !== "") {
           setbtnReject1Color("#BA0900");
         }
         settxtRejectCnt1(dt30.inspect_count);
@@ -1483,7 +1489,7 @@ function fn_PieceTraceView() {
       if (dt31.length > 0) {
         dt31 = dt31[0];
         setbtnTouchUp(dt31.touchup_result);
-        if (btnTouchUp === "NG") {
+        if (dt31.touchup_result === "NG") {
           setbtnTouchUpColor("#BA0900");
         } else {
           setbtnTouchUpColor("#059212");
@@ -1891,8 +1897,8 @@ function fn_PieceTraceView() {
               setlblELT7(prevState => ({ ...prevState, visible: true, value: dt34[i].stt_type }));
               setbtnELT7(prevState => ({ ...prevState, visible: true }));
               settxtELTTime7(prevState => ({ ...prevState, visible: true }));
-              let sbaql7 = await Get_Select(dt34[i].stt_key_type, SerialNo, dt34[i].stt_type, txtSerialChip, plantCode);
-              let dt7 = sbaql7;
+              const sbaql7 = await Get_Select(dt34[i].stt_key_type, SerialNo, dt34[i].stt_type, txtSerialChip, plantCode);
+              dt7 = sbaql7;
 
               if (dt7.length > 0) {
                 dt7 = dt7[0];
@@ -2462,8 +2468,8 @@ function fn_PieceTraceView() {
 
   const btnRetrive_Click = async () => {
     localStorage.setItem("SERIAL_NO", txtSerialNo);
-    Clear_View();
     ViewData();
+    //Clear_View();
   };
 
   const btnSPIF_Click = async () => {

@@ -59,7 +59,7 @@ function ScanSMTSerialPcsAutoTray() {
                     <TableContainer
                         component={Paper}
                         style={{
-                            width: "410px",
+                            width: "420px",
                             margin: "4px",
                         }}
                     >

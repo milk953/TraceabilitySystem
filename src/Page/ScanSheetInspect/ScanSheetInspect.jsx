@@ -230,6 +230,7 @@ function ScanSheetInspect() {
                                             defaultValue='A'
                                             onChange={(e, value) => {
                                                 setselShift(value);
+                                                document.getElementById("weekcode").focus();
                                             }}
                                             renderInput={(params) => (
                                                 <TextField {...params}

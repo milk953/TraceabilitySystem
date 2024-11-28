@@ -333,6 +333,9 @@ function fn_ScanSheetInspect() {
 
     const handleselShtBin = async (value) => {
         setselBinNo(value);
+        setTimeout(() => {
+            inputShtNo.current.focus();  
+        }, 200);
         selShtXOut.current?.focus();
         console.log(value, 'handleselShtBin')
     };
@@ -520,6 +523,8 @@ function fn_ScanSheetInspect() {
         setpnlSuccess(false);
         setpnlSerial(false);
         settxtShtNo("");
+        setvisiblelog(false);
+        setlabellog("");
         inputShtNo.current.focus();
     }
 
