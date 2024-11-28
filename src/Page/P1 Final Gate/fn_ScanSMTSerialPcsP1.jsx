@@ -2,6 +2,7 @@ import { Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLoading } from "../../loading/fn_loading";
+import ExcelJS from "exceljs";
 
 function fn_ScanSMTSerialPcsP1() {
   const Fac = import.meta.env.VITE_FAC;
@@ -470,8 +471,8 @@ function fn_ScanSMTSerialPcsP1() {
         (hiddenParams.hfTrayLength = data[0].slm_tray_length),
         
         (hiddenParams.hfTestResultFlag = data[0].slm_test_result_flag),
-        // (hiddenParams.hfSerialCount = data[0].slm_serial_count), // เปลี่ยนกลับ
-        (hiddenParams.hfSerialCount = 3),
+        (hiddenParams.hfSerialCount = data[0].slm_serial_count), // เปลี่ยนกลับ
+        // (hiddenParams.hfSerialCount = 100),
         (hiddenParams.hfAutoScan = data[0].slm_auto_scan),
         (hiddenParams.hfConfigCheck = data[0].prm_barcode_req_config),
         (hiddenParams.hfConfigCode = data[0].prm_config_code),
@@ -1057,6 +1058,7 @@ function fn_ScanSMTSerialPcsP1() {
       setGvSerialResult(dtSerial);
       setlblResultState(true);
       setHideImg(false);
+      ExportCSV(dtSerial)
       // if(hiddenParams.hfExportCSV == 'Y'){
 
       // }
@@ -1077,6 +1079,45 @@ function fn_ScanSMTSerialPcsP1() {
       behavior: 'smooth'
     });
   };
+  function ExportCSV(DtData) {
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("My Sheet");
+    sheet.properties.defaultRowHeight = 20;
+
+    const excelColumns = columns.map((col) => ({
+      header: col.title,
+      key: col.dataIndex,
+      width: 20,
+      style: { alignment: { horizontal: "center" } },
+    }));
+    sheet.columns = excelColumns;
+    DtData.forEach((row) => {
+      if (row.SERIAL && row.SERIAL.trim() !== "") { // ตรวจสอบว่าค่า SERIAL ไม่ว่าง
+        sheet.addRow(row); 
+      } 
+    });
+    sheet.columns.forEach((column) => {
+      let maxLength = column.header.length; 
+      column.eachCell({ includeEmpty: true }, (cell) => {
+        if (cell.value) {
+          const cellValueLength = cell.value.toString().length;
+          if (cellValueLength > maxLength) {
+            maxLength = cellValueLength;
+          }
+        }
+      });
+      column.width = maxLength + 4; 
+    });
+    workbook.xlsx
+    .writeBuffer()
+    .then((buffer) => {
+      const blob = new Blob([buffer], { type: "application/octet-stream" });
+      saveAs(blob,`test.xlsx`);
+    })
+    .catch((error) => {
+      console.error("Error writing excel file:", error);
+    });
+  }
   function SetMode(type) {
     if (type == "LOT") {
       setScanLot("");

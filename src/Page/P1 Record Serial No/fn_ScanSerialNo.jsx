@@ -176,7 +176,7 @@ function fn_ScanSerialNo() {
       align: "center",
       width: 50,
       render: (text, record, index) => {
-        return text;
+        return record.SERIAL == '' ? '' :text;
       },
     },
     {
@@ -618,6 +618,15 @@ function fn_ScanSerialNo() {
       }
       setLblResultState(true);
       setHideImg(false);
+      for(let i = 0; i < dtSerial.length; i++) {
+        if(dtSerial[i].SERIAL == ''){
+          dtSerial[i].SERIAL = '';
+          dtSerial[i].LOT = '';
+          dtSerial[i].MAGAZINE = '';
+          dtSerial[i].SCAN_RESULT = '';
+          dtSerial[i].REMARK = '';
+        }
+      }
       setGvSerialResult(dtSerial);
       console.log(dtSerial, "dtSerial");
       let result = await getData("GetCountSerialByLotMagazine", lotNo);
