@@ -636,6 +636,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             if (_strUpdateError != "") {
               _strScanResultAll = "NG";
             } else if (hfPlasmaConnShtPcs == "Y") {
+              if(dtSerial[drRow].SERIAL != ""){
               _strUpdateError = await getData("SetSerialRecordTimeTrayTable", {
                 SERIAL: dtSerial[drRow].SERIAL,
                 MACHINE : dtSerial[drRow].MACHINE,
@@ -654,6 +655,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               }
             }
           }
+        }
         
         } else {
           _strScanResultAll = "NG";
@@ -1205,12 +1207,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       return result;
     } else if (type == "SetSerialRecordTimeTrayTable") {
       let result = "";
-      console.log("SetSerialRecordTimeTrayTable Insert");
+      console.log("SetSerialRecordTimeTrayTable Insert",param);
       await axios
         .post("/api/Common/SetSerialRecordTimeTrayTable", {
           dataList: {
             strUserID: param.strUserID,
-            strPlantCode: Fac,
+            strPlantCode: param.strPlantCode,
             hfUserStation: param.hfUserStation,
             strProgram: param.strProgram,
             data: [{
@@ -1444,7 +1446,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         hfShtPlasmaTimeFlg = res.prm_sht_plasma_time_flg;
         hfShtPlasmaTime = res.prm_sht_plasma_time;
         hfSheetType = res.prm_sheet_type;
-        hfPlasmaConnShtPcs = res.prm_conn_shtpcs_plasma_time_flg;
+        hfPlasmaConnShtPcs = res.prm_conn_shtpcs_plasma_flg;
         hfSerialInfo = res.prm_additional_info;
         hfCheckXrayF = res.prm_sht_xray_f;
         hfCheckXrayB = res.prm_sht_xray_b;

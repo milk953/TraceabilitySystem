@@ -1,8 +1,7 @@
 import { Tag } from "antd";
 import axios from "axios";
-import { get, set } from "lodash";
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanSMTSerialPcsP1() {
   const Fac = import.meta.env.VITE_FAC;
@@ -60,6 +59,7 @@ function fn_ScanSMTSerialPcsP1() {
     hfLotAll: "server",
     hfExportCSV :'N'
   };
+  const {showLoading,hideLoading} = useLoading();
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
   const FINAL_GATE_SPECIAL_SERIAL_VAR = import.meta.env.VITE_FINAL_GATE_SPECIAL_SERIAL_VAR;
@@ -72,7 +72,7 @@ function fn_ScanSMTSerialPcsP1() {
   const [ddlProductState, setddlProductState] = useState(false);
   const [lblLot, setlblLot] = useState("");
   const [lblLotTotal, setlblLotTotal] = useState("");
-  const [lblSerialNG, setlblSerialNG] = useState("");
+  const [lblSerialNG, setlblSerialNG] = useState(0);
   const [lblError, setlblError] = useState("");
   const [lblErrorState, setlblErrorState] = useState(false);
   const [panalSerialState, setpanalSerialState] = useState(false);
@@ -113,7 +113,7 @@ function fn_ScanSMTSerialPcsP1() {
       dataIndex: "REJECT",
       key: "REJECT",
       align: "center",
-      width: 50,
+      width: 100,
       render: (text, record, index) => {
         return text;
       },
@@ -154,28 +154,7 @@ function fn_ScanSMTSerialPcsP1() {
       key: "SCAN_RESULT",
       align: "center",
       width: 50,
-      render: (text, record, index) => {
-        const backgroundColor =
-          record.SCAN_RESULT === "NG"
-            ? "#f50"
-            : record.SCAN_RESULT === "OK"
-            ? "#87d068"
-            : "transparent";
-
-        return (
-          <Tag
-            style={{
-              width: 100,
-              textAlign: "center",
-              padding: "0px 0px 0px 0px",
-            }}
-            color={backgroundColor}
-          >
-            {text}
-          </Tag>
-        );
-      },
-    },
+      render: (text, record, index) => {return text;},},
     {
       title: "Remark",
       dataIndex: "REMARK",
@@ -187,6 +166,14 @@ function fn_ScanSMTSerialPcsP1() {
       },
     },
   ];
+  const getRowClassName = (record) => {
+    if (record.SCAN_RESULT === "NG") {
+      return 'row-red';
+    } else if (record.SCAN_RESULT === "OK") {
+      return 'row-green';
+    }
+    return '';
+  };
   useEffect(() => {
     PageLoad();
   }, []);
@@ -209,7 +196,7 @@ function fn_ScanSMTSerialPcsP1() {
           _strPrdName = await getData("GetProductNameByLot", _strLot);
           let dtLotPassCount = await getData("GetSerialPassByLot", _strLot);
           setlblLotTotal("0");
-          setlblSerialNG("0");
+          setlblSerialNG(0);
           if (parseInt(dtLotPassCount) > 0) {
             setlblLotTotal(dtLotPassCount);
           }
@@ -226,11 +213,7 @@ function fn_ScanSMTSerialPcsP1() {
             await getData("getProductSerialMaster", _strPrdName);
             SetMode("SERIAL");
           } else {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Product " + _strPrdName + " not found.",
-            });
+            setlblError("Product " + _strPrdName + " not found.");
           }
         } else {
           setlblError(
@@ -242,7 +225,7 @@ function fn_ScanSMTSerialPcsP1() {
           );
           setlblLot("");
           setlblLotTotal("");
-          setlblSerialNG("");
+          setlblSerialNG(0);
           SetMode("LOT_ERROR");
         }
       } else {
@@ -251,7 +234,7 @@ function fn_ScanSMTSerialPcsP1() {
         );
         setlblLot("");
         setlblLotTotal("");
-        setlblSerialNG("");
+        setlblSerialNG(0);
         SetMode("LOT_ERROR");
       }
     } else {
@@ -468,7 +451,7 @@ function fn_ScanSMTSerialPcsP1() {
             result = res.data.p_error;
           })
           .catch((error) => {
-            Swal.fire("Please Try Again", error.message, "error");
+            setlblError(error.message);
           });
         return result;
       }
@@ -607,6 +590,8 @@ function fn_ScanSMTSerialPcsP1() {
     }
   };
   async function setSerialDataTray() {
+    setlblSerialNG(0);
+    showLoading('กำลังบันทึก กรุณารอสักครู่');
     let dtSerial = await getInputSerial();
     await getData("getProductSerialMaster", productSelected);
     let _strLot = lblLot;
@@ -1003,8 +988,16 @@ function fn_ScanSMTSerialPcsP1() {
 
           if(_strScanResultUpdate == 'NG'){
             _strScanResultAll = 'NG';
-          }else{
-            setlblSerialNG(parseInt(lblSerialNG) + 1);
+          }
+          if(_bolError){
+              setlblSerialNG((prevValue) => {
+                const numericValue = parseInt(prevValue, 10);
+                if (isNaN(numericValue)) {
+                  return 1;
+                } else {
+                  return numericValue + 1;
+                }
+              });
           }
         }
         _intRowSerial = _intRowSerial + 1
@@ -1048,11 +1041,7 @@ function fn_ScanSMTSerialPcsP1() {
             ) {
               dtSerial[insertDt].REMARK = "duplicate serial";
             }
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: `Error : ${_strErrorUpdate}`,
-            });
+            setlblError(`Error : ${_strErrorUpdate}`);
           }
         }
       }
@@ -1062,6 +1051,9 @@ function fn_ScanSMTSerialPcsP1() {
       }
     }
     if(!_bolTrayError){
+      for(let i = 0; i < dtSerial.length; i++){
+        dtSerial[i].SEQ = i + 1;
+      }
       setGvSerialResult(dtSerial);
       setlblResultState(true);
       setHideImg(false);
@@ -1075,9 +1067,16 @@ function fn_ScanSMTSerialPcsP1() {
     if(dtLotPassCount != ''){
       setlblLotTotal(dtLotPassCount);
     }
-    console.log(dtSerial);
     btnCancel_Click();
+    hideLoading();
+    scrollToTop();
   }
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
   function SetMode(type) {
     if (type == "LOT") {
       setScanLot("");
@@ -1094,21 +1093,21 @@ function fn_ScanSMTSerialPcsP1() {
       Setdisable("enable", "P1FGScanLot");
       setlblLot("");
       setlblLotTotal("");
-      setlblSerialNG("");
+      setlblSerialNG(0);
       setpanalSerialState(false);
       setlblErrorState(true);
       hfMode = "LOT";
       SetFocus("P1FGScanLot");
     } else if (type == "TRAY") {
       Setdisable("disable", "P1FGScanLot");
-      setlblSerialNG("");
+      setlblSerialNG(0);
       setpanalSerialState(true);
       getInitialSerial();
       hfMode = "TRAY";
       // SetFocus('txtTray');//ไม่มี
     } else if (type == "TRAY_ERROR") {
       Setdisable("disable", "P1FGScanLot");
-      setlblSerialNG("");
+      setlblSerialNG(0);
       setpanalSerialState(false);
       setlblErrorState(true);
       getInitialSerial();
@@ -1168,7 +1167,7 @@ function fn_ScanSMTSerialPcsP1() {
     btnSvae_Click,
     handletxtSerialChange,
     setSerialDataTray,
-
+    getRowClassName
   };
 }
 
