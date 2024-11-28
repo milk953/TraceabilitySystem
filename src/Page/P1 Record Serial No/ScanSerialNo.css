@@ -98,3 +98,9 @@
   font-size: 16px;
   width: 230px;
 }
+.row-red {
+  color: red;
+}
+.row-green {
+  color: green;
+}

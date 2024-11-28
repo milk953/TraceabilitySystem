@@ -90,6 +90,7 @@ function SPIAOITimeView() {
                         style={{ width: "100%" }}
                         disabled={txtSPIMCNo.disbled}
                         fullWidth
+                        autoComplete="off"
                         value={txtSPIMCNo.value}
                         onChange={(e) => {
                           setTxtSPIMCNo((prevState) => ({
@@ -123,6 +124,7 @@ function SPIAOITimeView() {
                         className="input_txt"
                         style={{ width: "100%" }}
                         fullWidth
+                        autoComplete="off"
                         value={txtAOIMCNo.value}
                         disabled={txtAOIMCNo.disbled}
                         onChange={(e) => {

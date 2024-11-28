@@ -43,7 +43,7 @@ function AOIManualConfirmP1() {
       <Hearder />
 
       <Card component={Paper} className="Card-Common">
-        <Typography
+        {/* <Typography
           variant="h6"
           style={{
             display: "flex",
@@ -52,7 +52,7 @@ function AOIManualConfirmP1() {
           }}
         >
           {lblUser1.value}
-        </Typography>
+        </Typography> */}
         <TableRow
           sx={{
             textAlign: "center",
@@ -63,7 +63,7 @@ function AOIManualConfirmP1() {
           <TableCell
             sx={{
               width: "40%",
-              borderBottom: "0px"
+              borderBottom: "0px",
             }}
           >
             <Typography
@@ -79,16 +79,7 @@ function AOIManualConfirmP1() {
             </Typography>
           </TableCell>
         </TableRow>
-        {/* <Typography
-          variant="h6"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            ...lblResult.style,
-          }}
-        >
-          {lblResult.value}
-        </Typography> */}
+
 
         <div className="DAOITableFirst">
           <Table className="AOITableFirst" component={Paper}>
@@ -153,10 +144,11 @@ function AOIManualConfirmP1() {
 
                 <TableCell sx={{ width: "60%" }}>
                   <TextField
-                    id="txtOperator_ScanConfirmMagazineP1_focus"
+                    id="txtSerialNo_AOIManualConfirmP1_focus"
                     className="input_txt"
                     size="small"
                     fullWidth
+                    autoComplete="off"
                     // disabled={txtOperator.disabled}
                     // style={txtOperator.style}
                     value={txtSerialNo.value}
@@ -220,6 +212,7 @@ function AOIManualConfirmP1() {
                     size="small"
                     disabled
                     fullWidth
+                    autoComplete="off"
                     style={{ width: "99%", backgroundColor: "#e0e0e0" }}
                     value={txtOperatorCode.value}
                   ></TextField>
@@ -230,6 +223,7 @@ function AOIManualConfirmP1() {
                     size="small"
                     disabled
                     fullWidth
+                    autoComplete="off"
                     value={txtCnt.value}
                     style={{ width: "99%", backgroundColor: "#e0e0e0" }}
                   ></TextField>

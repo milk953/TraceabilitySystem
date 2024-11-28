@@ -1224,12 +1224,7 @@ function fn_ScanSMTSerialPcsNG() {
                   hfCheckEFPCAVI,
                   "CheckEFPC"
                 );
-                if (
-                  hfCheckEFPCAOM == "Y" ||
-                  hfCheckEFPCAOI == "Y" ||
-                  hfCheckEFPCOST == "Y" ||
-                  hfCheckEFPCAVI == "Y"
-                ) {
+                if (hfCheckEFPCAOM == "Y" ||hfCheckEFPCAOI == "Y" ||hfCheckEFPCOST == "Y" ||hfCheckEFPCAVI == "Y") {
                   let _strEFPCResult = "";
                   let _strEFPCRemark;
                   // รอทำต่อ

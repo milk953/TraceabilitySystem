@@ -2,6 +2,7 @@ import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import {useLoading} from "../../loading/fn_loading";  
 
 function fn_rollTraceView() {
   const [Product, setProduct] = useState("");
@@ -12,6 +13,7 @@ function fn_rollTraceView() {
   const [gvResult, setGvResult] = useState([]);
   const [gvResultState, setgvResultState] = useState(false);
   const params = new URLSearchParams(window.location.search);
+  const {showLoading,hideLoading} = useLoading();
   const lot = params.get("ROLLLEAF");
   useEffect(() => {
     if (RollLeafTextFiled == "") {
@@ -50,6 +52,7 @@ function fn_rollTraceView() {
     setGvResult([]);
   };
   async function searchData() {
+    showLoading('กำลังค้นหาข้อมูล กรุณารอสักครู่')
     let dtLeft = await getData("fnLotRollLeafData", RollLeafTextFiled);
     if (dtLeft == []) {
       setRollLeafTextFiled("");
@@ -58,8 +61,7 @@ function fn_rollTraceView() {
       await removeURLParameter('ROLLLEAF');
       return ;
     }
-    setGvResult(dtLeft);
-    setgvResultState(true);
+    
 
     if (dtLeft != "") {
       let dtLot = await getData("fnLotNoByRoll", dtLeft[0].lot_no);
@@ -72,6 +74,9 @@ function fn_rollTraceView() {
       setLotNo(dtLeft[0].lot_no);
       setRollSheetNo(dtLeft[0].roll_sheet);
     }
+    setGvResult(dtLeft);
+    setgvResultState(true);
+    hideLoading();
   }
   async function getData(type, params) {
     if (type == "fnLotRollLeafData") {

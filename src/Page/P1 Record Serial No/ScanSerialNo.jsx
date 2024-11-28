@@ -51,12 +51,8 @@ function ScanSerialNo() {
     txtSerial,
     gvSerialResult,
     gvSerial,
+    getRowClassName
   } = fn_ScanSerialNo();
-  useEffect(() => {
-    if (gvSerialState == true){
-        document.getElementById("txtSerial_0").focus();
-    }
-  },[gvSerialState]);
   return (
     <>
       <Header />
@@ -180,7 +176,7 @@ function ScanSerialNo() {
             </Table>
             &nbsp;&nbsp;
             {gvSerialState && (
-              <Table classname="RecordSP1gvSerial" component={Card}>
+              <Table className="RecordSP1gvSerial" component={Card}>
                 <TableHead style={{ background: "#12422e" }}>
                   <TableRow>
                     <TableCell
@@ -274,7 +270,8 @@ function ScanSerialNo() {
                   <Typography
                     variant="h4"
                     style={{
-                      color: lblResult.styled.color,
+                      // color: lblResult.styled.color,
+                      color: "white",
                       fontSize: "30px",
                     }}
                   >
@@ -288,6 +285,7 @@ function ScanSerialNo() {
                     dataSource={gvSerialResult}
                   style={{ width: "980pxs", marginTop: "10px" }}
                   pagination={false}
+                  rowClassName={getRowClassName}
                   size="small"
                 />
                 &nbsp; &nbsp;

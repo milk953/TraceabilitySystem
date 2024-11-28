@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Tag } from "antd";
+import {useLoading} from "../../loading/fn_loading";  
 function fn_ScanSerialNo() {
   const hiddenParams = {
     hfSerialLength: "0",
@@ -60,6 +60,7 @@ function fn_ScanSerialNo() {
   const [ip, setIp] = useState("");
   const [userStation, setUserStation] = useState("");
   //btnState
+  const {showLoading,hideLoading} = useLoading();
   const [btnLotBack, setBtnLotBack] = useState(true);
   const [btnOperatorBack, setBtnOperatorBack] = useState(true);
   const [btnback, setBtnback] = useState(true);
@@ -76,15 +77,20 @@ function fn_ScanSerialNo() {
   });
   //btnHandle
   const handle_Save_Click = () => {
+    // console.log(txtSerial, "txtSerial");
     setSerialDataTray();
   };
   const handle_Cancel_Click = () => {
+    setGvSerial([]);
+    setTxtSerial(gvSerial.map(() => ""));
     setMode("SERIAL");
+    SetFocus("txtSerial_0");
   };
   const handle_BtnBack_Click = () => {
     setPcs("");
     Setdisable("enable", "txtPCS");
     setGvSerialState(false);
+    
     setMode("PCS");
   };
   const handle_txtPCS_Change = () => {
@@ -133,6 +139,10 @@ function fn_ScanSerialNo() {
     hiddenParams.hfSerialCount = parseInt(result);
     setTotal(result);
     setMode("SERIAL");
+    setTimeout(() => {
+      SetFocus("txtSerial_0");
+    }, 200);
+    
   };
   const handle_MagazineBack_Click = () => {
     setMode("MAGAZINE");
@@ -176,25 +186,7 @@ function fn_ScanSerialNo() {
       align: "center",
       width: 50,
       render: (text, record, index) => {
-        const backgroundColor =
-          record.SCAN_RESULT === "NG"
-            ? "#f50"
-            : record.SCAN_RESULT === "OK"
-            ? "#87d068"
-            : "transparent";
-
-        return (
-          <Tag
-            style={{
-              width: 100,
-              textAlign: "center",
-              padding: "0px 0px 0px 0px",
-            }}
-            color={backgroundColor}
-          >
-            {text}
-          </Tag>
-        );
+        return text;
       },
     },
     {
@@ -209,11 +201,12 @@ function fn_ScanSerialNo() {
     },
   ];
   async function Pageload() {
+
     setIp(localStorage.getItem("ipAddress"));
     setUserStation(localStorage.getItem("ipAddress"));
     setMode("OP");
     hiddenParams.hfMode = "";
-    setPcs(hiddenParams.hfTotalPcs);
+    setPcs("");
   }
 
   useEffect(() => {
@@ -380,27 +373,28 @@ function fn_ScanSerialNo() {
       Setdisable("disable", "txtMagazine");
       setProduct("");
       setTotal("");
-      setBtnLotBack(false);
+      setBtnLotBack(true);
       setBtnOperatorBack(false);
-      setBtnback(false);
-      setBtnMagBack(false);
+      setBtnback(true);
+      setBtnMagBack(true);
       setGvSerial([]);
+      setGvSerialState(false);
+      setLblResultState(false);
       hiddenParams.hfMode = "OP";
       SetFocus("txtOperator");
     } else if (strType == "PCS") {
       setLotNo("");
       Setdisable("disable", "txtLotNo");
-      setOperator("");
       Setdisable("disable", "txtOperator");
       setBtnOperatorBack(false);
       setPcs(hiddenParams.hfTotalPcs);
       Setdisable("enable", "txtPCS");
       setMagazine("");
       Setdisable("disable", "txtMagazine");
-      setBtnMagBack(false);
+      setBtnMagBack(true);
       setProduct("");
       setTotal("");
-      setBtnback(true);
+      setBtnback(false);
       setBtnLotBack(true);
       setGvSerialState(false);
       setGvSerial([]);
@@ -442,12 +436,20 @@ function fn_ScanSerialNo() {
     } else if (strType == "SERIAL") {
       // Setdisable("disable", "txtMagazine");
       setBtnMagBack(false);
-      Setdisable("disable", "txtPCS");
+      // Setdisable("disable", "txtPCS");
       setGvSerialState(true);
       hiddenParams.hfMode = "SERIAL";
       getInitialSerial();
     }
   }
+  const getRowClassName = (record) => {
+    if (record.SCAN_RESULT === "NG") {
+      return 'row-red';
+    } else if (record.SCAN_RESULT === "OK") {
+      return 'row-green';
+    }
+    return '';
+  };
   function Setdisable(type, txtField) {
     if (type == "disable") {
       document.getElementById(`${txtField}`).disabled = true;
@@ -472,6 +474,7 @@ function fn_ScanSerialNo() {
     console.log(txtSerial, "txtSerial");
   };
   async function setSerialDataTray() {
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
     let dtSerial = await getInputSerial();
     await getData("getProductSerialMaster", product);
     let _bolTrayError = false;
@@ -481,7 +484,7 @@ function fn_ScanSerialNo() {
 
     if (!_bolTrayError) {
       for (let i = 0; i < dtSerial.length; i++) {
-        if (dtSerial[i].SERIAL !== "") {
+        if (dtSerial[i].SERIAL !== "" && dtSerial[i] && dtSerial[i].SERIAL ) {
           let _intCount = 0;
           let _strRemark = "";
           let _strError = "";
@@ -624,7 +627,18 @@ function fn_ScanSerialNo() {
       setMode("SERIAL");
       
     }
+    hideLoading();
+    SetFocus("txtSerial_0");
+    scrollToTop();
+    
   }
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+ 
   return {
     operator,
     setOperator,
@@ -661,6 +675,7 @@ function fn_ScanSerialNo() {
     handletxtSerialChange,
     txtSerial,
     gvSerialResult,
+    getRowClassName
   };
 }
 
