@@ -133,8 +133,113 @@ function fn_Material_Trace() {
   ];
 
 
+// หาข้อมูล Material
+//   await axios
+//   .post("/api/Common/fnGetMaterialData", {
+//     strLOTNO: datalblLot,
+//   })
+//   .then((res) => {
+//     dt = res.data;
+//   });
+// setgvMaterial((prevState) => ({
+//   ...prevState,
+//   value: dt,
+//   visible: "โชว์",
+// }));
 
-  return { tblData1, txtLotNo, columnstblData1,ViewData,loading ,settxtLotNo,Clear};
+
+const columnsgvMaterial = [
+  {
+    title: "Material Code",
+    dataIndex: "MAT_CODE",
+    key: "Material Code",
+    render: (text, record, index) => {
+      return text;
+    },
+    align: "left",
+    width: "85px",
+  },
+  {
+    title: "Process",
+    dataIndex: "PROCESS",
+    key: "Process",
+    align: "left",
+    width: "85px",
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Material Name",
+    dataIndex: "MAT_NAME",
+    key: "Material Name",
+    align: "left",
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Category",
+    dataIndex: "MAT_CATEGORY",
+    key: "Category",
+    align: "left",
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+
+  {
+    title: "Vender Lot",
+    key: "Vender Lot",
+    dataIndex: "VENDER_LOT",
+    align: "left",
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+  {
+    title: "Sub Lot",
+    key: "Sub Lot",
+    dataIndex: "SUB_VENDER_LOT",
+    align: "left",
+    render: (text, record, index) => {
+      return text;
+    },
+    width: 100,
+  },
+  {
+    title: "Expired Date",
+    key: "Expired Date",
+    dataIndex: "EXPIRE_DATE",
+    align: "center",
+    render: (text, record, index) => {
+      return text;
+    },
+    width: 100,
+  },
+  {
+    title: "Invoice No.",
+    key: "Invoice No.",
+    dataIndex: "INVOICE_NO",
+    align: "left",
+    render: (text, record, index) => {
+      return text;
+    },
+    width: 110,
+  },
+  {
+    title: "Vender Name",
+    key: "Vender Name",
+    dataIndex: "VENDER_NAME",
+    align: "left",
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+];
+
+
+  return { tblData1, txtLotNo, columnstblData1,ViewData,loading ,settxtLotNo,Clear,columnsgvMaterial};
 }
 
 export { fn_Material_Trace };

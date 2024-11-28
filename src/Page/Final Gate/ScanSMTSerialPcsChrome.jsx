@@ -63,7 +63,7 @@ function ScanSMTRoollSht() {
     settxtOP,
     txtOP,
     txtOP_TextChanged,
-    txtMachine_TextChanged,fc_txtMachine,fc_txtOP,ibtOPBack_Click,ibtMachineBack_Click
+    txtMachine_TextChanged,fc_txtMachine,fc_txtOP,ibtOPBack_Click,ibtMachineBack_Click,lblOP
   } = fn_ScanSMTSerialPcsChrome();
   return (
     <div>
@@ -308,6 +308,17 @@ function ScanSMTRoollSht() {
                 }}
               >
                 {lblLog.value}
+              </Paper>
+
+              <Paper
+                elevation={3}
+                className="Card-lblOP"
+                style={{
+           
+                  display: lblOP.visble,
+                }}
+              >
+                {lblOP.value}
               </Paper>
               <Table
                 className="CSS-GvSerial"

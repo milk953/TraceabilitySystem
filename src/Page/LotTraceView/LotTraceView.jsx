@@ -299,7 +299,7 @@ function LotTraceView() {
         />
         {/*----------------------------- Table3--------------------- */}
         <br />
-        <Table
+        {/* <Table
           style={{ width: "50%" }}
           dataSource={gvProcessLink.value}
           columns={columnsgvProcessLink}
@@ -307,7 +307,7 @@ function LotTraceView() {
           pagination={false}
           size="small"
           bordered
-        />
+        /> */}
            </Spin>
       </Card>
     </>

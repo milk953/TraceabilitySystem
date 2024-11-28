@@ -27,6 +27,17 @@
     margin-top: 10px;
 
 }
+
+.Card-lblOP{
+    height: 40px;
+    text-align: center;
+    background: #acd0ee !important;
+    padding-top: 18px;
+    color: rgb(28, 39, 43) !important;
+    font-weight: bold;
+    margin-top: 10px;
+
+}
 .Img_GvResult{
 width: 360px;
 height: 300px;

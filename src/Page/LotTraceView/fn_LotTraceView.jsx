@@ -545,7 +545,7 @@ function fn_LotTraceView() {
         // DatagvRouting()
       });
 
-    await axios.post("/api/ViewTraceLot/fnGetProcessLinkData").then((res) => {
+    await axios.post("/api/ViewTraceLot/fnGetProcessLinkData").then((res) => {904084627
       console.log("gvProcessLinkgvProcessLink", res.data);
       setgvProcessLink((prevState) => ({
         ...prevState,
@@ -582,6 +582,16 @@ function fn_LotTraceView() {
       },
       align: "left",
       width: "85px",
+    },
+    {
+      title: "Process",
+      dataIndex: "PROCESS",
+      key: "Process",
+      align: "left",
+      width: "85px",
+      render: (text, record, index) => {
+        return text;
+      },
     },
     {
       title: "Material Name",

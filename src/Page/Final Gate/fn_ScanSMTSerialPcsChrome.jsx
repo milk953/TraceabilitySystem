@@ -96,7 +96,7 @@ function fn_ScanSMTSerialPcsChrome() {
   const [lblOP, setlblOP] = useState({
     value: "",
     disbled: "",
-    visble: "",
+    visble: "none",
     style: {},
   });
   const [txtOP, settxtOP] = useState({
@@ -713,6 +713,7 @@ function fn_ScanSMTSerialPcsChrome() {
           disbled: true,
           style: { background: "#e0e0e0" },
         }));
+        setlblOP((prevState) => ({ ...prevState, value: "", visble: "none" }));
         settxtOP((prevState) => ({
           ...prevState,
           disbled: true,
@@ -937,6 +938,7 @@ function fn_ScanSMTSerialPcsChrome() {
             setlblOP((prevState) => ({
               ...prevState,
               value: lblOP.value + Op,
+              visble: "",
             }));
             settxtOP((prevState) => ({
               ...prevState,
@@ -951,6 +953,7 @@ function fn_ScanSMTSerialPcsChrome() {
             setlblOP((prevState) => ({
               ...prevState,
               value: lblOP.value + Op + ",",
+              visble: "",
             }));
             settxtOP((prevState) => ({ ...prevState, value: "" }));
             setTimeout(() => {
@@ -1133,7 +1136,7 @@ function fn_ScanSMTSerialPcsChrome() {
       let _intRowSerial = 0;
       let _strMessageUpdate = "";
       let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
-      let datHfWeekCode = "";
+      let datHfWeekCode = hfWeekCode;
       if (!_bolTrayError) {
         await axios
           .post("/api/common/GetSerialTestResultManyTable", {
@@ -1150,7 +1153,7 @@ function fn_ScanSMTSerialPcsChrome() {
             console.log("GetSerialTestResultManyTable", res.data);
             dtSerial = res.data;
           });
-
+          console.log("hfCheckWeekCode", hfCheckWeekCode);
         if (hfCheckWeekCode == "Y") {
           await axios
             .post("/api/common/GetWeekCodebyLot", {
@@ -1343,7 +1346,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     parseInt(hfCheckWeekCodeStart) - 1,
                     parseInt(hfCheckWeekCodeEnd)
                   );
-                  if (_strWeekCode != hfWeekCode) {
+                  if (_strWeekCode != datHfWeekCode) {
                     _strMessageUpdate =
                       "Serial barcode mix week code / หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน";
                     _strRemark = "Serial barcode mix week code";
@@ -1482,7 +1485,6 @@ function fn_ScanSMTSerialPcsChrome() {
                   if (hfTestResultFlag == "Y") {
                     if (
                       _strTouchUp == "NG" &&
-                      _strTouchUp == "NG" &&
                       _strRejectGroup != "MASTER"
                     ) {
                       if (_strTestResult == "OK") {
@@ -1503,13 +1505,28 @@ function fn_ScanSMTSerialPcsChrome() {
                       dtSerial[drRow].ROW_UPDATE = "Y";
                       _intCountNG = 1;
                       _bolError = true;
-                    } else if (_strTestResult == "OK") {
+                    }else if(_strTouchUp=='NO' && _strRejectGroup!='MASTER'){
+                      if(_strTestResult=='OK'){
+                         _strMessageUpdate = "Not found touch up result / ไม่พบผล Touch up ชิ้นงาน"
+                      }
+                      else{
+                        _strMessageUpdate = "Not found touch up result " + _strTypeTestResult + " / ไม่พบผล Touch up ชิ้นงาน " + _strTypeTestResult
+                      }
+                      _strRemark = "Not found touch up result"
+                      _strScanResultUpdate = "NG"
+                      _strTestResultUpdate = _strTestResult
+                      dtSerial[drRow].REMARK_UPDATE = _strRemark;
+                        dtSerial[drRow].ROW_UPDATE = "Y";
+                    }
+                    
+                    else if (_strTestResult == "OK") {
                       console.log("แสกนบาร์โค้ดของชิ้นงานซ้ำ", _intCountDup);
                       if (_intCountDup == 0) {
                         _strScanResultUpdate = "OK";
                         _strTestResultUpdate = _strTestResult;
                         dtSerial[drRow].REMARK_UPDATE = _strRemark;
                         dtSerial[drRow].ROW_UPDATE = "Y";
+                        _bolError = true;
                       } else {
                         _strMessageUpdate =
                           "Duplicate scan serial " +
@@ -1567,6 +1584,7 @@ function fn_ScanSMTSerialPcsChrome() {
                       .then((res) => {
                         _dblPlasmaTime = res.data.plasma_time;
                         console.log("GetPlasmaTimeBySerialNo", res.data);
+                        console.log(hfPlasmaTime, _dblPlasmaTime,'check');
                       });
                     if (_dblPlasmaTime == 0) {
                       _strMessageUpdate =
@@ -1596,6 +1614,7 @@ function fn_ScanSMTSerialPcsChrome() {
                       parseFloat(hfPlasmaTime) < _dblPlasmaTime &&
                       hfPlasmaHideTime === "N"
                     ) {
+                      console.log(hfPlasmaTime, _dblPlasmaTime,'check');
                       _strMessageUpdate =
                         _strMessageUpdate +
                         " Plasma time over " +
@@ -1741,13 +1760,10 @@ function fn_ScanSMTSerialPcsChrome() {
 
                 //----------------------------------------------------------------
               } else {
-                _strMessageUpdate =
-                  "Serial not matching product" +
-                  " / หมายเลขบาร์โค้ดไม่ตรงตามที่กำหนดไว้";
+                _strMessageUpdate = "Serial not matching product / หมายเลขบาร์โค้ดไม่ตรงตามที่กำหนดไว้";
                 _strRemark = "Serial barcode not matching product";
                 _strScanResultUpdate = "NG";
                 _strTestResultUpdate = _strTestResult;
-
                 dtSerial[drRow].REMARK_UPDATE = _strRemark;
                 dtSerial[drRow].ROW_UPDATE = "Y";
                 _bolError = true;
@@ -2042,7 +2058,7 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "TEST_RESULT",
 
       render: (text, record, index) => {
-        if (gvScanResult.value[index].SERIAL == "") {
+        if (record.SERIAL == "") {
           return "";
         } else {
           return text;
@@ -2130,7 +2146,7 @@ function fn_ScanSMTSerialPcsChrome() {
     settxtOP,
     txtOP_TextChanged,
     txtMachine_TextChanged,
-    txtOP,fc_txtMachine,fc_txtOP,ibtOPBack_Click,ibtMachineBack_Click
+    txtOP,fc_txtMachine,fc_txtOP,ibtOPBack_Click,ibtMachineBack_Click,lblOP
   };
 }
 

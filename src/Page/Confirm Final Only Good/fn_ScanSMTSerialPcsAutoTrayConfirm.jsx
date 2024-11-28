@@ -886,6 +886,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
               _strTouchUp = dtSerial[i].TOUCH_UP;
               _strRejectGroup = dtSerial[i].REMARK;
             }
+            console.log("_strReject1",_strReject1);
             if (DUPLICATE_CHECK_FLG == "1") {
               if (dtSerial[i].ROW_COUNT == 0) {
                 console.log("g-hk", dtSerial[i].ROW_COUNT);
@@ -1253,7 +1254,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                     dtSerial[i].ROW_UPDATE = "Y";
                     _bolError = true;
                   } else if (
-                    _strTouchUp != "NO" &&
+                    _strTouchUp == "NO" &&
                     _strRejectGroup != "MASTER"
                   ) {
                     if (_strTestResult == "OK") {
