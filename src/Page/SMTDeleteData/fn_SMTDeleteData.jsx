@@ -54,7 +54,7 @@ function fn_SMTDeleteData() {
 
   const btnShtDeleteClick = async () => {
     if (txtSheetNo.trim() !== "") {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); 
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const result = await Swal.fire({
         title: 'Are you confirm delete?',
         showCancelButton: true,
@@ -77,7 +77,7 @@ function fn_SMTDeleteData() {
 
   const btnRollDeleteClick = async () => {
     if (txtRollLeaf.trim() !== "") {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); 
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const result = await Swal.fire({
         title: 'Are you confirm delete?',
         showCancelButton: true,
@@ -145,6 +145,9 @@ function fn_SMTDeleteData() {
   const handleSerialNo = async (e) => {
     const txtSerialNo = e.target.value;
     settxtSerialNo(txtSerialNo);
+    // if (e.target.value.length <= 2500) {
+    //   settxtSerialNo(e.target.value);
+    // }
     FNGetELTResult();
   };
 

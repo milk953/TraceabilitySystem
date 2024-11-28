@@ -94,7 +94,7 @@ function PieceTraceView() {
                                             // className="TxtField"
                                             size="small"
                                             sx={{ width: "100%" }}
-                                            value={txtSerialNo || ""}
+                                            value={txtSerialNo}
                                             onChange={(e) => {
                                                 settxtSerialNo(e.target.value);
                                             }}
@@ -1557,7 +1557,7 @@ function PieceTraceView() {
                                         </TableCell>
                                     </TableRow>
 
-                                    <TableRow>
+                                    <TableRow style={{ display: lblELT2.visible ? 'table-row' : 'none' }}>
                                         {lblELT2.visible && (
                                             <TableCell>{lblELT2.value}</TableCell>
                                         )}
@@ -1621,7 +1621,7 @@ function PieceTraceView() {
                                         )}
                                     </TableRow>
 
-                                    <TableRow>
+                                    <TableRow style={{ display: lblELT3.visible ? 'table-row' : 'none' }}>
                                         {lblELT3.visible && (
                                             <TableCell>{lblELT3.value}</TableCell>
                                         )}
@@ -1686,7 +1686,7 @@ function PieceTraceView() {
                                         )}
                                     </TableRow>
 
-                                    <TableRow>
+                                    <TableRow style={{ display: lblELT4.visible ? 'table-row' : 'none' }}>
                                         {lblELT4.visible && (
                                             <TableCell>{lblELT4.value}</TableCell>
                                         )}
@@ -1750,7 +1750,7 @@ function PieceTraceView() {
                                         )}
                                     </TableRow>
 
-                                    <TableRow>
+                                    <TableRow style={{ display: lblELT5.visible ? 'table-row' : 'none' }}>
                                         {lblELT5.visible && (
                                             <TableCell>{lblELT5.value}</TableCell>
                                         )}
@@ -1814,7 +1814,7 @@ function PieceTraceView() {
                                         )}
                                     </TableRow>
 
-                                    <TableRow>
+                                    <TableRow style={{ display: lblELT6.visible ? 'table-row' : 'none' }}>
                                         {lblELT6.visible && (
                                             <TableCell>{lblELT6.value}</TableCell>
                                         )}
@@ -1878,7 +1878,7 @@ function PieceTraceView() {
                                         )}
                                     </TableRow>
 
-                                    <TableRow>
+                                    <TableRow style={{ display: lblELT7.visible ? 'table-row' : 'none' }}>
                                         {lblELT7.visible && (
                                             <TableCell>{lblELT7.value}</TableCell>
                                         )}

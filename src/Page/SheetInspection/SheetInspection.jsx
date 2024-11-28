@@ -22,6 +22,10 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 import { Button, Avatar, Table as AntTable } from "antd";
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
@@ -29,6 +33,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
 import excel from "/src/assets/excel.png";
 import "../SheetInspection/SheetInspection.css";
+import "../LotTraceView/ViewLot.css";
 import { fn_SheetInspection } from "./fn_SheetInspection";
 
 function SheetInspection() {
@@ -55,7 +60,7 @@ function SheetInspection() {
                     <TableContainer
                         component={Paper}
                         style={{
-                            width: "700px",
+                            width: "900px",
                             margin: "4px",
                         }}
                     >
@@ -216,7 +221,7 @@ function SheetInspection() {
                                     </TableCell>
                                     <TableCell>
                                         <div style={{ display: "flex", alignItems: "center" }}>
-                                            <TextField
+                                            {/* <TextField
                                                 className="input_txt"
                                                 size="small"
                                                 value={txtDateFrom}
@@ -231,7 +236,32 @@ function SheetInspection() {
                                                         settxtDateTo(txtDateFrom);
                                                     }
                                                 }}
-                                            />
+                                            /> */}
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                    className="input_txt"
+                                                    value={txtDateFrom ? dayjs(txtDateFrom, 'DD/MM/YYYY') : null}
+                                                    onChange={(newValue) => {
+                                                        const formattedDate = newValue ? newValue.format('DD/MM/YYYY') : '';
+                                                        settxtDateFrom(formattedDate);
+                                                        settxtDateTo(formattedDate);
+                                                    }}
+                                                    format="DD/MM/YYYY"
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter') {
+                                                            settxtDateTo(txtDateFrom);
+                                                        }
+                                                    }}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            className="input_txt"
+                                                            size="small"
+                                                            style={{ width: '120px' }}
+                                                        />
+                                                    )}
+                                                />
+                                            </LocalizationProvider>
                                             <Typography style={{ marginLeft: "8px" }}>(DD/MM/YYYY)</Typography>
                                         </div>
                                     </TableCell>
@@ -240,7 +270,7 @@ function SheetInspection() {
                                     </TableCell>
                                     <TableCell>
                                         <div style={{ display: "flex", alignItems: "center" }}>
-                                            <TextField
+                                            {/* <TextField
                                                 className="input_txt"
                                                 size="small"
                                                 value={txtDateTo}
@@ -250,7 +280,25 @@ function SheetInspection() {
                                                 onChange={(e) => {
                                                     settxtDateTo(e.target.value.toUpperCase());
                                                 }}
-                                            />
+                                            /> */}
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                    className="input_txt"
+                                                    value={txtDateTo ? dayjs(txtDateTo, 'DD/MM/YYYY') : null}
+                                                    onChange={(newValue) => {
+                                                        settxtDateTo(newValue ? newValue.format('DD/MM/YYYY') : '');
+                                                    }}
+                                                    format="DD/MM/YYYY"
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            className="input_txt"
+                                                            size="small"
+                                                            style={{ width: '120px' }}
+                                                        />
+                                                    )}
+                                                />
+                                            </LocalizationProvider>
                                             <Typography style={{ marginLeft: "8px" }}>(DD/MM/YYYY)</Typography>
                                         </div>
                                     </TableCell>
@@ -324,36 +372,37 @@ function SheetInspection() {
 
                     <br />
                     {gvDataXOut.visible && (
-                        <>
-                            <AntTable
-                                dataSource={gvDataXOut.value}
-                                columns={columnsXOutData}
-                                rowKey={(record) => record.lot_no}
-                                className="tableGvDataXOut"
-                                // style={{ width: pnlGridWidth }}
-                                pagination={false}
-                                size="small"
-                                bordered
-                                scroll={{ x: 'max-content' }}
-                            />
-                        </>
+
+                        <AntTable
+                            dataSource={gvDataXOut.value}
+                            style={{ width: '1480px', marginLeft: "5px" }}
+                            columns={columnsXOutData}
+                            rowKey={(record) => record.lot_no}
+                            className="tableGvResultViewLot"
+                            pagination={false}
+                            size="small"
+                            bordered
+                            scroll={{ x: 'max-content', y: 250 }}  // เปิดการเลื่อนทั้งแนวนอนและแนวตั้ง
+                        />
+
                     )}
                     <br />
 
                     {gvDataSheet.visible && (
-                        <>
-                            <AntTable
-                                dataSource={gvDataSheet.value}
-                                columns={columnsSheetNoData}
-                                rowKey={(record) => record.seq}
-                                className="tableGvData"
-                                // style={{ width: pnlGridWidth }}
-                                pagination={false}
-                                size="small"
-                                bordered
-                                scroll={{ x: 'max-content' }}
-                            />
-                        </>
+
+                        <AntTable
+                            dataSource={gvDataSheet.value}
+                            style={{ width: '1400px', marginLeft: "5px" }}
+                            columns={columnsSheetNoData}
+                            rowKey={(record) => record.seq}
+                            className="tableGvResultViewLot"
+                            // style={{ width: pnlGridWidth }}
+                            pagination={false}
+                            size="small"
+                            bordered
+                            scroll={{ x: 'max-content', y: 300 }}
+                        />
+
                     )}
                 </Box>
             </Card>

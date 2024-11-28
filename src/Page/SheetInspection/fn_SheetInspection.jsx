@@ -176,15 +176,19 @@ function fn_SheetInspection() {
             key: "Product",
             dataIndex: "prd_name",
             align: "center",
+            width: '140px',
             render: (text, record, index) => {
                 return text;
             },
+            // width: 100,
+            
         },
         {
             title: "Packing Date",
             key: "Packing Date",
             dataIndex: "packing_date",
             align: "center",
+            width: '100px',
             render: (text, record, index) => {
                 return text;
             },
@@ -194,6 +198,7 @@ function fn_SheetInspection() {
             key: "Packing By",
             dataIndex: "packing_by",
             align: "center",
+            width: '90px',
             render: (text, record, index) => {
                 return text;
             },
@@ -203,6 +208,7 @@ function fn_SheetInspection() {
             key: "BIN",
             dataIndex: "bin_name",
             align: "center",
+            width: '40px',
             render: (text, record, index) => {
                 return text;
             },
@@ -212,6 +218,7 @@ function fn_SheetInspection() {
             key: "Shift",
             dataIndex: "shift",
             align: "center",
+            width: '50px',
             render: (text, record, index) => {
                 return text;
             },
@@ -221,6 +228,7 @@ function fn_SheetInspection() {
             key: "Week Code",
             dataIndex: "week_no",
             align: "center",
+            width: '90px',
             render: (text, record, index) => {
                 return text;
             },
@@ -248,6 +256,7 @@ function fn_SheetInspection() {
             key: "Total Scan",
             dataIndex: "total_sht_qty",
             align: "center",
+            width: '80px',
             render: (text, record, index) => {
                 return text;
             },
@@ -257,6 +266,7 @@ function fn_SheetInspection() {
             key: "Total",
             dataIndex: "total_xout_qty",
             align: "center",
+            width: '50px',
             render: (text, record, index) => {
                 return text;
             },
@@ -266,15 +276,7 @@ function fn_SheetInspection() {
             key: "GOOD",
             dataIndex: "sht_x0",
             align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "GOOD",
-            key: "GOOD",
-            dataIndex: "sht_x0",
-            align: "center",
+            width: '60px',
             render: (text, record, index) => {
                 return text;
             },
@@ -284,6 +286,7 @@ function fn_SheetInspection() {
             key: "1X-OUT",
             dataIndex: "sht_x1",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -293,6 +296,7 @@ function fn_SheetInspection() {
             key: "2X-OUT",
             dataIndex: "sht_x2",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -302,6 +306,7 @@ function fn_SheetInspection() {
             key: "3X-OUT",
             dataIndex: "sht_x3",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -311,6 +316,7 @@ function fn_SheetInspection() {
             key: "4X-OUT",
             dataIndex: "sht_x4",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -320,6 +326,7 @@ function fn_SheetInspection() {
             key: "5X-OUT",
             dataIndex: "sht_x5",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -329,6 +336,7 @@ function fn_SheetInspection() {
             key: "6X-OUT",
             dataIndex: "sht_x6",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -338,6 +346,7 @@ function fn_SheetInspection() {
             key: "7X-OUT",
             dataIndex: "sht_x7",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -347,6 +356,7 @@ function fn_SheetInspection() {
             key: "8X-OUT",
             dataIndex: "sht_x8",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -356,6 +366,7 @@ function fn_SheetInspection() {
             key: "Total",
             dataIndex: "total_pcs_qty",
             align: "center",
+            width: '50px',
             render: (text, record, index) => {
                 return text;
             },
@@ -365,6 +376,7 @@ function fn_SheetInspection() {
             key: "GOOD",
             dataIndex: "pcs_x0",
             align: "center",
+            width: '60px',
             render: (text, record, index) => {
                 return text;
             },
@@ -374,6 +386,7 @@ function fn_SheetInspection() {
             key: "1X-OUT",
             dataIndex: "pcs_x1",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -383,6 +396,7 @@ function fn_SheetInspection() {
             key: "2X-OUT",
             dataIndex: "pcs_x2",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -392,6 +406,7 @@ function fn_SheetInspection() {
             key: "3X-OUT",
             dataIndex: "pcs_x3",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -401,6 +416,7 @@ function fn_SheetInspection() {
             key: "4X-OUT",
             dataIndex: "pcs_x4",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -410,6 +426,7 @@ function fn_SheetInspection() {
             key: "5X-OUT",
             dataIndex: "pcs_x5",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -419,6 +436,7 @@ function fn_SheetInspection() {
             key: "6X-OUT",
             dataIndex: "pcs_x6",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -428,6 +446,7 @@ function fn_SheetInspection() {
             key: "7X-OUT",
             dataIndex: "pcs_x7",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },
@@ -437,6 +456,7 @@ function fn_SheetInspection() {
             key: "8X-OUT",
             dataIndex: "pcs_x8",
             align: "center",
+            width: '70px',
             render: (text, record, index) => {
                 return text;
             },

@@ -369,11 +369,11 @@ function fn_ScanAOISheetNo() {
                 inputLot.current.focus();
             }, 300);
         } else if (strType === "SERIAL") {
-            await getInitialSerial();
             settxtTotalPcsDisabled(true);
             setpnlSerial(true);
             setibtLayerBack(prevState => ({ ...prevState, disabled: false }));
             sethfMode("SERIAL");
+            await getInitialSerial();
         }
     };
 
@@ -591,7 +591,8 @@ function fn_ScanAOISheetNo() {
             strlayer: txtLayer
         })
             .then((res) => {
-                settxtNo(res.data);
+                const updatedValue = parseInt(res.data, 10) + 1;
+                settxtNo(updatedValue);
             });
 
         SetMode("SERIAL");
@@ -664,9 +665,10 @@ function fn_ScanAOISheetNo() {
                 strlayer: txtLayer
             })
                 .then((res) => {
-                    settxtNo(res.data);
+                    const updatedValue = parseInt(res.data, 10) + 1;
+                    settxtNo(updatedValue);
                 });
-            SetMode("SERIAL");
+            //SetMode("SERIAL");
         }
     };
 

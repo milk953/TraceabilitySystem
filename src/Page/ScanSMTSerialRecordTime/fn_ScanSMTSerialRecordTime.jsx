@@ -996,16 +996,15 @@ function fn_ScanSMTSerialRecordTime() {
 
         if (!bolTrayError) {
 
-            for (let i = 0; i < dtSerial.length; i++) {
-                await axios.post("/api/Common/getSerialRecordTimeTrayTable", {
-                    strPlantCode: plantCode,
-                    SERIAL: dtSerial[i].SERIAL,
-                    MACHINE: dtSerial[i].MACHINE
-                })
-                    .then((res) => {
-                        console.log(res.data.row_count);
-                    })
-            }
+    
+            //     await axios.post("/api/Common/getSerialRecordTimeTrayTable", {
+            //         strPlantCode: plantCode,
+            //         dtSerial: dtSerial,
+            //     })
+            //         .then((res) => {
+            //             console.log(res.data);
+            //         })
+       
 
             if (hfCheckWeekCode === "Y" && selrbtPcsSht === "rbtPcs") {
                 axios.post("/api/Common/getWeekCodebyLot", {
