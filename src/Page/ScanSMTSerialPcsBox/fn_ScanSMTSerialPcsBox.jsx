@@ -720,17 +720,18 @@ function fn_ScanSMTSerialPcsBox() {
       settxtBox((prevState) => ({ ...prevState, value: _strBoxNo }));
       setlblBox((prevState) => ({ ...prevState, value: _strBoxNo }));
       if (_strError == "") {
-        let _dtTrayCount = [];
+        let _dtTrayCount = 0;
         setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));
         await axios
           .post("/api/Common/GetCountTrayByBoxPacking", {
             prdName: selectddlProduct.value,
-            boxNo: lblBox.value,
+            boxNo: txtBox.value,
             srtPack: "",
           })
           .then((res) => {
+            
             _dtTrayCount = res.data[0].BOX_COUNT;
-            if (_dtTrayCount.length > 0) {
+            if (_dtTrayCount > 0) {
               setlblBoxTotal((prevState) => ({
                 ...prevState,
                 value: _dtTrayCount,
