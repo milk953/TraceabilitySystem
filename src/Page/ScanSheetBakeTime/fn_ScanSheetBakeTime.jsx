@@ -109,6 +109,11 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "#dbdede" },
     });
     setTxtLotNo("");
+    setTxtmcState({
+      disabled: false,
+      styled: { backgroundColor: "white" },
+      Focus: false,
+    });
     setTxtLotNoState({
       disabled: false,
       styled: { backgroundColor: "white" },
@@ -169,12 +174,21 @@ function fn_ScanSheetBakeTime() {
             styled: { backgroundColor: "white" },
             Focus: true,
           });
-          notification.error({
-            message: "Error",
-            description: "Not Found Data",
-            placement: "bottomRight",
-            duration: 3,
-          });
+          // notification.error({
+          //   message: "Error",
+          //   description: "Not Found Data",
+          //   placement: "bottomRight",
+          //   duration: 3,
+          // });
+          Swal.fire({
+            title: "Error",
+            text: "Not Found Data",
+            icon: "error",
+            showCancelButton: false,
+            showConfirmButton: false,
+            timer: 2000,
+
+          })
           return;
         }
         setTxtLotNo(strLot);
@@ -253,11 +267,12 @@ function fn_ScanSheetBakeTime() {
             hour12: false,
           });
           setLblSheet(`${txtSheetNo} [${currentTime}]`);
-          setLblRemark(strError);
+          setLblRemark({text:strError,color:'white',backgroundColor:'red'});
           // setPnlSaveState(true);
           // setPnlShowresult(true);
           if (strError == "") {
-            setLblResult({ text: "OK", styled: "green" });
+            setPnlShowresult(true);
+            setLblResult({ text: "OK", styled: "white" ,backgroundColor:'green'});
             Swal.fire({
               title: "Success",
               text: "Save Success",
@@ -267,18 +282,20 @@ function fn_ScanSheetBakeTime() {
               confirmButtonText: "OK",
             })
           } else {
-            setLblResult({ text: "NG", styled: "red" });
+            setPnlShowresult(true);
+            setLblResult({ text: "NG", styled: "white",backgroundColor:'red',border:'1px solid red' });
           }
         } else {
           // setLblSheet(txtSheetNo);
           setPnlSaveState(true);
           setPnlShowresult(true)
           PnlmainDisable();
-          setLblRemark("Exists record time, \n please be confirm.");
+          setLblRemark({text:"Exists record time, \n please be confirm.",color:'black',backgroundColor:'yellow'});
         }
       } else {
-        setLblResult({ text: "NG", styled: "red" });
-        setLblRemark(strError);
+        setLblResult({ text: "NG", styled: "white",backgrond:'red',border:'1px solid red' });
+        // setLblRemark(strError);
+        setLblRemark({text:strError,color:'black',backgroundColor:'red'});
       }
       // setTxtSheetNo("");
       setTxtSheetNoState({
@@ -318,8 +335,9 @@ function fn_ScanSheetBakeTime() {
       strProcId: txtProcess,
     });
 
-    setLblSheet(`${lblSheet} Delete`);
+    setLblSheet(`${txtSheetNo} Delete`);
     setLblRemark(strError);
+    setLblRemark({text:strError,color:'black',backgroundColor:'red'});
     if (strError == "") {
       Swal.fire({
         title: "Success",
@@ -330,20 +348,9 @@ function fn_ScanSheetBakeTime() {
         confirmButtonText: "OK",
         timer: 2000,
       })
-      // notification.success({
-      //   message: "Success",
-      //   description: "Delete Success",
-      //   placement: "bottomRight",
-      //   duration: 3,
-      // });
-      setLblResult({ text: "OK", styled: "green" });
+      setPnlShowresult(true);
+      setLblResult({ text: "OK", styled: "white",backgroundColor:'green' });
     }else{
-      // notification.error({
-      //   message: "Error",
-      //   description: strError,
-      //   placement: "bottomRight",
-      //   duration: 3,
-      // });
       Swal.fire({
         title: "Error",
         text: strError,
@@ -353,7 +360,8 @@ function fn_ScanSheetBakeTime() {
         confirmButtonText: "OK",
         timer: 2000,
       })
-      setLblResult({ text: "NG", styled: "red" });
+      setPnlShowresult(true);
+      setLblResult({ text: "NG", styled: "white" ,backgrond:'red',border:'1px solid red'});
     }
     // if (strStatus == "P") {
     //   setLblResult({ text: "OK", styled: "green" });
@@ -394,24 +402,36 @@ function fn_ScanSheetBakeTime() {
       strProduct: lblProductName,
       strProcess: txtProcess,
     });
+    
     const currentTime = new Date().toLocaleTimeString("en-US", {
       hour12: false,
     });
     setLblSheet(`${txtSheetNo} [${currentTime}]`);
-    setLblRemark(strError);
+    setLblRemark({text:strError,color:'white',backgroundColor:'red'});
+    
     if (strError == "") {
-      notification.success({
-        message: "Success",
-        description: "Replace Success",
-        placement: "bottomRight",
-        duration: 3,
-      });
-      setLblResult({ text: "OK", styled: "green" });
+      // notification.success({
+      //   message: "Success",
+      //   description: "Replace Success",
+      //   placement: "bottomRight",
+      //   duration: 3,
+      // });
+      Swal.fire({
+        title: "Success",
+        text: "Replace Success",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+      })
+      setPnlShowresult(true);
+      setLblResult({ text: "OK", styled: "white",backgroundColor:'green' });
     } else {
-      setLblResult({ text: "NG", styled: "red" });
+      setPnlShowresult(true);
+      setLblResult({ text: "NG", styled: "white",backgroundColor:'red',border:'1px solid red' });
     }
     setPnlSaveState(false);
-    setPnlShowresult(false);
+    // setPnlShowresult(false);
     PnlmainEnable();
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
@@ -448,7 +468,7 @@ function fn_ScanSheetBakeTime() {
       disabled: false,
       styled: { backgroundColor: "#dbdede" },
     });
-    setTxtmcState({ disabled: false, styled: { backgroundColor: "#dbdede" } });
+    // setTxtmcState({ disabled: false, styled: { backgroundColor: "#dbdede" } });
     setTxtLotNoState({
       disabled: false,
       styled: { backgroundColor: "#dbdede" },
@@ -520,7 +540,6 @@ function fn_ScanSheetBakeTime() {
           });
         });
     } else if (type == "GetMOTRecordTimeData") {
-      //ok
       await axios
         .post(
           "/api/Common/getMOTRecordTimeData",
@@ -597,7 +616,6 @@ function fn_ScanSheetBakeTime() {
           });
         });
     } else if (type == "DeleteBakingRecordTimeData") {
-      console.log(params, "params");
       await axios        
         .post(
           "/api/DeleteBakingRecordTimeData",

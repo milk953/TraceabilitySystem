@@ -837,6 +837,7 @@ function fn_ScanSMTSerialPcsP1() {
                 _bolError = true;
               }
             }
+            console.log('hfCheckSPIAOI',hiddenParams.hfCheckSPIAOI);
             if(!_bolError && hiddenParams.hfCheckSPIAOI == 'Y'){
               const { result1: _Result, result2: _strMessage } = await getData("Get_SPI_AOI_RESULT_P1", {
                 strSerialNo: _strSerial,
@@ -848,6 +849,7 @@ function fn_ScanSMTSerialPcsP1() {
                 strSPIF: hiddenParams.hfCheckSPIF,
                 strSPIB: hiddenParams.hfCheckSPIB,
               });
+              console.log(_Result,_strMessage);
               if(_Result == 'NG'){
                 _strScanResultUpdate = _Result;
                 _strMessageUpdate = _strMessage;
