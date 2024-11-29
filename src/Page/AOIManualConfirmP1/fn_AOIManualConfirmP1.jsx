@@ -74,7 +74,6 @@ function fn_AOIManualConfirmP1() {
 
   useEffect(() => {
     let ID = localStorage.getItem("ipAddress");
-    console.log("UserLogin", Username, Lastname, txtOperatorCode.value);
     const fetchData = async () => {
       setHfUserID(ID);
       setHfUserStation(ID);
@@ -96,10 +95,8 @@ function fn_AOIManualConfirmP1() {
   };
 
   const BtnSubmit1_Click = async () => {
-    console.log("BtnSubmit1_Click V1 ", ddlResult.value);
     let AOI_SPI_Check = "";
     if (ddlResult.value === " ") {
-      console.log("BtnSubmit1_Click V2 ", ddlResult.value);
       setLblResult((prevState) => ({
         ...prevState,
         value: "Please select result.",
@@ -122,7 +119,6 @@ function fn_AOIManualConfirmP1() {
         })
         .then((res) => {
           let data = res.data.flat().flat();
-          console.log("data ibtExcel_Click", data);
           setLblResult((prevState) => ({
             ...prevState,
             value:
@@ -175,12 +171,6 @@ function fn_AOIManualConfirmP1() {
         value: "",
       }));
       AOI_SPI_Check = rbtAOI.value ? "AOI" : "SPI";
-      console.log(
-        "Search_Data",
-        plantCode,
-        txtSerialNo.value.trim().toUpperCase(),
-        AOI_SPI_Check
-      );
       await axios
         .post("/api/Search_aoiandspi_rslt", {
           dataList: {
@@ -191,7 +181,6 @@ function fn_AOIManualConfirmP1() {
         })
         .then((res) => {
           let data = res.data.flat().flat();
-          console.log("data ibtExcel_Click", data);
           if (data.length > 0) {
             setDdlResult((prevState) => ({
               ...prevState,
@@ -224,7 +213,6 @@ function fn_AOIManualConfirmP1() {
   };
 
   const handleRadioChange = async (event) => {
-    console.log("handleRadioChange", event.target.value);
     let value = event.target.value;
     setRbtAOIandSPIcheck((prevState) => ({
       ...prevState,
