@@ -6,11 +6,13 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Button,
   TableHead,
   Paper,
+  Card,
 } from "@mui/material";
+import {  Button } from "antd";
 import "./SerialTestType.css";
+import { DeleteOutlined, PlusCircleOutlined } from "@ant-design/icons";
 function SerialTestType() {
   const {
     productData,
@@ -22,15 +24,22 @@ function SerialTestType() {
     result,
     handleDelete,
     handleAddData,
-    lblMassage
+    lblMassage,
+    lblMassageState,
   } = fn_SerialTestType();
   return (
     <>
       <Hearder />
       <h1>ELTType</h1>
-      <h3 style={{ display: "flex", justifyContent: "center" }}>{lblMassage}</h3>
+      {/* <h3 style={{ display: "flex", justifyContent: "center" }}>{lblMassage}</h3> */}
+      {lblMassageState && (
+        <Paper className="CardlblErrorELT">{lblMassage}</Paper>
+      )}
       <div className="ELTETYPEPnlForm">
-        <Table className="ETYPEmasterTb">
+        <Table className="ETYPEmasterTb" component={Card}>
+          <TableHead>
+            <TableCell colSpan={4}>ELTType</TableCell>
+          </TableHead>
           <TableBody>
             <TableRow>
               <TableCell>Product:</TableCell>
@@ -53,9 +62,9 @@ function SerialTestType() {
               <TableCell>ELT Type:</TableCell>
               <TableCell>
                 <select
-                onInputChange={(e) => ELTTypeSelectChange(e.target.value)}
-                onChange={(e) => ELTTypeSelectChange(e.target.value)}
-                value={ELTTypeSelect}
+                  onInputChange={(e) => ELTTypeSelectChange(e.target.value)}
+                  onChange={(e) => ELTTypeSelectChange(e.target.value)}
+                  value={ELTTypeSelect}
                 >
                   {ELTTypeData.map((option, index) => (
                     <option key={index} value={`${option.elt_type}`}>
@@ -65,7 +74,10 @@ function SerialTestType() {
                 </select>
               </TableCell>
               <TableCell>
-                <Button onClick={handleAddData}>Add</Button>
+                <Button 
+                  type="primary"
+                  icon={<PlusCircleOutlined />}
+                onClick={handleAddData}>Add</Button>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -87,17 +99,24 @@ function SerialTestType() {
                 <TableCell sx={{ padding: "0px" }}>{row.create_date}</TableCell>
                 <TableCell sx={{ padding: "0px" }}>
                   {" "}
-                  <Button sx={{ fontSize:'10px'}} onClick={() => handleDelete({product:row.product,elt_type:row.elt_type})}>Delete</Button>
+                  <Button
+                    type="primary"
+                    icon={<DeleteOutlined />}
+                    style={{ width: "90px", background: "red",alignItems:"center",margin:'0px' }}
+                    onClick={() =>
+                      handleDelete({
+                        product: row.product,
+                        elt_type: row.elt_type,
+                      })
+                    }
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </div>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
-      >
-        <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
       </div>
     </>
   );

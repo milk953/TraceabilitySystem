@@ -11,6 +11,7 @@ function fn_SerialTestType() {
   const [firstElt, setFirstElt] = useState("");
   const [result, setResult] = useState([]);
   const [lblMassage, setlblMassage] = useState("");
+  const [lblMassageState, setlblMassageState] = useState(false);
   useEffect(() => {
     Pageload();
     if (firstProduct != "") {
@@ -23,6 +24,7 @@ function fn_SerialTestType() {
   };
   const productSelectChange = (e) => {
     setlblMassage("");
+    setlblMassageState(false);
     setProductSelect(e);
     getData("getELTTypeByProduct", e);
   };
@@ -106,6 +108,7 @@ function fn_SerialTestType() {
             setResult(res.data);
           } else {
             setlblMassage("Not found data.");
+            setlblMassageState(true);
           }
         })
         .catch((error) => {
@@ -136,6 +139,7 @@ function fn_SerialTestType() {
                 if (result.isConfirmed) {
                   setResult([]);
                   setlblMassage("");
+                  setlblMassageState(false);
                   getData("getELTTypeByProduct", productSelect);
                 }
               }
@@ -185,6 +189,7 @@ function fn_SerialTestType() {
     handleDelete,
     handleAddData,
     lblMassage,
+    lblMassageState
   };
 }
 
