@@ -201,6 +201,11 @@ function fn_AOIManualConfirmP1() {
               ...prevState,
               value: String(data[0].inspect_count),
             }));
+            setLblResult((prevState) => ({
+              ...prevState,
+              value: "",
+              style: { background: "" },
+            }));
           } else {
             setLblResult((prevState) => ({
               ...prevState,
