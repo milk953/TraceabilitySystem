@@ -70,7 +70,7 @@ function ScanConfirmMagazineP1() {
               >
                 <TableHead>
                   <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">Confirm Magazine No.</Typography>
+                    <Typography variant="h6">P1 Confirm Magazine</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>

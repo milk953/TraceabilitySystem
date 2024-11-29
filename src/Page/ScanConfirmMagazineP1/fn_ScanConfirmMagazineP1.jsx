@@ -5,6 +5,7 @@ import { Tag } from "antd";
 import { values } from "lodash";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import Swal from 'sweetalert2';
 
 function fn_ScanConfirmMagazineP1() {
   const plantCode = import.meta.env.VITE_FAC;
@@ -92,30 +93,47 @@ function fn_ScanConfirmMagazineP1() {
         value: _strLotAll[0],
       }));
       txtLotNo_data = _strLotAll[0];
-      if ((dtLotData.length = 9)) {
+      if (txtLotNo_data.length == 9) {
+        console.log("2")
         await axios
           .post("/api/Common/getProductDataByLot", {
             strLot: txtLotNo_data,
           })
           .then((res) => {
             let data = res.data.flat().flat();
-            console.log("data prd_name", data[0][0]);
-            dtLotData = data[0][0];
+            console.log("data prd_name", data);
             if (data.length > 0) {
+              dtLotData = data[0][0];
               setLblProduct((prevState) => ({
                 ...prevState,
                 value: dtLotData,
               }));
               SetMode("MAGAZINE");
             } else {
+              alert('Invalid Lot No. Please check again!')
+              setTxtLotNo((prevState) => ({
+                ...prevState,
+                value: "",
+              }));
               SetMode("LOT");
             }
           });
       } else {
+        alert('Invalid Lot No. Please check again!')
+        setTxtLotNo((prevState) => ({
+          ...prevState,
+          value: "",
+        }));
         SetMode("LOT");
+        
       }
     } else {
-      SetMode("LOT");
+      alert('Invalid Lot No. Please check again!')
+        setTxtLotNo((prevState) => ({
+          ...prevState,
+          value: "",
+        }));
+        SetMode("LOT");
     }
   };
 
@@ -139,6 +157,7 @@ function fn_ScanConfirmMagazineP1() {
 
   const txtMagNo_TextChanged = async () => {
     let strError = "";
+    let lblTotalPcsCheck ;
     try {
       const res1 = await axios.post("/api/GetCountSerialByLotMagazine", {
         dataList: {
@@ -148,13 +167,14 @@ function fn_ScanConfirmMagazineP1() {
         },
       });
       let data = res1.data.flat().flat();
-      console.log("data", data);
+      console.log("GetCountSerialByLotMagazine : data => ", data);
+      lblTotalPcsCheck = data[0].lot_count
       setLblTotalPcs((prevState) => ({
         ...prevState,
         value: data[0].lot_count,
       }));
 
-      if (data.length > 0) {
+      if (lblTotalPcsCheck > 0) {
         const res2 = await axios.post("/api/SetManualConfirmMagazine", {
           dataList: {
             strPlantCode: plantCode,
@@ -164,8 +184,9 @@ function fn_ScanConfirmMagazineP1() {
           },
         });
         let data2 = res2.data.flat().flat();
+        console.log("SetManualConfirmMagazine : data2 => ",data2)
         strError = data2[0].p_error;
-        console.log("data2", strError);
+        console.log("SetManualConfirmMagazine : Error data2 => ", strError);
         if (strError.trim() === "") {
           setLblResult((prevState) => ({
             ...prevState,
