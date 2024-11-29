@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import { useLoading } from "../../loading/fn_loading";
+
 function fn_Change_Serial() {
   const [lblResult, setLblResult] = useState({
     value: "",
@@ -33,6 +35,7 @@ function fn_Change_Serial() {
   const plantCode = import.meta.env.VITE_FAC;
   const IP = localStorage.getItem("ipAddress");
   let txtTotalPcsCheck = "N";
+  const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +45,9 @@ function fn_Change_Serial() {
   }, []);
 
   const txtTotalPcs_TextChanged = async () => {
+    const newValues = [];
+    setTxtSerialNoOld(newValues);
+    setTxtSerialNoNew(newValues);
     await getInitialSerial();
   };
 
@@ -55,6 +61,7 @@ function fn_Change_Serial() {
       denyButtonText: "Cancel",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        showLoading("กำลังบันทึก กรุณารอสักครู่...");
         let dt = [];
         let CheckerHeaderFlg = false;
         let CheckerHeaderFlg3 = false;
@@ -81,6 +88,8 @@ function fn_Change_Serial() {
             value: strError,
             style: "red",
           }));
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          hideLoading();
           return;
         }
 
@@ -110,6 +119,8 @@ function fn_Change_Serial() {
                 }
               });
             if (Out1 > 0) {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+              hideLoading();
               return;
             }
           }
@@ -140,6 +151,7 @@ function fn_Change_Serial() {
                     value: res.data[0].p_lblresult,
                     style: "red",
                   }));
+                  hideLoading();
                   return;
                 }
                 if (
@@ -189,6 +201,8 @@ function fn_Change_Serial() {
                 }
               });
             if (Out2 > 0) {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+              hideLoading();
               return;
             }
           }
@@ -238,10 +252,13 @@ function fn_Change_Serial() {
             ),
             style: "blue",
           }));
-
           await getInitialSerial();
         }
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        hideLoading();
       } else if (result.isDenied) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        hideLoading();
         return;
       }
     });
