@@ -94,14 +94,12 @@ function fn_ScanConfirmMagazineP1() {
       }));
       txtLotNo_data = _strLotAll[0];
       if (txtLotNo_data.length == 9) {
-        console.log("2")
         await axios
           .post("/api/Common/getProductDataByLot", {
             strLot: txtLotNo_data,
           })
           .then((res) => {
             let data = res.data.flat().flat();
-            console.log("data prd_name", data);
             if (data.length > 0) {
               dtLotData = data[0][0];
               setLblProduct((prevState) => ({
@@ -167,7 +165,6 @@ function fn_ScanConfirmMagazineP1() {
         },
       });
       let data = res1.data.flat().flat();
-      console.log("GetCountSerialByLotMagazine : data => ", data);
       lblTotalPcsCheck = data[0].lot_count
       setLblTotalPcs((prevState) => ({
         ...prevState,
@@ -184,9 +181,7 @@ function fn_ScanConfirmMagazineP1() {
           },
         });
         let data2 = res2.data.flat().flat();
-        console.log("SetManualConfirmMagazine : data2 => ",data2)
         strError = data2[0].p_error;
-        console.log("SetManualConfirmMagazine : Error data2 => ", strError);
         if (strError.trim() === "") {
           setLblResult((prevState) => ({
             ...prevState,
@@ -345,7 +340,6 @@ function fn_ScanConfirmMagazineP1() {
   };
 
   const ibtExcel_Click = async () => {
-    console.log("เข้ามาในเงื่อนไขแล้ว : ");
     await axios
       .post("/api/GetSerialMagazineByLot", {
         dataList: {
@@ -355,7 +349,6 @@ function fn_ScanConfirmMagazineP1() {
       })
       .then((res) => {
         let data = res.data.flat().flat();
-        console.log("data ibtExcel_Click", data);
         setGvScanResult((prevState) => ({
           ...prevState,
           value: data,
@@ -365,7 +358,6 @@ function fn_ScanConfirmMagazineP1() {
   };
 
   const FN_ExportGridView = async (namefile, data) => {
-    console.log(data, "hhhhhhhh", namefile);
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("My Sheet");
     sheet.properties.defaultRowHeight = 20;
