@@ -72,7 +72,7 @@ function P1ConnectBoard() {
     fcRollleaf,
     fctMachchine,
     fcLotRef,
-    lblResult
+    lblResult,handleForntSideChange
   } = fn_P1ConnectBoard();
 
 
@@ -117,7 +117,7 @@ function P1ConnectBoard() {
                             txtLot_TextChanged();
                           }
                         }}
-                        onBlur={txtLot_TextChanged}
+                        // onBlur={txtLot_TextChanged}
                       ></TextField>
                     </TableCell>
                     <TableCell>
@@ -307,13 +307,18 @@ function P1ConnectBoard() {
                             fullWidth
                             value={txtSideBack[index]}
                             inputRef={(el) => (fcGvBackSide.current[index] = el)}
-                            onChange={(event) =>
-                              handleBackSideChange(index, event)
-                            }
-                            onBlur={(event) => {
+                            onChange={(event) => {
+                              // if (GvBackSide.value[index].SEQ === 1) {
+                              //   handleForntSideChange(index, event);
+                              // } else {
+                              //   handleBackSideChange(index, event);
+                              // }
                               handleBackSideChange(index, event);
-                              // fcGvBackSide_txtsideback_1.current[index].focus();
                             }}
+                            // onBlur={(event) => {
+                            //   handleBackSideChange(index, event);
+                            //   // fcGvBackSide_txtsideback_1.current[index].focus();
+                            // }}
                           
                             onKeyDown={(event) => {
                               if (event.key === "Enter") {
@@ -375,9 +380,9 @@ function P1ConnectBoard() {
                         onChange={(event) =>
                           handleSerialChange(index, event)
                         }
-                        onBlur={(event) => {
-                          handleSerialChange(index, event);
-                        }}
+                        // onBlur={(event) => {
+                        //   handleSerialChange(index, event);
+                        // }}
                       
                         onKeyDown={(event) => {
                           if (event.key === "Enter") {
