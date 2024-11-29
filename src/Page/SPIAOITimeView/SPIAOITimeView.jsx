@@ -98,11 +98,11 @@ function SPIAOITimeView() {
                             value: e.target.value,
                           }));
                         }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            btnRetrive_Click();
-                          }
-                        }}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     btnRetrive_Click();
+                        //   }
+                        // }}
                       />
                     </TableCell>
                   </TableRow>
@@ -133,11 +133,7 @@ function SPIAOITimeView() {
                             value: e.target.value,
                           }));
                         }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            btnRetrive_Click();
-                          }
-                        }}
+                
                         
                       />
                     </TableCell>
