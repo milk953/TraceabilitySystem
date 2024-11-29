@@ -350,10 +350,7 @@ function fn_ScanSMTConnectRollConfirm() {
     setLblRemark("");
     _strLotData = txtLot.value.trim().toUpperCase().split(";");
     _strLot = _strLotData[0];
-    // console.log("dtSerial 1 : ", dtSerial);
-    // console.log("dtSheet 2 : ", dtSheet);
     if (txtLot.value !== "" && dtSerial.length > 0) {
-      // console.log("Check NG 1 : ");
       _strScanResultAll = "NG";
       setLblRemark("");
       let _intRowSerial = 0;
@@ -369,19 +366,10 @@ function fn_ScanSMTConnectRollConfirm() {
           let _strSerialDup = "";
           for (let j = 0; j < dtSheet.length; j++) {
             const drShtRow = dtSheet[j];
-            // console.log(
-            //   "drShtRow 1 : ",
-            //   drShtRow.ROLL_LEAF_NO,
-            //   "drShtRow 2 : ",
-            //   drShtRow.SHEET_NO,
-            //   "drShtRow 3 : ",
-            //   drShtRow.DATA_REMARK
-            // );
             if (
               drShtRow.SHEET_NO === _strSerial &&
               drShtRow.DATA_REMARK === ""
             ) {
-              // console.log("Check NG 2 : ", _strScanResultAll);
               drShtRow.SCAN_RESULT = "OK";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -393,7 +381,6 @@ function fn_ScanSMTConnectRollConfirm() {
               drShtRow.SHEET_NO === _strSerial &&
               drShtRow.DATA_REMARK !== ""
             ) {
-              // console.log("Check NG 3 : ");
               drShtRow.SCAN_RESULT = "NG";
               drRow.ROLL_LEAF_NO = drShtRow.ROLL_LEAF_NO;
               drRow.SHEET_NO = drShtRow.SHEET_NO;
@@ -403,20 +390,6 @@ function fn_ScanSMTConnectRollConfirm() {
               _bolUpdate = true;
             }
           }
-          // console.log(
-          //   _strSerial.length,
-          //   parseInt(hfConnLeafLength),
-          //   "สำคัญ : ",
-          //   "_strLot :",
-          //   _strLot,
-          //   "_strSerial : ",
-          //   _strSerial,
-          //   "_strSerial.substring : ",
-          //   _strSerial.substring(
-          //     parseInt(hfCheckLotShtStart) - 1,
-          //     parseInt(hfCheckLotShtEnd)
-          //   )
-          // );
           if (
             _strSerial.length === parseInt(hfConnLeafLength) &&
             LblRemark === "" &&
@@ -470,7 +443,6 @@ function fn_ScanSMTConnectRollConfirm() {
             });
         }
         if (strError !== "") {
-          // console.log("Check NG 4 : ", strError);
           _strScanResultAll = "NG";
         }
         if (_intOK == parseInt(lblTotalSht, 10)) {
@@ -494,25 +466,17 @@ function fn_ScanSMTConnectRollConfirm() {
               strError = res.data[0].p_error;
             });
         }
-        // console.log(
-        //   "Check NG 5 : ",
-        //   strError,
-        //   _strScanResultAll,
-        //   _strScanResultAll.slice(0, 2)
-        // );
         setLblResult((prevState) => ({
           ...prevState,
           value: _strScanResultAll,
         }));
 
         if (_strScanResultAll.slice(0, 2) === "NG") {
-          // console.log("Check NG 5 : NG ");
           setLblResult((prevState) => ({
             ...prevState,
             style: { color: "red" },
           }));
         } else {
-          // console.log("Check NG 5 : OK ");
           setLblResult((prevState) => ({
             ...prevState,
             style: { color: "green" },
@@ -668,13 +632,11 @@ function fn_ScanSMTConnectRollConfirm() {
     const dtData = [];
     for (let intRow = 0; intRow < gvSerial.value.length; intRow++) {
       const serial = txtSerial[intRow]?.trim().toUpperCase();
-      // console.log("serialserialserialserial :", serial);
       dtData.push({
         SEQ: intRow + 1,
         SERIAL: serial,
       });
     }
-    // console.log("dtData : ", dtData);
     return dtData;
   };
 
@@ -716,7 +678,6 @@ function fn_ScanSMTConnectRollConfirm() {
         },
       });
       dtSheet = res.data;
-      // console.log("getShtDataBylot dtSheet : ", dtSheet);
       if (dtSheet.length > 0) {
         setGvScanResult((prevState) => ({
           ...prevState,
@@ -801,7 +762,6 @@ function fn_ScanSMTConnectRollConfirm() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
-        // console.log("dtProductSerial : ", dtProductSerial);
         if (dtProductSerial != null) {
           setHfSerialLength(dtProductSerial.slm_serial_length);
           setHfSerialFixFlag(dtProductSerial.slm_fix_flag);

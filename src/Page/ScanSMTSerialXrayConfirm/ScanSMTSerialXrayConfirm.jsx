@@ -223,12 +223,6 @@ function ScanSMTSerialXrayConfirm() {
                               className="input_txt"
                               value={txtSerial[index] || ""}
                               onKeyDown={(event) => {
-                                console.log(
-                                  "index : ",
-                                  index,
-                                  "index + 1 : ",
-                                  index + 1
-                                );
                                 if (event.key === "Enter") {
                                   if (
                                     txtTotalPCS.value == index + 1 
