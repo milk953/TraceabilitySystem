@@ -1,9 +1,8 @@
-import { Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLoading } from "../../loading/fn_loading";
-import Swal from "sweetalert2";
-import { set } from "lodash";
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
 
 function fn_ScanSMTSerialPcsNG() {
   var _strEventArgument = "";
@@ -88,6 +87,7 @@ function fn_ScanSMTSerialPcsNG() {
   var hfCheckEFPCAVI = "";
   //inpage
   // let hfLotAll ;
+  const export_csv_flg = import.meta.env.VITE_EXPORT_CSV_FLG;
   const [hfLotAll, SetHfLotAll] = useState("");
   //hiding Variable
   const DUPLICATE_CHECK_FLG = "0";
@@ -196,6 +196,14 @@ function fn_ScanSMTSerialPcsNG() {
       SetFocus("txtLot");
     }
   };
+  function ExportCSV (DtData) {
+    const date = new Date();
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+    const filteredData = DtData.filter(row => row.SERIAL !== '');
+    const csv = Papa.unparse(filteredData); 
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, `P1_FINAL_GATE_${formattedDate}.csv`); 
+  }
   async function setSerialMaster(item) { 
     hfSerialLength = "0";
     hfSerialFixFlag = "N";
@@ -696,6 +704,8 @@ function fn_ScanSMTSerialPcsNG() {
   };
   const handle_Cancel_Click = () => {
     // setMode("SERIAL");
+    setLblResultState(false);
+    setLblSerialNG(0);
     setTxtSerial(gvSerial.map(() => ""));
     SetFocus("txtSerial_0");
   };
@@ -714,7 +724,7 @@ function fn_ScanSMTSerialPcsNG() {
   };
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.toUpperCase();
     setTxtSerial(newValues);
 
     if (event.key === "Enter") {
@@ -1417,7 +1427,9 @@ function fn_ScanSMTSerialPcsNG() {
         setGvSerialResult(dtSerial);
         setHideImg(false);
         setLblResultState(true);
-        // ExportGridToCSV()
+        if(export_csv_flg == "Y"){
+          ExportCSV(dtSerial);
+        }
       } else {
         setGvSerialResult([]);
       }
