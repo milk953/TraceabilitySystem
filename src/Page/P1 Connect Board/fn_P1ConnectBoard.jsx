@@ -253,12 +253,12 @@ function fn_P1ConnectBoard() {
       visble: "none",
       style: "",
     }));
-    // setgvScanResult((prevState) => ({
-    //   ...prevState,
-    //   visble: false,
-    //   value: "",
-    // }));
-    // SetMode("SERIAL");
+    setgvScanResult((prevState) => ({
+      ...prevState,
+      visble: false,
+      value: "",
+    }));
+    SetMode("SERIAL");
     setTimeout(() => {
       fcGvBackSide.current[0].focus();
     }, 300);
