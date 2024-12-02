@@ -127,11 +127,9 @@ function fn_Homepage() {
   const MenuHome = async () => {
     let dataMenu;
     if (UserLogin == "" || UserLogin == null) {
-      console.log('Not login')
       await axios.post("/api/menuHome", {}).then((res) => {
         setmenu(res.data);
         dataMenu = res.data;
-        console.log("menuHome", res.data);
       });
     } else {
         await axios
@@ -140,7 +138,6 @@ function fn_Homepage() {
         })
         .then((res) => {
           dataMenu = res.data;
-          console.log("Menuname", res.data);
           setmenu(res.data);
           setCheckmenuState({state:true,count:1});
         });

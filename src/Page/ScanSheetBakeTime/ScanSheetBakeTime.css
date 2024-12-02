@@ -25,12 +25,17 @@
     width: 600px;
     /* margin-top: 20px; */
   }
-  #TableResultBaking {
+  /* #TableResultBaking {
     height: 180px;
-    background: #EFBC9B;
-  }
+    /* background: #EFBC9B; 
+  } */
   #TableResultBaking td {
     /* font-size: 80px; */
+    text-align: center;
+  }
+  #TableResultBakingred td {
+    /* font-size: 80px; */
+    border : 1px solid red !important;
     text-align: center;
   }
   .pnlSaveBaking {
@@ -52,7 +57,11 @@
     text-align: right;
   }
   .txtFieldBaking {
-    width: 300px;
+    width: 280px;
+    padding: 1px;
+  }
+  .CelltxtFieldbaging{
+    width: 200px;
     padding: 1px;
   }
   

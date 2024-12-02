@@ -39,7 +39,6 @@ function ScanSMTSerialPcsNG() {
     handle_Save_Click,
     ddlproduct_Change,
     txtSerial,
-    setTxtSerial,
     handletxtSerialChange,
     txtmasterCode_Change,
     gvSerialResult,

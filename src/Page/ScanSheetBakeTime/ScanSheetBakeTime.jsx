@@ -69,12 +69,12 @@ function ScanSheetBakeTime() {
         <TableBody>
           <TableRow>
             <TableCell id="lbltxtBaking">Reference Process::</TableCell>
-            <TableCell>
+            <TableCell className="CelltxtFieldbaging">
               <TextField
                 size="small"
                 className="txtFieldBaking"
                 id="txtProcessBaking"
-                style={{ width: "220px" }}
+                // style={{ width: "220px" }}
                 disabled={txtProcessState.disabled}
                 sx={txtProcessState.styled}
                 onChange={(e) => {
@@ -86,7 +86,7 @@ function ScanSheetBakeTime() {
                     handleTxtProcess_Change();
                   }
                 }}
-                // onBlur={handleTxtProcess_Change}
+
                 value={txtProcess}
               ></TextField>
             </TableCell>
@@ -94,12 +94,12 @@ function ScanSheetBakeTime() {
           </TableRow>
           <TableRow>
             <TableCell id="lbltxtBaking">Baking Machine:</TableCell>
-            <TableCell>
+            <TableCell className="CelltxtFieldbaging">
               <TextField
                 size="small"
-                className="txtField"
+                // className="txtField"
                 id="txtMcBaking"
-                style={{ width: "350px" }}
+                style={{ width: "280px" }}
                 disabled={txtmcState.disabled}
                 sx={txtmcState.styled}
                 inputRef={Fctxtmc}
@@ -119,12 +119,12 @@ function ScanSheetBakeTime() {
           </TableRow>
           <TableRow>
             <TableCell id="lbltxtBaking">Lot No.:</TableCell>
-            <TableCell>
+            <TableCell className="CelltxtFieldbaging">
               <TextField
                 size="small"
                 id="txtLotNoBaking"
-                className="txtField"
-                style={{ width: "350px" }}
+                // className="txtField"
+                style={{ width: "280px" }}
                 disabled={txtLotNoState.disabled}
                 sx={txtLotNoState.styled}
                 inputRef={FctxtLotNo}
@@ -148,11 +148,12 @@ function ScanSheetBakeTime() {
           </TableRow>
           <TableRow>
             <TableCell id="lbltxtBaking">Product Name:</TableCell>
-            <TableCell>
+            <TableCell className="CelltxtFieldbaging">
               <TextField
+              
                 size="small"
-                className="txtField"
-                style={{ width: "350px", backgroundColor: "lightgray" }}
+                // className="txtField"
+                style={{ width: "280px", backgroundColor: "lightgray" }}
                 disabled={true}
                 value={lblProductName}
               ></TextField>
@@ -162,24 +163,23 @@ function ScanSheetBakeTime() {
           </TableRow>
           <TableRow>
             <TableCell id="lbltxtBaking">Sheet No.:</TableCell>
-            <TableCell>
+            <TableCell className="CelltxtFieldbaging">
               <TextField
                 size="small"
-                className="txtField"
+                // className="txtField"
                 id="txtSheetNoBaking"
-                style={{ width: "350px" }}
+                style={{ width: "280px" }}
                 disabled={txtSheetNoState.disabled}
                 sx={txtSheetNoState.styled}
                 inputRef={FctxtSheetNo}
                 onChange={(e) => {
-                  setTxtSheetNo(e.target.value);
+                  setTxtSheetNo(e.target.value.toUpperCase());
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     handleTxtSheetNo_Change();
                   }
                 }}
-                // onBlur={handleTxtSheetNo_Change()}
                 value={txtSheetNo}
               ></TextField>
             </TableCell>
@@ -192,19 +192,20 @@ function ScanSheetBakeTime() {
           </TableRow>
         </TableBody>
       </Table>
+      &nbsp;
        {PnlShowresult && (       
       <div className="pnlResultBaking">
-        <Table id="TableResultBaking" component={Paper}>
-          <TableRow>
+        <Table id={lblResult.text == "NG" ? "TableResultBakingred" : "TableResultBaking"} component={Card} style={{ height: '180px' }} >
+          <TableRow >
             <TableCell
-              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled }}
+              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled,backgroundColor:lblResult.backgroundColor}}
             >
               {lblResult.text}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" ,whiteSpace: "pre-line" }} >
-              {lblRemark}
+            <TableCell sx={{ fontSize: "34px", padding: "0px" ,whiteSpace: "pre-line" ,color:lblRemark.color,background: lblRemark.text === "" ? "white" : lblRemark.backgroundColor}} >
+              {lblRemark.text}
             </TableCell>
           </TableRow>
         </Table>

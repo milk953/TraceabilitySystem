@@ -3,12 +3,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLoading } from "../../loading/fn_loading";
 import ExcelJS from "exceljs";
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
 
 function fn_ScanSMTSerialPcsP1() {
   const Fac = import.meta.env.VITE_FAC;
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
   const DUPLICATE_CHECK_FLG = "0";
+  const export_csv_flg = import.meta.env.VITE_EXPORT_CSV_FLG;
   let hfMode = "";
   const hiddenParams = {
     hfSerialLength: "0",
@@ -58,7 +61,7 @@ function fn_ScanSMTSerialPcsP1() {
     hfSerialCount: "",
     hfLotLength: "9",
     hfLotAll: "server",
-    hfExportCSV :'N'
+    hfExportCSV : export_csv_flg
   };
   const {showLoading,hideLoading} = useLoading();
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
@@ -193,8 +196,16 @@ function fn_ScanSMTSerialPcsP1() {
         _strLot = _strLotAll[0];
         _strPrdName = productSelected;
         hiddenParams.hfTestResultFlag = "Y";
+        console.log(_strLot.length,'_strLot.length',parseInt(hiddenParams.hfLotLength));
         if (_strLot.length == parseInt(hiddenParams.hfLotLength)) {
           _strPrdName = await getData("GetProductNameByLot", _strLot);
+          console.log(_strPrdName,'_strPrdName');
+          if(_strPrdName == "" || _strPrdName == undefined) {
+            setlblError(_strLot +" invalid lot no.!" +_strTagNewLine +' '+_strLot +" หมายเลขล็อตไม่ถูกต้อง");
+            // setlblErrorState(true);
+            SetMode("LOT_ERROR");
+            return;
+          }
           let dtLotPassCount = await getData("GetSerialPassByLot", _strLot);
           setlblLotTotal("0");
           setlblSerialNG(0);
@@ -217,22 +228,14 @@ function fn_ScanSMTSerialPcsP1() {
             setlblError("Product " + _strPrdName + " not found.");
           }
         } else {
-          setlblError(
-            _strLot +
-              " invalid lot no.!" +
-              _strTagNewLine +
-              _strLot +
-              " หมายเลขล็อตไม่ถูกต้อง"
-          );
+          setlblError(_strLot +" invalid lot no.!" +_strTagNewLine +_strLot +" หมายเลขล็อตไม่ถูกต้อง");
           setlblLot("");
           setlblLotTotal("");
           setlblSerialNG(0);
           SetMode("LOT_ERROR");
         }
       } else {
-        setlblError(
-          " Please scan QR Code!" + _strTagNewLine + " กรุณาสแกนที่คิวอาร์โค้ด"
-        );
+        setlblError(" Please scan QR Code!" + _strTagNewLine + " กรุณาสแกนที่คิวอาร์โค้ด");
         setlblLot("");
         setlblLotTotal("");
         setlblSerialNG(0);
@@ -246,7 +249,7 @@ function fn_ScanSMTSerialPcsP1() {
 
   const ibtBack_Click = () => {
     setddlProductState(false);
-    console.log(ddlproduct)
+    setTxtSerial(gvSerial.map(() => ""));
     setlblResultState(false);
     setProductSelected(ddlproduct[0].prd_name);
     setScanLot("");
@@ -323,7 +326,6 @@ function fn_ScanSMTSerialPcsP1() {
         }).then((res) => {
           dtData = res.data;
         });
-        console.log(dtData, "GetSerialTestResultManyTable");
         return dtData;
       } else if (type == "GetWeekCodebyLot") {
         let response = "";
@@ -361,7 +363,7 @@ function fn_ScanSMTSerialPcsP1() {
           
         })
         .then((res) => {
-          console.log(res.data);
+
           response = res.data._strsheet;
           response2 = res.data.lot_no;
         });
@@ -414,7 +416,6 @@ function fn_ScanSMTSerialPcsP1() {
             result1 = res.data[0].result_v;
             result2 = res.data[0]._message;
           });
-          console.log(result1, result2, "Get_SPI_AOI_RESULT_P1");
           return { result1, result2 };
       } else if (type == "getProductSerialMaster") {
         await axios
@@ -579,7 +580,7 @@ function fn_ScanSMTSerialPcsP1() {
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.toUpperCase();
     setTxtSerial(newValues);
 
     if (event.key === "Enter") {
@@ -615,7 +616,6 @@ function fn_ScanSMTSerialPcsP1() {
       })
       dtSerial = await dtResponse.length ? [...dtResponse] : [];
 
-      console.log(dtResponse, "dtSerial");
       if (hiddenParams.hfWeekCodeType == "Y") {
         hiddenParams.hfWeekCode = await getData("GetWeekCodebyLot", {
           strLot: _strLot,
@@ -759,26 +759,9 @@ function fn_ScanSMTSerialPcsP1() {
               }
             }
             if(!_bolError){
-              // for(let _intRow = _intRowSerial+1; _intRow < dtSerial.length; _intRow++){
-              //   if(_strSerial == dtSerial[_intRow].SERIAL){
-              //     _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
-              //     _strRemark = "Serial duplicate in tray  ";
-              //     _strScanResultUpdate = "NG";
-              //     _strTestResultUpdate = _strTestResult;
-              //     dtSerial[_intRow].REMARK_UPDATE = _strRemark; 
-              //     dtSerial[_intRow].ROW_UPDATE = "N";
-              //     _intCountNG = 1;
-              //     _bolError = true;
-              //   }
-              // }
               let isDuplicate = dtSerial.some((item, index) => {
                 _intCountNG = 1;
-                console.log(`Checking duplicate ${index+1}: ${item.SERIAL} -----  ${_strSerial}`);
-                return (
-                  index !== _intRowSerial &&
-                  _strSerial ===
-                    item.SERIAL
-                );
+                return (index !== _intRowSerial &&_strSerial ===item.SERIAL);
               });
               if (isDuplicate) {
                 _strMessageUpdate =
@@ -844,7 +827,6 @@ function fn_ScanSMTSerialPcsP1() {
                 _intCountNG = 1;
                 _bolError = true;
               }else if(parseFloat(hiddenParams.hfPlasmaTime) < parseInt(_dblPlasmaTime)){
-                console.log(parseInt(hiddenParams.hfPlasmaTime),':::::12345:::' ,parseInt(_dblPlasmaTime));
                 _strMessageUpdate = "Plasma time over " + hiddenParams.hfPlasmaTime + " hr." + _strTagNewLine + "เวลาพลาสม่าเกิน " + hiddenParams.hfPlasmaTime + " ชม.";
                 _strRemark = "Plasma time over " + hiddenParams.hfPlasmaTime + " hr.";
                 _strScanResultUpdate = "NG";
@@ -855,10 +837,8 @@ function fn_ScanSMTSerialPcsP1() {
                 _bolError = true;
               }
             }
+            console.log('hfCheckSPIAOI',hiddenParams.hfCheckSPIAOI);
             if(!_bolError && hiddenParams.hfCheckSPIAOI == 'Y'){
-              // let _Result = '';
-              // let _strMessage = '';
-
               const { result1: _Result, result2: _strMessage } = await getData("Get_SPI_AOI_RESULT_P1", {
                 strSerialNo: _strSerial,
                 strPlantCode: Fac,
@@ -869,7 +849,7 @@ function fn_ScanSMTSerialPcsP1() {
                 strSPIF: hiddenParams.hfCheckSPIF,
                 strSPIB: hiddenParams.hfCheckSPIB,
               });
-              console.log(_Result,'_Result',_strMessage,'_strMessage');
+              console.log(_Result,_strMessage);
               if(_Result == 'NG'){
                 _strScanResultUpdate = _Result;
                 _strMessageUpdate = _strMessage;
@@ -883,7 +863,6 @@ function fn_ScanSMTSerialPcsP1() {
               }
             }
             if(!_bolError){
-              console.log(hiddenParams.hfTestResultFlag,'HfResultflg',);
               if(hiddenParams.hfTestResultFlag == 'Y'){
                 if(_strTouchUp == 'NG'){
                   if(_strTestResult == 'NG'){
@@ -1016,11 +995,7 @@ function fn_ScanSMTSerialPcsP1() {
       }
       let _strErrorUpdate = '';
       for (let insertDt = 0; insertDt < dtSerial.length; insertDt++) {
-        if (
-          dtSerial[insertDt].SERIAL != "" ||
-          dtSerial[insertDt].SERIAL != null
-        ) {
-          console.log("insertDt");
+        if (dtSerial[insertDt].SERIAL != "" ||dtSerial[insertDt].SERIAL != null) {
           _strErrorUpdate = await getData("SetSerialLotTrayTable", {
             strPlantCode: Fac,
             strPrdName: _strPrdName,
@@ -1057,11 +1032,10 @@ function fn_ScanSMTSerialPcsP1() {
       }
       setGvSerialResult(dtSerial);
       setlblResultState(true);
-      setHideImg(false);
-      ExportCSV(dtSerial)
-      // if(hiddenParams.hfExportCSV == 'Y'){
-
-      // }
+      setHideImg(false);      
+      if(hiddenParams.hfExportCSV == 'Y'){
+        ExportCSV(dtSerial)
+      }
     }else{
       setGvSerialResult([]);
     }
@@ -1079,7 +1053,15 @@ function fn_ScanSMTSerialPcsP1() {
       behavior: 'smooth'
     });
   };
-  function ExportCSV(DtData) {
+  function ExportCSV (DtData) {
+    const date = new Date();
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+    const filteredData = DtData.filter(row => row.SERIAL !== '');
+    const csv = Papa.unparse(filteredData); 
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, `P1_FINAL_GATE_${formattedDate}.csv`); 
+  }
+  function ExportExcel(DtData) {
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("My Sheet");
     sheet.properties.defaultRowHeight = 20;
@@ -1092,7 +1074,7 @@ function fn_ScanSMTSerialPcsP1() {
     }));
     sheet.columns = excelColumns;
     DtData.forEach((row) => {
-      if (row.SERIAL && row.SERIAL.trim() !== "") { // ตรวจสอบว่าค่า SERIAL ไม่ว่าง
+      if (row.SERIAL && row.SERIAL.trim() !== "") { 
         sheet.addRow(row); 
       } 
     });
@@ -1112,7 +1094,7 @@ function fn_ScanSMTSerialPcsP1() {
     .writeBuffer()
     .then((buffer) => {
       const blob = new Blob([buffer], { type: "application/octet-stream" });
-      saveAs(blob,`test.xlsx`);
+      saveAs(blob,`test.csv`);
     })
     .catch((error) => {
       console.error("Error writing excel file:", error);

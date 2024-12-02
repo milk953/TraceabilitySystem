@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import { useLoading } from "../../loading/fn_loading";
+
 function fn_Change_Serial() {
   const [lblResult, setLblResult] = useState({
     value: "",
@@ -33,6 +35,7 @@ function fn_Change_Serial() {
   const plantCode = import.meta.env.VITE_FAC;
   const IP = localStorage.getItem("ipAddress");
   let txtTotalPcsCheck = "N";
+  const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,11 +45,13 @@ function fn_Change_Serial() {
   }, []);
 
   const txtTotalPcs_TextChanged = async () => {
+    const newValues = [];
+    setTxtSerialNoOld(newValues);
+    setTxtSerialNoNew(newValues);
     await getInitialSerial();
   };
 
   const BtnSubmit_Click = async () => {
-    console.log("เข้ามาละ BtnSubmit_Click");
     Swal.fire({
       title: "Are you confirm submit?",
       showDenyButton: false,
@@ -55,6 +60,7 @@ function fn_Change_Serial() {
       denyButtonText: "Cancel",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        showLoading("กำลังบันทึก กรุณารอสักครู่...");
         let dt = [];
         let CheckerHeaderFlg = false;
         let CheckerHeaderFlg3 = false;
@@ -73,21 +79,19 @@ function fn_Change_Serial() {
         const Result = await getInputSerial();
         dtData = Result.dtData;
         strError = Result.strError;
-        console.log("Result", Result);
         if (strError.trim() !== "") {
-          console.log("strError.trim");
           setLblResult((prevState) => ({
             ...prevState,
             value: strError,
             style: "red",
           }));
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          hideLoading();
           return;
         }
 
         try {
-          console.log("เข้ามาใน try one");
           for (let i = 0; i < dtData.length; i++) {
-            console.log("เข้ามาใน Loop one");
             const drRow = dtData[i];
             strOldSerial = drRow.SERIAL_OLD;
             strNewSerial = drRow.SERIAL_NEW;
@@ -99,7 +103,6 @@ function fn_Change_Serial() {
                 },
               })
               .then((res) => {
-                console.log("GetserialnoChangserial", res.data.length);
                 Out1 = res.data.length;
                 if (res.data.length > 0) {
                   setLblResult((prevState) => ({
@@ -110,6 +113,8 @@ function fn_Change_Serial() {
                 }
               });
             if (Out1 > 0) {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+              hideLoading();
               return;
             }
           }
@@ -118,7 +123,6 @@ function fn_Change_Serial() {
             const drRow = dtData[i];
             strOldSerial = drRow.SERIAL_OLD;
             strNewSerial = drRow.SERIAL_NEW;
-            console.log("เข้ามาใน Loop two", strNewSerial);
             await axios
               .post("/api/GetserialnoChangserialoldnew", {
                 dataList: {
@@ -128,11 +132,6 @@ function fn_Change_Serial() {
                 },
               })
               .then((res) => {
-                console.log(
-                  "GetserialnoChangserialoldnew",
-                  res.data[0].response,
-                  res.data[0].p_lblresult.length
-                );
                 Out2 = res.data[0].p_lblresult.length;
                 if (res.data[0].p_lblresult.length > 0) {
                   setLblResult((prevState) => ({
@@ -140,6 +139,7 @@ function fn_Change_Serial() {
                     value: res.data[0].p_lblresult,
                     style: "red",
                   }));
+                  hideLoading();
                   return;
                 }
                 if (
@@ -189,6 +189,8 @@ function fn_Change_Serial() {
                 }
               });
             if (Out2 > 0) {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+              hideLoading();
               return;
             }
           }
@@ -196,7 +198,6 @@ function fn_Change_Serial() {
             const drRow = dtData[i];
             strOldSerial = drRow.SERIAL_OLD;
             strNewSerial = drRow.SERIAL_NEW;
-            console.log("เข้ามาใน Loop three", strNewSerial);
             await axios
               .post("/api/SetserialnoChangserial", {
                 dataList: {
@@ -214,14 +215,9 @@ function fn_Change_Serial() {
                 },
               })
               .then((res) => {
-                console.log(
-                  "insert_and_update_smt_change_serial_hist",
-                  res.data
-                );
               });
           }
         } catch (ex) {
-          console.log("Error ครับผม");
           strError = ex.message;
           setLblResult((prevState) => ({
             ...prevState,
@@ -238,17 +234,19 @@ function fn_Change_Serial() {
             ),
             style: "blue",
           }));
-
           await getInitialSerial();
         }
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        hideLoading();
       } else if (result.isDenied) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        hideLoading();
         return;
       }
     });
   };
 
   const BtnCancle_Click = async () => {
-    console.log("BtnCancle_Click", txtSerialNoOld, txtSerialNoNew);
     txtTotalPcsCheck = "Y";
     // const newValues = Array(txtSerialNoOld.length).fill("");
     const newValues = [];
@@ -272,7 +270,6 @@ function fn_Change_Serial() {
   };
 
   const getInitialSerial = async () => {
-    console.log("เข้ามาละ getInitialSerial", txtTotalPcsCheck);
     const DatatxtTotalPcs = txtTotalPcsCheck === "Y" ? "1" : txtTotalPcs.value;
     let dtData = [];
     for (let intRow = 1; intRow <= parseInt(DatatxtTotalPcs); intRow++) {
@@ -285,9 +282,7 @@ function fn_Change_Serial() {
       visble: true,
     }));
     setHfSerialCount(DatatxtTotalPcs);
-    console.log("gvSerial.value.length", dtData.length);
     if (dtData.length > 0) {
-      console.log("เข้ามาใน Focus");
       fnSetFocus("gvSerial_txtSerialNoOld_0");
     }
 
@@ -295,7 +290,6 @@ function fn_Change_Serial() {
   };
 
   const getInputSerial = async () => {
-    console.log("เข้ามาละ getInputSerial", gvSerial.value);
     let dtData = [];
     let intRow = 0;
     let strFrontSide = "";
@@ -315,14 +309,11 @@ function fn_Change_Serial() {
         CHECKER1_FLG: "N",
         FINALGATE_FLG: "N",
       };
-      console.log("เข้ามาละ getInputSerial drRow", drRow.SERIAL_OLD);
       if (drRow.SERIAL_OLD == "") {
-        console.log("เข้ามาละ getInputSerial drRow.SERIAL_OLD");
         strError = `${intSeq + 1} Please input Old Serial Number.`;
         break;
       }
       if (drRow.SERIAL_NEW == "") {
-        console.log("เข้ามาละ getInputSerial drRow.SERIAL_NEW");
         strError = `${intSeq + 1} Please input New Serial Number.`;
         break;
       }

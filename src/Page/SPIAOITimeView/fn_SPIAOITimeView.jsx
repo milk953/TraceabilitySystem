@@ -57,7 +57,6 @@ function fn_SPIAOITimeView() {
   useEffect(() => {
     const fetchData = async () => {
       setHfURL(window.location.href);
-      console.log("window.location.href : ( ", window.location.href, " )");
       if (txtAOIMCNo.value.trim() !== "" || txtSPIMCNo.value.trim() !== "") {
         setBtnRetrive((prevState) => ({
           ...prevState,
@@ -90,12 +89,9 @@ function fn_SPIAOITimeView() {
     };
     fetchData();
   }, []);
+
+  const [intervalId, setIntervalId] = useState(null);
   const btnRetrive_Click = async () => {
-    console.log(
-      "เข้ามายัง btnRetrive_Click",
-      txtAOIMCNo.value,
-      txtSPIMCNo.value
-    );
     if (
       btnRetrive.value === "START" &&
       (txtAOIMCNo.value !== "" || txtSPIMCNo.value !== "")
@@ -122,11 +118,11 @@ function fn_SPIAOITimeView() {
           .toUpperCase()
           .trim()}&SPIMC=${txtSPIMCNo.value.toUpperCase().trim()}`
       );
-      fnSetPageTimeOut();
-      setGrid();
-
-      await fnSetPageTimeOut();
       await setGrid();
+      const newIntervalId = setInterval(async () => {
+        await setGrid();
+      }, 10000);
+      setIntervalId(newIntervalId);
     } else {
       setBtnRetrive((prevState) => ({
         ...prevState,
@@ -140,21 +136,20 @@ function fn_SPIAOITimeView() {
         ...prevState,
         disbled: false,
       }));
+
       let currentURL = hfURL;
       if (currentURL.includes("?")) {
         setHfURL(currentURL.substring(0, currentURL.indexOf("?")));
       }
-      fnSetPageTimeOut();
+
+      if (intervalId) {
+        clearInterval(intervalId);
+        setIntervalId(null);
+      }
     }
   };
-  const fnSetPageTimeOut = async () => {
-    console.log("เข้ามายัง fnSetPageTimeOut");
-    const script = document.createElement("script");
-    script.innerHTML = "";
-    document.body.appendChild(script);
-  };
+
   const setGrid = async () => {
-    console.log("เข้ามายัง setGrid");
     let dtData = [];
     await axios
       .post("/api/SPIAOITimeView/fnSheetSPIAOITimeData", {
@@ -169,7 +164,6 @@ function fn_SPIAOITimeView() {
         },
       })
       .then((res) => {
-        console.log("fnSheetSPIAOITimeData", res.data);
         dtData = res.data;
         setGvData((prevState) => ({
           ...prevState,
@@ -185,7 +179,7 @@ function fn_SPIAOITimeView() {
         <div
           style={{
             fontSize: "22px",
-            backgroundColor: "#336699",
+            backgroundColor: "#31363F",
             color: "#ffffff",
             padding: 0,
             margin: 0,
@@ -246,7 +240,7 @@ function fn_SPIAOITimeView() {
         <div
           style={{
             fontSize: "22px",
-            backgroundColor: "#336699",
+            backgroundColor: "#31363F",
             color: "#ffffff",
             padding: "0px",
             margin: "0px",
@@ -303,7 +297,7 @@ function fn_SPIAOITimeView() {
                 </Grid>
               </Grid>
             </div>
-            <div style={{ width: "100%", fontWeight: 500, }}>
+            <div style={{ width: "100%", fontWeight: 500 }}>
               <Grid container spacing={0} alignItems="center">
                 <Grid
                   item
@@ -383,7 +377,7 @@ function fn_SPIAOITimeView() {
         <div
           style={{
             fontSize: "22px",
-            backgroundColor: "#336699",
+            backgroundColor: "#31363F",
             color: "#ffffff",
             padding: "0px",
             margin: "0px",

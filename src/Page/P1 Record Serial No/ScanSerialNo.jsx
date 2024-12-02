@@ -51,7 +51,9 @@ function ScanSerialNo() {
     txtSerial,
     gvSerialResult,
     gvSerial,
-    getRowClassName
+    getRowClassName,
+    lblErrorState,
+    lblError
   } = fn_ScanSerialNo();
   return (
     <>
@@ -75,7 +77,7 @@ function ScanSerialNo() {
                       className="RecordSP1txtF"
                       id="txtOperator"
                       value={operator}
-                      onChange={(e) => setOperator(e.target.value)}
+                      onChange={(e) => setOperator(e.target.value.toUpperCase())}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handle_Operator_Change();
@@ -99,7 +101,7 @@ function ScanSerialNo() {
                       className="RecordSP1txtF"
                       id="txtPCS"
                       value={pcs}
-                      onChange={(e) => setPcs(e.target.value)}
+                      onChange={(e) => setPcs(e.target.value.toUpperCase())}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handle_txtPCS_Change();
@@ -120,8 +122,7 @@ function ScanSerialNo() {
                       className="RecordSP1txtF"
                       id="txtLotNo"
                       value={lotNo}
-                      onChange={(e) => setLotNo(e.target.value)}
-                      //   onBlur={handle_txtlotNo_Change}
+                      onChange={(e) => setLotNo(e.target.value.toUpperCase())}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handle_txtlotNo_Change();
@@ -145,7 +146,7 @@ function ScanSerialNo() {
                       className="RecordSP1txtF"
                       id="txtMagazine"
                       value={magazine}
-                      onChange={(e) => setMagazine(e.target.value)}
+                      onChange={(e) => setMagazine(e.target.value.toUpperCase())}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handle_Magazine_Change();
@@ -174,6 +175,9 @@ function ScanSerialNo() {
                 </TableRow>
               </TableBody>
             </Table>
+            {lblErrorState && (
+                <Paper className="Card-lblLog">{lblError}</Paper>
+              )}
             &nbsp;&nbsp;
             {gvSerialState && (
               <Table className="RecordSP1gvSerial" component={Card}>

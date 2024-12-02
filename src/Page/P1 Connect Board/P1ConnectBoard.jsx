@@ -72,7 +72,7 @@ function P1ConnectBoard() {
     fcRollleaf,
     fctMachchine,
     fcLotRef,
-    lblResult
+    lblResult,btnCancel_Click
   } = fn_P1ConnectBoard();
 
 
@@ -117,7 +117,7 @@ function P1ConnectBoard() {
                             txtLot_TextChanged();
                           }
                         }}
-                        onBlur={txtLot_TextChanged}
+                        // onBlur={txtLot_TextChanged}
                       ></TextField>
                     </TableCell>
                     <TableCell>
@@ -307,18 +307,20 @@ function P1ConnectBoard() {
                             fullWidth
                             value={txtSideBack[index]}
                             inputRef={(el) => (fcGvBackSide.current[index] = el)}
-                            onChange={(event) =>
-                              handleBackSideChange(index, event)
-                            }
-                            onBlur={(event) => {
+                            onChange={(event) => {
                               handleBackSideChange(index, event);
-                              // fcGvBackSide_txtsideback_1.current[index].focus();
                             }}
+              
                           
                             onKeyDown={(event) => {
                               if (event.key === "Enter") {
                                 event.preventDefault(); 
-                                // fcGvBackSide_txtsideback_1.current[index].focus();
+                                if (index <  GvBackSide.value.length - 1) {
+                                  fcGvBackSide.current[index + 1].focus();
+                                } else {
+                                  fcGvSerial.current[0].focus();
+                                }
+                              
                               }
                             }}
                           />
@@ -375,9 +377,9 @@ function P1ConnectBoard() {
                         onChange={(event) =>
                           handleSerialChange(index, event)
                         }
-                        onBlur={(event) => {
-                          handleSerialChange(index, event);
-                        }}
+                        // onBlur={(event) => {
+                        //   handleSerialChange(index, event);
+                        // }}
                       
                         onKeyDown={(event) => {
                           if (event.key === "Enter") {
@@ -403,7 +405,7 @@ function P1ConnectBoard() {
                         Save
                       </Button>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel"  onClick={btnSave_Click} >Cancel</Button>
+                      <Button className="BtCancel"  onClick={btnCancel_Click} >Cancel</Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -428,16 +430,17 @@ function P1ConnectBoard() {
                   />
                 </>
               )}
+              {console.log(txtSerial)}
               {gvScanResult.visble == true && (
                 <>
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                     <Paper
                       className="Card-lblResult"
                       elevation={3}
-                      style={{
-                        background: " #BA0900",
+                      style={
+                       lblResult.style
                    
-                      }}
+                      }
                     >
                       <Typography
                         variant="h4"

@@ -29,7 +29,7 @@ import {
     DeleteFilled
 } from "@ant-design/icons";
 import DeleteIcon from '@mui/icons-material/Delete';
-import "/src/Page/SMTDeleteData/SMTDeleteData.css";
+import "./SMTDeleteData.css";
 import Header from "../Header/Header.jsx";
 import { fn_SMTDeleteData } from "./fn_SMTDeleteData.jsx";
 import Item from "antd/es/list/Item.js";

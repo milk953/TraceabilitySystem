@@ -1627,15 +1627,16 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         }));
       }
       await getInitialSerial();
-      hideLoading();
+    
     } catch (error) {
-      hideLoading();
+      
       console.error("An error occurred while fetching serial data:", error);
       Swal.fire({
         title: error,
         icon: "error",
       });
     }
+    hideLoading();
   };
 
   const SaveSetSerialLotTrayTableGood = async (dtSerial) => {
