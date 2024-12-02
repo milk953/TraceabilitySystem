@@ -1093,7 +1093,7 @@ function fn_PieceTraceView() {
           .then((res) => {
             dt14 = res.data;
           });
-        console.log(dt14)
+        console.log(dt14, "dt14")
 
         if (dt14.length > 0) {
           dt14 = dt14[0];
@@ -1110,6 +1110,7 @@ function fn_PieceTraceView() {
             .then((res) => {
               dt15 = res.data;
             });
+            console.log(dt15, "dt15")
 
           if (dt15.length > 0) {
             dt15 = dt15[0];
@@ -1124,6 +1125,7 @@ function fn_PieceTraceView() {
               .then((res) => {
                 dt16 = res.data;
               });
+              console.log(dt16, "dt16")
 
             if (dt16.length > 0) {
               dt16 = dt16[0];

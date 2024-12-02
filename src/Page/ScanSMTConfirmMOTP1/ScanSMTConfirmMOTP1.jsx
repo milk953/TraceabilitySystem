@@ -49,7 +49,7 @@ function ScanSMTConfirmMOTP1() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-20px",
+                        marginLeft: "-5px",
                         marginTop: "-10px"
                     }}
                 >
@@ -91,11 +91,6 @@ function ScanSMTConfirmMOTP1() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    handleChangeLot();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                if (txtLot.value !== "") {
                                                     handleChangeLot();
                                                 }
                                             }}
@@ -198,7 +193,6 @@ function ScanSMTConfirmMOTP1() {
                                                             handleChangeSerial(index, e);
                                                         }}
                                                         onKeyDown={(e) => handleKeygvSerial(e, index)}
-                                                        onBlur={(e) => handleKeygvSerial(e, index)}
                                                     />
                                                 </TableCell>
                                             </TableRow>
@@ -288,6 +282,7 @@ function ScanSMTConfirmMOTP1() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                             />
                         </>
                     )}

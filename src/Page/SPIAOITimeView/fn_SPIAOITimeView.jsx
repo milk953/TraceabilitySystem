@@ -57,7 +57,6 @@ function fn_SPIAOITimeView() {
   useEffect(() => {
     const fetchData = async () => {
       setHfURL(window.location.href);
-      console.log("window.location.href : ( ", window.location.href, " )");
       if (txtAOIMCNo.value.trim() !== "" || txtSPIMCNo.value.trim() !== "") {
         setBtnRetrive((prevState) => ({
           ...prevState,
@@ -93,18 +92,10 @@ function fn_SPIAOITimeView() {
 
   const [intervalId, setIntervalId] = useState(null);
   const btnRetrive_Click = async () => {
-    console.log(
-      "เข้ามายัง btnRetrive_Click",
-      txtAOIMCNo.value,
-      txtSPIMCNo.value,
-      intervalId
-    );
-
     if (
       btnRetrive.value === "START" &&
       (txtAOIMCNo.value !== "" || txtSPIMCNo.value !== "")
     ) {
-      console.log("&&& START มั้ง");
       setBtnRetrive((prevState) => ({
         ...prevState,
         value: "STOP",
@@ -129,12 +120,10 @@ function fn_SPIAOITimeView() {
       );
       await setGrid();
       const newIntervalId = setInterval(async () => {
-        console.log("เรียก setGrid ผ่าน interval");
         await setGrid();
       }, 10000);
       setIntervalId(newIntervalId);
     } else {
-      console.log("&&& STOP มั้ง");
       setBtnRetrive((prevState) => ({
         ...prevState,
         value: "START",
@@ -161,7 +150,6 @@ function fn_SPIAOITimeView() {
   };
 
   const setGrid = async () => {
-    console.log("เข้ามายัง setGrid");
     let dtData = [];
     await axios
       .post("/api/SPIAOITimeView/fnSheetSPIAOITimeData", {
@@ -176,7 +164,6 @@ function fn_SPIAOITimeView() {
         },
       })
       .then((res) => {
-        console.log("fnSheetSPIAOITimeData", res.data);
         dtData = res.data;
         setGvData((prevState) => ({
           ...prevState,

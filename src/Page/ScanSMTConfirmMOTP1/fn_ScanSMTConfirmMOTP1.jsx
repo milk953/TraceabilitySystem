@@ -84,6 +84,7 @@ function fn_ScanSMTConfirmMOTP1() {
     const FINAL_GATE_SPECIAL_FLG = 1;
     const FINAL_GATE_SPECIAL_PRD = import.meta.env.FINAL_GATE_SPECIAL_PRD;
     const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.FINAL_GATE_SPECIAL_MESSAGE;
+    const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
     const FINAL_GATE_SPECIAL_OK = "OK";
 
     useEffect(() => {
@@ -91,7 +92,7 @@ function fn_ScanSMTConfirmMOTP1() {
             getInitialSerial();
         }
     }, [hfSerialCount, pnlLog]);
-    
+
     useEffect(() => {
         PageLoad();
     }, []);
@@ -116,7 +117,7 @@ function fn_ScanSMTConfirmMOTP1() {
         if (txtLot.value !== "") {
             let _strLot = "";
             let _strPrdName = "";
-            const _strLotAll = txtLot.value.trim().toUpperCase().split(";");
+            const _strLotAll = txtLot.value.toUpperCase().trim().split(";");
             if (_strLotAll.length >= 2) {
                 _strLot = _strLotAll[0];
                 _strPrdName = selProduct;
@@ -195,7 +196,7 @@ function fn_ScanSMTConfirmMOTP1() {
     };
 
     const ibtBackClick = () => {
-        setselProduct(prevState => ({ ...prevState, disabled: false }));
+        setselProduct(prevState => ({ ...prevState, disabled: false, value: Productdata[0].prd_name }));
         settxtLot(prevState => ({ ...prevState, disabled: false, value: "" }));
         setpnlSerial(false);
         SetMode("LOT");
@@ -225,7 +226,7 @@ function fn_ScanSMTConfirmMOTP1() {
         if (hfMode === "SERIAL" && inputgvSerial.current[0]) {
             inputgvSerial.current[0].focus();
         }
-    },[gvSerialData]);
+    }, [gvSerialData]);
 
     const handleKeygvSerial = (e, index) => {
         if (e.key === 'Enter') {
@@ -250,6 +251,7 @@ function fn_ScanSMTConfirmMOTP1() {
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
+        settxtgvSerial("");
     };
 
     const SetMode = async (strType) => {
@@ -258,6 +260,8 @@ function fn_ScanSMTConfirmMOTP1() {
             setlblLot("");
             setpnlLog(false);
             setpnlSerial(false);
+            settxtgvSerial("");
+            setgvScanResult(false);
             setgvScanData([]);
             setTimeout(() => {
                 inputLot.current.focus();
@@ -292,7 +296,10 @@ function fn_ScanSMTConfirmMOTP1() {
             setselProduct(prevState => ({ ...prevState, disabled: true }));
             settxtLot(prevState => ({ ...prevState, disabled: true }));
             setpnlLog(false);
+            setlblLog("");
             setpnlSerial(true);
+            setgvScanResult(false);
+            setgvScanData([]);
             sethfMode("SERIAL");
             await getInitialSerial();
         } else if (strType === "SERIAL_ERROR") {
@@ -321,9 +328,9 @@ function fn_ScanSMTConfirmMOTP1() {
         setgvSerialData(dtData);
         console.log("gvserialdata:", dtData)
 
-        if (gvSerialData.length > 0 && hfTrayFlag === "N") {
-            inputgvSerial.current[0].focus();
-        }
+        // if (gvSerialData.length > 0 && hfTrayFlag === "N") {
+        //    // inputgvSerial.current[0].focus();
+        // }
     };
 
     const setSerialDataTray = async () => {
@@ -368,7 +375,7 @@ function fn_ScanSMTConfirmMOTP1() {
                     let _strTestResultOrg = "";
                     let _strOK = "OK";
                     let _strNG = "NG";
-                    let _strScanResultUpdate = "";
+                    let _strScanResultUpdate = "OK";
                     let _strMessageUpdate = "";
                     let _strTestResultUpdate = "";
                     let _strTypeTestResult = "";
@@ -410,6 +417,7 @@ function fn_ScanSMTConfirmMOTP1() {
                         .then((res) => {
                             dtCarrierboard = res.data;
                         });
+                    console.log("dtCarrierboard", dtCarrierboard)
                     if (dtCarrierboard === "") {
                         _strMessageUpdate = "Serial not connect board / หมายเลขบาร์โค้ดยังไม่สแกนประกบบอร์ด";
                         _strRemark = "Serial not confirm magazine";
@@ -552,7 +560,8 @@ function fn_ScanSMTConfirmMOTP1() {
 
                                 _intCountNG = 1;
                                 _bolError = true;
-                            } else if (hfLotAll.indexOf(strSheetLot) <= 0) {
+                            } else if (hfLotAll.indexOf(strSheetLot) === -1) {
+                                console.log(hfLotAll, "hfLotAll")
                                 _strMessageUpdate = "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                                 _strRemark = "Lot not same connect sheet  ";
                                 _strScanResultUpdate = "NG";
@@ -579,7 +588,7 @@ function fn_ScanSMTConfirmMOTP1() {
                                 .then((res) => {
                                     _dblPlasmaTime = res.data.plasma_time;
                                 });
-                            if (_dblPlasmaTime <= 0) {
+                            if (_dblPlasmaTime === 0) {
                                 _strMessageUpdate = "Plasma time do not record / ไม่พบข้อมูลการแสกนก่อนเข้าพลาสม่า";
                                 _strRemark = "Plasma time do not record";
                                 _strScanResultUpdate = "NG";
@@ -616,9 +625,9 @@ function fn_ScanSMTConfirmMOTP1() {
                                 strSPIF: hfCheckSPIF,
                                 strSPIB: hfCheckSPIB
                             })
-                            .then((res) => {
-                                _Result = res.data[0].result_v;
-                            });
+                                .then((res) => {
+                                    _Result = res.data[0].result_v;
+                                });
 
                             if (_Result === "NG") {
                                 _strScanResultUpdate = _Result;
@@ -697,9 +706,9 @@ function fn_ScanSMTConfirmMOTP1() {
         if (!_bolTrayError) {
             setgvScanResult(true);
             setgvScanData(dtSerial);
-            if (hfExportCSV === "Y") {
-                ExportGridToCSV();
-            }
+            let nameFile = '';
+            nameFile = 'ConfirmResult.csv';
+            ExportGridToCSV(dtSerial, nameFile);
         } else {
             setgvScanData([]);
         }
@@ -865,13 +874,22 @@ function fn_ScanSMTConfirmMOTP1() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-
-
-                return (
-                    < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
-                        {text}
-                    </Tag>
-                );
+                if (record.SERIAL == "") {
+                    return "";
+                } else {
+                    return text;
+                }
+                // if (text == '')
+                //     return text;
+                // else {
+                //     return (
+                //         <Tag
+                //             className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                //         >
+                //             {text}
+                //         </Tag>
+                //     );
+                // }
             },
             align: "center",
         },
