@@ -37,6 +37,7 @@ function ScanSheetReflowTime() {
     btnReplace_Click,
     btnDelete_Click,
     btnIbtback_Click,
+    PnlShowresult
   } = fn_ScanSheetReflowTime();
   useEffect(() => {
     if (txtSheetNoState.state == true && txtSheetNo == "") {
@@ -117,25 +118,40 @@ function ScanSheetReflowTime() {
           </TableBody>
         </Table>
       </div>
+      {PnlShowresult && (
       <div className="pnlResult">
-        <Table id="TableResult" component={Paper}>
+        <Table  id={lblResult.text == "NG" ? "TableResultReflowred" : "TableResultReflow"} component={Card}>
           <TableRow>
             <TableCell
-              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled }}
+              sx={{
+                fontSize: "60px",
+                padding: "0px",
+                color: lblResult.styled?.color || "defaultColor",
+                background: lblResult.styled?.background || "defaultBackground",
+              }}
             >
               {lblResult.text}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" }}>
-              {lblRemark}
+            <TableCell
+              sx={{
+                fontSize: "34px",
+                padding: "0px",
+                color: lblRemark.styled?.color || "defaultColor",
+                background: lblRemark.styled?.background || "defaultBackground",
+                border : lblRemark.styled?.border || "defaultBorder",
+              }}
+            >
+              {lblRemark.text}
             </TableCell>
           </TableRow>
         </Table>
       </div>
+      )}
       {pnlSaveState && (
         <div className="pnlSave">
-          <Table id="TableSave" component={Paper}>
+          <Table id="TableSave" component={Card}>
             <TableRow>
               <TableCell>
                 <Button onClick={btnReplace_Click}>Replace</Button>

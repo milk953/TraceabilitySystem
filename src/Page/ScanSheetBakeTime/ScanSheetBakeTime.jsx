@@ -204,7 +204,7 @@ function ScanSheetBakeTime() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" ,whiteSpace: "pre-line" ,color:lblRemark.color,background:lblRemark.backgroundColor}} >
+            <TableCell sx={{ fontSize: "34px", padding: "0px" ,whiteSpace: "pre-line" ,color:lblRemark.color,background: lblRemark.text === "" ? "white" : lblRemark.backgroundColor}} >
               {lblRemark.text}
             </TableCell>
           </TableRow>
