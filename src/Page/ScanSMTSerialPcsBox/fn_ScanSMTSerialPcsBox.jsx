@@ -610,6 +610,7 @@ function fn_ScanSMTSerialPcsBox() {
   const btnCancel_Click = async () => {
     SetMode("SERIAL");
     setpnlgvScanResult(false);
+    scrollToTop();
   };
 
   const btnSave_Click = async () => {
@@ -617,18 +618,21 @@ function fn_ScanSMTSerialPcsBox() {
     if (hasAnyInput == true) {
       if (hfMode == "SERIAL") {
         setSerialDataTray();
+        scrollToTop();
     } 
     }else {
       setlblLog((prevState) => ({
         ...prevState,
         value: "Please Input Serial No.",
       }));
-      setpnlLog(true)
+      setpnlLog(true) 
+      scrollToTop();
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
       }, 300);
+     
     }
-      
+    
   };
 
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
@@ -673,6 +677,8 @@ function fn_ScanSMTSerialPcsBox() {
       let _strError = "";
       let _dblBoxQty = 0;
       let _strBox;
+      let datalbTotal = 0;
+      let datalblFull = 0;
 
       _strBox = txtBox.value.toUpperCase().split(";");
 
@@ -685,18 +691,17 @@ function fn_ScanSMTSerialPcsBox() {
             boxNo: _strBoxNo,
           })
           .then((res) => {
-            _dblBoxQty = res.data[0].BOX_QTY;
-            let data = res.data[0].BOX_COUNT;
-            console.log(res.data,"DATABOX")
-            if (data <= 0) {
-              _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
-            } else {
-              setlblBoxFull((prevState) => ({
-                ...prevState,
-                value: _dblBoxQty,
-              }));
-            }
+            datalblFull = res.data[0].BOX_QTY;
+            datalbTotal = res.data[0].BOX_COUNT;
           });
+          if (datalbTotal <= 0) {
+            _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
+          } else {
+            setlblBoxFull((prevState) => ({
+              ...prevState,
+              value: datalblFull,
+            }));
+          }
       } else {
         _strBoxNo = txtBox.value.toUpperCase();
         await axios
@@ -705,14 +710,14 @@ function fn_ScanSMTSerialPcsBox() {
             boxNo: _strBoxNo,
           })
           .then((res) => {
-            _dblBoxQty = res.data[0].BOX_QTY;
-            let data = res.data[0].BOX_COUNT;
-            if (data <= 0) {
+            datalblFull = res.data[0].BOX_QTY;
+            datalbTotal = res.data[0].BOX_COUNT;
+            if (datalbTotal <= 0) {
               _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
             } else {
               setlblBoxFull((prevState) => ({
                 ...prevState,
-                value: _dblBoxQty,
+                value: datalblFull,
               }));
             }
           });
@@ -725,23 +730,23 @@ function fn_ScanSMTSerialPcsBox() {
         await axios
           .post("/api/Common/GetCountTrayByBoxPacking", {
             prdName: selectddlProduct.value,
-            boxNo: txtBox.value,
+            boxNo: _strBoxNo,
             srtPack: "",
           })
           .then((res) => {
             
-            _dtTrayCount = res.data[0].BOX_COUNT;
-            if (_dtTrayCount > 0) {
+            datalbTotal = res.data[0].BOX_COUNT;
+            if (datalbTotal > 0) {
               setlblBoxTotal((prevState) => ({
                 ...prevState,
-                value: _dtTrayCount,
+                value: datalbTotal,
               }));
             }
-            if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
+            if (parseFloat(datalbTotal) == parseFloat(datalblFull)) {
               setlblBoxStatus((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { color: green },
+                style: { color: 'green' },
               }));
             } else {
               setlblBoxStatus((prevState) => ({ ...prevState, value: "NG" }));
@@ -1972,6 +1977,7 @@ function fn_ScanSMTSerialPcsBox() {
               .then((res) => {
                 _strErrorUpdate = res.data.p_error;
               });
+            }
             if (_strErrorUpdate != "") {
               setlblResult((prevState) => ({
                 ...prevState,
@@ -2000,7 +2006,6 @@ function fn_ScanSMTSerialPcsBox() {
                 }));
               } else {
                 if (FQC == "Y") {
-                  console.log("เข้าจ้า",dtSerial[drRow])
                   await axios
                     .post("/api/Common/getSerialRecordTimeTrayTable", {
                       strPlantCode: FAC,
@@ -2010,6 +2015,7 @@ function fn_ScanSMTSerialPcsBox() {
                     .then((res) => {
 
                     });
+                    for (let drRow = 0; drRow < dtSerial.length; drRow++) {
                   await axios
                     .post("/api/Common/setSerialRecordTimeTrayTable", {
                       dataList: {
@@ -2041,10 +2047,11 @@ function fn_ScanSMTSerialPcsBox() {
                     }));
                   }
                 }
+                }
               }
             }
           }
-        }
+        
       }
       // บรรทัด 1373
       let dtLotPassCount = [];

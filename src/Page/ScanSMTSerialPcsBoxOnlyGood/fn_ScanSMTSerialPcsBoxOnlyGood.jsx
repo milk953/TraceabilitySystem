@@ -1151,7 +1151,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       if (_strBox.length > 1) {
         _strItem = _strBox[0];
         _strBoxNo = _strBox[1];
-        let dataBOX_COUNT=0
+  
         await axios
               .post("/api/Common/GetBoxCount", {
                 prdName: selectddlProduct.value,
@@ -1159,20 +1159,18 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               })
               .then((res) => {
                 datalblFull = res.data[0].BOX_QTY;
-                 datalbTotal = res.data[0].BOX_COUNT
+                datalbTotal = res.data[0].BOX_COUNT
+                console.log(res.data,"DATA:")
            
           });
-          if (dataBOX_COUNT <= 0) {
-            console.log(_dblBoxQty,"//_dblBoxQty0")
+          if (datalbTotal <= 0) {
             _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
           } else {
             setlblBoxFull((prevState) => ({...prevState, value: datalblFull,}));
-            console.log(_dblBoxQty,"//_dblBoxQty")
+    
           }
       } else {
         _strBoxNo = txtBox.value;
-        let dataBOX_COUNT=0
-        
         await axios
         .post("/api/Common/GetBoxCount", {
           prdName: selectddlProduct.value,
@@ -1193,7 +1191,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             }));
           }
       }
-      console.log(datalblFull,"BOCCCC")
       settxtBox((prevState) => ({...prevState,value: _strBoxNo,}));
       setlblBox((prevState) => ({...prevState,value: _strBoxNo,}));
       if (_strError == "") {
@@ -1202,12 +1199,12 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         await axios
           .post("/api/Common/GetCountTrayByBoxPacking", {
             prdName: selectddlProduct.value,
-            boxNo: txtBox.value,
+            boxNo: _strBoxNo,
             srtPack: "",
           })
           .then((res) => {
             datalbTotal = res.data[0].BOX_COUNT;
-            console.log(_dtTrayCount,"_dtTrayCount",res.data[0].BOX_COUNT)
+            console.log(res.data[0].BOX_COUNT,"res.data[0].BOX_COUNT")
           });
             if (datalbTotal > 0) {
               setlblBoxTotal((prevState) => ({...prevState,
@@ -1309,6 +1306,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     if (hasAnyInput == true) {
       if (hfMode == "SERIAL") {
         setSerialDataTray();
+        scrollToTop();
+
     } 
     }else {
       setlblLog((prevState) => ({
@@ -1319,13 +1318,9 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
       }, 300);
+      scrollToTop();
+
     }
-
-    
-  
-  
-
-    
   };
 
   const handleSerialChange = async (index, event) => {
@@ -2156,6 +2151,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           .then((res) => {
             _strErrorUpdate = res.data.p_error;
           })};
+
+
         if (_strErrorUpdate != "") {
           setlblResult((prevState) => ({ ...prevState, value: "Error :" + _strErrorUpdate,style: { color: "Red" }, }));
         } else {
@@ -2183,21 +2180,23 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
             }
            
           });
-        
+        }
+        //////
           if (_strErrorUpdate !="") {
             setlblResult((prevState) => ({...prevState,value: "Error :" + _strErrorUpdate,style: { color: "Red" }, }));
           } else {
             if (FQC == "Y") {
               await axios
-                .post("/api/Common/getSerialRecordTimeTrayTable", {
-                  strPlantCode: FAC,
-                  SERIAL: dtSerial[drRow].SERIAL,
-                  MACHINE: dtSerial[drRow].MACHINE,
-                })
-                .then((res) => {
-                  console.log(res.data.row_count);
-                //  dtSerial[drRow].ROW_COUNT = 
-                });
+              .post("/api/Common/getSerialRecordTimeTrayTable", {
+                strPlantCode: FAC,
+                dtSerial: dtSerial,
+              })
+              .then((res) => {
+               console.log(res.data, "getSerialRecordTimeTrayTable");
+                dtSerial = res.data;
+              });
+                
+              for (let drRow = 0; drRow < dtSerial.length; drRow++) {
               await axios
                 .post("/api/Common/setSerialRecordTimeTrayTable", {
                   dataList: {
@@ -2221,12 +2220,13 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                 .then((res) => {
                   _strErrorUpdate = res.data.p_error;
                 });
+              }
               if (_strErrorUpdate !== "") {
                 setlblResult((prevState) => ({...prevState,value: "Error :" + _strErrorUpdate, style: { color: "Red" }, }));
               }
             }
           }
-        }
+       
       }
       }
     

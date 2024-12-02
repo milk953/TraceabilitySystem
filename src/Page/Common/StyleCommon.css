@@ -219,3 +219,23 @@ background-color: #e0e0e0;
   .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(even) {
     background-color: #ffffff; 
   } */
+  
+  .LableView{
+    height: 35px;
+    width: 100px;
+    border-spacing: 0px;
+    margin-right: 20px;
+}
+.RetriveBtn{
+    height: 35px;
+}
+.ClearBtn{
+    height: 35px;
+}
+.custom-fvi-button:hover {
+    background-color: grey; /* สีพื้นหลังเมื่อ hover */
+  }
+  .ViewInput {
+    width: 300px ;
+    height: 35px;    
+}

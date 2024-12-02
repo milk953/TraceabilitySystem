@@ -292,7 +292,6 @@ function fn_rpt_SheetTraceView() {
                        dt[i].spr_result !== "PASS" 
                     )
                     {
-                        console.log(dt[i].spr_result ,"gt14 :data")
                         StrResult =dt [i].spr_result
                     }
                 }
@@ -306,7 +305,6 @@ function fn_rpt_SheetTraceView() {
                     setbtnSPI((prevState) => ({...prevState,style:{backgroundColor:'green'}}));
                 }
             }else{
-                console.log("เข้าาาึ--ภภ")
                 setbtnSPI((prevState) => ({...prevState,disbled:true}));
                 settxtSPICnt("")
                 settxtSPITime("")
@@ -561,7 +559,7 @@ function fn_rpt_SheetTraceView() {
                 .post("/api/ViewTraceSheet/GetSMTConnectShtPcsCavity", {
                     dataList:{
                         strPlantCode: FAC,
-                        strPrdName:Product.trim()
+                        strPrdName:Product
                     }
                     
                 })
@@ -577,6 +575,7 @@ function fn_rpt_SheetTraceView() {
             }
             if(txtSheetNo.trim() !== '' && txtProduct.trim() !== ""){
                 let dtData = []
+                console.log(FAC,txtSheetNo,selectddlCavity,Product,hfSMPJCavityFlg,"KKKKK")
                 //757 มิ้วทำ
                 await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
                     _strPlantCode: FAC,
@@ -587,6 +586,7 @@ function fn_rpt_SheetTraceView() {
                   })
                     .then((res) => {
                       dtData = res.data;
+                      console.log(res.data,"OK11")
                     });
                 if(dtData.length > 0){
                     let AOM_Result = 'OK'
@@ -822,7 +822,7 @@ function fn_rpt_SheetTraceView() {
             }
         }else if(page=='AOI'){
             if(txtAOICnt !== ""){
-                window.open(`/TraceabilitySystem/AOIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}`, '_blank');
+                window.open(`/TraceabilitySystem/AOIResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${txtAOICnt}`, '_blank');
             }
         }else if(page=='XRAY'){
             let SERIAL_NO = '0'

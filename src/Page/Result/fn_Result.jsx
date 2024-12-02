@@ -1260,7 +1260,6 @@ function fn_Result() {
   };
 
   const exportExcelFile = (HeaderColumn, data, namefile) => {
-    console.log(data, 'hhhhhhhh');
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("My Sheet");
     sheet.properties.defaultRowHeight = 20;
