@@ -141,30 +141,36 @@ function fn_ScanSerialNo() {
     setGvSerial([]);
     setGvSerialResult([]);
     setLblResultState(false);
+    SetFocus("txtSerial_0");
     setTxtSerial(gvSerial.map(() => ""));
     setMode("SERIAL");
-    SetFocus("txtSerial_0");
+    
     
   };
   const handle_BtnBack_Click = () => {
     setPcs("");
     setTxtSerial(gvSerial.map(() => ""));
     Setdisable("enable", "txtPCS");
+    setLblResultState(false);
     setGvSerialState(false);
     setMode("PCS");
+    
   };
   const handle_OperatorBack_Click = () => {
     setTxtSerial(gvSerial.map(() => ""));
     setGvSerialState(false);
+    setLblResultState(false);
     setMode("OP");
   };
   const handle_LotBack_Click = () => {
     setTxtSerial(gvSerial.map(() => ""));
+    setLblResultState(false);
     setGvSerialState(false);
     setMode("LOT");
   };
   const handle_MagazineBack_Click = () => {
     setTxtSerial(gvSerial.map(() => ""));
+    setLblResultState(false);
     setGvSerialState(false);
     setMode("MAGAZINE");
   };

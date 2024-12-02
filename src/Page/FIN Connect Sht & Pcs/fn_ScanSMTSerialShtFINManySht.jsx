@@ -291,7 +291,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             strSheetnoB: _strShtNoBack,
             strSheetType: hfSheetType,
           });
-
+          console.log(_inCountSeq, "inCountSeq");
           if (parseInt(_inCountSeq) > 1) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet no. duplicate";
@@ -437,24 +437,27 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
       
       for(let x =0 ;x<dtSerial.length;x++){
+        console.log(hfCheckSheetELT, "hfCheckSheetELT",_bolError);
         if (hfCheckSheetELT == "Y" && _bolError == false) { 
           let _strReturn = "";
-          _strReturn = getData("SetSerialLotShtELTTable", {
+          _strReturn = await getData("SetSerialLotShtELTTable", {
             strSheetNo: dtSerial[x].SHEET,
-            strprdName: productSelect,
+            strPrdName: productSelect,
             strPlantCode: "5",
             strSideF: dtSerial[x].FRONT_SIDE,
             strSideB: dtSerial[x].BACK_SIDE,
             strPcsno: dtSerial[x].SEQ,
             strSerial: dtSerial[x].SERIAL,
+            hfSerialLength: hfSerialLength,
           });
+          console.log(_strReturn, "strReturn");
           if (_strReturn != "") {
             dtSerial[x].SCAN_RESULT = "NG";
-            dtSerial[x].REMARK =" No sheet ELT result " + _strTagNewLine + "ไม่พบผลการทดสอบ ELT"
+            dtSerial[x].REMARK =" No sheet ELT result " + '/' + "ไม่พบผลการทดสอบ ELT"
             _strScanResultAll = "NG";
             _bolError = true;
           }
-          if (_strReturn != "NG") {
+          if (_strReturn == "NG") {
             setlblLogState(true);
             setlblLog(_strReturn);
           }
@@ -665,20 +668,21 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       setHideImg(false);
       if (_strScanResultAll == "NG") {
         setlblResult({
-          text: _strScanResultAll,
+          text: _strScanResultAll + " "+_strErrorAll,
           styled: { backgroundColor: "red", color: "white" },
         });
-      } else if (_strErrorAll != "") {
-        setlblResult({
-          text: _strScanResultAll + _strErrorAll,
-          styled: { backgroundColor: "red", color: "white" },
-        });
-      } else {
+      }  else {
         setlblResult({
           text: _strScanResultAll,
           styled: { backgroundColor: "green", color: "white" },
         });
       }
+      // if (_strErrorAll != "") {
+      //   setlblResult({
+      //     text: _strScanResultAll + _strErrorAll,
+      //     styled: { backgroundColor: "red", color: "white" },
+      //   });
+      // }
       setGvScanResult(dtSerial);
       setTxtSideBack(gvBackSide.map(() => ""));
       setTxtSideFront(gvBackSide.map(() => ""));
@@ -1148,7 +1152,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           strSheetType: param.strSheetType,
         })
         .then((res) => {
-          result = res.data.sheet_count;
+          result = res.data;
         })
         .catch((error) => {
           Swal.fire("Error", error.message);
@@ -1176,13 +1180,13 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       await axios
         .post("/api/Common/SetSerialLotShtELTTable", {
           dataList: {
-            strSheetNo: param.strSheetNo,
-            strprdName: param.strprdName,
+            strPrdName: param.strPrdName,
             strPlantCode: param.strPlantCode,
             strSideF: param.strSideF,
             strSideB: param.strSideB,
             strPcsno: param.strPcsno,
-            strSerial: param.strSerial,
+            strSerialNo: param.strSerial,
+            strIntSerialLength: param.hfSerialLength,
           },
         })
         .then((res) => {
