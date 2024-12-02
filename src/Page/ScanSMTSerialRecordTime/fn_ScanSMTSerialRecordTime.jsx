@@ -967,7 +967,7 @@ function fn_ScanSMTSerialRecordTime() {
 
     const setSerialDataTray = async () => {
         let _strFileError = "";
-        const dtSerial = await getInputSerial();
+        let dtSerial = await getInputSerial();
         let _strLot = lblLot.toUpperCase().trim();
         let _strPrdName = selProduct;
         let _strTray = " ";
@@ -996,15 +996,16 @@ function fn_ScanSMTSerialRecordTime() {
 
         if (!bolTrayError) {
 
-    
-            //     await axios.post("/api/Common/getSerialRecordTimeTrayTable", {
-            //         strPlantCode: plantCode,
-            //         dtSerial: dtSerial,
-            //     })
-            //         .then((res) => {
-            //             console.log(res.data);
-            //         })
-       
+
+            await axios.post("/api/Common/getSerialRecordTimeTrayTable", {
+                strPlantCode: plantCode,
+                dtSerial: dtSerial,
+            })
+                .then((res) => {
+                    dtSerial = res.data;
+                    console.log(res.data);
+                })
+
 
             if (hfCheckWeekCode === "Y" && selrbtPcsSht === "rbtPcs") {
                 axios.post("/api/Common/getWeekCodebyLot", {

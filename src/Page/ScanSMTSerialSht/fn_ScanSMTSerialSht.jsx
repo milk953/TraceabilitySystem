@@ -203,7 +203,7 @@ function fn_ScanSMTSerialSht() {
           console.log("dt", dt);
           if (dt === "OK") {
             const datagetPd = await getProductSerialMaster(strPrdName);
-            await getInitialSheet();
+            await getInitialSheet(datagetPd.slm_sht_scan);
             if (datagetPd.prm_conn_roll_sht_flg === "Y") {
               setpnlRollLeaf(true);
               settxtRollLeaf("");
@@ -240,7 +240,7 @@ function fn_ScanSMTSerialSht() {
             try {
               setselProduct(strPrdName);
               const datagetPd = await getProductSerialMaster(strPrdName);
-              await getInitialSheet();
+              await getInitialSheet(datagetPd.slm_sht_scan);
               if (datagetPd.prm_conn_roll_sht_flg === "Y") {
                 setpnlRollLeaf(true);
                 settxtRollLeaf("");
@@ -319,7 +319,7 @@ function fn_ScanSMTSerialSht() {
         });
       if (dt === "OK") {
         await getCountDataBylot(txtLotNo);
-        await getInitialSheet();
+        await getInitialSheet(value);
         if (hfCheckRollSht === "Y") {
           setpnlRollLeaf(true);
           settxtRollLeaf("");
@@ -554,7 +554,7 @@ function fn_ScanSMTSerialSht() {
     return dtData;
   };
 
-  const getInitialSheet = async () => {
+  const getInitialSheet = async (hfShtScan) => {
     let dtData1 = [];
 
     for (let intRow = 1; intRow <= hfShtScan; intRow++) {
@@ -1129,31 +1129,31 @@ function fn_ScanSMTSerialSht() {
               _strScanResultAll = "NG";
             }
             else if (hfPlasmaConnShtPcs === "Y") {
-                await axios.post("/api/Common/setSerialRecordTimeTrayTable", {
-                  dataList:
-                  {
-                    strUserID: hfUserStation,
-                    strProgram: "frm_ScanSMTSerialSht",
-                    strPlantCode: plantCode,
-                    strStation: hfUserStation,
-                    data: [{
-                      SERIAL: dtSerial[i].SERIAL,
-                      MACHINE: dtSerial[i].MACHINE,
-                      PRODUCT: dtSerial[i].PRODUCT,
-                      LOT: dtSerial[i].LOT,
-                      DATA_TYPE: dtSerial[i].DATA_TYPE,
-                      ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                      UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                    }],
-                  },
-                })
-                  .then((res) => {
-                    _strUpdateError = res.data.p_error;
-                    console.log(_strUpdateError, "setSerialRecordTimeTrayTable")
-                  });
-                if (_strUpdateError !== "") {
-                  _strScanResultAll = "NG";
-                }
+              await axios.post("/api/Common/setSerialRecordTimeTrayTable", {
+                dataList:
+                {
+                  strUserID: hfUserStation,
+                  strProgram: "frm_ScanSMTSerialSht",
+                  strPlantCode: plantCode,
+                  strStation: hfUserStation,
+                  data: [{
+                    SERIAL: dtSerial[i].SERIAL,
+                    MACHINE: dtSerial[i].MACHINE,
+                    PRODUCT: dtSerial[i].PRODUCT,
+                    LOT: dtSerial[i].LOT,
+                    DATA_TYPE: dtSerial[i].DATA_TYPE,
+                    ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                    UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                  }],
+                },
+              })
+                .then((res) => {
+                  _strUpdateError = res.data.p_error;
+                  console.log(_strUpdateError, "setSerialRecordTimeTrayTable")
+                });
+              if (_strUpdateError !== "") {
+                _strScanResultAll = "NG";
+              }
             }
           }
         } else {
@@ -1530,13 +1530,14 @@ function fn_ScanSMTSerialSht() {
   const handleKeySideBack = (e, index) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      const nextIndex = index;
+      const nextIndex = index + 1;
       if (nextIndex < hfShtScan && inputSideBack.current[nextIndex]) {
         inputSideBack.current[nextIndex].focus();
+      } else if (nextIndex === hfShtScan) {
+        setTimeout(() => {
+          inputgvSerial.current[0].focus();
+        }, 200);
       }
-      setTimeout(() => {
-        inputgvSerial.current[0].focus();
-      }, 200);
     }
   };
 

@@ -27,7 +27,7 @@ import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
 import Pageimg from "/src/assets/1.jpg";
-import "../ScanAOISheetNo/ScanAOISheetNo.css";
+import "./ScanAOISheetNo.css";
 import { fn_ScanAOISheetNo } from "./fn_ScanAOISheetNo";
 
 function ScanAOISheetNo() {
@@ -37,7 +37,7 @@ function ScanAOISheetNo() {
         lblResult, lblResultcolor, gvScanResult, txtOperatorDisabled, txtTotalPcsDisabled, txtLeafDisabled, txtLayerDisabled, txtLotNoDisabled,
         inputOperator, inputTotalPcs, inputLeaf, inputLayer, inputLot, inputSerial, handleChangeOperator, ibtOperator_Click, handleChangeTotalPcs,
         handleChangeNo, ibtBack_Click, handleChangeLeaf, handleChangeLayer, ibtLayerBack_Click, handleChangeLotNo, ibtLotBack_Click, handleChangeSerial,
-        btnSave_Click, btnCancel_Click, columns, handleKeygvSerial, gvReject, columnsgvReject
+        btnSave_Click, btnCancel_Click, columns, handleKeygvSerial, gvReject, columnsgvReject, pnlResult
     } = fn_ScanAOISheetNo();
 
     return (
@@ -66,7 +66,7 @@ function ScanAOISheetNo() {
                                 <TableRow>
                                     <TableCell colSpan={5} align="center">
                                         <Typography variant="h6">
-                                            Scan AOI SheetNo
+                                             AOI Sheet No.
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
@@ -364,12 +364,12 @@ function ScanAOISheetNo() {
                         </div>
                     )}
 
-                    {gvScanResult.visible && (
-                        <div style={{ marginLeft: "22px", width: "100%" }}>
+                    {pnlResult && (
+                        <div style={{ marginLeft: "3px", width: "100%" }}>
                             <Paper
                                 className="Card-lblResult"
                                 style={{
-                                    width: "100%",
+                                    width: "450px",
                                     background: lblResultcolor,
                                 }}
                             >
