@@ -275,9 +275,6 @@ function fn_ScanSMTSerialPcsP1() {
       SetMode("LOT");
     }
   };
-  const btnHidden_Click = () => {
-    // DownloadCSV();
-  };
   //Function Method
   async function getData(type, params) {
     try {
@@ -593,6 +590,7 @@ function fn_ScanSMTSerialPcsP1() {
   };
   async function setSerialDataTray() {
     setlblSerialNG(0);
+    setlblErrorState(false);
     showLoading('กำลังบันทึก กรุณารอสักครู่');
     let dtSerial = await getInputSerial();
     await getData("getProductSerialMaster", productSelected);
@@ -603,6 +601,16 @@ function fn_ScanSMTSerialPcsP1() {
     let _bolError = false;
     let _strScanResultAll = "OK";
     let _intRowSerial = 0;
+    const allSerialEmpty = dtSerial.every(item => item.SERIAL === "" || item.SERIAL === undefined);
+    if (allSerialEmpty) {
+      hideLoading();
+      setlblError("Please Input Serial No.");
+      setlblErrorState(true);
+      SetFocus("txtSerial_0");
+      setlblResultState(false);
+      setGvSerialResult([]);
+      return;        
+    }
     if(!_bolTrayError){
       let dtResponse = await getData("GetSerialTestResultManyTable", {
         dataList: [

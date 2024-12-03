@@ -168,7 +168,6 @@ function ScanSMTSerialPcsP1() {
               {lblErrorState && (
                 <Paper className="Card-lblLog">{lblError}</Paper>
               )}
-              &nbsp;&nbsp;
               {panalSerialState && (
                 <Table className="P1FGgvSerial" component={Card}>
                   <TableHead
@@ -217,8 +216,14 @@ function ScanSMTSerialPcsP1() {
                           maxLength="30"
                           value={txtSerial[index]}
                           onKeyDown={(e) => {
-                            if (e.key === "Enter") {
+                            // if (e.key === "Enter") {
+                            //   handletxtSerialChange(index, e);
+                            // }
+                            if (e.key === "Enter" && index <(gvSerial.length -1)) {
                               handletxtSerialChange(index, e);
+                            }else if (e.key === "Enter" && index === (gvSerial.length -1)){
+                              btnSvae_Click();
+                              e.target.blur();
                             }
                           }}
                           onChange={(e) => handletxtSerialChange(index, e)}
