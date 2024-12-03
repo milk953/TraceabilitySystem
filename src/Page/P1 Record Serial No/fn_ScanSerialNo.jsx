@@ -116,14 +116,18 @@ function fn_ScanSerialNo() {
     }
   };
   const handle_Magazine_Change = async () => {
-    let result = await getData("GetCountSerialByLotMagazine", lotNo);
-    hiddenParams.hfSerialCount = parseInt(result);
-    setTotal(result);
-    setMode("SERIAL");
-    setTimeout(() => {
-      SetFocus("txtSerial_0");
-    }, 200);
+    if(magazine !== ""){
+      let result = await getData("GetCountSerialByLotMagazine", lotNo);
+      hiddenParams.hfSerialCount = parseInt(result);
+      setTotal(result);
+      setMode("SERIAL");
     
+      setTimeout(() => {
+        SetFocus("txtSerial_0");
+      }, 200);
+    }else{
+      setMode("MAGAZINE");
+    }
   };
   const handle_Operator_Change = () => {
     if (operator !== "") {
@@ -135,14 +139,15 @@ function fn_ScanSerialNo() {
   //btnHandle  
   const handle_Save_Click = () => {
     console.log(txtSerial, "txtSerial");
+    setLblErrorState(false);
     setSerialDataTray();
   };
   const handle_Cancel_Click = () => {
     setGvSerial([]);
     setGvSerialResult([]);
-    setLblResultState(false);
     SetFocus("txtSerial_0");
     setTxtSerial(gvSerial.map(() => ""));
+    setLblErrorState(false);
     setMode("SERIAL");
     
     
@@ -153,6 +158,7 @@ function fn_ScanSerialNo() {
     Setdisable("enable", "txtPCS");
     setLblResultState(false);
     setGvSerialState(false);
+    setLblErrorState(false);
     setMode("PCS");
     
   };
@@ -160,18 +166,21 @@ function fn_ScanSerialNo() {
     setTxtSerial(gvSerial.map(() => ""));
     setGvSerialState(false);
     setLblResultState(false);
+    setLblErrorState(false);
     setMode("OP");
   };
   const handle_LotBack_Click = () => {
     setTxtSerial(gvSerial.map(() => ""));
     setLblResultState(false);
     setGvSerialState(false);
+    setLblErrorState(false);
     setMode("LOT");
   };
   const handle_MagazineBack_Click = () => {
     setTxtSerial(gvSerial.map(() => ""));
     setLblResultState(false);
     setGvSerialState(false);
+    setLblErrorState(false);
     setMode("MAGAZINE");
   };
   //ResultTable
@@ -487,7 +496,7 @@ function fn_ScanSerialNo() {
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value.toUpperCase();
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
 
     if (event.key === "Enter") {
@@ -507,7 +516,17 @@ function fn_ScanSerialNo() {
     let _bolError = false;
     let _strScanResultAll = "OK";
     let _intRowSerial = 0;
-
+    console.log('item',dtSerial)
+    const allSerialEmpty = dtSerial.every(item => item.SERIAL === "" || item.SERIAL === undefined);
+    if (allSerialEmpty) {
+      hideLoading();
+      setLblError("Please Input Serial No.");
+      setLblErrorState(true);
+      SetFocus("txtSerial_0");
+      setLblResultState(false);
+      setGvSerialResult([]);
+      return;        
+    }
     if (!_bolTrayError) {
       for (let i = 0; i < dtSerial.length; i++) {
         if (dtSerial[i].SERIAL !== "" && dtSerial[i] && dtSerial[i].SERIAL ) {
