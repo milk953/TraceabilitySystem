@@ -462,7 +462,7 @@ function ScanSMTSerialPcsBox() {
               <Paper
                 className="Card-lblTime"
                 
-                style={{...lblTime.style,}}
+                style={{...lblTime.style,display: lblTime.value === '' ? 'none' : ''}}
               >
                 <Typography variant="h4" style={{color: "#fff", }}>
                  {lblTime.value}

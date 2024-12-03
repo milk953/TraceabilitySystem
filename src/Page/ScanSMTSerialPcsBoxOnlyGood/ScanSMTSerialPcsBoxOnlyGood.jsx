@@ -87,6 +87,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                       </Button>
                     </TableCell>
                   </TableRow>
+                  {console.log(lblLog,"มาแล้วจ้า")}
                   <TableRow>
                     <TableCell align="right">
                       <Typography>Product :</Typography>
@@ -359,21 +360,23 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                 {lblOP.value}
               </Paper>
               )} 
+              {console.log(pnlLog,"LOG")}
               {pnlLog && (
               <Paper
                 elevation={3}
-                style={{
-                  width: "400px",
-                  height: "40px",
-                  margin: "auto",
-                  textAlign: "center",
-                  background: "#BB2525",
-                  paddingTop: "18px",
-                  color: "yellow", 
-                  fontWeight: "bold", 
-                  marginTop: "10px",
+                className="Card-lblLog"
+                // style={{
+                //   width: "400px",
+                //   height: "40px",
+                //   margin: "auto",
+                //   textAlign: "center",
+                //   background: "#BB2525",
+                //   paddingTop: "18px",
+                //   color: "yellow", 
+                //   fontWeight: "bold", 
+                //   marginTop: "10px",
                   
-                }}
+                // }}
               >
                 {lblLog.value}
               </Paper>
@@ -500,7 +503,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                     
               <Paper
                  className="Card-lblTime"
-                style={{...lblTime.style,}}
+                style={{...lblTime.style,display: lblTime.value === '' ? 'none' : ''}}
               >
                 <Typography variant="h4" style={{ paddingTop: "5px", color: "#fff", }}>
                  {lblTime.value}
