@@ -120,7 +120,7 @@ function fn_ScanSheetBakeTime() {
       Focus: true,
     });
     setFocus("txtLotNoBaking");
-    // FctxtLotNo.current.focus();
+
   };
   const handleTxtProcess_Change = () => {
     if (txtProcess !== "") {
@@ -174,21 +174,6 @@ function fn_ScanSheetBakeTime() {
             styled: { backgroundColor: "white" },
             Focus: true,
           });
-          // notification.error({
-          //   message: "Error",
-          //   description: "Not Found Data",
-          //   placement: "bottomRight",
-          //   duration: 3,
-          // });
-          Swal.fire({
-            title: "Error",
-            text: "Not Found Data",
-            icon: "error",
-            showCancelButton: false,
-            showConfirmButton: false,
-            timer: 2000,
-
-          })
           return;
         }
         setTxtLotNo(strLot);
@@ -273,14 +258,7 @@ function fn_ScanSheetBakeTime() {
           if (strError == "") {
             setPnlShowresult(true);
             setLblResult({ text: "OK", styled: "white" ,backgroundColor:'green'});
-            Swal.fire({
-              title: "Success",
-              text: "Save Success",
-              icon: "success",
-              showCancelButton: false,
-              confirmButtonColor: "#3085d6",
-              confirmButtonText: "OK",
-            })
+            setTxtSheetNo("");
           } else {
             setPnlShowresult(true);
             setLblResult({ text: "NG", styled: "white",backgroundColor:'red',border:'1px solid red' });
@@ -335,39 +313,18 @@ function fn_ScanSheetBakeTime() {
       strProcId: txtProcess,
     });
 
-    setLblSheet(`${txtSheetNo} Delete`);
+    setLblSheet(`${txtSheetNo} Delete Success`);
     setLblRemark(strError);
     setLblRemark({text:strError,color:'black',backgroundColor:'red'});
     if (strError == "") {
-      Swal.fire({
-        title: "Success",
-        text: "Delete Success",
-        icon: "success",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK",
-        timer: 2000,
-      })
       setPnlShowresult(true);
       setLblResult({ text: "OK", styled: "white",backgroundColor:'green' });
+      setTxtSheetNo("");
     }else{
-      Swal.fire({
-        title: "Error",
-        text: strError,
-        icon: "error",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK",
-        timer: 2000,
-      })
+      setLblSheet(`${txtSheetNo} Delete Error ${strError}`);
       setPnlShowresult(true);
       setLblResult({ text: "NG", styled: "white" ,backgrond:'red',border:'1px solid red'});
     }
-    // if (strStatus == "P") {
-    //   setLblResult({ text: "OK", styled: "green" });
-    // } else {
-    //   setLblResult({ text: "NG", styled: "red" });
-    // }
     setPnlSaveState(false);
     setPnlShowresult(false);
     PnlmainEnable();
@@ -410,22 +367,9 @@ function fn_ScanSheetBakeTime() {
     setLblRemark({text:strError,color:'white',backgroundColor:'red'});
     
     if (strError == "") {
-      // notification.success({
-      //   message: "Success",
-      //   description: "Replace Success",
-      //   placement: "bottomRight",
-      //   duration: 3,
-      // });
-      Swal.fire({
-        title: "Success",
-        text: "Replace Success",
-        icon: "success",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK",
-      })
       setPnlShowresult(true);
       setLblResult({ text: "OK", styled: "white",backgroundColor:'green' });
+      setTxtSheetNo("");
     } else {
       setPnlShowresult(true);
       setLblResult({ text: "NG", styled: "white",backgroundColor:'red',border:'1px solid red' });
@@ -523,21 +467,13 @@ function fn_ScanSheetBakeTime() {
             setHfConnLeafLength(res.data.PRM_CONN_LEAF_LENGTH);
             Result = "OK";
           } else if (res.status == 404) {
-            notification.error({
-              message: "Error",
-              description: "Not Found Data",
-              placement: "bottomRight",
-              duration: 3,
-            });
+            setLblResult({ text: "NG", styled: "white",backgrond:'red',border:'1px solid red' });
+            setLblRemark("Not Found Data");
           }
         })
         .catch((error) => {
-          notification.error({
-            message: "Error",
-            description: error,
-            placement: "bottomRight",
-            duration: 3,
-          });
+          setLblResult({ text: "NG", styled: "white",backgrond:'red',border:'1px solid red' });
+            setLblRemark(error);
         });
     } else if (type == "GetMOTRecordTimeData") {
       await axios
