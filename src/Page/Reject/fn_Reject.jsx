@@ -19,6 +19,7 @@ function fn_Reject() {
   const [Fac, setFac] = useState("");
   const [txtOperator, setTxtOperator] = useState("");
   const [searchafterSubmit, setSearchafterSubmit] = useState([]);
+  const [isShowlblResult, setIsShowlblResult] = useState(false);
   //display state
   const [lblResult, setLblResult] = useState({
     text: "",
@@ -80,6 +81,7 @@ function fn_Reject() {
   };
   async function SearchData(flg, filteredData) {
     setLblResult({ text: "", styled: { color: "black" } });
+    
     let txtSerialnoValue = txtSerialno.trim().toLocaleUpperCase();
     let strSerialAll = txtSerialnoValue.replace(/\r?\n/g, ",").split(",");
 
@@ -103,6 +105,17 @@ function fn_Reject() {
       }
     }
     if (rdSelect == "rdPcsno") {
+      let isDuplicateSerial = strSerialAll.filter((item, index) => strSerialAll.indexOf(item) !== index);
+      if (isDuplicateSerial.length > 0) {
+        setLblResult({
+          text: "Duplicate serial no.",
+          styled: { color: "red" },
+        });
+        setIsShowlblResult(true);
+        setTxtSerialno("");
+        SetFocus("txtPieceNoReject");
+        return;
+      }
       for (let i = 0; i < strSerialAll.length; i++) {
         if (strSerialAll[i].length > 0) {
           let duplicateFound = false;
@@ -117,6 +130,7 @@ function fn_Reject() {
               text: "Duplicate serial no.",
               styled: { color: "red" },
             });
+            setIsShowlblResult(true);
           } else {
             await getData("GetSearchbySerialno", { Serialno: strSerialAll[i] });
           }
@@ -126,7 +140,13 @@ function fn_Reject() {
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
       setPnlTableDisplaySatate(false);
-      await getData("GetSearchbyLot", { Lotno: lot });
+      if (lot.length > 9 ){
+        setLot(lot.substring(0, 9));
+        await getData("GetSearchbyLot", { Lotno: lot.substring(0, 9) });
+      }else{
+        await getData("GetSearchbyLot", { Lotno: lot });
+      }
+      
     }
   }
 
@@ -155,6 +175,7 @@ function fn_Reject() {
     },
   };
   const handleBtnCancel_Click = () => {
+    setIsShowlblResult(false);
     setDtDataSearch([]);
     setPnlTableDisplaySatate(false);
     setLblResult({ text: "", styled: { color: "black" } });
@@ -217,18 +238,22 @@ function fn_Reject() {
         text: "Please select data to export",
         styled: { color: "red" },
       });
+      setIsShowlblResult(true);
     }
+
   };
   const handleRetrice_Click = async () => {
     await SearchData("", "");
   };
   const handleSubmit_Click = async () => {
+    setIsShowlblResult(false);
     if(rdSelect == "rdLotNo"){
       if (lot == "" || lot == " ") {
         setLblResult({
           text: "Please input lot no.",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
         SetFocus("txtLotnoReject");
         return;
       }
@@ -238,6 +263,7 @@ function fn_Reject() {
           text: "Please input serial no.",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
         SetFocus("txtPieceNoReject");       
         return;
       }
@@ -247,9 +273,18 @@ function fn_Reject() {
         text: "Please select Reason",
         styled: { color: "red" },
       });
+      setIsShowlblResult(true);
       return;
     }
     if (txtOperator != "" && cbSelected != "") {
+      if(selectedRows.length < 1){
+        setLblResult({
+          text: "Please select data to submit",
+          styled: { color: "red" },
+        });
+        setIsShowlblResult(true);
+        return;
+      }
       Swal.fire({
         title: "Are you confirm submit?",
         text: "Are you sure to submit this data",
@@ -259,6 +294,7 @@ function fn_Reject() {
         cancelButtonText: "No",
       }).then((result) => {
         if (result.isConfirmed) {
+
           SubmitData();
         }
       });
@@ -268,11 +304,13 @@ function fn_Reject() {
           text: "Please input operator Code . ",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
       } else if (cbSelected == "") {
         setLblResult({
           text: "Please select Reason ",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
       }
     }
   };
@@ -312,6 +350,7 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
+          setIsShowlblResult(true);
         });
     } else if (Select == "GetSearchbySerialno") {
       await axios
@@ -339,6 +378,7 @@ function fn_Reject() {
             text: "Data Read Complete",
             styled: { color: "black" },
           });
+          setIsShowlblResult(true);
           setPnlTableDisplaySatate(true);
         })
         .catch((error) => {
@@ -346,6 +386,7 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
+          setIsShowlblResult(true);
         });
     } else if (Select == "GetSearchbyLot") {
       await axios
@@ -368,11 +409,13 @@ function fn_Reject() {
               text: "Data Read Complete",
               styled: { color: "black" },
             });
+            setIsShowlblResult(true);
           } else if (response.status == 404) {
             setLblResult({
               text: "Please input lot again !",
               styled: { color: "red" },
             });
+            setIsShowlblResult(true);
           }
         })
 
@@ -381,6 +424,7 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
+          setIsShowlblResult(true);
         });
     } else if (Select == "SetSubmitData") {
       showLoading('กำลังบันทึก กรุณารอสักครู่')
@@ -411,7 +455,7 @@ function fn_Reject() {
                 text: "Data Delete Complete..",
                 styled: { color: "black" },
               });
-              
+              setIsShowlblResult(true);
               setTimeout(() => {                
                 SearchData("submit", lot);
                 hideLoading();
@@ -423,6 +467,7 @@ function fn_Reject() {
                 text: "Data save Complete.",
                 styled: { color: "black" },
               });
+              setIsShowlblResult(true);
               setTimeout(() => {                
                 SearchData("submit", lot);
                 hideLoading();
@@ -437,6 +482,7 @@ function fn_Reject() {
             text: error.message,
             styled: { color: "red" },
           });
+          setIsShowlblResult(true);
         });
     }
   }
@@ -572,6 +618,7 @@ function fn_Reject() {
     handleSubmit_Click,
     columns,
     handleBtnCancel_Click,
+    isShowlblResult
   };
 }
 

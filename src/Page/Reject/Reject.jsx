@@ -13,6 +13,7 @@ import {
   TableRow,
   TableHead,
   Paper,
+  Card,
 } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import { SearchOutlined } from "@ant-design/icons";
@@ -42,6 +43,7 @@ function Reject() {
     handleSubmit_Click,
     columns,
     handleBtnCancel_Click,
+    isShowlblResult,
   } = fn_Reject();
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -49,22 +51,39 @@ function Reject() {
     <>
       <Hearder />
       <h1>Reject Page</h1>
-      <h3 className="RejectResult" style={lblResult.styled}>
+      {isShowlblResult && (
+        <div className="divRejectResult">
+          {/* <h3 className="RejectResult" style={lblResult.styled}>
         {lblResult.text}
-      </h3>
+      </h3> */}
+
+          <Card
+            className={
+              lblResult.styled.color === "red"
+                ? "RejectResultError"
+                : "RejectResultSuccess"
+            }
+          >
+            {lblResult.text}
+          </Card>
+        </div>
+      )}
+      &nbsp;
       <div className="DRejectTableFirst">
         <Table className="RejectTableFirst" component={Paper}>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={4} align="center" >
+              <TableCell colSpan={4} align="center">
                 Reject
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell sx={{ width: "130px" ,textAlign:'right'}}>Piece No. 1,2,3,...</TableCell>
-              <TableCell sx={{ width: "30px", }}>
+              <TableCell sx={{ width: "130px", textAlign: "right" }}>
+                Piece No. 1,2,3,...
+              </TableCell>
+              <TableCell sx={{ width: "30px" }}>
                 <Radio
                   checked={rdSelect === "rdPcsno"}
                   onChange={handleRDChange}
@@ -128,7 +147,7 @@ function Reject() {
                   size="20"
                   value={lot}
                   id="txtLotnoReject"
-                  onChange={(e) => setLot(e.target.value)}
+                  onChange={(e) => setLot(e.target.value.trim())}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleRetrice_Click();
@@ -144,9 +163,9 @@ function Reject() {
       <div className="DRejectTableSecond">
         <Table className="RejectTableSecond" component={Paper}>
           <TableBody>
-            <TableRow >
+            <TableRow>
               <TableCell sx={{ textAlign: "right" }}>Reason :</TableCell>
-              <TableCell >
+              <TableCell>
                 <Select
                   style={{
                     width: 300,
@@ -174,7 +193,7 @@ function Reject() {
               <TableCell sx={{ width: "200px" }}>
                 <input
                   value={txtOperator}
-                  id='txtOperatorReject'
+                  id="txtOperatorReject"
                   onChange={(e) => setTxtOperator(e.target.value)}
                   style={{
                     width: "200px",
