@@ -12,8 +12,10 @@ import {
   Paper,
   Card,
 } from "@mui/material";
+
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetBakeTime.css";
+import "../Common/StyleCommon.css";
 import { TableView } from "@mui/icons-material";
 function ScanSheetBakeTime() {
   const {
