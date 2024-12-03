@@ -70,49 +70,7 @@ function rollTraceView() {
             Clear
           </Button>
         </div>
-        {/* <div className="RollTraceShowData">
-          <Button
-            type="primary"
-            style={{ backgroundColor: "#31363F" }}
-            className="RollTraceBtn"
-          >
-            Product
-          </Button>
-          <tr>{Product}</tr>
-          <Button
-            type="primary"
-            style={{ backgroundColor: "#31363F" }}
-            className="RollTraceBtn"
-          >
-            Roll No.
-          </Button>
-          <tr>{RollNo}</tr>
-          <Button
-            type="primary"
-            style={{ backgroundColor: "#31363F" }}
-            className="RollTraceBtn"
-          >
-            Lot No.
-          </Button>
-          <tr>
-            <a
-              href={`LotRollLeafNo?ROLLNO=${LotNo}&product=${Product}`}
-              target="_blank"
-            >
-              {LotNo}{" "}
-            </a>
-          </tr>
-          <Button
-            type="primary"
-            style={{ backgroundColor: "#31363F" }}
-            className="RollTraceBtn"
-          >
-            Roll Sheet No.
-          </Button>
-          <td>
-            <tr>{RollSheetNo}</tr>
-          </td>
-        </div> */}
+
         <div className="RollTraceShowData">
           <table className="tableRollTrace">
             <tr>
@@ -142,20 +100,6 @@ function rollTraceView() {
                 <th className="labelShowData">{RollNo}</th>
               </td>
             </tr>
-            {/* <tr>
-              <td>
-                <th>
-                  <Button
-                    type="primary"
-                    style={{ backgroundColor: "#31363F" }}
-                    className="RollTraceBtnLable"
-                  >
-                    Roll No.
-                  </Button>
-                </th>
-                <th>{RollNo}</th>
-              </td>
-            </tr> */}
             <tr>
               <td>
                 <th>
@@ -189,20 +133,7 @@ function rollTraceView() {
                 <th className="labelShowData">{RollSheetNo}</th>
               </td>
             </tr>
-            {/* <tr>
-              <td>
-                <th>
-                  <Button
-                    type="primary"
-                    style={{ backgroundColor: "#31363F" }}
-                    className="RollTraceBtnLable"
-                  >
-                    Roll Sheet No.
-                  </Button>
-                </th>
-                <th>{RollSheetNo}</th>
-              </td>
-            </tr> */}
+         
           </table>
         </div>
         {gvResultState && (
