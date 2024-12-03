@@ -44,6 +44,7 @@ function ReJudgement() {
     handleExport,
     columns,
     btnCancelClick,
+    isShowlblResult
   } = fn_ReJudgement();
   useEffect(() => {
     if (serialState == true) {
@@ -54,9 +55,23 @@ function ReJudgement() {
     <>
       <Hearder />
       <h1>ReJudgement</h1>
-      <h3 className="ReJudgementResult" style={lblResult.styled}>
+      {/* <h3 className="ReJudgementResult" style={lblResult.styled}>
         {lblResult.text}
-      </h3>
+      </h3> */}
+      {isShowlblResult && (
+        <div className="divRejudgeResult">
+          <Card
+            className={
+              lblResult.styled.color === "red"
+                ? "RejudgeResultError"
+                : "RejudgeResultSuccess"
+            }
+          >
+            {lblResult.text}
+          </Card>
+        </div>
+      )}
+      &nbsp;
       <div className="DReJudgementTableFirst">
         <Table className="ReJudgementTableFirst" component={Card}>
           <TableHead>

@@ -178,7 +178,6 @@ function ScanSerialNo() {
             {lblErrorState && (
                 <Paper className="Card-lblLog">{lblError}</Paper>
               )}
-            &nbsp;&nbsp;
             {gvSerialState && (
               <Table className="RecordSP1gvSerial" component={Card}>
                 <TableHead style={{ background: "#12422e" }}>
@@ -220,8 +219,11 @@ function ScanSerialNo() {
                           maxLength="30"
                           value={txtSerial[index]}
                           onKeyDown={(e) => {
-                            if (e.key === "Enter") {
+                            if (e.key === "Enter" && index <(gvSerial.length -1)) {
                               handletxtSerialChange(index, e);
+                            }else if (e.key === "Enter" && index === (gvSerial.length -1)){
+                              handle_Save_Click();
+                              e.target.blur();
                             }
                           }}
                           onChange={(e) => handletxtSerialChange(index, e)}
@@ -274,7 +276,7 @@ function ScanSerialNo() {
                   <Typography
                     variant="h4"
                     style={{
-                      // color: lblResult.styled.color,
+
                       color: "white",
                       fontSize: "30px",
                     }}

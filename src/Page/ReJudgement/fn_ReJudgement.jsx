@@ -22,12 +22,11 @@ function fn_ReJudgement() {
   const FcSerial = useRef(null);
   const [serialState, setSerialState] = useState(false);
   const [resultCombo, setResultCombo] = useState([]);
-  const [resultComboSelected, setResultComboSelected] = useState(
-    "------ SELECT ------"
-  );
+  const [resultComboSelected, setResultComboSelected] = useState("------ SELECT ------");
   const {showLoading,hideLoading} = useLoading();
   const Fac = import.meta.env.VITE_FAC;
   const IpAddress = localStorage.getItem("ipAddress");
+  const [isShowlblResult, setIsShowlblResult] = useState(false);
   const columns = [
     {
       title: "Serial No",
@@ -166,6 +165,7 @@ function fn_ReJudgement() {
   };
   const btnCancelClick = () => {
     setLblResult({ text: "", styled: { color: "black" } });
+    setIsShowlblResult(false);
     setCbReJustment("------ SELECT ------");
     setTxtQualified("");
     setTxtOperator("");
@@ -181,12 +181,14 @@ function fn_ReJudgement() {
     }
   };
   const btnRetrieveClick = async () => {
+   
     if (rdSelect == "rdPcsno") {
       if (txtSerialno == "") {
         setLblResult({
           text: "Please input serial no.",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
        SetFocus("txtSerialnoRejudege");
         return;
       } else {
@@ -198,6 +200,7 @@ function fn_ReJudgement() {
           text: "Please input Lot no.",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
         SetFocus("txtLotnoRejudege");
         return;
       } else {
@@ -207,6 +210,7 @@ function fn_ReJudgement() {
   };
   const btnSubmitClick = async () => {
     setLblResult({ text: "", styled: { color: "black" } });
+    setIsShowlblResult(false);
     if (
       txtOperator != "" &&
       resultComboSelected != "" &&
@@ -218,7 +222,7 @@ function fn_ReJudgement() {
           text: "Please select Reason.",
           styled: { color: "red" },
         });
-        
+        setIsShowlblResult(true);
         return;
       }
       if (cbReJustment == "------ SELECT ------") {
@@ -226,6 +230,7 @@ function fn_ReJudgement() {
           text: "Please select Re-judgement.",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
         return;
       }
 
@@ -247,29 +252,34 @@ function fn_ReJudgement() {
           text: "Please input operator Code.",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
         SetFocus("txtOperatorRejudege");
       } else if (resultComboSelected == "") {
         setLblResult({
           text: "Please select Reason",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
       } else if (txtQualified == "") {
         setLblResult({
           text: "Please input Qualified",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
         SetFocus("txtQualifiedRejudege");
       } else if (cbReJustment == "") {
         setLblResult({
           text: "Please select Re-judgement. ",
           styled: { color: "red" },
         });
+        setIsShowlblResult(true);
       }
     }
   };
   async function SubmitData() {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     setLblResult({ text: "", styled: { color: "black" } });
+    setIsShowlblResult(false);
     for (let i = 0; i < dtDataSearch.length; i++) {
       getData("submitData", {
         Serialno: dtDataSearch[i].rej_serial_no,
@@ -294,6 +304,7 @@ function fn_ReJudgement() {
           text: "Data save Complete.",
           styled: { color: "black" },
         });
+        setIsShowlblResult(true);
       }, 500);
      
     } else if (rdSelect == "rdLotNo") {
@@ -304,12 +315,14 @@ function fn_ReJudgement() {
           text: "Data save Complete.",
           styled: { color: "black" },
         });
+        setIsShowlblResult(true);
       }, 500);
      
     }
   }
   async function SearchData(flg) {
     setLblResult({ text: "", styled: { color: "black" } });
+    setIsShowlblResult(false);
     let txtSerialnoValue = txtSerialno.trim().toLocaleUpperCase();
     let strSerialAll = txtSerialnoValue.replace(/\r?\n/g, ",").split(",");
     let i;
@@ -330,6 +343,18 @@ function fn_ReJudgement() {
       return;
     }
     if (rdSelect == "rdPcsno") {
+      let isDuplicateSerial = strSerialAll.filter((item, index) => strSerialAll.indexOf(item) !== index);
+      if (isDuplicateSerial.length > 0) {
+        setLblResult({
+          text: "Duplicate serial no.",
+          styled: { color: "red" },
+        });
+        setIsShowlblResult(true);
+        // setIsShowlblResult(true);
+        setTxtSerialno("");
+        SetFocus("txtSerialnoRejudege");
+        return;
+      }
       for (let i = 0; i < strSerialAll.length; i++) {
         if (strSerialAll[i].length > 0) {
           let duplicateFound = false;
@@ -344,6 +369,7 @@ function fn_ReJudgement() {
               text: "Duplicate serial no.",
               styled: { color: "red" },
             });
+            setIsShowlblResult(true);
           } else {
             await getData("getSearch", {
               Serialno: strSerialAll[i],
@@ -355,7 +381,13 @@ function fn_ReJudgement() {
       }
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
-      await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" });
+      console.log(lot,'lot');
+      if (lot.length > 9){
+        setLot(lot.trim().substring(0,9));
+        await getData("getSearch", { Serialno: lot.trim().substring(0,9), rdFlg: "lot" });
+      }else{
+        await getData("getSearch", { Serialno: lot.trim(), rdFlg: "lot" });
+      }
     }
     setPnlTableDisplaySatate(true);
   }
@@ -410,6 +442,7 @@ function fn_ReJudgement() {
         text: "Please select data to export",
         styled: { color: "red" },
       });
+      setIsShowlblResult(true);
     }
   };
 
@@ -429,6 +462,7 @@ function fn_ReJudgement() {
               text: `Error Connection Please captuer and contact SE`,
               styled: { color: "red" },
             });
+            setIsShowlblResult(true);
           }
         });
     } else if (type == "getSearch") {
@@ -500,6 +534,7 @@ function fn_ReJudgement() {
               text: "Data save Complete.",
               styled: { color: "black" },
             });
+            setIsShowlblResult(true);
           }
         });
     }
@@ -533,7 +568,8 @@ function fn_ReJudgement() {
     serialState,
     handleExport,
     columns,
-    btnCancelClick
+    btnCancelClick,
+    isShowlblResult
   };
 }
 

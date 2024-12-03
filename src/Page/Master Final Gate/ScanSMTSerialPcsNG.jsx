@@ -45,22 +45,14 @@ function ScanSMTSerialPcsNG() {
     lblResult,
     columns,
     lblErrorState,
-    getRowClassName
+    getRowClassName,
+    isLastDisabled
   } = fn_ScanSMTSerialPcsNG();
   return (
     <div>
       <Header />
       <Card
         component={Paper}
-        // style={{
-        //   margin: "auto",
-        //   width: "95%",
-        //   maxWidth: "1450px",
-        //   marginTop: "50px",
-        //   minHeight: "200px",
-        //   padding: "20px",
-        //   overflow: "auto",
-        // }}
       className="Card-Common"
       >
         <table>
@@ -173,11 +165,7 @@ function ScanSMTSerialPcsNG() {
               {(lblErrorState &&
               <Paper
               className="Card-lblLog"
-                // style={{
-                //   textAlign: "center",
-                //   background: "red",
-                //   color: "yellow",
-                // }}
+
               >
                 {lblError}
               </Paper>
@@ -222,10 +210,23 @@ function ScanSMTSerialPcsNG() {
                             maxLength="30"
                             value={txtSerial[index]}
                             onKeyDown={(e) => {
-                              if (e.key === "Enter") {
+                              if (e.key === "Enter" && index < ( gvSerial.length - 1)) {
                                 handletxtSerialChange(index, e);
+                              }else if (index === ( gvSerial.length - 1)) {
+                                handle_Save_Click();
+                                e.target.blur();
                               }
+                              // if (e.key === "Enter") {
+                              //   handletxtSerialChange(index, e);
+                              // }
+                              // if (e.key === "Enter" && index < ( gvSerial.length - 1)) {
+                              //   handletxtSerialChange(index, e);
+                              // }else if (index === ( gvSerial.length - 1)) {
+                              //   {console.log('index',index)}
+                              //   handle_Save_Click();
+                              // }
                             }}
+                            // disabled={isLastDisabled}
                             onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
@@ -240,7 +241,9 @@ function ScanSMTSerialPcsNG() {
                           gap: "10px",
                         }}
                       >
-                        <Button className="BtSave" onClick={handle_Save_Click}>
+                        <Button 
+                        className="BtSave" 
+                        onClick={handle_Save_Click}>
                           SAVE
                         </Button>
                         &nbsp;&nbsp;

@@ -78,7 +78,7 @@ function ScanSheetBakeTime() {
                 disabled={txtProcessState.disabled}
                 sx={txtProcessState.styled}
                 onChange={(e) => {
-                  setTxtProcess(e.target.value);
+                  setTxtProcess(e.target.value.trim());
                 }}
                 inputRef={FctxtProcess}
                 onKeyDown={(e) => {
@@ -104,7 +104,7 @@ function ScanSheetBakeTime() {
                 sx={txtmcState.styled}
                 inputRef={Fctxtmc}
                 onChange={(e) => {
-                  setTxtmc(e.target.value);
+                  setTxtmc(e.target.value.trim());
                 }}
                 // onBlur={handleTxtmc_Change}
                 onKeyDown={(e) => {
@@ -135,7 +135,7 @@ function ScanSheetBakeTime() {
                   }
                 }}
                 onChange={(e) => {
-                  setTxtLotNo(e.target.value);
+                  setTxtLotNo(e.target.value.trim());
                 }}
                 value={txtLotNo}
               ></TextField>
@@ -173,7 +173,7 @@ function ScanSheetBakeTime() {
                 sx={txtSheetNoState.styled}
                 inputRef={FctxtSheetNo}
                 onChange={(e) => {
-                  setTxtSheetNo(e.target.value.toUpperCase());
+                  setTxtSheetNo(e.target.value.trim().toUpperCase());
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
