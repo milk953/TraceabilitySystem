@@ -80,7 +80,6 @@ function AOIManualConfirmP1() {
           </TableCell>
         </TableRow>
 
-
         <div className="DAOITableFirst">
           <Table className="AOITableFirst" component={Paper}>
             <TableBody>
@@ -188,9 +187,9 @@ function AOIManualConfirmP1() {
                       sx={{
                         height: 28,
                         fontSize: 14,
-                        color: ddlResult.value == " " ? "rgba(0, 0, 0, 0)" : "",
+                        // color: ddlResult.value == " " ? "rgba(0, 0, 0, 0)" : "",
                       }}
-                      value={ddlResult.value}
+                      value={ddlResult.value === "" ? " " : ddlResult.value}
                       onChange={(e) => {
                         setDdlResult((prevState) => ({
                           ...prevState,
@@ -198,9 +197,10 @@ function AOIManualConfirmP1() {
                         }));
                       }}
                     >
-                      <MenuItem value=" " style={{ color: "rgba(0, 0, 0, 0)" }}>
-                        <em>NONE</em>
-                      </MenuItem>
+                      {/* <MenuItem value=" " style={{ color: "rgba(0, 0, 0, 0)" }}>
+                        <em>-SELECT-</em>
+                      </MenuItem> */}
+                      <MenuItem value=" ">-Select-</MenuItem>
                       <MenuItem value={"OK"}>OK</MenuItem>
                       <MenuItem value={"NG"}>NG</MenuItem>
                     </Select>
