@@ -19,7 +19,26 @@
     padding-right: 2px;
   }
 
+  .Card-ViewLot3 {
+    width: 120px !important;
+    margin-bottom: 5px;
+    height: 22px !important;
+    background: #0D7C66 !important; /* สีพื้นหลัง */
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif!important;
+    color: #fff!important;
+    /* padding-left: 10px; */
+    /* padding-right: 2px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+
+.Card-ViewLot3:hover {
+  background: #0A5A4A !important; /* สีพื้นหลังเมื่อ hover */
+  cursor: pointer;
+  transform: scale(1.1);
+}
   .tableGvResultViewLot .ant-table-thead > tr > th {
     background-color: #31363F;
     color: white;

@@ -13,90 +13,104 @@ import excel from "/src/assets/excel.png";
 import { fn_Material_Trace } from "./fn_Material_Trace.jsx";
 const { Text } = Typography;
 function LotTraceView() {
-  const { tblData1, txtLotNo, columnstblData1,ViewData,loading ,settxtLotNo ,Clear,columnsgvMaterial} = fn_Material_Trace();
-console.log(loading,'loaddd')
+  const {
+    tblData1,
+    txtLotNo,
+    columnstblData1,
+    ViewData,
+    loading,
+    settxtLotNo,
+    Clear,
+    columnsgvMaterial,
+    gvMaterial,
+    txtInviceNo,
+    settxtInviceNo,
+  } = fn_Material_Trace();
+  console.log(loading, "loaddd");
   return (
     <>
       <Hearder />
-     
-      <Card component={Paper} className="Card-Common">
-      <div style={{ marginTop: '5px', marginLeft: '10px' }}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Text>Vendor Lot NO : </Text>&nbsp;
-        <Input
-          // placeholder="Vendor Lot NO : "
-          style={{ width: '250px', marginRight: '10px' }}
-          value={txtLotNo}
-          onChange={(e) => settxtLotNo(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              ViewData(e.target.value);
-            }
-          }}
-        />
-        <Text>Invoice No. : </Text>&nbsp;
-        <Input
-          // placeholder="Invoice No.:"
-          style={{ width: '250px', marginRight: '10px' }}
-          value={txtLotNo}
-          onChange={(e) => settxtLotNo(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              ViewData(e.target.value);
-            }
-          }}
-        />
-        <Button
-          type="primary"
-          icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
-          onClick={() => ViewData(txtLotNo)}
-          disabled={loading}
-          style={{ marginRight: '10px',marginTop  : '5px' }}
-        >
-          Search
-        </Button>
-        <Button
-          type="primary"
-          danger
-          icon={<UndoOutlined />}
-          onClick={() => Clear()}
-          style={{ marginRight: '10px',marginTop  : '5px' }}
-        >
-          Clear
-        </Button>
-        <div style={{ marginLeft: 'auto' }}>
-          
-          <Button
-            size="small"
-            style={{height: '30px',marginTop  : '5px',marginRight: '10px'}}
-            icon={<Avatar shape="square" src={excel} size="small" />}
-            // onClick={() =>
-            //   ExportTableToCSV(
-            //     gvMaterial.value,
-            //     columnsgvMaterial,
-            //     "MAT_" + txtLotNo + ".xls"
-            //   )
-            // }
-          >
-            Export
-          </Button>
-        </div>
-      </div>
-    </div>
 
-       
+      <Card component={Paper} className="Card-Common">
+        <div style={{ marginTop: "5px", marginLeft: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Text>Vendor Lot NO : </Text>&nbsp;
+            <Input
+              // placeholder="Vendor Lot NO : "
+              style={{ width: "250px", marginRight: "10px" }}
+              value={txtLotNo}
+              onChange={(e) => settxtLotNo(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  ViewData(e.target.value,txtInviceNo);
+                }
+              }}
+            />
+            <Text>Invoice No. : </Text>&nbsp;
+            <Input
+              // placeholder="Invoice No.:"
+              style={{ width: "250px", marginRight: "10px" }}
+              value={txtInviceNo}
+              onChange={(e) => settxtInviceNo(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  ViewData(txtLotNo,e.target.value);
+                }
+              }}
+            />
+            <Button
+              type="primary"
+              icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
+              onClick={() => ViewData(txtLotNo)}
+              disabled={loading}
+              style={{ marginRight: "10px", marginTop: "5px" }}
+            >
+              Search
+            </Button>
+            <Button
+              type="primary"
+              danger
+              icon={<UndoOutlined />}
+              onClick={() => Clear()}
+              style={{ marginRight: "10px", marginTop: "5px" }}
+            >
+              Clear
+            </Button>
+            <div style={{ marginLeft: "auto" }}>
+              <Button
+                size="small"
+                style={{
+                  height: "30px",
+                  marginTop: "5px",
+                  marginRight: "10px",
+                }}
+                icon={<Avatar shape="square" src={excel} size="small" />}
+                // onClick={() =>
+                //   ExportTableToCSV(
+                //     gvMaterial.value,
+                //     columnsgvMaterial,
+                //     "MAT_" + txtLotNo + ".xls"
+                //   )
+                // }
+              >
+                Export
+              </Button>
+            </div>
+          </div>
+        </div>
+
         <Table
-            // style={{ width: "88%", fontSize: "12px" }}
-            columns={columnsgvMaterial}
-            // dataSource={gvMaterial.value}
-            className="tableGvResult"
-            pagination={false}
-            size="small"
-            bordered
-            scroll={{ y: 200 }}
-          />
-        
-        <br/>
+          // style={{ width: "88%", fontSize: "12px" }}
+          columns={columnsgvMaterial}
+          dataSource={gvMaterial}
+          className="tableGvResult"
+          pagination={false}
+          size="small"
+          bordered
+          scroll={{ y: 200 }}
+        />
+
+        <br />
         <Table
           dataSource={tblData1}
           columns={columnstblData1}
@@ -106,9 +120,8 @@ console.log(loading,'loaddd')
           bordered
           scroll={{ y: 310 }}
         />
-        
-        <br/>
-       
+
+        <br />
       </Card>
     </>
   );

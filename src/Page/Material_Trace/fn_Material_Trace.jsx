@@ -10,39 +10,54 @@ import { values } from "lodash";
 import Column from "antd/es/table/Column";
 
 function fn_Material_Trace() {
-
-  const [txtLotNo, settxtLotNo] = useState('');
-  const [tblData1, settblData1] = useState('');
+  const [txtLotNo, settxtLotNo] = useState("");
+  const [txtInviceNo, settxtInviceNo] = useState("");
+  const [tblData1, settblData1] = useState("");
   const [loading, setloading] = useState(false);
-
+  const [gvMaterial, setgvMaterial] = useState("");
 
   //link
   const params = new URLSearchParams(window.location.search);
-  const Vender_lot = params.get("VENDER_LOTNO");
+  const Vender_lot = params.get("VENDER_LOTNO") || "";
+  const InvoiceNo = params.get("INVOICE_NO") || "";
   const Fac = import.meta.env.VITE_FAC;
 
   //เข้ามาแล้วSearch
   useEffect(() => {
-    
-  if(Vender_lot!=null&&Vender_lot!=''){
-    console.log(Vender_lot)
-    settxtLotNo(Vender_lot)
-    ViewData(Vender_lot)
-  }
+    console.log(Vender_lot, InvoiceNo, "Useeffect");
+    settxtLotNo(Vender_lot);
+    settxtInviceNo(InvoiceNo);
+    if (
+      (Vender_lot != null && Vender_lot != "") ||
+      (InvoiceNo != null && InvoiceNo != "")
+    ) {
+      console.log("เข้ามาแล้วSearch", Vender_lot, InvoiceNo);
+      ViewData(Vender_lot, InvoiceNo);
+    }
   }, []);
 
-
-
-  const ViewData = async (strlot) => {
-    setloading(true)
-    settblData1([])
+  const ViewData = async (strlot, Invoice) => {
+    setloading(true);
+    settblData1([]);
     console.log("ViewData", strlot);
     let Meterial = [];
+
+    // await axios
+    //   .post("/api/Common/MaterialDataSearch", {
+    //     Venderlot: strlot,
+    //     Invoice: Invoice,
+    //   })
+    //   .then((res) => {
+    //     setgvMaterial(res.data);
+    //   });
+
     await axios
       .post("/api/Common/GetMeterial", {
         txtLotNo: strlot,
+        txtInviceNo: Invoice,
       })
       .then((res) => {
+        console.log(res.data, "GetMeterial");
         for (let i = 0; i < res.data.length; i += 5) {
           Meterial.push(res.data.slice(i, i + 5));
         }
@@ -50,21 +65,20 @@ function fn_Material_Trace() {
         Meterial = Meterial.map((group, index) => {
           return {
             key: index,
-            LOT1: group[0] ? group[0].LOT  : "",
-            LOT2: group[1] ? group[1].LOT  : "",
-            LOT3: group[2] ? group[2].LOT  : "",
-            LOT4: group[3] ? group[3].LOT  : "",
-            LOT5: group[4] ? group[4].LOT  : "",
+            LOT1: group[0] ? group[0].LOT : "",
+            LOT2: group[1] ? group[1].LOT : "",
+            LOT3: group[2] ? group[2].LOT : "",
+            LOT4: group[3] ? group[3].LOT : "",
+            LOT5: group[4] ? group[4].LOT : "",
           };
         });
-        setTimeout(() => {
-          settblData1(Meterial);
-          setloading(false)
-        }, 1000);
+        // setTimeout(() => {
+        settblData1(Meterial);
+        setloading(false);
+        // }, 1000);
       });
-   
   };
-  const createLink= (text) => {
+  const createLink = (text) => {
     return (
       <a
         href={`/TraceabilitySystem/LotTraceView?lot=${text}`}
@@ -77,13 +91,12 @@ function fn_Material_Trace() {
   };
 
   const Clear = () => {
-    setloading(false)
-    settblData1('')
-    settxtLotNo('')
-    
-  }
+    setloading(false);
+    settblData1("");
+    settxtLotNo("");
+  };
 
-  const columnstblData1= [
+  const columnstblData1 = [
     {
       title: "LOT-NO1",
       dataIndex: "LOT1",
@@ -132,114 +145,123 @@ function fn_Material_Trace() {
     },
   ];
 
+  // หาข้อมูล Material
+  //   await axios
+  //   .post("/api/Common/fnGetMaterialData", {
+  //     strLOTNO: datalblLot,
+  //   })
+  //   .then((res) => {
+  //     dt = res.data;
+  //   });
+  // setgvMaterial((prevState) => ({
+  //   ...prevState,
+  //   value: dt,
+  //   visible: "โชว์",
+  // }));
 
-// หาข้อมูล Material
-//   await axios
-//   .post("/api/Common/fnGetMaterialData", {
-//     strLOTNO: datalblLot,
-//   })
-//   .then((res) => {
-//     dt = res.data;
-//   });
-// setgvMaterial((prevState) => ({
-//   ...prevState,
-//   value: dt,
-//   visible: "โชว์",
-// }));
+  const columnsgvMaterial = [
+    {
+      title: "Material Code",
+      dataIndex: "MAT_CODE",
+      key: "Material Code",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "left",
+      width: "85px",
+    },
+    {
+      title: "Process",
+      dataIndex: "PROCESS",
+      key: "Process",
+      align: "left",
+      width: "85px",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Material Name",
+      dataIndex: "MAT_NAME",
+      key: "Material Name",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Category",
+      dataIndex: "MAT_CATEGORY",
+      key: "Category",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
 
+    {
+      title: "Vender Lot",
+      key: "Vender Lot",
+      dataIndex: "VENDER_LOT",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Sub Lot",
+      key: "Sub Lot",
+      dataIndex: "SUB_VENDER_LOT",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 100,
+    },
+    {
+      title: "Expired Date",
+      key: "Expired Date",
+      dataIndex: "EXPIRE_DATE",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 100,
+    },
+    {
+      title: "Invoice No.",
+      key: "Invoice No.",
+      dataIndex: "INVOICE_NO",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 110,
+    },
+    {
+      title: "Vender Name",
+      key: "Vender Name",
+      dataIndex: "VENDER_NAME",
+      align: "left",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+  ];
 
-const columnsgvMaterial = [
-  {
-    title: "Material Code",
-    dataIndex: "MAT_CODE",
-    key: "Material Code",
-    render: (text, record, index) => {
-      return text;
-    },
-    align: "left",
-    width: "85px",
-  },
-  {
-    title: "Process",
-    dataIndex: "PROCESS",
-    key: "Process",
-    align: "left",
-    width: "85px",
-    render: (text, record, index) => {
-      return text;
-    },
-  },
-  {
-    title: "Material Name",
-    dataIndex: "MAT_NAME",
-    key: "Material Name",
-    align: "left",
-    render: (text, record, index) => {
-      return text;
-    },
-  },
-  {
-    title: "Category",
-    dataIndex: "MAT_CATEGORY",
-    key: "Category",
-    align: "left",
-    render: (text, record, index) => {
-      return text;
-    },
-  },
-
-  {
-    title: "Vender Lot",
-    key: "Vender Lot",
-    dataIndex: "VENDER_LOT",
-    align: "left",
-    render: (text, record, index) => {
-      return text;
-    },
-  },
-  {
-    title: "Sub Lot",
-    key: "Sub Lot",
-    dataIndex: "SUB_VENDER_LOT",
-    align: "left",
-    render: (text, record, index) => {
-      return text;
-    },
-    width: 100,
-  },
-  {
-    title: "Expired Date",
-    key: "Expired Date",
-    dataIndex: "EXPIRE_DATE",
-    align: "center",
-    render: (text, record, index) => {
-      return text;
-    },
-    width: 100,
-  },
-  {
-    title: "Invoice No.",
-    key: "Invoice No.",
-    dataIndex: "INVOICE_NO",
-    align: "left",
-    render: (text, record, index) => {
-      return text;
-    },
-    width: 110,
-  },
-  {
-    title: "Vender Name",
-    key: "Vender Name",
-    dataIndex: "VENDER_NAME",
-    align: "left",
-    render: (text, record, index) => {
-      return text;
-    },
-  },
-];
-
-
-  return { tblData1, txtLotNo, columnstblData1,ViewData,loading ,settxtLotNo,Clear,columnsgvMaterial};
+  return {
+    tblData1,
+    txtLotNo,
+    columnstblData1,
+    ViewData,
+    loading,
+    settxtLotNo,
+    Clear,
+    columnsgvMaterial,
+    gvMaterial,
+    txtInviceNo,
+    settxtInviceNo,
+  };
 }
 
 export { fn_Material_Trace };

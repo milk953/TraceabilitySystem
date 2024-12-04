@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import ExcelJS from "exceljs";
 import { useLoading } from "../../loading/fn_loading";
+import Papa from 'papaparse';
 function fn_P1ConnectBoard() {
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
@@ -89,8 +90,8 @@ function fn_P1ConnectBoard() {
     style: "",
   });
 
-  const [txtSideBack, settxtSideBack] = useState(Array(GvBackSide).fill(""));
-  const [txtSerial, settxtSerial] = useState(Array(GvSerial).fill(""));
+  const [txtSideBack, settxtSideBack] = useState(Array(GvBackSide.value.length).fill(""));
+  const [txtSerial, settxtSerial] = useState(Array(GvSerial.value.length).fill(""));
 
   //Focus
   const fcRollleaf = useRef(null);
@@ -179,6 +180,8 @@ function fn_P1ConnectBoard() {
   const CONNECT_SERIAL_NOT_FOUND = import.meta.env
     .VITE_CONNECT_SERIAL_NOT_FOUND;
   const Fac = import.meta.env.VITE_FAC;
+  const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
+  
   const hfProcessList = "''MPRN'',''MMOT'',''MREF'',''MAOI''";
   let Now = new Date();
   //Start pageload
@@ -216,10 +219,11 @@ function fn_P1ConnectBoard() {
       disbled: false,
       style: {},
     }));
-    setGvBackSide((prevState) => ({ ...prevState, visble: "none", value: "" }));
-    settxtSideBack(Array(GvBackSide).fill(""));
+    // setGvBackSide((prevState) => ({ ...prevState, visble: "none", value: "" }));
+    // settxtSideBack(Array(GvBackSide.value.length).fill(""));
+        // settxtSerial(Array(GvSerial.value.length).fill(""));
     setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
-    settxtSerial(Array(GvSerial).fill(""));
+    // settxtSerial(Array(GvSerial.value.length).fill(""));
     setlblResult((prevState) => ({
       ...prevState,
       value: "",
@@ -244,8 +248,8 @@ function fn_P1ConnectBoard() {
 
   const btnCancel_Click = async () => {
    
-    settxtSideBack(Array(GvBackSide).fill(""));
-    settxtSerial(Array(GvSerial).fill(""));
+    settxtSideBack(Array(GvBackSide.value.length).fill(""));
+    settxtSerial(Array(GvSerial.value.length).fill(""));
     setlblResult((prevState) => ({
       ...prevState,
       value: "",
@@ -478,7 +482,7 @@ function fn_P1ConnectBoard() {
               value: "",
               visble: "none",
             }));
-            settxtSerial(Array(GvSerial).fill(""));
+            settxtSerial(Array(GvSerial.value.length).fill(""));
             setlblLog((prevState) => ({
               ...prevState,
               value: strError,
@@ -496,7 +500,7 @@ function fn_P1ConnectBoard() {
           }));
           settxtLot((prevState) => ({ ...prevState, value: "" }));
           setGvSerial((prevState) => ({ ...prevState, visble: "none" }));
-          settxtSerial(Array(GvSerial).fill(""));
+          settxtSerial(Array(GvSerial.value.length).fill(""));
           setlblLog((prevState) => ({
             ...prevState,
             value: "Invalid lot no.",
@@ -514,7 +518,7 @@ function fn_P1ConnectBoard() {
         }));
         settxtLot((prevState) => ({ ...prevState, value: "" }));
         setGvSerial((prevState) => ({ ...prevState, visble: "", value: "" }));
-        settxtSerial(Array(GvSerial).fill(""));
+        settxtSerial(Array(GvSerial.value.length).fill(""));
         setlblLog((prevState) => ({
           ...prevState,
           value: "Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด",
@@ -565,8 +569,13 @@ function fn_P1ConnectBoard() {
         value: "",
       }));
       setlblLog((prevState) => ({ ...prevState, visble: false }));
-      settxtSerial(Array(GvSerial).fill(""));
+      setGvBackSide((prevState) => ({ ...prevState, visble: "none", value: "" }));
+      settxtSideBack(Array(GvBackSide.value.length).fill(""));
+      settxtSerial(Array(GvSerial.value.length).fill(""));
       setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+      settxtLotRef((prevState) => ({...prevState, value: ""}));
+      setlblTotalSht((prevState) => ({ ...prevState, value: "" }));
+      setlblTotalPcs((prevState) => ({ ...prevState, value: "" }));
       setHfMode("LOT");
       setTimeout(() => {
         fcLotNo.current.focus();
@@ -695,6 +704,8 @@ function fn_P1ConnectBoard() {
       };
       dtData1.push(drRow);
     }
+        settxtSideBack(Array(GvBackSide.value.length).fill(""));
+
     setGvBackSide((prevState) => ({
       ...prevState,
       value: dtData1,
@@ -765,6 +776,7 @@ function fn_P1ConnectBoard() {
         dtData.push(drRow);
       }
     }
+            settxtSerial(Array(GvSerial.value.length).fill(""));
     setGvSerial((prevState) => ({
       ...prevState,
       value: dtData,
@@ -814,6 +826,7 @@ function fn_P1ConnectBoard() {
   };
 
   const setSerialData = async () => {
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
     try {
       let dtSerial = await getInputSerial();
       let _strLotData;
@@ -833,6 +846,7 @@ function fn_P1ConnectBoard() {
       let _bolError = false;
       _strLotData = txtLot.value.toUpperCase().split(";");
       _strLot = _strLotData[0];
+      _strLotRefData =  txtLotRef.value.toUpperCase().split(";");
       _strLotRef = txtLotRef.value;
       setlblLog((prevState) => ({ ...prevState, visble: false }));
       if (txtLot.value != "" && dtSerial.length > 0) {
@@ -1095,6 +1109,7 @@ function fn_P1ConnectBoard() {
               _strMessageUpdate =
                 "Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว";
             }
+            console.log("ว่างตรงนี้แหละค้าบบบ1", _strScanResultUpdate);
             dtSerial[drRow].SCAN_RESULT = _strScanResultUpdate;
             dtSerial[drRow].REMARK = _strMessageUpdate;
           }
@@ -1229,6 +1244,7 @@ function fn_P1ConnectBoard() {
                 _strScanResultUpdate = "NG";
                 _bolError = true;
               }
+              console.log("ว่างตรงนี้แหละค้าบบบ2", _strScanResultUpdate);
               dtSerial[drRow].SCAN_RESULT = _strScanResultUpdate;
               dtSerial[drRow].REMARK = _strMessageUpdate;
               if (_strScanResultUpdate == "NG") {
@@ -1336,10 +1352,15 @@ function fn_P1ConnectBoard() {
           value: dtSerial,
           visble: true,
         }));
+        if(EXPORT_CSV_FLG=='Y'){
+          ExportCSV(dtSerial,columns);
+        }
         getInitialSheet();
         getInitialSerial();
         getCountDataBylot(txtLot.value);
-        BtnExport();
+        setTimeout(() => {
+          fcGvBackSide.current[0].focus();
+        }, 300);
       } else {
         setlblLog((prevState) => ({
           ...prevState,
@@ -1359,7 +1380,7 @@ function fn_P1ConnectBoard() {
           }, 300);
         }
       }
-      console.log("ถึงตรงนี้แล้วค้าบ2", dtSerial);
+     
     } catch (error) {
       hideLoading();
       console.error("An error occurred while fetching serial data:", error);
@@ -1545,98 +1566,43 @@ function fn_P1ConnectBoard() {
     },
   ];
 
-  const BtnExport = async () => {
-    let nameFile = "";
-    if (gvScanResult.length <= 0) {
-      Swal.fire({
-        icon: "error",
-        title: "No Data Export!",
-      });
-    } else {
-      console.log(nameFile, "nameFile");
-      let formattedNow =
-        Now.getFullYear().toString() +
-        (Now.getMonth() + 1).toString().padStart(2, "0") +
-        Now.getDate().toString().padStart(2, "0") +
-        Now.getHours().toString().padStart(2, "0") +
-        Now.getMinutes().toString().padStart(2, "0") +
-        Now.getSeconds().toString().padStart(2, "0");
-      nameFile = `Sheet1_${formattedNow}.csv`;
-      // exportExcelFile(columns, gvScanResult.value, nameFile);
-    }
+
+  const ExportCSV = (data, ColumnsHeader) => {
+    const date = new Date();
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+
+    const filteredColumns = ColumnsHeader.filter(
+      (col) => col.title !== "" && col.key !== null && col.title !== undefined
+    );
+  
+    const headers = filteredColumns.map((col) => col.key);
+  
+    const filteredData = data.map((row) =>
+      filteredColumns.map((col) => row[col.dataIndex] || "")
+    );
+  
+    const csvContent = [
+      headers.join(","), 
+      ...filteredData.map((row) => row.join(",")) 
+    ].join("\n");
+  
+
+    const bom = "\uFEFF";
+    const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, `P1_ConectBoard_${formattedDate}.csv`);
   };
 
-  //อย่าลืมเรียกใช้จ้าาาา
-  const exportExcelFile = (HeaderColumn, data, namefile) => {
-    console.log(data, "hhhhhhhh");
-    const workbook = new ExcelJS.Workbook();
-    const sheet = workbook.addWorksheet("My Sheet");
-    sheet.properties.defaultRowHeight = 20;
 
-    const dynamicColumns = HeaderColumn.map((col) => ({
-      header: col.title.toUpperCase(),
-      key: col.dataIndex,
-      width: 10,
-      style: { alignment: { horizontal: "center" } },
-    }));
+  // แบบเอาทั้งหมด
+  // function ExportCSV (DtData,Column) {
+  //   const date = new Date();
+  //   const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+  //   const filteredData = DtData.filter(row => row.SERIAL !== '');
+  //   const csv = Papa.unparse(filteredData); 
+  //   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  //   saveAs(blob, `P1_ConectBoard_${formattedDate}.csv`); 
+  // }
 
-    sheet.columns = dynamicColumns;
-
-    if (data.length === 0) {
-      const emptyRow = {};
-      dynamicColumns.forEach((col) => (emptyRow[col.dataIndex] = "")); // เติมค่าค่าว่าง
-      data.push(emptyRow);
-    }
-
-    data.forEach((row) => {
-      const newRow = sheet.addRow(row);
-      newRow.eachCell({ includeEmpty: true }, (cell) => {
-        cell.alignment = { horizontal: "center" };
-
-        cell.border = {
-          top: { style: "thin" },
-          left: { style: "thin" },
-          bottom: { style: "thin" },
-          right: { style: "thin" },
-        };
-      });
-    });
-
-    const firstRow = sheet.getRow(1);
-    firstRow.eachCell({ includeEmpty: true }, (cell) => {
-      cell.fill = {
-        type: "pattern",
-        pattern: "solid",
-        fgColor: { argb: "FFFF00" },
-      };
-      cell.font = {
-        name: "Roboto",
-        size: 9,
-        bold: true,
-      };
-
-      cell.border = {
-        top: { style: "thin" },
-        left: { style: "thin" },
-        bottom: { style: "thin" },
-        right: { style: "thin" },
-      };
-    });
-
-    sheet.columns.forEach((column) => {
-      let maxWidth = column.header.length;
-      data.forEach((row) => {
-        const cellValue = String(row[column.key] || "");
-        maxWidth = Math.max(maxWidth, cellValue.length);
-      });
-      column.width = maxWidth + 2;
-    });
-
-    workbook.xlsx.writeBuffer().then((buffer) => {
-      const blob = new Blob([buffer], { type: "application/octet-stream" });
-      saveAs(blob, `${namefile}`);
-    });
-  };
 
   return {
     Product,

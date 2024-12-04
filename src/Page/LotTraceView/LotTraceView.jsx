@@ -2,7 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Card, Paper } from "@mui/material";
-import { Input, Button, Table, Typography, Tag, Tooltip, Avatar ,Spin} from "antd";
+import {
+  Input,
+  Button,
+  Table,
+  Typography,
+  Tag,
+  Tooltip,
+  Avatar,
+  Spin,
+} from "antd";
 const { Text } = Typography;
 import { fn_LotTraceView } from "./fn_LotTraceView";
 import excel from "/src/assets/excel.png";
@@ -39,7 +48,11 @@ function LotTraceView() {
     setShtSerialGrid,
     setFinalGateGrid,
     ExportTableToCSV,
-    loadingDoc
+    settxtSerialNo,
+    txtSheetNo,
+    settxtSheetNo,
+    txtSerialNo,
+    loadingDoc,
   } = fn_LotTraceView();
 
   return (
@@ -47,259 +60,339 @@ function LotTraceView() {
       <Hearder />
 
       <Card component={Paper} className="Card-Common">
-      <Spin tip="Loading..." spinning={loadingDoc} >
-        <Input
-          placeholder="Lot No. :"
-          style={{ width: "250px" }}
-          value={txtLotNo}
-          onChange={(e) => {
-            settxtLotNo(e.target.value);
-          }}
-          ref={fc_txtLotNo}
-        />{" "}
-        &nbsp;
-        <Input placeholder="Sheet No. :" style={{ width: "300px" }} /> &nbsp;
-        <Input placeholder="Serial No.   :" style={{ width: "300px" }} /> &nbsp;
-        <Button
-          type="primary"
-          icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
-          // icon={<SearchOutlined />}
-          onClick={() => btnSearch_Click()}
-          disabled={loading ? true : false}
-        >
-          Execute
-        </Button>
-        &nbsp;
-        <Button
-          type="primary"
-          danger
-          icon={<UndoOutlined />}
-          onClick={() => reset()}
-        >
-          Reset
-        </Button>
-        <br />
-        <br />
-        <div style={{ display: "flex", gap: "10px" }}>
-          <Card
-            component={Paper}
-            className="Card-ViewLot1"
-            style={{ width: "180px" }}
-          >
-            <b style={{ fontSize: "20px" }}>Lotno.</b>
-            <br />
-            <b>{lblLotNo}</b>
-          </Card>
-          <Card
-            component={Paper}
-            className="Card-ViewLot1"
-            style={{ width: "200px" }}
-          >
-            <b style={{ fontSize: "20px" }}> Product Name </b>
-            <br />
-            <b> {txtProd}</b>
-          </Card>
-          <Card
-            component={Paper}
-            className="Card-ViewLot1"
-            style={{ width: "250px", display: txtPreviousLotNo.visible }}
-          >
-            <b style={{ fontSize: "20px" }}>Previous Lot No. </b>
-            <br />
-            <a
-              href={`/TraceabilitySystem/LotTraceView?lot=${txtPreviousLotNo.text}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#fff" }}
-            >
-              <b>{txtPreviousLotNo.text}</b>
-            </a>
-          </Card>
-          <Card
-            component={Paper}
-            className="Card-ViewLot1"
-            style={{ width: "180px", display: txtNextLotNo.visible }}
-          >
-            <b style={{ fontSize: "20px" }}>Next Lot No. </b>
-            <br />
-            <a
-              href={`/TraceabilitySystem/LotTraceView?lot=${txtNextLotNo.text}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#fff" }}
-            >
-              <b>{txtNextLotNo.text}</b>
-            </a>
-          </Card>
-          <Card
-            component={Paper}
-            className="Card-ViewLot1"
-            style={{ width: "180px" }}
-          >
-            <a
-              href={`/TraceabilitySystem/LotSheetNo?lot=${txtLotNo}&product=${txtProd}`}
-              // http://10.17.74.226/TraceabilitySystem/LotSheetNo?lot=900035953&product=dsafjisdf
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#fff" }}
-            >
-              {" "}
-              <b style={{ fontSize: "18px" }}>Sheet No. </b> {/*linkkkk */}
-            </a>
-            <br />
-            <a
-              href={`/TraceabilitySystem/LotRollLeafNo?LOTNO=${txtLotNo}&product=${txtProd}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#fff" }}
-            >
-              {" "}
-              <b style={{ fontSize: "18px" }}> Roll Leaf</b> {/*linkkkk */}
-            </a>
-         
-          </Card>
-          <Card
-            component={Paper}
-            className="Card-ViewLot1"
-            style={{ width: "210px" }}
-          >
-            <b style={{ fontSize: "20px" }}> Connect Sheet </b>
-            <br />
-            <div
-              style={{ cursor: "pointer" }}
-              onClick={() => setShtSerialGrid(txtLotNo)}
-            >
-              <b> {lbtConnectSht.value}</b>
-            </div>
-          </Card>
-          <Card className="Card-ViewLot1" style={{ width: "170px" }}>
-            <b style={{ fontSize: "20px" }}>Final Gate</b>
-            <br />
-            <b style={{ color: "#6EC207" }}>
-              OK:
-              <span
-                onClick={() => setFinalGateGrid(txtLotNo, "OK")}
-                style={{ cursor: "pointer" }}
-              >
-                &nbsp; {lbtFinalGate.valueOK}
-              </span>
-            </b>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <b style={{ color: "#C70039" }}>
-              NG:
-              <span
-                onClick={() => setFinalGateGrid(txtLotNo, "NG")}
-                style={{ cursor: "pointer" }}
-              >
-                &nbsp; {lbtFinalGate.valueNG}
-              </span>
-            </b>
-          </Card>
-
-          <div>
-            <Card
-              component={Paper}
-              className="Card-ViewLot2"
-              style={{ display: lblTitleShtFront.visible }}
-            >
-              <b style={{ fontSize: "16px" }}>Sheet Front: </b>
-              {lblTitleShtFront.value}
-            </Card>
-
-            <Card
-              component={Paper}
-              className="Card-ViewLot2"
-              style={{ display: lblTitleShtBack.visible }}
-            >
-              <b style={{ fontSize: "16px" }}> Sheet Back: </b>
-              {lblTitleShtBack.value}
-            </Card>
-          </div>
-        </div>
-        <br />
-        <div
-          style={{
-            width: "87%",
-            display: "flex",
-            justifyContent: "flex-end",
-            display: gvMaterial.value.length > 0 ? "flex" : "none",
-          }}
-        >
-          <Button
-            size="small"
-            icon={<Avatar shape="square" src={excel} size="small" />}
-            onClick={() =>
-              ExportTableToCSV(
-                gvMaterial.value,
-                columnsgvMaterial,
-                "MAT_" + txtLotNo + ".xls"
-              )
-            }
-          >
-            Export
-          </Button>
-        </div>
-        <div style={{ display: "flex", width: "100%" }}>
-          {/*----------------------------- Table1.1--------------------- */}
-          <Table
-            style={{ width: "88%", fontSize: "12px" }}
-            columns={columnsgvMaterial}
-            dataSource={gvMaterial.value}
-            className="tableGvResultViewLot"
-            pagination={false}
-            size="small"
-            bordered
-            scroll={{ y: 200 }}
+        <Spin tip="Loading..." spinning={loadingDoc}>
+          <Input
+            placeholder="Lot No. :"
+            style={{ width: "250px" }}
+            value={txtLotNo}
+            onChange={(e) => {
+              settxtLotNo(e.target.value);
+            }}
+            ref={fc_txtLotNo}
           />{" "}
           &nbsp;
-          {/*----------------------------- Table1.2--------------------- */}
+          <Input
+            placeholder="Sheet No. :"
+            style={{ width: "300px" }}
+            value={txtSheetNo}
+            onChange={(e) => {
+              settxtSheetNo(e.target.value);
+            }}
+          />{" "}
+          &nbsp;
+          <Input
+            placeholder="Serial No.   :"
+            style={{ width: "300px" }}
+            value={txtSerialNo}
+            onChange={(e) => {
+              settxtSerialNo(e.target.value);
+            }}
+          />{" "}
+          &nbsp;
+          <Button
+            type="primary"
+            icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
+            // icon={<SearchOutlined />}
+            onClick={() => btnSearch_Click()}
+            disabled={loading ? true : false}
+          >
+            Search
+          </Button>
+          &nbsp;
+          <Button
+            type="primary"
+            danger
+            icon={<UndoOutlined />}
+            onClick={() => reset()}
+          >
+            Clear
+          </Button>
+          <br />
+          <div style={{ display: "flex", gap: "10px" }}>
+            <Card
+              component={Paper}
+              className="Card-ViewLot1"
+              style={{ width: "180px" }}
+            >
+              <b style={{ fontSize: "20px", color: "#151515" }}>Lot No.</b>
+              <br />
+              <b>{lblLotNo}</b>
+            </Card>
+            <Card
+              component={Paper}
+              className="Card-ViewLot1"
+              style={{ width: "200px" }}
+            >
+              <b style={{ fontSize: "20px", color: "#151515" }}>
+                {" "}
+                Product Name{" "}
+              </b>
+              <br />
+              <b> {txtProd}</b>
+            </Card>
+            <Card
+              component={Paper}
+              className="Card-ViewLot1"
+              style={{ width: "180px", display: txtPreviousLotNo.visible }}
+            >
+              <b style={{ fontSize: "20px", color: "#151515" }}>
+                Previous Lot No.{" "}
+              </b>
+              <br />
+              <a
+                href={`/TraceabilitySystem/LotTraceView?lot=${txtPreviousLotNo.text}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#fff", textDecoration: "underline" }}
+              >
+                <b>{txtPreviousLotNo.text}</b>
+              </a>
+            </Card>
+            <Card
+              component={Paper}
+              className="Card-ViewLot1"
+              style={{ width: "180px", display: txtNextLotNo.visible }}
+            >
+              <b style={{ fontSize: "20px", color: "#151515" }}>
+                Next Lot No.{" "}
+              </b>
+              <br />
+              <a
+                href={`/TraceabilitySystem/LotTraceView?lot=${txtNextLotNo.text}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#fff", textDecoration: "underline" }}
+              >
+                <b>{txtNextLotNo.text}</b>
+              </a>
+            </Card>
+            <div>
+              <Card
+                component={Paper}
+                className="Card-ViewLot3"
+                style={{ width: "80px" }}
+              >
+                {txtLotNo === "" && txtProd === "_ _ _ _ _ _ _ _ _ _ _ _" ? (
+                  <span style={{ color: "#fff", cursor: "not-allowed" }}>
+                    <b
+                      style={{ fontSize: "16px", textDecoration: "underline" }}
+                    >
+                      Sheet No.
+                    </b>
+                  </span>
+                ) : (
+                  <a
+                    href={`/TraceabilitySystem/LotSheetNo?lot=${txtLotNo}&product=${txtProd}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#fff" }}
+                  >
+                    <b
+                      style={{ fontSize: "16px", textDecoration: "underline" }}
+                    >
+                      Sheet No.
+                    </b>
+                  </a>
+                )}
+              </Card>
+
+              <Card
+                component={Paper}
+                className="Card-ViewLot3"
+                style={{ width: "80px" }}
+              >
+                {txtLotNo === "" && txtProd === "_ _ _ _ _ _ _ _ _ _ _ _" ? (
+                  <span style={{ color: "#fff", cursor: "not-allowed" }}>
+                    <b
+                      style={{ fontSize: "16px", textDecoration: "underline" }}
+                    >
+                      Roll Leaf
+                    </b>
+                  </span>
+                ) : (
+                  <a
+                    href={`/TraceabilitySystem/LotRollLeafNo?LOTNO=${txtLotNo}&product=${txtProd}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#fff" }}
+                  >
+                    <b
+                      style={{ fontSize: "16px", textDecoration: "underline" }}
+                    >
+                      Roll Leaf
+                    </b>
+                  </a>
+                )}
+              </Card>
+            </div>
+
+            <Card
+              component={Paper}
+              className="Card-ViewLot1"
+              style={{ width: "210px" }}
+            >
+              <b style={{ fontSize: "20px", color: "#151515" }}>
+                {" "}
+                Connect Sheet{" "}
+              </b>
+              <br />
+              <div
+                style={{ cursor: "pointer", textDecoration: "underline" }}
+                onClick={() => setShtSerialGrid(txtLotNo)}
+              >
+                <b> {lbtConnectSht.value}</b>
+              </div>
+            </Card>
+            <Card className="Card-ViewLot1" style={{ width: "170px" }}>
+              <b style={{ fontSize: "20px", color: "#151515" }}>Final Gate</b>
+              <br />
+              <b style={{ color: "#6EC207" }}>
+                OK: &nbsp;
+                <span
+                  onClick={() => setFinalGateGrid(txtLotNo, "OK")}
+                  style={{ cursor: "pointer", textDecoration: "underline" }}
+                >
+                  {lbtFinalGate.valueOK}
+                </span>
+              </b>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <b style={{ color: "#C70039" }}>
+                NG: &nbsp;
+                <span
+                  onClick={() => setFinalGateGrid(txtLotNo, "NG")}
+                  style={{ cursor: "pointer", textDecoration: "underline" }}
+                >
+                  {lbtFinalGate.valueNG}
+                </span>
+              </b>
+            </Card>
+
+            <div>
+              <Card
+                component={Paper}
+                className="Card-ViewLot2"
+                style={{ display: lblTitleShtFront.visible, color: "#151515" }}
+              >
+                <b style={{ fontSize: "16px", color: "#151515" }}>
+                  Sheet Front :{" "}
+                </b>
+
+                <a
+                  href={`/TraceabilitySystem/SheetTraceView?SHEETNO=${lblTitleShtFront.value}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#151515" , textDecoration: "underline"}}
+                >
+                  {lblTitleShtFront.value}
+                </a>
+              </Card>
+
+              <Card
+                component={Paper}
+                className="Card-ViewLot2"
+                style={{ display: lblTitleShtBack.visible, color: "#151515" }}
+              >
+                <b style={{ fontSize: "16px", color: "#151515" }}>
+                  {" "}
+                  Sheet Back:{" "}
+                </b>
+                <a
+                  href={`/TraceabilitySystem/SheetTraceView?SHEETNO=${lblTitleShtBack.value}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#151515" , textDecoration: "underline"}}
+                >
+                {lblTitleShtBack.value}
+                </a>
+                {/* <span style={{ color: "#151515" }}>
+                  {lblTitleShtBack.value}
+                </span> */}
+              </Card>
+            </div>
+          </div>
+          <div
+            style={{
+              width: "87%",
+              display: "flex",
+              justifyContent: "flex-end",
+              display: gvMaterial.value.length > 0 ? "flex" : "none",
+            }}
+          >
+            <Button
+              size="small"
+              icon={<Avatar shape="square" src={excel} size="small" />}
+              onClick={() =>
+                ExportTableToCSV(
+                  gvMaterial.value,
+                  columnsgvMaterial,
+                  "MAT_" + txtLotNo + ".xls"
+                )
+              }
+            >
+              Export
+            </Button>
+          </div>
+          <div style={{ display: "flex", width: "100%" }}>
+            {/*----------------------------- Table1.1--------------------- */}
+            <Table
+              style={{ width: "88%", fontSize: "12px" }}
+              columns={columnsgvMaterial}
+              dataSource={gvMaterial.value}
+              className="tableGvResultViewLot"
+              pagination={false}
+              size="small"
+              bordered
+              scroll={{ y: 200 }}
+            />{" "}
+            &nbsp;
+            {/*----------------------------- Table1.2--------------------- */}
+            <Table
+              style={{ width: "12%" }}
+              columns={columnsgvLot}
+              dataSource={gvLot.value}
+              pagination={false}
+              size="small"
+              bordered
+              className="tableGvResultViewLot"
+            />
+          </div>
+          {/*----------------------------- Table2--------------------- */}
+          <div
+            style={{
+              marginTop: "5px",
+              width: "99%",
+              display: "flex",
+              justifyContent: "flex-end",
+              display: gvRouting.value.length > 0 ? "flex" : "none",
+            }}
+          >
+            <Button
+              size="small"
+              icon={<Avatar shape="square" src={excel} size="small" />}
+              onClick={() =>
+                ExportTableToCSV(
+                  gvRouting.value,
+                  columnsgvRouting,
+                  "Proc_" + txtLotNo + ".xls"
+                )
+              }
+            >
+              Export
+            </Button>
+          </div>
           <Table
-            style={{ width: "12%" }}
-            columns={columnsgvLot}
-            dataSource={gvLot.value}
+            style={{ width: "100%" }}
+            columns={columnsgvRouting}
+            dataSource={gvRouting.value}
+            className="tableGvResultViewLot"
             pagination={false}
             size="small"
             bordered
-            className="tableGvResultViewLot"
+            // scroll={{ y: 265 }}
           />
-        </div>
-        <br />
-        {/*----------------------------- Table2--------------------- */}
-        <div
-          style={{
-            width: "99%",
-            display: "flex",
-            justifyContent: "flex-end",
-            display: gvRouting.value.length > 0 ? "flex" : "none",
-          }}
-        >
-          <Button
-            size="small"
-            icon={<Avatar shape="square" src={excel} size="small" />}
-            onClick={() =>
-              ExportTableToCSV(
-                gvRouting.value,
-                columnsgvRouting,
-                "Proc_" + txtLotNo + ".xls"
-              )
-            }
-          >
-            Export
-          </Button>
-        </div>
-        <Table
-          style={{ width: "100%" }}
-          columns={columnsgvRouting}
-          dataSource={gvRouting.value}
-          className="tableGvResultViewLot"
-          pagination={false}
-          size="small"
-          bordered
-          scroll={{ y: 300 }}
-        />
-        {/*----------------------------- Table3--------------------- */}
-        <br />
-        {/* <Table
+          {/*----------------------------- Table3--------------------- */}
+          <br />
+          {/* <Table
           style={{ width: "50%" }}
           dataSource={gvProcessLink.value}
           columns={columnsgvProcessLink}
@@ -308,7 +401,7 @@ function LotTraceView() {
           size="small"
           bordered
         /> */}
-           </Spin>
+        </Spin>
       </Card>
     </>
   );

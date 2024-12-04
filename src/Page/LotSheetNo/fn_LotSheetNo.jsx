@@ -40,32 +40,32 @@ function fn_LotSheetNo() {
 
   const setGrid = async (strlot) => {
     console.log("setGrid", strlot);
-    let dtFront = [];
-    await axios
-      .post("/api/ViewTraceLot/fnLotSheetFrontData", {
-        strLOTNO: strlot,
-      })
-      .then((res) => {
-        for (let i = 0; i < res.data.length; i += 5) {
-          dtFront.push(res.data.slice(i, i + 5));
-        }
+    // let dtFront = [];
+    // await axios
+    //   .post("/api/ViewTraceLot/fnLotSheetFrontData", {
+    //     strLOTNO: strlot,
+    //   })
+    //   .then((res) => {
+    //     for (let i = 0; i < res.data.length; i += 5) {
+    //       dtFront.push(res.data.slice(i, i + 5));
+    //     }
 
-        dtFront = dtFront.map((group, index) => {
-          return {
-            key: index,
-            FRONTSHEET1: group[0] ? group[0].front_sheet_no  : "",
-            FRONTSHEET2: group[1] ? group[1].front_sheet_no  : "",
-            FRONTSHEET3: group[2] ? group[2].front_sheet_no  : "",
-            FRONTSHEET4: group[3] ? group[3].front_sheet_no  : "",
-            FRONTSHEET5: group[4] ? group[4].front_sheet_no  : "",
-          };
-        });
-        console.log("dtFront", dtFront);
-        settblFrontSheet(dtFront);
-      });
+    //     dtFront = dtFront.map((group, index) => {
+    //       return {
+    //         key: index,
+    //         FRONTSHEET1: group[0] ? group[0].FRONT_SHEET_NO  : "",
+    //         FRONTSHEET2: group[1] ? group[1].FRONT_SHEET_NO  : "",
+    //         FRONTSHEET3: group[2] ? group[2].FRONT_SHEET_NO  : "",
+    //         FRONTSHEET4: group[3] ? group[3].FRONT_SHEET_NO  : "",
+    //         FRONTSHEET5: group[4] ? group[4].FRONT_SHEET_NO  : "",
+    //       };
+    //     });
+    //     console.log("dtFront", dtFront);
+    //     settblFrontSheet(dtFront);
+    //   });
       let dtBack = [];
       await axios
-      .post("/api/ViewTraceLot/fnLotSheetBackData", {
+      .post("/api/ViewTraceLot/fnLotSheetData", {
         strLOTNO: strlot,
       })
       .then((res) => {
@@ -76,11 +76,16 @@ function fn_LotSheetNo() {
         dtBack = dtBack.map((group, index) => {
           return {
             key: index,
-            BACKSHEET1: group[0] ? group[0].back_sheet_no : "",
-            BACKSHEET2: group[1] ? group[1].back_sheet_no : "",
-            BACKSHEET3: group[2] ? group[2].back_sheet_no : "",
-            BACKSHEET4: group[3] ? group[3].back_sheet_no : "",
-            BACKSHEET5: group[4] ? group[4].back_sheet_no : "",
+            BACKSHEET1: group[0] ? group[0].BACK_SHEET_NO : "",
+            BACKSHEET2: group[1] ? group[1].BACK_SHEET_NO : "",
+            BACKSHEET3: group[2] ? group[2].BACK_SHEET_NO : "",
+            BACKSHEET4: group[3] ? group[3].BACK_SHEET_NO : "",
+            BACKSHEET5: group[4] ? group[4].BACK_SHEET_NO : "",
+            FRONTSHEET1: group[0] ? group[0].FRONT_SHEET_NO  : "",
+            FRONTSHEET2: group[1] ? group[1].FRONT_SHEET_NO  : "",
+            FRONTSHEET3: group[2] ? group[2].FRONT_SHEET_NO  : "",
+            FRONTSHEET4: group[3] ? group[3].FRONT_SHEET_NO  : "",
+            FRONTSHEET5: group[4] ? group[4].FRONT_SHEET_NO  : "",
           };
         });
         console.log("dtBack", dtBack);
@@ -196,7 +201,123 @@ function fn_LotSheetNo() {
       },
     },
   ];
-
+  const columns = [
+    {
+      title: "SHEET No.1",
+      children: [
+        {
+          title: "FRONT-SHEET",
+          dataIndex: "FRONTSHEET1",
+          key: "FRONT-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+        {
+          title: "BACK-SHEET",
+          dataIndex: "BACKSHEET1",
+          key: "BACK-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+      ],
+    },
+    {
+      title: "SHEET No.2",
+      children: [
+        {
+          title: "FRONT-SHEET",
+          dataIndex: "FRONTSHEET2",
+          key: "FRONT-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+        {
+          title: "BACK-SHEET ",
+          dataIndex: "BACKSHEET2",
+          key: "BACK-SHEET-NO",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+      ],
+    },
+    {
+      title: "SHEET No.3",
+      children: [
+        {
+          title: "FRONT-SHEET",
+          dataIndex: "FRONTSHEET3",
+          key: "FRONT-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+        {
+          title: "BACK-SHEET",
+          dataIndex: "BACKSHEET3",
+          key: "BACK-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+      ],
+    },
+    {
+      title: "SHEET No.4",
+      children: [
+        {
+          title: "FRONT-SHEET",
+          dataIndex: "FRONTSHEET4",
+          key: "FRONT-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+        {
+          title: "BACK-SHEET",
+          dataIndex: "BACKSHEET4",
+          key: "BACK-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+      ],
+    },
+    {
+      title: "SHEET No.5",
+      children: [
+        {
+          title: "FRONT-SHEET",
+          dataIndex: "FRONTSHEET5",
+          key: "FRONT-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+        {
+          title: "BACK-SHEET",
+          dataIndex: "BACKSHEET5",
+          key: "BACK-SHEET",
+          render: (text, record, index) => {
+            return createLink(text);
+          },
+          align: "center",
+        },
+      ],
+    },
+  ];
   // const columnsExport = [
   //   {
   //     key: "SHR_PLANT_CODE",
@@ -299,7 +420,7 @@ function fn_LotSheetNo() {
   //   saveAs(blobData, namefile);
   // };
 
-  return { tblBackSheet,tblFrontSheet, txtProd, txtLotNo, columnsBACK,columnsFRONT };
+  return { tblBackSheet,tblFrontSheet, txtProd, txtLotNo, columnsBACK,columnsFRONT,columns };
 }
 
 export { fn_LotSheetNo };

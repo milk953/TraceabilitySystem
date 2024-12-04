@@ -13,7 +13,7 @@ import excel from "/src/assets/excel.png";
 import { fn_LotSheetNo } from "./fn_LotSheetNo.jsx";
 
 function LotTraceView() {
-  const {  tblBackSheet,tblFrontSheet, txtProd, txtLotNo, columnsBACK,columnsFRONT  } = fn_LotSheetNo();
+  const {  tblBackSheet,tblFrontSheet, txtProd, txtLotNo, columnsBACK,columnsFRONT,columns  } = fn_LotSheetNo();
 
   return (
     <>
@@ -50,7 +50,7 @@ function LotTraceView() {
         </div>
         <br />
         
-        {console.log('tblFrontSheet',tblFrontSheet,columnsFRONT)}
+        {/* {console.log('tblFrontSheet',tblFrontSheet,columnsFRONT)}
         <Table
           dataSource={tblFrontSheet}
           columns={columnsFRONT}
@@ -69,6 +69,16 @@ function LotTraceView() {
           size="small"
           bordered
           scroll={{ y: 310 }}
+        />
+         <br/> */}
+        <Table
+          dataSource={tblBackSheet}
+          columns={columns}
+          className="tableGvResultView"
+          pagination={false}
+          size="small"
+          bordered
+          scroll={{ x:'max-content' }}
         />
       </Card>
     </>

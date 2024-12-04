@@ -171,6 +171,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
   const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env
     .VITE_FINAL_GATE_SPECIAL_MESSAGE;
+    const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
 
   const Fac = import.meta.env.VITE_FAC;
   //PageLoad----------
@@ -802,9 +803,14 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   };
 
   const setSerialDataTray = async () => {
-
+    showLoading("กำลังบันทึก กรุณารอสักครู่");
+    setlblSerialNG(0)
+    setlblLog((prevState) => ({
+      ...prevState,
+      value: ``,
+      visble: "none",
+    }));
     try {
-      showLoading("กำลังบันทึก กรุณารอสักครู่");
       let dtSerial = await getInputSerial();
       let _strLot = lblLot.trim().toUpperCase();
       let _strPrdName = Sl_Product.value;
@@ -814,6 +820,25 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       let _strScanResultAll = "OK";
       let _intRowSerial = 0;
       let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
+      const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+      if (allSerialEmpty) {
+        hideLoading();
+        setlblLog((prevState) => ({
+          ...prevState,
+          value: `Please Input Serial No.`,
+          visble: "",
+        }));
+        setlblResult((prevState) => ({
+          ...prevState,
+          value: '',
+        }));
+        setgvSerial((prevState) => ({ ...prevState, visble: "", value: "" }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+        setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+      }, 300);
+        return;        
+      }
       if (!_bolTrayError) {
         await axios
           .post("/api/FinalGate/GetSerialTestResultManyTableConfirm", {
@@ -1464,8 +1489,16 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
               dtSerial[i].ROW_UPDATE = "Y";
               _bolError = true;
             }
-            if (_bolError) {
-              setlblSerialNG(parseInt(lblSerialNG) + 1);
+            if (_strScanResultUpdate=='NG') {
+              // setLblSerialNG(0)
+              setlblSerialNG((prevValue) => {
+                const numericValue = parseInt(prevValue, 10);
+                if (isNaN(numericValue)) {
+                  return 1;
+                } else {
+                  return numericValue + 1;
+                }
+              });
             }
             dtSerial[i].REJECT = _strReject1;
             dtSerial[i].TOUCH_UP = _strTouchUp;
@@ -1526,32 +1559,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         let _strErrorUpdate = "";
 
         if (_strScanResultAll === "OK") {
-          _strErrorUpdate= await SaveSetSerialLotTrayTableGood(dtSerial)
-          // for(let i=0;i<1;i++){
-          //   console.log("SAVE1", dtSerial[i].SCAN_RESULT);
-          // await  axios.post("/api/Common/SetSerialLotTrayTableGood2", {
-          //           dataList:
-          //             {
-          //               strPlantCode: Fac,
-          //               strPrdName: _strPrdName,
-          //               strLot: _strLot,
-          //               strUserID: hfUserID,
-          //               strStation: hfUserStation,
-          //               data:dtSerial
-          //               // SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-          //               // SERIAL: dtSerial[i].SERIAL,
-          //               // UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-          //               // ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-          //               // REJECT_CODE: dtSerial[i].REJECT_CODE,
-          //               // TEST_RESULT: dtSerial[i].TEST_RESULT,
-          //               // REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-          //               // PACKING_NO: dtSerial[i].PACKING_NO,
-          //             },
-          //             // data:dtSerial
-          //         }).then((res) => {
-          //           _strErrorUpdate = res.data.p_error;
-          //         });
-          // }
+          _strErrorUpdate= await SaveSetSerialLotTrayTableGood(dtSerial);
         }
         console.log("SAVE1 ออก จบ ไปต่อ");
         if (_strErrorUpdate != "") {
@@ -1618,7 +1626,9 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
           visble: true,
           value: dtSerial,
         }));
-        ExportGridToCSV(dtSerial, columns);
+        if(EXPORT_CSV_FLG=='Y'){
+          ExportCSV(dtSerial,columns);
+        }
       } else {
         setgvScanResult((prevState) => ({
           ...prevState,
@@ -1670,27 +1680,32 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     return _strErrorUpdate
   };
 
-  const ExportGridToCSV = (data, ColumnsHeader) => {
+
+  const ExportCSV = (data, ColumnsHeader) => {
+    const date = new Date();
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
     );
-
+  
     const headers = filteredColumns.map((col) => col.key);
-
+  
     const filteredData = data.map((row) =>
       filteredColumns.map((col) => row[col.dataIndex] || "")
     );
+  
+    const csvContent = [
+      headers.join(","), 
+      ...filteredData.map((row) => row.join(",")) 
+    ].join("\n");
+  
 
-    const wsData = [headers, ...filteredData];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blobData = new Blob([excelBuffer], {
-      type: "application/octet-stream",
-    });
-    saveAs(blobData, "export.xlsx");
+    const bom = "\uFEFF";
+    const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, `ConfirmFinalGateOnlyGood_${formattedDate}.csv`);
   };
+
 
   const columns = [
     {

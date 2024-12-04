@@ -101,7 +101,7 @@ function fn_LotTraceView() {
 
   const [lbtConnectSht, setlbtConnectSht] = useState({
     text: "0",
-    value: "",
+    value: "0",
     visible: "none",
     style: {},
   });
@@ -113,7 +113,7 @@ function fn_LotTraceView() {
     disabledNG: "",
     style: {},
   });
-  //   txtRollNo  tr1 tr2 gvMaterial lblTitleShtFront lblTitleShtBack
+  //txtRollNo  tr1 tr2 gvMaterial lblTitleShtFront lblTitleShtBack
   
   //Focus
   const fc_txtLotNo = useRef(null);
@@ -154,9 +154,8 @@ function fn_LotTraceView() {
   const btnSearch_Click = async () => {
     setloading(true);
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
+      console.log(txtLotNo,txtSheetNo,txtSerialNo, "เข้าจ้าาาาาาาาาาาาๅ");
       const datalblLot = await setHead();
-
-      console.log(datalblLot, "datalblLot");
       await setGrid(datalblLot);
       setloading(false);
     } else {
@@ -166,6 +165,19 @@ function fn_LotTraceView() {
   };
 
   const reset = async () => {
+    setlblLotNo("xxxxxxxxx");
+    settxtLotNo('');
+    settxtSerialNo('')
+    settxtSheetNo('')
+    setlbtConnectSht((prevState) => ({
+      ...prevState,
+      value: "0",
+    }));
+    setlbtFinalGate((prevState) => ({
+      ...prevState,
+      valueOK: 0,
+      valueNG: 0,
+    }));
     settxtProd("_ _ _ _ _ _ _ _ _ _ _ _");
     settxtRollNo((prevState) => ({
       ...prevState,
@@ -318,12 +330,14 @@ function fn_LotTraceView() {
         }
       }
     } else if (txtSheetNo != "") {
+      console.log(txtSheetNo, "เข้าtxtsheetno");
       let dtLot;
       await axios
         .post("/api/ViewTraceLot/GetDataViewLot3", {
-          dataList: { txtSerialNo: txtSheetNo, PLANT_CODE: Fac },
+          dataList: { txtSheetNo: txtSheetNo, PLANT_CODE: Fac },
         })
         .then((res) => {
+          console.log(res.data, "GetDataViewLot3");
           dtLot = res.data;
         });
       if (dtLot.length > 0) {
@@ -523,7 +537,7 @@ function fn_LotTraceView() {
     setlbtFinalGate((prevState) => ({
       ...prevState,
       valueOK: dataOK,
-      valueOK: dataOK,
+      valueNG: dataNG,
       disabledOK: dataOK !== "0" ? "กดได้" : "กดไม่ได้",
       disabledNG: dataNG !== "0" ? "กดได้" : "กดไม่ได้",
     }));
@@ -572,6 +586,30 @@ function fn_LotTraceView() {
     }
   };
 
+  const LinkToMaterial_Lot = (Vender_lot) => {
+    return (
+      <a
+        href={`/TraceabilitySystem/MaterialTrace?VENDER_LOTNO=${Vender_lot}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {Vender_lot}
+      </a>
+    );
+  };
+
+  const LinkToMaterial_invoice = (invoice) => {
+    return (
+      <a
+        href={`/TraceabilitySystem/MaterialTrace?INVOICE_NO=${invoice}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {invoice}
+      </a>
+    );
+  };
+
   const columnsgvMaterial = [
     {
       title: "Material Code",
@@ -618,7 +656,7 @@ function fn_LotTraceView() {
       dataIndex: "VENDER_LOT",
       align: "left",
       render: (text, record, index) => {
-        return text;
+        return LinkToMaterial_Lot(text);
       },
     },
     {
@@ -647,7 +685,7 @@ function fn_LotTraceView() {
       dataIndex: "INVOICE_NO",
       align: "left",
       render: (text, record, index) => {
-        return text;
+        return LinkToMaterial_invoice(text);
       },
       width: 110,
     },
@@ -668,7 +706,7 @@ function fn_LotTraceView() {
         <>
           Roll No. : {" "}
           <a
-            href={`/TraceabilitySystem/LotRollLeafNo?LOTNO=${gvLot.value[0].LOT_ROLL_NO}&product=${txtProd}`}
+            href={`/TraceabilitySystem/LotRollLeafNo?ROLLNO=${gvLot.value[0].LOT_ROLL_NO}&product=${txtProd}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: "#98DED9" }}
@@ -1173,7 +1211,8 @@ function fn_LotTraceView() {
     setShtSerialGrid,
     setFinalGateGrid,
     ExportTableToCSV,
-    loadingDoc
+    loadingDoc,
+    settxtSerialNo,txtSheetNo,settxtSheetNo,txtSerialNo
   };
 }
 

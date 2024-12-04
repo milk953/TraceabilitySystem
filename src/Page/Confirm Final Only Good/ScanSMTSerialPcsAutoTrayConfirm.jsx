@@ -284,7 +284,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                   </TableRow>
                 </TableBody>
               </Table>
-            </Grid>
+            </Grid>     
             {/* border:'1PX SOLID green' */}
             <Grid
               item

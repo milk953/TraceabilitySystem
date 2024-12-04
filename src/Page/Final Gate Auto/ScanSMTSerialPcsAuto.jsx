@@ -320,7 +320,7 @@ function ScanSMTRoollSht() {
                       style={{
                         background:
                           lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
-                        width: "70%", // ควบคุมขนาดของ Paper
+                        // width: "70%", // ควบคุมขนาดของ Paper
                       }}
                     >
                       <Typography
@@ -336,11 +336,12 @@ function ScanSMTRoollSht() {
                       style={{
                         ...lblTime.style,
                         width: "30%", // ควบคุมขนาดของ Paper
+                        display: lblTime.value === '' ? 'none' : ''
                       }}
                     >
                       <Typography
                         variant="h4"
-                        style={{ paddingTop: "5px", color: "#fff" }}
+                        style={{ paddingTop: "5px", color: "#fff"}}
                       >
                         {lblTime.value}
                       </Typography>

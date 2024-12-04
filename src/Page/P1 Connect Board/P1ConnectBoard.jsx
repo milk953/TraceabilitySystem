@@ -169,16 +169,16 @@ function P1ConnectBoard() {
                         style={txtLotRef.style}
                         value={txtLotRef.value}
                         onChange={(e) => {
-                          settxtRollLeaf((prevState) => ({
+                          settxtLotRef((prevState) => ({
                             ...prevState,
                             value: e.target.value,
                           }));
                         }}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtRollLeaf_TextChanged();
-                        //   }
-                        // }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtLotRef_TextChanged();
+                          }
+                        }}
                         // onBlur={txtRollLeaf_TextChanged}
                         fullWidth
                       ></TextField>

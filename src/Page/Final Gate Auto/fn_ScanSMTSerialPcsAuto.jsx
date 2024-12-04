@@ -171,6 +171,8 @@ function fn_ScanSMTSerialPcsChrome() {
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
   const Fac = import.meta.env.VITE_FAC;
+  const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
+  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE
   //PageLoad----------
   useEffect(() => {
     const fetchData = async () => {
@@ -789,43 +791,87 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const getInputSerial = () => {
     let dtData = [];
-    for (let intSht = 0; intSht < gvSerial.value.length; intSht++) {
-      dtData.push({
-        SEQ: intSht + 1,
-        SERIAL: txtSerial[intSht],
-        REJECT: "",
-        TOUCH_UP: "",
-        REJECT2: "",
-        REJECT_CODE: "",
-        SCAN_RESULT: "",
-        TEST_RESULT: "",
-        TYPE_TEST_RESULT: "",
-        REMARK: "",
-        REMARK_UPDATE: "",
-        ROW_COUNT: 0,
-        ROW_UPDATE: "N",
-        UPDATE_FLG: "N",
-        PACKING_NO: txtPackingNo.value,
-        MASTER_NO: "",
-        FRONT_SHEET_NO: "",
-        BACK_SHEET_NO: "",
-        SHEET_PCS_NO: 0,
-        ROLL_LEAF_NO: "",
-      });
-      // if (dtData[intSht].SERIAL != "") {
-      //   for( let intNo=0;intNo>intRow - 2;intNo++){
+    let intRow = 0;
 
-      //   }
-      // }
-      //      For intNo As Integer = 0 To intRow - 2
-      //           If drRow("SERIAL").ToString.Trim = CType(gvSerial.Rows(intNo).FindControl("txtSerial"), TextBox).Text.Trim.ToUpper Then
-      //               drRow("ROW_COUNT") = 9
-      //               Exit For
-      //           End If
-      //       Next
+    for (let intSeq = 0; intSeq < gvSerial.value.length; intSeq++) {
+        intRow++;
+        let drRow = {
+            SEQ: intRow,
+            SERIAL: txtSerial[intSeq].trim().toUpperCase(),
+            REJECT: "",
+            TOUCH_UP: "",
+            REJECT2: "",
+            REJECT_CODE: "",
+            SCAN_RESULT: "",
+            TEST_RESULT: "",
+            TYPE_TEST_RESULT: "",
+            REMARK: "",
+            REMARK_UPDATE: "",
+            ROW_COUNT: 0,
+            ROW_UPDATE: "N",
+            UPDATE_FLG: "N",
+            PACKING_NO: txtPackingNo.value.trim().toUpperCase(),
+            MASTER_NO: "",
+            FRONT_SHEET_NO: "",
+            BACK_SHEET_NO: "",
+            SHEET_PCS_NO: 0,
+            ROLL_LEAF_NO: ""
+        };
+
+        if (drRow.SERIAL !== "") {
+            for (let intNo = 0; intNo < intRow - 1; intNo++) {
+                if (drRow.SERIAL === txtSerial[intNo].trim().toUpperCase()) {
+                    drRow.ROW_COUNT = 9;
+                    break;
+                }
+            }
+        }
+
+        dtData.push(drRow);
     }
+
     return dtData;
-  };
+};
+
+  // const getInputSerial = () => {
+  //   let dtData = [];
+  //   for (let intSht = 0; intSht < gvSerial.value.length; intSht++) {
+  //     dtData.push({
+  //       SEQ: intSht + 1,
+  //       SERIAL: txtSerial[intSht],
+  //       REJECT: "",
+  //       TOUCH_UP: "",
+  //       REJECT2: "",
+  //       REJECT_CODE: "",
+  //       SCAN_RESULT: "",
+  //       TEST_RESULT: "",
+  //       TYPE_TEST_RESULT: "",
+  //       REMARK: "",
+  //       REMARK_UPDATE: "",
+  //       ROW_COUNT: 0,
+  //       ROW_UPDATE: "N",
+  //       UPDATE_FLG: "N",
+  //       PACKING_NO: txtPackingNo.value,
+  //       MASTER_NO: "",
+  //       FRONT_SHEET_NO: "",
+  //       BACK_SHEET_NO: "",
+  //       SHEET_PCS_NO: 0,
+  //       ROLL_LEAF_NO: "",
+  //     });
+  //     // if (dtData[intSht].SERIAL != "") {
+  //     //   for( let intNo=0;intNo>intRow - 2;intNo++){
+
+  //     //   }
+  //     // }
+  //     //      For intNo As Integer = 0 To intRow - 2
+  //     //           If drRow("SERIAL").ToString.Trim = CType(gvSerial.Rows(intNo).FindControl("txtSerial"), TextBox).Text.Trim.ToUpper Then
+  //     //               drRow("ROW_COUNT") = 9
+  //     //               Exit For
+  //     //           End If
+  //     //       Next
+  //   }
+  //   return dtData;
+  // };
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
@@ -835,6 +881,12 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const setSerialDataTray = async () => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
+    setlblSerialNG(0)
+    setlblLog((prevState) => ({
+      ...prevState,
+      value: ``,
+      visble: "none",
+    }));
     try {
       let dtSerial = getInputSerial();
       let _strLot = lblLot.trim().toUpperCase();
@@ -845,7 +897,25 @@ function fn_ScanSMTSerialPcsChrome() {
       let _strScanResultAll = "OK";
       let _intRowSerial = 0;
       let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
-
+      const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+      if (allSerialEmpty) {
+        hideLoading();
+        setlblLog((prevState) => ({
+          ...prevState,
+          value: `Please Input Serial No.`,
+          visble: "",
+        }));
+        setlblResult((prevState) => ({
+          ...prevState,
+          value: '',
+        }));
+        setgvSerial((prevState) => ({ ...prevState, visble: "", value: "" }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+        setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+      }, 300);
+        return;        
+      }
       if (!_bolTrayError) {
         // for (let i = 0; i < dtSerial.length; i++) {
         await axios
@@ -1027,10 +1097,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   _intRow < dtSerial.length;
                   _intRow++
                 ) {
-                  // if (
-                  //   _strSerial.toUpperCase ==
-                  //   dtSerial[_intRow].SERIAL.trim().toUpperCase
-                  // ) {
+     
                   let isDuplicate = dtSerial.some((item, index) => {
                     console.log(
                       `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
@@ -1040,7 +1107,6 @@ function fn_ScanSMTSerialPcsChrome() {
                       _strSerial.toUpperCase() === item.SERIAL.toUpperCase()
                     );
                   });
-                  // let isDuplicate = _strSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
                   if (isDuplicate) {
                     console.log("ซ้ำ1", _strSerial);
                     _strMessageUpdate =
@@ -1460,8 +1526,16 @@ function fn_ScanSMTSerialPcsChrome() {
               _bolError = true;
             }
 
-            if (_bolError) {
-              setlblSerialNG(parseInt(lblSerialNG) + 1);
+            if (_strScanResultUpdate=='NG') {
+              // setLblSerialNG(0)
+              setlblSerialNG((prevValue) => {
+                const numericValue = parseInt(prevValue, 10);
+                if (isNaN(numericValue)) {
+                  return 1;
+                } else {
+                  return numericValue + 1;
+                }
+              });
             }
             dtSerial[drRow].REJECT = _strReject1;
             dtSerial[drRow].TOUCH_UP = _strTouchUp;
@@ -1626,13 +1700,16 @@ function fn_ScanSMTSerialPcsChrome() {
           visble: true,
           value: dtSerial,
         }));
-        ExportGridToCSV(dtSerial, columns);
+        // ExportGridToCSV(dtSerial, columns);
       } else {
         setgvScanResult((prevState) => ({
           ...prevState,
           visble: true,
           value: {},
         }));
+      }
+      if(EXPORT_CSV_FLG=='Y'){
+        ExportCSV(dtSerial,columns);
       }
       scrollToTop();
       await getInitialSerial();
@@ -1652,26 +1729,30 @@ function fn_ScanSMTSerialPcsChrome() {
       behavior: "smooth",
     });
   };
-  const ExportGridToCSV = (data, ColumnsHeader) => {
+
+  const ExportCSV = (data, ColumnsHeader) => {
+    const date = new Date();
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
     );
-
+  
     const headers = filteredColumns.map((col) => col.key);
-
+  
     const filteredData = data.map((row) =>
       filteredColumns.map((col) => row[col.dataIndex] || "")
     );
+  
+    const csvContent = [
+      headers.join(","), 
+      ...filteredData.map((row) => row.join(",")) 
+    ].join("\n");
+  
 
-    const wsData = [headers, ...filteredData];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blobData = new Blob([excelBuffer], {
-      type: "application/octet-stream",
-    });
-    saveAs(blobData, "export.xlsx");
+    const bom = "\uFEFF";
+    const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, `Final_Gate_Auto_${formattedDate}.csv`);
   };
 
   const columns = [

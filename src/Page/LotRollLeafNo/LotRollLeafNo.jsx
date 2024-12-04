@@ -23,7 +23,7 @@ function LotTraceView() {
           <Card
             component={Paper}
             className="Card-ViewRollTitlePage"
-            style={{ width: "200px" }}
+            style={{ maxWidth: "230px",width:'100%' }}
           >
             <b style={{ fontSize: "32px" }}>Roll Leaf No.</b>
           </Card>
@@ -45,7 +45,26 @@ function LotTraceView() {
             <br />
             {txtProd}
           </Card>
-          <Tooltip title="Click!! Export to Excel">
+            <div
+          style={{
+            width: "87%",
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop:'25px',
+            marginRight:'5px'
+            // display: gvMaterial.value.length > 0 ? "flex" : "none",
+          }}
+        >
+          <Button
+            size="small"
+            icon={<Avatar shape="square" src={excel} size="small" />}
+            onClick={() => btnExport_Click()}
+          >
+            Export
+          </Button>
+        </div>
+  
+          {/* <Tooltip title="Click!! Export to Excel">
             <Button
               type="primary"
               icon={
@@ -76,9 +95,9 @@ function LotTraceView() {
             >
               Export
             </Button>
-          </Tooltip>
+          </Tooltip> */}
         </div>
-        <br />
+        
         <Table
           dataSource={tblLeafNo.value}
           columns={columns}

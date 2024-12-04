@@ -581,7 +581,7 @@ function fn_ScanSMTSerialPcsChrome() {
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
-      settxtSerial("");
+      settxtSerial(Array(gvSerial.value.length).fill(""));
       if (FQC == "Y") {
         settxtMachine((prevState) => ({
           ...prevState,
@@ -970,6 +970,7 @@ function fn_ScanSMTSerialPcsChrome() {
       }
     }
   };
+
   const ibtOPBack_Click = async () => {
     setgvScanResult((prevState) => ({
       ...prevState,
@@ -1125,6 +1126,12 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const setSerialDataTray = async () => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
+    setlblSerialNG(0)
+    setlblLog((prevState) => ({
+      ...prevState,
+      value: ``,
+      visble: "none",
+    }));
     try {
       let dtSerial = await getInputSerial();
       let _strLot = lblLot.trim().toUpperCase();
@@ -1137,6 +1144,26 @@ function fn_ScanSMTSerialPcsChrome() {
       let _strMessageUpdate = "";
       let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
       let datHfWeekCode = hfWeekCode;
+      const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+      if (allSerialEmpty) {
+        hideLoading();
+        setlblLog((prevState) => ({
+          ...prevState,
+          value: `Please Input Serial No.`,
+          visble: "",
+        }));
+        setlblResult((prevState) => ({
+          ...prevState,
+          value: '',
+        }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+        setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+        setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+      }, 300);
+        return;        
+      }
+
       if (!_bolTrayError) {
         await axios
           .post("/api/common/GetSerialTestResultManyTable", {
@@ -1208,12 +1235,7 @@ function fn_ScanSMTSerialPcsChrome() {
               _strTouchUp = dtSerial[drRow].TOUCH_UP;
               _strRejectGroup = dtSerial[drRow].REMARK;
             }
-            console.log(
-              "dtSerial[drRow]",
-              hfTestResultFlag,
-              hfSerialLength,
-              _strRejectGroup
-            );
+
             if (_strScanResultUpdate != "NG") {
               if (DUPLICATE_CHECK_FLG == "1") {
                 if (dtSerial[drRow].ROW_COUNT == 0) {
@@ -1787,10 +1809,21 @@ function fn_ScanSMTSerialPcsChrome() {
             if (_strScanResultUpdate === "NG") {
               _strScanResultAll = "NG";
             }
-
-            if (_bolError) {
-              setlblSerialNG(lblSerialNG + 1);
+            if (_strScanResultUpdate=='NG') {
+              // setLblSerialNG(0)
+              setlblSerialNG((prevValue) => {
+                const numericValue = parseInt(prevValue, 10);
+                if (isNaN(numericValue)) {
+                  return 1;
+                } else {
+                  return numericValue + 1;
+                }
+              });
             }
+
+            // if (_bolError) {
+            //   setlblSerialNG(lblSerialNG + 1);
+            // }
           }
           _intRowSerial = _intRowSerial + 1;
         }

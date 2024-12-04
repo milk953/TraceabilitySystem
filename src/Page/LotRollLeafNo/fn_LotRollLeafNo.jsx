@@ -103,19 +103,30 @@ function fn_LotRollLeafNo() {
     } else {
       strType = "ROLL";
     }
+    console.log(txtRollNo.label, "btnExport_Click", strType);
     await axios
       .post("/api/ViewTraceLot/fnLotRollLeafByLotData", {
-        dataList:{        strNo: txtRollNo.value,
+        dataList:{        
+          strNo: txtRollNo.value,
           strPlantCode:Fac,
           strType:strType}
 
       })
       .then((res) => {
-        datagvFinalExport = res.data;
+        if(res.data.length>0){
+          datagvFinalExport = res.data;
+          ExportGridToCSV(datagvFinalExport,columnsExport,'RollLeaf'+txtRollNo.value+'.xls')
+        }
+        else{
+          Swal.fire({
+            title: "No Data Export!",
+            icon: "error",
+          });
+        }
         
       });
       
-      ExportGridToCSV(datagvFinalExport,columnsExport,'RollLeaf'+txtRollNo.value+'.xls')
+      
       
   };
 
