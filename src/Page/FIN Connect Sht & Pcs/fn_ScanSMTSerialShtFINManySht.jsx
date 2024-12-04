@@ -2,7 +2,6 @@ import { getBottomNavigationActionUtilityClass } from "@mui/material";
 import { Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import Swal from "sweetalert2";
 import {useLoading} from "../../loading/fn_loading";  
 const fn_ScanSMTSerialShtFINManySht = () => {
   //region useState
@@ -827,7 +826,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               }
             }
           } else {
-            Swal.fire("error", "Product not found.", "error");
+            setlblLog(`Product ${strPrdname} not found.`);
+            setlblLogState(true);
             setLotValue("");
             Fctxtlot.current.focus();
           }
@@ -1102,7 +1102,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setProductcombo(response.data);
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
     } else if (type == "getProductSerialMaster") {
       await axios
@@ -1111,7 +1112,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setSerialMaster(res.data);
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
     } else if (type == "GetProductDataByLot") {
       let dtData = [];
@@ -1122,7 +1124,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           dtData = res.data;
         })
         .catch((error) => {
-          // Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return dtData;
     } else if (type == "GetLotSerialCountData") {
@@ -1135,7 +1138,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           drSerialCount = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return drSerialCount;
     } else if (type == "GetConnectShtMasterCheckResult") {
@@ -1184,7 +1188,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetSheetDuplicateConnectShtType") {
@@ -1199,7 +1204,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetSerialDuplicateConnectSht") {
@@ -1215,7 +1221,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.intRow;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "SetSerialLotShtELTTable") {
@@ -1237,7 +1244,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetRollLeafScrapRBMP") {
@@ -1250,7 +1258,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.SCRAP_FLG;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "SetSerialRecordTimeTrayTable") {
@@ -1278,7 +1287,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "SetRollLeafTrayTable") {
@@ -1306,7 +1316,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetRollLeafDuplicate") {
@@ -1320,7 +1331,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.intCount;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
         return
     } else if (type == "Get_SPI_AOI_RESULT") {
@@ -1340,7 +1352,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     }else if (type == "SetSerialLotShtTable"){
@@ -1362,7 +1375,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }).then((res) => {
         result = res.data.p_error;
       }).catch((error) => {
-        Swal.fire("Error", error.message);
+        setlblLog(`Error ${error.message}`);
+        setlblLogState(true);
       })
       return result;
     }
@@ -1690,19 +1704,22 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     key: "SCAN_RESULT",
     align: "center",
     width: 80,
-    padding: '0px 0px 0px 0px',
     render: (text, record, index) => {
-      const backgroundColor =
-        record.SCAN_RESULT === "NG" ? "#f50" : 
-        record.SCAN_RESULT === "OK" ? "#87d068" : 
-        "transparent";
-      
-      return (
-        < Tag style={{width:100,textAlign:'center',padding:'0px 0px 0px 0px'}}  color={backgroundColor} >
-          {text}
-        </Tag>
-      );
+      return text;       
     },
+    // padding: '0px 0px 0px 0px',
+    // render: (text, record, index) => {
+    //   const backgroundColor =
+    //     record.SCAN_RESULT === "NG" ? "#f50" : 
+    //     record.SCAN_RESULT === "OK" ? "#87d068" : 
+    //     "transparent";
+      
+    //   return (
+    //     < Tag style={{width:100,textAlign:'center',padding:'0px 0px 0px 0px'}}  color={backgroundColor} >
+    //       {text}
+    //     </Tag>
+    //   );
+    // },
   },
   {
     title: "Remark",
@@ -1715,6 +1732,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     },
   },
 ];
+const getRowClassName = (record) => {
+  if (record.SCAN_RESULT === "NG") {
+    return 'row-red';
+  } else if (record.SCAN_RESULT === "OK") {
+    return 'row-green';
+  }
+  return '';
+};
   return {
     productCombo,
     setProductcombo,
@@ -1777,7 +1802,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     lblResult,
     gvScanResult,
     hideImg,
-    columns
+    columns,
+    getRowClassName
   };
 };
 

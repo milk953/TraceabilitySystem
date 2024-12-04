@@ -167,3 +167,10 @@
   height: 45px;
   text-align: center;
 }
+.row-red {
+  color: red;
+}
+
+.row-green {
+  color: green;
+}

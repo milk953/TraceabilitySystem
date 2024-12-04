@@ -89,6 +89,7 @@ function ScanSMTSerialShtFINManySht() {
     gvScanResult,
     hideImg,
     columns,
+    getRowClassName
   } = fn_ScanSMTSerialShtFINManySht();
 
   return (
@@ -511,6 +512,7 @@ function ScanSMTSerialShtFINManySht() {
                   dataSource={gvScanResult}
                   style={{ width: "1000px",marginTop:"10px" }}
                   pagination={false}
+                  rowClassName={getRowClassName}
                   size="small"
                 />
 
