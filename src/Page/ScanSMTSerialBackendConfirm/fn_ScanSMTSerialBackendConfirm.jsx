@@ -323,6 +323,19 @@ function fn_ScanSMTSerialBackendConfirm() {
         _strLot = strLotData[0];
         showLoading('กำลังบันทึก กรุณารอสักครู่');
 
+        const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+        if (allSerialEmpty) {
+            hideLoading();
+            setlblLog("Please Input Serial No.");
+            setvisiblelog(true);
+            setTimeout(() => {
+                inputgvSerial.current[0].focus();
+            }, 100);
+            setgvScanResult(false);
+            setgvScanData([]);
+            return;
+        }
+
         if (txtLotNo !== "" && dtSerial.length > 0) {
             for (let i = 0; i < dtSerial.length; i++) {
                 await axios.post("/api/getSerialSheetManyTable", {
@@ -363,18 +376,18 @@ function fn_ScanSMTSerialBackendConfirm() {
 
                     if (!CONNECT_SERIAL_ERROR.includes(_strSerial) && _strSerial !== "") {
                         await axios.post("/api/get_backendresult", {
+                            Message: _strMessage,
                             strPlantCode: plantCode,
                             strProduct: _strPrdName,
                             pcsPosition: _intShtSeq,
                             frontSheetNumber: _FrontSheetBarcode,
                             rearSheetNumber: _RearSheetBarcode,
-                            Message: _strMessage,
                             finalgatespiaoixray1time: FINAL_GATE_SPI_AOI_XRAY_1_TIME,
                             strSerial: _strSerial
                         })
                             .then((res) => {
                                 _strSerialResult = res.data.backen_result;
-                                //_strMessage = res.data.message;
+                                _strMessage = res.data.message;
                             });
                         console.log(_strSerialResult);
 

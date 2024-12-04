@@ -52,8 +52,8 @@ function ScanSMTSerialPcsAutoTray() {
             >
                 <Box justifyContent="space-between"
                     sx={{
-                        marginLeft: "-6px",
-                        marginTop: "-10px"
+                        // marginLeft: "-6px",
+                        // marginTop: "-10px"
                     }}
                 >
                     <TableContainer
@@ -243,8 +243,8 @@ function ScanSMTSerialPcsAutoTray() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "412px",
-                                marginLeft: "22px",
+                                width: "90%",
+                                //marginLeft: "22px",
                             }}
                         >
                             {lblLog}
@@ -252,12 +252,12 @@ function ScanSMTSerialPcsAutoTray() {
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerialPcs" style={{ position: "relative" }}>
+                        <div className="divgvSerialPcs">
                             <TableContainer
                                 component={Paper}
                                 style={{
                                     width: "100%",
-                                    display: "flex",
+                                    //display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
                                 }}
@@ -391,6 +391,7 @@ function ScanSMTSerialPcsAutoTray() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                //rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                             />
                         </>
                     )}

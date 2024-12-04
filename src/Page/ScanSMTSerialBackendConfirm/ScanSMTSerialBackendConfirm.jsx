@@ -25,7 +25,7 @@ import {
 import { Table as AntTable } from 'antd';
 import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "/src/Page/ScanSMTSerialBackendConfirm/ScanSMTSerialBackendConfirm.css";
+import "./ScanSMTSerialBackendConfirm.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialBackendConfirm } from "./fn_ScanSMTSerialBackendConfirm";
 import Pageimg from "/src/assets/1.jpg";
@@ -47,10 +47,10 @@ function ScanSMTSerialBackendConfirm() {
                 sx={{ display: "flex" }}
             >
                 <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-6px",
-                        marginTop: "-10px"
-                    }}
+                    // sx={{
+                    //     marginLeft: "-6px",
+                    //     marginTop: "-10px"
+                    // }}
                 >
                     <TableContainer
                         component={Paper}

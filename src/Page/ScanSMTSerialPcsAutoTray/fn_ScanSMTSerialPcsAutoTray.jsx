@@ -333,9 +333,11 @@ function fn_ScanSMTSerialPcsAutoTray() {
     };
 
     const handleChangePackingNo = async () => {
+        setlblLotTotal("0");
+        setlblSerialNG("0");
         if (txtPackingNo.length !== 0) {
-            let dtLotPassCount = [];
-            let dtPackPassCount = [];
+            let dtLotPassCount = 0;
+            let dtPackPassCount = 0;
 
             await axios.post("/api/Common/getSerialPassByLot", {
                 strLotNo: lblLot,
@@ -356,15 +358,14 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 });
             console.log("dtPackPassCount:", dtPackPassCount);
 
-            setlblLotTotal("0");
-            setlblSerialNG("0");
-            if (dtLotPassCount.length > 0) {
+
+            if (dtLotPassCount > 0) {
                 setlblLotTotal(dtLotPassCount);
             }
-            if (dtPackPassCount.length > 0) {
-                setlblLotTotal(`${dtPackPassCount}/${lblLotTotal}`);
+            if (dtPackPassCount > 0) {
+                setlblLotTotal(`${dtPackPassCount} / ${dtLotPassCount}`);
             } else {
-                setlblLotTotal(`0/${lblLotTotal}`);
+                setlblLotTotal(`0 / ${dtLotPassCount}`);
             }
             SetMode("SERIAL");
         } else {
@@ -406,7 +407,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
-        setlblSerialNG("0");
+        //setlblSerialNG("0");
     };
 
     const SetMode = async (strType) => {
@@ -450,7 +451,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
             settxtPackingNo("");
             settxtPackingNoDisabled(false);
             setpnlPackingGroup(true);
-            setlblLotTotal("0");
             setvisiblelog(false);
             setpnlSerial(false);
             settxtgvSerial("");
@@ -488,8 +488,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
     const getInitialSerial = async () => {
         let dtData = [];
-        for (let intRow = 1; intRow <= hfSerialCount; intRow++) {
-            dtData.push({ SEQ: intRow });
+        for (let intRow = 0; intRow < hfSerialCount; intRow++) {
+            dtData.push({ SEQ: intRow + 1 });
         }
         setgvSerialData(dtData);
         console.log("gvserialdata:", dtData)
@@ -497,8 +497,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
     };
 
     const setSerialDataTray = async () => {
-        const dtSerial = await getInputSerial();
-        let _strLot = "";
+        let dtSerial = await getInputSerial();
+        let _strLot = lblLot;
         let _strPrdName = selProduct;
         let _strTray = " ";
         let _bolTrayError = false;
@@ -508,9 +508,39 @@ function fn_ScanSMTSerialPcsAutoTray() {
         let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
         showLoading("กำลังบันทึก กรุณารอสักครู่");
 
+        const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+        if (allSerialEmpty) {
+            hideLoading();
+            setlblLog("Please Input Serial No.");
+            setvisiblelog(true);
+            setTimeout(() => {
+                inputgvSerial.current[0].focus();
+            }, 100);
+            setgvScanResult(false);
+            setgvScanData([]);
+            return;
+        } else {
+            setvisiblelog(false);
+            setlblLog("");
+        }
+
         console.log(dtSerial, "dtSerial");
 
         if (!_bolTrayError) {
+
+            await axios.post("/api/Common/GetSerialTestResultManyOnlyGood", {
+                dataList: [
+                    {
+                        strPlantCode: plantCode,
+                        strPrdname: _strPrdName
+                    },
+                ],
+                dtSerial: dtSerial,
+            })
+                .then((res) => {
+                    dtSerial = res.data;
+                    console.log(res.data);
+                });
 
             if (hfCheckWeekCode === "Y") {
                 await axios.post("/api/Common/getWeekCodebyLot", {
@@ -556,6 +586,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                     let _strTestResult = "NO";
                     if (hfTestResultFlag === "Y") {
+                        console.log(dtSerial[i].TEST_RESULT, "dtSerial[i].TEST_RESULT")
                         _strTestResult = dtSerial[i].TEST_RESULT;
                         _strTypeTestResult = dtSerial[i].TYPE_TEST_RESULT;
                         _strReject1 = dtSerial[i].REJECT;
@@ -564,7 +595,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         _strTouchUp = dtSerial[i].TOUCH_UP;
                         _strRejectGroup = dtSerial[i].REMARK;
                     }
-                    console.log(_strRejectGroup)
+                    //console.log(_strRejectGroup)
 
                     if (DUPLICATE_CHECK_FLG === "1") {
                         let _strSerialSegment = "";
@@ -572,19 +603,22 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         const end = parseInt(hfDuplicateEnd);
                         _strSerialSegment = _strSerial.substring(start - 1, end);
                         if (dtSerial[i].ROW_COUNT === 0) {
-                            await axios.post("/api/Common/getSerialDuplicate", {
-                                strFghSerialNo: _strSerialSegment,
-                                strPlantCode: plantCode
+                            await axios.post("/api/Common/GetSerialDuplicate", {
+                                dataList: {
+                                    strFghSerialNo: _strSerialSegment,
+                                    strPlantCode: plantCode
+                                },
                             })
                                 .then((res) => {
                                     _intCountDup = res.data.row_count;
+                                    dtSerial[i].ROW_COUNT = _intCountDup;
                                 });
-                            dtSerial[i].ROW_COUNT = _intCountDup;
                         } else {
                             _intCountDup = dtSerial[i].ROW_COUNT;
                         }
                     }
 
+                    console.log(_strSerial, "_strSerial")
                     if (_strSerial.length === hfSerialLength) {
                         let _strFixDigit = "";
                         let dtchecksumserial = true;
@@ -781,7 +815,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 .then((res) => {
                                     _dblPlasmaTime = res.data.plasma_time;
                                 });
-                                console.log(_dblPlasmaTime);
+                            console.log(_dblPlasmaTime);
                             if (_dblPlasmaTime === 0) {
                                 _strMessageUpdate = _strMessageUpdate + " Skip Plasma / งานไม่ผ่านพลาสม่า";
                                 _strRemark = "Skip Plasma";
@@ -884,6 +918,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                         if (!_bolError) {
                             if (hfTestResultFlag === "Y") {
+                                console.log(_strTestResult, "mmmmmf")
                                 if (_strTouchUp === "NG" && _strRejectGroup !== "MASTER") {
                                     if (_strTestResult === "OK") {
                                         _strMessageUpdate = "Touch up result was fail / ผล Touch up ชิ้นงานแสดงไม่ผ่าน";
@@ -1117,12 +1152,13 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 setlblResultcolor("#059212");
             }
 
+            console.log(hfPlasmaCheck, hfPlasmaHideTime, "_dblPlasmaRemain")
             if (hfPlasmaCheck === "Y" && hfPlasmaHideTime === "N") {
                 if (_dblPlasmaRemain > 0) {
-                    setlblTime("Remain ");
+                    //setlblTime("Remain ");
                     if (Math.floor(_dblPlasmaRemain) > 0) {
-                        const formattedText = `${Math.floor(_dblPlasmaRemain)} hr.`;
-                        setlblTime(lblTime + formattedText);
+                        const formattedText = `${Math.floor(_dblPlasmaRemain)} Hr.`;
+                        setlblTime("Remain" + formattedText);
                     }
                     const fractionalPart = _dblPlasmaRemain % 1;
                     if (fractionalPart > 0) {
@@ -1138,44 +1174,69 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 }
             } else {
                 setlblTime("");
+                setlblTimecolor("#fff");
             }
 
+            let _strErrorUpdate = "";
             for (let i = 0; i < dtSerial.length; i++) {
-                let _strErrorUpdate = "";
-                await axios.post("/api/Common/SetSerialLotTrayTableGood", {
-                    dataList: {
-                        strPlantCode: plantCode,
-                        strPrdName: _strPrdName,
-                        strLot: _strLot,
-                        strUserID: hfUserID,
-                        strStation: hfUserStation,
-                        data: [
-                            {
-                                SERIAL: dtSerial[i].SERIAL,
-                                UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                                ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                                REJECT_CODE: dtSerial[i].REJECT_CODE,
-                                TEST_RESULT: dtSerial[i].TEST_RESULT,
-                                REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-                                SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-                                PACKING_NO: "",
-                            },
-                        ],
-                    },
-                })
+                // await axios.post("/api/Common/SetSerialLotTrayTableGood", {
+                //     dataList: {
+                //         strPlantCode: plantCode,
+                //         strPrdName: _strPrdName,
+                //         strLot: _strLot,
+                //         strUserID: hfUserID,
+                //         strStation: hfUserStation,
+                //         data: [
+                //             {
+                //                 SERIAL: dtSerial[i].SERIAL,
+                //                 UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                //                 ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                //                 REJECT_CODE: dtSerial[i].REJECT_CODE,
+                //                 TEST_RESULT: dtSerial[i].TEST_RESULT,
+                //                 REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
+                //                 SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+                //                 PACKING_NO: dtSerial[i].PACKING_NO,
+                //             },
+                //         ],
+                //     },
+                // })
+                //     .then((res) => {
+                //         _strErrorUpdate = res.data.p_error;
+                //         console.log(res.data,'mmmmv');
+                //     });
+                await axios
+                    .post("/api/Common/SetSerialLotTrayTableGood2", {
+                        dataList: {
+                            strPlantCode: plantCode,
+                            strPrdName: _strPrdName,
+                            strLot: _strLot,
+                            strUserID: hfUserID,
+                            strStation: hfUserStation,
+                            SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+                            SERIAL: dtSerial[i].SERIAL,
+                            UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                            ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                            REJECT_CODE: dtSerial[i].REJECT_CODE,
+                            TEST_RESULT: dtSerial[i].TEST_RESULT,
+                            REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
+                            PACKING_NO: dtSerial[i].PACKING_NO,
+                        },
+                    })
                     .then((res) => {
                         _strErrorUpdate = res.data.p_error;
                     });
-
-                if (_strErrorUpdate !== "") {
-                    setlblResult("Error :" + _strErrorUpdate);
-                    setlblResultcolor("#BA0900");
-                }
             }
-        }
 
-        let dtLotPassCount = [];
-        let dtPackPassCount = [];
+            if (_strErrorUpdate !== "") {
+                setlblResult("Error : " + _strErrorUpdate);
+                setlblResultcolor("#BA0900");
+            }
+
+
+        }
+        let datalblLotTotal = 0;
+        let dtLotPassCount = 0;
+        let dtPackPassCount = 0;
         if (hfCheckPackingNo === "Y") {
             await axios.post("/api/Common/getSerialPassByLot", {
                 strLotNo: _strLot,
@@ -1192,18 +1253,15 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 .then((res) => {
                     dtPackPassCount = res.data.lot_count;
                 });
-            if (dtLotPassCount.length > 0) {
-                setlblLotTotal(dtLotPassCount);
-            } else {
-                setlblLotTotal("0");
+            if (dtLotPassCount > 0) {
+                datalblLotTotal = dtLotPassCount;
             }
-            if (dtPackPassCount.length > 0) {
-                const newLotCount = dtPackPassCount;
-                const newLblLotTotal = `${newLotCount}/${lblLotTotal}`;
-                setlblLotTotal(newLblLotTotal);
+            if (dtPackPassCount > 0) {
+                datalblLotTotal = dtPackPassCount + " / " + dtLotPassCount;
             } else {
-                setlblLotTotal("0/" + lblLotTotal);
+                datalblLotTotal = "0 / " + dtLotPassCount;
             }
+            setlblLotTotal(datalblLotTotal);
         } else {
             await axios.post("/api/Common/getSerialPassByLot", {
                 strLotNo: _strLot,
@@ -1224,10 +1282,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             setgvScanData([]);
         }
 
-        console.log(gvScanData.length, "gvscanData")
-        if (gvScanData.length > 0) {
-            ExportGridToCSV('ELTResult.csv');
-        }
+        ExportGridToCSV(dtSerial, 'ELTResult.csv');
 
         settxtPcsTray(hfSerialCountOriginal);
         sethfSerialCount(hfSerialCountOriginal);
@@ -1475,17 +1530,22 @@ function fn_ScanSMTSerialPcsAutoTray() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-                if (text == '')
+                if (record.SERIAL == "") {
+                    return "";
+                } else {
                     return text;
-                else {
-                    return (
-                        <Tag
-                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
-                        >
-                            {text}
-                        </Tag>
-                    );
                 }
+                // if (text == '')
+                //     return text;
+                // else {
+                //     return (
+                //         <Tag
+                //             className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                //         >
+                //             {text}
+                //         </Tag>
+                //     );
+                // }
             },
             align: "center",
         },
@@ -1532,18 +1592,18 @@ function fn_ScanSMTSerialPcsAutoTray() {
     };
 
     const btnHiddenClick = () => {
-        ExportGridToCSV('ELTResult.csv');
+        ExportGridToCSV(gvScanData, 'ELTResult.csv');
     };
 
     //Export
-    const ExportGridToCSV = async (nameFile) => {
-        if (gvScanData.length <= 0) {
+    const ExportGridToCSV = async (data, nameFile) => {
+        if (data.length <= 0) {
             Swal.fire({
                 icon: "error",
                 title: "No Data Export!",
             });
         } else {
-            exportExcelFile(gvScanData, nameFile);
+            exportExcelFile(data, nameFile);
         }
     };
 

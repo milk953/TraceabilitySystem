@@ -34,7 +34,6 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Common/StyleCommon.css";
 import  '../SheetBinChecking/SheetBinCheck.css'
 import {fn_ScanSMTSerialRecordTimeReplace} from './fn_ScanSMTSerialRecordTimeReplace'
-import { color } from "framer-motion";
 function ScanSMTSerialRecordTimeReplace() {
   const{  txtSerialNo_TextChanged,
     txtSerialRefer,
@@ -54,7 +53,7 @@ function ScanSMTSerialRecordTimeReplace() {
     handleSetSerial,
     lblGroup ,gvSerialReplace ,
     setlblSerial,fntxtSerialReplace,fntxtSerialRefer,
-    columns,checkresult,fnddlProduct,BtnSubmit1_Cancel} =fn_ScanSMTSerialRecordTimeReplace()
+    columns,checkresult,fnddlProduct,BtnSubmit1_Cancel,pnlsubmit,gvSerialSubmit,serialrefer} =fn_ScanSMTSerialRecordTimeReplace()
   return (
     <div>
       <Hearder />
@@ -173,7 +172,7 @@ function ScanSMTSerialRecordTimeReplace() {
                       <Typography>Group No.:</Typography>
                     </TableCell>
                     <TableCell colSpan={2} >
-                 {lblGroup.value}
+                      <Typography>{lblGroup.value}</Typography>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -265,17 +264,69 @@ function ScanSMTSerialRecordTimeReplace() {
                   </TableRow>
                 </TableBody>
               </Table>)}
-              {console.log(lblResult.value,"lblResult.value",lblResult.style)}
               
-              {/* <AntTable
-                    columns={columns}
-                    dataSource={gvRow.value}
-                    pagination={false}
-                    size="small"
-                    bordered
-                    className="tableGvResult"
-                    // style={{width:'70%',display:gvRow.visble}}
-                  /> */}
+              {pnlsubmit &&(
+              <>
+              <Table
+                className="CSS-GvSerial"
+                style={{
+                  width: "50%",
+                  marginTop: "20px",
+                }}
+                component={Card}
+              >
+                <TableHead>
+                  <TableCell
+                    sx={{ borderRight: "1px solid #d9d9d9" }}
+                    align="center"
+                  >
+                    No.
+                  </TableCell>
+                  <TableCell
+                    sx={{ borderRight: "1px solid #d9d9d9" }}
+                    align="center"
+                  >
+                   Reference Serial No.
+                  </TableCell>
+                  
+                  <TableCell align="center">New Serial No.</TableCell>
+                  <TableRow></TableRow>
+                </TableHead>
+                <TableBody>
+                  {/* <TableRow> */}
+                  {Array.from(
+                        { length: gvSerialSubmit.length },
+                        (_, index) => (
+                          <TableRow key={index}>
+                            <TableCell
+                              align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvSerialSubmit[index].SEQ}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                       {serialrefer}
+                            </TableCell>
+                            <TableCell
+                            align="center"
+                              sx={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {gvSerialSubmit[index].SERIAL_NO
+                              }
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
+         
+
+                 
+                </TableBody>
+              </Table>
+              </>
+              )}
             </Grid>
           </Grid>
         </Box>

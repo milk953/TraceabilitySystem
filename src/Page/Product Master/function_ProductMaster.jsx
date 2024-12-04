@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx';
-import swal from "sweetalert";
+//import swal from "sweetalert";
 import Swal from 'sweetalert2';
 
 function fn_ProductMaster() {
@@ -2019,6 +2019,23 @@ function fn_ProductMaster() {
         settxtProduct(txtProduct.toUpperCase().trim());
       }
 
+      if (
+        txtProduct === null ||
+        txtProduct === undefined ||
+        txtProduct === "" ||
+        txtProduct === "null" ||
+        txtProduct.length == 0
+      ) {
+        Swal.fire({
+          icon: "error",
+          text: "Please input product name.",
+        });
+        setErrorPrdName(true);
+        return;
+      } else {
+        setErrorPrdName(false);
+      }
+
       if (txtShtLot === "") {
         setErrorShtLot(true);
         setErrorShtLotMessage("Please input Sheet/Lot.")
@@ -2027,6 +2044,23 @@ function fn_ProductMaster() {
         setErrorShtLotMessage("Please input Sheet/Lot with numbers.")
       } else {
         settxtShtLot(txtShtLot);
+      }
+
+      if (
+        txtShtLot === null ||
+        txtShtLot === undefined ||
+        txtShtLot === "" ||
+        txtShtLot === "null" ||
+        txtShtLot.length == 0
+      ) {
+        Swal.fire({
+          icon: "error",
+          text: "Please input Sheet/Lot.",
+        });
+        setErrorShtLot(true);
+        return;
+      } else {
+        setErrorShtLot(false);
       }
 
       if (txtPcsSht === "") {
@@ -2039,6 +2073,23 @@ function fn_ProductMaster() {
         settxtPcsSht(txtPcsSht);
       }
 
+      if (
+        txtPcsSht === null ||
+        txtPcsSht === undefined ||
+        txtPcsSht === "" ||
+        txtPcsSht === "null" ||
+        txtPcsSht.length == 0
+      ) {
+        Swal.fire({
+          icon: "error",
+          text: "Please input Piece/Sheet.",
+        });
+        setErrorPcsSht(true);
+        return;
+      } else {
+        setErrorPcsSht(false);
+      }
+
       if (txtShtScan === "") {
         setErrorShtScan(true);
         setErrorShtScanMessage("Please input Sheet/Scan.");
@@ -2047,6 +2098,23 @@ function fn_ProductMaster() {
         setErrorShtScanMessage("Please input Sheet/Scan with numbers.");
       } else {
         settxtShtScan(txtShtScan);
+      }
+
+      if (
+        txtShtScan === null ||
+        txtShtScan === undefined ||
+        txtShtScan === "" ||
+        txtShtScan === "null" ||
+        txtShtScan.length == 0
+      ) {
+        Swal.fire({
+          icon: "error",
+          text: "Please input Sheet/Scan.",
+        });
+        setErrorShtScan(true);
+        return;
+      } else {
+        setErrorShtScan(false);
       }
 
       if (txtShtLaser === "") {
@@ -2062,29 +2130,61 @@ function fn_ProductMaster() {
         const start = parseInt(txtConfigStart);
         const end = parseInt(txtConfigEnd);
         if (txtConfigStart === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start config digit with numbers.",
+          });
           setErrorConfigStart(true);
           setErrorConfigStartMessage("Please input start config digit with numbers.");
         }
         if (txtConfigEnd === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input end config digit with numbers.",
+          });
           setErrorConfigEnd(true);
           setErrorConfigEndMessage("Please input end config digit with numbers.");
         }
         if (txtConfigWord === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input config word.",
+          });
           setErrorConfigWord(true);
           setErrorConfigWordMessage("Please input config word.");
         } else if (isNaN(txtConfigStart)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start config digit with numbers.",
+          });
           setErrorConfigStart(true);
           setErrorConfigStartMessage("Please input start config digit with numbers.");
         } else if (isNaN(txtConfigEnd)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input end config digit with numbers.",
+          });
           setErrorConfigEnd(true);
           setErrorConfigEndMessage("Please input end config digit with numbers.");
         } else if (parseInt(txtConfigStart) > parseInt(txtConfigEnd)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start less than end of config digit.",
+          });
           setErrorConfigStart(true);
           setErrorConfigStartMessage("Please input start less than end of config digit.");
         } else if (parseInt(txtConfigEnd) > parseInt(txtSerialLength)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input end config digit not over serial length.",
+          });
           setErrorConfigEnd(true);
           setErrorConfigEndMessage("Please input end config digit not over serial length.");
         } else if (txtConfigWord.length !== (end - start + 1)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start and end digit same as length of config word.",
+          });
           setErrorConfigStart(true);
           setErrorConfigStartMessage("Please input start and end digit same as length of config word.");
         }
@@ -2093,20 +2193,32 @@ function fn_ProductMaster() {
       }
 
       if (txtDupStart === "") {
+        Swal.fire({
+          icon: "error",
+          text: "Please input duplicate start digit.",
+        });
         setErrorDupStart(true);
         setErrorDupStartMessage("Please input duplicate start digit.");
       } else if (isNaN(txtDupStart)) {
         setErrorDupStart(true);
         setErrorDupStartMessage("Please input duplicate start digit with numbers.");
       } else if (parseInt(txtDupStart) > parseInt(txtDupEnd)) {
+        Swal.fire({
+          icon: "error",
+          text: "Please input duplicate start less than end of duplicate digit.",
+        });
         setErrorDupStart(true);
         setErrorDupStartMessage("Please input duplicate start less than end of duplicate digit.");
-        return false; 
+        return false;
       } else {
         settxtDupStart(txtDupStart);
       }
 
       if (txtDupEnd === "") {
+        Swal.fire({
+          icon: "error",
+          text: "Please input duplicate end digit.",
+        });
         setErrorDupEnd(true);
         setErrorDupEndMessage("Please input duplicate end digit.");
       } else if (isNaN(txtDupEnd)) {
@@ -2117,19 +2229,35 @@ function fn_ProductMaster() {
       }
 
       if (parseInt(txtDupEnd) > parseInt(txtSerialLength)) {
+        Swal.fire({
+          icon: "error",
+          text: "Please input duplicate end digit not over serial length.",
+        });
         setErrorDupEnd(true);
         setErrorDupEndMessage("Please input duplicate end digit not over serial length.");
-        return false; 
-      } 
+        return false;
+      }
 
       if (ReqCheckPrdShtCheck) {
         if (isNaN(txtCheckPrdShtFrom)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input sheet PRD. start digit.",
+          });
           setErrorCheckPrdShtFrom(true);
           setErrorCheckPrdShtFromMessage("Please input sheet PRD. start digit.");
         } else if (isNaN(txtCheckPrdShtTo)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input sheet PRD. end digit.",
+          });
           setErrorCheckPrdShtTo(true);
           setErrorCheckPrdShtToMessage("Please input sheet PRD. end digit.");
         } else if (isNaN(txtCheckPrdShtTo) && isNaN(txtCheckPrdShtFrom) && parseInt(txtCheckPrdShtFrom) > parseInt(txtCheckPrdShtTo)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input sheet PRD. start less than end digit.",
+          });
           setErrorCheckPrdShtFrom(true);
           setErrorCheckPrdShtFromMessage("Please input sheet PRD. start less than end digit.");
         }
@@ -2140,10 +2268,18 @@ function fn_ProductMaster() {
 
       if (ReqCheckLotShtCheck) {
         if (txtCheckLotShtFrom === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input sheet lot start digit.",
+          });
           setErrorCheckLotShtFrom(true);
           setErrorCheckLotShtFromMessage("Please input sheet lot start digit.");
         }
         if (txtCheckLotShtTo === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input sheet lot end digit.",
+          });
           setErrorCheckLotShtTo(true);
           setErrorCheckLotShtToMessage("Please input sheet lot end digit.");
         }
@@ -2154,6 +2290,10 @@ function fn_ProductMaster() {
           setErrorCheckLotShtTo(true);
           setErrorCheckLotShtToMessage("Please input sheet lot end digit.");
         } else if (parseInt(txtCheckLotShtFrom) > parseInt(txtCheckLotShtTo)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input sheet lot start less than end digit.",
+          });
           setErrorCheckLotShtFrom(true);
           setErrorCheckLotShtFromMessage("Please input sheet lot start less than end digit.");
         }
@@ -2164,6 +2304,10 @@ function fn_ProductMaster() {
 
       if (ReqControlPlasmaCheck) {
         if (txtPlasmaTime === "" || isNaN(txtPlasmaTime)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input control plasma time.",
+          });
           setErrorPlasmaTime(true);
           setErrorPlasmaTimeMessage("Please input control plasma time.");
         }
@@ -2171,14 +2315,26 @@ function fn_ProductMaster() {
 
       if (ReqStartSeqCodeCheck) {
         if (txtStartSeqDigitFrom === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start seq. start digit.",
+          });
           setErrorStartSeqDigitFrom(true);
           setErrorStartSeqDigitFromMessage("Please input start seq. start digit.");
         }
         if (txtStartSeqDigitTo === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start seq. end digit.",
+          });
           setErrorStartSeqDigitTo(true);
           setErrorStartSeqDigitToMessage("Please input start seq. end digit.");
         }
         if (txtStartSeqCode === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start seq. code",
+          });
           setErrorStartSeqCode(true);
           setErrorStartSeqCodeMessage("Please input start seq. code");
         } else if (isNaN(txtStartSeqDigitFrom)) {
@@ -2188,6 +2344,10 @@ function fn_ProductMaster() {
           setErrorStartSeqDigitTo(true);
           setErrorStartSeqDigitToMessage("Please input start seq. end digit.");
         } else if (parseInt(txtStartSeqDigitFrom) > parseInt(txtStartSeqDigitTo)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input start seq. start less than end digit.",
+          });
           setErrorStartSeqDigitFrom(true);
           setErrorStartSeqDigitFromMessage("Please input start seq. start less than end digit.");
         }
@@ -2202,6 +2362,10 @@ function fn_ProductMaster() {
 
       if (ReqVendorLotCheck) {
         if (txtVendorLotLength === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input length of vendor lot.",
+          });
           setErrorVendorLotLength(true);
           setErrorVendorLotLengthMessage("Please input length of vendor lot.");
         }
@@ -2212,31 +2376,55 @@ function fn_ProductMaster() {
 
       if (ReqConRollLeafCheck) {
         if (txtRollNoLength === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input length of roll seq.",
+          });
           setErrorRollNoLength(true);
           setErrorRollNoLengthMessage("Please input length of roll seq.");
         }
         if (txtLeafNoLength === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input length of leaf seq.",
+          });
           setErrorLeafNoLength(true);
-          setErrorLeafNoLengthhMessage("Please input length of roll seq.");
+          setErrorLeafNoLengthhMessage("Please input length of leaf seq.");
         }
 
         if (txtLeafScan === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input of leaf scan",
+          });
           setErrorLeafScan(true);
           setErrorLeafScanMessage("Please input of leaf scan");
         } else if (isNaN(txtLeafScan)) {
           setErrorLeafScan(true);
           setErrorLeafScanMessage("Please input number of leaf scan");
         } else if (parseInt(txtLeafScan) === 0) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input number of leaf scan",
+          });
           setErrorLeafScan(true);
           setErrorLeafScanMessage("Please input number of leaf scan");
         }
 
         if (ReqCheckPrdRollCheck) {
           if (txtCheckRollPrdFrom === "") {
+            Swal.fire({
+              icon: "error",
+              text: "Please input roll PRD. start digit.",
+            });
             setErrorCheckRollPrdFrom(true);
             setErrorCheckRollPrdFromMessage("Please input roll PRD. start digit.");
           }
           if (txtCheckRollPrdTo === "") {
+            Swal.fire({
+              icon: "error",
+              text: "Please input roll PRD. end digit.",
+            });
             setErroCheckRollPrdTo(true);
             setErrorCheckRollPrdToMessage("Please input roll PRD. end digit.");
           }
@@ -2247,9 +2435,17 @@ function fn_ProductMaster() {
             setErroCheckRollPrdTo(true);
             setErrorCheckRollPrdToMessage("Please input roll PRD. end digit.");
           } else if (parseInt(txtCheckRollPrdFrom) > parseInt(txtCheckRollPrdTo)) {
+            Swal.fire({
+              icon: "error",
+              text: "Please input roll PRD. start less than end digit.",
+            });
             setErrorCheckRollPrdFrom(true);
             setErrorCheckRollPrdFromMessage("Please input roll PRD. start less than end digit.");
           } else if (txtCheckRollPrdWord === "") {
+            Swal.fire({
+              icon: "error",
+              text: "Please input check roll PRD. word.",
+            });
             setErrorCheckRollPrdWord(true);
             setErrorCheckRollPrdWordMessage("Please input check roll PRD. word.");
           }
@@ -2264,10 +2460,18 @@ function fn_ProductMaster() {
 
         if (RollReqCheckPrdLeafCheck) {
           if (txtRollCheckPrdLeafFrom === "") {
+            Swal.fire({
+              icon: "error",
+              text: "Please input leaf PRD. start digit.",
+            });
             setErrorRollCheckPrdLeafFrom(true);
             setErrorRollCheckPrdLeafFromMessage("Please input leaf PRD. start digit.");
           }
           if (txtRollCheckPrdLeafTo === "") {
+            Swal.fire({
+              icon: "error",
+              text: "Please input leaf PRD. end digit.",
+            });
             setErrorRollCheckPrdLeafTo(true);
             setErrorRollCheckPrdLeafToMessage("Please input leaf PRD. end digit.");
           }
@@ -2278,6 +2482,10 @@ function fn_ProductMaster() {
             setErrorRollCheckPrdLeafTo(true);
             setErrorRollCheckPrdLeafToMessage("Please input leaf PRD. end digit.");
           } else if (isNaN(txtRollCheckPrdLeafTo) && isNaN(txtRollCheckPrdLeafFrom) && parseInt(txtRollCheckPrdLeafFrom) > parseInt(txtRollCheckPrdLeafTo)) {
+            Swal.fire({
+              icon: "error",
+              text: "Please input leaf PRD. start less than end digit.",
+            });
             setErrorRollCheckPrdLeafFrom(true);
             setErrorRollCheckPrdLeafFromMessage("Please input leaf PRD. start less than end digit.");
           }
@@ -2290,10 +2498,18 @@ function fn_ProductMaster() {
 
         if (RollReqCheckLotLeafCheck) {
           if (txtRollCheckLotLeafFrom === "") {
+            Swal.fire({
+              icon: "error",
+              text: "Please input leaf lot start digit.",
+            });
             setErrorRollCheckLotLeafFrom(true);
             setErrorRollCheckLotLeafFromMessage("Please input leaf lot start digit.");
           }
           if (txtRollCheckLotLeafTo === "") {
+            Swal.fire({
+              icon: "error",
+              text: "Please input leaf lot end digit.",
+            });
             setErrorRollCheckLotLeafTo(true);
             setErrorRollCheckLotLeafToMessage("Please input leaf lot end digit.");
           }
@@ -2304,6 +2520,10 @@ function fn_ProductMaster() {
             setErrorRollCheckLotLeafTo(true);
             setErrorRollCheckLotLeafToMessage("Please input leaf lot end digit.");
           } else if (isNaN(txtRollCheckLotLeafTo) && isNaN(txtRollCheckLotLeafFrom) && parseInt(txtRollCheckLotLeafFrom) > parseInt(txtRollCheckLotLeafTo)) {
+            Swal.fire({
+              icon: "error",
+              text: "Please input leaf lot start less than end digit.",
+            });
             setErrorRollCheckLotLeafFrom(true);
             setErrorRollCheckLotLeafFromMessage("Please input leaf lot start less than end digit.");
           }
@@ -2349,6 +2569,10 @@ function fn_ProductMaster() {
 
       if (ReqDateProcCheck) {
         if (txtDateFromProc === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input process for serial date.",
+          });
           setErrorDateFromProc(true);
           setErrorDateFromProcMessage("Please input process for serial date.");
         }
@@ -2359,10 +2583,18 @@ function fn_ProductMaster() {
 
       if (ReqCheckWeekCodeCheck) {
         if (txtWeekCodeStart === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input week code start digit.",
+          });
           setErrorWeekCodeStart(true);
           setErrorWeekCodeStartMessage("Please input week code start digit.");
         }
         if (txtWeekCodeEnd === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input week code start digit.",
+          });
           setErrorWeekCodeEnd(true);
           setErrorWeekCodeEndMessage("Please input week code end digit.");
         }
@@ -2373,6 +2605,10 @@ function fn_ProductMaster() {
           setErrorWeekCodeEnd(true);
           setErrorWeekCodeEndMessage("Please input week code end digit.");
         } else if (parseInt(txtWeekCodeStart) > parseInt(txtWeekCodeEnd)) {
+          Swal.fire({
+            icon: "error",
+            text: "Please input week code start less than end digit.",
+          });
           setErrorWeekCodeStart(true);
           setErrorWeekCodeStartMessage("Please input week code start less than end digit.");
         }
@@ -2385,6 +2621,10 @@ function fn_ProductMaster() {
 
       if (ReqProcControlTimeCheck) {
         if (txtProcControlTime === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input process control time.",
+          });
           setErrorProcControlTime(true);
           setErrorProcControlTimeMessage("Please input process control time.");
         }
@@ -2397,6 +2637,10 @@ function fn_ProductMaster() {
 
       if (ReqShtControlPlasmaCheck) {
         if (txtShtPlasmaTime === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input sheet process control time.",
+          });
           setErrorShtPlasmaTime(true);
           setErrorShtPlasmaTimeMessage("Please input sheet process control time.");
         }
@@ -2407,6 +2651,10 @@ function fn_ProductMaster() {
 
       if (ReqFinInspectCheck) {
         if (txtFinInspectProc === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input final inspection process.",
+          });
           setErrorFinInspectProc(true);
           setErrorFinInspectProcMessage("Please input final inspection process.");
         }
@@ -2417,26 +2665,46 @@ function fn_ProductMaster() {
 
       if (txtAbbr === "") {
         if (selSheetType === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please select sheet type.",
+          });
           setErrorselSheetType(true);
           setErrorselSheetTypeMessage("Please select sheet type.");
         }
 
         if (selDateType === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Pease select date type.",
+          });
           setErrorselDateType(true);
           setErrorselDateTypeMessage("Pease select date type.");
         }
 
         if (txtEngCode === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input engineer code.",
+          });
           setErrorEngCode(true);
           setErrorEngCodeMessage("Please input engineer code.");
         }
 
         if (txtRevision === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input revision.",
+          });
           setErrorRevision(true);
           setErrorRevisionMessage("Please input revision.");
         }
 
         if (txtPcsTray === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input pcs/tray.",
+          });
           setErrorPcsTray(true);
           setErrorPcsTrayMessage("Please input pcs/tray.");
         } else if (isNaN(txtPcsTray)) {
@@ -2445,6 +2713,10 @@ function fn_ProductMaster() {
         }
 
         if (txtPcsScan === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input pcs/scan.",
+          });
           setErrorPcsScan(true);
           setErrorPcsScanMessage("Please input pcs/scan.");
         } else if (isNaN(txtPcsScan)) {
@@ -2453,6 +2725,10 @@ function fn_ProductMaster() {
         }
 
         if (txtChkStartDig === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input check start digit.",
+          });
           setErrorChkStartDig(true);
           setErrorChkStartDigMessage("Please input check start digit.");
         } else if (isNaN(txtChkStartDig)) {
@@ -2461,6 +2737,10 @@ function fn_ProductMaster() {
         }
 
         if (txtChkEndDig === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input check engineer digit.",
+          });
           setErrorChkEndDig(true);
           setErrorChkEndDigMessage("Please input check engineer digit.");
         } else if (isNaN(txtChkEndDig)) {
@@ -2469,11 +2749,19 @@ function fn_ProductMaster() {
         }
 
         if (txtChkWord === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input check word.",
+          });
           setErrorChkWord(true);
           setErrorChkWordMessage("Please input check word.");
         }
 
         if (txtSerialLength === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input serial length.",
+          });
           setErrorSerialLength(true);
           setErrorSerialLengthMessage("Please input serial length.");
         } else if (isNaN(txtSerialLength)) {
@@ -2482,11 +2770,19 @@ function fn_ProductMaster() {
         }
 
         if (txtSerialFormat === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please input serial btw file name.",
+          });
           setErrorSerialFormat(true);
           setErrorSerialFormatMessage("Please input serial btw file name.");
         }
 
         if (selLaminationSide === "") {
+          Swal.fire({
+            icon: "error",
+            text: "Please select lamination side.",
+          });
           setErrorLaminationSide(true);
           setErrorLaminationSideMessage("Please select lamination side.");
         }
@@ -2627,14 +2923,19 @@ function fn_ProductMaster() {
           })
             .then((res) => {
               console.log("แก้ไขข้อมูลสำเร็จ =", res.data);
-              swal("success", "You update data success", "success");
-              setlblMessageColor("darkblue");
-              setlblMessage("Data Update complete.");
-              setpnlMessage(true);
+              Swal.fire("Success", "Update Data Success", "success").then(
+                (result) => {
+                  if (result.isConfirmed) {
+                    setlblMessageColor("darkblue");
+                    setlblMessage("Data Update complete.");
+                    setpnlMessage(true);
+                  }
+                }
+              );
             })
             .catch((error) => {
               console.error("เกิดข้อผิดพลาด =", error);
-              swal("Error", error.res.data.message, "error");
+              Swal.fire("Error", error.res.data.message, "error");
             });
         } else {
           BeginTransFlg = true;
@@ -2757,14 +3058,19 @@ function fn_ProductMaster() {
           })
             .then((res2) => {
               console.log("บันทึกข้อมูลสำเร็จ =", res2);
-              swal("success", "You summit data success", "success");
-              setlblMessageColor("darkblue");
-              setlblMessage("Data Insert complete.");
-              setpnlMessage(true);
+              Swal.fire("Success", "Summit Data Success", "success").then(
+                (result) => {
+                  if (result.isConfirmed) {
+                    setlblMessageColor("darkblue");
+                    setlblMessage("Data Insert complete.");
+                    setpnlMessage(true);
+                  }
+                }
+              );
             })
             .catch((error) => {
               console.error("เกิดข้อผิดพลาด =", error);
-              swal("Error", error.response.data.message, "error");
+              Swal.fire("Error", error.res2.data.message, "error");
             });
         }
       } catch (error) {

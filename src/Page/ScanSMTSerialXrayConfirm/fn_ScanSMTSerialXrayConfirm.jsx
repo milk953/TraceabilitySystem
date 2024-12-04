@@ -186,7 +186,7 @@ function fn_ScanSMTSerialXrayConfirm() {
   };
 
   const btnSave_Click = async () => {
-    console.log("txtSerialtxtSerialtxtSerialtxtSerial",txtSerial)
+    console.log("txtSerialtxtSerialtxtSerialtxtSerial", txtSerial);
     let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
@@ -765,12 +765,28 @@ function fn_ScanSMTSerialXrayConfirm() {
       key: "Scan Result",
       dataIndex: "scan_result",
       render: (text, record, index) => {
-        return text !== "" ? (
-          <Tag
-            className={text === "PASS X-RAY" ? "Tag-OK" : text === "-" ? "Tag-NG" : ""}
+        // return text !== "" ? (
+        //   <Tag
+        //     className={text === "PASS X-RAY" ? "Tag-OK" : text === "-" ? "Tag-NG" : ""}
+        //   >
+        //     {text}
+        //   </Tag>
+        // ) : (
+        //   ""
+        // );
+        return text !== " " ? (
+          <span
+            style={{
+              color:
+                text === "PASS X-RAY"
+                  ? "green"
+                  : text === "-"
+                  ? "red"
+                  : "inherit",
+            }}
           >
             {text}
-          </Tag>
+          </span>
         ) : (
           ""
         );

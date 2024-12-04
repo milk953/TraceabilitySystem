@@ -59,7 +59,14 @@ function ScanConfirmMagazineP1() {
   return (
     <div>
       <Hearder />
-      <Card component={Paper} className="Card-Common">
+      <Card
+        component={Paper}
+        className="Card-Common"
+        sx={{
+          backgroundColor: "transparent",
+          boxShadow: "none",
+        }}
+      >
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} align="center">

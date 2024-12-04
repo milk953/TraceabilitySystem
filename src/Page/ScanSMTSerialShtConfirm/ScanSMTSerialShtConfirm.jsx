@@ -26,7 +26,7 @@ import Pageimg from "/src/assets/1.jpg";
 import { Table as AntTable } from 'antd';
 import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "/src/Page/ScanSMTSerialShtConfirm/ScanSMTSerialShtConfirm.css";
+import "./ScanSMTSerialShtConfirm.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialShtConfirm } from "./fn_ScanSMTSerialShtConfirm";
 
@@ -47,12 +47,7 @@ function ScanSMTSerialShtConfirm() {
                 className="Card-Common"
                 sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-6px",
-                        marginTop: "-10px"
-                    }}
-                >
+                <Box justifyContent="space-between">
                     <TableContainer
                         component={Paper}
                         style={{

@@ -2,8 +2,7 @@ import { getBottomNavigationActionUtilityClass } from "@mui/material";
 import { Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import Swal from "sweetalert2";
-
+import {useLoading} from "../../loading/fn_loading";  
 const fn_ScanSMTSerialShtFINManySht = () => {
   //region useState
   //env State
@@ -92,7 +91,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [gvBackSide, setGvBackSide] = useState([]);
   const [gvSerial, setGvSerial] = useState([]);
   const [gvScanResult, setGvScanResult] = useState([]);
-
+  const {showLoading,hideLoading} = useLoading();
   //lblState
   const [lblTotalSht, setlblTotalSht] = useState("");
   const [lblTotalPcs, setlblTotalPcs] = useState("");
@@ -156,7 +155,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     document.getElementById(`${txtField}`).focus();
     
   }
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
   const Pageload = () => {
     let Ipaddress = localStorage.getItem("ipAddress");
     sethfUserID(Ipaddress);
@@ -169,7 +173,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const btnBack_Click = () => {
     // location.reload();
+    setlblTotalPcs('');
+    setlblTotalSht('');
     setTxtLotRef("");
+    setlblLogState(false);
     setTxtOperator("");
     setLblResultState(false);
     setGvBackSide([]);
@@ -187,11 +194,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const btnCancel_Click = () => {
     Setmode("SERIAL");
     setTxtSerial(gvSerial.map(() => ""))
+    setlblLogState(false);
     if(txtOperator == ""){
       FctxtOperator.current.focus();
     }else{
       // FcgvBackside.current.focus();
-      document.getElementById(`txtSerial_0`).focus();
+      document.getElementById(`gvBackside_0`).focus();
     }
   };
   const btnSave_Click = async () => {
@@ -207,9 +215,21 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   async function setSerialData() {
     await getData("getProductSerialMaster", productSelect);
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
     var dtSerial = [];
     dtSerial = await getInputSerial();
+    console.log(dtSerial, "dtSerial");
 
+    const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+    if (allSerialEmpty) {
+      hideLoading();
+      setlblLog("Please Input Serial No.");
+      setlblLogState(true);
+      SetFocus("txtSerial_0");
+      setLblResultState(false);
+      setGvScanResult([]);
+      return;        
+    }
     let _strPrdName = productSelect;
     let _strLotData = lotValue.split(";").toString();
     let _strLotRefData = txtLotRef.split(";").toString();
@@ -706,8 +726,13 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       setPnlMachineState(true);
       Fctxtmcno.current.focus();
     } else {
-      FcgvBackside.current.focus();
+      setTimeout(() => {
+        hideLoading();
+        SetFocus("gvBackside_0");
+      }, 200);
+      scrollToTop();
     }
+    
   }
   const ProductSelect_Change = async (e) => {
     setProductSelect(e);
@@ -801,7 +826,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               }
             }
           } else {
-            Swal.fire("error", "Product not found.", "error");
+            setlblLog(`Product ${strPrdname} not found.`);
+            setlblLogState(true);
             setLotValue("");
             Fctxtlot.current.focus();
           }
@@ -920,7 +946,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           Fctxtmcno.current.focus();
         } else {
           setPnlMachineState(false);
-          setTimeOut(FcgvBackside);
+          
+          SetFocus(`gvBackside_0`);
         }
       }
     } else {
@@ -931,57 +958,73 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const handleBackSideChange = (index, event) => {
     const newValues = [...txtSideBack];
     newValues[index] = event.target.value;
+    console.log(index, "index");
     setTxtSideBack(newValues);
-    
+    if (event.key === "Enter") {
+      try {
+        document.getElementById(`gvFrontside_${index}`).focus();
+      } catch (e) {
+        document.getElementById(`txtSerial_0`).focus();
+      }
+    } 
   };
   const handleFrontSideChange = (index, event) => {
     const newValues = [...txtSideFront];
     newValues[index] = event.target.value;
     setTxtSideFront(newValues);
-    // if (event.key === "Enter") {
-    //   SetFocus("txtSerial_0");
-    // }else{
-    // }
-    console.log("txtSideBack",txtSideBack,"txtSideFront",txtSideFront);
+    console.log(index, "index");
+    if (event.key === "Enter") {
+      try {
+        document.getElementById(`gvBackside_${index+1}`).focus();
+      } catch (e) {
+        document.getElementById(`txtSerial_0`).focus();
+      }
+    }    
   };
   async function getInputSerial() {
     await getData("getProductSerialMaster", productSelect);
+    // console.log(txtSideBack[0], "txtSideBack0",txtSideFront[1], "txtSideFront0", txtSideFront[0], "txtSideFront1", txtSideBack[1], "txtSideBack1");
     var dtData = [];
     var updatedt = [];
     var intRow = 0;
     var strFrontSide = "";
     let _strlotno = lotValue.split(";");
+    
     for (let i = 0; i < gvSerial.length; i++) {
-      if (txtSerial[i] == undefined) {
-        txtSerial[i] = "";
-      }
-      intRow += 1;
-      let dataitem = {
-        SHEET: gvSerial[i].SHEET,
-        BACK_SIDE: txtSideBack.toString(),
-        FRONT_SIDE: txtSideFront.toString(),
-        SEQ: gvSerial[i].SEQ,
-        SERIAL: txtSerial[i],
-        SCAN_RESULT: "",
-        REMARK: "",
-        UPDATE_FLG: "N",
-        MACHINE: txtmcno.toString(),
-        MASTER_NO: "",
-        LOT: _strlotno.toString(),
-        PRODUCT: productSelect,
-        ROW_UPDATE: "Y",
-      };
-
-      if (hfReqBoardNo == "Y") {
-        updatedt = {
-          ...dataitem,
-          BOARD_NO_F: txtBoardNoF,
-          BOARD_NO_B: txtBoardNoB,
+      // if (hfShtScan <= 1){
+        if (txtSerial[i] == undefined) {
+          txtSerial[i] = "";
+        }
+        intRow += 1;
+        let dataitem = {
+          SHEET: gvSerial[i].SHEET,
+          // BACK_SIDE: txtSideBack.toString(),
+          BACK_SIDE:txtSideBack[gvSerial[i].SHEET -1],
+          FRONT_SIDE: txtSideFront[gvSerial[i].SHEET-1],
+          // FRONT_SIDE: txtSideFront.toString(),
+          SEQ: gvSerial[i].SEQ,
+          SERIAL: txtSerial[i],
+          SCAN_RESULT: "",
+          REMARK: "",
+          UPDATE_FLG: "N",
+          MACHINE: txtmcno.toString(),
+          MASTER_NO: "",
+          LOT: _strlotno.toString(),
+          PRODUCT: productSelect,
+          ROW_UPDATE: "Y",
         };
-        dtData.push(updatedt);
-      } else {
-        dtData.push(dataitem);
-      }
+
+        if (hfReqBoardNo == "Y") {
+          updatedt = {
+            ...dataitem,
+            BOARD_NO_F: txtBoardNoF,
+            BOARD_NO_B: txtBoardNoB,
+          };
+          dtData.push(updatedt);
+        } else {
+          dtData.push(dataitem);
+        }
+      // }
     }
     return dtData;
   }
@@ -1047,6 +1090,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         SetFocus(`txtSerial_${index + 1}`);
       } catch (error) {
         btnSave_Click();
+        event.target.blur();
       }
     }
   };
@@ -1058,7 +1102,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setProductcombo(response.data);
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
     } else if (type == "getProductSerialMaster") {
       await axios
@@ -1067,7 +1112,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setSerialMaster(res.data);
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
     } else if (type == "GetProductDataByLot") {
       let dtData = [];
@@ -1078,7 +1124,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           dtData = res.data;
         })
         .catch((error) => {
-          // Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return dtData;
     } else if (type == "GetLotSerialCountData") {
@@ -1091,7 +1138,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           drSerialCount = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return drSerialCount;
     } else if (type == "GetConnectShtMasterCheckResult") {
@@ -1140,7 +1188,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetSheetDuplicateConnectShtType") {
@@ -1155,7 +1204,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetSerialDuplicateConnectSht") {
@@ -1171,7 +1221,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.intRow;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "SetSerialLotShtELTTable") {
@@ -1193,7 +1244,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetRollLeafScrapRBMP") {
@@ -1206,7 +1258,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.SCRAP_FLG;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "SetSerialRecordTimeTrayTable") {
@@ -1234,7 +1287,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "SetRollLeafTrayTable") {
@@ -1262,7 +1316,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.p_error;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     } else if (type == "GetRollLeafDuplicate") {
@@ -1276,7 +1331,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data.intCount;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
         return
     } else if (type == "Get_SPI_AOI_RESULT") {
@@ -1296,7 +1352,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           result = res.data;
         })
         .catch((error) => {
-          Swal.fire("Error", error.message);
+          setlblLog(`Error ${error.message}`);
+          setlblLogState(true);
         });
       return result;
     }else if (type == "SetSerialLotShtTable"){
@@ -1318,7 +1375,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }).then((res) => {
         result = res.data.p_error;
       }).catch((error) => {
-        Swal.fire("Error", error.message);
+        setlblLog(`Error ${error.message}`);
+        setlblLogState(true);
       })
       return result;
     }
@@ -1538,7 +1596,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     return dtData;
   }
   const getInitialSerial = () => {
-    
     const newData = [];
     if (hfReqBoardNo == "Y") {
       setPnlBoardState(true);
@@ -1647,19 +1704,22 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     key: "SCAN_RESULT",
     align: "center",
     width: 80,
-    padding: '0px 0px 0px 0px',
     render: (text, record, index) => {
-      const backgroundColor =
-        record.SCAN_RESULT === "NG" ? "#f50" : 
-        record.SCAN_RESULT === "OK" ? "#87d068" : 
-        "transparent";
-      
-      return (
-        < Tag style={{width:100,textAlign:'center',padding:'0px 0px 0px 0px'}}  color={backgroundColor} >
-          {text}
-        </Tag>
-      );
+      return text;       
     },
+    // padding: '0px 0px 0px 0px',
+    // render: (text, record, index) => {
+    //   const backgroundColor =
+    //     record.SCAN_RESULT === "NG" ? "#f50" : 
+    //     record.SCAN_RESULT === "OK" ? "#87d068" : 
+    //     "transparent";
+      
+    //   return (
+    //     < Tag style={{width:100,textAlign:'center',padding:'0px 0px 0px 0px'}}  color={backgroundColor} >
+    //       {text}
+    //     </Tag>
+    //   );
+    // },
   },
   {
     title: "Remark",
@@ -1672,6 +1732,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     },
   },
 ];
+const getRowClassName = (record) => {
+  if (record.SCAN_RESULT === "NG") {
+    return 'row-red';
+  } else if (record.SCAN_RESULT === "OK") {
+    return 'row-green';
+  }
+  return '';
+};
   return {
     productCombo,
     setProductcombo,
@@ -1734,7 +1802,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     lblResult,
     gvScanResult,
     hideImg,
-    columns
+    columns,
+    getRowClassName
   };
 };
 
