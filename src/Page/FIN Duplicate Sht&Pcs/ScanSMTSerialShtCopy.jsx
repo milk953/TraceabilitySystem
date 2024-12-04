@@ -260,6 +260,7 @@ function ScanSMTSerialShtCopy() {
               {lblErrorState && (
                 <Paper className="Card-lblLog">{lblError}</Paper>
               )}
+              &nbsp;
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
                   <TableHead
@@ -381,9 +382,9 @@ function ScanSMTSerialShtCopy() {
                 />
               )}
               {lblResultState && (
-                <div className="lblResultMasterFinal">
+                <div className="lblResultFinCopy">
                   <Paper
-                    className="lblResultCardMasterFinal"
+                    className="lblResultCardFinCopy"
                     elevation={3}
                     style={{
                       alignItems: "center",

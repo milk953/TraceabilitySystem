@@ -1422,12 +1422,21 @@ function fn_ScanSMTSerialPcsBox() {
                   }
                 }
                 if (!_bolError) {
-                  for (
-                    let _intRow = _intRowSerial + 1;
-                    _intRow < dtSerial.length;
-                    _intRow++
-                  ) {
-                    if (_strSerial == dtSerial[_intRow].SERIAL) {
+                  let isDuplicate = dtSerial.some((item, index) => {
+                    // console.log(
+                    //   `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
+                    // );
+                    return (
+                      index !== _intRowSerial &&
+                      _strSerial.toUpperCase() === item.SERIAL.toUpperCase()
+                    );
+                  });
+                  // for (
+                  //   let _intRow = _intRowSerial + 1;
+                  //   _intRow < dtSerial.length;
+                  //   _intRow++
+                  // ) {
+                    if (isDuplicate) {
                       _strMessageUpdate =
                         "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                       _strRemark = "Serial duplicate in tray  ";
@@ -1438,7 +1447,7 @@ function fn_ScanSMTSerialPcsBox() {
                       _intCountNG = 1;
                       _bolError = true;
                     }
-                  }
+                  // }
                 }
                 if (!_bolError && hfCheckPrdSht == "Y") {
                   let strSheetLot = "";
@@ -1951,7 +1960,6 @@ function fn_ScanSMTSerialPcsBox() {
         }
         //1345
         let _strErrorUpdate = "";
-        console.log(_strScanResultAll,'_strScanResultAll00')
         if (_strScanResultAll == "OK") {
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
             if (dtSerial[drRow].SERIAL == "") {
@@ -1986,22 +1994,17 @@ function fn_ScanSMTSerialPcsBox() {
             }
           }
         
-        console.log(_strErrorUpdate.length, "_strErrorUpdate0");
         if (_strErrorUpdate != "") {
-          console.log(_strErrorUpdate.length, "_strErrorUpdate1");
           setlblResult((prevState) => ({
             ...prevState,
             value: "Error :" + _strErrorUpdate,
             style: { color: "Red" },
           }));
         } else {
-          console.log(_strErrorUpdate.length, "_strErrorUpdate2");
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
             if (dtSerial[drRow].SERIAL == "") {
               continue;
             }else{
-
-            
             await axios
               .post("/api/Common/SetBoxPackingSerialTray", {
                 strPrdName: _strPrdName,

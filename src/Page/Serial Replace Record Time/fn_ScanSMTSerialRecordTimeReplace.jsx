@@ -37,10 +37,13 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   });
   const [lblSerial, setlblSerial] = useState("");
   const [checkresult, setcheckresult] = useState(false);
+  const [serialrefer,setserialrefer]= useState("");
   // data
   const [gvSerialReplace, setgvSerialReplace] = useState([]);
+  const [gvSerialSubmit, setgvSerialSubmit] = useState([]);
   // visible show
   const [pnlgvSerialReplace, setpnlgvSerialReplace] = useState("");
+  const [pnlsubmit,setpnlsubmit]= useState(false);
   const FAC = import.meta.env.VITE_FAC;
   // Hf const
   const hfLotLength = 9;
@@ -281,18 +284,16 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   };
   useEffect(() => {}, [lblGroup.value]);
   const txtSerialNo_TextChanged = async () => {
-    console.log("OK", txtSerialRefer.value, hfSerialLength);
+    setserialrefer(txtSerialRefer.value)
     setlblGroup((prevState) => ({ ...prevState, value: "" }));
     setlblStartTime((prevState) => ({ ...prevState, value: "" }));
     sethfMaxSeq("0");
     let datalblGroup = await Search_Data();
-    console.log("search ma", datalblGroup);
     if (
       datalblGroup == "" ||
       datalblGroup == null ||
       datalblGroup == undefined
     ) {
-      console.log(datalblGroup, "lblGroup.value");
       settxtSerialRefer((prevState) => ({ ...prevState, value: "" }));
       settxtSerialReplace((prevState) => ({ ...prevState, disbled: true }));
       setTimeout(() => {
@@ -308,6 +309,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
         fntxtSerialReplace.current.focus();
       }, 300);
     }
+    setpnlsubmit(false)
   };
   const Search_Data = async () => {
     let DBOpenFlg = false;
@@ -418,8 +420,10 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     if (_strRemark == "") {
       let InputSerial = await getInputSerial();
       setgvSerialReplace(InputSerial);
+      setgvSerialSubmit(InputSerial);
       setpnlgvSerialReplace(true);
       settxtSerialReplace((prevState) => ({ ...prevState, value: "" }));
+    
     } else {
       setlblResult((prevState) => ({
         ...prevState,
@@ -472,7 +476,6 @@ function fn_ScanSMTSerialRecordTimeReplace() {
         value: "",
       }));
       setcheckresult(false);
-      // เพิ่ม serial ใหม่เข้าไปใน gvSerialReplace เพื่อเก็บค่าที่ใส่เพิ่ม
       gvSerialReplace.push({
         SEQ: gvSerialReplace + 1,
         SERIAL_NO: txtSerialReplace.value,
@@ -528,7 +531,9 @@ function fn_ScanSMTSerialRecordTimeReplace() {
           }));
           setcheckresult(true);
           setgvSerialReplace([]);
+          settxtSerialRefer((prevState) => ({ ...prevState, value: "" }));
           setpnlgvSerialReplace(false);
+          setpnlsubmit(true)
         });
     }
     setTimeout(() => {
@@ -598,7 +603,7 @@ setTimeout(() => {
     gvSerialReplace,
     checkresult,
     fnddlProduct,
-    BtnSubmit1_Cancel
+    BtnSubmit1_Cancel,pnlsubmit,gvSerialSubmit,serialrefer
   };
 }
 
