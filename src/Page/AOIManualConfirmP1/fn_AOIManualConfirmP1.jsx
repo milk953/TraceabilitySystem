@@ -101,9 +101,10 @@ function fn_AOIManualConfirmP1() {
     if (CheckComplete === "") {
       setLblResult((prevState) => ({
         ...prevState,
-        value: "Data not found.",
+        value: "Please in put piece no.",
         style: { background: "red" },
       }));
+      fnSetFocus("txtSerialNo_AOIManualConfirmP1_focus");
       return;
     }
     if (ddlResult.value === " ") {
@@ -142,6 +143,7 @@ function fn_AOIManualConfirmP1() {
             ...prevState,
             value: " ",
           }));
+
           // setTxtOperatorCode((prevState) => ({
           //   ...prevState,
           //   value: "",
@@ -209,9 +211,10 @@ function fn_AOIManualConfirmP1() {
           } else {
             setLblResult((prevState) => ({
               ...prevState,
-              value: "Data not found",
+              value: "Data not found.",
               style: { background: "red" },
             }));
+            fnSetFocus("txtSerialNo_AOIManualConfirmP1_focus");
           }
         });
     } catch (ex) {
@@ -246,6 +249,7 @@ function fn_AOIManualConfirmP1() {
       value: "",
       style: {},
     }));
+    fnSetFocus("txtSerialNo_AOIManualConfirmP1_focus");
     if (value === "AOI") {
       setRbtAOI((prevState) => ({
         ...prevState,

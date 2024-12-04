@@ -313,6 +313,7 @@ function ScanSMTSerialXrayConfirm() {
                     size="small"
                     bordered
                     className="tableGvResult"
+                    rowClassName={(record) => (record.scan_result === "-" ? "row-red" : record.scan_result ===  "PASS X-RAY" ? "row-green" : "")}
                   />
                 </>
               )}

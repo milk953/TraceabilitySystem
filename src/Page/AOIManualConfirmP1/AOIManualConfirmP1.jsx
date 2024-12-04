@@ -42,17 +42,14 @@ function AOIManualConfirmP1() {
     <>
       <Hearder />
 
-      <Card component={Paper} className="Card-Common">
-        {/* <Typography
-          variant="h6"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            fontSize: "20px",
-          }}
-        >
-          {lblUser1.value}
-        </Typography> */}
+      <Card
+        component={Paper}
+        className="Card-Common"
+        sx={{
+          backgroundColor: "transparent",
+          boxShadow: "none",
+        }}
+      >
         <TableRow
           sx={{
             textAlign: "center",
@@ -82,6 +79,9 @@ function AOIManualConfirmP1() {
 
         <div className="DAOITableFirst">
           <Table className="AOITableFirst" component={Paper}>
+            <TableHead>
+              <TableCell colSpan={4}>P1 AOI/SPI Confirm</TableCell>
+            </TableHead>
             <TableBody>
               <TableRow>
                 <TableCell sx={{ width: "90px", textAlign: "right" }}>
@@ -134,7 +134,7 @@ function AOIManualConfirmP1() {
                     sx={{ width: "100px" }}
                     onClick={btnRetrive_Click}
                   >
-                    Retrive
+                    Search
                   </Button>
                 </TableCell>
               </TableRow>
