@@ -382,9 +382,9 @@ function ScanSMTSerialShtCopy() {
                 />
               )}
               {lblResultState && (
-                <div className="lblResultMasterFinal">
+                <div className="lblResultFinCopy">
                   <Paper
-                    className="lblResultCardMasterFinal"
+                    className="lblResultCardFinCopy"
                     elevation={3}
                     style={{
                       alignItems: "center",
