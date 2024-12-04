@@ -87,11 +87,8 @@ function fn_ScanSheetReflowTime() {
         await axios.post("/api/common/getreflowrecordtimedata", {dataList: {strSheetno: txtSheetNo,strPlantCode :plantCode},})
           .then((res) => {rowCount = res.data.row_count;})
           .catch((error) => {
-            notification.error({
-              message: 'Error',
-              description: `${error}`,
-              duration: 3
-            });
+            setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
+            setPnlShowresult(true);
           });
 
         if (rowCount == 0) {
@@ -114,15 +111,11 @@ function fn_ScanSheetReflowTime() {
               console.log(strError,'strError')
             })
             .catch((error) => {
-              notification.error({
-                message: 'Error',
-                description: `${error}`,
-                duration: 3
-              });
+              setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
+            setPnlShowresult(true);
             });
             console.log(strError,'strError2')
           if (strError == "") {
-            alert("OK");
             const currentTime = new Date().toLocaleTimeString("en-US", {
               hour12: false,
             });
@@ -133,7 +126,7 @@ function fn_ScanSheetReflowTime() {
             console.log(strError,'strError3')
             setLblResult({ text: "NG", styled:{color: "white",background:'red'} });
             setLblRemark({text:strError,styled:{color: "white",background:'red',border:'1px solid red'}});
-            setPnlSaveState(true);
+            setPnlSaveState(false);
             setPnlShowresult(true);
           }
         } else {
@@ -185,6 +178,7 @@ function fn_ScanSheetReflowTime() {
     setLblSheet("");
     setLblRemark("");
     setTxtSheetNo("");
+
   };
   
   function setTimeOut(txtField) {
@@ -214,11 +208,8 @@ function fn_ScanSheetReflowTime() {
         console.log(strError,'strError')
       })
       .catch((error) => {
-        notification.error({
-          message: 'Error',
-          description: `${error}`,
-          duration: 3
-        });
+        setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
+        setPnlShowresult(true);
       });
     if (strError.split("") == "") {
       const currentTime = new Date().toLocaleTimeString("en-US", {
@@ -227,20 +218,10 @@ function fn_ScanSheetReflowTime() {
       setLblSheet(`${txtSheetNo} [${currentTime}]`);
       setLblResult({ text: "OK", styled:{color: "white",background:'green'} });
       setLblRemark("");
-      notification.success({
-        message: 'Success',
-        description: 'Replace Success',
-        placement: 'bottomRight',
-        duration: 3
-      });
+
     } else {
-      // setLblResult({ text: "NG", styled: "red" });
       setLblResult({ text: "NG", styled:{color: "white",background:'red'} });
-      notification.error({
-        message: 'Error',
-        description: `${strError}`,
-        duration: 3
-      });
+      setLblRemark(strError);
     }
     setTxtSheetNo("");
     setTxtmcNoState({
@@ -265,29 +246,17 @@ function fn_ScanSheetReflowTime() {
         strError = res.data.p_error;
       })
       .catch((error) => {
-        notification.error({
-          message: 'Error',
-          description: `${error}`,
-          duration: 3
-        });
+        setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
+        setPnlShowresult(true);
       });
     setLblSheet(`${lblSheet} Delete`);
     setLblRemark(strError);
     if (strError == "") {
-      notification.success({  
-        message: 'Success',
-        description: 'Delete Success',
-        placement: 'bottomRight',
-        duration: 3
-      });
       setPnlSaveState(false);
       setPnlShowresult(false);
     }else{
-      notification.error({
-        message: 'Error',
-        description: `${strError}`,
-        duration: 3
-      });
+      setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
+      setPnlShowresult(true);
     }
 
 
@@ -301,6 +270,7 @@ function fn_ScanSheetReflowTime() {
   };
   const btnIbtback_Click = () => {
     setTxtmcNo("");
+    setTxtSheetNo("");
     setTxtmcNoState({ disabled: false, open: true });
     setTxtSheetNoState({
       disabled: true,

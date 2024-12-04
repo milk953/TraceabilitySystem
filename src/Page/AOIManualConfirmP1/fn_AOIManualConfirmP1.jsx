@@ -10,6 +10,7 @@ function fn_AOIManualConfirmP1() {
   const [hfUserStation, setHfUserStation] = useState("");
   const [Result, setResult] = useState([]);
   const [selectedValue, setSelectedValue] = useState("AOI");
+  const [CheckComplete, setCheckComplete] = useState("");
   const [txtSerialNo, setTxtSerialNo] = useState({
     value: "",
     disbled: "",
@@ -95,7 +96,16 @@ function fn_AOIManualConfirmP1() {
   };
 
   const BtnSubmit1_Click = async () => {
+    console.log("CheckComplete", CheckComplete);
     let AOI_SPI_Check = "";
+    if (CheckComplete === "") {
+      setLblResult((prevState) => ({
+        ...prevState,
+        value: "Data not found.",
+        style: { background: "red" },
+      }));
+      return;
+    }
     if (ddlResult.value === " ") {
       setLblResult((prevState) => ({
         ...prevState,
@@ -182,6 +192,7 @@ function fn_AOIManualConfirmP1() {
         .then((res) => {
           let data = res.data.flat().flat();
           if (data.length > 0) {
+            setCheckComplete("Y");
             setDdlResult((prevState) => ({
               ...prevState,
               value: data[0].prod_result,
@@ -207,7 +218,7 @@ function fn_AOIManualConfirmP1() {
       setLblResult((prevState) => ({
         ...prevState,
         value: ex.message,
-        style: { background: "red",  },
+        style: { background: "red" },
       }));
     }
   };
@@ -217,6 +228,23 @@ function fn_AOIManualConfirmP1() {
     setRbtAOIandSPIcheck((prevState) => ({
       ...prevState,
       value: value,
+    }));
+    setTxtSerialNo((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+    setDdlResult((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+    setTxtCnt((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+    setLblResult((prevState) => ({
+      ...prevState,
+      value: "",
+      style: {},
     }));
     if (value === "AOI") {
       setRbtAOI((prevState) => ({

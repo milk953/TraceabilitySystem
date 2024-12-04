@@ -11,6 +11,7 @@ import {
   Card,
 } from "@mui/material";
 import "./ScanSheetReflowTime.css";
+import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Hearder from "../Header/Header";
 import { fn_ScanSheetReflowTime } from "./fn_ScanSheetReflowTime";
@@ -98,7 +99,7 @@ function ScanSheetReflowTime() {
                   value={txtSheetNo}
                   inputRef={FctxtSheetNo}
                   onChange={(e) => {
-                    setTxtSheetNo(e.target.value);
+                    setTxtSheetNo(e.target.value.trim());
                   }}
                   // onBlur={handleTxtSheetNo}
                   onKeyDown={(e) => {
@@ -154,13 +155,13 @@ function ScanSheetReflowTime() {
           <Table id="TableSave" component={Card}>
             <TableRow>
               <TableCell>
-                <Button onClick={btnReplace_Click}>Replace</Button>
+                <Button variant="contained" className="ButtonReplace" onClick={btnReplace_Click}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={btnDelete_Click}>Delete</Button>
+                <Button variant="contained" className="ButtonDelete" onClick={btnDelete_Click}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={btnCancel_Click}>Cancel</Button>
+                <Button variant="contained" className="ButtonCancel" onClick={btnCancel_Click}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>
