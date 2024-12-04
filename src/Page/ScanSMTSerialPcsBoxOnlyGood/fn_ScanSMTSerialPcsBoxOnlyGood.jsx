@@ -1301,7 +1301,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           });
         if (datalbTotal > 0) {
           setlblBoxTotal((prevState) => ({ ...prevState, value: datalbTotal }));
-       
+
           if (parseFloat(datalbTotal) > parseFloat(datalblFull)) {
             setlblLog((prevState) => ({
               ...prevState,
@@ -1315,11 +1315,12 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           setlblBoxStatus((prevState) => ({
             ...prevState,
             value: "OK",
-            style: { color: "green" }, }
-        ));
-        setlblLog((prevState) => ({
-          ...prevState,
-          value: "Box was full / กล่องเต็มแล้ว",  }));
+            style: { color: "green" },
+          }));
+          setlblLog((prevState) => ({
+            ...prevState,
+            value: "Box was full / กล่องเต็มแล้ว",
+          }));
           setpnlLog(true);
           return;
         } else {
@@ -1448,7 +1449,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
       if (!_bolTrayError) {
         showLoading("กำลังบันทึก กรุณารอสักครู่");
-        
 
         await axios
           .post("/api/common/GetSerialBoxTestResultManyTableOnlyGood", {
@@ -1677,12 +1677,21 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                   }
                 }
                 if (!_bolError) {
-                  for (
-                    let _intRow = _intRowSerial + 1;
-                    _intRow < dtSerial.length - 1;
-                    _intRow++
-                  ) {
-                    if (_strSerial.toUpperCase == dtSerial[_intRow].SERIAL) {
+                  let isDuplicate = dtSerial.some((item, index) => {
+                    // console.log(
+                    //   `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
+                    // );
+                    return (
+                      index !== _intRowSerial &&
+                      _strSerial.toUpperCase() === item.SERIAL.toUpperCase()
+                    );
+                  });
+                  // for (
+                  //   let _intRow = _intRowSerial + 1;
+                  //   _intRow < dtSerial.length - 1;
+                  //   _intRow++
+                  // ) {
+                    if (isDuplicate) {
                       _strMessageUpdate =
                         "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                       _strRemark = "Serial duplicate in tray  ";
@@ -1693,7 +1702,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                       _intCountNG = 1;
                       _bolError = true;
                     }
-                  }
+                  
                 }
                 if (!_bolError && hfCheckPrdSht == "Y") {
                   let strSheetLot = "";
@@ -2200,36 +2209,34 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         }
         //1352
         let _strErrorUpdate = "";
-
+        console.log(_strScanResultAll, "_strScanResultAll1");
         if (_strScanResultAll == "OK") {
-          for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-           
-            await axios
-              .post("/api/Common/SetSerialLotTrayTableGood", {
-                dataList: {
-                  strPlantCode: FAC,
-                  strPrdName: _strPrdName,
-                  strLot: _strLot,
-                  strUserID: hfUserID,
-                  strStation: hfUserStation,
-                  data: [
-                    {
-                      SERIAL: dtSerial[drRow].SERIAL,
-                      UPDATE_FLG: dtSerial[drRow].UPDATE_FLG,
-                      ROW_UPDATE: dtSerial[drRow].ROW_UPDATE,
-                      REJECT_CODE: dtSerial[drRow].REJECT_CODE,
-                      TEST_RESULT: dtSerial[drRow].TEST_RESULT,
-                      REMARK_UPDATE: dtSerial[drRow].REMARK_UPDATE,
-                      SCAN_RESULT: dtSerial[drRow].SCAN_RESULT,
-                      PACKING_NO: dtSerial[drRow].PACKING_NO,
-                    },
-                  ],
-                },
-              })
-              .then((res) => {
-                _strErrorUpdate = res.data.p_error;
-               
-              });
+          for (let i = 0; i < dtSerial.length; i++) {
+            if (dtSerial[i].SERIAL == "") {
+              continue;
+            } else {
+              await axios
+                .post("/api/Common/SetSerialLotTrayTableGood2", {
+                  dataList: {
+                    strPlantCode: FAC,
+                    strPrdName: _strPrdName,
+                    strLot: _strLot,
+                    strUserID: hfUserID,
+                    strStation: hfUserStation,
+                    SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+                    SERIAL: dtSerial[i].SERIAL,
+                    UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                    ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                    REJECT_CODE: dtSerial[i].REJECT_CODE,
+                    TEST_RESULT: dtSerial[i].TEST_RESULT,
+                    REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
+                    PACKING_NO: dtSerial[i].PACKING_NO,
+                  },
+                })
+                .then((res) => {
+                  _strErrorUpdate = res.data.p_error;
+                });
+            }
           }
 
           if (_strErrorUpdate != "") {
@@ -2239,27 +2246,30 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               style: { color: "Red" },
             }));
           } else {
-            // ติดที่ SetBoxPackingSerialTray ใน PCTTTEST.FPC ทำใน PROCEDURE
-            // บรรทัด 1359
             for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-              await axios
-                .post("/api/Common/SetBoxPackingSerialTray", {
-                  strPrdName: _strPrdName,
-                  strBox: lblBox.value,
-                  strPack: lblPacking.value,
-                  strSerial: dtSerial[drRow].SERIAL || "",
-                  strUserID: hfUserID,
-                  strStation: hfUserStation,
-                  _strResult: _strScanResultAll,
-                })
-                .then((res) => {
-                  if (res.data.p_error != "OK" && res.data.p_error != "") {
-                    dtSerial[drRow].SCAN_RESULT = "NG";
-                    dtSerial[drRow].REMARK = res.data.p_error;
-                    //_strResult="NG"
-                    _strErrorUpdate = res.data.p_error;
-                  }
-                });
+              if (dtSerial[drRow].SERIAL == "") {
+                continue;
+              } else {
+                await axios
+                  .post("/api/Common/SetBoxPackingSerialTray", {
+                    strPrdName: _strPrdName,
+                    strBox: lblBox.value,
+                    strPack: lblPacking.value,
+                    strSerial: dtSerial[drRow].SERIAL,
+                    strUserID: hfUserID,
+                    strStation: hfUserStation,
+                    _strResult: _strScanResultAll,
+                  })
+                  .then((res) => {
+                    // _strErrorUpdate = res.data.p_error;
+                    if (res.data.p_error != "OK" && res.data.p_error != "") {
+                      dtSerial[drRow].SCAN_RESULT = "NG";
+                      dtSerial[drRow].REMARK = res.data.p_error;
+                      //_strResult="NG"
+                      _strErrorUpdate = res.data.p_error;
+                    }
+                  });
+              }
             }
             //////
             if (_strErrorUpdate != "") {
@@ -2276,7 +2286,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                     dtSerial: dtSerial,
                   })
                   .then((res) => {
-                    console.log(res.data, "getSerialRecordTimeTrayTable");
                     dtSerial = res.data;
                   });
 
