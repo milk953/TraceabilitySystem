@@ -980,6 +980,19 @@ function fn_ScanSMTSerialRecordTime() {
         setlblLog("");
         showLoading('กำลังบันทึก กรุณารอสักครู่');
 
+        const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+        if (allSerialEmpty) {
+            hideLoading();
+            setlblLog("Please Input Serial No.");
+            setvisiblelog(true);
+            setTimeout(() => {
+                inputgvSerial.current[0].focus();
+            }, 100);
+            setgvScanResult(false);
+            setgvScanData([]);
+            return;
+        }
+
         if (_strLot !== "") {
             if (_strLot.length === 9 && _strPrdName !== "") {
                 setlblLot(_strLot);
@@ -1243,6 +1256,8 @@ function fn_ScanSMTSerialRecordTime() {
                         _strScanResultAll = "NG";
                         bolError = true;
                     }
+                } else {
+
                 }
                 _intRowSerial = _intRowSerial + 1;
             }

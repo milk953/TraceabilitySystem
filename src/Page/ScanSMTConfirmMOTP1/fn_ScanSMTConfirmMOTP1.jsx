@@ -237,7 +237,6 @@ function fn_ScanSMTConfirmMOTP1() {
                 console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === nextIndex) {
                 btnSaveClick();
-                e.target.blur();
             }
         }
     };
@@ -627,6 +626,7 @@ function fn_ScanSMTConfirmMOTP1() {
                             })
                                 .then((res) => {
                                     _Result = res.data[0].result_v;
+                                    _strMessage = res.data[0]._message;
                                 });
 
                             if (_Result === "NG") {

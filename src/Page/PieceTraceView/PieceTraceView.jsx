@@ -10,7 +10,7 @@ import {
     TableContainer,
     Paper,
     Typography,
-    Button,
+    //Button,
     Select,
     MenuItem,
     FormControl,
@@ -23,11 +23,13 @@ import {
     Tooltip,
 } from "@mui/material";
 import { Table as AntTable } from 'antd';
+import { Input, Button } from "antd";
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import Header from "../Header/Header";
 import "./PieceTraceView.css";
 import { fn_PieceTraceView } from "./fn_PieceTraceView";
+import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
 
 function PieceTraceView() {
     const {
@@ -85,15 +87,26 @@ function PieceTraceView() {
                             <TableBody>
                                 <TableRow>
                                     <TableCell align="right" colSpan={4}>
-                                        <Typography>
+                                        {/* <Typography>
                                             Piece No. :
-                                        </Typography>
+                                        </Typography> */}
+                                        <Button
+                                            disabled
+                                            colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            type="primary"
+                                            className="LableView"
+                                            iconPosition={"end"}
+
+                                        >
+                                            Piece No :
+                                        </Button>
                                     </TableCell>
-                                    <TableCell align="left">
+                                    <TableCell align="center">
                                         <TextField
-                                            // className="TxtField"
+                                            className="ViewInput"
                                             size="small"
-                                            sx={{ width: "100%" }}
+                                            sx={{ width: "90%" }}
                                             value={txtSerialNo}
                                             onChange={(e) => {
                                                 settxtSerialNo(e.target.value);
@@ -107,16 +120,24 @@ function PieceTraceView() {
                                     </TableCell>
                                     <TableCell align="left">
                                         <Button
-                                            variant="contained"
-                                            sx={{ width: "20%" }}
+                                            type="primary"
+                                            //variant="contained"
+                                            className="RetriveBtn"
+                                            icon={<SearchOutlined />}
                                             onClick={btnRetrive_Click}
                                         >
                                             Retrive
-                                        </Button>{" "}
+                                        </Button>
                                         &nbsp;&nbsp;&nbsp;
                                         <Button
-                                            variant="contained"
-                                            sx={{ width: "20%" }}
+                                            //variant="contained"
+                                            type="primary"
+                                            className="ClearBtn"
+                                            icon={<ClearOutlined />}
+                                            style={{
+                                                backgroundColor: "#f5222d",
+                                                borderColor: "#f5222d",
+                                            }}
                                             color="error"
                                             onClick={btnClear_Click}
                                         >
@@ -125,7 +146,7 @@ function PieceTraceView() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell align="right" colSpan={4}>
+                                    <TableCell align="center">
                                         {lblSerialChip.visible && (
                                             <Typography>
                                                 {lblSerialChip.value}
@@ -153,13 +174,24 @@ function PieceTraceView() {
                     </div>
 
                     <div className="divTbProduct">
-                        <Table style={{marginRight: "120px"}}>
+                        <Table >
                             <TableBody>
                                 <TableRow>
                                     <TableCell>
-                                        <Typography>
+                                        {/* <Typography>
                                             Product :
-                                        </Typography>
+                                        </Typography> */}
+                                        <Button
+                                            disabled
+                                            colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            type="primary"
+                                            className="LableView"
+                                            iconPosition={"end"}
+
+                                        >
+                                            Product :
+                                        </Button>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
@@ -176,9 +208,20 @@ function PieceTraceView() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>
+                                        {/* <Typography>
                                             Sheet No.(F) :
-                                        </Typography>
+                                        </Typography> */}
+                                        <Button
+                                            disabled
+                                            colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            type="primary"
+                                            className="LableView"
+                                            iconPosition={"end"}
+
+                                        >
+                                            Sheet No.(F) :
+                                        </Button>
                                     </TableCell>
                                     <TableCell>
                                         <a id="hypSheetNoF"
@@ -191,9 +234,20 @@ function PieceTraceView() {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>
-                                        <Typography>
+                                        {/* <Typography>
                                             Lot No. :
-                                        </Typography>
+                                        </Typography> */}
+                                        <Button
+                                            disabled
+                                            colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            type="primary"
+                                            className="LableView"
+                                            iconPosition={"end"}
+
+                                        >
+                                            Lot No. :
+                                        </Button>
                                     </TableCell>
                                     <TableCell>
                                         <a id="hypLotNo"
@@ -204,9 +258,20 @@ function PieceTraceView() {
                                         </a>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>
+                                        {/* <Typography>
                                             Sheet No.(B) :
-                                        </Typography>
+                                        </Typography> */}
+                                        <Button
+                                            disabled
+                                            colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            type="primary"
+                                            className="LableView"
+                                            iconPosition={"end"}
+
+                                        >
+                                            Sheet No.(B) :
+                                        </Button>
                                     </TableCell>
                                     <TableCell>
                                         <a id="hypSheetNoB"
@@ -219,9 +284,20 @@ function PieceTraceView() {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>
-                                        <Typography>
+                                        {/* <Typography>
                                             Piece No. :
-                                        </Typography>
+                                        </Typography> */}
+                                        <Button
+                                            disabled
+                                            colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            type="primary"
+                                            className="LableView"
+                                            iconPosition={"end"}
+
+                                        >
+                                            Piece No. :
+                                        </Button>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
@@ -235,9 +311,20 @@ function PieceTraceView() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>
+                                        {/* <Typography>
                                             SheetType. :
-                                        </Typography>
+                                        </Typography> */}
+                                        <Button
+                                            disabled
+                                            colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            type="primary"
+                                            className="LableView"
+                                            iconPosition={"end"}
+
+                                        >
+                                            SheetType. :
+                                        </Button>
                                     </TableCell>
                                     <TableCell>
                                         <TextField
@@ -271,16 +358,16 @@ function PieceTraceView() {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell rowSpan={"2"}>Type</TableCell>
-                                        <TableCell rowSpan={"2"} style={{width: "200px"}}> Process</TableCell>
-                                        <TableCell colSpan={"3"} style={{width: "500px"}}>Front side</TableCell>
-                                        <TableCell colSpan={"3"} style={{width: "500px"}}>Back side</TableCell>
+                                        <TableCell rowSpan={"2"} style={{ width: "200px" }}> Process</TableCell>
+                                        <TableCell colSpan={"3"} style={{ width: "500px" }}>Front side</TableCell>
+                                        <TableCell colSpan={"3"} style={{ width: "500px" }}>Back side</TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell>Result</TableCell>
-                                        <TableCell style={{width: "80px"}}>C</TableCell>
+                                        <TableCell style={{ width: "80px" }}>C</TableCell>
                                         <TableCell>Reg Time</TableCell>
                                         <TableCell>Result</TableCell>
-                                        <TableCell style={{width: "80px"}}>C</TableCell>
+                                        <TableCell style={{ width: "80px" }}>C</TableCell>
                                         <TableCell>Reg Time</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -294,7 +381,7 @@ function PieceTraceView() {
                                         <TableCell>AOM / Via AOI</TableCell>
                                         <TableCell style={{ width: "100px" }}>
                                             <Button
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAOMEFPCColor,
                                                     color: "white",
@@ -341,7 +428,7 @@ function PieceTraceView() {
                                         <TableCell>
                                             <Button
 
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAOIEFPCColor,
                                                     color: "white",
@@ -392,7 +479,7 @@ function PieceTraceView() {
 
                                                 <Button
 
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnBarcodeGradeColor,
                                                         color: "white",
@@ -433,8 +520,7 @@ function PieceTraceView() {
                                         <TableCell>OST</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnOSTColor,
                                                     color: "white",
@@ -482,7 +568,7 @@ function PieceTraceView() {
                                         <TableCell>
                                             <Button
 
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIFColor,
                                                     color: "white",
@@ -525,8 +611,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell style={{ width: "100px" }}>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIBColor,
                                                     color: "white",
@@ -572,8 +657,7 @@ function PieceTraceView() {
                                         <TableCell>FVI</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIMarkFColor,
                                                     color: "white",
@@ -616,8 +700,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAVIMarkBColor,
                                                     color: "white",
@@ -664,8 +747,7 @@ function PieceTraceView() {
                                         <TableCell>SPI</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnSPIFColor,
                                                     color: "white",
@@ -717,8 +799,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnSPIBColor,
                                                     color: "white",
@@ -774,8 +855,7 @@ function PieceTraceView() {
                                         <TableCell>PreAOI</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnPreAOIFColor,
                                                     color: "white",
@@ -827,8 +907,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnPreAOIBColor,
                                                     color: "white",
@@ -884,8 +963,7 @@ function PieceTraceView() {
                                         <TableCell>Reflow</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnReflowFColor,
                                                     color: "white",
@@ -928,8 +1006,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnReflowBColor,
                                                     color: "white",
@@ -976,8 +1053,7 @@ function PieceTraceView() {
                                         <TableCell>AOI</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAOIFColor,
                                                     color: "white",
@@ -1029,8 +1105,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAOIBColor,
                                                     color: "white",
@@ -1086,8 +1161,7 @@ function PieceTraceView() {
                                         <TableCell>X-RAY</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnXRAY_FColor,
                                                     color: "white",
@@ -1130,8 +1204,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnXRAY_BColor,
                                                     color: "white",
@@ -1178,8 +1251,7 @@ function PieceTraceView() {
                                         <TableCell>AOI Coating</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAOICOAFColor,
                                                     color: "white",
@@ -1223,8 +1295,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnAOICOABColor,
                                                     color: "white",
@@ -1272,8 +1343,7 @@ function PieceTraceView() {
                                         <TableCell>SMT-INT</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnSMTIntFColor,
                                                     color: "white",
@@ -1315,8 +1385,7 @@ function PieceTraceView() {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnSMTIntBColor,
                                                     color: "white",
@@ -1362,8 +1431,7 @@ function PieceTraceView() {
                                         <TableCell>Reject1</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnReject1Color,
                                                     color: "white",
@@ -1410,8 +1478,7 @@ function PieceTraceView() {
                                         <TableCell>Re-judgement</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnTouchUpColor,
                                                     color: "white",
@@ -1458,8 +1525,7 @@ function PieceTraceView() {
                                         <TableCell>Bending</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnBendingColor,
                                                     color: "white",
@@ -1502,8 +1568,7 @@ function PieceTraceView() {
                                         {btnELT1.visible && (
                                             <TableCell>
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnELT1Color,
                                                         color: "white",
@@ -1564,8 +1629,7 @@ function PieceTraceView() {
                                         {btnELT2.visible && (
                                             <TableCell>
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnELT2Color,
                                                         color: "white",
@@ -1629,8 +1693,7 @@ function PieceTraceView() {
                                             <TableCell>
 
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnELT3Color,
                                                         color: "white",
@@ -1693,8 +1756,7 @@ function PieceTraceView() {
                                         {btnELT4.visible && (
                                             <TableCell>
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnELT4Color,
                                                         color: "white",
@@ -1757,8 +1819,7 @@ function PieceTraceView() {
                                         {btnELT5.visible && (
                                             <TableCell>
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnELT5Color,
                                                         color: "white",
@@ -1821,8 +1882,7 @@ function PieceTraceView() {
                                         {btnELT6.visible && (
                                             <TableCell>
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnELT6Color,
                                                         color: "white",
@@ -1885,8 +1945,7 @@ function PieceTraceView() {
                                         {btnELT7.visible && (
                                             <TableCell>
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnELT7Color,
                                                         color: "white",
@@ -1949,8 +2008,7 @@ function PieceTraceView() {
                                         {btnFQC.visible && (
                                             <TableCell>
                                                 <Button
-
-                                                    sx={{
+                                                    style={{
                                                         height: "33px",
                                                         backgroundColor: btnFQCColor,
                                                         color: "white",
@@ -2008,8 +2066,7 @@ function PieceTraceView() {
                                         <TableCell>FinalGate</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnFinalGateColor,
                                                     color: "white",
@@ -2049,8 +2106,7 @@ function PieceTraceView() {
                                         <TableCell>ScanPack</TableCell>
                                         <TableCell>
                                             <Button
-
-                                                sx={{
+                                                style={{
                                                     height: "33px",
                                                     backgroundColor: btnScanPackColor,
                                                     color: "white",
