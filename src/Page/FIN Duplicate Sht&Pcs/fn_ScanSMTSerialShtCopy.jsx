@@ -135,8 +135,12 @@ function fn_ScanSMTSerialShtCopy() {
   }, []);
   // textfile
   const handle_ibtnBack_Click = () => {
+    setlblTotalPcs(0);
+    setlblTotalSht(0);
     setTxtlotNo("");
     setProductSelected(ddlProduct[0].prd_name);
+    setGvBackSideState(false);
+    setGvBackSide([]);
     setTxtbackSide(gvBackSide.map(() => ""));
     setTxtSerial(gvSerial.map(() => ""));
     setLblResultState(false);
@@ -165,6 +169,8 @@ function fn_ScanSMTSerialShtCopy() {
   };
 
   const handle_Cancel_Click = async () => {
+    setGvScanResult([]);
+    setLblResultState(false);
     setMode("SERIAL");
     setTxtbackSide(gvBackSide.map(() => ""));
     SetFocus("txtbackSide_0");
@@ -294,6 +300,8 @@ function fn_ScanSMTSerialShtCopy() {
 
   //function
   async function setSerialData(dtBackSideUpdate) {
+    setLblErrorState(false);
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
     await getData("getProductSerialMaster", productSelected);
     let dtSerial = await getInputSerial();
     let _strPrdName = productSelected;
@@ -311,6 +319,17 @@ function fn_ScanSMTSerialShtCopy() {
     let _bolError = false;
     hfWeekCode = "";
     setLblErrorState(false);
+    console.log(dtSerial,'dtSerial')
+    const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+    if (allSerialEmpty) {
+      hideLoading();
+      setLblError("Please Input Serial No.");
+      setLblErrorState(true);
+      SetFocus("txtSerial_0");
+      setLblResultState(false);
+      setGvScanResult([]);
+      return;        
+    }
     if (txtlotNo != '' && dtSerial != ''){
       if (hfCheckWeekCode == 'Y'){
         hfWeekCode = await getData("GetWeekCodebyLot",{txtlotNo,hfDateInProc});
@@ -657,7 +676,7 @@ function fn_ScanSMTSerialShtCopy() {
       
         if(!_bolError && _strUpdateError ==''){
           // 'Sucha modify 31-Aug-2016 update slowly
-          showLoading('กำลังบันทึก กรุณารอสักครู่')
+          
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
             if (dtSerial[drRow].SERIAL != ''){
               _strUpdateError = await getData("SetSerialLotShtTable", {
@@ -750,6 +769,7 @@ function fn_ScanSMTSerialShtCopy() {
     } else {
       SetFocus('txtbackSide_0')
     }
+    hideLoading();
     scrollToTop();
   }
   async function UpdateGvSerial(txtSerial) {
@@ -1352,6 +1372,7 @@ function fn_ScanSMTSerialShtCopy() {
         SetFocus(`txtSerial_${index + 1}`);
       } catch (error) {
         handle_Save_Click();
+        event.target.blur();
       }
     }
   };
@@ -1372,7 +1393,7 @@ function fn_ScanSMTSerialShtCopy() {
       } else if (txtbackSide[i-1] != "" && strFrontSide != "") {
         let dtRow = {
           SHEET: gvSerial[i].SHEET,
-          BACK_SIDE: txtbackSide[0] || '',
+          BACK_SIDE: txtbackSide[gvSerial[i].SHEET -1] || '',
           FRONT_SIDE: strFrontSide,
           SEQ: gvSerial[i].SEQ,
           SERIAL: txtSerial[i],
