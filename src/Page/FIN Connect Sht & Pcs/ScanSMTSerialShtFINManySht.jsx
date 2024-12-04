@@ -95,17 +95,8 @@ function ScanSMTSerialShtFINManySht() {
     <div>
       <Hearder />
       <Card
-        component={Paper}
+        component={Card}
         className="Card-Common"
-        // style={{
-        //   margin: "auto",
-        //   width: "95%",
-        //   maxWidth: "1450px",
-        //   marginTop: "50px",
-        //   minHeight: "200px",
-        //   padding: "20px",
-        //   overflow: "auto",
-        // }}
       >
         <table>
           <tr>
@@ -276,17 +267,18 @@ function ScanSMTSerialShtFINManySht() {
                           <TableCell>
                             <input
                               type="text"
-                              id="gvBackside_1"
+                              // id="gvBackside_1"
+                              id={`gvBackside_${index}`}
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
                               }}
                               maxLength="30"
                               className="styleEnable"
-                              ref={FcgvBackside}
+                              // ref={FcgvBackside}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                  FcgvFrontside.current.focus();
+                                  handleBackSideChange(index, e);
                                 }
                               }}
                               value={txtSideBack[index]}
@@ -294,7 +286,8 @@ function ScanSMTSerialShtFINManySht() {
                             />
                             <input
                               type="text"
-                              id="gvBackside_2"
+                              // id="gvBackside_2"
+                              id={`gvFrontside_${index}`}
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
@@ -302,10 +295,7 @@ function ScanSMTSerialShtFINManySht() {
                               maxLength="30"
                               ref={FcgvFrontside}
                               onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  document
-                                    .getElementById(`txtSerial_0`)
-                                    .focus();
+                                if (e.key === "Enter") {                                  
                                   handleFrontSideChange(index, e);
                                 }
                               }}
@@ -358,9 +348,9 @@ function ScanSMTSerialShtFINManySht() {
               )}
               {lblLogState && (
                 <div className="lblLog">
-                  <Table className="lblTbLog">
-                    <TableCell>{lblLog}</TableCell>
-                  </Table>
+                  <Card className="Card-lblLog">
+                  {lblLog}
+                  </Card>
                 </div>
               )}
               <div className="panelgvSerial">
@@ -426,9 +416,9 @@ function ScanSMTSerialShtFINManySht() {
                               value={txtSerial[index]}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                  document
-                                    .getElementById(`txtSerial_0`)
-                                    .focus();
+                                  // document
+                                  //   .getElementById(`txtSerial_0`)
+                                  //   .focus();
                                   handletxtSerialChange(index, e);
                                 }
                               }}
