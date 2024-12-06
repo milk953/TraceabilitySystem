@@ -1258,7 +1258,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           .then((res) => {
             datalblFull = res.data[0].BOX_QTY;
             datalbTotal = res.data[0].BOX_COUNT;
-            console.log(res.data, "DATA:");
           });
         if (datalbTotal <= 0) {
           _strError = "Box No. not found / ไม่พบกล่องหมายเลขนี้";
@@ -2209,7 +2208,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         }
         //1352
         let _strErrorUpdate = "";
-        console.log(_strScanResultAll, "_strScanResultAll1");
         if (_strScanResultAll == "OK") {
           for (let i = 0; i < dtSerial.length; i++) {
             if (dtSerial[i].SERIAL == "") {

@@ -52,6 +52,7 @@ function fn_rpt_SheetTraceView() {
     const[txtSMTIntMachine,settxtSMTIntMachine]=useState("")
     const[lblMessage,setlblMessage]=useState("")
     let PanelNo =""
+    const [PanelNo1,setPanelNo1]=useState("")
    
     //table
     const[tblData1,settblData1]=useState([])
@@ -193,7 +194,6 @@ function fn_rpt_SheetTraceView() {
 
     const ViewData = async (sheetno) => {
         let txtSheetNo =   sheetno;
-        console.log('Selected sheet no:', txtSheetNo, 'Selected cavity:', selectddlCavity);
         setlblMessage("");
         let DBOpenFlg = false
         let dt =[]
@@ -224,20 +224,17 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
-                console.log(res.data,"DATA1")
             });
             if (dt && dt.length > 0) {
                 if ( dt[0].lss_lot_no !== null) { 
                   settxtProduct(dt[0].lss_product_name);
-                  console.log(dt[0].lss_product_name,"dt[0].lss_product_name")
                   Product = dt[0].lss_product_name
                   sethypLotNo(dt[0].lss_lot_no);
                   //   hypLotNo.href = "./rpt_LotTraceView.aspx?LOT=" + dt[0].Item0;
-                  console.log(dt[0].lss_machine_no,"OK",dt[0].lss_machine_no)
                   if (dt[0].lss_machine_no && dt[0].lss_machine_no.trim() !== "") {
                   
                     setlblTitleMachine((prevState) => ({...prevState,value: "",visible:false}));
-                    setlblShtMachine((prevState) => ({...prevState,value: dt[0].lss_machine_no.trim(),visible:false}));
+                    setlblShtMachine((prevState) => ({...prevState,value: dt[0].lss_machine_no.trim(),visible:true}));
                   }
                 }
               }
@@ -250,14 +247,11 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
-                console.log(res.data,"GetProductSheet")
               
             });
             if(dt != ""){
-                console.log(dt,"dt444",dt[0].shn_product_name)
                 if(dt[0].shn_product_name !== null){
                     settxtProduct(dt[0].shn_product_name)
-                    console.log(dt[0].shn_product_name,"dt[0].lss_product_name1")
                     Product = dt[0].shn_product_name
                     if(hypLotNo == ""){
                         sethypLotNo(dt[0].shn_lot_no)
@@ -275,10 +269,8 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
-                console.log("dt14",dt)
             });
             if(dt.length > 0){
-                console.log("เข้า 14")
                 StrResult = "OK"
                 
               
@@ -320,11 +312,9 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
-                console.log(dt,"dt3")
             });
             if(dt.length > 0){
                 setbtnPre((prevState) => ({...prevState,disbled:false}));
-                console.log("OK",)
                 switch (dt[0].prh_result.toUpperCase()) {
                     case "GOOD":
                     case "OK":
@@ -364,7 +354,6 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
-                console.log(dt,"dt5")
             });
             if(dt.length > 0){  
                 setbtnAOI((prevState) => ({...prevState, disabled: false,style:{color:'white'} }));
@@ -411,7 +400,7 @@ function fn_rpt_SheetTraceView() {
             .post("/api/ViewTraceSheet/GetAOI_Coating", {
                 dataList:{
                     strplantcode: FAC,
-                strsheetno: txtSheetNo,
+                    strsheetno: txtSheetNo,
                 }
                 
             })
@@ -452,9 +441,9 @@ function fn_rpt_SheetTraceView() {
                     default:
                         setbtnAOICOA((prevState) => ({...prevState,value: AOI_Result,style:{backgroundColor:'red'}}));
                 }
-                settxtAOICnt(dt[0].aor_inspect_count)
-                settxtAOITime(dt[0].aor_inspect_date)
-                settxtAOIMachine(dt[0].aor_machine_no)
+                settxtAOICOACnt(dt[0].aor_inspect_count)
+                settxtAOICOATime(dt[0].aor_inspect_date)
+                settxtAOICOAMachine(dt[0].aor_machine_no)
             }else{
                 setbtnAOICOA((prevState) => ({...prevState,disbled:true}));
             }
@@ -516,7 +505,6 @@ function fn_rpt_SheetTraceView() {
             })
             .then((res) => {
                 dt = res.data;
-                console.log(dt,"dt66")
             });
             if(dt.length > 0){
                 setbtnXRay((prevState) => ({...prevState,value:dt[0].xray_result}));
@@ -546,15 +534,12 @@ function fn_rpt_SheetTraceView() {
                 setddlCavity(dtSMPJ);
             });
             if(dtSMPJ.length > 1){
-               console.log("เข้าdll")
                 setlblCavity((prevState) => ({...prevState,value:'SMPJ Cavity'}));
                 setddlCavity(dtSMPJ)
                 sethfSMPJCavityFlg("Y")
                 setdtddlCavity([])
                 setselectddlCavity(dtSMPJ[0].pcs_no)
             }else{
-                console.log("เข้าdll2")
-                console.log(Product,"Product")
                 await axios
                 .post("/api/ViewTraceSheet/GetSMTConnectShtPcsCavity", {
                     dataList:{
@@ -565,7 +550,6 @@ function fn_rpt_SheetTraceView() {
                 })
                 .then((res) => {
                     dtPcsNo = res.data;
-                    console.log(dtPcsNo,"dtPcsNo")
                     setddlCavity(dtPcsNo)
                 });
                 setlblCavity((prevState) => ({...prevState,value:'Connect Sht&Pcs'}));
@@ -575,7 +559,6 @@ function fn_rpt_SheetTraceView() {
             }
             if(txtSheetNo.trim() !== '' && txtProduct.trim() !== ""){
                 let dtData = []
-                console.log(FAC,txtSheetNo,selectddlCavity,Product,hfSMPJCavityFlg,"KKKKK")
                 //757 มิ้วทำ
                 await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
                     _strPlantCode: FAC,
@@ -586,7 +569,6 @@ function fn_rpt_SheetTraceView() {
                   })
                     .then((res) => {
                       dtData = res.data;
-                      console.log(res.data,"OK11")
                     });
                 if(dtData.length > 0){
                     let AOM_Result = 'OK'
@@ -744,7 +726,6 @@ function fn_rpt_SheetTraceView() {
               })
                 .then((res) => {
                   dtData = res.data;
-                  console.log(dtData,"dtDatadtData")
                 });
                if(dtData.length >0){
                     let FVI_Result = "OK"
@@ -778,7 +759,6 @@ function fn_rpt_SheetTraceView() {
                   })
                     .then((res) => {
                         dtReflow = res.data;
-                        console.log(dtReflow,"dtReflow")
                     });
                 if(dtReflow.length >0){
                     setbtnReflow((prevState) => ({...prevState,value:dtReflow[0].REFLOW_RESULT}));  
@@ -803,7 +783,7 @@ function fn_rpt_SheetTraceView() {
     const  btnAllLInk= (page) =>{
         if(page == 'SPI'){
             if(txtSPICnt !== ""){
-                window.open(`/TraceabilitySystem/SPIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+                window.open(`/TraceabilitySystem/SPIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`, '_blank');
             }else{
                 setlblMessage("Please input SerialNo and click Retrive.")
             }
@@ -815,7 +795,7 @@ function fn_rpt_SheetTraceView() {
             }
         }else if(page=='OST'){
             if(txtSheetNo !== ""){;
-               window.open(`/TraceabilitySystem/OSTResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+               window.open(`/TraceabilitySystem/OSTResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`, '_blank');
                 
             }else{
                 setlblMessage("Please input SerialNo and click Retrive.")
@@ -835,7 +815,7 @@ function fn_rpt_SheetTraceView() {
         }else if(page=='AOI_COA'){
             if(txtAOICOACnt !== "")
                 {
-                    window.open(`/TraceabilitySystem/AOICOAResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo}`, '_blank');
+                    window.open(`/TraceabilitySystem/AOICOAResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`, '_blank');
                    
                     
              }
@@ -859,11 +839,11 @@ function fn_rpt_SheetTraceView() {
         setselectddlCavity(dropdawn)
         if(txtSheetNo.trim() !== "")
         {    
-            // Clear_View()
+            Clear_View()
             if(dropdawn > 0){
-                ViewDataPcs(txtSheetNo);
+                ViewDataPcs(txtSheetNo,dropdawn);
             }else{
-                ViewData(txtSheetNo);
+                ViewData(txtSheetNo,dropdawn);
             }
             
      }
@@ -872,9 +852,10 @@ function fn_rpt_SheetTraceView() {
             
        
     }
-    const ViewDataPcs =async()=>{
+    const ViewDataPcs =async(txtSheetNo,selectddlCavity)=>{
+        console.log(txtSheetNo,"txtSheetNo")
         let intPcsNo =0
-        console.log(hfSMPJCavityFlg,"hfSMPJCavityFlg")
+        console.log(hfSMPJCavityFlg,"DATA777",txtSheetNo,txtProduct)
         if(hfSMPJCavityFlg == "Y"){
             GetFPCPcsNoBySMPJCavity
             await axios.post("/api/ViewTraceSheet/GetSerialAOMEFPCResult", {
@@ -887,7 +868,7 @@ function fn_rpt_SheetTraceView() {
                 });
             //1048
         }else{
-            console.log(selectddlCavity,"selectddlCavity333")
+            console.log(txtProduct,"selectddlCavity333")
             intPcsNo = selectddlCavity
         }
         if( intPcsNo > 0){
@@ -898,8 +879,8 @@ function fn_rpt_SheetTraceView() {
             let i;
             let StrResult ="";
             let ELT_Count = 0;
-            console.log(FAC,txtSheetNo,intPcsNo,txtProduct,hfSMPJCavityFlg,"HJHJHJ")
-            if(txtSheetNo.trim() !=="" && txtProduct.trim() !== ""){
+            if(txtSheetNo.trim() !=="" && txtProduct !== ""){
+                console.log("เข้าจ้า")
                 let dtData = []
                 //1071
                 await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
@@ -911,6 +892,7 @@ function fn_rpt_SheetTraceView() {
                   })
                     .then((res) => {
                       dtData = res.data;
+                      console.log(dtData,"dtData")
                     });
                 if( dtData.length > 0){
                     StrResult = dtData[0].AOM_RESULT
@@ -934,7 +916,7 @@ function fn_rpt_SheetTraceView() {
                 .post("/api/ViewTraceSheet/GetSerialAOIEFPCResult", {
                   _strPlantCode: FAC,
                   _strFrontSheetNo: txtSheetNo.trim().toUpperCase(),
-                  _intPcsNo:selectddlCavity,
+                  _intPcsNo:intPcsNo,
                   _strProduct: txtProduct,
                   _strSMPJCavityFlg: hfSMPJCavityFlg,
                 })
@@ -1040,8 +1022,11 @@ function fn_rpt_SheetTraceView() {
 
                 }
             }
+            console.log("ถึงตรงนี้แล้วจ้า0")
             try {
+                console.log("ถึงตรงนี้แล้วจ้า1")
                 //1194
+                let dtData =[]
                 await axios
                 .post("/api/ViewTraceSheet/GetSPI_Front", {
                     dataList:{
@@ -1054,14 +1039,23 @@ function fn_rpt_SheetTraceView() {
                 })
                 .then((res) => {
                   dtData = res.data;
+                  console.log(res.data,"dtData555")
                 });
                 //1215 
-                if(dt.length > 0){
+                if(dtData.length > 0){
+                    if(SPI_Maker == "CKD"){
+                        setPanelNo1((intPcsNo - 1).toString().trim())
+                        PanelNo =  (intPcsNo - 1).toString().trim();
+                    }else{
+                        setPanelNo1(intPcsNo)
+                        PanelNo = intPcsNo
+                    }
                     await axios 
                     .post("/api/ViewTraceSheet/GetSPI_RSLT", {
                         dataList:{
                             plantcode:FAC,
-                            sheetno:txtProduct
+                            sheetno:txtSheetNo,
+                            _PanelNo : PanelNo
                         }
                         
                     })
@@ -1069,35 +1063,34 @@ function fn_rpt_SheetTraceView() {
                       dtData = res.data;
                       console.log(res.data,"SPI1")
                     });
-                    if(SPI_Maker == "CKD"){
-                        PanelNo =  (intPcsNo - 1).toString().trim();
-                    }else{
-                        PanelNo = intPcsNo
-                    }
+                   
                 }
            
-       
-           if(dt.length > 0){
+     
+           if(dtData.length > 0){ 
+             console.log(dtData.length ,'dtData.length ')
             StrResult = '';
-            for(let i =0; i < dt.length;i++){
-                StrResult = dt[i].SPR_RESULT.trim().toUpperCase();
+            for(let i =0; i < dtData.length;i++){
+                StrResult = dtData[i].spr_result.trim().toUpperCase();
+                console.log(StrResult,"StrResult3")
                 if(StrResult.toUpperCase() == "NG" ||StrResult.toUpperCase() == "FAIL"||StrResult.toUpperCase() == "BADMARK"||StrResult.toUpperCase() == "SKIP"){
                     break;  
                 }
             }
             if(StrResult.toUpperCase() != "NG" ||StrResult.toUpperCase() != "FAIL"||StrResult.toUpperCase() != "BADMARK"||StrResult.toUpperCase() != "SKIP"){
-                for(let i =0;i>dt.length;i++){
-                    StrResult = dt[i].SPR_RESULT.trim()
+                for(let i =0;i>dtData.length;i++){
+                    StrResult = dtData[i].spr_result.trim()
                     if (StrResult.substring(0, 1).toUpperCase() === "E" || StrResult.substring(0, 1).toUpperCase() === "W") {
                         break;
                     }
                     
                 }
             }
-            settxtSPICnt(dt[0].spr_ins_count)
-            settxtSPITime(dt[0].spr_inspect_date)
-            settxtSPIMachine(dt[0].spr_machine_name)
+            settxtSPICnt(dtData[0].spr_ins_count)
+            settxtSPITime(dtData[0].spr_inspect_date)
+            settxtSPIMachine(dtData[0].spr_machine_name)
             setbtnSPI((prevState) => ({...prevState,value:StrResult}));  
+            console.log(StrResult,"StrResultStrResult")
             switch (StrResult.toUpperCase()) {
                 case "GOOD":
                 case "OK":
@@ -1111,7 +1104,10 @@ function fn_rpt_SheetTraceView() {
                 case "FAIL":
                 case "BADMARK":
                 case "SKIP":
-                    setbtnSPI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red',color:'white'}})); 
+                    
+                console.log(StrResult,'GGGGy')
+                    setbtnSPI((prevState) => ({...prevState,value:StrResult,style:{backgroundColor:'red'}})); 
+                    break;
                 case "":
                     setbtnSPI((prevState) => ({...prevState,value:""})); 
                     break;
@@ -1124,14 +1120,14 @@ function fn_rpt_SheetTraceView() {
                 .post("/api/ViewTraceSheet/GetSPI_RSLT", {
                     dataList:{
                         plantcode:FAC,
-                        sheetno:txtProduct
+                        sheetno:txtSheetNo
                     }
                     
                 })
                 .then((res) => {
                   dtData = res.data;
                 });
-                if(dt.length>0){
+                if(dtData.length>0){
                     StrResult = "BADMARK"
                     settxtSPICnt(dt[0].spr_ins_count)
                     settxtSPITime(dt[0].spr_inspect_date)
@@ -1156,12 +1152,12 @@ function fn_rpt_SheetTraceView() {
             .then((res) => {
               dtData = res.data;
             });
-            if(dt.length > 0){
-            settxtSPICnt(dt[0].sph_panel_count)
-            settxtSPITime(dt[0].sph_inspection_date)
-            settxtSPIMachine(dt[0].sph_machine_name)
-            setbtnSPI((prevState) => ({...prevState,value:dt[0].sph_result}));  
-            switch (dt[0].sph_result.toUpperCase()) {
+            if(dtData.length > 0){
+            settxtSPICnt(dtData[0].sph_panel_count)
+            settxtSPITime(dtData[0].sph_inspection_date)
+            settxtSPIMachine(dtData[0].sph_machine_name)
+            setbtnSPI((prevState) => ({...prevState,value:dtData[0].sph_result}));  
+            switch (dtData[0].sph_result.toUpperCase()) {
                 case "GOOD":
                 case "OK":
                 case "JUDGE":
@@ -1290,8 +1286,8 @@ function fn_rpt_SheetTraceView() {
                             setbtnAOI((prevState) => ({...prevState,style:{backgroundColor:'red',color:'white',value:dt[0].aor_result}}));
                             for (let i = 0; i < dt.length; i++) {
                               
-                                if (dt[drRow].error_code) {
-                                    setbtnAOI((prevState) => ({...prevState,value:dt[drRow].error_code}));
+                                if (dt[i].error_code) {
+                                    setbtnAOI((prevState) => ({...prevState,value:dt[i].error_code}));
                                   break;
                                 }
                               }
@@ -1314,6 +1310,7 @@ function fn_rpt_SheetTraceView() {
                     })
                     .then((res) => {
                         dt = res.data;
+                        console.log(res.data,"res.data444")
                     });
                     if(dt.length >0){
                         setbtnAOI((prevState) => ({...prevState,value:dt[0].aor_result}))
@@ -1336,7 +1333,6 @@ function fn_rpt_SheetTraceView() {
                             case "RPASS":
                                 setbtnAOI((prevState) => ({...prevState,style:{backgroundColor:'green',color:'white'}}));
                               break;
-                              
                             case "NG":
                             case "FAIL":
                             case "BADMARK":
