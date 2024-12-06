@@ -44,7 +44,7 @@ function fn_ScanSheetAOIXrayConfirm() {
       setlblSheet(txtSheetNo + " " + currentTime);
 
       setlblResult(strResult);
-      setlblRemark("AOI : " + strAOI + " X-Ray : " + strXray);
+      setlblRemark("AOI : " + strAOI + " &nbsp;&nbsp; X-Ray : " + strXray);
       settxtSheetNo("");
       setTimeout(() => {
         fc_txtSheet.current.focus();

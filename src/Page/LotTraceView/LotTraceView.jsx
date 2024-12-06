@@ -271,10 +271,10 @@ function LotTraceView() {
               <Card
                 component={Paper}
                 className="Card-ViewLot2"
-                style={{ display: lblTitleShtFront.visible, color: "#151515" }}
+                style={{ display: lblTitleShtFront.visible, }}
               >
                 <b style={{ fontSize: "16px", color: "#151515" }}>
-                  Sheet Front :{" "}
+                Sheet No.(F){" "}
                 </b>
 
                 <a
@@ -294,7 +294,7 @@ function LotTraceView() {
               >
                 <b style={{ fontSize: "16px", color: "#151515" }}>
                   {" "}
-                  Sheet Back:{" "}
+                  Sheet No.(B){" "}
                 </b>
                 <a
                   href={`/TraceabilitySystem/SheetTraceView?SHEETNO=${lblTitleShtBack.value}`}

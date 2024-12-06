@@ -28,8 +28,8 @@ function SheetBarcodeGradeView() {
     <div>
       <Header />
      
-      <Card component={Card} className="Card-Common" style={{width:'97%'}}>
-        <div className="ReportBadTextFileDiv">
+      {/* <Card component={Card} className="Card-Common" > */}
+        <div className="ReportBadTextFileDiv" >
           <Button
             disabled
             style={{ color: "white", backgroundColor: "#31363F" }}
@@ -88,6 +88,7 @@ function SheetBarcodeGradeView() {
             onChange={(e) => {
               setRadioValue(e.target.value);
             }}
+            
           >
             <Radio value={"RESULT"}>Result</Radio>
             <Radio value={"VALUE"}>Value</Radio>
@@ -184,13 +185,13 @@ function SheetBarcodeGradeView() {
               columns={columns}
               pagination={false}
               size="small"
-              scroll={{ x: "max-content", y: 350 }}
+              // scroll={{ x: "max-content" }}
               bordered
             />
           </div>
         )}
         &nbsp;
-      </Card>
+      {/* </Card> */}
     </div>
   );
 }

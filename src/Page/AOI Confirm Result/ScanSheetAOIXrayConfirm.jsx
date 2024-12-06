@@ -148,7 +148,7 @@ function ScanSheetMOTTime() {
                         </b>
                         
                         <b style={{ fontSize: "25px", color: "red" }}>
-                          {lblRemark}
+                        <span dangerouslySetInnerHTML={{ __html: lblRemark }} />
                         </b>
                       </Paper>
                     </TableCell>
