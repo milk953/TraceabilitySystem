@@ -99,6 +99,10 @@ function fn_AOIManualConfirmP1() {
     console.log("CheckComplete", CheckComplete);
     let AOI_SPI_Check = "";
     if (CheckComplete === "") {
+      setDdlResult((prevState) => ({
+        ...prevState,
+        value: "",
+      }));
       setLblResult((prevState) => ({
         ...prevState,
         value: "Please in put piece no.",
