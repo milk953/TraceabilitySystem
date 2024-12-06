@@ -28,7 +28,7 @@ import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Header from "../Header/Header";
-import "/src/Page/ScanSMTSerialSht/ScanSMTSerialSht.css";
+import "./ScanSMTSerialSht.css";
 import { fn_ScanSMTSerialSht } from "./fn_ScanSMTSerialSht";
 
 function ScanSMTSerialSht() {

@@ -29,7 +29,7 @@
 .TbPiece {
     margin: auto;
     width: 100%;
-    display: flex;
+    display: flex !important;
 }
 
 .TbPiece th {
