@@ -13,6 +13,7 @@ function fn_SheetBarcodeGradeView() {
   const [product_result, setProduct_result] = useState("");
   const [lotNo_result, setLotNo_result] = useState("");
   const [totalSheet_result, setTotalSheet_result] = useState("");
+  const hfBarcodeGrade='A,B,C'
 
   const Fac = import.meta.env.VITE_FAC;
   const RetriveBtn = async () => {
@@ -114,11 +115,17 @@ function fn_SheetBarcodeGradeView() {
       key: key,
       align: "center",
       width: 35,
-      render: (text) => (
-        <span style={{ color: text === "NG" ? "red" : "inherit" }}>{text}</span>
-      ),
+      render: (text) => {
+        if (radioValue === "RESULT") {
+          return <span style={{ color: text === "NG" ? "red" : "inherit" }}>{text}</span>;
+        } else {
+          const barcodeGrades = hfBarcodeGrade.split(',');
+          const isTextInBarcodeGrade = barcodeGrades.includes(text) || text === "OK" || text === "NG";
+          return <span style={{ color: isTextInBarcodeGrade ? "inherit" : "red" }}>{text}</span>;
+        }
+      },
     }));
-  const columns = [...predefinedColumns, ...dynamicColumns];
+ const columns = [...predefinedColumns, ...dynamicColumns.slice(0, dynamicColumns.length - 1)];
 
   const exportExcelFile = () => {
     if (gvResult == "" || gvResult == null || gvResult == []) {
