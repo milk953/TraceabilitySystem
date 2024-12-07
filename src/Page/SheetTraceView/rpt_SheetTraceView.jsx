@@ -186,7 +186,7 @@ function rpt_SheetTraceView() {
                       icon={<SearchOutlined />}
                       onClick={btnRetrive}
                     >
-                      Retrive
+                     Search
                     </Button>
                     &nbsp;&nbsp;&nbsp;
                     {/* <Button
@@ -307,8 +307,9 @@ function rpt_SheetTraceView() {
                            style={{height:"33px"}}
                             size="small"
                             value={selectddlCavity}
-                            onChange={ddlCavity_SelectedIndexChanged}
-                            onBlur={ddlCavity_SelectedIndexChanged}
+                           // onChange={ddlCavity_SelectedIndexChanged}
+                            onChange={(e) => ddlCavity_SelectedIndexChanged(e)}
+                            // onBlur={ddlCavity_SelectedIndexChanged}
                             displayEmpty
                           >
                             {ddlCavity.map((option) => (
@@ -342,7 +343,9 @@ function rpt_SheetTraceView() {
                     </Button>
                       </TableCell>
                       <TableCell>
-                        <Typography sx={{ textAlign: "center" }}>
+                        <Typography 
+                        // sx={{ textAlign: "center" }}
+                        >
                           {lblShtMachine.value}
                         </Typography>
                         <Typography sx={{ textAlign: "center" }}>
@@ -634,6 +637,7 @@ function rpt_SheetTraceView() {
                     <TableCell rowSpan={"10"}>SMT</TableCell>
                     <TableCell>SPI</TableCell>
                     <TableCell>
+                      {console.log("btnSPI.style",btnSPI)}
                       <Button
                         onClick={() => btnAllLInk("SPI")}
                         style={{

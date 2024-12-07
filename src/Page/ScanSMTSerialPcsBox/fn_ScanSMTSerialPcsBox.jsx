@@ -1661,11 +1661,7 @@ function fn_ScanSMTSerialPcsBox() {
                   }
                   //เดี๋ยวกลับมาเปิด
                   if (hfPlasmaCheck == "Y" && _strRejectGroup !== "MASTER") {
-                    console.log(
-                      hfPlasmaCheck,
-                      "hfPlasmaCheck",
-                      dtSerial[drRow].PLASMA_TIME
-                    );
+                
                     let _dblPlasmaTime = dtSerial[drRow].PLASMA_TIME;
                     if (_dblPlasmaTime == 0) {
                       _strMessageUpdate =
@@ -1903,7 +1899,6 @@ function fn_ScanSMTSerialPcsBox() {
             parseFloat(lblBoxTotal.value + _intCountOK) >
             parseFloat(lblBoxFull.value)
           ) {
-            console.log(lblBoxTotal.value, "ค่ามา", lblBoxFull.value);
             setlblLog((prevState) => ({
               ...prevState,
               value: "Box was full / กล่องเต็มแล้ว",
@@ -2363,7 +2358,6 @@ function fn_ScanSMTSerialPcsBox() {
       })
       .then((res) => {
         dtProductBox = res.data[0];
-        console.log(res.data[0], "res.data[0]");
         if (dtProductBox != "") {
           if (
             serial_digit !== dtProductBox.SLM_FIX_DIGIT ||

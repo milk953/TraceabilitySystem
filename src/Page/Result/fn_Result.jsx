@@ -42,9 +42,12 @@ function fn_Result() {
     if(product_name==null){
         product_name=''
     }
-    if (Page == "AOICOAResult2"|| Page=='AOIResult2') {
+    if (Page == "AOICOAResult2") {
       GetDataAOICOAResult();
       setColumntblData1(columnsAoiCoaResult2);
+    } else if ( Page=='AOIResult2') {
+      GetDataAOIResult();
+      setColumntblData1(columnsAoiResult2);
     } else if (Page == "SPIResult") {
       GetDataSPIResult();
       setColumntblData1(columnsSPIResult);
@@ -95,7 +98,223 @@ function fn_Result() {
 
   };
 
+   const GetDataAOIResult = async () => {
+    await axios
+      .post("/api/Result/getAOI_RESULT", {
+        dataList: {
+          strprdname: product_name,
+          strplantcode: Fac,
+          panelno:panel_no === '' ? null : panel_no,
+          strsheetno: sheet_no,
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'getAOI');
+        settblData1(res.data);
+      });
+
+      await axios
+      .post("/api/Result/Get_AOI_Export", {
+        dataList: {
+          strprdname: product_name,
+          strplantcode: Fac,
+          panelno:panel_no === '' ? null : panel_no,
+          strsheetno: sheet_no,
+        },
+      })
+      .then((res) => {
+        console.log(res.data,'GetAoi_Coa_Result2_Export');
+        setDatatblData1(res.data);
+      });
+
+
+  };
+
   const columnsAoiCoaResult2 = [
+    {
+      title: "Link",
+      dataIndex: "link", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "link",
+      render: (text, record, index) => {
+        let modifiedText=''
+        if(text!=''){
+           modifiedText = text.replace("<a ", '<a target="_blank" '); 
+        }
+        return (
+          <span
+            dangerouslySetInnerHTML={{ __html: modifiedText }} 
+          />
+        );
+      },
+      align: "center",
+      width: 45,
+    },
+    {
+      title: "PLANT_CODE",
+      dataIndex: "plant_code", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "plant_code",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 70,
+    },
+    {
+      title: "SHEET_NO",
+      dataIndex: "sheet_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "sheet_no",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 190,
+    },
+    {
+      title: "CABITY_NO",
+      key: "cabity_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "cabity_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 70,
+    },
+    {
+      title: "SEQ",
+      key: "seq", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "seq", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 50,
+    },
+    {
+      title: "INS_COUNT",
+      dataIndex: "ins_count", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "ins_count",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+      width: 90,
+    },
+    {
+      title: "MACHINE_NAME",
+      dataIndex: "machine_name", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "machine_name",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 90,
+    },
+    {
+      title: "REFERENCE",
+      dataIndex: "reference", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "reference",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 90,
+    },
+    {
+      title: "POSITION",
+      key: "position", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "p_position", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 90,
+    },
+    {
+      title: "INSPECT_DATE",
+      key: "inspect_date", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "inspect_date", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 110,
+    },
+    {
+      title: "LOT_NO",
+      dataIndex: "lot_no", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "lot_no",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+      width: 110,
+    },
+    {
+      title: "RESULT",
+      dataIndex: "result", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "result",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+      width: 70,
+    },
+    {
+      title: "PROGRAM_NAME",
+      dataIndex: "program_name", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "program_name",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "IMAGE_PATH",
+      key: "image_path", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "image_path", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "COMPONENT",
+      key: "component", // เปลี่ยนเป็นพิมพ์เล็ก
+      dataIndex: "component", // เปลี่ยนเป็นพิมพ์เล็ก
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_BY",
+      dataIndex: "create_by", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "create_by",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+    {
+      title: "CREATE_PROGRAM",
+      dataIndex: "create_program", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "create_program",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "CREATE_DATE",
+      dataIndex: "create_date", // เปลี่ยนเป็นพิมพ์เล็ก
+      key: "create_date",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+  ];
+  const columnsAoiResult2 = [
     {
       title: "Link",
       dataIndex: "link", // เปลี่ยนเป็นพิมพ์เล็ก

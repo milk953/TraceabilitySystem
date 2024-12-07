@@ -27,7 +27,7 @@ import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
-import "/src/Page/ScanSMTSerialShtMaster/ScanSMTSerialShtMaster.css";
+import "./ScanSMTSerialShtMaster.css";
 import { fn_ScanSMTSerialShtMaster } from "./fn_ScanSMTSerialShtMaster";
 
 function ScanSMTSerialShtMaster() {
@@ -49,9 +49,9 @@ function ScanSMTSerialShtMaster() {
                 sx={{ display: "flex" }}
             >
                 <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-6px",
-                    }}
+                    // sx={{
+                    //     marginLeft: "-6px",
+                    // }}
                 >
                     <TableContainer
                         component={Paper}
@@ -352,7 +352,7 @@ function ScanSMTSerialShtMaster() {
                             className="Card-lblLog"
                             style={{
                                 width: "433px",
-                                marginLeft: "23px",
+                                //marginLeft: "23px",
                             }}
                         >
                             {lblLog}
