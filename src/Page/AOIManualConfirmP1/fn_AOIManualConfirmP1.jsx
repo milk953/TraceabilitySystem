@@ -141,7 +141,7 @@ function fn_AOIManualConfirmP1() {
               " => " +
               ddlResult.value +
               " update complete.",
-            style: { background: "blue" },
+            style: { background: "#059212" },
           }));
           setDdlResult((prevState) => ({
             ...prevState,

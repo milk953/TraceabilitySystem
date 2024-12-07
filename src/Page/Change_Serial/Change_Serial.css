@@ -13,3 +13,21 @@
     padding: 4px 4px 4px 4px!important;
  
 }
+
+
+.ChangeSerialTableFirst {
+    height: 50px;
+  }
+  .ChangeSerialTableFirst th {
+    font-family: Arial;
+    padding: 8px;
+    background-color: #8c8c8c !important ;
+    border-radius: 5px 5px 0 0 !important;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+  }
+  .ChangeSerialTableFirst td {
+    padding: 5px;
+  }
+  

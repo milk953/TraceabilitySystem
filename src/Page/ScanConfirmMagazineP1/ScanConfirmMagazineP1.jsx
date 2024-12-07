@@ -20,19 +20,19 @@ import {
   Checkbox,
   Grid,
   Input,
+  Avatar,
 } from "@mui/material";
 import {
   ArrowRightOutlined,
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { Table as AntTable } from "antd";
+import { Table as AntTabl } from "antd";
 import "./ScanConfirmMagazineP1.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import { FileExcelTwoTone, FileExcelFilled } from "@ant-design/icons";
-import { Avatar } from "antd";
 import "../Common/StyleCommon.css";
+import excel from "../../../src/assets/excel.png";
 import { fn_ScanConfirmMagazineP1 } from "../ScanConfirmMagazineP1/fn_ScanConfirmMagazineP1";
 
 function ScanConfirmMagazineP1() {
@@ -61,7 +61,7 @@ function ScanConfirmMagazineP1() {
       <Hearder />
       <Card
         component={Paper}
-        className="Card-Common"
+        className="Card-Common-Khun"
         sx={{
           backgroundColor: "transparent",
           boxShadow: "none",
@@ -73,7 +73,7 @@ function ScanConfirmMagazineP1() {
               <Table
                 className="ScanSMT"
                 component={Paper}
-                style={{ width: "50%" }}
+                style={{ width: "600px" }}
               >
                 <TableHead>
                   <TableCell colSpan={4} align="center">
@@ -184,16 +184,25 @@ function ScanConfirmMagazineP1() {
                     </TableCell>
                     <TableCell>
                       <Button
-                        className="Bt_ibtBack"
+                        size="small"
                         disabled={ibtExcel.disabled}
+                        startIcon={
+                          <Avatar
+                            variant="square"
+                            src={excel}
+                            sx={{ width: 18, height: 18 }}
+                          />
+                        }
                         onClick={ibtExcel_Click}
+                        sx={{
+                          textTransform: "none",
+                          border: "1px solid #B7B7B7",
+                          color: "#686D76",
+                          padding: "2px 4px",
+                          marginLeft: "20px",
+                        }}
                       >
-                        <FileExcelFilled
-                          style={{
-                            fontSize: "24px",
-                            color: ibtExcel.disabled ? "" : "green",
-                          }}
-                        />
+                        Export
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -244,11 +253,23 @@ function ScanConfirmMagazineP1() {
                   elevation={3}
                   className="ManglblLog"
                   style={{
-                    width: "50%",
-                    color: lblResult.value == "OK" ? "#059212" : "#FF0066",
+                    width: "600px",
+                    backgroundColor:
+                      lblResult.value == "OK" ? "#059212" : "#BA0900",
                   }}
                 >
-                  {lblResult.value}
+                  <Typography
+                    variant="h6"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      fontSize: "30px",
+
+                      color: "#ffffff",
+                    }}
+                  >
+                    {lblResult.value}
+                  </Typography>
                 </Paper>
               )}
               {/* 200784420 */}

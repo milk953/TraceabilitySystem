@@ -52,14 +52,19 @@ function ScanAVIConfirmResult() {
   return (
     <div>
       <Hearder />
-      <Card component={Paper} className="Card-Common">
+      <Card component={Paper} className="Card-Common-Khun" 
+           sx={{
+            backgroundColor: "transparent",
+            boxShadow: "none",
+          }}
+      >
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
               <Table
                 className="ScanSMT"
                 component={Paper}
-                style={{ width: "50%" }}
+                style={{ width: "600px" }}
               >
                 <TableHead>
                   <TableCell colSpan={4} align="center">
@@ -166,16 +171,15 @@ function ScanAVIConfirmResult() {
                   className="ScanSMT"
                   component={Paper}
                   style={{
-                    width: "50%",
+                    width: "600px",
                     marginTop: "10px",
-                    backgroundColor: "#FFFFCC",
+                    backgroundColor: "yellow",
                   }}
                 >
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={2}>
                         <Typography style={{ color: "#0000CC" }}>
-                          {" "}
                           {lblNo.value}
                         </Typography>
                       </TableCell>

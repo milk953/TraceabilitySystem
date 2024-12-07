@@ -16,6 +16,13 @@
     padding:5px;
     /* min-height:700px ; */
 }
+.Card-Common-Khun {
+    margin: auto;
+    width: 98%;
+    margin-top: 90px;
+    height: 100%;
+    padding:5px;
+}
 
 .Card-lblLog{
     height: 40px;

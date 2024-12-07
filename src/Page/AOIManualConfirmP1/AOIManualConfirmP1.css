@@ -10,12 +10,15 @@
 }
 .AOITableFirst th {
   font-family: Arial;
-  padding: 8px !important;
+  padding: 8px;
   background-color: #8c8c8c !important ;
   border-radius: 5px 5px 0 0 !important;
   color: #fff;
   font-size: 20px;
   text-align: center;
+}
+.AOITableFirst td {
+  padding: 5px;
 }
 
 /* .DAOITableFirst {
@@ -28,7 +31,7 @@
   display: flex;
   margin: auto;
   width: 600px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .DAOITableSecond {
@@ -55,8 +58,3 @@
 .field_select .MuiSelect-select {
   height: 10px;
 }
-
-
-
-
-

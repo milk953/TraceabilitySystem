@@ -5,7 +5,6 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Button,
   TableHead,
   Paper,
   Card,
@@ -19,7 +18,10 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
+import { Button } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import "./AOIManualConfirmP1.css";
+import "../Common/StyleCommon.css";
 import { fn_AOIManualConfirmP1 } from "../AOIManualConfirmP1/fn_AOIManualConfirmP1";
 function AOIManualConfirmP1() {
   const {
@@ -37,45 +39,45 @@ function AOIManualConfirmP1() {
     btnRetrive_Click,
     BtnSubmit1_Click,
   } = fn_AOIManualConfirmP1();
-  console.log("ddlResult.value", ddlResult.value, "###");
   return (
     <>
       <Hearder />
-
       <Card
         component={Paper}
-        className="Card-Common"
+        className="Card-Common-Khun"
         sx={{
           backgroundColor: "transparent",
           boxShadow: "none",
         }}
       >
-        <TableRow
-          sx={{
-            textAlign: "center",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <TableCell
+        {lblResult.value && (
+          <TableRow
             sx={{
-              width: "40%",
-              borderBottom: "0px",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
             }}
           >
-            <Typography
-              variant="h6"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                color: "#ffffff",
-                ...lblResult.style,
+            <TableCell
+              sx={{
+                width: "600px",
+                borderBottom: "0px",
               }}
             >
-              {lblResult.value}
-            </Typography>
-          </TableCell>
-        </TableRow>
+              <Typography
+                variant="h6"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  color: "#ffffff",
+                  ...lblResult.style,
+                }}
+              >
+                {lblResult.value}
+              </Typography>
+            </TableCell>
+          </TableRow>
+        )}
 
         <div className="DAOITableFirst">
           <Table className="AOITableFirst" component={Paper}>
@@ -124,14 +126,14 @@ function AOIManualConfirmP1() {
                     </Grid>
                   </Grid>
                 </TableCell>
+
                 <TableCell
                   rowSpan={2}
                   sx={{ verticalAlign: "middle", textAlign: "center" }}
                 >
                   <Button
-                    variant="contained"
-                    color="primary"
-                    sx={{ width: "100px" }}
+                    type="primary"
+                    icon={<SearchOutlined />}
                     onClick={btnRetrive_Click}
                   >
                     Search
@@ -180,7 +182,7 @@ function AOIManualConfirmP1() {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell style={{ width: "20%" }}>
+                <TableCell style={{ width: "35%" }}>
                   <FormControl style={{ width: "100%" }} size="small">
                     <Select
                       className="field_select"
@@ -200,7 +202,7 @@ function AOIManualConfirmP1() {
                       {/* <MenuItem value=" " style={{ color: "rgba(0, 0, 0, 0)" }}>
                         <em>-SELECT-</em>
                       </MenuItem> */}
-                      <MenuItem value=" ">-Select-</MenuItem>
+                      <MenuItem value=" ">--- Select ---</MenuItem>
                       <MenuItem value={"OK"}>OK</MenuItem>
                       <MenuItem value={"NG"}>NG</MenuItem>
                     </Select>
@@ -217,7 +219,7 @@ function AOIManualConfirmP1() {
                     value={txtOperatorCode.value}
                   ></TextField>
                 </TableCell>
-                <TableCell style={{ width: "35%" }}>
+                <TableCell style={{ width: "20%" }}>
                   <TextField
                     className="field_text"
                     size="small"
@@ -228,11 +230,17 @@ function AOIManualConfirmP1() {
                     style={{ width: "99%", backgroundColor: "#e0e0e0" }}
                   ></TextField>
                 </TableCell>
-                <TableCell sstyle={{ width: "10%" }}>
+
+                <TableCell
+                  rowSpan={2}
+                  sx={{ verticalAlign: "middle", textAlign: "center" }}
+                >
                   <Button
-                    variant="contained"
-                    color="primary"
-                    sx={{ width: "100px" }}
+                    style={{
+                      backgroundColor: "green",
+                      width: "90px",
+                      color: "white",
+                    }}
                     onClick={BtnSubmit1_Click}
                   >
                     Submit
