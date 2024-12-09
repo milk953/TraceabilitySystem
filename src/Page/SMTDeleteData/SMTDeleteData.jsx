@@ -26,7 +26,8 @@ import {
     ArrowLeftOutlined,
     FileExcelFilled,
     SearchOutlined,
-    DeleteFilled
+    DeleteFilled,
+    ClearOutlined
 } from "@ant-design/icons";
 import DeleteIcon from '@mui/icons-material/Delete';
 import "./SMTDeleteData.css";
@@ -39,7 +40,8 @@ function SMTDeleteData() {
     const {
         pnlForm, lblResult, lblResultcolor, txtSheetNo, settxtSheetNo, txtRollLeaf, settxtRollLeaf, ddlELTType, ELTTypedata, txtSerialNo,
         txtFinalSerialNo, settxtFinalSerialNo, gvELTResult, gvELTData, gvFinalResult, gvFinalData, inputShtNo, btnShtDeleteClick, handleELTType,
-        btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick,
+        btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
+        btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect
     } = fn_SMTDeleteData();
 
     return (
@@ -78,7 +80,7 @@ function SMTDeleteData() {
                 <Card
                     component={Paper}
                     style={{
-                        width: "52%",
+                        width: "780px",
                         margin: "10px",
                     }}
                 >
@@ -113,9 +115,7 @@ function SMTDeleteData() {
                                         }}
                                         onKeyDown={(e) => {
                                             if (e.key === "Enter") {
-                                                if (txtSheetNo !== "") {
-                                                    btnShtDeleteClick();
-                                                }
+                                                btnShtDeleteClick();
                                             }
                                         }}
                                     />
@@ -145,7 +145,7 @@ function SMTDeleteData() {
                 <Card
                     component={Paper}
                     style={{
-                        width: "52%",
+                        width: "780px",
                         margin: "10px",
                     }}
                 >
@@ -177,7 +177,6 @@ function SMTDeleteData() {
                                         onKeyDown={(e) => {
                                             if (e.key === "Enter") {
                                                 btnRollDeleteClick();
-                                                
                                             }
                                         }}
                                     />
@@ -206,8 +205,10 @@ function SMTDeleteData() {
                 <Card
                     component={Paper}
                     style={{
-                        width: "52%",
+                        width: "780px",
                         margin: "10px",
+                        display: "flex",
+                        justifyContent: "center"
                     }}
                 >
                     <Table className="TbSMTDel">
@@ -271,6 +272,7 @@ function SMTDeleteData() {
                                         variant="contained"
                                         sx={{
                                             marginLeft: "-114px",
+                                            textTransform: "none",
                                             marginBottom: "100px"
                                         }}
                                         size="small"
@@ -280,8 +282,29 @@ function SMTDeleteData() {
                                             style={{
                                                 fontSize: '20px'
                                             }}
-                                        />
+                                        />&nbsp;
                                         Search
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        onClick={btnClearELTClick}
+                                        sx={{
+                                            marginLeft: "-90px",
+                                            backgroundColor: "#f5222d",
+                                            textTransform: "none",
+                                            width: "90px",
+                                            "&:hover": {
+                                                backgroundColor: "#d32020",
+                                            },
+                                        }}
+                                        size="small"
+                                    >
+                                        <ClearOutlined
+                                            style={{
+                                                fontSize: '20px'
+                                            }}
+                                        />&nbsp;
+                                        Clear
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -290,11 +313,11 @@ function SMTDeleteData() {
                 </Card>
 
                 {gvELTResult && (
-                    <div className="divgvELTResult" style={{ position: "relative" }}>
+                    <div className="divgvELTResult">
                         <TableContainer
                             component={Paper}
                             style={{
-                                width: "100%",
+                                width: "780px",
                                 display: "flex",
                                 flexDirection: "column",
                                 justifyContent: "space-between",
@@ -303,7 +326,9 @@ function SMTDeleteData() {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Type</TableCell>
+                                        <TableCell>
+                                            Select
+                                        </TableCell>
                                         <TableCell>No</TableCell>
                                         <TableCell>Type</TableCell>
                                         <TableCell>Serial No.</TableCell>
@@ -317,7 +342,8 @@ function SMTDeleteData() {
                                                 <Checkbox
                                                     size="small"
                                                     style={{ padding: "0" }}
-                                                    checked={true}
+                                                    checked={selectedRows[index]}
+                                                    onChange={(event) => handleRowSelect(index, event)}
                                                 />
                                             </TableCell>
                                             <TableCell align="center">
@@ -340,25 +366,30 @@ function SMTDeleteData() {
                     </div>
                 )}
                 <div style={{
-                    position: "relative",
-                    display: "flex",
+                    //display: "flex",
+                    marginTop: "10px",
                     justifyContent: "center",
-                    gap: "10px",
-                    marginBottom: "20px"
+                    marginBottom: "10px",
                 }}>
-                    <Button
-                        className="BtCancel"
+                    <Button className="Bt_del"
+                        style={{ backgroundColor: "#fff" }}
                         onClick={btnELTDeleteClick}
                     >
-                        <DeleteIcon />
-                        Delete
+                        <Tooltip title="Delete" placement="right-end">
+                            <DeleteIcon
+                                style={{
+                                    fontSize: 35,
+                                    color: "red",
+                                }}
+                            />
+                        </Tooltip>
                     </Button>
                 </div>
 
                 <Card
                     component={Paper}
                     style={{
-                        width: "52%",
+                        width: "780px",
                         margin: "10px",
                     }}
                 >
@@ -397,7 +428,8 @@ function SMTDeleteData() {
                                     <Button
                                         variant="contained"
                                         sx={{
-                                            marginLeft: "-120px",
+                                            marginLeft: "-114px",
+                                            textTransform: "none",
                                             marginBottom: "100px"
                                         }}
                                         size="small"
@@ -407,8 +439,29 @@ function SMTDeleteData() {
                                             style={{
                                                 fontSize: '20px'
                                             }}
-                                        />
+                                        />&nbsp;
                                         Search
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        onClick={btnClearFinalClick}
+                                        sx={{
+                                            marginLeft: "-90px",
+                                            backgroundColor: "#f5222d",
+                                            textTransform: "none",
+                                            width: "90px",
+                                            "&:hover": {
+                                                backgroundColor: "#d32020",
+                                            },
+                                        }}
+                                        size="small"
+                                    >
+                                        <ClearOutlined
+                                            style={{
+                                                fontSize: '20px'
+                                            }}
+                                        />&nbsp;
+                                        Clear
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -417,20 +470,20 @@ function SMTDeleteData() {
                 </Card>
 
                 {gvFinalResult && (
-                    <div className="divgvELTResult" style={{ position: "relative" }}>
+                    <div className="divgvELTResult">
                         <TableContainer
                             component={Paper}
                             style={{
                                 width: "100%",
                                 display: "flex",
                                 flexDirection: "column",
-                                justifyContent: "space-between",
+                                // justifyContent: "space-between",
                             }}
                         >
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Type</TableCell>
+                                        <TableCell>Select</TableCell>
                                         <TableCell>No</TableCell>
                                         <TableCell>Serial No.</TableCell>
                                         <TableCell>Result</TableCell>
@@ -443,7 +496,8 @@ function SMTDeleteData() {
                                                 <Checkbox
                                                     size="small"
                                                     style={{ padding: "0" }}
-                                                    checked={true}
+                                                    checked={selectedRow[index]}
+                                                    onChange={(event) => handleSelect(index, event)}
                                                 />
                                             </TableCell>
                                             <TableCell align="center">
@@ -466,15 +520,21 @@ function SMTDeleteData() {
                 <div style={{
                     display: "flex",
                     justifyContent: "center",
-                    gap: "10px",
+                    marginTop: "10px",
                     marginBottom: "2px"
                 }}>
-                    <Button
-                        className="BtCancel"
+                    <Button className="Bt_del"
+                        style={{ backgroundColor: "#fff" }}
                         onClick={btnFinalDeleteClick}
                     >
-                        <DeleteIcon />
-                        Delete
+                        <Tooltip title="Delete" placement="right-end">
+                            <DeleteIcon
+                                style={{
+                                    fontSize: 35,
+                                    color: "red",
+                                }}
+                            />
+                        </Tooltip>
                     </Button>
                 </div>
             </Box>

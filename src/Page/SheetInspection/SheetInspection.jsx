@@ -40,7 +40,7 @@ function SheetInspection() {
     const {
         txtProductFrom, settxtProductFrom, txtProductTo, settxtProductTo, txtLotFrom, settxtLotFrom, txtLotTo, settxtLotTo, txtRollFrom, settxtRollFrom,
         txtRollTo, settxtRollTo, txtInvFrom, settxtInvFrom, txtInvTo, settxtInvTo, txtDateFrom, settxtDateFrom, txtDateTo, settxtDateTo, selectcbx,
-        gvDataXOut, gvDataSheet, pnlGridWidth, handleChangecbx, btnExecute_Click, btnExport_Click, columnsXOutData, columnsSheetNoData
+        gvDataXOut, gvDataSheet, pnlGridWidth, handleChangecbx, btnExecute_Click, btnExport_Click, columnsXOutData, columnsSheetNoData, inputProduct
     } = fn_SheetInspection();
 
     return (
@@ -52,15 +52,15 @@ function SheetInspection() {
                 sx={{ display: "flex" }}
             >
                 <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-5px",
-                        marginTop: "-10px",
-                    }}
+                // sx={{
+                //     marginLeft: "-5px",
+                //     marginTop: "-10px",
+                // }}
                 >
                     <TableContainer
                         component={Paper}
                         style={{
-                            width: "900px",
+                            width: "800px",
                             margin: "4px",
                         }}
                     >
@@ -83,6 +83,7 @@ function SheetInspection() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
+                                            inputRef={(el) => (inputProduct.current = el)}
                                             fullWidth
                                             value={txtProductFrom}
                                             onChange={(e) => {
@@ -91,6 +92,7 @@ function SheetInspection() {
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     settxtProductTo(txtProductFrom);
+                                                    document.getElementById("ProductTo").focus();
                                                 }
                                             }}
                                         />
@@ -101,11 +103,17 @@ function SheetInspection() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="ProductTo"
                                             size="small"
                                             fullWidth
                                             value={txtProductTo}
                                             onChange={(e) => {
                                                 settxtProductTo(e.target.value.toUpperCase());
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("lotfrom").focus();
+                                                }
                                             }}
                                         />
                                     </TableCell>
@@ -117,6 +125,7 @@ function SheetInspection() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="lotfrom"
                                             size="small"
                                             fullWidth
                                             value={txtLotFrom}
@@ -126,6 +135,7 @@ function SheetInspection() {
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     settxtLotTo(txtLotFrom);
+                                                    document.getElementById("lotto").focus();
                                                 }
                                             }}
                                         />
@@ -136,11 +146,17 @@ function SheetInspection() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="lotto"
                                             size="small"
                                             fullWidth
                                             value={txtLotTo}
                                             onChange={(e) => {
                                                 settxtLotTo(e.target.value.toUpperCase());
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("rollfrom").focus();
+                                                }
                                             }}
                                         />
                                     </TableCell>
@@ -152,6 +168,7 @@ function SheetInspection() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="rollfrom"
                                             size="small"
                                             fullWidth
                                             value={txtRollFrom}
@@ -161,6 +178,7 @@ function SheetInspection() {
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     settxtRollTo(txtRollFrom);
+                                                    document.getElementById("rollto").focus();
                                                 }
                                             }}
                                         />
@@ -171,11 +189,17 @@ function SheetInspection() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="rollto"
                                             size="small"
                                             fullWidth
                                             value={txtRollTo}
                                             onChange={(e) => {
                                                 settxtRollTo(e.target.value.toUpperCase());
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("invfrom").focus();
+                                                }
                                             }}
                                         />
                                     </TableCell>
@@ -187,6 +211,7 @@ function SheetInspection() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="invfrom"
                                             size="small"
                                             fullWidth
                                             value={txtInvFrom}
@@ -196,6 +221,7 @@ function SheetInspection() {
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     settxtInvTo(txtInvFrom);
+                                                    document.getElementById("invto").focus();
                                                 }
                                             }}
                                         />
@@ -206,12 +232,21 @@ function SheetInspection() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="invto"
                                             size="small"
                                             fullWidth
                                             value={txtInvTo}
                                             onChange={(e) => {
                                                 settxtInvTo(e.target.value.toUpperCase());
                                             }}
+                                            // onKeyDown={(e) => {
+                                            //     setTimeout(() => {
+                                            //         const element = document.getElementById("datefrom");
+                                            //         if (element) {
+                                            //             element.focus();
+                                            //         }
+                                            //     }, 0);
+                                            // }}
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -220,7 +255,7 @@ function SheetInspection() {
                                         <Typography>Packing Date :</Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                        <div>
                                             {/* <TextField
                                                 className="input_txt"
                                                 size="small"
@@ -237,7 +272,7 @@ function SheetInspection() {
                                                     }
                                                 }}
                                             /> */}
-                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs} >
                                                 <DatePicker
                                                     className="input_txt"
                                                     value={txtDateFrom ? dayjs(txtDateFrom, 'DD/MM/YYYY') : null}
@@ -257,19 +292,18 @@ function SheetInspection() {
                                                             {...params}
                                                             className="input_txt"
                                                             size="small"
-                                                            style={{ width: '120px' }}
+                                                            id="datefrom"
                                                         />
                                                     )}
                                                 />
                                             </LocalizationProvider>
-                                            <Typography style={{ marginLeft: "8px" }}>(DD/MM/YYYY)</Typography>
                                         </div>
                                     </TableCell>
                                     <TableCell>
                                         <Typography>To :</Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                        <div style={{ width: "260px" }}>
                                             {/* <TextField
                                                 className="input_txt"
                                                 size="small"
@@ -293,13 +327,18 @@ function SheetInspection() {
                                                         <TextField
                                                             {...params}
                                                             className="input_txt"
+                                                            id="dateto"
                                                             size="small"
                                                             style={{ width: '120px' }}
+                                                            // onKeyDown={(e) => {
+                                                            //     if (e.key === "Enter") {
+                                                            //         document.getElementById("xout").focus();
+                                                            //     }
+                                                            // }}
                                                         />
                                                     )}
                                                 />
                                             </LocalizationProvider>
-                                            <Typography style={{ marginLeft: "8px" }}>(DD/MM/YYYY)</Typography>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -314,6 +353,7 @@ function SheetInspection() {
                                             onChange={handleChangecbx}
                                         >
                                             <FormControlLabel
+                                                id="xout"
                                                 value="cbxXOut"
                                                 control={
                                                     <Radio
@@ -330,6 +370,7 @@ function SheetInspection() {
                                                 sx={{ marginLeft: 2 }}
                                             />
                                             <FormControlLabel
+                                                id="sheetno"
                                                 value="cbxSheetNo"
                                                 control={
                                                     <Radio

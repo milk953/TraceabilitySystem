@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Swal from 'sweetalert2';
-import swal from "sweetalert";
+//import swal from "sweetalert";
 
 function fn_SMTDeleteData() {
   const [pnlForm, setpnlForm] = useState(false);
@@ -108,7 +108,7 @@ function fn_SMTDeleteData() {
           .then((res) => {
             let dtdelsht = res.data;
             if (dtdelsht === "") {
-              swal("success", "You delete data success", "success");
+              Swal.fire('Success', 'You delete data success', 'success');
               setlblResult(`Sheet No. ${txtSheetNo} Delete Complete.`);
               setpnlForm(true);
               settxtSheetNo("");
@@ -122,7 +122,7 @@ function fn_SMTDeleteData() {
           .then((res) => {
             let dtdelrollleaf = res.data;
             if (dtdelrollleaf === "") {
-              swal("success", "You delete data success", "success");
+              Swal.fire('Success', 'You delete data success', 'success');
               setlblResult(`RollLeaf No. ${txtSheetNo} Delete Complete.`);
               setpnlForm(true);
               settxtRollLeaf("");
@@ -148,7 +148,7 @@ function fn_SMTDeleteData() {
     // if (e.target.value.length <= 2500) {
     //   settxtSerialNo(e.target.value);
     // }
-    FNGetELTResult();
+    FNGetELTResult(txtSerialNo);
   };
 
   const btnSerialSearchClick = async () => {
@@ -195,42 +195,62 @@ function fn_SMTDeleteData() {
   };
 
   const btnELTDeleteClick = async () => {
-    const result = await Swal.fire({
-      title: 'Are you confirm delete?',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      icon: 'warning',
-    });
 
-    if (result.isConfirmed) {
-      let dtDelELT = "";
-      for (let i = 0; i < gvELTData.length; i++) {
-        await axios.post("/api/SMTDeleteData/DeleteELT", {
-          strplantcode: plantCode,
-          strelttype: gvELTData[i].ELT_TYPE,
-          strserial: gvELTData[i].SERIAL_NO,
-          strtablename: gvELTData[i].TABLE_NAME
-        })
-          .then((res) => {
-            dtDelELT = res.data.p_error;
-            if (dtDelELT === "") {
-              swal("success", "You delete data success", "success");
-            }
+    if (txtSerialNo !== "") {
+      const result = await Swal.fire({
+        title: 'Are you confirm delete?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        icon: 'warning',
+      });
+
+      if (result.isConfirmed) {
+        let dtDelELT = "";
+        for (let i = 0; i < gvELTData.length; i++) {
+          await axios.post("/api/SMTDeleteData/DeleteELT", {
+            strplantcode: plantCode,
+            strelttype: gvELTData[i].ELT_TYPE,
+            strserial: gvELTData[i].SERIAL_NO,
+            strtablename: gvELTData[i].TABLE_NAME
           })
-          .catch((error) => {
-            swal("Error", error.res.data.p_error, "error");
-          });
-      }
+            .then((res) => {
+              dtDelELT = res.data.p_error;
+              if (dtDelELT === "") {
+                Swal.fire('Success', 'You delete data success', 'success');
+                setlblResult(`ELT Result Delete Complete.`);
+              }
+            })
+            .catch((error) => {
+              Swal.fire("Error", error.res.data.p_error, "error");
+            });
+        }
 
-      FNGetELTResult();
+        FNGetELTResult();
+      } else {
+        console.log('Form not Delete');
+      }
     } else {
-      console.log('Form not Delete');
+      setpnlForm(true);
+      setlblResult("Please input ELT Serial No.");
+      setlblResultcolor("#BA0900");
     }
+  };
+
+  const btnClearELTClick = () => {
+    settxtSerialNo("");
+    setgvELTResult(false);
+    setgvELTData([]);
   };
 
   const btnFinalSerialSearchClick = async () => {
     FNGetFinalGateResult();
+  };
+
+  const btnClearFinalClick = () => {
+    settxtFinalSerialNo("");
+    setgvFinalResult(false);
+    setgvFinalData([]);
   };
 
   const FNGetFinalGateResult = async () => {
@@ -270,42 +290,83 @@ function fn_SMTDeleteData() {
   };
 
   const btnFinalDeleteClick = async () => {
-    const result = await Swal.fire({
-      title: 'Are you confirm delete?',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      icon: 'warning',
-    });
+    if (txtFinalSerialNo !== "") {
+      const result = await Swal.fire({
+        title: 'Are you confirm delete?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        icon: 'warning',
+      });
 
-    if (result.isConfirmed) {
-      let dtDelFinal = "";
-      for (let i = 0; i < gvFinalData.length; i++) {
-        await axios.post("/api/SMTDeleteData/FinalDelete", {
-          strplantcode: plantCode,
-          strserial: gvFinalData[i].SERIAL_NO,
-        })
-          .then((res) => {
-            dtDelFinal = res.data.p_error;
-            if (dtDelFinal === "") {
-              swal("success", "You delete data success", "success");
-            }
+      if (result.isConfirmed) {
+        let dtDelFinal = "";
+        for (let i = 0; i < gvFinalData.length; i++) {
+          await axios.post("/api/SMTDeleteData/FinalDelete", {
+            strplantcode: plantCode,
+            strserial: gvFinalData[i].SERIAL_NO,
           })
-          .catch((error) => {
-            swal("Error", error.res.data.p_error, "error");
-          });
-      }
+            .then((res) => {
+              dtDelFinal = res.data.p_error;
+              if (dtDelFinal === "") {
+                Swal.fire('Success', 'You delete data success', 'success');
+                setlblResult(`Final Gate Delete Complete.`);
+              }
+            })
+            .catch((error) => {
+              Swal.fire("Error", error.res.data.p_error, "error");
+            });
+        }
 
-      FNGetFinalGateResult();
+        FNGetFinalGateResult();
+      } else {
+        console.log('Form not Delete');
+      }
     } else {
-      console.log('Form not Delete');
+      setpnlForm(true);
+      setlblResult("Please input Final Serial No.");
+      setlblResultcolor("#BA0900");
     }
+  };
+
+  let totalRows = 1000000; 
+
+
+  const [selectedRows, setSelectedRows] = useState(
+    Array.from({ length: totalRows }).reduce((acc, _, index) => {
+      acc[index] = true;
+      return acc;
+    }, {})
+  );
+
+  const [selectedRow, setSelectedRow] = useState(
+    Array.from({ length: totalRows }).reduce((acc, _, index) => {
+      acc[index] = true;
+      return acc;
+    }, {})
+  );
+
+  const handleRowSelect = (index, event) => {
+    const selectrows = event.target.checked; 
+    setSelectedRows(prevState => ({
+      ...prevState,
+      [index]: selectrows, 
+    }));
+  };
+
+  const handleSelect = (index, event) => {
+    const selectrow = event.target.checked; 
+    setSelectedRow(prevState => ({
+      ...prevState,
+      [index]: selectrow, 
+    }));
   };
 
   return {
     pnlForm, lblResult, lblResultcolor, txtSheetNo, settxtSheetNo, txtRollLeaf, settxtRollLeaf, ddlELTType, ELTTypedata, txtSerialNo,
     txtFinalSerialNo, settxtFinalSerialNo, gvELTResult, gvELTData, gvFinalResult, gvFinalData, inputShtNo, btnShtDeleteClick, handleELTType,
-    btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick,
+    btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
+    btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect
   }
 };
 

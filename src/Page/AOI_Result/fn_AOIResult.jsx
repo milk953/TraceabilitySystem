@@ -44,6 +44,16 @@ function fn_AOIResult() {
         }
     };
 
+    const formatDate = (dateString) => {
+        const [datePart, timePart] = dateString.split("T");
+        const [year, month, day] = datePart.split("-");
+        const [hours, minutes, secondsWithFraction] = timePart.split(":");
+
+        const seconds = secondsWithFraction.split(".")[0];
+
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    };
+
     const columns = [
         {
             title: "LINK",
@@ -136,7 +146,7 @@ function fn_AOIResult() {
             key: "AOR_INSPECT_DATE",
             align: "center",
             render: (text, record, index) => {
-                return text;
+                return formatDate(text);
             },
         },
         {
@@ -208,7 +218,7 @@ function fn_AOIResult() {
             key: "AOR_CREATE_DATE",
             align: "center",
             render: (text, record, index) => {
-                return text;
+                return formatDate(text);
             },
         },
     ]
