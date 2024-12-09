@@ -439,6 +439,8 @@ function fn_ScanConfirmMagazineP1() {
       document.getElementById(`${txtField}`).focus();
     }, 300);
   }
+
+
   return {
     txtOperator,
     setTxtOperator,
