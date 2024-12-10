@@ -30,6 +30,7 @@ function ScanSheetOvenTime() {
     txtSheetNoState,
     handleTxtMcNo,
     handleTxtSheetNo,
+    pnlResultState,
   } = fn_ScanSheetOvenTime();
   useEffect(() => {
     if (txtmcNo == "" && txtmcNoState.styled.focus == true) {
@@ -92,50 +93,52 @@ function ScanSheetOvenTime() {
                   value={txtSheetNo}
                   inputRef={FctxtSheetNo}
                   onChange={(e) => {
-                    setTxtSheetNo(e.target.value);
+                    setTxtSheetNo(e.target.value.trim());
                   }}
                   // onBlur={handleTxtSheetNo}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleTxtSheetNo();
-                    }}
-                  }
+                    }
+                  }}
                 ></TextField>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
               <TableCell colSpan={3} sx={{ textAlign: "center" }}>
-                {lblSheet.text}
+                {lblSheet}
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </div>
-      <div className="pnlResult">
-        <Table id="TableResult" component={Paper}>
-          <TableRow>
-            <TableCell
-              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled }}
-            >
-              {lblResult.text}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell
-              sx={{ fontSize: "34px", padding: "0px", color: lblRemark.styled }}
-            >
-              {lblRemark.text}
-            </TableCell>
-          </TableRow>
-        </Table>
-      </div>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "5px" }}
-      >
-        <Button sx={{ fontSize: "11px" }}> Return to Menu</Button>
-      </div>
-      //{" "}
+      &nbsp;
+      {pnlResultState && (
+        <div className="pnlResult">
+           <Table id={lblResult.text == "NG" ? "TableResultOvenTimered" : "TableResultOvenTime"} component={Card} style={{ height: '180px' }}>
+            <TableRow>
+              <TableCell
+                 sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled,backgroundColor:lblResult.backgroundColor }}
+              >
+                {lblResult.text}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell
+                 sx={{ 
+                  fontSize: "34px", 
+                  padding: "0px",
+                  color: lblRemark.color,
+                  background: lblRemark.text === "" ? "white" : lblRemark.backgroundColor 
+                }}
+              >
+                {lblRemark.text}
+              </TableCell>
+            </TableRow>
+          </Table>
+        </div>
+      )}
     </div>
   );
 }

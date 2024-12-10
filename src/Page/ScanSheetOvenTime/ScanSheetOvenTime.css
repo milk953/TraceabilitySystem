@@ -1,19 +1,32 @@
 .pnlMainOvenTime {
-    display: flex;
-    margin: auto;
-    /* margin-top: 80px; */
-    width: 600px;
-    height: 300px;
-  }
-  #TableMainOvenTime {
-    width: 600px !important;
-    margin: 0 auto;
-  }
-  #TableMainOvenTime th {
-    text-align: center;
-    font-size: 36px;
-    line-height: 1.2em;
-    background-color: #8c8c8c;
-    color:white;
-  }
-  
+  display: flex;
+  margin: auto;
+  /* margin-top: 80px; */
+  width: 600px;
+  height: 300px;
+}
+#TableMainOvenTime {
+  width: 600px !important;
+  margin: 0 auto;
+}
+#TableMainOvenTime th {
+  text-align: center;
+  font-size: 36px;
+  line-height: 1.2em;
+  background-color: #8c8c8c;
+  color: white;
+}
+
+#TableResultOvenTime {
+  height: 180px;
+  /* background: #EFBC9B; */
+}
+#TableResultOvenTime td {
+  /* font-size: 80px; */
+  text-align: center;
+}
+#TableResultOvenTimered td {
+  /* font-size: 80px; */
+  border: 1px solid red !important;
+  text-align: center;
+}

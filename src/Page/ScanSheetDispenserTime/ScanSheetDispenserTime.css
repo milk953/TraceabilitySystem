@@ -24,17 +24,22 @@
 }
 #DispenserTableResult {
   height: 180px;
-  background: #efbc9b;
+  background: yellow;
 }
 #DispenserTableResult td {
   /* font-size: 80px; */
+  text-align: center;
+}
+#DispenserTableResultred td {
+  /* font-size: 80px; */
+  border : 1px solid red !important;
   text-align: center;
 }
 .DispenserpnlSave {
   display: flex;
   margin: auto;
   width: 600px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 #DispenserTableSave {
   width: 600px;

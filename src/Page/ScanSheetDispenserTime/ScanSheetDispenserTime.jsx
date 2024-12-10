@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetDispenserTime.css";
+import "../Common/StyleCommon.css";
 import { fn_ScanSheetDispenserTime } from "./fn_ScanSheetDispenserTime";
 import {
   TextField,
@@ -40,7 +41,8 @@ function ScanSheetDispenserTime() {
     txtMcno_change,
     txtSheetno_change,
     handleCbNoChange,
-    txtCbno_change
+    txtCbno_change,
+    pnlResultState
   } = fn_ScanSheetDispenserTime();
   useEffect(() => {
     if (txtmcNo == "" && txtmcNoState.focused == true) {
@@ -76,6 +78,7 @@ function ScanSheetDispenserTime() {
                 <TextField
                   size="small"
                   className="DispensertxtField"
+                  id='txtMcnoDispenser'
                   disabled={txtmcNoState.disabled}
                   sx={txtmcNoState.styled}
                   inputRef={Fctxtmcno}
@@ -104,7 +107,7 @@ function ScanSheetDispenserTime() {
                 <TextField
                   size="small"
                   className="DispensertxtField"
-      
+                  id = "txtSheetNoDispenser"
                   disabled={txtSheetNoState.disabled}
                   sx={txtSheetNoState.styled}
                   // onBlur={txtSheetno_change}
@@ -129,6 +132,7 @@ function ScanSheetDispenserTime() {
                 <TableCell>
                   <TextField
                     size="small"
+                    id='txtCbnoDispenser'
                     className="DispensertxtField"
                     disabled={txtCBnoState.disabled}
                     // onBlur={txtSheetno_change}                    
@@ -156,34 +160,45 @@ function ScanSheetDispenserTime() {
           </TableBody>
         </Table>
       </div>
+      &nbsp;
+      {pnlResultState && (
       <div className="DispenserpnlResult">
-        <Table id="DispenserTableResult" component={Paper}>
+        <Table id={lblResult.text == "NG" ? "DispenserTableResultred" : "DispenserTableResult"} component={Card} style={{ height: '180px' }}>
           <TableRow>
             <TableCell
-              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled }}
+              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled,backgroundColor:lblResult.backgroundColor }}
             >
               {lblResult.text}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ fontSize: "34px", padding: "0px" }}>
-              {lblRemark}
+            <TableCell 
+            sx={{ 
+              fontSize: "34px", 
+              padding: "0px",
+              whiteSpace: 'pre-line',
+              color: lblRemark.color,
+              background: lblRemark.text === "" ? "white" : lblRemark.backgroundColor 
+            }}
+          >
+              {lblRemark.text}
             </TableCell>
           </TableRow>
         </Table>
       </div>
+      )}
       {pnlSaveState && (
         <div className="DispenserpnlSave">
-          <Table id="DispenserTableSave" component={Paper}>
+          <Table id="DispenserTableSave" component={Card}>
             <TableRow>
               <TableCell>
-                <Button onClick={btnReplace_Click}>Replace</Button>
+                <Button variant="contained" className="ButtonReplace"  onClick={btnReplace_Click}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={btnDelete_Click}>Delete</Button>
+                <Button variant="contained" className="ButtonDelete" onClick={btnDelete_Click}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={btnCancel_Click}>Cancel</Button>
+                <Button variant="contained" className="ButtonCancel" onClick={btnCancel_Click}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>

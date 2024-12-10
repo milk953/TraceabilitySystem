@@ -1,8 +1,9 @@
-import { CompassOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
+import {useLoading} from "../../loading/fn_loading";
 import Swal from "sweetalert2";
 function fn_ScanSheetOvenTime() {
+  const Fac = import.meta.env.VITE_FAC;
   const [txtmcNo, setTxtmcNo] = useState("");
   const [txtmcNoState, setTxtmcNoState] = useState({
     styled: { disabled: false, focus: true, backgroundColor: "white" },
@@ -13,7 +14,7 @@ function fn_ScanSheetOvenTime() {
   const [txtSheetNoState, setTxtSheetNoState] = useState({
     styled: { disabled: true, backgroundColor: "#B2A8A9" },
   });
-  const [lblSheet, setLblSheet] = useState({ text: "", styled: { color: "" } });
+  const [lblSheet, setLblSheet] = useState("");
   const [lblResult, setLblResult] = useState({
     text: "",
     styled: { color: "" },
@@ -22,7 +23,8 @@ function fn_ScanSheetOvenTime() {
     text: "",
     styled: { color: "" },
   });
-
+  const {showLoading,hideLoading} = useLoading();
+  const [pnlResultState, setPnlResultState] = useState(false);
   //Hidden Field
   const [hfURL, setHfURL] = useState("");
   const [hfPeriod, setHfPeriod] = useState("0.2");
@@ -50,7 +52,7 @@ function fn_ScanSheetOvenTime() {
     setTxtmcNoState({
       styled: { disabled: false, focus: true, backgroundColor: "white" },
     });
-
+    setPnlResultState(false);
     setTxtSheetNoState({
       styled: { disabled: true, backgroundColor: "#B2A8A8" },
     });
@@ -62,7 +64,7 @@ function fn_ScanSheetOvenTime() {
   const handleTxtMcNo = () => {
     if (txtmcNo == "") {
       FctxtmcNo.current.focus();
-    }else{
+    } else {
       setTxtmcNoState({
         styled: { disabled: true, focus: false, backgroundColor: "#B2A8A8" },
       });
@@ -71,49 +73,59 @@ function fn_ScanSheetOvenTime() {
         styled: { disabled: false, backgroundColor: "white", focus: true },
       });
     }
-   
   };
 
-  const handleTxtSheetNo = async()  => {
+  const handleTxtSheetNo = async () => {
     if (txtSheetNo !== "") {
       let strError = "";
-      let strStatus = "" ;
-      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) !== txtSheetNo.length && strStatus !== "F") {
-        strStatus = 'F'
+      let strStatus = "";
+      const currentTime = new Date().toLocaleTimeString("en-US", {
+        hour12: false,
+      });
+      if (
+        parseInt(hfConnLeafLength) > 0 &&
+        parseInt(hfConnLeafLength) !== txtSheetNo.length &&
+        strStatus !== "F"
+      ) {
+        strStatus = "F";
         strError = "Invalid Sheet length";
       }
-      if (strStatus !== 'F'){
-      console.log('in')
-        const currentTime = new Date().toLocaleTimeString("en-US", {
-          hour12: false,
-        });
-        setLblSheet(`${txtSheetNo} [${currentTime}]`);
+      if (strStatus !== "F") {
+        showLoading('กำลังบันทึก กรุณารอสักครู่')
         const res = await axios
-        .post("api/setsmtprocflowoven", {
-          strSheetNo: txtSheetNo,
-          strUser:'frm_ScanSheetDispenserTime',
-          strStation:txtmcNo,
-          strPlantCode:'5',
-        })
-        .then((res) => {
-          console.log(res, "res");
-          strError = res.data.p_error;
-          alert(strError)
-          console.log(strError)
-        })
-        // .catch((error) => {
-        //   Swal.fire("Error", `${error}`, "error")
-        // });
+          .post("api/setsmtprocflowoven", {
+            p_sheet_no: txtSheetNo,
+            p_user: "frm_ScanSheetDispenserTime",
+            p_station: txtmcNo,
+            strPlantCode: Fac,
+          })
+          .then((res) => {
+            console.log(res, "res");
+            strError = res.data.P_ERROR;
+          });
       }
 
-      setLblRemark(strError)
-      if(strError === ""){
-        setLblRemark({text:"ok", styled:{color:"green"}})
-      }else{
-        setLblRemark({text:strError, styled:{color:"red"}})
+      // setLblRemark(strError)
+      setLblSheet(`${txtSheetNo} [${currentTime}]`);
+      if (strError === "") {
+        // setLblRemark({text:"ok", styled:{color:"green"}})
+        setLblResult({ text: "OK", styled: "white", backgroundColor: "green" });
+        setLblRemark({ text: "", styled: { color: "" } });
+        setPnlResultState(true);
+      } else {
+        setLblResult({ text: "NG", styled: "white", backgroundColor: "red" });
+        setLblRemark({
+          text: strError,
+          color: "white",
+          backgroundColor: "red",
+        });
+        setPnlResultState(true);
       }
-      setTxtSheetNo('');
-      setTxtSheetNoState({styled:{disabled:false, backgroundColor:"white", focus:true}})
+      hideLoading();
+      setTxtSheetNo("");
+      setTxtSheetNoState({
+        styled: { disabled: false, backgroundColor: "white", focus: true },
+      });
     } else {
       setTxtSheetNo("");
       setTxtSheetNoState({
@@ -138,6 +150,7 @@ function fn_ScanSheetOvenTime() {
     txtSheetNoState,
     handleTxtMcNo,
     handleTxtSheetNo,
+    pnlResultState,
   };
 }
 
