@@ -1309,6 +1309,7 @@ function fn_rpt_SheetTraceView() {
           })
           .then((res) => {
             dtData = res.data;
+            console.log(dtData,"dtData3")
           });
         //1215
         if (dtData.length > 0) {
@@ -1503,41 +1504,7 @@ function fn_rpt_SheetTraceView() {
             setTxtPreCnt(dtData[0].prh_inspect_count);
             settxtPreTime(dtData[0].prh_inspect_date);
             settxtPreMachine(dtData[0].prh_machine_id);
-            // switch (dtData[0].prh_result) {
-            //   case "GOOD":
-            //   case "OK":
-            //   case "JUDGE":
-            //   case "WN":
-            //   case "PASS":
-            //   case "RPASS":
-            //     setbtnPre((prevState) => ({...prevState,style: {
-            //           backgroundColor: "green",
-            //           color: "white",
-            //           height: "33px",
-            //           width: "90%",
-            //         },value:dtData[0].prh_result
-            //       }));
-            //     break; 
-            //   default:
-            //     await axios
-            //       .post("/api/ViewTraceSheet/GetPRD_NG_DETAIL", {
-            //         dataList: {
-            //           plantcode: FAC,
-            //           sheetno: txtSheetNo,
-            //           intPcsNo: intPcsNo,
-            //         },
-            //       })
-            //       .then((res) => {
-            //         dtData = res.data;
-            //       });
-            //     // ตรวจสอบจำนวนแถว
-            //     if (dtData.length > 0) {
-            //       setbtnPre((prevState) => ({...prevState,value: "NG",style: { backgroundColor: "red", color: "white" },}));
-            //     } else {
-            //       setbtnPre((prevState) => ({ ...prevState,  value: "OK", style: { backgroundColor: "green", color: "white" }, }));
-            //     }
-            //     break; // ออกจาก switch
-            // }
+           
             if(dtData[0].prh_result == ("GOOD" || 'OK' || 'JUDGE' || 'WN'|| 'PASS' || 'RPASS')){
                 setbtnPre((prevState) => ({...prevState,style: {
                               backgroundColor: "green",
@@ -1593,6 +1560,7 @@ function fn_rpt_SheetTraceView() {
             settxtAOITime(dtData[0].aor_inspect_date);
             settxtAOIMachine(dtData[0].aor_machine_no);
           } else {
+             console.log("มาละจ้า2222")
             await axios
               .post("/api/ViewTraceSheet/GetAoi_rslt_short", {
                 dataList: {
@@ -1608,7 +1576,7 @@ function fn_rpt_SheetTraceView() {
               settxtAOICnt(dt[0].aor_inspect_count);
               settxtAOITime(dt[0].aor_inspect_date);
               settxtAOIMachine(dt[0].aor_machine_no);
-              console.log("มาแล้วจ้า",res.data)
+              console.log(dt,"OK1")
               await axios
                 .post("/api/ViewTraceSheet/GetAoi_rslt_short2", {
                   dataList: {
@@ -1642,14 +1610,13 @@ function fn_rpt_SheetTraceView() {
                 settxtAOITime(dt[0].aor_inspect_date);
                 settxtAOIMachine(dt[0].aor_machine_no);
               } else {
-                setbtnAOI((prevState) => ({
-                  ...prevState,
+                console.log("Ok2")
+                setbtnAOI((prevState) => ({...prevState,
                   style: {
                     backgroundColor: "green",
                     color: "white",
                     disabled: false,
-                    value: "OK",
-                  },
+                  },value: "OK",
                 }));
               }
             }

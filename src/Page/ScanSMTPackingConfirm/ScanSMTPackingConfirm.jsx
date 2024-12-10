@@ -7,25 +7,14 @@ import {
   TableBody,
   TableRow,
   TableHead,
-  TableContainer,
   Paper,
   Typography,
   Button,
-  Select,
-  MenuItem,
   FormControl,
-  InputLabel,
   Autocomplete,
   Box,
-  Checkbox,
   Grid,
-  Input,
 } from "@mui/material";
-import {
-  ArrowRightOutlined,
-  DeleteOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { Table as AntTable } from 'antd';
 import "../Final Gate/SerialPcs.css";
@@ -101,7 +90,6 @@ function ScanSMTPackingConfirm() {
                             txtLot_TextChanged();
                           }
                         }}
-                        // onBlur={txtLot_TextChanged}
                         
                       ></TextField>
                       <Button
@@ -158,21 +146,11 @@ function ScanSMTPackingConfirm() {
               {pnlLog  && (
               <Paper
                 elevation={3}
-                style={{
-                  width: "400px",
-                  height: "40px",
-                  margin: "auto",
-                  textAlign: "center",
-                  background: "#BB2525",
-                  paddingTop: "18px",
-                  color: "yellow",
-                  fontWeight: "bold",
-                  marginTop: "30px",
-                }}
+                 className="Card-lblLog"
               >
                 {lblLog.value}
               </Paper>
-             )} 
+              )}  
               {pnlSerial &&(
                 <Table
                 className="CSS-GvSerial"
@@ -212,9 +190,6 @@ function ScanSMTPackingConfirm() {
                           fullWidth
                           inputRef={(el) => (fngvSerial_txtSerial_0.current[index] = el)}
                           value={txtSerial[index]}
-                          // onBlur={(event) => {
-                          //   handleSerialChange(index, event);
-                          // }}
                           onChange={(event) => handleSerialChange(index, event)}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
@@ -286,14 +261,14 @@ function ScanSMTPackingConfirm() {
                   <Paper
                     className=".Card-Result"
                     style={{
-                      width: "70%", 
+                      width: "100%", 
                       background:'#fcf3cf',
                       marginBottom:'10px'
                     }}
                   >
                     <Typography
                       variant="h4"
-                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',fontSize:'70px',color:'white'}}
+                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',fontSize:'50px',color:'white'}}
                     >
                    
                    {lblResult.value}
@@ -301,14 +276,14 @@ function ScanSMTPackingConfirm() {
                     </Typography>
                     <Typography
                       variant="h4"
-                      style={{ fontWeight:'bold',paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',color:'white'}}
+                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',color:'white'}}
                     >
                    
                    {lblRemark.value}
  
                     </Typography>
                   </Paper>
-)}
+ )}
               
                
               {pnlgvScanResult &&(
@@ -320,6 +295,21 @@ function ScanSMTPackingConfirm() {
                 size="small"
                 bordered
                 className="tableGvResult"
+                rowClassName={(record) => {
+                  if (
+                    (record.scan_result === " " || record.scan_result === "") && 
+                    (record.confirm_result === " " || record.confirm_result === "")
+                  ) {
+                    return "row-black"; // สีดำทั้งแถว
+                  } else if (record.scan_result === "NG" || record.scan_result === " ") {
+                    return "row-red"; // สีแดง
+                  } else if (record.scan_result === "OK") {
+                    return "row-green"; // สีเขียว
+                  }
+                  return ""; // ไม่มีคลาส
+                }}
+                
+                
                 />
               )}
                 
