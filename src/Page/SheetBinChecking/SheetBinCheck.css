@@ -18,10 +18,12 @@
 #TableMain1 {
   width: 600px !important;
   margin: 0 auto;
+  
 }
 #TableMain1 th {
   text-align: center;
   font-size: 38px;
+  background-color: #8c8c8c !important ;
 }
 
 .pnlResult1 {

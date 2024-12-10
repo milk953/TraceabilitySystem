@@ -6,7 +6,7 @@ function fn_SheetBinCheck() {
 const [txtSheetNo,settxtSheetNo] = useState("")
 const [lblSheet,setlblSheet] = useState("")
 const [lblResult, setlblResult] = useState({  text: "", styled: {} });
-
+const [pnlResult,setpnlResult] = useState(false)
 // ตัวแปร focus
 const FctxtSht = useRef(null);
 
@@ -33,21 +33,23 @@ const txtSheetNo_TextChanged = async () => {
         if(response.data == 'NO BIN'){
             setlblResult({
                 text: response.data,
-                styled: { color: "red" , fontSize:'100px' ,fontWeight: 'bold' },
+                styled: { color: "white" , fontSize:'100px' ,fontWeight: 'bold',backgroundColor:'red' },
               });
               setlblSheet(txtSheetNo.trim().toUpperCase());
               settxtSheetNo("")
+              setpnlResult(true)
               FctxtSht.current.focus();
              
 
         }else{
             setlblResult({
                 text: response.data,
-                styled: { color: "green" , fontSize:'100px',fontWeight: 'bold'  },
+                styled: { color: "white" , fontSize:'100px',fontWeight: 'bold',backgroundColor:'green'  },
               });
               setlblSheet(txtSheetNo.trim().toUpperCase());
               settxtSheetNo("")
               FctxtSht.current.focus();
+              setpnlResult(true)
 
         }
         })
@@ -57,6 +59,8 @@ const txtSheetNo_TextChanged = async () => {
         setlblSheet("");
         setlblResult("");
         FctxtSht.current.focus();
+        setpnlResult(false)
+
     }
 }
 useEffect(() => {
@@ -66,7 +70,7 @@ useEffect(() => {
 }, []);
 
   return {
-    txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht
+    txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht,pnlResult
   }
 }
 

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { color } from 'framer-motion'
 
 function fn_ScanAutoBendingTime() {
-
+        const FAC = import.meta.env.VITE_FAC;
     const[txtMCNo,settxtMCNo] = useState({value: "",disbled: "",visble: "",style: "",})
     const [txtLotNo,settxtLotNo] = useState({value: "",disbled: "",visble: "",style: "",})
     const [lblProductName,setlblProductName] = useState({value: "",disbled: "",visble: "",style: "",})
@@ -14,8 +14,8 @@ function fn_ScanAutoBendingTime() {
 
     const [hfURL,sethfURL] =useState("")
     const [hfSerialCount ,sethfSerialCount] =useState("")
-    const plantcode = '5'
-    
+    const plantcode = FAC
+ 
     // focus
     const fcMCno = useRef(null);
     const fcLotNo = useRef(null);
@@ -35,6 +35,7 @@ function fn_ScanAutoBendingTime() {
    const IP = localStorage.getItem("ipAddress");
    const currentTime = new Date().toLocaleTimeString("en-GB", { hour12: false });
     const  IsPostBack = ""
+  
     
     useEffect(() => {
       settxtMCNo((prevState) => ({ ...prevState, value: "" , disbled: false}));
@@ -65,7 +66,7 @@ function fn_ScanAutoBendingTime() {
     const handletxtMCNo_TextChanged = async () => {
       setpnlResult(false)
       setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'green' ,height:'100px' }}));
-      setlblRemark((prevState) => ({ ...prevState, value: ""}));
+      setlblRemark((prevState) => ({ ...prevState, value: "", style: { fontSize:'20px' ,textAlign:'center' }}));
       sethfSerialCount("0")
       if(txtMCNo.value.trim() !== ""){
         let dtBending = []
@@ -90,8 +91,8 @@ function fn_ScanAutoBendingTime() {
        
         }else{
           setpnlResult(true)
-          setlblResult((prevState) => ({ ...prevState, value: "NG", style: { backgroundColor: 'yellow' , color:'red', fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
-          setlblRemark((prevState) => ({ ...prevState, value:`Machine ${txtMCNo.value} not found in master!`,style: { fontSize: '30px', padding: '0px' ,textAlign: 'center'}}));
+          setlblResult((prevState) => ({ ...prevState, value: "NG", style: { backgroundColor: 'red' , color:'white', fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
+          ((prevState) => ({ ...prevState, value:`Machine ${txtMCNo.value} not found in master!`,style: { fontSize: '30px', padding: '0px' ,textAlign: 'center'}}));
           setTimeout(() => {
             fcMCno.current.focus();
           }, 300);
@@ -102,8 +103,8 @@ function fn_ScanAutoBendingTime() {
     const handletxtLotNo_TextChanged = async() => {  
       let  dtProductSerial =[]
       setlblProductName((prevState) => ({ ...prevState, value: ""}));
-      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'yellow',color:'green' }}));
-      setlblRemark((prevState) => ({ ...prevState, value: ""}));
+      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'red',color:'green' }}));
+      setlblRemark((prevState) => ({ ...prevState, value: "", style: { fontSize:'20px' ,textAlign:'center' }}));
       setpnlResult(false)
       if(txtLotNo.value.trim().toUpperCase() !== ""){
         let _strPrdName=""
@@ -127,8 +128,8 @@ function fn_ScanAutoBendingTime() {
           getInitialSerial()
         }else{
           setpnlResult(true)
-          setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'Yellow',color:"red" ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
-          setlblRemark((prevState) => ({ ...prevState, value: 'LOT   '+txtLotNo.value+'  not found!' }));
+          setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red',color:"white" ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
+          setlblRemark((prevState) => ({ ...prevState, value: 'LOT   '+txtLotNo.value+'  not found!' , style: { fontSize:'20px' ,textAlign:'center' }}));
           settxtLotNo((prevState) => ({ ...prevState, value: '' }));
           setTimeout(() => {
             fcLotNo.current.focus();

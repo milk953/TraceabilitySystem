@@ -2342,7 +2342,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
       let _dblBoxQty = 0; // 1386
       let data_count = 0;
-      setlblBoxFull((prevState) => ({ ...prevState, value: "0" }));
+      // setlblBoxFull((prevState) => ({ ...prevState, value: "0" }));
       await axios
         .post("/api/Common/GetBoxCount", {
           prdName: selectddlProduct.value,
@@ -2362,19 +2362,19 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         .post("/api/Common/GetCountTrayByBoxPacking", {
           prdName: selectddlProduct.value,
           boxNo: lblBox.value,
-          srtPack: "",
+          srtPack: txtPack.value,
         })
         .then((res) => {
           _dtTrayCount = res.data;
         });
-      if (_dtTrayCount > 0) {
+      if (_dtTrayCount.length > 0) {
         setlblBoxTotal((prevState) => ({
           ...prevState,
-          value: _dtTrayCount.BOX_COUNT,
+          value: _dtTrayCount[0].BOX_COUNT,
         }));
         setlblPackingTotal((prevState) => ({
           ...prevState,
-          value: _dtTrayCount.PACKING_COUNT,
+          value: _dtTrayCount[0].PACKING_COUNT,
         }));
       }
       if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {

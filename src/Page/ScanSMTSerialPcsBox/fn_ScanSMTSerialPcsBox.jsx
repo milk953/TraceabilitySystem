@@ -176,8 +176,7 @@ function fn_ScanSMTSerialPcsBox() {
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
   const FINAL_GATE_SPECIAL_SERIAL_VAR = "";
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env
-    .VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
   const FINAL_GATE_SPECIAL_OK = "";
   const FINAL_GATE_SPECIAL_QUERY = "";
 
@@ -786,6 +785,7 @@ function fn_ScanSMTSerialPcsBox() {
         })
         .then((res) => {
           _dtTrayCount = res.data;
+          console.log(_dtTrayCount,"_dtTrayCount1")
         });
       if (_dtTrayCount.length > 0) {
         setlblBoxTotal((prevState) => ({
@@ -1226,7 +1226,7 @@ function fn_ScanSMTSerialPcsBox() {
           .then((res) => {
             dtSerial = res.data;
           });
-        
+
         await axios
           .post("/api/GetExistsBoxSerial", {
             dtSerial: dtSerial,
@@ -1436,17 +1436,17 @@ function fn_ScanSMTSerialPcsBox() {
                   //   _intRow < dtSerial.length;
                   //   _intRow++
                   // ) {
-                    if (isDuplicate) {
-                      _strMessageUpdate =
-                        "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
-                      _strRemark = "Serial duplicate in tray  ";
-                      _strScanResultUpdate = "NG";
-                      _strTestResultUpdate = _strTestResult;
-                      dtSerial[drRow].REMARK_UPDATE = _strRemark;
-                      dtSerial[drRow].ROW_UPDATE = "N";
-                      _intCountNG = 1;
-                      _bolError = true;
-                    }
+                  if (isDuplicate) {
+                    _strMessageUpdate =
+                      "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+                    _strRemark = "Serial duplicate in tray  ";
+                    _strScanResultUpdate = "NG";
+                    _strTestResultUpdate = _strTestResult;
+                    dtSerial[drRow].REMARK_UPDATE = _strRemark;
+                    dtSerial[drRow].ROW_UPDATE = "N";
+                    _intCountNG = 1;
+                    _bolError = true;
+                  }
                   // }
                 }
                 if (!_bolError && hfCheckPrdSht == "Y") {
@@ -1661,7 +1661,6 @@ function fn_ScanSMTSerialPcsBox() {
                   }
                   //เดี๋ยวกลับมาเปิด
                   if (hfPlasmaCheck == "Y" && _strRejectGroup !== "MASTER") {
-                
                     let _dblPlasmaTime = dtSerial[drRow].PLASMA_TIME;
                     if (_dblPlasmaTime == 0) {
                       _strMessageUpdate =
@@ -1740,7 +1739,7 @@ function fn_ScanSMTSerialPcsBox() {
                       },
                     })
                     .then((res) => {
-                      const response = res.data;
+                       _intCheckPass = res.data;
                     });
                   if (_intCheckPass == 0) {
                     _strMessageUpdate = "USER SKIP TEST ELT2";
@@ -1775,7 +1774,7 @@ function fn_ScanSMTSerialPcsBox() {
                       _strResult: _strEFPCResult,
                     })
                     .then((res) => {
-                      const response = res.data.sheet_no;
+                      _strEFPCRemark = res.data.sheet_no;
                     });
 
                   if (_strEFPCResult == "NG") {
@@ -1988,90 +1987,90 @@ function fn_ScanSMTSerialPcsBox() {
                 });
             }
           }
-        
-        if (_strErrorUpdate != "") {
-          setlblResult((prevState) => ({
-            ...prevState,
-            value: "Error :" + _strErrorUpdate,
-            style: { color: "Red" },
-          }));
-        } else {
-          for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-            if (dtSerial[drRow].SERIAL == "") {
-              continue;
-            }else{
-            await axios
-              .post("/api/Common/SetBoxPackingSerialTray", {
-                strPrdName: _strPrdName,
-                strBox: lblBox.value,
-                strPack: lblPacking.value,
-                strSerial: dtSerial[drRow].SERIAL,
-                strUserID: hfUserID,
-                strStation: hfUserStation,
-                _strResult: _strScanResultAll,
-              })
-              .then((res) => {
-                // _strErrorUpdate = res.data.p_error;
-                if (res.data.p_error != "OK" && res.data.p_error != "") {
-                  dtSerial[drRow].SCAN_RESULT = "NG";
-                  dtSerial[drRow].REMARK = res.data.p_error;
-                  //_strResult="NG"
-                  _strErrorUpdate = res.data.p_error;
-                }
-              });
-            }
-          }
-          if (_strErrorUpdate !== "OK" && _strErrorUpdate !== "") {
+
+          if (_strErrorUpdate != "") {
             setlblResult((prevState) => ({
               ...prevState,
               value: "Error :" + _strErrorUpdate,
               style: { color: "Red" },
             }));
           } else {
-            if (FQC == "Y") {
-              await axios
-                .post("/api/Common/getSerialRecordTimeTrayTable", {
-                  strPlantCode: FAC,
-                  SERIAL: dtSerial[drRow].SERIAL,
-                  MACHINE: dtSerial[drRow].MACHINE,
-                })
-                .then((res) => {});
-              for (let drRow = 0; drRow < dtSerial.length; drRow++) {
+            for (let drRow = 0; drRow < dtSerial.length; drRow++) {
+              if (dtSerial[drRow].SERIAL == "") {
+                continue;
+              } else {
                 await axios
-                  .post("/api/Common/setSerialRecordTimeTrayTable", {
-                    dataList: {
-                      strUserID: txtOP.value,
-                      strProgram: "frm_ScanSMTSerialRecordTime",
-                      strPlantCode: FAC,
-                      strStation: hfUserStation,
-                      data: [
-                        {
-                          SERIAL: dtSerial[drRow].SERIAL,
-                          MACHINE: dtSerial[drRow].MACHINE,
-                          PRODUCT: dtSerial[drRow].PRODUCT,
-                          LOT: dtSerial[drRow].LOT,
-                          DATA_TYPE: dtSerial[drRow].DATA_TYPE,
-                          ROW_UPDATE: dtSerial[drRow].ROW_UPDATE,
-                          UPDATE_FLG: dtSerial[drRow].UPDATE_FLG,
-                        },
-                      ],
-                    },
+                  .post("/api/Common/SetBoxPackingSerialTray", {
+                    strPrdName: _strPrdName,
+                    strBox: lblBox.value,
+                    strPack: lblPacking.value,
+                    strSerial: dtSerial[drRow].SERIAL,
+                    strUserID: hfUserID,
+                    strStation: hfUserStation,
+                    _strResult: _strScanResultAll,
                   })
                   .then((res) => {
-                    _strErrorUpdate = res.data.p_error;
+                    // _strErrorUpdate = res.data.p_error;
+                    if (res.data.p_error != "OK" && res.data.p_error != "") {
+                      dtSerial[drRow].SCAN_RESULT = "NG";
+                      dtSerial[drRow].REMARK = res.data.p_error;
+                      //_strResult="NG"
+                      _strErrorUpdate = res.data.p_error;
+                    }
                   });
-                if (_strErrorUpdate !== "") {
-                  setlblResult((prevState) => ({
-                    ...prevState,
-                    value: "Error :" + _strErrorUpdate,
-                    style: { color: "Red" },
-                  }));
+              }
+            }
+            if (_strErrorUpdate !== "OK" && _strErrorUpdate !== "") {
+              setlblResult((prevState) => ({
+                ...prevState,
+                value: "Error :" + _strErrorUpdate,
+                style: { color: "Red" },
+              }));
+            } else {
+              if (FQC == "Y") {
+                await axios
+                  .post("/api/Common/getSerialRecordTimeTrayTable", {
+                    strPlantCode: FAC,
+                    SERIAL: dtSerial[drRow].SERIAL,
+                    MACHINE: dtSerial[drRow].MACHINE,
+                  })
+                  .then((res) => {});
+                for (let drRow = 0; drRow < dtSerial.length; drRow++) {
+                  await axios
+                    .post("/api/Common/setSerialRecordTimeTrayTable", {
+                      dataList: {
+                        strUserID: txtOP.value,
+                        strProgram: "frm_ScanSMTSerialRecordTime",
+                        strPlantCode: FAC,
+                        strStation: hfUserStation,
+                        data: [
+                          {
+                            SERIAL: dtSerial[drRow].SERIAL,
+                            MACHINE: dtSerial[drRow].MACHINE,
+                            PRODUCT: dtSerial[drRow].PRODUCT,
+                            LOT: dtSerial[drRow].LOT,
+                            DATA_TYPE: dtSerial[drRow].DATA_TYPE,
+                            ROW_UPDATE: dtSerial[drRow].ROW_UPDATE,
+                            UPDATE_FLG: dtSerial[drRow].UPDATE_FLG,
+                          },
+                        ],
+                      },
+                    })
+                    .then((res) => {
+                      _strErrorUpdate = res.data.p_error;
+                    });
+                  if (_strErrorUpdate !== "") {
+                    setlblResult((prevState) => ({
+                      ...prevState,
+                      value: "Error :" + _strErrorUpdate,
+                      style: { color: "Red" },
+                    }));
+                  }
                 }
               }
             }
           }
         }
-      }
         ///////////
       }
       // บรรทัด 1373
@@ -2107,26 +2106,23 @@ function fn_ScanSMTSerialPcsBox() {
         setlblBoxFull((prevState) => ({ ...prevState, value: _dblBoxQty }));
       }
       let _dtTrayCount = []; // 1392
-      setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));
-      setlblPackingTotal((prevState) => ({ ...prevState, value: "0" }));
+      console.log()
+      // setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));
+      // setlblPackingTotal((prevState) => ({ ...prevState, value: "0" }));
       await axios
         .post("/api/Common/GetCountTrayByBoxPacking", {
           prdName: selectddlProduct.value,
           boxNo: lblBox.value,
-          srtPack: "",
+          srtPack: txtPack.value,
         })
         .then((res) => {
           _dtTrayCount = res.data;
+          console.log(_dtTrayCount[0],"_dtTrayCount")
         });
-      if (_dtTrayCount > 0) {
-        setlblBoxTotal((prevState) => ({
-          ...prevState,
-          value: _dtTrayCount.BOX_COUNT,
-        }));
-        setlblPackingTotal((prevState) => ({
-          ...prevState,
-          value: _dtTrayCount.PACKING_COUNT,
-        }));
+      if (_dtTrayCount.length > 0) {
+        console.log("เข้าจ้า มาได้ไง",_dtTrayCount[0].BOX_COUNT, _dtTrayCount[0].PACKING_COUNT)
+        setlblBoxTotal((prevState) => ({...prevState, value: _dtTrayCount[0].BOX_COUNT, }));
+        setlblPackingTotal((prevState) => ({...prevState,value: _dtTrayCount[0].PACKING_COUNT,}));
       }
       if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
         setlblBoxStatus((prevState) => ({ ...prevState, value: "OK" }));

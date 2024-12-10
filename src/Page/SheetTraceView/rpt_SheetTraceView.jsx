@@ -695,7 +695,6 @@ function rpt_SheetTraceView() {
                         style={{
                           height: "33px",
                           backgroundColor: "#B6BBC4", 
-                          color: "white",
                           width: "90%",
                           ...btnPre.style, 
                         }}
@@ -705,13 +704,11 @@ function rpt_SheetTraceView() {
                       </Button>
                     </TableCell>
                     <TableCell>
+                      {console.log(TxtPreCnt,"TxtPreCnt")}
                       <TextField
                         className="input_txt"
                         size="small"
                         value={TxtPreCnt}
-                        // onChange={(e) => {
-                        //     settxtPreAOICntF(e.target.value);
-                        // }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -723,9 +720,6 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtPreTime}
-                        // onChange={(e) => {
-                        //     settxtPreTimeF(e.target.value);
-                        // }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -738,9 +732,6 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtPreMachine}
-                        // onChange={(e) => {
-                        //     settxtPreTimeB(e.target.value);
-                        // }}
                         InputProps={{
                           readOnly: true,
                         }}

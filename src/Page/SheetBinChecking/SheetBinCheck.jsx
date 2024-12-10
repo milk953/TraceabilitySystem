@@ -12,8 +12,9 @@ import {
 import  './SheetBinCheck.css'
 import Hearder from "../Header/Header";
 import {fn_SheetBinCheck} from "./fn_SheetBinCheck"
+import { color } from "framer-motion";
 function ScanBinCheck() {
-const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht} =fn_SheetBinCheck()
+const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht,pnlResult} =fn_SheetBinCheck()
 
   return (
     <div>
@@ -27,7 +28,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
             <TableHead>
               
               <TableRow>
-                <TableCell colSpan={3}>Sheet Bin Checking</TableCell>
+                <TableCell style={{color:'white'}}colSpan={3}>Sheet Bin Checking</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -35,7 +36,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
               <TableRow>
                 <TableCell  sx={{fontSize:'20px'}}
                 id="lbltxt"
-                >Sheet No.:</TableCell>
+                >Sheet No. :</TableCell>
                 <TableCell>
                   <TextField
                     size="small"
@@ -63,6 +64,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
             </TableBody>
           </Table>
         </div>
+        {(pnlResult &&
       <div className="pnlResult1">
         <Table id="TableResult1" component={Paper}>
         <TableRow>
@@ -79,7 +81,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
           </TableRow>
           
         </Table>
-      </div>
+      </div>)}
      </div>
     </div>
   );

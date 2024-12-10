@@ -13,8 +13,11 @@ import {
   TableHead,
   Paper,
   Typography,
+  Card
 } from "@mui/material";
 import {fn_ELTmaster} from "./fn_ELTmaster"
+import { Button as ButtonTable } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 function ELT_Master() {
     const {lblUser1,lblResult,txtSerialNo_TextChanged,ddlReason1,selectddlReason1,setselectddlReason1,txtUpdateBy,settxtSerialNo_TextChanged,Search_Data,Submit,FctxtSerial} = fn_ELTmaster();
   return (
@@ -35,21 +38,38 @@ function ELT_Master() {
           </td>
         </tr>
         <tr>
-          <td>
-            <Typography style={lblResult.styled}> {lblResult.text}</Typography>
-          </td>
+        <td
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <Paper
+          className="Result_ELT"
+          style={{
+            ...lblResult.styled,
+          }}
+        >
+         <Typography  style={{
+            ...lblResult.styled,
+          }}>{lblResult.text}</Typography> 
+        </Paper>
+      </td>
         </tr>
       </tbody>
     </table>
       </div>
-    <div className="Head-Piece">
-    <Table  component={Paper} className='Head-Textshow'>
-    <TableBody>
-        <TableRow>
-        <TableCell  style={{ padding: '8px' }}>
-            <Typography>PieceNo:</Typography>
-          </TableCell>
-          <TableCell  style={{padding: '8px', width: '80%' }} >
+      <div className="ELTMmasterPnlForm">
+        <Table className="ELTMmasterTb" component={Card}>
+          <TableHead>
+            <TableCell colSpan={4}>ELT Master</TableCell>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell style={{padding: '8px', width: '20%' ,textAlign:'right' }}>Piece No.</TableCell>
+              <TableCell  style={{padding: '8px', width: '80%' }} >
             <TextField size="small" style={{width:'100%'}} value={txtSerialNo_TextChanged}
             onChange={(e) => settxtSerialNo_TextChanged(e.target.value)}
             // onBlur={Search_Data}
@@ -64,20 +84,40 @@ function ELT_Master() {
             </TextField>
           </TableCell>
           <TableCell style={{ padding: '8px' }}>
-          <Button
+          {/* <Button
                   variant="contained"
                   color="primary"
                   onClick={Search_Data}
                 > 
                 Retrive
                 </Button>
+                 */}
+                     <ButtonTable
+                    type="primary"
+                    icon={<SearchOutlined />}
+                    onClick={Search_Data}
+                  >
+                    Search
+                  </ButtonTable>
           </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+    {/* <div className="Head-Piece">
+    <Table  component={Card} className='Head-Textshow'>
+    <TableBody>
+        <TableRow>
+        <TableCell  style={{ padding: '8px' }}>
+            <Typography>PieceNo:</Typography>
+          </TableCell>
+          
         </TableRow>
       </TableBody>
     </Table>
-      </div>
+      </div> */}
       <br></br>
-      <div className="DRejectTableSecond">
+      <div className="ELTMmasterPnlForm">
         <Table className="RejectTableSecond" component={Paper}>
           <TableHead>
             <TableRow>
@@ -120,13 +160,22 @@ function ELT_Master() {
                     />
               </TableCell>
               <TableCell sx={{ width: "100px" }}>
-                <Button
+                {/* <Button
                   variant="contained"
                   color="primary"
                   onClick={Submit}
                 >
                   Submit
-                </Button>
+                </Button> */}
+                 <ButtonTable
+            style={{
+              backgroundColor: "green",
+              color: "white",
+            }}
+            onClick={Submit}
+          >
+            Submit
+          </ButtonTable>
               </TableCell>
             </TableRow>
           </TableBody>
