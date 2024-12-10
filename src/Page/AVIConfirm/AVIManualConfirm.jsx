@@ -41,7 +41,7 @@ function AVIManualConfirm() {
     <>
       <Hearder />
       <h1>AVIConfirm</h1>
-      <Card classNmae="AVIMainCard">
+      {/* <Card classNmae="AVIMainCard"> */}
         {lblResult && (
           <h3
             style={{
@@ -206,7 +206,7 @@ function AVIManualConfirm() {
           </div>
         )}
         <br></br>
-      </Card>
+      {/* </Card> */}
     </>
   );
 }
