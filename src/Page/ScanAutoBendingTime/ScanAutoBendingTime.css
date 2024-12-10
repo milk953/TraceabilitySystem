@@ -33,9 +33,10 @@
 }
 .pnlDetail th{
    
- background-color: #8acdf9;
+ background-color: #355E3B;
     padding: 10px;
     border-radius: 1px;
+    color: white;
    
 }
 .pnlDetail td{
@@ -80,7 +81,27 @@
     padding: 10px;
   } */
 
-  #lbltxtBaking {
+  #lbltxtBending {
     width: 150px;
     text-align: right;
   }
+  .DAVITableFirst_Bending{
+  display: flex;
+  margin: auto;
+  width: 530px;
+  margin-top: 20px;
+}
+#TableMainBending {
+    width: 600px !important;
+    margin: 0 auto;
+  }
+  #TableMainBending th {
+    text-align: center;
+    font-size: 38px;
+    background-color: #8c8c8c;
+    color: white;
+  }
+  #TableMainBending td {
+   padding: 1%;
+  }
+  

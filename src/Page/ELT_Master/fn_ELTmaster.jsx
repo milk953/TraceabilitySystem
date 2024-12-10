@@ -66,12 +66,12 @@ function fn_ELTmaster() {
             settxtUpdateBy(response.data[0].rej_operator_code);
             setlblResult({
               text: "Data Read Complete",
-              styled: { color: "black" , fontSize:'50px' },
+              styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
             });
           } else {
             setlblResult({
               text: "Data reject can not modify",
-              styled: { color: "red" , fontSize:'50px' },
+              styled: { color: "white" ,backgroundColor:'red', fontSize:'50px' },
             });
             settxtSerialNo_TextChanged("");
             FctxtSerial.current.focus();
@@ -80,7 +80,7 @@ function fn_ELTmaster() {
         else {
           setlblResult({
             text: "Data Read Complete",
-            styled: { color: "black"  , fontSize:'50px' },
+            styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
           });
         }
       });
@@ -90,7 +90,7 @@ function fn_ELTmaster() {
     if (selectddlReason1.trim() == "") {
       setlblResult({
         text: "Please select before reject reason.",
-        styled: { color: "red" , fontSize:'50px'},
+        styled: { color: "white" ,backgroundColor:'red', fontSize:'50px' },
       });
     } else {
       console.log(IP,"IP",hfUserName)
@@ -118,20 +118,20 @@ function fn_ELTmaster() {
             if (selectddlReason1 == "DELETE") {
               setlblResult({
                 text: "Data Delete Complete.",
-                styled: { color: "blue" , fontSize:'50px' },
+                styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
               });
               settxtUpdateBy("");
             } else {
               setlblResult({
                 text: "Data Update Complete.",
-                styled: { color: "blue" , fontSize:'50px' },
+                styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
               });
               settxtUpdateBy(hfUserName);
             }
           } else {
             setlblResult({
               text: res.data.message,
-              styled: { color: "red" , fontSize:'50px' },
+              styled: { color: "white",backgroundColor:'red' , fontSize:'50px' },
             });
           }
         })

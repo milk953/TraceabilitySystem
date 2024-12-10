@@ -8,27 +8,16 @@ import {
   TableBody,
   TableRow,
   TableHead,
-  TableContainer,
   Paper,
   Typography,
   Button,
-  Select,
-  MenuItem,
   FormControl,
-  InputLabel,
   Autocomplete,
   Box,
-  Checkbox,
   Grid,
-  Input,
 } from "@mui/material";
 import { Table as AntTable } from "antd";
 import Pageimg from "/src/assets/1.jpg";
-import {
-  ArrowRightOutlined,
-  DeleteOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTConnectRollConfirm.css";
 import "../Common/StyleCommon.css";
@@ -207,7 +196,6 @@ function ScanSMTConnectRollConfirm() {
                           </TableCell>
                           <TableCell>
                             <TextField
-                              //  key={`text_${index}`}
                               key={index}
                               size="small"
                               autoComplete="off"
@@ -254,8 +242,6 @@ function ScanSMTConnectRollConfirm() {
               xs={10}
               md={8}
               style={{
-                // margin: "auto",
-                // marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -310,88 +296,6 @@ function ScanSMTConnectRollConfirm() {
                     </Paper>
                   )}
 
-                  {/* <Table
-                    className="CSS-GvScanResult"
-                    style={{ display: gvScanResult }}
-                    component={Card}
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="50px"
-                        >
-                          No.
-                        </TableCell>
-                        <TableCell
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="200px"
-                        >
-                          Roll No.
-                        </TableCell>
-                        <TableCell
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="200px"
-                        >
-                          Leaf No.
-                        </TableCell>
-                        <TableCell
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                          width="150px"
-                        >
-                          Scan Result
-                        </TableCell>
-                        <TableCell width="300px">Remark</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {Array.from(
-                        { length: gvScanResult.value.length },
-                        (_, index) => (
-                          <TableRow key={index}>
-                            <TableCell
-                              align="center"
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult.value[index].seq}
-                            </TableCell>
-
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult.value[index].roll_leaf_no}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult.value[index].sheet_no}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{
-                                borderRight: "1px solid #d9d9d9",
-                                background:
-                                  gvScanResult.value[index].scan_result === ""
-                                    ? ""
-                                    : gvScanResult.value[index].scan_result ===
-                                      "OK"
-                                    ? "green"
-                                    : "#ff4d4f",
-                              }}
-                            >
-                              {gvScanResult.value[index].scan_result}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderRight: "1px solid #d9d9d9" }}
-                            >
-                              {gvScanResult.value[index].remark}
-                            </TableCell>
-                          </TableRow>
-                        )
-                      )}
-                    </TableBody>
-                  </Table> */}
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}

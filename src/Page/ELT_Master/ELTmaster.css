@@ -15,8 +15,27 @@
     width: 900px;  
 }
 /* sx={{ color: 'text.secondary', fontSize: 14 }} */
-
-
+.ELTMmasterPnlForm {
+    display: flex;
+    margin: auto;
+    width: 600px;
+    margin-top: 20px;
+}
+.ELTMmasterTb {
+  height: 100px;
+}
+.ELTMmasterTb th {
+  font-family: Arial;
+  padding: 8px !important;
+  background-color: #8c8c8c !important ;
+  border-radius: 5px 5px 0 0 !important;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+}
+.Result_ELT{
+    width: 65%;
+}
 
 
 

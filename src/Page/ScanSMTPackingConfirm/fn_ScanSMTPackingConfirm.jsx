@@ -236,7 +236,6 @@ function fn_ScanSMTPackingConfirm() {
             }, 300);
           }
         } catch (error) {
-          console.log("OK111")
           const intProduct = strPrdName.indexOf("-", 12);
           if (intProduct > 0) {
             strPrdName =
@@ -312,9 +311,7 @@ function fn_ScanSMTPackingConfirm() {
   };
   const setSerialData = async () => {
     let dtSerial = await getInputSerial();
-    console.log(dtSerial, "dtSerial");
     let dtSheet = await getSheetResult();
-    console.log(dtSheet, "dtSheet");
     let _strLotData = [];
     let _strLot = "";
     let _strPrdName = selectddlProduct.value;
@@ -344,7 +341,6 @@ function fn_ScanSMTPackingConfirm() {
           let _inCountSeq = 0;
           let _strSerialDup = "";
           for (let drShtRow = 0; drShtRow < dtSheet.length; drShtRow++) {
-            console.log(" เข้าจ้าาาาา",dtSheet[drShtRow].sheet_no,"///",_strSerial)
             if (
               dtSheet[drShtRow].sheet_no === _strSerial &&
               dtSheet[drShtRow].confirm_result.trim() === "OK"
@@ -420,7 +416,6 @@ function fn_ScanSMTPackingConfirm() {
         ...prevState,
         value: "Please input lot no. ",
       }));
-      console.log(pnlLog);
       SetMode("SERIAL_ERROR");
     }
     getShtDataBylot(txtLot.value.trim().toUpperCase());
@@ -459,7 +454,6 @@ function fn_ScanSMTPackingConfirm() {
     return dtData;
   };
   const getShtDataBylot = async (_strLot) => {
-    console.log(_strLot, "_strLot");
     let dtSheet = [];
     let intOK = 0;
 
@@ -478,12 +472,10 @@ function fn_ScanSMTPackingConfirm() {
         }
       });
     for (let row = 0; row < dtSheet.length; row++) {
-      console.log(dtSheet[row].scan_result, "Result");
       if (dtSheet[row].scan_result == "OK") {
         intOK += 1;
       }
     }
-    console.log(intOK, "intOK");
     setlblShtCount((prevState) => ({ ...prevState, value: intOK.toString() }));
     if (lblTotalSht.value == "" || lblTotalSht == "0") {
       setlblTotalSht((prevState) => ({ ...prevState, value: dtSheet.length }));
@@ -521,19 +513,44 @@ function fn_ScanSMTPackingConfirm() {
       align: "center",
       key: "Confirm Result",
       render: (text, record, index) => {
-        return text != " " ? (
-          <Tag
-            className={
-              text === "OK" ? "Tag-OK" : text === "NG" || "NO" ? "Tag-NG" : ""
-            }
-          >
-            {text}
-          </Tag>
-        ) : (
-          ""
-        );
+        return text 
+        // != " " ? (
+        //   <Tag
+        //     className={
+        //       text === "OK" ? "Tag-OK" : text === "NG" || "NO" ? "Tag-NG" : ""
+        //     }
+        //   >
+        //     {text}
+        //   </Tag>
+        // ) : (
+        //   ""
+        // );
       },
     },
+    // {
+    //   title: "Confirm Result",
+    //   dataIndex: "confirm_result",
+    //   align: "center",
+    //   key: "Confirm Result",
+    //   render: (text) => {
+    //     return text.trim() !== "" ? (
+    //       <span
+    //         style={{
+    //           color: text === "OK" 
+    //             ? "green" 
+    //             : text === "NG" || text === "NO" 
+    //             ? "red" 
+    //             : "black", // สีดำเป็นค่าเริ่มต้น
+    //         }}
+    //       >
+    //         {text}
+    //       </span>
+    //     ) : (
+    //       ""
+    //     );
+    //   },
+    // },
+    
 
     {
       title: "Scan Result",
@@ -541,17 +558,18 @@ function fn_ScanSMTPackingConfirm() {
       dataIndex: "scan_result",
 
       render: (text, record, index) => {
-        return text != " " ? (
-          <Tag
-            className={
-              text === "OK" ? "Tag-OK" : text === "NG" || "NO" ? "Tag-NG" : ""
-            }
-          >
-            {text}
-          </Tag>
-        ) : (
-          ""
-        );
+        return text 
+        //!= " " ? (
+        //   <Tag
+        //     className={
+        //       text === "OK" ? "Tag-OK" : text === "NG" || "NO" ? "Tag-NG" : ""
+        //     }
+        //   >
+        //     {text}
+        //   </Tag>
+        // ) : (
+        //   ""
+        // );
       },
       align: "center",
     },

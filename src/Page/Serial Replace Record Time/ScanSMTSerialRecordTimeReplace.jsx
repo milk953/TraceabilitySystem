@@ -11,7 +11,7 @@ import {
   TableContainer,
   Paper,
   Typography,
-  Button,
+
   Select,
   MenuItem,
   FormControl,
@@ -28,6 +28,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import { Table as AntTable } from "antd";
+import {  Button} from "antd"
 import "./ScanSMTSerialRecordTimeReplace.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -57,7 +58,8 @@ function ScanSMTSerialRecordTimeReplace() {
   return (
     <div>
       <Hearder />
-      <Card component={Paper} className="Card-Common">
+      {/* <Card component={Paper} className="Card-Common"> */}
+      <div className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
@@ -68,7 +70,7 @@ function ScanSMTSerialRecordTimeReplace() {
               <Table
                 component={Card}
                 className="ReplaceRecord"
-                style={{ width: "50%" ,marginTop:'20px'}}
+                style={{ width: "40%" ,marginTop:'20px'}}
               >
                 <TableHead style={{ height: "50px" }}>
                   <TableRow>
@@ -84,14 +86,13 @@ function ScanSMTSerialRecordTimeReplace() {
                 <TableBody>
                   <TableRow>
                     <TableCell align="right" >
-                      <Typography>Product.:</Typography>
+                      <Typography>Product :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
                         <Autocomplete
                           className="Select_dropDown"
-                            sx={{width:'61%'}}
-                            
+                            sx={{width:'80%'}}
                             value={selectddlProduct.value}
                             onChange={(e, value) =>
                               ddlProduct_SelectedIndexChanged(value)
@@ -112,7 +113,7 @@ function ScanSMTSerialRecordTimeReplace() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="right" style={{ width: "180px" }}>
-                      <Typography>Reference Serial No.:</Typography>
+                      <Typography>Reference Serial No :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
@@ -121,8 +122,8 @@ function ScanSMTSerialRecordTimeReplace() {
                        inputRef={(el) => (fntxtSerialRefer.current = el)}
                         className="input_txt"
                         disabled={txtSerialRefer.disbled} 
-                        style={{backgroundColor: txtSerialRefer.disbled ? '#e0e0e0' : 'inherit'}}
-                          fullWidth
+                        style={{backgroundColor: txtSerialRefer.disbled ? '#e0e0e0' : 'inherit',width:"80%"}}
+                        
                           value={txtSerialRefer.value}
                           onChange={(e) => {
                             settxtSerialRefer((prevState) => ({
@@ -141,15 +142,15 @@ function ScanSMTSerialRecordTimeReplace() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="right" style={{ width: "150px" }}>
-                      <Typography>New Serial No.:</Typography>
+                      <Typography>New Serial No :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
                         size="small"
                         className="input_txt"
                             inputRef={(el) => (fntxtSerialReplace.current = el)}
-                            style={{ backgroundColor: txtSerialReplace.disbled ? '#e0e0e0' : 'inherit'}}
-                          fullWidth
+                            style={{ backgroundColor: txtSerialReplace.disbled ? '#e0e0e0' : 'inherit',width:"80%"}}
+                         
                           disabled={txtSerialReplace.disbled} 
                           value={txtSerialReplace.value}
                           onChange={(e) => {
@@ -169,7 +170,7 @@ function ScanSMTSerialRecordTimeReplace() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="right" style={{ width: "150px" }}>
-                      <Typography>Group No.:</Typography>
+                      <Typography>Group No :</Typography>
                     </TableCell>
                     <TableCell colSpan={2} >
                       <Typography>{lblGroup.value}</Typography>
@@ -177,7 +178,7 @@ function ScanSMTSerialRecordTimeReplace() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="right" style={{ width: "150px" }}>
-                      <Typography>Start Time.:</Typography>
+                      <Typography>Start Time :</Typography>
                     </TableCell>
                     <TableCell colSpan={2} >
                     <Typography>{lblStartTime.value}</Typography>
@@ -247,23 +248,32 @@ function ScanSMTSerialRecordTimeReplace() {
 
                   <TableRow>
                     <TableCell colSpan={3} style={{ textAlign: "center" }}>
+                
                       <Button
-                        className="BtSave"
-                        onClick={BtnSubmit1_Click}
-                      >
-                        Submit
-                      </Button>
-                      &nbsp;&nbsp;
-                      <Button
-                        className="BtCancel"
-                        onClick={BtnSubmit1_Cancel}
-                      >
-                        CANCEL
-                      </Button>
+                    style={{
+                      backgroundColor: "green",
+                      width: "90px",
+                      color: "white",
+                    }}
+                    onClick={BtnSubmit1_Click}
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "red",
+                      width: "90px",
+                      color: "white",
+                    }}
+                    onClick={BtnSubmit1_Cancel}
+                  >
+                    Cancel
+                  </Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </Table>)}
+              </Table>
+             )} 
               
               {pnlsubmit &&(
               <>
@@ -330,8 +340,8 @@ function ScanSMTSerialRecordTimeReplace() {
             </Grid>
           </Grid>
         </Box>
-        
-      </Card>
+       </div> 
+      {/* </Card> */}
       {/* </Card> */}
   
     </div>

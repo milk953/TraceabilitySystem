@@ -430,7 +430,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                               event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
                               if (index < gvSerial.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
-                              } else{
+                              } else if(index ==(gvSerial.length - 1)){
                                 btnSave_Click()
                                 event.target.blur();
                               }
