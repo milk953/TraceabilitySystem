@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Button } from 'antd';
 import DeleteIcon from '@mui/icons-material/Delete';
-import swal from "sweetalert";
+import swal from "sweetalert2";
 
 function fn_ScanAOISheetNo() {
     const [txtOperator, settxtOperator] = useState("");
@@ -406,6 +406,7 @@ function fn_ScanAOISheetNo() {
         let dtData = [];
         if (parseInt(TotalPcs) > parseInt(No)) {
             setlblSEQ(No);
+            console.log(hfSerialCount);
             for (let intRow = 0; intRow < hfSerialCount; intRow++) {
                 let drRow = {
                     SEQ: intRow + 1
@@ -603,9 +604,12 @@ function fn_ScanAOISheetNo() {
             strlotno: txtLotNo,
             strlayer: txtLayer
         })
-            .then((res) => {
+            .then(async (res) => {
                 const updatedValue = parseInt(res.data, 10) + 1;
                 settxtNo(updatedValue);
+                if (updatedValue <= txtTotalPcs) {
+                    setlblSEQ(updatedValue);
+                }
             });
         SetMode("SERIAL");
     };
@@ -640,7 +644,6 @@ function fn_ScanAOISheetNo() {
                 console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === gvSerial.length) {
                 btnSave_Click();
-                e.target.blur();
             }
         }
     };
@@ -658,11 +661,11 @@ function fn_ScanAOISheetNo() {
                 .then((res) => {
                     data = res.data.p_error;
                     console.log("ลบข้อมูลสำเร็จ =", data);
-                    swal("success", "You delete data success", "success");
+                    swal.fire("success", "You delete data success", "success");
                 })
                 .catch((error) => {
                     console.error("เกิดข้อผิดพลาด =", error);
-                    swal("Error", error.data.message, "error");
+                    swal.fire("Error", error.data.message, "error");
                 });
             await axios.post("/api/ScanAOISheetNo/GetAOISheetDataByLot", {
                 strlotno: txtLotNo,
@@ -679,8 +682,9 @@ function fn_ScanAOISheetNo() {
                 .then((res) => {
                     const updatedValue = parseInt(res.data, 10) + 1;
                     settxtNo(updatedValue);
+                    setlblSEQ(updatedValue);
                 });
-            //SetMode("SERIAL");
+            SetMode("SERIAL");
         }
     };
 

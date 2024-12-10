@@ -612,7 +612,7 @@ function fn_ScanSMTSerialSht() {
           setpnlLog(true);
           setlblLog("Please input Sheet Side");
           setTimeout(() => {
-            inputgvSerial.current[0].focus();
+            inputSideBack.current[0].focus();
           }, 200);
         }
 

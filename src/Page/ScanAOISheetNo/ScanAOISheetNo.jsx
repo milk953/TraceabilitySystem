@@ -49,10 +49,10 @@ function ScanAOISheetNo() {
                 sx={{ display: "flex" }}
             >
                 <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-5px",
-                        marginTop: "-10px"
-                    }}
+                    // sx={{
+                    //     marginLeft: "-5px",
+                    //     marginTop: "-10px"
+                    // }}
                 >
                     <TableContainer
                         component={Paper}
@@ -291,7 +291,7 @@ function ScanAOISheetNo() {
                     </TableContainer>
 
                     {pnlSerial && (
-                        <div className="divgvSerialAOISheetNo" style={{ position: "relative" }}>
+                        <div className="divgvSerialAOISheetNo">
                             <TableContainer
                                 component={Paper}
                                 style={{
@@ -365,7 +365,7 @@ function ScanAOISheetNo() {
                     )}
 
                     {pnlResult && (
-                        <div style={{ marginLeft: "3px", width: "100%" }}>
+                        <div style={{ marginLeft: "2px", width: "100%" }}>
                             <Paper
                                 className="Card-lblResult"
                                 style={{

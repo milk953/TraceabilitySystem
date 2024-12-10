@@ -14,7 +14,7 @@ function fn_TouchUpResult() {
         if (Serialno !== null) {
             ViewData();
         }
-    },[]);
+    }, []);
 
     const ViewData = async () => {
         let dt = [];
@@ -22,10 +22,20 @@ function fn_TouchUpResult() {
             strplantcode: plantCode,
             strserialno: Serialno,
         })
-        .then((res) => {
-            dt = res.data;
-        });
+            .then((res) => {
+                dt = res.data;
+            });
         setgvViewTouchup(dt);
+    };
+
+    const formatDate = (dateString) => {
+        const [datePart, timePart] = dateString.split("T");
+        const [year, month, day] = datePart.split("-");
+        const [hours, minutes, secondsWithFraction] = timePart.split(":");
+
+        const seconds = secondsWithFraction.split(".")[0];
+
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
     };
 
     const columnsTouchup = [
@@ -98,7 +108,7 @@ function fn_TouchUpResult() {
             key: "TOU_CREATE_DATE",
             align: "center",
             render: (text, record, index) => {
-                return text;
+                return formatDate(text);
             },
         },
         {
@@ -125,7 +135,7 @@ function fn_TouchUpResult() {
             key: "TOU_UPDATE_DATE",
             align: "center",
             render: (text, record, index) => {
-                return text;
+                return formatDate(text);
             },
         },
     ];

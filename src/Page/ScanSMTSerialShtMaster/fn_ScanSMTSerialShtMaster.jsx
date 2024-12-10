@@ -178,8 +178,8 @@ function fn_ScanSMTSerialShtMaster() {
                 await getCountDataBylot(strLot);
                 try {
                     setselProduct(strPrdName);
-                    await getProductSerialMaster(strPrdName);
-                    await getInitialSheet();
+                    const datagetPd = await getProductSerialMaster(strPrdName);
+                    await getInitialSheet(datagetPd.slm_sht_scan);
                     settxtMasterCode("");
                     setTimeout(() => {
                         inputMasterCode.current?.focus();
@@ -190,8 +190,8 @@ function fn_ScanSMTSerialShtMaster() {
                         strPrdName = strPrdName.substring(0, intProduct) + strPrdName.substring(intProduct + 1, intProduct + 11).trim();
                         try {
                             setselProduct(strPrdName);
-                            await getProductSerialMaster(strPrdName);
-                            await getInitialSheet();
+                            const datagetPd = await getProductSerialMaster(strPrdName);
+                            await getInitialSheet(datagetPd.slm_sht_scan);
                             settxtMasterCode("");
                             setTimeout(() => {
                                 inputMasterCode.current?.focus();
@@ -259,7 +259,7 @@ function fn_ScanSMTSerialShtMaster() {
             setlblLog("");
             setpnlLog(false);
             await getCountDataBylot(txtLotNo);
-            await getInitialSheet();
+            await getInitialSheet(value);
             if (hfCheckRollSht === "Y") {
                 setpnlRollLeaf(true);
                 settxtRollLeaf("");
@@ -301,7 +301,7 @@ function fn_ScanSMTSerialShtMaster() {
                 setpnlLog(false);
                 setlblLog("");
                 const datagetPd = await getProductSerialMaster(selProduct);
-                await getInitialSheet();
+                // await getInitialSheet(datagetPd.slm_sht_scan);
                 console.log("hfCheckRollSht", datagetPd.prm_conn_roll_sht_flg);
                 if (datagetPd.prm_conn_roll_sht_flg === "Y") {
                     setpnlRollLeaf(true);
@@ -412,6 +412,7 @@ function fn_ScanSMTSerialShtMaster() {
             await setSerialData();
             settxtgvSerial("");
             settxtSideBack("");
+            scrollToTop();
         }
     };
 
@@ -500,7 +501,7 @@ function fn_ScanSMTSerialShtMaster() {
         return dtData;
     };
 
-    const getInitialSheet = async () => {
+    const getInitialSheet = async (hfShtScan) => {
         let dtData1 = [];
 
         for (let intRow = 1; intRow <= hfShtScan; intRow++) {
@@ -513,10 +514,18 @@ function fn_ScanSMTSerialShtMaster() {
         setpnlBackSide(true);
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
     const setSerialData = async () => {
-        showLoading('กำลังบันทึก กรุณารอสักครู่')
+        
         if (txtMasterCode === MASTER_SHEET) {
             const dtSerial = await getInputSerial();
+            console.log(dtSerial)
             let _strLot = "";
             let _strLotRef = "";
             let _strPrdName = selProduct;
@@ -536,6 +545,7 @@ function fn_ScanSMTSerialShtMaster() {
             _strLotRef = _strLotRefData[0];
 
             setpnlLog(false);
+            showLoading('กำลังบันทึก กรุณารอสักครู่');
 
             if (txtLotNo !== "" && dtSerial.length > 0) {
                 if (hfCheckWeekCode === "Y") {
@@ -563,6 +573,8 @@ function fn_ScanSMTSerialShtMaster() {
                             inputSideBack.current[0].focus();
                         }, 200);
                         settxtSideBack("");
+                        settxtgvSerial("");
+                        hideLoading();
                     }
 
                     if (hfCheckPrdSht === "Y" && dtSerial[i].SEQ === 1 && !_bolError) {
@@ -1057,12 +1069,13 @@ function fn_ScanSMTSerialShtMaster() {
 
                 setgvScanData(dtSerial);
                 setgvScanResult(true);
-                await getInitialSheet();
+                //await getInitialSheet();
                 await getInitialSerial();
 
             } else {
                 setlblLog("Please input Sheet Side No. !!! ");
                 SetMode("SERIAL_ERROR");
+                hideLoading();
             }
 
             await getCountDataBylot(txtLotNo);
@@ -1079,7 +1092,9 @@ function fn_ScanSMTSerialShtMaster() {
                 setpnlMachine(true);
                 inputMachineNo.current.focus();
             } else {
-                inputSideBack.current[0].focus();
+                setTimeout(() => {
+                    inputSideBack.current[0].focus();
+                }, 200);
             }
         } else {
             settxtMasterCode("");
@@ -1364,7 +1379,6 @@ function fn_ScanSMTSerialShtMaster() {
                 console.log('Calling btnSaveClick', nextIndex);
             } else if (nextIndex === gvSerialData.length) {
                 btnSaveClick();
-                e.target.blur();
             }
         }
     };
@@ -1375,10 +1389,11 @@ function fn_ScanSMTSerialShtMaster() {
             const nextIndex = index + 1;
             if (nextIndex < hfShtScan && inputSideBack.current[nextIndex]) {
                 inputSideBack.current[nextIndex].focus();
+            } else if (nextIndex === hfShtScan) {
+                setTimeout(() => {
+                    inputgvSerial.current[0].focus();
+                }, 200);
             }
-            setTimeout(() => {
-                inputgvSerial.current[0].focus();
-            }, 200);
         }
     };
 

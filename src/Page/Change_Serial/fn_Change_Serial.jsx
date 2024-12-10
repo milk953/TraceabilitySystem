@@ -226,13 +226,30 @@ function fn_Change_Serial() {
           }));
         }
         if (strError.trim() === "") {
+          const newValues = [];
+          setTxtSerialNoOld(newValues);
+          setTxtSerialNoNew(newValues);
+          setGvSerial((prevState) => ({
+            ...prevState,
+            value: [],
+          }));
+          setTxtTotalPcs((prevState) => ({
+            ...prevState,
+            value: "1",
+          }));
+          setLblResult((prevState) => ({
+            ...prevState,
+            value: "",
+            disbled: "",
+            visble: false,
+          }));
           setLblResult((prevState) => ({
             ...prevState,
             value: `${prevState.value} Change Serial Successed`.replace(
               /\n/g,
               "<br />"
             ),
-            style: "blue",
+            style: "#059212",
           }));
           await getInitialSerial();
         }

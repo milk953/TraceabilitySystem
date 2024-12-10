@@ -19,9 +19,15 @@ function fn_SheetInspection() {
     const [gvDataSheet, setgvDataSheet] = useState({ visible: false, value: [] })
     const [pnlGridWidth, setpnlGridWidth] = useState("1620px");
 
+    //inputRef
+    const inputProduct = useRef([]);
+
     useEffect(() => {
         reset();
         setselectcbx("cbxXOut");
+        setTimeout(() => {
+            inputProduct.current.focus();
+        }, 200);
     }, []);
 
     const handleChangecbx = (event) => {
@@ -665,7 +671,7 @@ function fn_SheetInspection() {
     return {
         txtProductFrom, settxtProductFrom, txtProductTo, settxtProductTo, txtLotFrom, settxtLotFrom, txtLotTo, settxtLotTo, txtRollFrom, settxtRollFrom,
         txtRollTo, settxtRollTo, txtInvFrom, settxtInvFrom, txtInvTo, settxtInvTo, txtDateFrom, settxtDateFrom, txtDateTo, settxtDateTo, selectcbx,
-        gvDataXOut, gvDataSheet, pnlGridWidth, handleChangecbx, btnExecute_Click, btnExport_Click, columnsXOutData, columnsSheetNoData
+        gvDataXOut, gvDataSheet, pnlGridWidth, handleChangecbx, btnExecute_Click, btnExport_Click, columnsXOutData, columnsSheetNoData, inputProduct
     }
 };
 

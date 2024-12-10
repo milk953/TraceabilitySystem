@@ -178,7 +178,7 @@ function fn_SPIAOITimeView() {
       title: (
         <div
           style={{
-            fontSize: "22px",
+            fontSize: "20px",
             backgroundColor: "#31363F",
             color: "#ffffff",
             padding: 0,
@@ -239,7 +239,7 @@ function fn_SPIAOITimeView() {
       title: (
         <div
           style={{
-            fontSize: "22px",
+            fontSize: "20px",
             backgroundColor: "#31363F",
             color: "#ffffff",
             padding: "0px",
@@ -376,7 +376,7 @@ function fn_SPIAOITimeView() {
       title: (
         <div
           style={{
-            fontSize: "22px",
+            fontSize: "20px",
             backgroundColor: "#31363F",
             color: "#ffffff",
             padding: "0px",

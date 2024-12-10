@@ -10,7 +10,6 @@ import {
   TableContainer,
   Paper,
   Typography,
-  Button,
   Select,
   MenuItem,
   FormControl,
@@ -27,7 +26,7 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { Table as AntTable } from "antd";
+import { Button } from "antd";
 import "./Change_Serial.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -54,7 +53,14 @@ function Change_Serial() {
   return (
     <div>
       <Hearder />
-      <Card component={Paper} className="Card-Common">
+      <Card
+        component={Paper}
+        className="Card-Common-Khun"
+        sx={{
+          backgroundColor: "transparent",
+          boxShadow: "none",
+        }}
+      >
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
@@ -64,7 +70,7 @@ function Change_Serial() {
                   style={{
                     background: lblResult.style,
                     marginBottom: "10px",
-                    width: "50%",
+                    width: "600px",
                     height: "auto",
                     display: lblResult.visble,
                   }}
@@ -80,9 +86,12 @@ function Change_Serial() {
 
               <Table
                 component={Card}
-                className="ChangePartino"
-                style={{ width: "50%" }}
+                className="ChangeSerialTableFirst"
+                style={{ width: "600px" }}
               >
+                <TableHead>
+                  <TableCell colSpan={4}>Serial Config</TableCell>
+                </TableHead>
                 <TableBody>
                   <TableRow>
                     <TableCell align="right" style={{ width: "150px" }}>
@@ -117,7 +126,7 @@ function Change_Serial() {
               <Table
                 className="CSS-GvSerial"
                 style={{
-                  width: "50%",
+                  width: "600px",
                   marginTop: "20px",
                 }}
                 component={Card}
@@ -205,15 +214,21 @@ function Change_Serial() {
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
                       <Button
-                        className="BtSave"
+                        style={{
+                          backgroundColor: "green",
+                          width: "90px",
+                          color: "white",
+                        }}
                         onClick={BtnSubmit_Click}
-                        style={{ margin: "0 10px" }}
                       >
                         Submit
                       </Button>
                       <Button
-                        className="BtCancel"
-                        style={{ margin: "0 10px" }}
+                        style={{
+                          backgroundColor: "red",
+                          width: "90px",
+                          color: "white",
+                        }}
                         onClick={BtnCancle_Click}
                       >
                         Cancel

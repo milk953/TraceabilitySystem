@@ -58,7 +58,7 @@ function PieceTraceView() {
         btnAOICOAFColor, btnAOICOABColor, btnSMTIntFColor, btnSMTIntBColor, btnReject1Color, btnTouchUpColor, btnBendingColor, btnELT1Color, btnELT2Color, btnELT3Color, btnELT4Color, btnELT5Color,
         btnELT6Color, btnELT7Color, btnFQCColor, btnFinalGateColor, btnScanPackColor, btnPreAOIF_Click, btnClear_Click, btnSPIB_Click, btnPreAOIB_Click, btnAOIF_Click, btnAOIB_Click, btnReject1_Click,
         btnTouchUp_Click, btnELT1_Click, btnELT2_Click, btnELT3_Click, btnELT4_Click, btnELT5_Click, btnELT6_Click, btnELT7_Click, btnXRAY_Click, btnXRAY_B_Click, btnFinalGate_Click, btnAOICOAF_Click,
-        btnAOICOAB_Click, btnRetrive_Click, btnSPIF_Click, btnOST_Click, hypSheetNoF
+        btnAOICOAB_Click, btnRetrive_Click, btnSPIF_Click, btnOST_Click, hypSheetNoF, inputPiece
     } = fn_PieceTraceView();
 
     return (
@@ -106,6 +106,7 @@ function PieceTraceView() {
                                         <TextField
                                             className="ViewInput"
                                             size="small"
+                                            inputRef={(el) => (inputPiece.current = el)}
                                             sx={{ width: "90%" }}
                                             value={txtSerialNo}
                                             onChange={(e) => {
