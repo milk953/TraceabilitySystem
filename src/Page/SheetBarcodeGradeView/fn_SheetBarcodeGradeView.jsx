@@ -3,7 +3,7 @@ import { get } from "lodash";
 import React, { useState } from "react";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
-
+import { Tag } from "antd";
 function fn_SheetBarcodeGradeView() {
   const [gvResult, setGvResult] = useState([]);
   const [gvResultState, setGvResultState] = useState(false);
@@ -13,20 +13,20 @@ function fn_SheetBarcodeGradeView() {
   const [product_result, setProduct_result] = useState("");
   const [lotNo_result, setLotNo_result] = useState("");
   const [totalSheet_result, setTotalSheet_result] = useState("");
-  const hfBarcodeGrade='A,B,C'
+  const hfBarcodeGrade = "A,B,C";
 
   const Fac = import.meta.env.VITE_FAC;
   const RetriveBtn = async () => {
-    Clear_View()
-    setGrid()
+    Clear_View();
+    setGrid();
   };
 
   const Clear_View = async () => {
-    setProduct_result('')
-    setGvResult([])
-    setLotNo_result('')
-    setTotalSheet_result('0')
-  }
+    setProduct_result("");
+    setGvResult([]);
+    setLotNo_result("");
+    setTotalSheet_result("0");
+  };
   const setGrid = async () => {
     let dtData = [];
     let strShowBy = "";
@@ -67,12 +67,11 @@ function fn_SheetBarcodeGradeView() {
             setLotNo_result(res.data[0].LOT);
           }
           console.log(res.data, "lot");
-        })
+        });
     }
 
-    setTotalSheet_result(dtData.length)
+    setTotalSheet_result(dtData.length);
   };
-
 
   const predefinedColumns = [
     {
@@ -102,7 +101,15 @@ function fn_SheetBarcodeGradeView() {
       align: "center",
       width: 45,
       render: (text, record, index) => {
-        return text;
+        if (text > 0) {
+          return (
+            <Tag color="#cd201f" style={{ fontSize: 14, margin: 0 }}>
+              {text}
+            </Tag>
+          );
+        } else {
+          return text;
+        }
       },
     },
   ];
@@ -117,15 +124,41 @@ function fn_SheetBarcodeGradeView() {
       width: 35,
       render: (text) => {
         if (radioValue === "RESULT") {
-          return <span style={{ color: text === "NG" ? "red" : "inherit" }}>{text}</span>;
+          const barcodeGrades = hfBarcodeGrade.split(",");
+          const isTextInBarcodeGrade = barcodeGrades.includes(text)
+          // return <span style={{ color: text === "NG" ? "red" : "inherit",margin:0,border:'1px solid red' }}>{text}</span>;
+          return text === "NG" ? (
+            <Tag
+            color="#cd201f"
+            style={{ fontSize: 13, margin: 0 }}
+          >
+            {text}
+          </Tag>
+          ) : (
+           text
+          );
         } else {
-          const barcodeGrades = hfBarcodeGrade.split(',');
-          const isTextInBarcodeGrade = barcodeGrades.includes(text) || text === "OK" || text === "NG";
-          return <span style={{ color: isTextInBarcodeGrade ? "inherit" : "red" }}>{text}</span>;
+          const barcodeGrades = hfBarcodeGrade.split(",");
+          const isTextInBarcodeGrade =
+            barcodeGrades.includes(text) || text === "OK" || text === "NG";
+          return isTextInBarcodeGrade ? (
+            text
+          ) : (
+            <Tag
+              color={isTextInBarcodeGrade ? "" : "#cd201f"}
+              style={{ fontSize: 13, margin: 0 }}
+            >
+              {text}
+            </Tag>
+          );
+          // return <span style={{ color: isTextInBarcodeGrade ? "inherit" : "red" }}>{text}</span>;
         }
       },
     }));
- const columns = [...predefinedColumns, ...dynamicColumns.slice(0, dynamicColumns.length - 1)];
+  const columns = [
+    ...predefinedColumns,
+    ...dynamicColumns.slice(0, dynamicColumns.length - 1),
+  ];
 
   const exportExcelFile = () => {
     if (gvResult == "" || gvResult == null || gvResult == []) {
@@ -156,18 +189,34 @@ function fn_SheetBarcodeGradeView() {
         width: 5,
         style: { alignment: { horizontal: "center" } },
       }));
+      if (dynamicColumns.length > 0) {
+        dynamicColumns.pop();
+      }
 
     sheet.columns = [...columns, ...dynamicColumns];
+    // const barcodeGrades = hfBarcodeGrade.split(',');
+    // const isTextInBarcodeGrade = barcodeGrades.includes(text) || text === "OK" || text === "NG";
+    // return isTextInBarcodeGrade? text : <Tag color={isTextInBarcodeGrade ? "" : "#cd201f"} style={{fontSize:13,margin:0,}}>{text}</Tag>;
 
-    gvResult.forEach((row) => {
-      const newRow = sheet.addRow(row);
-      newRow.eachCell((cell) => {
-        cell.alignment = { horizontal: "center" };
-        if (cell.value === "NG") {
-          cell.font = { color: { argb: "FF0000" } };
-        }
-      });
-    });
+gvResult.forEach((row) => {
+  const newRow = sheet.addRow(row);
+  newRow.eachCell((cell, colNumber) => {
+    cell.alignment = { horizontal: "center" };
+    const barcodeGrades = hfBarcodeGrade.split(",");
+    const isTextInBarcodeGrade = barcodeGrades.includes(cell.value);
+    const columnHeader = sheet.getRow(1).getCell(colNumber).value;
+
+    if (columnHeader !== "Sheet No." && columnHeader !== "OK" && columnHeader !== "NG") {
+      if (cell.value === "NG" || !isTextInBarcodeGrade&& cell.value !== "OK") {
+        cell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FFFF0000" }, // สีแดง
+        };
+      }
+    }
+  });
+});
 
     const firstRow = sheet.getRow(1);
     firstRow.eachCell((cell) => {

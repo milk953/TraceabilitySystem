@@ -6,8 +6,9 @@ import { saveAs } from "file-saver";
 import { Tag } from "antd";
 import { Tooltip, Avatar } from "antd";
 import excel from "/src/assets/excel.png";
-
+import { useLoading } from "../../loading/fn_loading";
 function fn_LotTraceView() {
+  const { showLoading, hideLoading } = useLoading();
   const [txtLotNo, settxtLotNo] = useState("");
   const [LotNoSearch, setLotNoSearch] = useState("");
   const [txtSheetNo, settxtSheetNo] = useState("");
@@ -152,15 +153,15 @@ function fn_LotTraceView() {
   //     console.log(test1,'ttttttt')}
 
   const btnSearch_Click = async () => {
-    setloading(true);
+    showLoading("กำลังค้นหา กรุณารอสักครู่...");
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
       console.log(txtLotNo,txtSheetNo,txtSerialNo, "เข้าจ้าาาาาาาาาาาาๅ");
       const datalblLot = await setHead();
       await setGrid(datalblLot);
-      setloading(false);
+      hideLoading();
     } else {
       reset();
-      setloading(false);
+      hideLoading();
     }
   };
 
@@ -801,15 +802,15 @@ function fn_LotTraceView() {
     {
       title: "Operator",
       dataIndex: "OPER",
-      key: "Operator",
+      key: "Operator",      
       render: (text, record, index) => {
         return text;
       },
       align: "left",
       width: 115,
     },
-    {
-      title: "Document No.",
+    {       
+      title: "Document No.",          
       dataIndex: "EMCS",
       key: "Document No.",
       render: (text, record, index) => {

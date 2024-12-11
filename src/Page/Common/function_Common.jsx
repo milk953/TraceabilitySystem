@@ -83,7 +83,7 @@ const DataConfig =() =>{
     data();
   }, []);
 
-  return { ConfigData, setConfigData };
+  return { ConfigData };
 }
 
 export { usePopupFunctions, useIPAddress, getFactory, getTimestamp,DataConfig };

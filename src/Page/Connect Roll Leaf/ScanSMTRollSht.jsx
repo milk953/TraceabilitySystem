@@ -72,7 +72,6 @@ function ScanSMTRoollSht() {
     txtRollLeaf_TextChanged,
     ibtCancel_Click
   } = Fn_ScanSMTRollSht();
-  // console.log('gvScanResult',gvScanResult)
 
   return (
     <div>
@@ -114,7 +113,6 @@ function ScanSMTRoollSht() {
                             handleLotxt_Lotno();
                           }
                         }}
-                        // onBlur={handleLotxt_Lotno}
                       ></TextField>
                     </TableCell>
                     <TableCell>
@@ -178,7 +176,6 @@ function ScanSMTRoollSht() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        // label="Operator. :"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtOperator_TextChanged(e.target.value);
@@ -191,7 +188,7 @@ function ScanSMTRoollSht() {
                           settxtOperator(e.target.value);
                           console.log(e.target.value,'txtoper');
                       }}
-                      // onBlur={(e) => txtOperator_TextChanged(e.target.value)}
+                   
 
                       ></TextField>
                     </TableCell>
@@ -209,7 +206,7 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxtTotalLeaf(e.target.value);
                         }}
-                        // onBlur={handletxtTotalLeaf}
+
                       ></TextField>
                     </TableCell>
                     <TableCell align="right">
@@ -229,8 +226,6 @@ function ScanSMTRoollSht() {
                           variant="button"
                           style={{
                             color: "#FFF",
-
-                            // border:'1px solid red',
                             fontSize: "17px",
                           }}
                         >
@@ -263,7 +258,6 @@ function ScanSMTRoollSht() {
                           }
                         }}
                         
-                        // onBlur={(e) => txtRollLeaf_TextChanged(e.target.value)}
                         fullWidth
                       ></TextField>
                     </TableCell>
@@ -293,7 +287,6 @@ function ScanSMTRoollSht() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* <TableRow> */}
 
                   {Array.from({ length: GvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
@@ -314,11 +307,6 @@ function ScanSMTRoollSht() {
                           onChange={(event) =>
                             handleTextFieldChange(index, event)
                           }
-                          // inputRef={(el) => (fc_txtSerial.current[index] = el)}
-                          // value={txtSerial[index]}
-                          // onBlur={(event) => {
-                          //   handleTextFieldChange(index, event);
-                          // }}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
@@ -386,83 +374,6 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-                  {/* <Table
-                className="CSS-GvScanResult"
-                style={{ display: gvScanResult }}
-                component={Card}
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="50px"
-                    >
-                      No.
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="200px"
-                    >
-                      Roll/Sheet No.
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="200px"
-                    >
-                      Leaf No.
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
-                      width="150px"
-                    >
-                      Scan Result
-                    </TableCell>
-                    <TableCell width="300px">Remark</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Array.from(
-                    { length: gvScanResult.value.length },
-                    (_, index) => (
-                      <TableRow key={index}>
-                        <TableCell
-                          align="center"
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                        >
-                          {gvScanResult.value[index].SHT_SEQ}
-                        </TableCell>
-
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          {gvScanResult.value[index].ROLL_LEAF}
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
-                        >
-                          {gvScanResult.value[index].SHT_NO}
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            borderRight: "1px solid #d9d9d9",
-                            background: gvScanResult.value[index].SCAN_RESULT === ''
-                              ? ''
-                              : gvScanResult.value[index].SCAN_RESULT === 'OK'
-                              ? 'green'
-                              : '#ff4d4f'
-                          }}
-                        >
-                          {gvScanResult.value[index].SCAN_RESULT}
-                        </TableCell>
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
-                          {gvScanResult.value[index].REMARK}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  )}
-                </TableBody>
-              </Table> */}
-
                   <AntTable
                     columns={columns}
                     dataSource={gvScanResult.value}
@@ -471,6 +382,7 @@ function ScanSMTRoollSht() {
                     size="small"
                     bordered
                     className="tableGvResult"
+                    rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                   />
                 </>
               )}

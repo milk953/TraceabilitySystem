@@ -8,8 +8,9 @@ import { Tooltip, Avatar } from "antd";
 import excel from "/src/assets/excel.png";
 import { values } from "lodash";
 import Column from "antd/es/table/Column";
-
+import { useLoading } from "../../loading/fn_loading";
 function fn_Material_Trace() {
+  const { showLoading, hideLoading } = useLoading();
   const [txtLotNo, settxtLotNo] = useState("");
   const [txtInviceNo, settxtInviceNo] = useState("");
   const [tblData1, settblData1] = useState("");
@@ -37,24 +38,25 @@ function fn_Material_Trace() {
   }, []);
 
   const ViewData = async (strlot, Invoice) => {
-    setloading(true);
+    showLoading("กำลังค้นหา กรุณารอสักครู่...");
     settblData1([]);
-    console.log("ViewData", strlot);
+    console.log("ViewData", strlot,Invoice);
     let Meterial = [];
 
-    // await axios
-    //   .post("/api/Common/MaterialDataSearch", {
-    //     Venderlot: strlot,
-    //     Invoice: Invoice,
-    //   })
-    //   .then((res) => {
-    //     setgvMaterial(res.data);
-    //   });
+    await axios
+      .post("/api/Common/MaterialDataSearch", {
+        Venderlot: strlot||'',
+        Invoice: Invoice||'',
+      })
+      .then((res) => {
+        console.log(res.data, "MaterialDataSearch");
+        setgvMaterial(res.data);
+      });
 
     await axios
       .post("/api/Common/GetMeterial", {
-        txtLotNo: strlot,
-        txtInviceNo: Invoice,
+        Venderlot: strlot||'',
+        Invoice: Invoice||'',
       })
       .then((res) => {
         console.log(res.data, "GetMeterial");
@@ -72,11 +74,11 @@ function fn_Material_Trace() {
             LOT5: group[4] ? group[4].LOT : "",
           };
         });
-        // setTimeout(() => {
+ 
         settblData1(Meterial);
-        setloading(false);
-        // }, 1000);
+
       });
+    hideLoading();
   };
   const createLink = (text) => {
     return (

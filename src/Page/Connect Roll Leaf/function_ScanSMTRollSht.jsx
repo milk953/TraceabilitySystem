@@ -1146,10 +1146,7 @@ function Fn_ScanSMTRollSht() {
       dataIndex: "SCAN_RESULT",
       align: "center",
       render: (text, record, index) => {
-        const backgroundColor =
-          text === "NG" ? "#f50" : text === "OK" ? "#87d068" : "transparent";
-
-        return <Tag color={backgroundColor}>{text}</Tag>;
+        return text;
       },
     },
     {

@@ -73,7 +73,7 @@ function ScanSheetMOTTime() {
       <Hearder />
 
 
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'140px' }}>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'100px' }}>
           <Grid container spacing={2} style={{justifyContent: 'center' }}>
             <Grid >
               <Table
@@ -279,12 +279,16 @@ function ScanSheetMOTTime() {
                     </TableCell>
                   </TableRow>
                   )}
-                  <TableRow  >
-                    <TableCell colSpan={3} align="center" style={{display:pnlSave}}>
-                    <Button variant="contained" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>&nbsp;
-                      <Button variant="contained"onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>&nbsp;
-                      <Button variant="contained" onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>&nbsp;
-                     </TableCell>
+                  <TableRow style={{display:pnlSave}} >
+                  <TableCell colSpan={3} align="center">
+                  <Box display="flex" justifyContent="center" alignItems="center" width="100%">
+                    <Box display="flex" justifyContent="space-between" alignItems="center" width="90%">
+                      <Button variant="contained" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
+                      <Button variant="contained" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
+                      <Button variant="contained" onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
+                    </Box>
+                  </Box>
+                </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

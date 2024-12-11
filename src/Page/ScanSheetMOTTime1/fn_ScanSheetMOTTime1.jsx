@@ -382,7 +382,7 @@ function fn_ScanSheetMOTTime() {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { color: "#fff", background: "#059212" },
+                style: { color: "#fff", background: "green" },
               }));
             } else {
               setlblResult((prevState) => ({
@@ -399,7 +399,7 @@ function fn_ScanSheetMOTTime() {
             setlblRemark("Exists record time,\nPlease be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
-              style: { color: "#fff", background: "#F3C623" },
+              style: { color: "black", background: "yellow" },
             }));
           }
           settxtSheet((prevState) => ({
@@ -523,7 +523,7 @@ function fn_ScanSheetMOTTime() {
               setlblResult((prevState) => ({
                 ...prevState,
                 value: "OK",
-                style: { color: "#fff", background: "#059212" },
+                style: { color: "#fff", background: "green" },
               }));
             } else {
               setlblResult((prevState) => ({
@@ -540,7 +540,7 @@ function fn_ScanSheetMOTTime() {
             setlblRemark("Exists record time,\nPlease be confirm.");
             setlblResult((prevState) => ({
               ...prevState,
-              style: { color: "#fff", background: "#F3C623" },
+              style: { color: "Black", background: "yellow" },
             }));
           }
           settxtSheet((prevState) => ({
@@ -662,7 +662,7 @@ function fn_ScanSheetMOTTime() {
             setlblResult((prevState) => ({
               ...prevState,
               value: "OK",
-              style: { color: "#fff", background: "#059212" },
+              style: { color: "#fff", background: "green" },
             }));
           } else {
             setlblResult((prevState) => ({
@@ -681,7 +681,7 @@ function fn_ScanSheetMOTTime() {
           setlblRemark("Exists record time,\nPlease be confirm.");
           setlblResult((prevState) => ({
             ...prevState,
-            style: { color: "#fff", background: "#F3C623" },
+            style: { color: "black", background: "yellow" },
           }));
         }
         settxtSheet((prevState) => ({
@@ -860,7 +860,7 @@ function fn_ScanSheetMOTTime() {
     if (strStatus == "P") {
       setlblResult((prevState) => ({
         ...prevState,
-        style: { color: "#fff", background: "#059212" },
+        style: { color: "#fff", background: "green" },
         value: "OK",
       }));
     } else {

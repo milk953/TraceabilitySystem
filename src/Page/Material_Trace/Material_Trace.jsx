@@ -11,6 +11,7 @@ import {
 import "../Material_Trace/MaterialTrace.css";
 import excel from "/src/assets/excel.png";
 import { fn_Material_Trace } from "./fn_Material_Trace.jsx";
+
 const { Text } = Typography;
 function LotTraceView() {
   const {
@@ -26,7 +27,7 @@ function LotTraceView() {
     txtInviceNo,
     settxtInviceNo,
   } = fn_Material_Trace();
-  console.log(loading, "loaddd");
+  // console.log(loading, "loaddd");
   return (
     <>
       <Hearder />
@@ -61,7 +62,7 @@ function LotTraceView() {
             <Button
               type="primary"
               icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
-              onClick={() => ViewData(txtLotNo)}
+              onClick={() => ViewData(txtLotNo,txtInviceNo)}
               disabled={loading}
               style={{ marginRight: "10px", marginTop: "5px" }}
             >
