@@ -3,11 +3,13 @@ import { CompareSharp, StopScreenShareRounded } from "@mui/icons-material";
 import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import Swal from "sweetalert2";
+import {useLoading} from "../../loading/fn_loading";  
 
 function fn_ScanSheetDispenserTime() {
+  const {showLoading,hideLoading} = useLoading();
   //State
   const [pnlSaveState, setPnlSaveState] = useState(false);
+  const [pnlResultState, setPnlResultState] = useState(false);
   // txtField
   const [txtmcNo, setTxtmcNo] = useState("");
   const [txtSheetNo, setTxtSheetNo] = useState("");
@@ -86,7 +88,7 @@ function fn_ScanSheetDispenserTime() {
       });
     }
   }
-
+//txtChange 
   const txtMcno_change = () => {
     setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
     setTxtSheetNo("");
@@ -97,6 +99,184 @@ function fn_ScanSheetDispenserTime() {
     });
     FctxtSheetNo.current.focus();
   };
+  const txtSheetno_change = async () => {
+    let rowCount = 0;
+    let strError = "";
+    let strStatus = "";
+    setLblRemark("");
+    setPnlSaveState(false);
+    if (txtSheetNo != "") {
+      if (parseInt(hfConnLeafLength) > 0 &&parseInt(hfConnLeafLength) != txtSheetNo.length &&strStatus != "F") {
+        strError = "Invalid sheet length";
+        strStatus = "F";
+      }
+    }
+    if (strStatus != "F") {
+      if (hfCBNoFlg != "Y") {
+        setTxtCBnoState({
+          disabled: false,
+          styled: { backgroundColor: "white" },
+          focused: false,
+        });
+        setTxtCBno("");
+        rowCount = await getData("GetDispenserRecordTimeData", txtSheetNo);
+        if (parseInt(rowCount) == 0) {
+          const currentTime = new Date().toLocaleTimeString("en-US", {
+            hour12: false,
+          });
+          setLblSheet(`${txtSheetNo} [${currentTime}]`);
+          showLoading('กำลังบันทึก กรุณารอสักครู่')
+          strError = await getData("CallSMTDispenserRecordTimeResult", {
+            P_SHEET_NO: txtSheetNo,
+            P_CB_NO: txtCBno,
+            P_USER: "frm_ScanSheetDispenserTime",
+            P_STATION: txtmcNo,
+          });
+          console.log(strError)
+          if (strError == "") {
+            
+            setTxtCBnoState({
+              disabled: true,
+              styled: { backgroundColor: "#B2A8A8" },
+              open: true,
+
+            })
+            setLblResult({ text: "OK", styled: "white" ,backgroundColor:'green' });    
+            
+            setPnlResultState(true);     
+          }else{
+            setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
+            setLblRemark({text:strError,color:'white',backgroundColor:'red'});
+            setPnlResultState(true);   
+          }
+        } else {
+          setLblSheet(`${txtSheetNo}`);
+          setPnlSaveState(true);
+          PnlmainDisable();
+          setLblResult("")
+          setLblRemark({text:"Exists record time, \n please be confirm.",color:'black',backgroundColor:'yellow'});
+          setPnlResultState(true);
+        }
+        setTxtSheetNo("");
+        setTxtSheetNoState({
+          disabled: false,
+          styled: { backgroundColor: "white" },
+          focused: true,
+        });
+        hideLoading();
+      } else {
+        setTxtCBno("");
+        setTxtCBnoState({
+          disabled: false,
+          styled: { backgroundColor: "white" },
+          focused: true,
+          open: true,
+        });
+        FctxtCBno.current.focus();
+      }
+    } else {
+      setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
+      setLblRemark({text:strError,color:'white',backgroundColor:'red'});
+      setTxtSheetNo("");
+      setTxtSheetNoState({
+        disabled: false,
+        styled: { backgroundColor: "white" },
+        focused: true,
+      });
+    }
+  };
+  const txtCbno_change = async () => {
+    let strError = "";
+    let strStatus = "";
+    setLblResult("");
+    setLblRemark("");
+    setPnlSaveState(false);
+    if (txtSheetNo != "") {
+      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) != txtSheetNo.length &&strStatus != "F") {
+        strError = "Invalid sheet length";
+        strStatus = "F";
+      }
+      if (strStatus != "F") {
+        setTxtCBnoState({
+          disabled: false,
+          styled: { backgroundColor: "white" },
+          focused: false,
+          open: true,
+        });
+        setTxtCBno("");
+        let rowCount = await axios.get("/api/Dispenser/GetDispenserRecordTimeData?strSheetNo=" + txtSheetNo)
+          .then((res) => {
+            return res.data.row_count;
+          })
+          .catch((error) => {
+            setLblRemark({text:error,color:'white',backgroundColor:'red'});
+          });
+        console.log(rowCount,'rowCount')
+        if (rowCount == 0) {
+          const currentTime = new Date().toLocaleTimeString("en-US", {
+            hour12: false,
+          });
+          setLblSheet(`${txtSheetNo} [${currentTime}]`);
+          showLoading('กำลังบันทึก กรุณารอสักครู่')
+          strError = await getData("CallSMTDispenserRecordTimeResult", {
+            P_SHEET_NO: txtSheetNo,
+            P_CB_NO: txtCBno,
+            P_USER: "frm_ScanSheetDispenserTime",
+            P_STATION: txtmcNo,
+          });
+          console.log(strError)
+          if (strError == "") {
+            
+            setTxtCBnoState({
+              disabled: true,
+              styled: { backgroundColor: "#B2A8A8" },
+              open: true,
+
+            })
+            setLblResult({ text: "OK", styled: "white" ,backgroundColor:'green' });
+            setPnlResultState(true);         
+          }else{
+            setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
+            setLblRemark({text:strError,color:'white',backgroundColor:'red'});
+            setPnlResultState(true);   
+          }
+        } else {
+          setLblSheet(`${txtSheetNo}`);
+          setPnlSaveState(true);
+          setTxtCBnoState({
+            disabled: true,
+            styled: { backgroundColor: "#B2A8A8" },
+            open: true,
+          })
+          setPnlResultState(true);
+          setLblRemark({text:"Exists record time, \n please be confirm.",color:'black',backgroundColor:'yellow'});
+        }
+        setTxtSheetNo("");
+        setTxtSheetNoState({
+          disabled: false,
+          styled: { backgroundColor: "white" },
+          open: true,
+        })
+        setFocus('txtSheetNoDispenser')
+        hideLoading();
+      } else {
+        setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
+        setLblRemark({text:strError,color:'white',backgroundColor:'red'});
+        // setTxtSheetNo("");
+        setTxtSheetNoState({
+          disabled: false,
+          styled: { backgroundColor: "white" },
+          focused: true,
+        });
+      }
+    }
+  };
+  function setFocus(txtField){
+    document.getElementById(`${txtField}`).focus();
+  }
+  const handleCbNoChange = (e) => {
+    setTxtCBno(e.target.value);
+  };
   //Btn
   const btnReturn_Click = () => {
     console.log("btnReturn_Click");
@@ -105,8 +285,9 @@ function fn_ScanSheetDispenserTime() {
   const btnReplace_Click = async () => {
     let strError = "";
     let strStatus = "";
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
     strError = await getData("CallSMTDispenserRecordTimeResult", {
-      P_SHEET_NO: txtSheetNo,
+      P_SHEET_NO: lblSheet,
       P_CB_NO: txtCBno,
       P_USER: "frm_ScanSheetDispenserTime",
       P_STATION: txtmcNo,
@@ -115,76 +296,54 @@ function fn_ScanSheetDispenserTime() {
       hour12: false,
     });
     setLblSheet(`${lblSheet} [${currentTime}]`);
-    setLblRemark(strError);
+    setLblRemark({text:strError,color:'white',backgroundColor:'red'});
 
     if (strError == "") {
-      setLblResult({ text: "OK", styled: { color: "green" } });
+      setLblResult({ text: "OK", styled: "white" ,backgroundColor:'green' });
+      setPnlResultState(true);
     } else {
-      setLblResult({ text: "NG", styled: { color: "red" } });
+      setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
+      setLblRemark({text:strError,color:'white',backgroundColor:'red'});
+      setPnlResultState(true);
     }
     setPnlSaveState(false);
-    // PnlmainEnable();
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: false,
       styled: { backgroundColor: "white" },
       focused: true,
     });
+    hideLoading();
   };
-  const btnDelete_Click = async () => {
+  const btnDelete_Click = async () => { //Delete OK
     let strError = "";
     let strStatus = "";
-    alert(txtSheetNo);
-    strError = await getData("DeleteDispenserRecordTimeData", txtSheetNo); // FPC
-
-    setLblSheet(`${lblSheet} Delete`);
-    setLblRemark(strError);
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
+    strError = await getData("DeleteDispenserRecordTimeData", lblSheet); 
+    console.log(strError)
+    setLblRemark({text:strError,color:'white',backgroundColor:'red'});
     if (strError == "") {
-      Swal.fire({
-        title: "Success",
-        text: "Delete Success",
-        icon: "success",
-        timer: 2000,
-        showConfirmButton: false,
-      });
+      setLblSheet(`${lblSheet} Delete`);
+      setPnlResultState(false);
+    }else{
+      setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
+      setLblRemark({text:strError,color:'white',backgroundColor:'red'});
+      setPnlResultState(true);
     }
-    // if (strStatus == "P") {
-    //   setLblResult({ text: "OK", styled: { color: "green" } });
-    // } else {
-    //   setLblResult({ text: "NG", styled: { color: "red" } });
-    // }
     setPnlSaveState(false);
-    // PnlmainEnable();
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: false,
       styled: { backgroundColor: "white" },
       focused: true,
     });
+    hideLoading();
   };
-  function PnlmainDisable() {
-    setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
-    setTxtSheetNoState({
-      disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
-    });
-    setTxtCBnoState({
-      disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
-      open: true,
-    });
-  }
-  function PnlmainEnable() {
-    setTxtmcNoState({ disabled: false, styled: { backgroundColor: "white" } });
-    setTxtSheetNoState({
-      disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
-    });
-    setTxtCBnoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
-  }
+  
   const btnCancel_Click = () => {
     setPnlSaveState(false);
-    // PnlmainEnable();
+    setPnlResultState(false);
+    setLblSheet('');
     setTxtCBno("");
     setLblSheet("");
     setLblRemark("");
@@ -216,166 +375,51 @@ function fn_ScanSheetDispenserTime() {
       focused: true,
       open: true,
     });
-  };
-  const txtSheetno_change = async () => {
-    let rowCount = 0;
-    let strError = "";
-    let strStatus = "";
-    setLblRemark("");
+    setPnlResultState(false);
     setPnlSaveState(false);
-    if (txtSheetNo != "") {
-      if (
-        parseInt(hfConnLeafLength) > 0 &&
-        parseInt(hfConnLeafLength) != txtSheetNo.length &&
-        strStatus != "F"
-      ) {
-        strError = "Invalid sheet length";
-        strStatus = "F";
-      }
-    }
-    if (strStatus != "F") {
-      if (hfCBNoFlg != "Y") {
-        setTxtCBnoState({
-          disabled: false,
-          styled: { backgroundColor: "white" },
-          focused: false,
-        });
-        setTxtCBno("");
-        rowCount = await getData("GetDispenserRecordTimeData", txtSheetNo);
-        if (rowCount == 0) {
-          const currentTime = new Date().toLocaleTimeString("en-US", {
-            hour12: false,
-          });
-          setLblSheet(`${lblSheet} [${currentTime}]`);
-        } else {
-          setLblSheet(`${txtSheetNo}`);
-          pnlSaveState(true);
-          PnlmainDisable();
-          setLblResult("")
-          setLblRemark("Exists record time, please be confirm.");
-        }
-        setTxtSheetNo("");
-        setTxtSheetNoState({
-          disabled: false,
-          styled: { backgroundColor: "white" },
-          focused: true,
-        });
-      } else {
-        setTxtCBno("");
-        setTxtCBnoState({
-          disabled: false,
-          styled: { backgroundColor: "white" },
-          focused: true,
-          open: true,
-        });
-        FctxtCBno.current.focus();
-      }
+    setLblSheet("");
+  };
+  function Setdisable(type, txtField) {
+    if (type == "disable") {
+      document.getElementById(`${txtField}`).disabled = true;
+      document.getElementById(`${txtField}`).className = "styleDisableDispenSer";
     } else {
-      setLblResult({ text: "NG", styled: { color: "red" } });
-      setLblRemark(strError);
-      setTxtSheetNo("");
-      setTxtSheetNoState({
-        disabled: false,
-        styled: { backgroundColor: "white" },
-        focused: true,
-      });
+      document.getElementById(`${txtField}`).disabled = false;
+      document.getElementById(`${txtField}`).className = "styleEnableDispenSer";
     }
-  };
-  const txtCbno_change = async () => {
-    let strError = "";
-    let strStatus = "";
-    console.log(txtCBno, txtSheetNo);
-    setLblResult("");
-    setLblRemark("");
-    setPnlSaveState(false);
-    if (txtSheetNo != "") {
-      if (
-        parseInt(hfConnLeafLength) > 0 &&
-        parseInt(hfConnLeafLength) != txtSheetNo.length &&
-        strStatus != "F"
-      ) {
-        strError = "Invalid sheet length";
-        strStatus = "F";
-      }
-      if (strStatus != "F") {
-        setTxtCBnoState({
-          disabled: false,
-          styled: { backgroundColor: "white" },
-          focused: false,
-          open: true,
-        });
-        setTxtCBno("");
-        let rowCount = await axios
-          .get(
-            "/api/Dispenser/GetDispenserRecordTimeData?strSheetNo=" + txtSheetNo
-          )
-          .then((res) => {
-            return res.data.ROW_COUNT;
-          })
-          .catch((error) => {
-            alert(error);
-          });
-
-        if (rowCount == 0) {
-          const currentTime = new Date().toLocaleTimeString("en-US", {
-            hour12: false,
-          });
-          setLblSheet(`${txtSheetNo} [${currentTime}]`);
-          strError = await getData("CallSMTDispenserRecordTimeResult", {
-            P_SHEET_NO: txtSheetNo,
-            P_CB_NO: txtCBno,
-            P_USER: "frm_ScanSheetDispenserTime",
-            P_STATION: txtmcNo,
-          });
-          if (strError == "") {
-            setLblResult({ text: "OK", styled: { color: "green" } });
-            Swal.fire({
-              title: "Success",
-              text: "Insert Success",
-              icon: "success",
-              timer: 2000,
-              showConfirmButton: false,
-            });
-          }
-        } else {
-          setLblSheet(`${txtSheetNo}`);
-          setPnlSaveState(true);
-          PnlmainDisable();
-          setLblRemark("Exists record time, please be confirm.");
-        }
-        // setTxtSheetNo("");
-        setTxtSheetNoState({
-          disabled: false,
-          styled: { backgroundColor: "white" },
-          focused: true,
-        });
-      } else {
-        setLblResult({ text: "NG", styled: { color: "red" } });
-        setLblRemark(strError);
-        // setTxtSheetNo("");
-        setTxtSheetNoState({
-          disabled: false,
-          styled: { backgroundColor: "white" },
-          focused: true,
-        });
-      }
-    }
-  };
-  const handleCbNoChange = (e) => {
-    setTxtCBno(e.target.value);
-  };
-
+  }
+  
+  function PnlmainDisable() {
+    setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
+    setTxtSheetNoState({
+      disabled: true,
+      styled: { backgroundColor: "#B2A8A8" },
+      open: true,
+    });
+    setTxtCBnoState({
+      disabled: true,
+      styled: { backgroundColor: "#B2A8A8" },
+      open: true,
+    });
+  }
+  function PnlmainEnable() {
+    setTxtmcNoState({ disabled: false, styled: { backgroundColor: "white" } });
+    setTxtSheetNoState({
+      disabled: true,
+      styled: { backgroundColor: "#B2A8A8" },
+    });
+    setTxtCBnoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
+  }
   async function getData(Config, Param) {
     if (Config == "DeleteDispenserRecordTimeData") {
       let res = "";
-      alert(Param);
       await axios
         .post("/api/Dispenser/DeleteDispenserRecordTimeData", {
           strSheetNo: Param,
         })
         .then((res) => {
           if (res.data.length > 0) {
-            res = res.data.p_error;
+            res = res.data.message;
           }
         })
         .catch((error) => {
@@ -383,40 +427,33 @@ function fn_ScanSheetDispenserTime() {
         });
       return res;
     } else if (Config == "CallSMTDispenserRecordTimeResult") {
-      alert(Param);
-      let res = "";
+      let resultcallDispenser = "";
       await axios
-        .post("/api/Dispenser/Calldispenser", {
-          P_SHEET_NO: Param.P_SHEET_NO,
-          P_CB_NO: Param.P_CB_NO,
-          P_USER: Param.P_USER,
-          P_STATION: Param.P_STATION,
+        .post("/api/Dispenser/CallSMTDispenserRecordTimeResult", {
+          p_sheet_no: Param.P_SHEET_NO,
+          p_cb_no: Param.P_CB_NO,
+          p_user: Param.P_USER,
+          p_station: Param.P_STATION,
         })
         .then((res) => {
-          if (res.data.length > 0) {
-            res = res.data.p_error;
-          }
+          resultcallDispenser = res.data.P_ERROR;          
         })
         .catch((error) => {
           console.error(error);
         });
-      return res;
+      return resultcallDispenser;
     } else if (Config == "GetDispenserRecordTimeData") {
       // Fininsih
-      let res;
+      let response = '';
       await axios
         .get("/api/Dispenser/GetDispenserRecordTimeData?strSheetNo=" + Param)
         .then((res) => {
-          if (res.data.length > 0) {
-            res = res.data.ROW_COUNT;
-          } else {
-            res = 0;
-          }
+          response = res.data.row_count
         })
         .catch((error) => {
           console.error(error);
         });
-      return res;
+      return response;
     }
   }
 
@@ -452,6 +489,7 @@ function fn_ScanSheetDispenserTime() {
     txtMcno_change,
     txtSheetno_change,
     handleCbNoChange,
+    pnlResultState
   };
 }
 
