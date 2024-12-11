@@ -376,14 +376,15 @@ function fn_ScanSMTSerialPcsBox() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        const backgroundColor =
-          record.SCAN_RESULT === "NG"
-            ? "#f50"
-            : record.SCAN_RESULT === "OK"
-            ? "#87d068"
-            : "transparent";
+        // const backgroundColor =
+          // record.SCAN_RESULT === "NG"
+          //   ? "#f50"
+          //   : record.SCAN_RESULT === "OK"
+          //   ? "#87d068"
+          //   : "transparent";
 
-        return <Tag color={backgroundColor}>{text}</Tag>;
+        return text;
+        // <Tag color={backgroundColor}>{text}</Tag>;
       },
       align: "center",
     },
@@ -626,6 +627,7 @@ function fn_ScanSMTSerialPcsBox() {
         value: "Please Input Serial No.",
       }));
       setpnlLog(true);
+      setpnlgvScanResult(false)
       scrollToTop();
       setTimeout(() => {
         fc_txtSerial.current[0].focus();

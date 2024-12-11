@@ -2,13 +2,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { color } from "framer-motion";
-import { green } from "@mui/material/colors";
-import styled from "styled-components";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
 import "../Common/StyleCommon.css";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const [enableState, setEnableState] = useState({
@@ -359,14 +355,15 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        const backgroundColor =
-          record.SCAN_RESULT === "NG"
-            ? "#BA0900"
-            : record.SCAN_RESULT === "OK"
-            ? "#87d068"
-            : "transparent";
+        // const backgroundColor =
+        //   record.SCAN_RESULT === "NG"
+        //     ? "#BA0900"
+        //     : record.SCAN_RESULT === "OK"
+        //     ? "#87d068"
+        //     : "transparent";
 
-        return <Tag color={backgroundColor}>{text}</Tag>;
+        // return <Tag color={backgroundColor}>{text}</Tag>;
+        return text;
       },
       align: "center",
     },
@@ -1206,7 +1203,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         }
 
         if (!bolError) {
-          // ตรวจสอบความยาวของ strOPData กับค่าของ hfOP
           if (strOPData.length === parseInt(hfOP, 10)) {
             setlblOP((prevState) => ({
               ...prevState,
@@ -1418,6 +1414,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         value: "Please Input Serial No.",
       }));
       setpnlLog(true);
+      setpnlgvScanResult(false)
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
       }, 300);
@@ -1677,9 +1674,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                 }
                 if (!_bolError) {
                   let isDuplicate = dtSerial.some((item, index) => {
-                    // console.log(
-                    //   `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
-                    // );
                     return (
                       index !== _intRowSerial &&
                       _strSerial.toUpperCase() === item.SERIAL.toUpperCase()

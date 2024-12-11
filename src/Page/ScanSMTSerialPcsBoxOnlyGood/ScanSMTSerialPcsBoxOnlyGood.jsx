@@ -360,33 +360,18 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                 {lblOP.value}
               </Paper>
               )} 
-              {console.log(pnlLog,"LOG")}
               {pnlLog && (
               <Paper
                 elevation={3}
                 className="Card-lblLog"
-                // style={{
-                //   width: "400px",
-                //   height: "40px",
-                //   margin: "auto",
-                //   textAlign: "center",
-                //   background: "#BB2525",
-                //   paddingTop: "18px",
-                //   color: "yellow", 
-                //   fontWeight: "bold", 
-                //   marginTop: "10px",
-                  
-                // }}
               >
                 {lblLog.value}
               </Paper>
               )} 
-              {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
               {pnlSerial && (
               <Table
                 className="CSS-GvSerial"
                 style={{ marginTop: "20px",
-                  //  display: gvSerial.visble
                    }}
                 component={Card}
               >
@@ -520,6 +505,8 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                 size="small"
                 bordered
                 className="tableGvResult"
+                rowClassName={(record) => (record.TEST_RESULT === "NG" ? "row-red" : record.TEST_RESULT ===  "OK" ? "row-green" : "")}
+
                 />
               
                 </>

@@ -479,6 +479,7 @@ function ScanSMTSerialPcsBox() {
                 size="small"
                 bordered
                 className="tableGvResult"
+                rowClassName={(record) => (record.TEST_RESULT === "NG" ? "row-red" : record.TEST_RESULT ===  "OK" ? "row-green" : "")}
                 />
                 </>
               )} 

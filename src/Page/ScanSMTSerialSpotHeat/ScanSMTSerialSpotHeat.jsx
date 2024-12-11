@@ -153,10 +153,11 @@ function ScanSMTSerialSpotHeat() {
                   className="Card-lblLog"
                 >
                   {lblLog}
-                </Card>   )}
+                </Card>  
+               )}
                 {visiblgvSerial == true && (
               <Table className="CSS-GvSerial" component={Card}
-                  style={{ marginTop: "20px",}}
+            
                   inputRef={fcGvSerial}>
                 <TableHead>
 
@@ -245,20 +246,28 @@ function ScanSMTSerialSpotHeat() {
               xs={10}
               md={8}
               style={{
+                margin: "auto",
+                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                
               }}
             >
               {visiblegvScanResult == false && (
                 <>
               <img
-                className="Img1"
+                // className="Img1"
+                style={{
+                  width: "360px",
+                  height: "300px",
+                  marginBottom: "30px",
+                }}
                 src={Pageimg}
                 
               />
               </>)}
-              {visiblegvScanResult == true && (
+              {visiblegvScanResult && (
               <>
                 <Paper
                   className="Card-lblResult"
@@ -281,6 +290,12 @@ function ScanSMTSerialSpotHeat() {
                 size="small"
                 bordered
                 className="tableGvResult"
+                rowClassName={(record) => 
+                  (record.SCAN_RESULT === "NG" || record.SCAN_RESULT === "NO") ? "row-red" : 
+                  record.SCAN_RESULT === "OK" ? "row-green" : ""
+                }
+                
+
                 />
               </>  )}
             </Grid>

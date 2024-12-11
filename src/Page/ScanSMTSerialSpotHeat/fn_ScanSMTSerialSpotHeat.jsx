@@ -354,11 +354,29 @@ function fn_ScanSMTSerialSpotHeat() {
     fcGvSerial_txtSerial_0.current[0].focus();
   };
 
-  const btnSave_Click = () => {
-    if (hfMode == "SERIAL") {
-      setSerialData();
-    }
-  };
+  const btnSave_Click = () => { 
+    const hasAnyInput = Array.from(fcGvSerial_txtSerial_0.current).some(
+        (input) => input.value.trim() !== ""
+    );
+
+    if (hasAnyInput == true) {
+        if (hfMode === "SERIAL") {
+            setSerialData();
+            scrollToTop();
+           
+        }
+    } else{
+      setlblLog("Please Input Serial No.");
+        setpnlLog(true);
+        setTimeout(() => {
+          fcGvSerial_txtSerial_0.current[0].focus();
+        }, 300);
+        setvisiblegvScanResult(false)
+        scrollToTop();
+       }
+};
+
+
 
   const handleddlProduct = async () => {
     GetProductSerialMaster(SlProduct);
@@ -544,6 +562,7 @@ function fn_ScanSMTSerialSpotHeat() {
       setlblLog("Please input lot no. ");
       SetMode("SERIAL_ERROR");
     }
+    setpnlLog(false)
     fcGvSerial_txtSerial_0.current[0].focus();
   };
 
@@ -596,11 +615,13 @@ function fn_ScanSMTSerialSpotHeat() {
       key: "Scan Result",
       dataIndex: "SCAN_RESULT",
       render: (text, record, index) => {
-        return text ? (
-          <Tag className={text === "OK" ? "Tag-OK" : text === "NG"|| "NO" ? "Tag-NG" : ""}>
-            {text}
-          </Tag>
-        ) : null; // คืนค่า null ถ้า text เป็นค่าว่าง
+        return text ; 
+        //?
+        // (
+        //   <Tag className={text === "OK" ? "Tag-OK" : text === "NG"|| "NO" ? "Tag-NG" : ""}>
+        //     {text}
+        //   </Tag>
+        // ) : null; // คืนค่า null ถ้า text เป็นค่าว่าง
       },
       align: "center",
     },
