@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common";
 import Swal from "sweetalert2";
 function fn_ScanSMTSerialPcsBox() {
+  const{ConfigData} = DataConfig();
   const [enableState, setEnableState] = useState({
     styled: { backgroundColor: "" },
   });
@@ -172,7 +174,9 @@ function fn_ScanSMTSerialPcsBox() {
   // disable
   const [dis_ddlProduct, setdis_ddlProduct] = useState(false);
 
-  const FAC = import.meta.env.VITE_FAC;
+  const FAC = ConfigData.VITE_FAC_A1;
+  console.log(FAC,"FAC1")
+
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
   const FINAL_GATE_SPECIAL_SERIAL_VAR = "";

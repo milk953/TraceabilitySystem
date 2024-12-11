@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useIPAddress, getTimestamp } from "../Common/function_Common";
+import { useIPAddress, getTimestamp ,DataConfig} from "../Common/function_Common";
 import swal from "sweetalert";
 
 function PopupSerialMaster(onClose, item, searchFunction) {
@@ -10,6 +10,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
     const UserLogin = localStorage.getItem("IDCode");
     const [user_id, setuser_id] = useState("");
     const { ipaddress, setipaddress } = useIPAddress();
+
 
     const [isPlantChecked, setIsPlantChecked] = useState(false);
     const [isWeekChecked, setIsWeekChecked] = useState(false);

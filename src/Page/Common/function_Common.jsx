@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 const usePopupFunctions = () => {
   const [OpenPopup, setOpenPopup] = useState(false);
 
@@ -20,14 +21,10 @@ const usePopupFunctions = () => {
   return { OpenPopup, PopupOpen, PopupClose, New };
 };
 
-
-
 const useIPAddress = () => {
   const [ipaddress, setipaddress] = useState("");
 
   useEffect(() => {
-
-    console.log("TEST IP : OPEN ");
     const page_load = () => {
       axios.get("/api/getIPaddress").then((res) => {
         setipaddress(res.data.ip);
@@ -72,5 +69,21 @@ const getTimestamp = () => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
 };
+const DataConfig =() =>{
+  const [ConfigData, setConfigData] = useState("");
 
-export { usePopupFunctions, useIPAddress, getFactory, getTimestamp };
+  useEffect(() => {
+
+    const data = () => {
+      axios.post("/api/Common/GetDataConfig").then((res) => {
+        setConfigData(res.data);
+     
+      });
+    };
+    data();
+  }, []);
+
+  return { ConfigData, setConfigData };
+}
+
+export { usePopupFunctions, useIPAddress, getFactory, getTimestamp,DataConfig };
