@@ -161,7 +161,7 @@ function fn_ScanConfirmMagazineP1() {
         dataList: {
           strPlantCode: plantCode,
           strLotno: txtLotNo.value,
-          strMgzNo: txtMagNo.value,
+          strMgzNo: txtMagNo.value.trim().toUpperCase(),
         },
       });
       let data = res1.data.flat().flat();
@@ -176,7 +176,7 @@ function fn_ScanConfirmMagazineP1() {
           dataList: {
             strPlantCode: plantCode,
             strLotno: txtLotNo.value,
-            strMgzNo: txtMagNo.value,
+            strMgzNo: txtMagNo.value.trim().toUpperCase(),
             strStation: hfUserStation,
           },
         });
