@@ -505,7 +505,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                 size="small"
                 bordered
                 className="tableGvResult"
-                rowClassName={(record) => (record.TEST_RESULT === "NG" ? "row-red" : record.TEST_RESULT ===  "OK" ? "row-green" : "")}
+                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
 
                 />
               
