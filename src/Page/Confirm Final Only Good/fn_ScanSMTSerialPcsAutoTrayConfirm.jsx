@@ -5,7 +5,9 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSMTSerialPcsAutoTrayConfirm() {
+  const{ConfigData} = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
@@ -169,11 +171,10 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
   const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env
-    .VITE_FINAL_GATE_SPECIAL_MESSAGE;
-    const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
-
-  const Fac = import.meta.env.VITE_FAC;
+  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
+  const Fac = ConfigData.VITE_FAC_A1;
+  
   //PageLoad----------
   useEffect(() => {
     const fetchData = async () => {

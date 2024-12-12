@@ -4,7 +4,9 @@ import Swal from "sweetalert2";
 import { Tag } from "antd";
 import * as XLSX from "xlsx";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSMTSerialPcsChrome() {
+  const{ConfigData} = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
@@ -15,7 +17,6 @@ function fn_ScanSMTSerialPcsChrome() {
     focus: "",
   });
   const [txtLot, settxtLot] = useState({
-    //231175237;231175237;231175237
     value: "",
     disbled: "",
     visble: "",
@@ -164,15 +165,15 @@ function fn_ScanSMTSerialPcsChrome() {
   const fc_SlProduct = useRef([]);
 
   //env
-
-  const FINAL_GATE_AUTO_PRD = import.meta.env.VITE_FINAL_GATE_AUTO_PRD;
-  const DUPLICATE_CHECK_FLG = import.meta.env.VITE_DUPLICATE_CHECK_FLG;
-  const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const Fac = import.meta.env.VITE_FAC;
-  const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE
+  console.log(';ConfigData',ConfigData);
+  const FINAL_GATE_AUTO_PRD = ConfigData.FINAL_GATE_AUTO_PRD;
+  const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
+  const FINAL_GATE_MASTER_CODE = ConfigData.FINAL_GATE_MASTER_CODE;
+  const FINAL_GATE_SPECIAL_FLG =ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+  const Fac = ConfigData.FACTORY;
+  const EXPORT_CSV_FLG = ConfigData.EXPORT_CSV_FLG;
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE
   //PageLoad----------
   useEffect(() => {
     const fetchData = async () => {
@@ -1708,6 +1709,7 @@ function fn_ScanSMTSerialPcsChrome() {
           value: {},
         }));
       }
+      console.log("EXPORT_CSV_FLG", EXPORT_CSV_FLG);
       if(EXPORT_CSV_FLG=='Y'){
         ExportCSV(dtSerial,columns);
       }

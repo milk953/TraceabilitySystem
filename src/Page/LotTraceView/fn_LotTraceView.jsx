@@ -115,7 +115,7 @@ function fn_LotTraceView() {
     style: {},
   });
   //txtRollNo  tr1 tr2 gvMaterial lblTitleShtFront lblTitleShtBack
-  
+
   //Focus
   const fc_txtLotNo = useRef(null);
 
@@ -155,7 +155,7 @@ function fn_LotTraceView() {
   const btnSearch_Click = async () => {
     showLoading("กำลังค้นหา กรุณารอสักครู่...");
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
-      console.log(txtLotNo,txtSheetNo,txtSerialNo, "เข้าจ้าาาาาาาาาาาาๅ");
+      console.log(txtLotNo, txtSheetNo, txtSerialNo, "เข้าจ้าาาาาาาาาาาาๅ");
       const datalblLot = await setHead();
       await setGrid(datalblLot);
       hideLoading();
@@ -167,9 +167,9 @@ function fn_LotTraceView() {
 
   const reset = async () => {
     setlblLotNo("xxxxxxxxx");
-    settxtLotNo('');
-    settxtSerialNo('')
-    settxtSheetNo('')
+    settxtLotNo("");
+    settxtSerialNo("");
+    settxtSheetNo("");
     setlbtConnectSht((prevState) => ({
       ...prevState,
       value: "0",
@@ -560,7 +560,8 @@ function fn_LotTraceView() {
         // DatagvRouting()
       });
 
-    await axios.post("/api/ViewTraceLot/fnGetProcessLinkData").then((res) => {904084627
+    await axios.post("/api/ViewTraceLot/fnGetProcessLinkData").then((res) => {
+      904084627;
       console.log("gvProcessLinkgvProcessLink", res.data);
       setgvProcessLink((prevState) => ({
         ...prevState,
@@ -703,33 +704,35 @@ function fn_LotTraceView() {
 
   const columnsgvLot = [
     {
-      title: gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO ? (
-        <>
-          Roll No. : {" "}
-          <a
-            href={`/TraceabilitySystem/LotRollLeafNo?ROLLNO=${gvLot.value[0].LOT_ROLL_NO}&product=${txtProd}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#98DED9" }}
-          >
-            {gvLot.value[0].LOT_ROLL_NO}
-          </a>
-        </>
-      ) : (
-        "Roll No."
-      ),
-      
+      title:
+        gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO ? (
+          <>
+            Roll No. :{" "}
+            <a
+              href={`/TraceabilitySystem/LotRollLeafNo?ROLLNO=${gvLot.value[0].LOT_ROLL_NO}&product=${txtProd}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#98DED9" }}
+            >
+              {gvLot.value[0].LOT_ROLL_NO}
+            </a>
+          </>
+        ) : (
+          "Roll No."
+        ),
+
       dataIndex: "LOT",
       key: "Roll No.",
       render: (text, record, index) => {
-        return    <a
-        href={`/TraceabilitySystem/LotTraceView?lot=${text}`}
-        target="_blank"
-        rel="noopener noreferrer"
-
-      >
-       {text}
-      </a>;
+        return (
+          <a
+            href={`/TraceabilitySystem/LotTraceView?lot=${text}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {text}
+          </a>
+        );
       },
       align:
         gvLot.value && gvLot.value[0] && gvLot.value[0].LOT_ROLL_NO
@@ -802,15 +805,15 @@ function fn_LotTraceView() {
     {
       title: "Operator",
       dataIndex: "OPER",
-      key: "Operator",      
+      key: "Operator",
       render: (text, record, index) => {
         return text;
       },
       align: "left",
       width: 115,
     },
-    {       
-      title: "Document No.",          
+    {
+      title: "Document No.",
       dataIndex: "EMCS",
       key: "Document No.",
       render: (text, record, index) => {
@@ -849,7 +852,7 @@ function fn_LotTraceView() {
           </>
         );
       },
-      
+
       // render:  (text, record, index) => {
 
       //   return text;
@@ -876,7 +879,6 @@ function fn_LotTraceView() {
       align: "left",
     },
   ];
-  
 
   const columnsgvProcessLink = [
     {
@@ -1037,6 +1039,20 @@ function fn_LotTraceView() {
     saveAs(blobData, namefile);
   };
 
+  // const [fileExists, setFileExists] = useState(null);
+  const checkFileExists = async (fileUrl) => {
+console.log(fileUrl,"fileUrl")
+    try {
+      const response = await fetch(`'${fileUrl}'`, { method: "HEAD" });
+      console.log(response,"fileUrl")
+      return response.ok;
+    } catch (error) {
+      console.error("Error checking file:", error);
+      return false;
+    }
+  };
+
+
   const ExportTableToCSV = (data, ColumnsHeader, namefile) => {
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.key !== "" && col.key !== null && col.key !== undefined
@@ -1081,7 +1097,7 @@ function fn_LotTraceView() {
   };
 
   const DatagvRouting = async (strEMCS, strEMCSNo, strEMCSRev) => {
-    setLoadingDoc(true)
+    setLoadingDoc(true);
     let linkEmcNo = "";
     let linkEmcNo2 = "";
     let linkEmcNo3 = "";
@@ -1095,7 +1111,7 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         dt1 = res.data;
-        console.log(dt1,'fdsfksdhf')
+        console.log(dt1, "fdsfksdhf");
       });
 
     for (let intSeq = 0; intSeq < strEMCS.length; intSeq++) {
@@ -1136,15 +1152,24 @@ function fn_LotTraceView() {
           }
         }
       }
-      console.log(strEMCSNo,'strEMCSNostrEMCSNo')
+      console.log(strEMCSNo, "strEMCSNostrEMCSNo");
       await axios
         .post("/api/common/fnGetDocumentLink", {
           strEMCS: strEMCSNo,
         })
         .then((res) => {
           dt2 = res.data;
-          console.log(dt2,'tdtdtdtdtddt');
+
+          console.log(dt2, "tdtdtdtdtddt");
         });
+        checkFileExists( dt2[0].filepdf).then(exists => {
+          if (exists) {
+            console.log("ไฟล์มีอยู่");
+          } else {
+            console.log("ไฟล์ไม่มีอยู่");
+          }
+        });
+
       for (let dr = 0; dr < dt2.length; dr++) {
         dt2 = dt2[0];
         if (intSeq == 0) {
@@ -1159,21 +1184,16 @@ function fn_LotTraceView() {
         }
       }
       console.log("linkEmcNo", linkEmcNo, linkEmcNo2, linkEmcNo3);
-      if (linkEmcNo != "" ||linkEmcNo2 != "" || linkEmcNo3 != "") {
+      if (linkEmcNo != "" || linkEmcNo2 != "" || linkEmcNo3 != "") {
         if (intSeq == 0) {
-          window.open(linkEmcNo, '_blank');
-
+          window.open(linkEmcNo, "_blank");
         }
         if (intSeq == 1) {
-          window.open(linkEmcNo2, '_blank');
-
-  
+          window.open(linkEmcNo2, "_blank");
         }
         if (intSeq == 2) {
-          window.open(linkEmcNo3, '_blank');
-
+          window.open(linkEmcNo3, "_blank");
         }
-
       }
     }
     // if (dt1.length === 0 && dt2.length === 0) {
@@ -1183,7 +1203,7 @@ function fn_LotTraceView() {
     //     text: 'Document not found',
     //   });
     // }
-    setLoadingDoc(false)
+    setLoadingDoc(false);
   };
 
   return {
@@ -1213,7 +1233,10 @@ function fn_LotTraceView() {
     setFinalGateGrid,
     ExportTableToCSV,
     loadingDoc,
-    settxtSerialNo,txtSheetNo,settxtSheetNo,txtSerialNo
+    settxtSerialNo,
+    txtSheetNo,
+    settxtSheetNo,
+    txtSerialNo,
   };
 }
 

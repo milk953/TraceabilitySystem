@@ -43,15 +43,15 @@ function ScanSheetMOTTime() {
     lblRemark,
     fc_txtSheet,
     txtSheetNo_TextChanged,
-    ibt_back
+    ibt_back,
   } = fn_ScanSheetAOIXrayConfirm();
 
   return (
     <div>
       <Hearder />
-    
-      <Card component={Paper} className="Card-Common">
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+
+      {/* <Card component={Paper} className="Card-Common"> */}
+        <Box sx={{ display: "flex", alignItems: "flex-start" ,marginTop:'80px'}}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
               <Table
@@ -93,32 +93,44 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                     <TableCell>
-    
-                    <BackspaceIcon style={{ marginLeft: "10px" }} onClick={ibt_back} />
+                      <BackspaceIcon
+                        style={{ marginLeft: "10px" }}
+                        onClick={ibt_back}
+                      />
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  <TableRow style={{display: lblResult === '' ? 'none' : '',}}>
                     <TableCell
                       colSpan={3}
                       style={{ height: "40px" }}
                       align="center"
                     >
-                      <Paper
+                      {/* <Paper
                         style={{
                           height: "40px",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          background: "#D2E0FB",
+                          background: "#DAD3BE",
                         }}
                       >
                         <b style={{ fontSize: "20px", color: "#0000CC" }}>
                           {lblSheet}
                         </b>
-                      </Paper>
+                      </Paper> */}
+                                        <Card
+                        style={{
+                          background: "#DAD3BE",
+                          height: "40px",
+                          paddingTop: "6px",
+                          fontSize: "23px",
+                        }}
+                      >
+                        {lblSheet}
+                      </Card>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  <TableRow style={{display: lblResult === '' ? 'none' : '',}}>
                     <TableCell
                       colSpan={3}
                       style={{ height: "300px" }}
@@ -130,25 +142,29 @@ function ScanSheetMOTTime() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          background: "#F9DBBA",
-                          flexDirection: "column", // เพิ่มเพื่อจัดเรียงในแนวตั้ง
-                          textAlign: "center", // เพิ่มเพื่อให้ข้อความอยู่กึ่งกลาง
+                          background:
+                            lblResult.toLowerCase() === "ok"
+                              ? "#059212"
+                              : lblResult.toLowerCase() === "ng"
+                              ? "red"
+                              : "transparent",
+                          flexDirection: "column",
+                          textAlign: "center", 
                         }}
                       >
                         <b
                           style={{
                             fontSize: "80px",
-                            color:
-                              lblResult.toLowerCase() === "ok"
-                                ? "#059212"
-                                : "red",
+                            color: "#fff",
                           }}
                         >
                           {lblResult}
                         </b>
-                        
-                        <b style={{ fontSize: "25px", color: "red" }}>
-                        <span dangerouslySetInnerHTML={{ __html: lblRemark }} />
+
+                        <b style={{ fontSize: "25px", color: "#fff" }}>
+                          <span
+                            dangerouslySetInnerHTML={{ __html: lblRemark }}
+                          />
                         </b>
                       </Paper>
                     </TableCell>
@@ -158,7 +174,7 @@ function ScanSheetMOTTime() {
             </Grid>
           </Grid>
         </Box>
-      </Card>
+      {/* </Card> */}
       {/* </Card> */}
     </div>
   );
