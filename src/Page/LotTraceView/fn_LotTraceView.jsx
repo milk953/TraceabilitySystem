@@ -1039,18 +1039,27 @@ function fn_LotTraceView() {
     saveAs(blobData, namefile);
   };
 
-  // const [fileExists, setFileExists] = useState(null);
-  const checkFileExists = async (fileUrl) => {
-console.log(fileUrl,"fileUrl")
-    try {
-      const response = await fetch(`'${fileUrl}'`, { method: "HEAD" });
-      console.log(response,"fileUrl")
-      return response.ok;
-    } catch (error) {
-      console.error("Error checking file:", error);
-      return false;
-    }
-  };
+
+  // const checkFileExists = async (fileUrl) => {
+  //   const res = await axios.head(fileUrl);
+  //   const status = res.status;
+  //   console.log(res)
+  //   if (status === 200) {
+  //     console.log("file exists", res);
+  //     return true;
+  //   } else {
+  //     console.log("file not exists", res);
+  //     return false;
+  //   }
+  //   // try {
+  //   //   const response = await fetch(`'${fileUrl}'`, { method: "HEAD" });
+  //   //   console.log(response,"fileUrl")
+  //   //   return response.ok;
+  //   // } catch (error) {
+  //   //   console.error("Error checking file:", error);
+  //   //   return false;
+  //   // }
+  // };
 
 
   const ExportTableToCSV = (data, ColumnsHeader, namefile) => {
@@ -1152,23 +1161,19 @@ console.log(fileUrl,"fileUrl")
           }
         }
       }
-      console.log(strEMCSNo, "strEMCSNostrEMCSNo");
+      // console.log(strEMCSNo, "strEMCSNostrEMCSNo");
+      let fileUrl=''
       await axios
         .post("/api/common/fnGetDocumentLink", {
           strEMCS: strEMCSNo,
         })
         .then((res) => {
           dt2 = res.data;
-
+          // fileUrl=dt2[0].filepdf
           console.log(dt2, "tdtdtdtdtddt");
         });
-        checkFileExists( dt2[0].filepdf).then(exists => {
-          if (exists) {
-            console.log("ไฟล์มีอยู่");
-          } else {
-            console.log("ไฟล์ไม่มีอยู่");
-          }
-        });
+      //  await checkFileExists(fileUrl)
+        
 
       for (let dr = 0; dr < dt2.length; dr++) {
         dt2 = dt2[0];
