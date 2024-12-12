@@ -327,11 +327,13 @@ function fn_Change_Serial() {
         FINALGATE_FLG: "N",
       };
       if (drRow.SERIAL_OLD == "") {
-        strError = `${intSeq + 1} Please input Old Serial Number.`;
+        // strError = `${intSeq + 1} Please input Old Serial Number.`;
+        strError = `Please input Old Serial Number.`;
         break;
       }
       if (drRow.SERIAL_NEW == "") {
-        strError = `${intSeq + 1} Please input New Serial Number.`;
+        // strError = `${intSeq + 1} Please input New Serial Number.`;
+        strError = `Please input New Serial Number.`;
         break;
       }
       dtData.push(drRow);

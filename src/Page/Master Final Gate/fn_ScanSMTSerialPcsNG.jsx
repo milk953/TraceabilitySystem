@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useLoading } from "../../loading/fn_loading";
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
+import {DataConfig} from "../Common/function_Common";
 
 function fn_ScanSMTSerialPcsNG() {
+  const{ConfigData} = DataConfig();
   var _strEventArgument = "";
   var hfMode = "";
   var hfSerialCount = "";
@@ -87,7 +89,8 @@ function fn_ScanSMTSerialPcsNG() {
   var hfCheckEFPCAVI = "";
   //inpage
   // let hfLotAll ;
-  const export_csv_flg = import.meta.env.VITE_EXPORT_CSV_FLG;
+  console.log("ConfigData",ConfigData);
+  const export_csv_flg = ConfigData.EXPORT_CSV_FLG;
   const [isDisabledSave, setIsDisabledSave] = useState(false);
   const [hfLotAll, SetHfLotAll] = useState("");
   //hiding Variable

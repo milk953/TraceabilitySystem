@@ -4,9 +4,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common";
 import "../Common/StyleCommon.css";
 
 function fn_ScanSMTSerialPcsBoxOnlyGood() {
+  const{ConfigData} = DataConfig();
   const [enableState, setEnableState] = useState({
     styled: { backgroundColor: "" },
   });
@@ -169,11 +171,21 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   // disable
   const [dis_ddlProduct, setdis_ddlProduct] = useState(false);
 
-  const FAC = import.meta.env.VITE_FAC;
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env
-    .VITE_FINAL_GATE_SPECIAL_MESSAGE;
+
+  // const FAC = import.meta.env.VITE_FAC;
+  // const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
+  // const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
+  // const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+
+  const FAC = ConfigData.FACTORY;
+  const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
+
+
+  
+
+  
 
   //hf
   const hfLotLength = 9;

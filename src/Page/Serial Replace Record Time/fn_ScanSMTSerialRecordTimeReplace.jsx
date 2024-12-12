@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
-import { color } from "framer-motion";
-import { Tag } from "antd";
-import { set } from "lodash";
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSMTSerialRecordTimeReplace() {
+  const{ConfigData} = DataConfig();
   const [ddlProduct, setddlProduct] = useState([]);
   const [selectddlProduct, setselectddlProduct] = useState({
     value: "",
@@ -44,7 +43,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
   // visible show
   const [pnlgvSerialReplace, setpnlgvSerialReplace] = useState("");
   const [pnlsubmit,setpnlsubmit]= useState(false);
-  const FAC = import.meta.env.VITE_FAC;
+  const FAC = ConfigData.FACTORY;
   // Hf const
   const hfLotLength = 9;
   const [hfLotAll, setHfLotAll] = useState("");

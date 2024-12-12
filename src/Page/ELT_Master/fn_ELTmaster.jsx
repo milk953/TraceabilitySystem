@@ -1,7 +1,9 @@
 import React, { useEffect, useState,useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import {DataConfig} from "../Common/function_Common";
 function fn_ELTmaster() {
+  const{ConfigData} = DataConfig();
   // count pageload
   const [lblUser1, setlblUser1] = useState("");
   const [lblResult, setlblResult] = useState({ text: "", styled: {} });
@@ -17,7 +19,7 @@ function fn_ELTmaster() {
   const FctxtSerial = useRef(null);
 
   let IP = "";
-  let plant_code = import.meta.env.VITE_FAC;
+  let plant_code = ConfigData.FACTORY;
   IP = localStorage.getItem("ipAddress");
  
   useEffect(() => {
