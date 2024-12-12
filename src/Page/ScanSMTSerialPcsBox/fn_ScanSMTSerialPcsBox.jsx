@@ -174,15 +174,19 @@ function fn_ScanSMTSerialPcsBox() {
   // disable
   const [dis_ddlProduct, setdis_ddlProduct] = useState(false);
 
-  const FAC = ConfigData.VITE_FAC_A1;
-  console.log(FAC,"FAC1")
-
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
+  const FAC = ConfigData.FACTORY;
+  const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
   const FINAL_GATE_SPECIAL_SERIAL_VAR = "";
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
   const FINAL_GATE_SPECIAL_OK = "";
   const FINAL_GATE_SPECIAL_QUERY = "";
+  // const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
+  // const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
+  // const FINAL_GATE_SPECIAL_SERIAL_VAR = "";
+  // const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  // const FINAL_GATE_SPECIAL_OK = "";
+  // const FINAL_GATE_SPECIAL_QUERY = "";
 
   //hf
   const hfLotLength = 9;
@@ -791,7 +795,6 @@ function fn_ScanSMTSerialPcsBox() {
         })
         .then((res) => {
           _dtTrayCount = res.data;
-          console.log(_dtTrayCount,"_dtTrayCount1")
         });
       if (_dtTrayCount.length > 0) {
         setlblBoxTotal((prevState) => ({
@@ -2112,7 +2115,6 @@ function fn_ScanSMTSerialPcsBox() {
         setlblBoxFull((prevState) => ({ ...prevState, value: _dblBoxQty }));
       }
       let _dtTrayCount = []; // 1392
-      console.log()
       // setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));
       // setlblPackingTotal((prevState) => ({ ...prevState, value: "0" }));
       await axios
@@ -2123,10 +2125,8 @@ function fn_ScanSMTSerialPcsBox() {
         })
         .then((res) => {
           _dtTrayCount = res.data;
-          console.log(_dtTrayCount[0],"_dtTrayCount")
         });
       if (_dtTrayCount.length > 0) {
-        console.log("เข้าจ้า มาได้ไง",_dtTrayCount[0].BOX_COUNT, _dtTrayCount[0].PACKING_COUNT)
         setlblBoxTotal((prevState) => ({...prevState, value: _dtTrayCount[0].BOX_COUNT, }));
         setlblPackingTotal((prevState) => ({...prevState,value: _dtTrayCount[0].PACKING_COUNT,}));
       }
