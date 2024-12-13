@@ -143,10 +143,10 @@ function fn_ScanSMTSerialPcsAutoTray() {
         sethfMode("");
         sethfLotAll("");
 
-        if (FINAL_GATE_AUTO_PRD.trim() !== "") {
-            getProductDataFix();
+        if (FINAL_GATE_AUTO_PRD === "") {
+            await getProductDataFix();
         } else {
-            getProductData();
+            await getProductData();
         }
         SetMode("LOT");
     };

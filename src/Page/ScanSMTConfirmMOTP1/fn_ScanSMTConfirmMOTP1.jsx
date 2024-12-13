@@ -710,11 +710,12 @@ function fn_ScanSMTConfirmMOTP1() {
         if (!_bolTrayError) {
             setgvScanResult(true);
             setgvScanData(dtSerial);
-            if (EXPORT_CSV_FLG === 'Y') {
-                ExportGridToCSV(dtSerial, columnsgvResult);
-            }
         } else {
             setgvScanData([]);
+        }
+
+        if (EXPORT_CSV_FLG === 'Y') {
+            ExportGridToCSV(dtSerial, columnsgvResult);
         }
 
         getInitialSerial();
