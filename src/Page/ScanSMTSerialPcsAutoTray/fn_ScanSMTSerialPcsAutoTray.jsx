@@ -5,8 +5,11 @@ import { Tag } from "antd";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
 import { useLoading } from "../../loading/fn_loading";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTSerialPcsAutoTray() {
+
+    const { ConfigData } = DataConfig();
 
     const [txtLot, settxtLot] = useState("");
     const [selProduct, setselProduct] = useState("");
@@ -111,17 +114,18 @@ function fn_ScanSMTSerialPcsAutoTray() {
     const inputgvSerial = useRef([]);
     const inputTray = useRef(null);
 
-    const plantCode = import.meta.env.VITE_FAC;
-    const DUPLICATE_CHECK_FLG = 0;
-    const FINAL_GATE_AUTO_PRD = "";
-    const FINAL_GATE_SPECIAL_FLG = 1;
-    const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-    const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+    const plantCode = ConfigData.FACTORY;
+    const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
+    const FINAL_GATE_AUTO_PRD = ConfigData.FINAL_GATE_AUTO_PRD;
+    const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
+    const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+    const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE
     const FINAL_GATE_SPECIAL_OK = "OK";
-    const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
+    const FINAL_GATE_MASTER_CODE = ConfigData.FINAL_GATE_MASTER_CODE;
     const FINAL_GATE_MASTER_FLG = import.meta.env.VITE_FINAL_GATE_MASTER_FLG;
     const FINAL_GATE_MASTER_TIME = import.meta.env.VITE_FINAL_GATE_MASTER_TIME;
     const WORKING_START_TIME = import.meta.env.VITE_WORKING_START_TIME;
+    const EXPORT_CSV_FLG = ConfigData.EXPORT_CSV_FLG;
 
     const { showLoading, hideLoading } = useLoading();
 
@@ -1282,7 +1286,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
             setgvScanData([]);
         }
 
-        ExportGridToCSV(dtSerial, 'ELTResult.csv');
+        if (EXPORT_CSV_FLG === 'Y') {
+            ExportGridToCSV(dtSerial, columns);
+        }
 
         settxtPcsTray(hfSerialCountOriginal);
         sethfSerialCount(hfSerialCountOriginal);
@@ -1591,99 +1597,124 @@ function fn_ScanSMTSerialPcsAutoTray() {
         }
     };
 
-    const btnHiddenClick = () => {
-        ExportGridToCSV(gvScanData, 'ELTResult.csv');
-    };
+    // const btnHiddenClick = () => {
+    //     ExportGridToCSV(gvScanData, 'ELTResult.csv');
+    // };
 
     //Export
-    const ExportGridToCSV = async (data, nameFile) => {
-        if (data.length <= 0) {
-            Swal.fire({
-                icon: "error",
-                title: "No Data Export!",
-            });
-        } else {
-            exportExcelFile(data, nameFile);
-        }
-    };
+    // const ExportGridToCSV = async (data, nameFile) => {
+    //     if (data.length <= 0) {
+    //         Swal.fire({
+    //             icon: "error",
+    //             title: "No Data Export!",
+    //         });
+    //     } else {
+    //         exportExcelFile(data, nameFile);
+    //     }
+    // };
 
-    const exportExcelFile = (data, namefile) => {
-        const workbook = new ExcelJS.Workbook();
-        const sheet = workbook.addWorksheet("My Sheet");
-        sheet.properties.defaultRowHeight = 20;
+    // const exportExcelFile = (data, namefile) => {
+    //     const workbook = new ExcelJS.Workbook();
+    //     const sheet = workbook.addWorksheet("My Sheet");
+    //     sheet.properties.defaultRowHeight = 20;
 
-        // สร้างคอลัมน์แบบ dynamic
-        const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
-            header: key.toUpperCase(), // ทำให้ header เป็นตัวพิมพ์ใหญ่
-            key: key,
-            width: 10, // กำหนดขนาดความกว้างเริ่มต้น
-            style: { alignment: { horizontal: "center" } },
-        }));
+    //     // สร้างคอลัมน์แบบ dynamic
+    //     const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
+    //         header: key.toUpperCase(), // ทำให้ header เป็นตัวพิมพ์ใหญ่
+    //         key: key,
+    //         width: 10, // กำหนดขนาดความกว้างเริ่มต้น
+    //         style: { alignment: { horizontal: "center" } },
+    //     }));
 
-        sheet.columns = dynamicColumns;
+    //     sheet.columns = dynamicColumns;
 
-        // ถ้าไม่มีข้อมูลก็สร้างแถวว่าง
-        if (data.length === 0) {
-            const emptyRow = {};
-            dynamicColumns.forEach((col) => (emptyRow[col.key] = "")); // เติมค่าค่าว่าง
-            data.push(emptyRow);
-        }
+    //     // ถ้าไม่มีข้อมูลก็สร้างแถวว่าง
+    //     if (data.length === 0) {
+    //         const emptyRow = {};
+    //         dynamicColumns.forEach((col) => (emptyRow[col.key] = "")); // เติมค่าค่าว่าง
+    //         data.push(emptyRow);
+    //     }
 
-        // ใส่ข้อมูลลงใน sheet
-        data.forEach((row) => {
-            const newRow = sheet.addRow(row);
-            newRow.eachCell({ includeEmpty: true }, (cell) => {
-                // includeEmpty เพื่อให้ทุก cell รวมถึงที่ว่างมีเส้นขอบ
-                cell.alignment = { horizontal: "center" };
+    //     // ใส่ข้อมูลลงใน sheet
+    //     data.forEach((row) => {
+    //         const newRow = sheet.addRow(row);
+    //         newRow.eachCell({ includeEmpty: true }, (cell) => {
+    //             // includeEmpty เพื่อให้ทุก cell รวมถึงที่ว่างมีเส้นขอบ
+    //             cell.alignment = { horizontal: "center" };
 
-                // เพิ่มเส้นขอบให้ทุก cell
-                cell.border = {
-                    top: { style: "thin" },
-                    left: { style: "thin" },
-                    bottom: { style: "thin" },
-                    right: { style: "thin" },
-                };
-            });
-        });
+    //             // เพิ่มเส้นขอบให้ทุก cell
+    //             cell.border = {
+    //                 top: { style: "thin" },
+    //                 left: { style: "thin" },
+    //                 bottom: { style: "thin" },
+    //                 right: { style: "thin" },
+    //             };
+    //         });
+    //     });
 
-        // จัดรูปแบบให้แถวแรก (header)
-        const firstRow = sheet.getRow(1);
-        firstRow.eachCell({ includeEmpty: true }, (cell) => {
-            cell.fill = {
-                type: "pattern",
-                pattern: "solid",
-                fgColor: { argb: "FFFF00" }, // สีพื้นหลังเหลือง
-            };
-            cell.font = {
-                name: "Roboto",
-                size: 9,
-                bold: true,
-            };
+    //     // จัดรูปแบบให้แถวแรก (header)
+    //     const firstRow = sheet.getRow(1);
+    //     firstRow.eachCell({ includeEmpty: true }, (cell) => {
+    //         cell.fill = {
+    //             type: "pattern",
+    //             pattern: "solid",
+    //             fgColor: { argb: "FFFF00" }, // สีพื้นหลังเหลือง
+    //         };
+    //         cell.font = {
+    //             name: "Roboto",
+    //             size: 9,
+    //             bold: true,
+    //         };
 
-            // เพิ่มเส้นขอบให้ header
-            cell.border = {
-                top: { style: "thin" },
-                left: { style: "thin" },
-                bottom: { style: "thin" },
-                right: { style: "thin" },
-            };
-        });
+    //         // เพิ่มเส้นขอบให้ header
+    //         cell.border = {
+    //             top: { style: "thin" },
+    //             left: { style: "thin" },
+    //             bottom: { style: "thin" },
+    //             right: { style: "thin" },
+    //         };
+    //     });
 
-        // กำหนดความกว้างของคอลัมน์ให้พอดีกับข้อความ
-        sheet.columns.forEach((column) => {
-            let maxWidth = column.header.length; // เริ่มต้นความกว้างจากความยาวของ header
-            data.forEach((row) => {
-                const cellValue = String(row[column.key] || ""); // แปลงค่าเป็นสตริง
-                maxWidth = Math.max(maxWidth, cellValue.length); // คำนวณความกว้างสูงสุด
-            });
-            column.width = maxWidth + 2; // เพิ่มขนาดพิเศษเล็กน้อยเพื่อความสบาย
-        });
+    //     // กำหนดความกว้างของคอลัมน์ให้พอดีกับข้อความ
+    //     sheet.columns.forEach((column) => {
+    //         let maxWidth = column.header.length; // เริ่มต้นความกว้างจากความยาวของ header
+    //         data.forEach((row) => {
+    //             const cellValue = String(row[column.key] || ""); // แปลงค่าเป็นสตริง
+    //             maxWidth = Math.max(maxWidth, cellValue.length); // คำนวณความกว้างสูงสุด
+    //         });
+    //         column.width = maxWidth + 2; // เพิ่มขนาดพิเศษเล็กน้อยเพื่อความสบาย
+    //     });
 
-        // สร้างไฟล์ Excel
-        workbook.xlsx.writeBuffer().then((buffer) => {
-            const blob = new Blob([buffer], { type: "application/octet-stream" });
-            saveAs(blob, `${namefile}`);
-        });
+    //     // สร้างไฟล์ Excel
+    //     workbook.xlsx.writeBuffer().then((buffer) => {
+    //         const blob = new Blob([buffer], { type: "application/octet-stream" });
+    //         saveAs(blob, `${namefile}`);
+    //     });
+    // };
+
+    const ExportGridToCSV = (data, ColumnsHeader) => {
+        const date = new Date();
+        const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+
+        const filteredColumns = ColumnsHeader.filter(
+            (col) => col.title !== "" && col.key !== null && col.title !== undefined
+        );
+
+        const headers = filteredColumns.map((col) => col.key);
+
+        const filteredData = data.map((row) =>
+            filteredColumns.map((col) => row[col.dataIndex] || "")
+        );
+
+        const csvContent = [
+            headers.join(","),
+            ...filteredData.map((row) => row.join(","))
+        ].join("\n");
+
+
+        const bom = "\uFEFF";
+        const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+        saveAs(blob, `ELTResult.csv`);
     };
 
     return {
@@ -1692,7 +1723,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
         txtPackingNoDisabled, inputLot, ddlProduct, inputPackingNo, inputgvSerial, inputTray, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangePackingNo, ibtPackingBackClick, handleChangePcsTray, settxtLot, settxtPackingNo,
         settxtPcsTray, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick, gvScanData, gvScanResult, lblTimecolor,
-        lblLastTray, btnHiddenClick, columns
+        lblLastTray, columns
     }
 };
 

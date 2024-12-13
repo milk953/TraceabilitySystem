@@ -44,9 +44,7 @@
 .divgvSerialPcs {
     justify-content: center;
     display: flex;
-    max-width: 100%;
     overflow-x: auto;
-    width: 470px;
 }
 
 .divgvSerialPcs th {

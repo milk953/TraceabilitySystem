@@ -36,7 +36,7 @@ function ScanSMTConfirmMOTP1() {
         txtLot, settxtLot, selProduct, Productdata, lblLot, pnlLog, lblLog, lblResult, lblResultcolor, pnlSerial,
         hfSerialCount, gvScanResult, gvScanData, txtgvSerial, inputLot, ddlProduct, inputgvSerial, handleChangeLot,
         ibtBackClick, handleChangeProduct, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick,
-        columnsgvResult, btnHiddenClick
+        columnsgvResult
     } = fn_ScanSMTConfirmMOTP1();
 
     return (
@@ -225,7 +225,7 @@ function ScanSMTConfirmMOTP1() {
                             </TableContainer>
                         </div>
                     )}
-                    <Button
+                    {/* <Button
                         style={{
                             width: '1px',
                             height: '1px',
@@ -234,7 +234,7 @@ function ScanSMTConfirmMOTP1() {
                         onClick={btnHiddenClick}
                     >
                         <FileDownloadOutlinedIcon />
-                    </Button>
+                    </Button> */}
                 </Box>
 
                 <div className="divgvScanResultCon">

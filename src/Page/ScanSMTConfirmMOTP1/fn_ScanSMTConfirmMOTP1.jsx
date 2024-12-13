@@ -3,6 +3,7 @@ import axios from "axios";
 import { Tag } from "antd";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTConfirmMOTP1() {
     const [txtLot, settxtLot] = useState({ disabled: false, value: "" });
@@ -79,13 +80,16 @@ function fn_ScanSMTConfirmMOTP1() {
     const inputgvSerial = useRef([]);
     const inputTray = useRef([]);
 
-    const plantCode = import.meta.env.VITE_FAC;
-    const DUPLICATE_CHECK_FLG = 0;
+    const { ConfigData } = DataConfig();
+
+    const plantCode = ConfigData.FACTORY;
+    const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
     const FINAL_GATE_SPECIAL_FLG = 1;
-    const FINAL_GATE_SPECIAL_PRD = import.meta.env.FINAL_GATE_SPECIAL_PRD;
-    const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.FINAL_GATE_SPECIAL_MESSAGE;
-    const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
+    const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+    const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE
+    const FINAL_GATE_MASTER_CODE = ConfigData.FINAL_GATE_MASTER_CODE;
     const FINAL_GATE_SPECIAL_OK = "OK";
+    const EXPORT_CSV_FLG = ConfigData.EXPORT_CSV_FLG;
 
     useEffect(() => {
         if (hfSerialCount != "" && !pnlLog) {
@@ -706,9 +710,9 @@ function fn_ScanSMTConfirmMOTP1() {
         if (!_bolTrayError) {
             setgvScanResult(true);
             setgvScanData(dtSerial);
-            let nameFile = '';
-            nameFile = 'ConfirmResult.csv';
-            ExportGridToCSV(dtSerial, nameFile);
+            if (EXPORT_CSV_FLG === 'Y') {
+                ExportGridToCSV(dtSerial, columnsgvResult);
+            }
         } else {
             setgvScanData([]);
         }
@@ -905,101 +909,47 @@ function fn_ScanSMTConfirmMOTP1() {
         },
     ];
 
-    const btnHiddenClick = () => {
-        let nameFile = '';
-        nameFile = 'ConfirmResult.csv';
-        const userAction = window.confirm(`Do you want to open or save ${nameFile} from IP address ${hfUserID}?`);
-        if (userAction) {
-            ExportGridToCSV(gvScanData, nameFile);
-        } else {
-            console.log('User canceled the export.');
-        }
-    };
+    // const btnHiddenClick = () => {
+    //     let nameFile = '';
+    //     nameFile = 'ConfirmResult.csv';
+    //     const userAction = window.confirm(`Do you want to open or save ${nameFile} from IP address ${hfUserID}?`);
+    //     if (userAction) {
+    //         ExportGridToCSV(gvScanData, nameFile);
+    //     } else {
+    //         console.log('User canceled the export.');
+    //     }
+    // };
 
-    const ExportGridToCSV = (data, namefile) => {
-        const workbook = new ExcelJS.Workbook();
-        const sheet = workbook.addWorksheet("My Sheet");
-        sheet.properties.defaultRowHeight = 20;
+    const ExportGridToCSV = (data, ColumnsHeader) => {
+        const date = new Date();
+        const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
 
-        // สร้างคอลัมน์แบบ dynamic
-        const dynamicColumns = Object.keys(data[0] || {}).map((key) => ({
-            header: key.toUpperCase(), // ทำให้ header เป็นตัวพิมพ์ใหญ่
-            key: key,
-            width: 10, // กำหนดขนาดความกว้างเริ่มต้น
-            style: { alignment: { horizontal: "center" } },
-        }));
+        const filteredColumns = ColumnsHeader.filter(
+            (col) => col.title !== "" && col.key !== null && col.title !== undefined
+        );
 
-        sheet.columns = dynamicColumns;
+        const headers = filteredColumns.map((col) => col.key);
 
-        // ถ้าไม่มีข้อมูลก็สร้างแถวว่าง
-        if (data.length === 0) {
-            const emptyRow = {};
-            dynamicColumns.forEach((col) => (emptyRow[col.key] = "")); // เติมค่าค่าว่าง
-            data.push(emptyRow);
-        }
+        const filteredData = data.map((row) =>
+            filteredColumns.map((col) => row[col.dataIndex] || "")
+        );
 
-        // ใส่ข้อมูลลงใน sheet
-        data.forEach((row) => {
-            const newRow = sheet.addRow(row);
-            newRow.eachCell({ includeEmpty: true }, (cell) => {
-                // includeEmpty เพื่อให้ทุก cell รวมถึงที่ว่างมีเส้นขอบ
-                cell.alignment = { horizontal: "center" };
+        const csvContent = [
+            headers.join(","),
+            ...filteredData.map((row) => row.join(","))
+        ].join("\n");
 
-                // เพิ่มเส้นขอบให้ทุก cell
-                cell.border = {
-                    top: { style: "thin" },
-                    left: { style: "thin" },
-                    bottom: { style: "thin" },
-                    right: { style: "thin" },
-                };
-            });
-        });
 
-        // จัดรูปแบบให้แถวแรก (header)
-        const firstRow = sheet.getRow(1);
-        firstRow.eachCell({ includeEmpty: true }, (cell) => {
-            cell.fill = {
-                type: "pattern",
-                pattern: "solid",
-                fgColor: { argb: "FFFF00" }, // สีพื้นหลังเหลือง
-            };
-            cell.font = {
-                name: "Roboto",
-                size: 9,
-                bold: true,
-            };
-
-            // เพิ่มเส้นขอบให้ header
-            cell.border = {
-                top: { style: "thin" },
-                left: { style: "thin" },
-                bottom: { style: "thin" },
-                right: { style: "thin" },
-            };
-        });
-
-        // กำหนดความกว้างของคอลัมน์ให้พอดีกับข้อความ
-        sheet.columns.forEach((column) => {
-            let maxWidth = column.header.length; // เริ่มต้นความกว้างจากความยาวของ header
-            data.forEach((row) => {
-                const cellValue = String(row[column.key] || ""); // แปลงค่าเป็นสตริง
-                maxWidth = Math.max(maxWidth, cellValue.length); // คำนวณความกว้างสูงสุด
-            });
-            column.width = maxWidth + 2; // เพิ่มขนาดพิเศษเล็กน้อยเพื่อความสบาย
-        });
-
-        // สร้างไฟล์ Excel
-        workbook.xlsx.writeBuffer().then((buffer) => {
-            const blob = new Blob([buffer], { type: "application/octet-stream" });
-            saveAs(blob, `${namefile}`);
-        });
+        const bom = "\uFEFF";
+        const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+        saveAs(blob, `ConfirmResult.csv`);
     };
 
     return {
         txtLot, settxtLot, selProduct, Productdata, lblLot, pnlLog, lblLog, lblResult, lblResultcolor, pnlSerial,
         hfSerialCount, gvScanResult, gvScanData, txtgvSerial, inputLot, ddlProduct, inputgvSerial, handleChangeLot,
         ibtBackClick, handleChangeProduct, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick,
-        columnsgvResult, btnHiddenClick
+        columnsgvResult
     }
 };
 
