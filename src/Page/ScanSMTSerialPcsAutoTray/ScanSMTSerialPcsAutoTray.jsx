@@ -384,14 +384,14 @@ function ScanSMTSerialPcsAutoTray() {
 
                             <AntTable
                                 columns={columns}
-                                dataSource={gvScanData.filter((record) => record.SERIAL !== "")}
+                                dataSource={gvScanData}
                                 rowKey={(record) => record.SEQ}
                                 style={{ width: "100%" }}
                                 pagination={false}
                                 size="small"
                                 bordered
                                 className="tableGvResult"
-                                //rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                             />
                         </>
                     )}

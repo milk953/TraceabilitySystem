@@ -1,4 +1,4 @@
-.Card-ScanSMTSerialPcs{
+.Card-ScanSMTSerialPcs {
     margin: auto;
     width: 95%;
     max-width: 1400px;
@@ -49,14 +49,14 @@
 
 .divgvSerialPcs th {
     text-align: center;
-    background-color: #12422e !important ;
+    background-color: #12422e !important;
     color: #fff;
     border-right: 1px solid rgb(221, 219, 219);
     padding: 5px;
 }
 
 .divgvSerialPcs td {
-    padding: 4px 4px 4px 4px!important;
+    padding: 4px 4px 4px 4px !important;
 }
 
 .divgvScanResultPcs {
@@ -84,12 +84,12 @@
 
 .gvScanResultContainer {
     display: flex;
-    align-items: center; 
-    width: 100%; 
+    align-items: center;
+    width: 100%;
 }
 
 
-.lblResultPcs{
+.lblResultPcs {
     margin: auto;
     margin-left: 42px;
     margin-top: 15px !important;
@@ -101,7 +101,7 @@
     padding: 20px;
 }
 
-.lblResultTime{
+.lblResultTime {
     margin: auto;
     margin-top: 15px !important;
     width: 300px;
@@ -112,3 +112,10 @@
     padding: 20px;
 }
 
+.row-red {
+    color: red;
+}
+
+.row-green {
+    color: green;
+}
