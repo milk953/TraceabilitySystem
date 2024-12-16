@@ -103,11 +103,11 @@ function PieceTraceView() {
                                         </Button>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <TextField
+                                        <Input
                                             className="ViewInput"
                                             size="small"
-                                            inputRef={(el) => (inputPiece.current = el)}
-                                            sx={{ width: "90%" }}
+                                            ref={(el) => (inputPiece.current = el)}
+                                            style={{ width: "92%" }}
                                             value={txtSerialNo}
                                             onChange={(e) => {
                                                 settxtSerialNo(e.target.value);
@@ -127,7 +127,7 @@ function PieceTraceView() {
                                             icon={<SearchOutlined />}
                                             onClick={btnRetrive_Click}
                                         >
-                                            Retrive
+                                            Search
                                         </Button>
                                         &nbsp;&nbsp;&nbsp;
                                         <Button
@@ -198,13 +198,13 @@ function PieceTraceView() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
-                                            style={{ width: "180px" }}
+                                            style={{ width: "180px", backgroundColor: "rgba(0, 0, 0, 0.04)" }}
                                             value={txtProduct}
                                             onChange={(e) => {
                                                 settxtProduct(e.target.value);
                                             }}
                                             InputProps={{
-                                                readOnly: true,
+                                                disabled: true,
                                             }}
                                         />
                                     </TableCell>
@@ -304,10 +304,13 @@ function PieceTraceView() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
-                                            style={{ width: "180px" }}
+                                            style={{ width: "180px", backgroundColor: "rgba(0, 0, 0, 0.04)" }}
                                             value={txtPcsNo}
                                             onChange={(e) => {
                                                 settxtPcsNo(e.target.value);
+                                            }}
+                                            InputProps={{
+                                                disabled: true,
                                             }}
                                         />
                                     </TableCell>
@@ -331,10 +334,16 @@ function PieceTraceView() {
                                         <TextField
                                             className="input_txt"
                                             size="small"
-                                            style={{ width: "185px" }}
+                                            style={{
+                                                width: "185px",
+                                                backgroundColor: "rgba(0, 0, 0, 0.04)"
+                                            }}
                                             value={txtShtType}
                                             onChange={(e) => {
                                                 settxtShtType(e.target.value);
+                                            }}
+                                            InputProps={{
+                                                disabled: true,
                                             }}
                                         />
                                     </TableCell>

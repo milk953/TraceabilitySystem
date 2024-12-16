@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_PieceTraceView() {
   const [txtSerialNo, settxtSerialNo] = useState("");
@@ -237,11 +238,13 @@ function fn_PieceTraceView() {
   const Serial = searchParams.get("SERIAL");
   const [SerialSearch, setSerialSearch] = useState("");
 
+  const { showLoading, hideLoading } = useLoading();
+
   useEffect(() => {
     PageLoad();
     setTimeout(() => {
       inputPiece.current.focus();
-  }, 200);
+    }, 200);
   }, []);
 
   useEffect(() => {
@@ -482,7 +485,9 @@ function fn_PieceTraceView() {
     let ELT_Count = 0;
     let strFinalGateStation = "";
     let SerialNo = txtSerialNo.toUpperCase().trim();
+    let ProductName = txtProduct;
     console.log(SerialNo, "SerialNo")
+    showLoading("กำลังค้นหา กรุณารอสักครู่...");
 
     try {
       if (SERIAL_DATABASE_SWITCH === 1) {
@@ -516,7 +521,8 @@ function fn_PieceTraceView() {
       console.log("dtPrd", dtPrd);
       if (dtPrd.length > 0) {
         dtPrd = dtPrd[0];
-        settxtProduct(dtPrd.product_name);
+        ProductName = dtPrd.product_name;
+        settxtProduct(ProductName);
         sethypLotNo(dtPrd.lot_no);
         //hypLotNo.NavigateUrl = "./rpt_LotTraceView.aspx?LOT=" & dtPrd.lot_no)
 
@@ -545,21 +551,33 @@ function fn_PieceTraceView() {
             dt = res.data;
           });
 
+        console.log("dtProduct", dt);
         if (dt.length <= 0) {
           if (dtSerial.length > 0) {
             dtSerial = dtSerial[0];
-            settxtProduct(dtSerial.productname);
+            ProductName = dtSerial.productname;
+            sethypLotNo(dtSerial.lotno);
+          } else {
+            setlblMessage("Error : SMT_SERIAL_NO isn't Found!");
+          }
+        } else if (dt.product_name !== "") {
+          ProductName = dt.product_name;
+        } else {
+          if (dtSerial.length > 0) {
+            dtSerial = dtSerial[0];
+            ProductName = dtSerial.productname;
             sethypLotNo(dtSerial.lotno);
           } else {
             setlblMessage("Error : SMT_SERIAL_NO isn't Found!");
           }
         }
+        settxtProduct(ProductName)
       }
 
       //Get SMT_PRODUCT_MST
-      //console.log(txtProduct, "Produckj");
+      console.log(ProductName, "Produckj");
       await axios.post("/api/ViewTracePiece/getproductmst", {
-        strprdname: dtPrd.product_name
+        strprdname: ProductName
       })
         .then((res) => {
           dt1 = res.data;
@@ -705,7 +723,7 @@ function fn_PieceTraceView() {
       if (dt2.front_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getspifront", {
           strplantcode: plantCode,
-          strprdname: dtPrd.product_name,
+          strprdname: ProductName,
           strpcsno: dt2.pcs_no,
           strsheetnof: dt2.front_sheet_no
         })
@@ -791,7 +809,7 @@ function fn_PieceTraceView() {
               dt5 = res.data;
             });
 
-            console.log("dt5", dt5)
+          console.log("dt5", dt5)
           if (dt5.length > 0) {
             dt5 = dt5[0];
             StrResult = "BADMARK"
@@ -812,7 +830,7 @@ function fn_PieceTraceView() {
       if (dt2.back_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getspiback", {
           strplantcode: plantCode,
-          strprdname: dtPrd.product_name,
+          strprdname: ProductName,
           strpcsno: dt2.pcs_no,
           strsheetnob: dt2.back_sheet_no
         })
@@ -820,7 +838,7 @@ function fn_PieceTraceView() {
             dt6 = res.data;
           });
 
-          console.log("dt6", dt6)
+        console.log("dt6", dt6)
 
         if (dt6.length === 0) {
           if (SPI_Maker === "CKD") {
@@ -1116,7 +1134,7 @@ function fn_PieceTraceView() {
             .then((res) => {
               dt15 = res.data;
             });
-            console.log(dt15, "dt15")
+          console.log(dt15, "dt15")
 
           if (dt15.length > 0) {
             dt15 = dt15[0];
@@ -1131,7 +1149,7 @@ function fn_PieceTraceView() {
               .then((res) => {
                 dt16 = res.data;
               });
-              console.log(dt16, "dt16")
+            console.log(dt16, "dt16")
 
             if (dt16.length > 0) {
               dt16 = dt16[0];
@@ -1515,7 +1533,7 @@ function fn_PieceTraceView() {
       //Final Inspection check
       await axios.post("/api/ViewTracePiece/getfinalinspection", {
         strplantcode: plantCode,
-        strprdname: dtPrd.product_name,
+        strprdname: ProductName,
         strserialno: SerialNo
       })
         .then((res) => {
@@ -1592,7 +1610,7 @@ function fn_PieceTraceView() {
 
       await axios.post("/api/ViewTracePiece/getelt", {
         strplantcode: plantCode,
-        strprdname: dtPrd.product_name,
+        strprdname: ProductName,
         strserialno: SerialNo
       })
         .then((res) => {
@@ -2040,13 +2058,13 @@ function fn_PieceTraceView() {
 
     settxtPackingTime(prevState => ({ ...prevState, visible: false }));
 
-    if (dtPrd.product_name !== "") {
+    if (ProductName !== "") {
       let strPlasmaResult = "";
       let strPlasmaRemark = "";
 
       await axios.post("/api/ViewTracePiece/GetPlasmaDataResultBySerial", {
         strplantcode: plantCode,
-        strprdname: dtPrd.product_name,
+        strprdname: ProductName,
         strserial: SerialNo,
         strLot: dt2.lot_no,
       })
@@ -2100,7 +2118,7 @@ function fn_PieceTraceView() {
       if (dt2.front_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
           _intPcsNo: dt2.pcs_no,
-          _strPrdName: dtPrd.product_name,
+          _strPrdName: ProductName,
           _strSMPJCavityFlg: "N"
         })
           .then((res) => {
@@ -2130,7 +2148,7 @@ function fn_PieceTraceView() {
           _strPlantCode: plantCode,
           _strSheetNo: dt2.back_sheet_no,
           _intPcsNo: dt2.pcs_no,
-          _strPrdName: dtPrd.product_name,
+          _strPrdName: ProductName,
           _strSMPJCavityFlg: "N"
         })
           .then((res) => {
@@ -2167,7 +2185,7 @@ function fn_PieceTraceView() {
           _strPlantCode: plantCode,
           _strFrontSheetNo: dt2.front_sheet_no,
           _intPcsNo: dt2.pcs_no,
-          _strProduct: dtPrd.product_name,
+          _strProduct: ProductName,
           _strSMPJCavityFlg: "N",
         })
           .then((res) => {
@@ -2199,7 +2217,7 @@ function fn_PieceTraceView() {
           _strPlantCode: plantCode,
           _strFrontSheetNo: dt2.back_sheet_no,
           _intPcsNo: dt2.pcs_no,
-          _strProduct: dtPrd.product_name,
+          _strProduct: ProductName,
           _strSMPJCavityFlg: "N",
         })
           .then((res) => {
@@ -2455,6 +2473,7 @@ function fn_PieceTraceView() {
         }
       }
     }
+    hideLoading();
 
   };
 
