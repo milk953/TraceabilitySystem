@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from 'antd';
 import DeleteIcon from '@mui/icons-material/Delete';
 import swal from "sweetalert2";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_ScanAOISheetNo() {
     const [txtOperator, settxtOperator] = useState("");
@@ -61,6 +62,8 @@ function fn_ScanAOISheetNo() {
     const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
     const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
     const plantCode = import.meta.env.VITE_FAC;
+
+    const { showLoading, hideLoading } = useLoading();
 
     useEffect(() => {
         PageLoad();
@@ -254,7 +257,6 @@ function fn_ScanAOISheetNo() {
         if (hfMode === "SERIAL") {
             await setSerialDataTray();
             settxtgvSerial("");
-            setpnlResult(true);
             setTimeout(() => {
                 inputSerial.current[0].focus();
             }, 300);
@@ -433,6 +435,7 @@ function fn_ScanAOISheetNo() {
         let _intRowSerial = 0;
 
         setgvReject(prevState => ({ ...prevState, visible: false, value: [] }));
+        showLoading("กำลังบันทึก กรุณารอสักครู่");
 
         console.log(dtSerial, "dtserial");
         if (!_bolTrayError) {
@@ -539,6 +542,7 @@ function fn_ScanAOISheetNo() {
                 _intRowSerial = _intRowSerial + 1;
             }
 
+            setpnlResult(true);
             setlblResult(_strScanResultAll);
 
             if (_strScanResultAll === "NG") {
@@ -600,18 +604,27 @@ function fn_ScanAOISheetNo() {
             value: data,
         }));
 
+        SetMode("SERIAL");
+
         await axios.post("/api/ScanAOISheetNo/GetAOISheetCountbyLot", {
             strlotno: txtLotNo,
             strlayer: txtLayer
         })
             .then(async (res) => {
                 const updatedValue = parseInt(res.data, 10) + 1;
-                settxtNo(updatedValue);
                 if (updatedValue <= txtTotalPcs) {
+                    settxtNo(updatedValue);
                     setlblSEQ(updatedValue);
+                } else if (updatedValue > txtTotalPcs) {
+                    setTimeout(() => {
+                        setpnlSerial(false);
+                        setpnlResult(false);
+                        setlblResult("");
+                    }, 500);
                 }
             });
-        SetMode("SERIAL");
+
+        hideLoading();
     };
 
     const getInputSerial = () => {
@@ -684,7 +697,6 @@ function fn_ScanAOISheetNo() {
                     settxtNo(updatedValue);
                     setlblSEQ(updatedValue);
                 });
-            SetMode("SERIAL");
         }
     };
 

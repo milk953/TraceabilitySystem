@@ -25,6 +25,8 @@ function fn_SMTDeleteData() {
 
   //inputRef
   const inputShtNo = useRef([]);
+  const inputELTSerial = useRef([]);
+  const inputFinalSerial = useRef([]);
 
   const plantCode = import.meta.env.VITE_FAC;
 
@@ -148,11 +150,21 @@ function fn_SMTDeleteData() {
     // if (e.target.value.length <= 2500) {
     //   settxtSerialNo(e.target.value);
     // }
-    FNGetELTResult(txtSerialNo);
   };
 
   const btnSerialSearchClick = async () => {
-    FNGetELTResult();
+    if (txtSerialNo !== "") {
+      FNGetELTResult();
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "Please input ELT Serial No.",
+      }).then(() => {
+        setTimeout(() => {
+          inputELTSerial.current.focus();
+        }, 300);
+      });
+    }
   };
 
   const FNGetELTResult = async () => {
@@ -231,9 +243,14 @@ function fn_SMTDeleteData() {
         console.log('Form not Delete');
       }
     } else {
-      setpnlForm(true);
-      setlblResult("Please input ELT Serial No.");
-      setlblResultcolor("#BA0900");
+      Swal.fire({
+        icon: "error",
+        text: "Please input ELT Serial No.",
+      }).then(() => {
+        setTimeout(() => {
+          inputELTSerial.current.focus();
+        }, 300);
+      });
     }
   };
 
@@ -241,16 +258,33 @@ function fn_SMTDeleteData() {
     settxtSerialNo("");
     setgvELTResult(false);
     setgvELTData([]);
+    setTimeout(() => {
+      inputELTSerial.current.focus();
+    }, 300);
   };
 
   const btnFinalSerialSearchClick = async () => {
-    FNGetFinalGateResult();
+    if (txtFinalSerialNo !== "") {
+      FNGetFinalGateResult();
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "Please input Final Serial No.",
+      }).then(() => {
+        setTimeout(() => {
+          inputFinalSerial.current.focus();
+        }, 300);
+      });
+    }
   };
 
   const btnClearFinalClick = () => {
     settxtFinalSerialNo("");
     setgvFinalResult(false);
     setgvFinalData([]);
+    setTimeout(() => {
+      inputFinalSerial.current.focus();
+    }, 300);
   };
 
   const FNGetFinalGateResult = async () => {
@@ -323,13 +357,18 @@ function fn_SMTDeleteData() {
         console.log('Form not Delete');
       }
     } else {
-      setpnlForm(true);
-      setlblResult("Please input Final Serial No.");
-      setlblResultcolor("#BA0900");
+      Swal.fire({
+        icon: "error",
+        text: "Please input Final Serial No.",
+      }).then(() => {
+        setTimeout(() => {
+          inputFinalSerial.current.focus();
+        }, 300);
+      });
     }
   };
 
-  let totalRows = 1000000; 
+  let totalRows = 1000000;
 
 
   const [selectedRows, setSelectedRows] = useState(
@@ -347,18 +386,18 @@ function fn_SMTDeleteData() {
   );
 
   const handleRowSelect = (index, event) => {
-    const selectrows = event.target.checked; 
+    const selectrows = event.target.checked;
     setSelectedRows(prevState => ({
       ...prevState,
-      [index]: selectrows, 
+      [index]: selectrows,
     }));
   };
 
   const handleSelect = (index, event) => {
-    const selectrow = event.target.checked; 
+    const selectrow = event.target.checked;
     setSelectedRow(prevState => ({
       ...prevState,
-      [index]: selectrow, 
+      [index]: selectrow,
     }));
   };
 
@@ -366,7 +405,7 @@ function fn_SMTDeleteData() {
     pnlForm, lblResult, lblResultcolor, txtSheetNo, settxtSheetNo, txtRollLeaf, settxtRollLeaf, ddlELTType, ELTTypedata, txtSerialNo,
     txtFinalSerialNo, settxtFinalSerialNo, gvELTResult, gvELTData, gvFinalResult, gvFinalData, inputShtNo, btnShtDeleteClick, handleELTType,
     btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
-    btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect
+    btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect, inputELTSerial, inputFinalSerial
   }
 };
 

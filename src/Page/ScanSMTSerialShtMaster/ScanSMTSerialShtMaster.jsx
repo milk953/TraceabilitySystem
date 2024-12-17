@@ -49,9 +49,9 @@ function ScanSMTSerialShtMaster() {
                 sx={{ display: "flex" }}
             >
                 <Box justifyContent="space-between"
-                    // sx={{
-                    //     marginLeft: "-6px",
-                    // }}
+                // sx={{
+                //     marginLeft: "-6px",
+                // }}
                 >
                     <TableContainer
                         component={Paper}
@@ -65,7 +65,7 @@ function ScanSMTSerialShtMaster() {
                                 <TableRow>
                                     <TableCell colSpan={5} align="center">
                                         <Typography variant="h6">
-                                            Connect Master Sht & Pcs
+                                            Master Connect Sht & Pcs
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
@@ -254,7 +254,7 @@ function ScanSMTSerialShtMaster() {
                             <TableContainer
                                 component={Paper}
                                 style={{
-                                    width: "100%",
+                                    width: "480px",
                                     marginBottom: "1px",
                                     display: "flex",
                                     flexDirection: "column",
@@ -360,11 +360,11 @@ function ScanSMTSerialShtMaster() {
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerialShtMas" style={{ position: "relative" }}>
+                        <div className="divgvSerialShtMas">
                             <TableContainer
                                 component={Paper}
                                 style={{
-                                    width: "100%",
+                                    width: "430px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
@@ -460,7 +460,7 @@ function ScanSMTSerialShtMaster() {
                                     className="Card-lblResult"
                                     style={{
                                         background: lblResultcolor,
-                                        width: "100%", 
+                                        width: "100%",
                                     }}
                                 >
                                     <Typography

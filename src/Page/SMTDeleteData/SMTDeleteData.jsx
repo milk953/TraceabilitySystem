@@ -41,7 +41,7 @@ function SMTDeleteData() {
         pnlForm, lblResult, lblResultcolor, txtSheetNo, settxtSheetNo, txtRollLeaf, settxtRollLeaf, ddlELTType, ELTTypedata, txtSerialNo,
         txtFinalSerialNo, settxtFinalSerialNo, gvELTResult, gvELTData, gvFinalResult, gvFinalData, inputShtNo, btnShtDeleteClick, handleELTType,
         btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
-        btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect
+        btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect, inputELTSerial, inputFinalSerial
     } = fn_SMTDeleteData();
 
     return (
@@ -259,12 +259,14 @@ function SMTDeleteData() {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
+                                            marginRight: "120px"
                                         }}
                                         rows="10"
                                         cols="71"
                                         maxLength="2500"
                                         value={txtSerialNo}
                                         onChange={handleSerialNo}
+                                        ref={(el) => (inputELTSerial.current = el)}
                                     ></textarea>
                                 </TableCell>
                                 <TableCell >
@@ -422,6 +424,7 @@ function SMTDeleteData() {
                                         onChange={(e) => {
                                             settxtFinalSerialNo(e.target.value)
                                         }}
+                                        ref={(el) => (inputFinalSerial.current = el)}
                                     ></textarea>
                                 </TableCell>
                                 <TableCell >

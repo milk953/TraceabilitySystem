@@ -45,10 +45,7 @@
 .divgvBackSideMas {
     justify-content: center;
     display: flex;
-    max-width: 100%;
     overflow-x: auto;
-    width: 482px;
-    position: relative;
 }
 
 .divgvBackSideMas th {
@@ -72,7 +69,6 @@
     max-width: 100%;
     overflow-x: auto;
     width: 482px;
-    position: relative;
 }
 
 .divgvFrontSideShtMas th {
@@ -106,7 +102,6 @@
 .divgvSerialShtMas {
     display: flex;
     overflow-x: auto;
-    width: 482px;
     margin-top: 10px;
 }
 
