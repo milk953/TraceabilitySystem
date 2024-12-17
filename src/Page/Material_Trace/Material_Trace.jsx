@@ -26,6 +26,7 @@ function LotTraceView() {
     gvMaterial,
     txtInviceNo,
     settxtInviceNo,
+    ExportGridToCSV
   } = fn_Material_Trace();
   // console.log(loading, "loaddd");
   return (
@@ -85,14 +86,17 @@ function LotTraceView() {
                   marginTop: "5px",
                   marginRight: "10px",
                 }}
+                disabled={gvMaterial === ''|| gvMaterial.length === 0}
+          
                 icon={<Avatar shape="square" src={excel} size="small" />}
-                // onClick={() =>
-                //   ExportTableToCSV(
-                //     gvMaterial.value,
-                //     columnsgvMaterial,
-                //     "MAT_" + txtLotNo + ".xls"
-                //   )
-                // }
+                onClick={() =>
+                  ExportGridToCSV(
+                    gvMaterial,
+                    columnsgvMaterial,
+                    "Material.xls"
+                  )
+                }
+
               >
                 Export
               </Button>

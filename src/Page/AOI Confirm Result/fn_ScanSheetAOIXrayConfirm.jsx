@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import {DataConfig} from "../Common/function_Common"; 
 function fn_ScanSheetAOIXrayConfirm() {
+  const{ConfigData} = DataConfig();
+  console.log(ConfigData,'ConfigData');
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [lblResult, setlblResult] = useState("");
   const [lblSheet, setlblSheet] = useState("");
   const [lblRemark, setlblRemark] = useState("");
   const fc_txtSheet = useRef([]);
 
-  const Fac = import.meta.env.VITE_FAC;
+  const Fac = ConfigData.FACTORY;
   const currentTime = new Date().toLocaleTimeString("en-GB", { hour12: false });
 
   useEffect(() => {

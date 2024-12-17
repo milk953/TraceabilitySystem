@@ -2,7 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import {DataConfig} from "../Common/function_Common";
 function fn_Change_PartialNo() {
+  const{ConfigData} = DataConfig();
+  console.log(ConfigData,'ConfigData');
   const [txtTotalPcs, settxtTotalPcs] = useState(1);
   const [hfSerialCount, sethfSerialCount] = useState("");
   const [loading, setloading] = useState(false);
@@ -35,9 +38,8 @@ function fn_Change_PartialNo() {
   });
   const fc_txtSerialOld = useRef([]);
   const fc_txtSerialNew = useRef([]);
-  let SERIAL_DATABASE_SWITCH = import.meta.env.VITE_SERIAL_DATABASE_SWITCH;
-  const Fac = import.meta.env.VITE_FAC;
-
+  const SERIAL_DATABASE_SWITCH =  ConfigData.SERIAL_DATABASE_SWITCH;
+  const Fac = ConfigData.FACTORY;
   const IP = localStorage.getItem("ipAddress");
   //PageLoad----------
   useEffect(() => {

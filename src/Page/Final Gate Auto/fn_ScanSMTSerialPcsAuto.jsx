@@ -834,46 +834,6 @@ function fn_ScanSMTSerialPcsChrome() {
     return dtData;
 };
 
-  // const getInputSerial = () => {
-  //   let dtData = [];
-  //   for (let intSht = 0; intSht < gvSerial.value.length; intSht++) {
-  //     dtData.push({
-  //       SEQ: intSht + 1,
-  //       SERIAL: txtSerial[intSht],
-  //       REJECT: "",
-  //       TOUCH_UP: "",
-  //       REJECT2: "",
-  //       REJECT_CODE: "",
-  //       SCAN_RESULT: "",
-  //       TEST_RESULT: "",
-  //       TYPE_TEST_RESULT: "",
-  //       REMARK: "",
-  //       REMARK_UPDATE: "",
-  //       ROW_COUNT: 0,
-  //       ROW_UPDATE: "N",
-  //       UPDATE_FLG: "N",
-  //       PACKING_NO: txtPackingNo.value,
-  //       MASTER_NO: "",
-  //       FRONT_SHEET_NO: "",
-  //       BACK_SHEET_NO: "",
-  //       SHEET_PCS_NO: 0,
-  //       ROLL_LEAF_NO: "",
-  //     });
-  //     // if (dtData[intSht].SERIAL != "") {
-  //     //   for( let intNo=0;intNo>intRow - 2;intNo++){
-
-  //     //   }
-  //     // }
-  //     //      For intNo As Integer = 0 To intRow - 2
-  //     //           If drRow("SERIAL").ToString.Trim = CType(gvSerial.Rows(intNo).FindControl("txtSerial"), TextBox).Text.Trim.ToUpper Then
-  //     //               drRow("ROW_COUNT") = 9
-  //     //               Exit For
-  //     //           End If
-  //     //       Next
-  //   }
-  //   return dtData;
-  // };
-
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value;
@@ -1733,9 +1693,6 @@ function fn_ScanSMTSerialPcsChrome() {
   };
 
   const ExportCSV = (data, ColumnsHeader) => {
-    const date = new Date();
-    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
-
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
     );
@@ -1754,7 +1711,7 @@ function fn_ScanSMTSerialPcsChrome() {
 
     const bom = "\uFEFF";
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, `Final_Gate_Auto_${formattedDate}.csv`);
+    saveAs(blob, `Final_Gate_Auto.csv`);
   };
 
   const columns = [
@@ -1866,7 +1823,6 @@ function fn_ScanSMTSerialPcsChrome() {
     txtPcsTray,
     settxtPcsTray,
     lblSerialNG,
-
     ibtBack_Click,
     ibtPackingBack_Click,
     lblLastTray,
