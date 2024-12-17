@@ -2119,7 +2119,8 @@ function fn_PieceTraceView() {
         await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
           _intPcsNo: dt2.pcs_no,
           _strPrdName: ProductName,
-          _strSMPJCavityFlg: "N"
+          _strSMPJCavityFlg: "N",
+          _strSheetNo: dt2.front_sheet_no
         })
           .then((res) => {
             dtData = res.data;
