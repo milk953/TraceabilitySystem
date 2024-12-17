@@ -3,13 +3,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import { Tag } from "antd";
-import { Tooltip, Avatar } from "antd";
-import excel from "/src/assets/excel.png";
-import { values } from "lodash";
-import Column from "antd/es/table/Column";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common"; 
 function fn_Material_Trace() {
+  const{ConfigData} = DataConfig();
+  console.log(ConfigData,'ConfigData');
   const { showLoading, hideLoading } = useLoading();
   const [txtLotNo, settxtLotNo] = useState("");
   const [txtInviceNo, settxtInviceNo] = useState("");
@@ -21,7 +19,7 @@ function fn_Material_Trace() {
   const params = new URLSearchParams(window.location.search);
   const Vender_lot = params.get("VENDER_LOTNO") || "";
   const InvoiceNo = params.get("INVOICE_NO") || "";
-  const Fac = import.meta.env.VITE_FAC;
+  const Fac = ConfigData.FACTORY;
 
   //เข้ามาแล้วSearch
   useEffect(() => {
@@ -40,45 +38,53 @@ function fn_Material_Trace() {
   const ViewData = async (strlot, Invoice) => {
     showLoading("กำลังค้นหา กรุณารอสักครู่...");
     settblData1([]);
-    console.log("ViewData", strlot,Invoice);
-    let Meterial = [];
-
-    await axios
-      .post("/api/Common/MaterialDataSearch", {
-        Venderlot: strlot||'',
-        Invoice: Invoice||'',
-      })
-      .then((res) => {
-        console.log(res.data, "MaterialDataSearch");
-        setgvMaterial(res.data);
+    setgvMaterial('');
+    if(strlot==''&&Invoice==''){
+      Swal.fire({
+        icon: "warning",
+        title: "กรุณากรอกข้อมูล",
       });
-
-    await axios
-      .post("/api/Common/GetMeterial", {
-        Venderlot: strlot||'',
-        Invoice: Invoice||'',
-      })
-      .then((res) => {
-        console.log(res.data, "GetMeterial");
-        for (let i = 0; i < res.data.length; i += 5) {
-          Meterial.push(res.data.slice(i, i + 5));
-        }
-
-        Meterial = Meterial.map((group, index) => {
-          return {
-            key: index,
-            LOT1: group[0] ? group[0].LOT : "",
-            LOT2: group[1] ? group[1].LOT : "",
-            LOT3: group[2] ? group[2].LOT : "",
-            LOT4: group[3] ? group[3].LOT : "",
-            LOT5: group[4] ? group[4].LOT : "",
-          };
+      hideLoading();
+    }else{    console.log("ViewData", strlot,Invoice);
+      let Meterial = [];
+  
+      await axios
+        .post("/api/Common/MaterialDataSearch", {
+          Venderlot: strlot||'',
+          Invoice: Invoice||'',
+        })
+        .then((res) => {
+          console.log(res.data, "MaterialDataSearch");
+          setgvMaterial(res.data);
         });
- 
-        settblData1(Meterial);
+  
+      await axios
+        .post("/api/Common/GetMeterial", {
+          Venderlot: strlot||'',
+          Invoice: Invoice||'',
+        })
+        .then((res) => {
+          console.log(res.data, "GetMeterial");
+          for (let i = 0; i < res.data.length; i += 5) {
+            Meterial.push(res.data.slice(i, i + 5));
+          }
+  
+          Meterial = Meterial.map((group, index) => {
+            return {
+              key: index,
+              LOT1: group[0] ? group[0].LOT : "",
+              LOT2: group[1] ? group[1].LOT : "",
+              LOT3: group[2] ? group[2].LOT : "",
+              LOT4: group[3] ? group[3].LOT : "",
+              LOT5: group[4] ? group[4].LOT : "",
+            };
+          });
+   
+          settblData1(Meterial);
+  
+        });
+      hideLoading();}
 
-      });
-    hideLoading();
   };
   const createLink = (text) => {
     return (
@@ -96,6 +102,30 @@ function fn_Material_Trace() {
     setloading(false);
     settblData1("");
     settxtLotNo("");
+    settxtInviceNo("");
+    setgvMaterial("");
+  };
+
+  const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
+    const filteredColumns = ColumnsHeader.filter(
+      (col) => col.key !== "" && col.key !== null && col.key !== undefined
+    );
+
+    const headers = filteredColumns.map((col) => col.key);
+
+    const filteredData = data.map((row) =>
+      filteredColumns.map((col) => row[col.dataIndex] || "")
+    );
+
+    const wsData = [headers, ...filteredData];
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blobData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(blobData, namefile);
   };
 
   const columnstblData1 = [
@@ -146,20 +176,6 @@ function fn_Material_Trace() {
       },
     },
   ];
-
-  // หาข้อมูล Material
-  //   await axios
-  //   .post("/api/Common/fnGetMaterialData", {
-  //     strLOTNO: datalblLot,
-  //   })
-  //   .then((res) => {
-  //     dt = res.data;
-  //   });
-  // setgvMaterial((prevState) => ({
-  //   ...prevState,
-  //   value: dt,
-  //   visible: "โชว์",
-  // }));
 
   const columnsgvMaterial = [
     {
@@ -263,6 +279,7 @@ function fn_Material_Trace() {
     gvMaterial,
     txtInviceNo,
     settxtInviceNo,
+    ExportGridToCSV
   };
 }
 

@@ -1403,6 +1403,7 @@ function fn_ScanSMTSerialShtMaster() {
             dataIndex: "SHEET",
             key: "Sheet No.",
             align: "center",
+            width: 80,
             render: (text, record, index) => {
                 return text;
             },
@@ -1412,6 +1413,7 @@ function fn_ScanSMTSerialShtMaster() {
             dataIndex: "SEQ",
             key: "No.",
             align: "center",
+            width: 60,
             render: (text, record, index) => {
                 return index + 1;
             },
@@ -1421,6 +1423,7 @@ function fn_ScanSMTSerialShtMaster() {
             dataIndex: "SERIAL",
             key: "Serial No.",
             align: "center",
+            width: 440,
             render: (text, record, index) => {
                 return text;
             },
@@ -1430,18 +1433,24 @@ function fn_ScanSMTSerialShtMaster() {
             key: "Scan Result",
             dataIndex: "SCAN_RESULT",
             align: "center",
+            width: 120,
             render: (text, record, index) => {
-                if (text == '')
+                if (record.SERIAL == "") {
+                    return "";
+                } else {
                     return text;
-                else {
-                    return (
-                        <Tag
-                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
-                        >
-                            {text}
-                        </Tag>
-                    );
                 }
+                // if (text == '')
+                //     return text;
+                // else {
+                //     return (
+                //         <Tag
+                //             className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                //         >
+                //             {text}
+                //         </Tag>
+                //     );
+                // }
             },
 
         },

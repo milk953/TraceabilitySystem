@@ -143,15 +143,6 @@ function fn_LotTraceView() {
     }
   }, [LotNoSearch]);
 
-  //   useEffect(() => {
-  // fetchdata()
-  //     // const [strEMCSNo, linkEmcNo, linkEmcNo2, linkEmcNo3] = test1; // ค่าแต่ละตัวจาก array test1
-  //     // console.log(strEMCSNo, linkEmcNo, linkEmcNo2, linkEmcNo3,'useeeeee')
-
-  //   }, [gvRouting.value]);
-  //   const fetchdata = async () => {  const test1= await DatagvRouting(); // ค่าแรกจาก DatagvRouting
-  //     console.log(test1,'ttttttt')}
-
   const btnSearch_Click = async () => {
     showLoading("กำลังค้นหา กรุณารอสักครู่...");
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
@@ -835,7 +826,7 @@ function fn_LotTraceView() {
             )
             .trim(); //ตัวสุดท้ายหลัง_
         }
-        console.log(strEMCSNo, "strEMCSNo");
+        // console.log(strEMCSNo, "strEMCSNo");
         return (
           <>
             {strEMCSNo.map((item, idx) => (
@@ -1006,6 +997,116 @@ function fn_LotTraceView() {
     },
   ];
 
+  const handleExport = async () => {
+    console.log(gvLot.value,"setLOT")
+    let data=[{
+      LOT_NO: lblLotNo,
+      PRODUCT_NAME: txtProd,
+      NEXT_LOT: txtNextLotNo.text,
+      Previous_LOT: txtPreviousLotNo.text,
+      Connect_Sheet: lbtConnectSht.value,
+      FinalGate_OK: lbtFinalGate.valueOK,
+      FinalGate_NG: lbtFinalGate.valueNG,
+      Roll_No: gvLot.value[0].LOT_ROLL_NO,
+      FRONT_SHEET_NO: lblTitleShtFront.value,
+      BACK_SHEET_NO: lblTitleShtBack.value,
+    }]
+
+    
+    ExportTableToCSV([
+        {
+            data: data,
+            ColumnsHeader: columnsViewTraceLot,
+            sheetName: "LOT",
+        },
+        {
+            data: gvMaterial.value,
+            ColumnsHeader: columnsgvMaterial,
+            sheetName: "Material",
+        },
+        {
+            data: gvRouting.value,
+            ColumnsHeader: columnsgvRouting,
+            sheetName: "Routing",
+        },
+    ], "ViewTraceLOT.xlsx");
+    // ExportGridToCSV(data, columnsViewTraceLot, "ViewTraceLot.xls");
+  }
+
+  const columnsViewTraceLot = [
+    {
+      key: "LOT No.",
+      dataIndex: "LOT_NO",
+    },
+    {
+      key: "Product Name",
+      dataIndex: "PRODUCT_NAME",
+    },
+    {
+      key: "Next LOT No.",
+      dataIndex: "NEXT_LOT",
+    },
+    {
+      key: "Previous LOT No.",
+      dataIndex: "Previous_LOT",
+    },
+    {
+      key: "Connect Sheet",
+      dataIndex: "Connect_Sheet",
+    },
+    {
+      key: "FinalGate OK",
+      dataIndex: "FinalGate_OK",
+    },
+    {
+      key: "FinalGate NG",
+      dataIndex: "FinalGate_NG",
+    },
+    {
+      key: "Roll No",
+      dataIndex: "Roll_No",
+    },
+    {
+      key: "Front Sheet",
+      dataIndex: "FRONT_SHEET_NO",
+    },
+    {
+      key: "Back Sheet",
+      dataIndex: "BACK_SHEET_NO",
+    },
+   
+    
+  ];
+
+  const ExportTableToCSV = (sheets, namefile) => {
+    console.log(sheets, "exportcsv", namefile);
+    const wb = XLSX.utils.book_new();
+  
+    sheets.forEach((sheet) => {
+      const { data, ColumnsHeader, sheetName } = sheet;
+  
+      const filteredColumns = ColumnsHeader.filter(
+        (col) => col.key !== "" && col.key !== null && col.key !== undefined
+      );
+  
+      const headers = filteredColumns.map((col) => col.key);
+  
+      const filteredData = data.map((row) =>
+        filteredColumns.map((col) => row[col.dataIndex] || "")
+      );
+  
+      const wsData = [headers, ...filteredData];
+      const ws = XLSX.utils.aoa_to_sheet(wsData);
+      XLSX.utils.book_append_sheet(wb, ws, sheetName || "Sheet1");
+    });
+  
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blobData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(blobData, namefile);
+  };
+
   const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
     console.log(data, "---", ColumnsHeader, "---", namefile);
 
@@ -1036,42 +1137,6 @@ function fn_LotTraceView() {
       type: "application/octet-stream",
     });
 
-    saveAs(blobData, namefile);
-  };
-
-  // const [fileExists, setFileExists] = useState(null);
-  const checkFileExists = async (fileUrl) => {
-console.log(fileUrl,"fileUrl")
-    try {
-      const response = await fetch(`'${fileUrl}'`, { method: "HEAD" });
-      console.log(response,"fileUrl")
-      return response.ok;
-    } catch (error) {
-      console.error("Error checking file:", error);
-      return false;
-    }
-  };
-
-
-  const ExportTableToCSV = (data, ColumnsHeader, namefile) => {
-    const filteredColumns = ColumnsHeader.filter(
-      (col) => col.key !== "" && col.key !== null && col.key !== undefined
-    );
-
-    const headers = filteredColumns.map((col) => col.key);
-
-    const filteredData = data.map((row) =>
-      filteredColumns.map((col) => row[col.dataIndex] || "")
-    );
-
-    const wsData = [headers, ...filteredData];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blobData = new Blob([excelBuffer], {
-      type: "application/octet-stream",
-    });
     saveAs(blobData, namefile);
   };
 
@@ -1152,23 +1217,18 @@ console.log(fileUrl,"fileUrl")
           }
         }
       }
-      console.log(strEMCSNo, "strEMCSNostrEMCSNo");
+
+
       await axios
         .post("/api/common/fnGetDocumentLink", {
           strEMCS: strEMCSNo,
         })
         .then((res) => {
           dt2 = res.data;
-
           console.log(dt2, "tdtdtdtdtddt");
         });
-        checkFileExists( dt2[0].filepdf).then(exists => {
-          if (exists) {
-            console.log("ไฟล์มีอยู่");
-          } else {
-            console.log("ไฟล์ไม่มีอยู่");
-          }
-        });
+
+      
 
       for (let dr = 0; dr < dt2.length; dr++) {
         dt2 = dt2[0];
@@ -1196,13 +1256,6 @@ console.log(fileUrl,"fileUrl")
         }
       }
     }
-    // if (dt1.length === 0 && dt2.length === 0) {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Not Found',
-    //     text: 'Document not found',
-    //   });
-    // }
     setLoadingDoc(false);
   };
 
@@ -1237,6 +1290,7 @@ console.log(fileUrl,"fileUrl")
     txtSheetNo,
     settxtSheetNo,
     txtSerialNo,
+    handleExport
   };
 }
 

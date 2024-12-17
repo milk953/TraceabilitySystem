@@ -218,6 +218,7 @@ function Change_Serial() {
                           backgroundColor: "green",
                           width: "90px",
                           color: "white",
+                          marginRight: "16px", // เพิ่มระยะห่าง 12px ทางขวา
                         }}
                         onClick={BtnSubmit_Click}
                       >

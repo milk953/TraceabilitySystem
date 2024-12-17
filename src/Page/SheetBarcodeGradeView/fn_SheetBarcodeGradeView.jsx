@@ -155,6 +155,7 @@ function fn_SheetBarcodeGradeView() {
         }
       },
     }));
+
   const columns = [
     ...predefinedColumns,
     ...dynamicColumns.slice(0, dynamicColumns.length - 1),
@@ -194,9 +195,6 @@ function fn_SheetBarcodeGradeView() {
       }
 
     sheet.columns = [...columns, ...dynamicColumns];
-    // const barcodeGrades = hfBarcodeGrade.split(',');
-    // const isTextInBarcodeGrade = barcodeGrades.includes(text) || text === "OK" || text === "NG";
-    // return isTextInBarcodeGrade? text : <Tag color={isTextInBarcodeGrade ? "" : "#cd201f"} style={{fontSize:13,margin:0,}}>{text}</Tag>;
 
 gvResult.forEach((row) => {
   const newRow = sheet.addRow(row);

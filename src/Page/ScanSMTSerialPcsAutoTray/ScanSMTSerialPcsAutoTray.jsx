@@ -39,7 +39,7 @@ function ScanSMTSerialPcsAutoTray() {
         txtPackingNoDisabled, inputLot, ddlProduct, inputPackingNo, inputgvSerial, inputTray, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangePackingNo, ibtPackingBackClick, handleChangePcsTray, settxtLot, settxtPackingNo,
         settxtPcsTray, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick, gvScanData, gvScanResult, lblTimecolor,
-        lblLastTray, btnHiddenClick, columns
+        lblLastTray, columns
     } = fn_ScanSMTSerialPcsAutoTray();
 
     return (
@@ -243,7 +243,7 @@ function ScanSMTSerialPcsAutoTray() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "90%",
+                                width: "420px",
                                 //marginLeft: "22px",
                             }}
                         >
@@ -256,8 +256,8 @@ function ScanSMTSerialPcsAutoTray() {
                             <TableContainer
                                 component={Paper}
                                 style={{
-                                    width: "100%",
-                                    //display: "flex",
+                                    width: "460px",
+                                    display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
                                 }}
@@ -321,7 +321,7 @@ function ScanSMTSerialPcsAutoTray() {
                             </TableContainer>
                         </div>
                     )}
-                    <Button
+                    {/* <Button
                         style={{
                             width: '1px',
                             height: '1px',
@@ -330,7 +330,7 @@ function ScanSMTSerialPcsAutoTray() {
                         onClick={btnHiddenClick}
                     >
                         <FileDownloadOutlinedIcon />
-                    </Button>
+                    </Button> */}
                 </Box>
 
 
@@ -391,7 +391,7 @@ function ScanSMTSerialPcsAutoTray() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
-                                //rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                             />
                         </>
                     )}

@@ -30,11 +30,9 @@ function LotTraceView() {
     gvLot,
     gvMaterial,
     gvRouting,
-    gvProcessLink,
     columnsgvMaterial,
     columnsgvLot,
     columnsgvRouting,
-    columnsgvProcessLink,
     loading,
     reset,
     lblLotNo,
@@ -47,12 +45,12 @@ function LotTraceView() {
     lbtConnectSht,
     setShtSerialGrid,
     setFinalGateGrid,
-    ExportTableToCSV,
     settxtSerialNo,
     txtSheetNo,
     settxtSheetNo,
     txtSerialNo,
     loadingDoc,
+    handleExport
   } = fn_LotTraceView();
 
   return (
@@ -61,53 +59,67 @@ function LotTraceView() {
 
       <Card component={Paper} className="Card-Common">
         <Spin tip="Loading..." spinning={loadingDoc}>
-          <Input
-            placeholder="Lot No. :"
-            style={{ width: "250px" }}
-            value={txtLotNo}
-            onChange={(e) => {
-              settxtLotNo(e.target.value);
-            }}
-            ref={fc_txtLotNo}
-          />{" "}
-          &nbsp;
-          <Input
-            placeholder="Sheet No. :"
-            style={{ width: "300px" }}
-            value={txtSheetNo}
-            onChange={(e) => {
-              settxtSheetNo(e.target.value);
-            }}
-          />{" "}
-          &nbsp;
-          <Input
-            placeholder="Serial No.   :"
-            style={{ width: "300px" }}
-            value={txtSerialNo}
-            onChange={(e) => {
-              settxtSerialNo(e.target.value);
-            }}
-          />{" "}
-          &nbsp;
-          <Button
-            type="primary"
-            icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
-            // icon={<SearchOutlined />}
-            onClick={() => btnSearch_Click()}
-            disabled={loading ? true : false}
-          >
-            Search
-          </Button>
-          &nbsp;
-          <Button
-            type="primary"
-            danger
-            icon={<UndoOutlined />}
-            onClick={() => reset()}
-          >
-            Clear
-          </Button>
-          <br />
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+  <div>
+    <Input
+      placeholder="Lot No. :"
+      style={{ width: "250px" }}
+      value={txtLotNo}
+      onChange={(e) => {
+        settxtLotNo(e.target.value);
+      }}
+      ref={fc_txtLotNo}
+    />{" "}
+    &nbsp;
+    <Input
+      placeholder="Sheet No. :"
+      style={{ width: "300px" }}
+      value={txtSheetNo}
+      onChange={(e) => {
+        settxtSheetNo(e.target.value);
+      }}
+    />{" "}
+    &nbsp;
+    <Input
+      placeholder="Serial No.   :"
+      style={{ width: "300px" }}
+      value={txtSerialNo}
+      onChange={(e) => {
+        settxtSerialNo(e.target.value);
+      }}
+    />{" "}
+    &nbsp;
+    <Button
+      type="primary"
+      icon={loading ? <LoadingOutlined /> : <SearchOutlined />}
+      onClick={() => btnSearch_Click()}
+      disabled={loading ? true : false}
+    >
+      Search
+    </Button>
+    &nbsp;
+    <Button
+      type="primary"
+      danger
+      icon={<UndoOutlined />}
+      onClick={() => reset()}
+    >
+      Clear
+    </Button>
+  </div>
+  <Button
+    style={{ marginRight: "10px" ,height:'30px'}}
+    size="small"
+    disabled={txtLotNo === '' && txtSheetNo=== '' && txtSerialNo === '' ? true : false}
+    icon={<Avatar shape="square" src={excel} size="small" />}
+    onClick={() =>
+      handleExport()
+    }
+  >
+    Export
+  </Button>
+</div>
+         
           <div style={{ display: "flex", gap: "10px" }}>
             <Card
               component={Paper}
@@ -304,9 +316,7 @@ function LotTraceView() {
                 >
                 {lblTitleShtBack.value}
                 </a>
-                {/* <span style={{ color: "#151515" }}>
-                  {lblTitleShtBack.value}
-                </span> */}
+
               </Card>
             </div>
           </div>
@@ -318,20 +328,9 @@ function LotTraceView() {
               display: gvMaterial.value.length > 0 ? "flex" : "none",
             }}
           >
-            <Button
-              size="small"
-              icon={<Avatar shape="square" src={excel} size="small" />}
-              onClick={() =>
-                ExportTableToCSV(
-                  gvMaterial.value,
-                  columnsgvMaterial,
-                  "MAT_" + txtLotNo + ".xls"
-                )
-              }
-            >
-              Export
-            </Button>
+           
           </div>
+          {console.log(gvMaterial.value,columnsgvMaterial,'เทสสสสสส')}
           <div style={{ display: "flex", width: "100%" }}>
             {/*----------------------------- Table1.1--------------------- */}
             <Table
@@ -366,19 +365,7 @@ function LotTraceView() {
               display: gvRouting.value.length > 0 ? "flex" : "none",
             }}
           >
-            <Button
-              size="small"
-              icon={<Avatar shape="square" src={excel} size="small" />}
-              onClick={() =>
-                ExportTableToCSV(
-                  gvRouting.value,
-                  columnsgvRouting,
-                  "Proc_" + txtLotNo + ".xls"
-                )
-              }
-            >
-              Export
-            </Button>
+
           </div>
           <Table
             style={{ width: "100%" }}
@@ -390,17 +377,8 @@ function LotTraceView() {
             bordered
             // scroll={{ y: 265 }}
           />
-          {/*----------------------------- Table3--------------------- */}
+
           <br />
-          {/* <Table
-          style={{ width: "50%" }}
-          dataSource={gvProcessLink.value}
-          columns={columnsgvProcessLink}
-          className="tableGvResultViewLot"
-          pagination={false}
-          size="small"
-          bordered
-        /> */}
         </Spin>
       </Card>
     </>

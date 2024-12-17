@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { values } from "lodash";
 
+import {DataConfig} from "../Common/function_Common"; 
 function fn_ScanSheetMOTTime() {
-  //txt
+  const{ConfigData} = DataConfig();
+  console.log(ConfigData,'ConfigData');
   const [txtlot, settxtlot] = useState({
     value: "",
     disbled: "",
@@ -82,11 +83,11 @@ function fn_ScanSheetMOTTime() {
   let hfZPRNProcID = "";
 
   if (partweb.toUpperCase() == "ScanSheetMOTTime") {
-    hfZPRNProcID = "1840";
+    hfZPRNProcID =  ConfigData.hfZPRNProcID_MOT1;
   } else if (partweb.toUpperCase() == "ScanSheetMOTTime2") {
-    hfZPRNProcID = "1841";
+    hfZPRNProcID =  ConfigData.hfZPRNProcID_MOT2;
   }
-  const Fac = import.meta.env.VITE_FAC;
+  const Fac = ConfigData.FACTORY;
   const VITE_FINAL_GATE_AUTO_PRD = import.meta.env.VITE_FINAL_GATE_AUTO_PRD;
 
   useEffect(() => {
