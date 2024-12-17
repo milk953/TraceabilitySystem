@@ -529,7 +529,6 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data, "SPIResult_Getfinaldata");
         settblData1(res.data);
       });
 
@@ -835,13 +834,13 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data, "position_v2");
         if (res.data.length > 0) {
           dt2 = res.data;
+        
         }
       });
-      console.log(dt2.length,'dtdtdtdt')
     if (dt2.length > 0) {
+      console.log(dt2,"dt2dt2")
       await axios
         .post("/api/Result/PreResult_GetDataFound", {
           dataList: {
@@ -852,9 +851,9 @@ function fn_Result() {
           },
         })
         .then((res) => {
-  
+  console.log(res.data,"res.data.1")
           if (res.data.length> 0) {
-            console.log(res.data, "SPIResult_Getfinaldata000000");
+            
             settblData1(res.data);
             dt = res.data;
           }
@@ -1468,7 +1467,8 @@ function fn_Result() {
     } else {
       console.log(nameFile, "nameFile");
       let formattedNow = Now.getFullYear().toString() + 
-      (Now.getMonth() + 1).toString().padStart(2, '0') +  // เดือนเริ่มต้นที่ 0 ต้องบวก 1
+      (
+      Now.getMonth() + 1).toString().padStart(2, '0') +  // เดือนเริ่มต้นที่ 0 ต้องบวก 1
       Now.getDate().toString().padStart(2, '0') + 
       Now.getHours().toString().padStart(2, '0') + 
       Now.getMinutes().toString().padStart(2, '0') + 

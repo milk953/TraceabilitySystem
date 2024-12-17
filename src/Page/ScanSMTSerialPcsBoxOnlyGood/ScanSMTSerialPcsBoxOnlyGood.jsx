@@ -40,7 +40,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
   return (
     <div>
       <Hearder />
-      <h1>Final Gate</h1>
+
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
