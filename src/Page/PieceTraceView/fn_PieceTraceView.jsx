@@ -2119,7 +2119,8 @@ function fn_PieceTraceView() {
         await axios.post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
           _intPcsNo: dt2.pcs_no,
           _strPrdName: ProductName,
-          _strSMPJCavityFlg: "N"
+          _strSMPJCavityFlg: "N",
+          _strSheetNo: dt2.front_sheet_no
         })
           .then((res) => {
             dtData = res.data;
@@ -2338,7 +2339,7 @@ function fn_PieceTraceView() {
     if (dt2.back_sheet_no !== "" && !isNaN(dt2.pcs_no)) {
       let dtData = [];
       await axios.post("/api/ViewTracePiece/GetSerialAVIResult", {
-        strSheetNo: dt2.front_sheet_no,
+        strSheetNo: dt2.back_sheet_no,
         intPCSNo: dt2.pcs_no,
         strSMPJCavityFlg: "N",
       })
