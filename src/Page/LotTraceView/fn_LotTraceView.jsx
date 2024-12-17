@@ -7,9 +7,7 @@ import { Tag } from "antd";
 import { Tooltip, Avatar } from "antd";
 import excel from "/src/assets/excel.png";
 import { useLoading } from "../../loading/fn_loading";
-import {DataConfig} from "../Common/function_Common"; 
 function fn_LotTraceView() {
-  const{ConfigData} = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [txtLotNo, settxtLotNo] = useState("");
   const [LotNoSearch, setLotNoSearch] = useState("");
@@ -54,7 +52,7 @@ function fn_LotTraceView() {
     visible: "none",
     style: {},
   });
-  const [gvLOTtrace, setgvLOTtrace] = useState([])
+
   const [gvMaterial, setgvMaterial] = useState({
     value: "",
     disbled: "",
@@ -124,7 +122,7 @@ function fn_LotTraceView() {
   //link
   const params = new URLSearchParams(window.location.search);
   const lot = params.get("lot");
-  const Fac = ConfigData.FACTORY;
+  const Fac = import.meta.env.VITE_FAC;
 
   useEffect(() => {
     if (lot == "" || lot == null || lot == undefined) {
@@ -151,7 +149,6 @@ function fn_LotTraceView() {
       console.log(txtLotNo, txtSheetNo, txtSerialNo, "เข้าจ้าาาาาาาาาาาาๅ");
       const datalblLot = await setHead();
       await setGrid(datalblLot);
-      await setLOT();
       hideLoading();
     } else {
       reset();
@@ -235,8 +232,6 @@ function fn_LotTraceView() {
       url: "",
     }));
   };
-
-
 
   const setHead = async () => {
     let datalblLot = "";
@@ -1001,7 +996,9 @@ function fn_LotTraceView() {
       key: "MASTER_CODE",
     },
   ];
-  const setLOT = async () => {
+
+  const handleExport = async () => {
+    console.log(gvLot.value,"setLOT")
     let data=[{
       LOT_NO: lblLotNo,
       PRODUCT_NAME: txtProd,
@@ -1013,11 +1010,29 @@ function fn_LotTraceView() {
       Roll_No: gvLot.value[0].LOT_ROLL_NO,
       FRONT_SHEET_NO: lblTitleShtFront.value,
       BACK_SHEET_NO: lblTitleShtBack.value,
-     
     }]
-    console.log(data,"setLOT")
-    setgvLOTtrace(data) 
+
+    
+    ExportTableToCSV([
+        {
+            data: data,
+            ColumnsHeader: columnsViewTraceLot,
+            sheetName: "LOT",
+        },
+        {
+            data: gvMaterial.value,
+            ColumnsHeader: columnsgvMaterial,
+            sheetName: "Material",
+        },
+        {
+            data: gvRouting.value,
+            ColumnsHeader: columnsgvRouting,
+            sheetName: "Routing",
+        },
+    ], "ViewTraceLOT.xlsx");
+    // ExportGridToCSV(data, columnsViewTraceLot, "ViewTraceLot.xls");
   }
+
   const columnsViewTraceLot = [
     {
       key: "LOT No.",
@@ -1064,7 +1079,7 @@ function fn_LotTraceView() {
   ];
 
   const ExportTableToCSV = (sheets, namefile) => {
-    console.log(sheets, "---", namefile);
+    console.log(sheets, "exportcsv", namefile);
     const wb = XLSX.utils.book_new();
   
     sheets.forEach((sheet) => {
@@ -1123,20 +1138,6 @@ function fn_LotTraceView() {
     });
 
     saveAs(blobData, namefile);
-  };
-
-
-
-
-
-  const checkFileLink = async (url) => {
-    const res = await axios.get(`'${url}'`)
-    if(res){
-      console.log(res,"res")
-    }else{
-      console.log("no res")
-    }
-
   };
 
   const setFinalGateGrid = async (strLot, strResult) => {
@@ -1216,26 +1217,17 @@ function fn_LotTraceView() {
           }
         }
       }
-      // console.log(strEMCSNo, "strEMCSNostrEMCSNo");
-      let fileUrl=''
+
+
       await axios
         .post("/api/common/fnGetDocumentLink", {
           strEMCS: strEMCSNo,
         })
         .then((res) => {
           dt2 = res.data;
-          fileUrl=dt2[0].filepdf
           console.log(dt2, "tdtdtdtdtddt");
         });
-       console.log(dt2, "fileUrl");
-        const isAccessible = await checkFileLink(fileUrl)
-        if (isAccessible) {
-          // Handle the case when the file is accessible
-          console.log('File is accessible');
-        } else {
-          // Handle the case when the file is not accessible
-          console.log('File is not accessible');
-        }
+
       
 
       for (let dr = 0; dr < dt2.length; dr++) {
@@ -1264,13 +1256,6 @@ function fn_LotTraceView() {
         }
       }
     }
-    // if (dt1.length === 0 && dt2.length === 0) {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Not Found',
-    //     text: 'Document not found',
-    //   });
-    // }
     setLoadingDoc(false);
   };
 
@@ -1305,8 +1290,7 @@ function fn_LotTraceView() {
     txtSheetNo,
     settxtSheetNo,
     txtSerialNo,
-    gvLOTtrace,
-    columnsViewTraceLot
+    handleExport
   };
 }
 

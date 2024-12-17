@@ -30,11 +30,9 @@ function LotTraceView() {
     gvLot,
     gvMaterial,
     gvRouting,
-    gvProcessLink,
     columnsgvMaterial,
     columnsgvLot,
     columnsgvRouting,
-    columnsgvProcessLink,
     loading,
     reset,
     lblLotNo,
@@ -47,14 +45,12 @@ function LotTraceView() {
     lbtConnectSht,
     setShtSerialGrid,
     setFinalGateGrid,
-    ExportTableToCSV,
     settxtSerialNo,
     txtSheetNo,
     settxtSheetNo,
     txtSerialNo,
     loadingDoc,
-    gvLOTtrace,
-    columnsViewTraceLot
+    handleExport
   } = fn_LotTraceView();
 
   return (
@@ -117,24 +113,7 @@ function LotTraceView() {
     disabled={txtLotNo === '' && txtSheetNo=== '' && txtSerialNo === '' ? true : false}
     icon={<Avatar shape="square" src={excel} size="small" />}
     onClick={() =>
-      ExportTableToCSV([
-        {
-          data: gvLOTtrace,
-          ColumnsHeader: columnsViewTraceLot,
-          sheetName: "LOT",
-        },
-        {
-          data: gvMaterial.value,
-          ColumnsHeader: columnsgvMaterial,
-          sheetName: "Material",
-        },
-        {
-          data: gvRouting.value,
-          ColumnsHeader: columnsgvRouting,
-          sheetName: "Routing",
-        },
-      ], "ViewTraceLOT.xlsx"
-      )
+      handleExport()
     }
   >
     Export
@@ -337,9 +316,7 @@ function LotTraceView() {
                 >
                 {lblTitleShtBack.value}
                 </a>
-                {/* <span style={{ color: "#151515" }}>
-                  {lblTitleShtBack.value}
-                </span> */}
+
               </Card>
             </div>
           </div>
@@ -388,19 +365,7 @@ function LotTraceView() {
               display: gvRouting.value.length > 0 ? "flex" : "none",
             }}
           >
-            {/* <Button
-              size="small"
-              icon={<Avatar shape="square" src={excel} size="small" />}
-              onClick={() =>
-                ExportTableToCSV(
-                  gvRouting.value,
-                  columnsgvRouting,
-                  "Proc_" + txtLotNo + ".xls"
-                )
-              }
-            >
-              Export
-            </Button> */}
+
           </div>
           <Table
             style={{ width: "100%" }}
@@ -412,17 +377,8 @@ function LotTraceView() {
             bordered
             // scroll={{ y: 265 }}
           />
-          {/*----------------------------- Table3--------------------- */}
+
           <br />
-          {/* <Table
-          style={{ width: "50%" }}
-          dataSource={gvProcessLink.value}
-          columns={columnsgvProcessLink}
-          className="tableGvResultViewLot"
-          pagination={false}
-          size="small"
-          bordered
-        /> */}
         </Spin>
       </Card>
     </>
