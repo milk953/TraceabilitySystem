@@ -149,15 +149,16 @@ function fn_rpt_SheetTraceView() {
   }, [SHEETNO]);
 
   const Clear_View = () => {
-    setbtnSPI((prevState) => ({ ...prevState, value: " ", style: {} }));
+    console.log("OKมาจ้า")
+    setbtnSPI((prevState) => ({ ...prevState, value: "", style:  ""}));
     settxtSPICnt("");
     settxtSPITime("");
     settxtSPIMachine("");
-    setbtnPre((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnPre((prevState) => ({ ...prevState, value: "", style: {} }));
     setTxtPreCnt("");
     settxtPreTime("");
     settxtPreMachine("");
-    setbtnAOI((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnAOI((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtAOICnt("");
     settxtAOITime("");
     settxtAOIMachine("");
@@ -170,22 +171,22 @@ function fn_rpt_SheetTraceView() {
     }));
     setlblTitleMachine((prevState) => ({ ...prevState, value: "", style: {} }));
 
-    setbtnXRay((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnXRay((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtXRayCnt("");
     settxtXRayTime("");
     settxtXRayMachine("");
 
-    setbtnAOICOA((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnAOICOA((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtAOICOACnt("");
     settxtAOICOATime("");
     settxtAOICOAMachine("");
 
-    setbtnSMTInt((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnSMTInt((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtSMTIntCnt("");
     settxtSMTIntTime("");
     settxtSMTIntMachine("");
 
-    setbtnAOMEFPC((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnAOMEFPC((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtAOMEFPCCnt("");
     settxtAOMEFPCTime("");
     settxtAOMEFPCMachine("");
@@ -193,7 +194,7 @@ function fn_rpt_SheetTraceView() {
     sethfAOMLeafNo("");
     sethfAOMPcsNo("");
 
-    setbtnAOIEFPC((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnAOIEFPC((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtAOIEFPCCnt("");
     settxtAOIEFPCTime("");
     settxtAOIEFPCMachine("");
@@ -201,31 +202,31 @@ function fn_rpt_SheetTraceView() {
     sethfAOMLeafNo("");
     sethfAOMPcsNo("");
 
-    setbtnOST((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnOST((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtOSTCnt("");
     settxtOSTTime("");
     settxtOSTMachine("");
     sethfOSTSheetNo("");
     sethfOSTPcsNo("");
 
-    setbtnAVI((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnAVI((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtAVICnt("");
     settxtAVITime("");
     settxtAVIMachine("");
 
-    setbtnFVI((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnFVI((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtFVICnt("");
     settxtFVITime("");
     settxtFVIMachine("");
 
-    setbtnReflow((prevState) => ({ ...prevState, value: " ", style: {} }));
+    setbtnReflow((prevState) => ({ ...prevState, value: "", style: {} }));
     settxtReflowCnt("");
     settxtReflowTime("");
     settxtReflowMachine("");
   };
 
   const ViewData = async (sheetno, dropdawn) => {
-    console.log(dropdawn, "dropdawn22");
+    console.log("เข้ามานี่นะ")
     setPanelNo1("");
     let txtSheetNo = sheetno;
     setlblMessage("");
@@ -242,13 +243,8 @@ function fn_rpt_SheetTraceView() {
         visible: true,
       }));
       if (SERIAL_DATABASE_SWITCH == "1") {
-        if (hfMaterialN1 !== "") {
-          sethypMaterial((prevState) => ({
-            ...prevState,
-            value: "Material",
-            visible: false,
-          }));
-          //sethypMaterialUrl บรรทัดที่ 184 ส่งลิงค์ไป  hypMaterial.NavigateUrl = hfMaterialN1.Value.Replace("#SHEET_NO#", txtSheetNo.Text)
+        if (hfMaterialN1 !== "") {sethypMaterial((prevState) => ({...prevState,value: "Material",visible: false,}));
+        //sethypMaterialUrl บรรทัดที่ 184 ส่งลิงค์ไป  hypMaterial.NavigateUrl = hfMaterialN1.Value.Replace("#SHEET_NO#", txtSheetNo.Text)
         }
       } else {
         if (hfMaterialA1 !== "") {
@@ -382,28 +378,12 @@ function fn_rpt_SheetTraceView() {
           case "WN":
           case "PASS":
           case "RPASS":
-            setbtnPre((prevState) => ({
-              ...prevState,
-              style: {
-                backgroundColor: "green",
-                color: "white",
-                height: "33px",
-                width: "90%",
-              },
-            }));
+            setbtnPre((prevState) => ({ ...prevState,style: { backgroundColor: "green",color: "white",height: "33px", width: "90%"},value:dt[0].prh_result}));
             break;
           default:
-            setbtnPre((prevState) => ({
-              ...prevState,
-              disabled: false,
-              style: { backgroundColor: "red", color: "white" },
-            }));
+            setbtnPre((prevState) => ({...prevState, disabled: false, style: { backgroundColor: "red", color: "white" },value:dt[0].prh_result}));
         }
-        setbtnPre((prevState) => ({
-          ...prevState,
-          disabled: true,
-          value: dt[0].prh_result,
-        }));
+        setbtnPre((prevState) => ({...prevState,disabled: true,value: dt[0].prh_result,}));
         setTxtPreCnt(dt[0].prh_inspect_count);
         settxtPreTime(dt[0].prh_inspect_date);
         settxtPreMachine(dt[0].machine_name);
@@ -492,10 +472,7 @@ function fn_rpt_SheetTraceView() {
           dt = res.data;
         });
       if (dt.length > 0) {
-        setbtnAOICOA((prevState) => ({
-          ...prevState,
-          disabled: false,
-          style: { color: "white" },
+        setbtnAOICOA((prevState) => ({...prevState, disabled: false, style: { color: "white" },
         }));
         let AOI_Result = "OK";
         for (let i = 0; i < dt.length; i++) {
@@ -517,7 +494,7 @@ function fn_rpt_SheetTraceView() {
           }
         }
         setbtnAOICOA((prevState) => ({ ...prevState, value: AOI_Result }));
-        switch (AOI_Result.toUpperCase()) {
+        switch (AOI_Result) {
           case "PASS":
           case "SKIP":
           case "OK":
@@ -557,22 +534,10 @@ function fn_rpt_SheetTraceView() {
           dt = res.data;
         });
       if (dt.length > 0) {
-        setbtnSMTInt((prevState) => ({
-          ...prevState,
-          value: dt[0].inspect_result,
-        }));
-        settxtSMTIntCnt((prevState) => ({
-          ...prevState,
-          value: dt[0].inspect_count,
-        }));
-        settxtSMTIntCnt((prevState) => ({
-          ...prevState,
-          value: dt[0].machine_no,
-        }));
-        settxtSMTIntTime((prevState) => ({
-          ...prevState,
-          value: dt[0].inspect_date,
-        }));
+        setbtnSMTInt((prevState) => ({...prevState,value: dt[0].inspect_result, }));
+        settxtSMTIntCnt((prevState) => ({...prevState,value: dt[0].inspect_count,}));
+        settxtSMTIntCnt((prevState) => ({...prevState, value: dt[0].machine_no,}));
+        settxtSMTIntTime((prevState) => ({...prevState,value: dt[0].inspect_date, }));
         if (btnSMTInt == "NG") {
           setbtnSMTInt((prevState) => ({
             ...prevState,
@@ -616,7 +581,7 @@ function fn_rpt_SheetTraceView() {
         });
       //' Get SMT_LOT_SHEET_SERIAL 586
       await axios
-        .post("/api/ViewTraceSheet/GetXray", {
+        .post("/api/ViewTraceSheet/getxray", {
           dataList: {
             sheetno: txtSheetNo,
           },
@@ -693,12 +658,13 @@ function fn_rpt_SheetTraceView() {
           .post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
             _strPlantCode: FAC,
             _strSheetNo: txtSheetNo,
-            _intPcsNo: selectddlCavity,
+            _intPcsNo: dropdawn,
             _strPrdName: Product,
             _strSMPJCavityFlg: hfSMPJCavityFlg,
           })
           .then((res) => {
             dtData = res.data;
+            console.log(dtData,"dtData222")
           });
         if (dtData.length > 0) {
           let AOM_Result = "OK";
@@ -749,7 +715,7 @@ function fn_rpt_SheetTraceView() {
           .post("/api/ViewTraceSheet/GetSerialAOIEFPCResult", {
             _strPlantCode: FAC,
             _strFrontSheetNo: txtSheetNo,
-            _intPcsNo: selectddlCavity,
+            _intPcsNo: dropdawn,
             _strProduct: txtProduct,
             _strSMPJCavityFlg: hfSMPJCavityFlg,
           })
@@ -803,7 +769,7 @@ function fn_rpt_SheetTraceView() {
         await axios
           .post("/api/ViewTraceSheet/GetSerialOSTResult", {
             SerialNo: txtSheetNo.trim().toUpperCase(),
-            intPCSNo: selectddlCavity,
+            intPCSNo: dropdawn,
             strSMPJCavityFlg: hfSMPJCavityFlg,
           })
           .then((res) => {
@@ -855,7 +821,7 @@ function fn_rpt_SheetTraceView() {
         await axios
           .post("/api/ViewTraceSheet/GetSerialAVIResult", {
             _strFrontSheetNo: txtSheetNo.trim().toUpperCase(),
-            _intPcsNo: selectddlCavity,
+            _intPcsNo: dropdawn,
             _strSMPJCavityFlgfv: hfSMPJCavityFlg,
           })
           .then((res) => {
@@ -903,7 +869,7 @@ function fn_rpt_SheetTraceView() {
         // 900
         await axios
           .post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
-            intPCSNo: selectddlCavity,
+            intPCSNo: dropdawn,
             strSMPJCavityFlg: hfSMPJCavityFlg,
             strSheetNo: txtSheetNo,
           })
@@ -986,7 +952,7 @@ function fn_rpt_SheetTraceView() {
     if (page == "SPI") {
       if (txtSPICnt !== "") {
         window.open(
-          `/TraceabilitySystem/SPIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`,
+          `/TraceabilitySystem/SPIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}`,
           "_blank"
         );
       } else {
@@ -1042,14 +1008,13 @@ function fn_rpt_SheetTraceView() {
     settxtSheetNo("");
   };
   const btnRetrive = () => {
-    // Clear_View()
+    Clear_View()
     sethypLotNo("");
     sethypLotNoUrl("");
     ViewData(txtSheetNo);
   };
   const ddlCavity_SelectedIndexChanged = (event) => {
     const dropdawn = event.target.value;
-    console.log(dropdawn, "dropdawn");
     setselectddlCavity(dropdawn);
     if (txtSheetNo.trim() !== "") {
       Clear_View();
@@ -1061,23 +1026,18 @@ function fn_rpt_SheetTraceView() {
     }
   };
   const ViewDataPcs = async (txtSheetNo, selectddlCavity) => {
-    console.log(txtSheetNo, "txtSheetNo");
     let intPcsNo = 0;
-    console.log(hfSMPJCavityFlg, "DATA777", txtSheetNo, txtProduct);
     if (hfSMPJCavityFlg == "Y") {
-      GetFPCPcsNoBySMPJCavity;
       await axios
-        .post("/api/ViewTraceSheet/GetSerialAOMEFPCResult", {
+        .post("/api/ViewTraceSheet/GetFPCPcsNoBySMPJCavity", {
           strProduct: txtProduct,
           _intPcsNo: selectddlCavity,
         })
         .then((res) => {
-          dtData = res.data;
-          console.log(dtData, "dtData1");
+          intPcsNo = res.data;
         });
       //1048
     } else {
-      console.log(txtProduct, "selectddlCavity333");
       intPcsNo = selectddlCavity;
     }
     if (intPcsNo > 0) {
@@ -1089,7 +1049,6 @@ function fn_rpt_SheetTraceView() {
       let StrResult = "";
       let ELT_Count = 0;
       if (txtSheetNo.trim() !== "" && txtProduct !== "") {
-        console.log("เข้าจ้า");
         let dtData = [];
         //1071
         await axios
@@ -1102,7 +1061,7 @@ function fn_rpt_SheetTraceView() {
           })
           .then((res) => {
             dtData = res.data;
-            console.log(dtData, "dtData");
+            console.log(dtData, "dtData666");
           });
         if (dtData.length > 0) {
           StrResult = dtData[0].AOM_RESULT;

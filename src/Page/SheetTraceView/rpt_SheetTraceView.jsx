@@ -399,6 +399,7 @@ function rpt_SheetTraceView() {
                           width: "90%",
                           backgroundColor: "#B6BBC4", 
                           ...btnAOMEFPC.style, // รวมสไตล์เพิ่มเติมจาก btnAOMEFPC.style
+                          color: "white",
                         }}
                         className="hover-button"
                       >
