@@ -68,6 +68,11 @@ function LotTraceView() {
       onChange={(e) => {
         settxtLotNo(e.target.value);
       }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          btnSearch_Click()
+        }
+      }}
       ref={fc_txtLotNo}
     />{" "}
     &nbsp;
@@ -78,6 +83,11 @@ function LotTraceView() {
       onChange={(e) => {
         settxtSheetNo(e.target.value);
       }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          btnSearch_Click()
+        }
+      }}
     />{" "}
     &nbsp;
     <Input
@@ -86,6 +96,11 @@ function LotTraceView() {
       value={txtSerialNo}
       onChange={(e) => {
         settxtSerialNo(e.target.value);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          btnSearch_Click()
+        }
       }}
     />{" "}
     &nbsp;
