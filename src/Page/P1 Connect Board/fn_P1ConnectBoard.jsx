@@ -3,8 +3,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import ExcelJS from "exceljs";
 import { useLoading } from "../../loading/fn_loading";
-import Papa from 'papaparse';
+import {DataConfig} from "../Common/function_Common"; 
 function fn_P1ConnectBoard() {
+  const{ConfigData} = DataConfig();
+  console.log(ConfigData,'ConfigData');
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
 
@@ -172,15 +174,14 @@ function fn_P1ConnectBoard() {
   const [hfSerialCount, setHfSerialCount] = useState("");
   const hfUserStation = localStorage.getItem("ipAddress");
   const hfUserID = localStorage.getItem("ipAddress");
-  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-  const ROLL_SHT_ROLL_START_DIGIT = import.meta.env
-    .VITE_ROLL_SHT_ROLL_START_DIGIT;
-  const ROLL_SHT_ROLL_LENGTH = import.meta.env.VITE_ROLL_SHT_ROLL_LENGTH;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env
-    .VITE_CONNECT_SERIAL_NOT_FOUND;
-  const Fac = import.meta.env.VITE_FAC;
-  const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
+
+  const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+  const AUTO_SCAN_CHECK_FLG = ConfigData.AUTO_SCAN_CHECK_FLG;
+  const ROLL_SHT_ROLL_START_DIGIT = ConfigData.ROLL_SHT_ROLL_START_DIGIT;
+  const ROLL_SHT_ROLL_LENGTH = ConfigData.ROLL_SHT_ROLL_LENGTH;
+  const CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND;
+  const Fac = ConfigData.FACTORY;
+  const EXPORT_CSV_FLG = ConfigData.EXPORT_CSV_FLG;
   
   const hfProcessList = "''MPRN'',''MMOT'',''MREF'',''MAOI''";
   let Now = new Date();
@@ -1568,9 +1569,6 @@ function fn_P1ConnectBoard() {
 
 
   const ExportCSV = (data, ColumnsHeader) => {
-    const date = new Date();
-    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
-
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
     );
@@ -1589,7 +1587,7 @@ function fn_P1ConnectBoard() {
 
     const bom = "\uFEFF";
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, `P1_ConectBoard_${formattedDate}.csv`);
+    saveAs(blob, `P1_ConectBoard.csv`);
   };
 
 

@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
 import {DataConfig} from "../Common/function_Common";
 function fn_ScanSMTSerialPcsAutoTrayConfirm() {
@@ -166,13 +164,13 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
 
   //env
 
-  const FINAL_GATE_AUTO_PRD = import.meta.env.VITE_FINAL_GATE_AUTO_PRD;
-  const DUPLICATE_CHECK_FLG = import.meta.env.VITE_DUPLICATE_CHECK_FLG;
-  const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
-  const EXPORT_CSV_FLG = import.meta.env.VITE_EXPORT_CSV_FLG;
+  const FINAL_GATE_AUTO_PRD =ConfigData.FINAL_GATE_AUTO_PRD;
+  const DUPLICATE_CHECK_FLG =ConfigData.DUPLICATE_CHECK_FLG;
+  const FINAL_GATE_MASTER_CODE =ConfigData.FINAL_GATE_MASTER_CODE;
+  const FINAL_GATE_SPECIAL_FLG =ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD =ConfigData.FINAL_GATE_SPECIAL_PRD;
+  const FINAL_GATE_SPECIAL_MESSAGE =ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
+  const EXPORT_CSV_FLG = ConfigData.EXPORT_CSV_FLG;
   const Fac = ConfigData.VITE_FAC_A1;
   
   //PageLoad----------
@@ -1683,13 +1681,10 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
 
 
   const ExportCSV = (data, ColumnsHeader) => {
-    const date = new Date();
-    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
-
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
     );
-  
+
     const headers = filteredColumns.map((col) => col.key);
   
     const filteredData = data.map((row) =>
@@ -1701,10 +1696,9 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       ...filteredData.map((row) => row.join(",")) 
     ].join("\n");
   
-
     const bom = "\uFEFF";
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, `ConfirmFinalGateOnlyGood_${formattedDate}.csv`);
+    saveAs(blob, `ConfirmFinalGateOnlyGood.csv`);
   };
 
 

@@ -7,7 +7,9 @@ import { Tag } from "antd";
 import { Tooltip, Avatar } from "antd";
 import excel from "/src/assets/excel.png";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common"; 
 function fn_LotTraceView() {
+  const{ConfigData} = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [txtLotNo, settxtLotNo] = useState("");
   const [LotNoSearch, setLotNoSearch] = useState("");
@@ -52,7 +54,7 @@ function fn_LotTraceView() {
     visible: "none",
     style: {},
   });
-
+  const [gvLOTtrace, setgvLOTtrace] = useState([])
   const [gvMaterial, setgvMaterial] = useState({
     value: "",
     disbled: "",
@@ -122,7 +124,7 @@ function fn_LotTraceView() {
   //link
   const params = new URLSearchParams(window.location.search);
   const lot = params.get("lot");
-  const Fac = import.meta.env.VITE_FAC;
+  const Fac = ConfigData.FACTORY;
 
   useEffect(() => {
     if (lot == "" || lot == null || lot == undefined) {
@@ -143,21 +145,13 @@ function fn_LotTraceView() {
     }
   }, [LotNoSearch]);
 
-  //   useEffect(() => {
-  // fetchdata()
-  //     // const [strEMCSNo, linkEmcNo, linkEmcNo2, linkEmcNo3] = test1; // ค่าแต่ละตัวจาก array test1
-  //     // console.log(strEMCSNo, linkEmcNo, linkEmcNo2, linkEmcNo3,'useeeeee')
-
-  //   }, [gvRouting.value]);
-  //   const fetchdata = async () => {  const test1= await DatagvRouting(); // ค่าแรกจาก DatagvRouting
-  //     console.log(test1,'ttttttt')}
-
   const btnSearch_Click = async () => {
     showLoading("กำลังค้นหา กรุณารอสักครู่...");
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
       console.log(txtLotNo, txtSheetNo, txtSerialNo, "เข้าจ้าาาาาาาาาาาาๅ");
       const datalblLot = await setHead();
       await setGrid(datalblLot);
+      await setLOT();
       hideLoading();
     } else {
       reset();
@@ -241,6 +235,8 @@ function fn_LotTraceView() {
       url: "",
     }));
   };
+
+
 
   const setHead = async () => {
     let datalblLot = "";
@@ -835,7 +831,7 @@ function fn_LotTraceView() {
             )
             .trim(); //ตัวสุดท้ายหลัง_
         }
-        console.log(strEMCSNo, "strEMCSNo");
+        // console.log(strEMCSNo, "strEMCSNo");
         return (
           <>
             {strEMCSNo.map((item, idx) => (
@@ -1005,6 +1001,96 @@ function fn_LotTraceView() {
       key: "MASTER_CODE",
     },
   ];
+  const setLOT = async () => {
+    let data=[{
+      LOT_NO: lblLotNo,
+      PRODUCT_NAME: txtProd,
+      NEXT_LOT: txtNextLotNo.text,
+      Previous_LOT: txtPreviousLotNo.text,
+      Connect_Sheet: lbtConnectSht.value,
+      FinalGate_OK: lbtFinalGate.valueOK,
+      FinalGate_NG: lbtFinalGate.valueNG,
+      Roll_No: gvLot.value[0].LOT_ROLL_NO,
+      FRONT_SHEET_NO: lblTitleShtFront.value,
+      BACK_SHEET_NO: lblTitleShtBack.value,
+     
+    }]
+    console.log(data,"setLOT")
+    setgvLOTtrace(data) 
+  }
+  const columnsViewTraceLot = [
+    {
+      key: "LOT No.",
+      dataIndex: "LOT_NO",
+    },
+    {
+      key: "Product Name",
+      dataIndex: "PRODUCT_NAME",
+    },
+    {
+      key: "Next LOT No.",
+      dataIndex: "NEXT_LOT",
+    },
+    {
+      key: "Previous LOT No.",
+      dataIndex: "Previous_LOT",
+    },
+    {
+      key: "Connect Sheet",
+      dataIndex: "Connect_Sheet",
+    },
+    {
+      key: "FinalGate OK",
+      dataIndex: "FinalGate_OK",
+    },
+    {
+      key: "FinalGate NG",
+      dataIndex: "FinalGate_NG",
+    },
+    {
+      key: "Roll No",
+      dataIndex: "Roll_No",
+    },
+    {
+      key: "Front Sheet",
+      dataIndex: "FRONT_SHEET_NO",
+    },
+    {
+      key: "Back Sheet",
+      dataIndex: "BACK_SHEET_NO",
+    },
+   
+    
+  ];
+
+  const ExportTableToCSV = (sheets, namefile) => {
+    console.log(sheets, "---", namefile);
+    const wb = XLSX.utils.book_new();
+  
+    sheets.forEach((sheet) => {
+      const { data, ColumnsHeader, sheetName } = sheet;
+  
+      const filteredColumns = ColumnsHeader.filter(
+        (col) => col.key !== "" && col.key !== null && col.key !== undefined
+      );
+  
+      const headers = filteredColumns.map((col) => col.key);
+  
+      const filteredData = data.map((row) =>
+        filteredColumns.map((col) => row[col.dataIndex] || "")
+      );
+  
+      const wsData = [headers, ...filteredData];
+      const ws = XLSX.utils.aoa_to_sheet(wsData);
+      XLSX.utils.book_append_sheet(wb, ws, sheetName || "Sheet1");
+    });
+  
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blobData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(blobData, namefile);
+  };
 
   const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
     console.log(data, "---", ColumnsHeader, "---", namefile);
@@ -1040,48 +1126,17 @@ function fn_LotTraceView() {
   };
 
 
-  // const checkFileExists = async (fileUrl) => {
-  //   const res = await axios.head(fileUrl);
-  //   const status = res.status;
-  //   console.log(res)
-  //   if (status === 200) {
-  //     console.log("file exists", res);
-  //     return true;
-  //   } else {
-  //     console.log("file not exists", res);
-  //     return false;
-  //   }
-  //   // try {
-  //   //   const response = await fetch(`'${fileUrl}'`, { method: "HEAD" });
-  //   //   console.log(response,"fileUrl")
-  //   //   return response.ok;
-  //   // } catch (error) {
-  //   //   console.error("Error checking file:", error);
-  //   //   return false;
-  //   // }
-  // };
 
 
-  const ExportTableToCSV = (data, ColumnsHeader, namefile) => {
-    const filteredColumns = ColumnsHeader.filter(
-      (col) => col.key !== "" && col.key !== null && col.key !== undefined
-    );
 
-    const headers = filteredColumns.map((col) => col.key);
+  const checkFileLink = async (url) => {
+    const res = await axios.get(`'${url}'`)
+    if(res){
+      console.log(res,"res")
+    }else{
+      console.log("no res")
+    }
 
-    const filteredData = data.map((row) =>
-      filteredColumns.map((col) => row[col.dataIndex] || "")
-    );
-
-    const wsData = [headers, ...filteredData];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blobData = new Blob([excelBuffer], {
-      type: "application/octet-stream",
-    });
-    saveAs(blobData, namefile);
   };
 
   const setFinalGateGrid = async (strLot, strResult) => {
@@ -1169,11 +1224,19 @@ function fn_LotTraceView() {
         })
         .then((res) => {
           dt2 = res.data;
-          // fileUrl=dt2[0].filepdf
+          fileUrl=dt2[0].filepdf
           console.log(dt2, "tdtdtdtdtddt");
         });
-      //  await checkFileExists(fileUrl)
-        
+       console.log(dt2, "fileUrl");
+        const isAccessible = await checkFileLink(fileUrl)
+        if (isAccessible) {
+          // Handle the case when the file is accessible
+          console.log('File is accessible');
+        } else {
+          // Handle the case when the file is not accessible
+          console.log('File is not accessible');
+        }
+      
 
       for (let dr = 0; dr < dt2.length; dr++) {
         dt2 = dt2[0];
@@ -1242,6 +1305,8 @@ function fn_LotTraceView() {
     txtSheetNo,
     settxtSheetNo,
     txtSerialNo,
+    gvLOTtrace,
+    columnsViewTraceLot
   };
 }
 

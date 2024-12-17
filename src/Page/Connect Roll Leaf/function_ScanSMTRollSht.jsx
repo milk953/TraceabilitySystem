@@ -2,9 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
-import {useLoading} from "../../loading/fn_loading";  
-
+import {useLoading} from "../../loading/fn_loading"; 
+import {DataConfig} from "../Common/function_Common"; 
+import * as XLSX from "xlsx";
 function Fn_ScanSMTRollSht() {
+  const{ConfigData} = DataConfig();
+  console.log(ConfigData,'ConfigData');
   const {showLoading,hideLoading} = useLoading();
   const [txt_lotNo, settxt_lotNo] = useState({
     value: "",
@@ -77,8 +80,6 @@ function Fn_ScanSMTRollSht() {
   const [hfTrayFlag, setHfTrayFlag] = useState("");
   const [hfTrayLength, setHfTrayLength] = useState("");
   const [hfTestResultFlag, setHfTestResultFlag] = useState("");
-  const [hfBarcodeSide, setHfBarcodeSide] = useState("");
-  const [hfShtScan, setHfShtScan] = useState("");
   const [hfConfigCheck, setHfConfigCheck] = useState("");
   const [hfConfigCode, setHfConfigCode] = useState("");
   const [hfConfigStart, setHfConfigStart] = useState("");
@@ -97,9 +98,6 @@ function Fn_ScanSMTRollSht() {
   const [hfCheckStartSeqCode, setHfCheckStartSeqCode] = useState("");
   const [hfCheckStartSeqStart, setHfCheckStartSeqStart] = useState("");
   const [hfCheckStartSeqEnd, setHfCheckStartSeqEnd] = useState("");
-  const [hfCheckSheetELT, setHfCheckSheetELT] = useState("");
-  const [hfCheckRollSht, setHfCheckRollSht] = useState("");
-  const [hfCheckRollShtDigit, setHfCheckRollShtDigit] = useState("");
   const [hfCheckDateInProc, setHfCheckDateInProc] = useState("");
   const [hfDateInProc, setHfDateInProc] = useState("");
   const [hfCheckWeekCode, setHfCheckWeekCode] = useState("");
@@ -107,13 +105,6 @@ function Fn_ScanSMTRollSht() {
   const [hfCheckWeekCodeEnd, setHfCheckWeekCodeEnd] = useState("");
   const [hfWeekCode, setHfWeekCode] = useState("");
   const [hfWeekCodeType, setHfWeekCodeType] = useState("");
-  const [hfCheckPreAOIF, setHfCheckPreAOIF] = useState("");
-  const [hfCheckPreAOIB, setHfCheckPreAOIB] = useState("");
-  const [hfCheckAOIF, setHfCheckAOIF] = useState("");
-  const [hfCheckAOIB, setHfCheckAOIB] = useState("");
-  const [hfCheckSPIF, setHfCheckSPIF] = useState("");
-  const [hfCheckSPIB, setHfCheckSPIB] = useState("");
-  const [hfReqMachine, setHfReqMachine] = useState("");
   const [hfConnRollLength, setHfConnRollLength] = useState("");
   const [hfConnLeafLength, setHfConnLeafLength] = useState("");
   const [hfCheckRollPrdFlg, setHfCheckRollPrdFlg] = useState("");
@@ -121,19 +112,11 @@ function Fn_ScanSMTRollSht() {
   const [hfCheckRollPrdEnd, setHfCheckRollPrdEnd] = useState("");
   const [hfCheckRollPrd, setHfCheckRollPrd] = useState("");
   const [hfSerialStartCode, setHfSerialStartCode] = useState("");
-  const [hfCheckXrayF, setHfCheckXrayF] = useState("");
-  const [hfCheckXrayB, setHfCheckXrayB] = useState("");
-  const [hfCheckXrayOneTime, setHfCheckXrayOneTime] = useState("");
-  const [hfCheckFinInspect, setHfCheckFinInspect] = useState("");
-  const [hfCheckFinInspectProc, setHfCheckFinInspectProc] = useState("");
   const [hfChipIDCheck, setHfChipIDCheck] = useState("");
   const [hfPlasmaCheck, setHfPlasmaCheck] = useState("");
   const [hfPlasmaTime, setHfPlasmaTime] = useState("");
   const [hfAutoScan, setHfAutoScan] = useState("");
-  const [hfCheckAOICoatF, setHfCheckAOICoatF] = useState("");
-  const [hfCheckAOICoatB, setHfCheckAOICoatB] = useState("");
   const [hfSerialInfo, setHfSerialInfo] = useState("");
-  const [hfBarcodeGrade, setHfBarcodeGrade] = useState("");
   const [hfMode, setHfMode] = useState("");
   const [hfSerialCount, setHfSerialCount] = useState("");
   const [hfRollNo, setHfRollNo] = useState("");
@@ -142,10 +125,11 @@ function Fn_ScanSMTRollSht() {
   const [hfLeafSerialFlg, setHfLeafSerialFlg] = useState("");
   const [hfScanResult, setHfScanResult] = useState("");
 
+  // const Fac = ConfigData.FACTORY;
   const Fac = import.meta.env.VITE_FAC;
-  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
-  const hfAutoDownload = "N";
+  const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+  const CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND;
+  const hfAutoDownload = ConfigData.EXPORT_CSV_FLG;
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
 
@@ -156,6 +140,7 @@ function Fn_ScanSMTRollSht() {
       setHfMode("");
       await GetProductRollLeafData();
       await SetMode("LOT");
+     
     };
     fetchData();
   }, []);
@@ -1061,13 +1046,24 @@ function Fn_ScanSMTRollSht() {
         fc_txtRollleaf.current.focus();
       }, 300);
     } else {
-      settxtRollLeaf((prevState) => ({
-        ...prevState,
-        value: "",
-        disbled: false,
-      }));
+      if (lbllog.value != "") {
+        getInitialSheet();
+        settxtRollLeaf((prevState) => ({
+          ...prevState,
+          value: "",
+          disbled: false,
+        }));
+
+        SetGvSerial((prevState) => ({ ...prevState, visible: false }));
+        setHfMode("SHEET");
+      } else {
+        SetMode("ROLL");
+      }
+      setTimeout(() => {
+        fc_txtRollleaf.current.focus();
+      }, 300);
       ExportGridToCSV(dtSheet, columns);
-      getInitialSheet();
+     
     }
     hideLoading();
   }
@@ -1218,24 +1214,23 @@ function Fn_ScanSMTRollSht() {
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
     );
-
+  
     const headers = filteredColumns.map((col) => col.key);
-
+  
     const filteredData = data.map((row) =>
       filteredColumns.map((col) => row[col.dataIndex] || "")
     );
+  
+    const csvContent = [
+      headers.join(","), 
+      ...filteredData.map((row) => row.join(",")) 
+    ].join("\n");
+  
 
-    const wsData = [headers, ...filteredData];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blobData = new Blob([excelBuffer], {
-      type: "application/octet-stream",
-    });
-    saveAs(blobData, "export.xlsx");
+    const bom = "\uFEFF";
+    const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, `ConnectRollLeaf.csv`);
   };
-
   return {
     settxt_lotNo,
     txt_lotNo,

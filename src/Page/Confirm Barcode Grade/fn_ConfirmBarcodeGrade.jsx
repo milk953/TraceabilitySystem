@@ -3,8 +3,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
-
+import {DataConfig} from "../Common/function_Common"; 
 function fn_ConfirmBarcodeGrade() {
+  const{ConfigData} = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
 
@@ -177,10 +178,10 @@ function fn_ConfirmBarcodeGrade() {
     visble: false,
     style: "",
   });
-  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
+  const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+  const AUTO_SCAN_CHECK_FLG =  ConfigData.AUTO_SCAN_CHECK_FLG;
+  const Fac = ConfigData.FACTORY;
   const hfBarcodeErrorValue = "NA";
-  const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-  const Fac = import.meta.env.VITE_FAC;
 
   //Start pageload
   useEffect(() => {

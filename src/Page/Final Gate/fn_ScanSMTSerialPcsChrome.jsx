@@ -3,7 +3,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common"; 
 function fn_ScanSMTSerialPcsChrome() {
+  const{ConfigData} = DataConfig();
+  console.log(ConfigData,'ConfigData');
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
@@ -188,13 +191,12 @@ function fn_ScanSMTSerialPcsChrome() {
   const fc_txtMachine= useRef([]);
 
   //env
-  const DUPLICATE_CHECK_FLG = import.meta.env.VITE_DUPLICATE_CHECK_FLG;
-  const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const Fac = import.meta.env.VITE_FAC;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env
-    .VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
+  const FINAL_GATE_MASTER_CODE = ConfigData.FINAL_GATE_MASTER_CODE;
+  const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+  const Fac = ConfigData.FACTORY
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
   //PageLoad----------
   useEffect(() => {
     const fetchData = async () => {
