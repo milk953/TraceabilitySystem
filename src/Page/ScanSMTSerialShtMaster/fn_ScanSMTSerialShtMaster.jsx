@@ -1423,7 +1423,7 @@ function fn_ScanSMTSerialShtMaster() {
             dataIndex: "SERIAL",
             key: "Serial No.",
             align: "center",
-            width: 450,
+            width: 440,
             render: (text, record, index) => {
                 return text;
             },
@@ -1433,19 +1433,24 @@ function fn_ScanSMTSerialShtMaster() {
             key: "Scan Result",
             dataIndex: "SCAN_RESULT",
             align: "center",
-            width: 150,
+            width: 120,
             render: (text, record, index) => {
-                if (text == '')
+                if (record.SERIAL == "") {
+                    return "";
+                } else {
                     return text;
-                else {
-                    return (
-                        <Tag
-                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
-                        >
-                            {text}
-                        </Tag>
-                    );
                 }
+                // if (text == '')
+                //     return text;
+                // else {
+                //     return (
+                //         <Tag
+                //             className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
+                //         >
+                //             {text}
+                //         </Tag>
+                //     );
+                // }
             },
 
         },
