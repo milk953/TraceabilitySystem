@@ -81,9 +81,9 @@ function ScanSheetMOTTime() {
                 component={Card}
                 sx={{ width: "100%", maxWidth: "800px", minWidth: "800px" }}
               >
-                <TableHead style={{ height: '60px' }}>
+                <TableHead>
                   <TableRow>
-                    <TableCell colSpan={3} align="center" style={{fontSize:'30px'}}>
+                    <TableCell colSpan={3} className="Header_Center">
                     
                         Pre-Baking <ArrowRightOutlined /> MOT2 Control Time
                       
