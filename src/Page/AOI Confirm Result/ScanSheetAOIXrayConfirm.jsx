@@ -27,7 +27,7 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { Table as AntTable } from "antd";
+
 import "./AOIXrayConfirm.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -50,21 +50,18 @@ function ScanSheetMOTTime() {
     <div>
       <Hearder />
 
-      {/* <Card component={Paper} className="Card-Common"> */}
-        <Box sx={{ display: "flex", alignItems: "flex-start" ,marginTop:'80px'}}>
-          <Grid container spacing={2}>
-            <Grid item xs={10} md={12} align="center">
+          <Grid className="Center_Layout">
+            <Grid >
               <Table
                 component={Card}
-                className="AOIConfirmResult"
-                style={{ width: "50%" }}
+                className="Header_Center"
+              
               >
-                <TableHead style={{ height: "60px" }}>
+                <TableHead >
                   <TableRow>
                     <TableCell
                       colSpan={3}
-                      align="center"
-                      style={{ fontSize: "30px" }}
+                    
                     >
                       <b>AOI Confirm Result</b>
                     </TableCell>
@@ -93,16 +90,19 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                     <TableCell>
-                      <BackspaceIcon
-                        style={{ marginLeft: "10px" }}
+                      {/* <BackspaceIcon
+                        style={{ marginLeft: "10px", cursor: "pointer" }}
                         onClick={ibt_back}
-                      />
+                      /> */}
+                         <Button type="text" onClick={ibt_back}>
+                        <BackspaceIcon />
+                      </Button>
                     </TableCell>
                   </TableRow>
                   <TableRow style={{display: lblResult === '' ? 'none' : '',}}>
                     <TableCell
                       colSpan={3}
-                      style={{ height: "40px",fontSize: "23px", }}
+                      style={{ height: "40px",fontSize: "16px", }}
                       align="center"
                     >
                         {lblSheet}
@@ -163,7 +163,7 @@ function ScanSheetMOTTime() {
               </Table>
             </Grid>
           </Grid>
-        </Box>
+        {/* </Box> */}
       {/* </Card> */}
       {/* </Card> */}
     </div>
