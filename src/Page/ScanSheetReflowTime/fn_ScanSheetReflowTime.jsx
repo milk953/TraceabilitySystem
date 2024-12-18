@@ -135,7 +135,7 @@ function fn_ScanSheetReflowTime() {
           setLblSheet(txtSheetNo);
           setTxtmcNoState({ open: true });
           PnlmainDisable();
-          setLblRemark({text:"Exists record time, please be confirm.",styled:{color: "black",background:'yellow'}});
+          setLblRemark({text:"Exists record time, \n please be confirm.",styled:{color: "black",background:'yellow'}});
           return;
         }
       } else {

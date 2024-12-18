@@ -145,6 +145,7 @@ function ScanSheetReflowTime() {
                 color: lblRemark.styled?.color || "defaultColor",
                 background: lblRemark.styled?.background || "defaultBackground",
                 border : lblRemark.styled?.border || "defaultBorder",
+                whiteSpace: "pre-line"
               }}
             >
               {lblRemark.text}

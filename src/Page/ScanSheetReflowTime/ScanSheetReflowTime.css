@@ -30,6 +30,7 @@
 #TableResult {
   height: 180px;
   /* background: #EFBC9B; */
+  
 }
 #TableResult td {
   /* font-size: 80px; */
@@ -60,6 +61,7 @@
 }
 #TableResultReflow {
   height: 180px;
+  
 }
 #TableResultReflowred {
   height: 180px;
@@ -67,6 +69,7 @@
 #TableResultReflow td {
   /* font-size: 80px; */
   text-align: center;
+  border: 15px;
 }
 #TableResultReflowred td {
   /* font-size: 80px; */
