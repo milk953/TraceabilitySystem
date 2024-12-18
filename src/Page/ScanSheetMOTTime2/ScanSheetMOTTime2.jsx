@@ -10,7 +10,7 @@ import {
   TableContainer,
   Paper,
   Typography,
-
+  Button as MuiButton,
   Select,
   MenuItem,
   FormControl,
@@ -84,7 +84,7 @@ function ScanSheetMOTTime() {
                   <TableRow>
                     <TableCell colSpan={3} className="Header_Center">
                     
-                        Pre-Baking <ArrowRightOutlined /> MOT2 Control Time
+                       <b> Pre-Baking <ArrowRightOutlined /> MOT2 Control Time</b>
                       
                     </TableCell>
                   </TableRow>
@@ -146,9 +146,9 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button onClick={BtClick_back}>
+                    <MuiButton type="text" onClick={BtClick_back}>
                         <BackspaceIcon />
-                      </Button>
+                      </MuiButton>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -247,7 +247,7 @@ function ScanSheetMOTTime() {
                   </TableRow>
                   {console.log('lblRemark2',lblRemark,lblResult.value)}
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
-                    <TableCell colSpan={3} align="center" style={{fontSize:'23px'}}>
+                    <TableCell colSpan={3} align="center" style={{fontSize:'16px'}}>
                        {lblSheet}
                     </TableCell>
                   </TableRow>
@@ -268,7 +268,7 @@ function ScanSheetMOTTime() {
                           {lblResult.value}
                         </Typography>
                         {/* marginTop: lblResult.value === '' ? "380px" : "0px", */}
-                        <Typography align="center" style={{ fontSize: "34px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "80px" : "0px"}}>
+                        <Typography align="center" style={{ fontSize: "34px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "65px" : "0px",whiteSpace: "pre-line"}}>
                           {lblRemark}
                         </Typography>
                       </Card>
@@ -279,7 +279,7 @@ function ScanSheetMOTTime() {
                   <TableCell colSpan={3} align="center">
                   <Box display="flex" justifyContent="center" alignItems="center" width="100%">
                     <Box display="flex" justifyContent="space-between" alignItems="center" width="90%">
-                    <Button  type="primary" size="large" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
+                      <Button  type="primary" size="large" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
                       <Button  type="primary" size="large" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
                       <Button  type="primary" size="large"  onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
                     </Box>

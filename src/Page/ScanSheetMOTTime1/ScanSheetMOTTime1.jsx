@@ -19,6 +19,7 @@ import {
   Checkbox,
   Grid,
   Input,
+  Button as MuiButton,
 } from "@mui/material";
 
 
@@ -84,7 +85,7 @@ function ScanSheetMOTTime() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} >
-                        Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
+                     Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -141,9 +142,9 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button type="text" onClick={BtClick_back}>
+                      <MuiButton type="text" onClick={BtClick_back}>
                         <BackspaceIcon />
-                      </Button>
+                      </MuiButton>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -238,7 +239,7 @@ function ScanSheetMOTTime() {
                   </TableRow>
   
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
-                    <TableCell colSpan={3} align="center" style={{fontSize:'23px'}}>
+                    <TableCell colSpan={3} align="center" style={{fontSize:'16px'}}>
                        {lblSheet}
                     </TableCell>
                   </TableRow>
@@ -254,7 +255,7 @@ function ScanSheetMOTTime() {
                       <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"
-                          style={{ color:'#fff', marginTop: "30px", fontSize: "90px"  }}
+                          style={{ color:'#fff', marginTop: "40px", fontSize: "90px"  }}
                         >
                           {lblResult.value}
                         </Typography>

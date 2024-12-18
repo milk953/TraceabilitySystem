@@ -215,24 +215,25 @@
   text-align: center !important;
   font-size: 20px !important;
   height: 30px !important;
-}
-*/ .Header_Center {
-  height: 100px;
-  width: 880px;
-}
-.Header_Center th {
-  font-family: Arial;
-  padding: 8px !important;
-  background-color: #8c8c8c !important ;
-  border-radius: 5px 5px 0 0 !important;
-  color: #fff;
-  font-size: 20px;
-  text-align: center;
-}
+} 
 
-.Header_Center td {
-  padding: 8px !important;
-}
+
+
+  .Header_Center th {
+    font-family: Arial;
+    padding: 8px !important;
+    background-color: #8c8c8c !important ;
+    border-radius: 5px 5px 0 0 !important;
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .Header_Center td{
+
+    padding: 8px !important;
+
+  }
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {
     background-color: #f9f9f9;
   
