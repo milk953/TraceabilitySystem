@@ -411,15 +411,11 @@ function rpt_SheetTraceView() {
                         className="input_txt"
                         size="small"
                         value={txtAOMEFPCCnt}
-                        // onChange={(e) => {
-                        //     settxtProduct(e.target.value);
-                        // }}
-                        // onKeyDown={(e) => {
-                        //     if (e.key === "Enter") {
-                        //         handleChangeProduct();
-                        //     }
-                        // }}
-                        // onBlur={handleChangeProduct}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell style={{ width: "250px" }}>
@@ -428,15 +424,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtAOMEFPCTime}
-                        // onChange={(e) => {
-                        //     settxtProduct(e.target.value);
-                        // }}
-                        // onKeyDown={(e) => {
-                        //     if (e.key === "Enter") {
-                        //         handleChangeProduct();
-                        //     }
-                        // }}
-                        // onBlur={handleChangeProduct}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -447,6 +439,11 @@ function rpt_SheetTraceView() {
                         value={txtAOMEFPCMachine}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -473,6 +470,11 @@ function rpt_SheetTraceView() {
                         className="input_txt"
                         size="small"
                         value={txtAOIEFPCCnt}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -481,6 +483,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtAOIEFPCTime}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -489,6 +496,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtAOIEFPCMachine}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -519,6 +531,11 @@ function rpt_SheetTraceView() {
                         className="input_txt"
                         size="small"
                         value={txtOSTCnt}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -527,6 +544,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtOSTTime}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -535,6 +557,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtOSTMachine}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -563,6 +590,11 @@ function rpt_SheetTraceView() {
                         className="input_txt"
                         size="small"
                         value={txtAVICnt}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -571,6 +603,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtAVITime}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
 
@@ -580,6 +617,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtAVIMachine}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                   </TableRow>
@@ -605,6 +647,11 @@ function rpt_SheetTraceView() {
                         className="input_txt"
                         size="small"
                         value={txtFVICnt}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -616,6 +663,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtFVITime}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -628,6 +680,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtFVIMachine}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -638,7 +695,6 @@ function rpt_SheetTraceView() {
                     <TableCell rowSpan={"10"}>SMT</TableCell>
                     <TableCell>SPI</TableCell>
                     <TableCell>
-                      {console.log("btnSPI.style",btnSPI)}
                       <Button
                         onClick={() => btnAllLInk("SPI")}
                         style={{
@@ -657,6 +713,11 @@ function rpt_SheetTraceView() {
                       <TextField
                         className="input_txt"
                         size="small"
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         value={txtSPICnt}
                         InputProps={{
                           readOnly: true,
@@ -669,6 +730,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtSPITime}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -681,6 +747,11 @@ function rpt_SheetTraceView() {
                         size="small"
                         fullWidth
                         value={txtSPIMachine}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -705,13 +776,17 @@ function rpt_SheetTraceView() {
                       </Button>
                     </TableCell>
                     <TableCell>
-                      {console.log(TxtPreCnt,"TxtPreCnt")}
                       <TextField
                         className="input_txt"
                         size="small"
                         value={TxtPreCnt}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -724,6 +799,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
 
@@ -735,6 +815,11 @@ function rpt_SheetTraceView() {
                         value={txtPreMachine}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -763,6 +848,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -773,6 +863,11 @@ function rpt_SheetTraceView() {
                         value={txtReflowTime}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -785,6 +880,11 @@ function rpt_SheetTraceView() {
                         value={txtReflowMachine}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -814,6 +914,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -824,6 +929,11 @@ function rpt_SheetTraceView() {
                         value={txtAOITime}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -836,6 +946,11 @@ function rpt_SheetTraceView() {
                         value={txtAOIMachine}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -865,6 +980,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -876,6 +996,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -886,6 +1011,11 @@ function rpt_SheetTraceView() {
                         value={txtXRayMachine}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -916,6 +1046,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -927,6 +1062,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -937,6 +1077,11 @@ function rpt_SheetTraceView() {
                         value={txtAOICOAMachine}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
@@ -965,6 +1110,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -976,6 +1126,11 @@ function rpt_SheetTraceView() {
                         InputProps={{
                           readOnly: true,
                         }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -986,6 +1141,11 @@ function rpt_SheetTraceView() {
                         value={txtSMTIntMachine}
                         InputProps={{
                           readOnly: true,
+                        }}
+                        disabled
+                        sx={{
+                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
+                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
                         }}
                       />
                     </TableCell>
