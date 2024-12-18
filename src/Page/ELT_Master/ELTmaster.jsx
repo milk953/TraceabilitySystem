@@ -2,28 +2,28 @@ import React, { useState } from "react";
 import Hearder from "../Header/Header";
 import "../Reject/Reject.css";
 import './ELTmaster.css'
-import Checkbox from "@mui/material/Checkbox";
 import {
   TextField,
   Table,
   TableBody,
   TableCell,
   TableRow,
-  Button,
   TableHead,
   Paper,
   Typography,
   Card
 } from "@mui/material";
 import {fn_ELTmaster} from "./fn_ELTmaster"
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import { Button as ButtonTable } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 function ELT_Master() {
-    const {lblUser1,lblResult,txtSerialNo_TextChanged,ddlReason1,selectddlReason1,setselectddlReason1,txtUpdateBy,settxtSerialNo_TextChanged,Search_Data,Submit,FctxtSerial} = fn_ELTmaster();
-  return (
+    const {lblUser1,lblResult,txtSerialNo_TextChanged,ddlReason1,selectddlReason1,setselectddlReason1,txtUpdateBy,settxtSerialNo_TextChanged,Search_Data,Submit,FctxtSerial,handleBtnCancel} = fn_ELTmaster();
+    const { menuName } = fn_Homepage();
+    return (
     <>
       <Hearder />
-      <h1>ELT Master</h1>
+      
       <div className="Head-ELT">
     <table  className='Head-Textshow'>
     <tbody>
@@ -46,7 +46,7 @@ function ELT_Master() {
           textAlign: "center",
         }}
       >
-        <Paper
+        {/* <Paper
           className="Result_ELT"
           style={{
             ...lblResult.styled,
@@ -55,16 +55,29 @@ function ELT_Master() {
          <Typography  style={{
             ...lblResult.styled,
           }}>{lblResult.text}</Typography> 
-        </Paper>
+        </Paper> */}
+               <Card
+              //  style={{
+              //   ...lblResult.styled,
+              // }}
+              style={{ display: lblResult.text === '' ? 'none' : '' }}
+                    className={
+                      lblResult.styled.backgroundColor === "red"
+                        ? "ResultError"
+                        : "ResultSuccess"
+                    }
+                  >
+                    {lblResult.text}
+                  </Card>
       </td>
         </tr>
       </tbody>
     </table>
       </div>
       <div className="ELTMmasterPnlForm">
-        <Table className="ELTMmasterTb" component={Card}>
+        <Table className="Header_Center" component={Card}>
           <TableHead>
-            <TableCell colSpan={4}>ELT Master</TableCell>
+            <TableCell colSpan={4}>{menuName}</TableCell>
           </TableHead>
           <TableBody>
             <TableRow>
@@ -84,14 +97,7 @@ function ELT_Master() {
             </TextField>
           </TableCell>
           <TableCell style={{ padding: '8px' }}>
-          {/* <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={Search_Data}
-                > 
-                Retrive
-                </Button>
-                 */}
+         
                      <ButtonTable
                     type="primary"
                     icon={<SearchOutlined />}
@@ -104,84 +110,88 @@ function ELT_Master() {
           </TableBody>
         </Table>
       </div>
-    {/* <div className="Head-Piece">
-    <Table  component={Card} className='Head-Textshow'>
-    <TableBody>
-        <TableRow>
-        <TableCell  style={{ padding: '8px' }}>
-            <Typography>PieceNo:</Typography>
-          </TableCell>
+      <br></br>
+   
+      <div >
+      <Table className="ELTTableSecond" component={Card}>
+      <TableBody>
+    <TableRow sx={{maargin:'1px',}}>
+      <TableCell align="right">Before Reson :</TableCell>
+      <TableCell >
+        
+        <select
+        
+         style={{width:'95%'}}
+          onChange={(e) => setselectddlReason1(e.target.value)}
+          value={selectddlReason1}
+        >
+           <option value="" disabled align='center'>
+    --------------------- Select --------------------
+  </option>
+  {ddlReason1
+    .filter((option) => option.rejcet_code && option.rejcet_code.trim() !== '') 
+    .map((option, index) => (
+      <option key={index} value={option.rejcet_code}>
+        {option.rejcet_code === 'DELETE'
+          ? 'DELETE'
+          : `${option.rejcet_code} : ${option.rejcet_name}`}
+      </option>
+    ))}
+        </select>
+      </TableCell>
+      <TableCell  align="right">Update By :</TableCell>
+      <TableCell >
+        <input
+        
+          style={{
+            width:'85%',
+            backgroundColor: '#E2E3DC',
           
-        </TableRow>
-      </TableBody>
-    </Table>
-      </div> */}
-      <br></br>
-      <div className="ELTMmasterPnlForm">
-        <Table className="RejectTableSecond" component={Paper}>
-          <TableHead>
-            <TableRow>
-              <TableCell style={{textAlign:'center'}}>Before Reson</TableCell>
-              <TableCell style={{textAlign:'center'}} >Update By</TableCell>
-              <TableCell colSpan={2}></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <select
-                  onChange={(e) => setselectddlReason1(e.target.value)}
-                 value={selectddlReason1}
-                >
-                  {ddlReason1.map((option, index) => (
-                    <option key={index} value={`${option.rejcet_code}`}>
-                      {option.rejcet_code === "DELETE"
-                        ? "DELETE"
-                        : option.rejcet_code === " "
-                        ? ""
-                        : `${option.rejcet_code} : ${option.rejcet_name}`}
-                    </option>
-                  ))}
-                </select>
-              </TableCell>
-              <TableCell sx={{ width: "100px" }}>
-              <input
-                      style={{
-                        width: "150px",
-                        // border: "1px solid",
-                        margin: "0px",
-                        backgroundColor: "#E2E3DC"
-                        
-                      }}
-                      type="text"
-                      size="20"
-                      value={txtUpdateBy}
-                      disabled
-                    />
-              </TableCell>
-              <TableCell sx={{ width: "100px" }}>
-                {/* <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={Submit}
-                >
-                  Submit
-                </Button> */}
-                 <ButtonTable
-            style={{
-              backgroundColor: "green",
-              color: "white",
-            }}
-            onClick={Submit}
-          >
-            Submit
-          </ButtonTable>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
-      <br></br>
+          }}
+          type="text"
+          value={txtUpdateBy}
+          disabled
+        />
+      </TableCell>
+    </TableRow>
+    <TableRow >
+      <TableCell
+        colSpan={4} 
+        sx={{
+          textAlign: 'center', 
+        
+        }}
+      >
+        <ButtonTable
+          style={{
+            backgroundColor: 'green',
+            color: 'white',
+            width: '90px',
+            
+       
+          }}
+          onClick={Submit}
+        >
+          Submit
+        </ButtonTable>
+        <ButtonTable
+                            style={{
+                              backgroundColor: "red",
+                              width: "90px",
+                              color: "white",
+                            }}
+                            onClick={handleBtnCancel}
+                          >
+                            Cancel
+                          </ButtonTable>
+      </TableCell>
+    </TableRow>
+  </TableBody>
+
+</Table>
+
+        </div>
+
     </>
   );
 }

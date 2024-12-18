@@ -8,6 +8,7 @@ import {
   Button,
   TableHead,
   Paper,
+  Card
 } from "@mui/material";
 import  './SheetBinCheck.css'
 import Hearder from "../Header/Header";
@@ -34,7 +35,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
             <TableBody>
              
               <TableRow>
-                <TableCell  sx={{fontSize:'20px'}}
+                <TableCell  sx={{fontSize:'15px'}}
                 id="lbltxt"
                 >Sheet No. :</TableCell>
                 <TableCell>
@@ -58,7 +59,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
               </TableRow>
               <TableRow>
                 <TableCell colSpan={3} sx={{ textAlign: "center" }}>
-                  {/* {lblSheet} */}
+                  {lblSheet}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -66,13 +67,13 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
         </div>
         {(pnlResult &&
       <div className="pnlResult1">
-        <Table id="TableResult1" component={Paper}>
-        <TableRow>
+        <Table id="TableResult1" component={Card}>
+        {/* <TableRow>
           <TableCell sx={{fontSize:'30px' ,backgroundColor:'#d0d9ff'}}>
           {lblSheet}
           </TableCell>
-        </TableRow >
-          <TableRow sx={{height:'200px' ,backgroundColor:'yellow'}}>
+        </TableRow > */}
+          <TableRow sx={{height:'34px' }}>
             <TableCell
             sx={lblResult.styled}
             >

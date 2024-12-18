@@ -33,7 +33,7 @@ const txtSheetNo_TextChanged = async () => {
         if(response.data == 'NO BIN'){
             setlblResult({
                 text: response.data,
-                styled: { color: "white" , fontSize:'100px' ,fontWeight: 'bold',backgroundColor:'red' },
+                styled: { color: "white" , fontSize:'60px' ,backgroundColor:'red' },
               });
               setlblSheet(txtSheetNo.trim().toUpperCase());
               settxtSheetNo("")
@@ -44,7 +44,7 @@ const txtSheetNo_TextChanged = async () => {
         }else{
             setlblResult({
                 text: response.data,
-                styled: { color: "white" , fontSize:'100px',fontWeight: 'bold',backgroundColor:'green'  },
+                styled: { color: "white" , fontSize:'60px',backgroundColor:'green'  },
               });
               setlblSheet(txtSheetNo.trim().toUpperCase());
               settxtSheetNo("")

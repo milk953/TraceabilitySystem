@@ -25,6 +25,7 @@ function fn_ELTmaster() {
   useEffect(() => {
     let Idcode = localStorage.getItem("IDCode");
     sethfUserName(Idcode);
+    FctxtSerial.current.focus();
     PageLoad();
   }, []);
 
@@ -145,6 +146,15 @@ function fn_ELTmaster() {
         });
     }
   };
+  const handleBtnCancel = async () => {
+    settxtSerialNo_TextChanged("")
+    setselectddlReason1("")
+    setddlReason1([])
+    settxtUpdateBy("")
+    setlblResult("")
+    FctxtSerial.current.focus();
+  }
+  
   return {
     lblUser1,
     lblResult,
@@ -156,7 +166,8 @@ function fn_ELTmaster() {
     settxtSerialNo_TextChanged,
     Search_Data,
     Submit,
-    FctxtSerial
+    FctxtSerial,
+    handleBtnCancel
   };
 }
 

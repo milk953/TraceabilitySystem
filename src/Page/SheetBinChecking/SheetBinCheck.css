@@ -9,11 +9,15 @@
 }
 .pnlMain1 {
 
-  display: flex;
+  /* display: flex;
   margin: auto;
-  /* margin-top: 80px; */
   width: 600px;
-  /* height: 300px; */
+  height: 300px;
+   */
+   display: flex;
+   margin: auto;
+   width: 600px;
+   margin-top: 20px;
 }
 #TableMain1 {
   width: 600px !important;
@@ -21,9 +25,16 @@
   
 }
 #TableMain1 th {
-  text-align: center;
+  /* text-align: center;
   font-size: 38px;
+  background-color: #8c8c8c !important ; */
+  font-family: Arial;
+  padding: 8px !important;
   background-color: #8c8c8c !important ;
+  border-radius: 5px 5px 0 0 !important;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
 }
 
 .pnlResult1 {
@@ -56,3 +67,4 @@
 .Pageshow-SheetBin{
 margin-top: 6%;
 }
+
