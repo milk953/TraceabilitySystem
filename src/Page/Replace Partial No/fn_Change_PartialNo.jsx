@@ -127,11 +127,11 @@ function fn_Change_PartialNo() {
       console.log(txtSerialNo[intSeq], "txtSerialNo");
       if (txtSerialNo[intSeq] == "" || txtSerialNo[intSeq] == undefined) {
         console.log("11111");
-        strError = String(intSeq + 1) + " Please input Old Serial Number.";
+        strError = "Please input Old Serial Number.";
       }
       if (txtSerialNoNew[intSeq] == "" || txtSerialNoNew[intSeq] == undefined) {
         console.log("2222");
-        strError = String(intSeq + 1) + " Please input New Serial Number.";
+        strError = "Please input New Serial Number.";
       }
     }
     console.log("dtData", strError);

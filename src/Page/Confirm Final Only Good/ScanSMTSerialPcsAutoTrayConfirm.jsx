@@ -315,7 +315,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                       style={{
                         background:
                           lblResult.value === "OK" ? "#52c41a" : " #BA0900",
-                        width: "70%", // ควบคุมขนาดของ Paper
+                        // width: "70%", // ควบคุมขนาดของ Paper
                       }}
                     >
                       <Typography
@@ -331,6 +331,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                       style={{
                         ...lblTime.style,
                         width: "30%", // ควบคุมขนาดของ Paper
+                        display: lblTime.value === '' ? 'none' : ''
                       }}
                     >
                       <Typography
@@ -350,6 +351,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                 size="small"
                 bordered
                 className="tableGvResult"
+                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                 />
                 </>
               )}

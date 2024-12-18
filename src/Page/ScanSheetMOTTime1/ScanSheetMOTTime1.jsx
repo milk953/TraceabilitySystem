@@ -10,7 +10,6 @@ import {
   TableContainer,
   Paper,
   Typography,
-  Button,
   Select,
   MenuItem,
   FormControl,
@@ -28,6 +27,7 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
+import { Button } from 'antd';
 import "../Common/StyleCommon.css";
 import "../ScanSheetMOTTime1/ScanSheetMOTTime1.css"
 import Hearder from "../Header/Header";
@@ -82,9 +82,9 @@ function ScanSheetMOTTime() {
                 component={Card}
                 
               >
-                <TableHead style={{ height: '60px' }}>
+                <TableHead>
                   <TableRow>
-                    <TableCell colSpan={3} align="center" style={{fontSize:'30px'}}>
+                    <TableCell colSpan={3} className="Header_Center">
                     
                         Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
                       
@@ -93,7 +93,7 @@ function ScanSheetMOTTime() {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell align="right" style={{ width: "150px" }}>
+                    <TableCell align="right" style={{ width: "150px" }} >
                       <Typography>MOT Machine/Line :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
@@ -148,7 +148,7 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button onClick={BtClick_back}>
+                      <Button type="text" onClick={BtClick_back}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>

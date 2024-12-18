@@ -6,8 +6,7 @@ import { useLoading } from "../../loading/fn_loading";
 import {DataConfig} from "../Common/function_Common"; 
 function fn_P1ConnectBoard() {
   const{ConfigData} = DataConfig();
-  console.log(ConfigData,'ConfigData');
-  const { showLoading, hideLoading } = useLoading();
+    const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
 
   const [txtLot, settxtLot] = useState({
@@ -639,9 +638,10 @@ function fn_P1ConnectBoard() {
   };
 
   const txtRollLeaf_TextChanged = async () => {
+    console.log(txtRollLeaf.value.length, hfCheckRollShtDigit, "txtRollLeaf");
     if (
       txtRollLeaf.value != "" &&
-      txtRollLeaf.length === parseInt(hfCheckRollShtDigit)
+      txtRollLeaf.value.length === parseInt(hfCheckRollShtDigit)
     ) {
       SetMode("SERIAL");
       settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
@@ -1381,7 +1381,7 @@ function fn_P1ConnectBoard() {
           }, 300);
         }
       }
-     
+      scrollToTop();
     } catch (error) {
       hideLoading();
       console.error("An error occurred while fetching serial data:", error);
@@ -1567,7 +1567,12 @@ function fn_P1ConnectBoard() {
     },
   ];
 
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
   const ExportCSV = (data, ColumnsHeader) => {
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined

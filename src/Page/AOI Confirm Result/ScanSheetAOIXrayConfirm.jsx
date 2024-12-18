@@ -102,35 +102,25 @@ function ScanSheetMOTTime() {
                   <TableRow style={{display: lblResult === '' ? 'none' : '',}}>
                     <TableCell
                       colSpan={3}
-                      style={{ height: "40px" }}
+                      style={{ height: "40px",fontSize: "23px", }}
                       align="center"
                     >
-                      {/* <Paper
-                        style={{
-                          height: "40px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "#DAD3BE",
-                        }}
-                      >
-                        <b style={{ fontSize: "20px", color: "#0000CC" }}>
-                          {lblSheet}
-                        </b>
-                      </Paper> */}
-                                        <Card
-                        style={{
-                          background: "#DAD3BE",
-                          height: "40px",
-                          paddingTop: "6px",
-                          fontSize: "23px",
-                        }}
-                      >
                         {lblSheet}
-                      </Card>
+                   
                     </TableCell>
                   </TableRow>
-                  <TableRow style={{display: lblResult === '' ? 'none' : '',}}>
+
+                </TableBody>
+              </Table>
+              <br/>
+              <Table
+                component={Card}
+                className="AOIConfirmResult"
+                style={{ width: "50%" }}
+              >
+            
+                <TableBody style={{display: lblResult === '' ? 'none' : '',}}>
+                  <TableRow >
                     <TableCell
                       colSpan={3}
                       style={{ height: "300px" }}
