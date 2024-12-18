@@ -1,27 +1,28 @@
 .Head-ELT{
     display: flex;
     margin: auto;
-    width: 900px;
-    
+    width: 800px;
+    margin-top: 70px; 
 }
 
 
 .Head-Textshow{
-    width: 100%;
+    width: 800px;
     text-align: center;
+    margin: auto;
 }
 
 .Head-Piece{
     display: flex;
     margin: auto;
-    width: 900px;  
+    width: 80px;  
 }
 /* sx={{ color: 'text.secondary', fontSize: 14 }} */
 .ELTMmasterPnlForm {
     display: flex;
     margin: auto;
     width: 800px;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 .ELTMmasterTb {
   height: 100px;

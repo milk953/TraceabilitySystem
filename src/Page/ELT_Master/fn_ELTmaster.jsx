@@ -151,6 +151,7 @@ function fn_ELTmaster() {
     setselectddlReason1("")
     setddlReason1([])
     settxtUpdateBy("")
+    setlblResult("")
     FctxtSerial.current.focus();
   }
   

@@ -14,14 +14,16 @@ import {
   Card
 } from "@mui/material";
 import {fn_ELTmaster} from "./fn_ELTmaster"
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import { Button as ButtonTable } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 function ELT_Master() {
     const {lblUser1,lblResult,txtSerialNo_TextChanged,ddlReason1,selectddlReason1,setselectddlReason1,txtUpdateBy,settxtSerialNo_TextChanged,Search_Data,Submit,FctxtSerial,handleBtnCancel} = fn_ELTmaster();
-  return (
+    const { menuName } = fn_Homepage();
+    return (
     <>
       <Hearder />
-      <h1>ELT Master</h1>
+      
       <div className="Head-ELT">
     <table  className='Head-Textshow'>
     <tbody>
@@ -44,7 +46,7 @@ function ELT_Master() {
           textAlign: "center",
         }}
       >
-        <Paper
+        {/* <Paper
           className="Result_ELT"
           style={{
             ...lblResult.styled,
@@ -53,7 +55,20 @@ function ELT_Master() {
          <Typography  style={{
             ...lblResult.styled,
           }}>{lblResult.text}</Typography> 
-        </Paper>
+        </Paper> */}
+               <Card
+              //  style={{
+              //   ...lblResult.styled,
+              // }}
+              style={{ display: lblResult.text === '' ? 'none' : '' }}
+                    className={
+                      lblResult.styled.backgroundColor === "red"
+                        ? "ResultError"
+                        : "ResultSuccess"
+                    }
+                  >
+                    {lblResult.text}
+                  </Card>
       </td>
         </tr>
       </tbody>
@@ -62,7 +77,7 @@ function ELT_Master() {
       <div className="ELTMmasterPnlForm">
         <Table className="Header_Center" component={Card}>
           <TableHead>
-            <TableCell colSpan={4}>ELT Master</TableCell>
+            <TableCell colSpan={4}>{menuName}</TableCell>
           </TableHead>
           <TableBody>
             <TableRow>
@@ -82,14 +97,7 @@ function ELT_Master() {
             </TextField>
           </TableCell>
           <TableCell style={{ padding: '8px' }}>
-          {/* <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={Search_Data}
-                > 
-                Retrive
-                </Button>
-                 */}
+         
                      <ButtonTable
                     type="primary"
                     icon={<SearchOutlined />}
@@ -121,7 +129,7 @@ function ELT_Master() {
     --------------------- Select --------------------
   </option>
   {ddlReason1
-    .filter((option) => option.rejcet_code && option.rejcet_code.trim() !== '') // กรองค่าที่ไม่ต้องการ
+    .filter((option) => option.rejcet_code && option.rejcet_code.trim() !== '') 
     .map((option, index) => (
       <option key={index} value={option.rejcet_code}>
         {option.rejcet_code === 'DELETE'
