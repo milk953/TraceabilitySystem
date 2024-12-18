@@ -3,17 +3,22 @@
   margin: auto;
   /* margin-top: 80px; */
   width: 600px;
-  height: 300px;
+  height: 240px;
 }
 #TableMain {
   width: 600px !important;
   margin: 0 auto;
+  height: 200px;
+
 }
 #TableMain th {
+  font-family: Arial;
+  padding: 8px !important;
+  background-color: #8c8c8c !important ;
+  border-radius: 5px 5px 0 0 !important;
+  color: #fff;
+  font-size: 24px;
   text-align: center;
-  font-size: 38px;
-  background-color: #8c8c8c;
-  color:white;
 }
 
 .pnlResult {
@@ -47,12 +52,13 @@
 #lbltxt {
   width: 150px;
   text-align: right;
+  font-size: 16px;
 }
 .txtField {
   width: 250px !important;
   padding: 1px;
 }
-#TableResultReflow{
+#TableResultReflow {
   height: 180px;
 }
 #TableResultReflowred {
@@ -64,10 +70,10 @@
 }
 #TableResultReflowred td {
   /* font-size: 80px; */
-  border : 1px solid red !important;
+  border: 1px solid red !important;
   text-align: center;
 }
-.btnBackReflow{
+.btnBackReflow {
   border: none !important;
-  border-color:white
+  border-color: white;
 }
