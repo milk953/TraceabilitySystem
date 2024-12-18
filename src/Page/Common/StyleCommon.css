@@ -242,6 +242,12 @@ background-color: #e0e0e0;
     font-size: 20px;
     text-align: center;
   }
+  
+  .Header_Center td{
+
+    padding: 8px !important;
+
+  }
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {
     background-color: #f9f9f9;
   

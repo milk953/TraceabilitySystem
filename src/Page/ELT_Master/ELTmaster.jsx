@@ -46,20 +46,8 @@ function ELT_Master() {
           textAlign: "center",
         }}
       >
-        {/* <Paper
-          className="Result_ELT"
-          style={{
-            ...lblResult.styled,
-          }}
-        >
-         <Typography  style={{
-            ...lblResult.styled,
-          }}>{lblResult.text}</Typography> 
-        </Paper> */}
+     
                <Card
-              //  style={{
-              //   ...lblResult.styled,
-              // }}
               style={{ display: lblResult.text === '' ? 'none' : '' }}
                     className={
                       lblResult.styled.backgroundColor === "red"
@@ -81,8 +69,8 @@ function ELT_Master() {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell style={{padding: '8px', width: '20%' ,textAlign:'right' }}>Piece No.</TableCell>
-              <TableCell  style={{padding: '8px', width: '80%' }} >
+              <TableCell style={{width: '20%' ,textAlign:'right' }}>Piece No.</TableCell>
+              <TableCell  style={{width: '80%' }} >
             <TextField size="small" style={{width:'100%'}} value={txtSerialNo_TextChanged}
             onChange={(e) => settxtSerialNo_TextChanged(e.target.value)}
             // onBlur={Search_Data}

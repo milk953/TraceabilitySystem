@@ -149,9 +149,11 @@ function fn_ELTmaster() {
   const handleBtnCancel = async () => {
     settxtSerialNo_TextChanged("")
     setselectddlReason1("")
-    setddlReason1([])
     settxtUpdateBy("")
-    setlblResult("")
+    setlblResult({
+      text: "",
+      styled: { color: "" },
+    });
     FctxtSerial.current.focus();
   }
   
