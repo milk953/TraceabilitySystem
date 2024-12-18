@@ -42,6 +42,7 @@
 .ELTTableSecond {
     margin: auto;
     width: 800px !important;
+    margin-top: 8px;
   }
   .ELTTableSecond td{
     padding: 4px 4px 4px 4px!important;

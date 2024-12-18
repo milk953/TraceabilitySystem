@@ -218,11 +218,11 @@ background-color: #e0e0e0;
 }
 
 .ButtonCancel{
-    background: rgb(70, 69, 69) !important;
+    background: rgb(112, 111, 111) !important;
 }
 
 .Header_Center{
-  width: 90px !important;
+  width: 800px !important;
   text-align: center !important;
   font-size: 20px !important;
   height: 30px !important;
@@ -241,6 +241,12 @@ background-color: #e0e0e0;
     color: #fff;
     font-size: 20px;
     text-align: center;
+  }
+  
+  .Header_Center td{
+
+    padding: 8px !important;
+
   }
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {
     background-color: #f9f9f9;
@@ -297,5 +303,5 @@ background-color: #e0e0e0;
     display: flex;
     margin: auto;
     width: 800px;
-    margin-top: 70px; 
+    margin-top: 80px; 
 }
