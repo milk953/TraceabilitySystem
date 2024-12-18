@@ -74,20 +74,17 @@ function ScanSheetMOTTime() {
       <Hearder/>
      
       {/* <Card component={Paper} className="Card-ScanSheetMOTTime"> */}
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'100px' }}>
-          <Grid container spacing={2} style={{justifyContent: 'center' }}>
+        <div className='Center_Layout'>
+          {/* <Grid container spacing={2} style={{justifyContent: 'center' }}> */}
             <Grid >
               <Table
-                className="TableMot1"
+                className="Header_Center"
                 component={Card}
-                
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell colSpan={3} className="Header_Center">
-                    
+                    <TableCell colSpan={3} >
                         Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
-                      
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -101,7 +98,6 @@ function ScanSheetMOTTime() {
                         size="small"
                         fullWidth
                         value={txtMCNo.value}
-                        // style={{}}
                         inputRef={(el) => (fctxtMcNo.current = el)}
                         disabled={txtMCNo.disbled} //falseพิมได้ 
                         style={txtMCNo.style}
@@ -116,7 +112,6 @@ function ScanSheetMOTTime() {
                             txtMCNo_TextChanged(e.target.value);
                           }
                         }}
-                        // onBlur={(e) => {txtMCNo_TextChanged(e.target.value)}}
                       />
                     </TableCell>
                   </TableRow>
@@ -142,9 +137,7 @@ function ScanSheetMOTTime() {
                             txtLotNo_TextChanged();
                           }
                         }}
-                        // inputRef={fctxtLotno}
                         inputRef={(el) => (fctxtLotno.current = el)}
-                        // onBlur={txtLotNo_TextChanged}
                       />
                     </TableCell>
                     <TableCell>
@@ -184,9 +177,7 @@ function ScanSheetMOTTime() {
                             txtSheetNo_TextChanged();
                           }
                         }}
-                        // inputRef={fctxtSheetNo}
                         inputRef={(el) => (fctxtSheetNo.current = el)}
-                        // onBlur={txtSheetNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -214,7 +205,6 @@ function ScanSheetMOTTime() {
                             txtCBNo_TextChanged();
                           }
                         }} 
-                        // onBlur={txtCBNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
@@ -243,29 +233,24 @@ function ScanSheetMOTTime() {
                             txtSUSNo_TextChanged();
                           }
                         }} 
-                        // onBlur={txtSUSNo_TextChanged}
                       />
                     </TableCell>
                   </TableRow>
   
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
-                    <TableCell colSpan={3} align="center">
-                      <Card
-                        style={{
-                          background: "#DAD3BE",
-                          height: "40px",
-                          paddingTop: "6px",
-                          fontSize: "23px",
-                        }}
-                      >
-                        {lblSheet}
-                      </Card>
+                    <TableCell colSpan={3} align="center" style={{fontSize:'23px'}}>
+                       {lblSheet}
                     </TableCell>
                   </TableRow>
-                  {/* {console.log('lblRemark1',lblResult.value,'---l',lblRemark)} */}
-                  {((lblResult.value !== undefined && lblResult.value !== '') || (lblRemark !== undefined && lblRemark !== '')) && (
+       
+                
+                </TableBody>
+              </Table>
+              <br/>
+              <Table  component={Card}>
+              {((lblResult.value !== undefined && lblResult.value !== '') || (lblRemark !== undefined && lblRemark !== '')) && (
                   <TableRow style={{ height: "180px" }} >
-                    <TableCell colSpan={3}>
+                    <TableCell colSpan={3} style={{padding:0}}>
                       <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"
@@ -280,8 +265,7 @@ function ScanSheetMOTTime() {
                     </TableCell>
                   </TableRow>
                   )}
-                  <TableRow  style={{display:pnlSave}} > 
-                    {/* style={{display:pnlSave}} */}
+              <TableRow  style={{display:pnlSave}} > 
                 <TableCell colSpan={3} align="center">
                   <Box display="flex" justifyContent="center" alignItems="center" width="100%">
                     <Box display="flex" justifyContent="space-between" alignItems="center" width="90%">
@@ -292,11 +276,10 @@ function ScanSheetMOTTime() {
                   </Box>
                 </TableCell>
                   </TableRow>
-                </TableBody>
               </Table>
             </Grid>
-          </Grid>
-        </Box>
+          {/* </Grid> */}
+        </div>
       {/* </Card> */}
     </div>
   );
