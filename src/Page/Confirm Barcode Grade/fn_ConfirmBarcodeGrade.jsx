@@ -1706,6 +1706,7 @@ function fn_ConfirmBarcodeGrade() {
           }, 300);
         }
       }
+      scrollToTop();
       hideLoading();
     } catch (error) {
       console.error("An error occurred while fetching serial data:", error);
@@ -1715,6 +1716,13 @@ function fn_ConfirmBarcodeGrade() {
       });
       hideLoading();
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const columns = [

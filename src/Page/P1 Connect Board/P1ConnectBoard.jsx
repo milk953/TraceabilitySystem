@@ -239,11 +239,11 @@ function P1ConnectBoard() {
                             value: e.target.value,
                           }));
                         }}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtRollLeaf_TextChanged();
-                        //   }
-                        // }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtRollLeaf_TextChanged();
+                          }
+                        }}
                         // onBlur={txtRollLeaf_TextChanged}
                         fullWidth
                       ></TextField>
@@ -459,6 +459,8 @@ function P1ConnectBoard() {
                     size="small"
                     bordered
                     className="tableGvResult"
+                    rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                  
                   />
                 </>
                )} 

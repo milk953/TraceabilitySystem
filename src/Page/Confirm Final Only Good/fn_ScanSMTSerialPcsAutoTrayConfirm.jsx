@@ -171,7 +171,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   const FINAL_GATE_SPECIAL_PRD =ConfigData.FINAL_GATE_SPECIAL_PRD;
   const FINAL_GATE_SPECIAL_MESSAGE =ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
   const EXPORT_CSV_FLG = ConfigData.EXPORT_CSV_FLG;
-  const Fac = ConfigData.VITE_FAC_A1;
+  const Fac = ConfigData.FACTORY;
   
   //PageLoad----------
   useEffect(() => {
@@ -249,12 +249,14 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
               _strPrdName = res.data.prdName[0];
             });
           let dtLotPassCount;
+          console.log(_strLot,Fac, "_strLot");
           await axios
             .post("/api/Common/getSerialPassByLot", {
               strLotNo: _strLot,
               strPlantCode: Fac,
             })
             .then((res) => {
+              console.log(res.data, "lot_count");
               dtLotPassCount = res.data.lotcount;
             });
           setlblLotTotal("0");
@@ -1635,6 +1637,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
           value: {},
         }));
       }
+      scrollToTop();
       await getInitialSerial();
     
     } catch (error) {
@@ -1700,7 +1703,12 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, `ConfirmFinalGateOnlyGood.csv`);
   };
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const columns = [
     {

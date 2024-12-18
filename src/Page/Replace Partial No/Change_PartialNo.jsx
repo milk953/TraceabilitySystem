@@ -224,7 +224,9 @@ function ScanSheetMOTTime() {
                           Submit
                         </Button>
                       )}
-
+<Button className="BtSave" onClick={BtnSubmit_Click}>
+                          Cancel
+                        </Button>
                       {/* ถ้า loading เป็น true จะแสดง Spin */}
                       {loading && <Spin tip="Loading..." size="large" />}
                     </TableCell>

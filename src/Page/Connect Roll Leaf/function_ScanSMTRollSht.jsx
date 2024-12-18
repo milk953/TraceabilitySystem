@@ -34,7 +34,7 @@ function Fn_ScanSMTRollSht() {
     visible: "",
     style: {},
   });
-  const [txtTotalLeaf, settxtTotalLeaf] = useState("4");
+  const [txtTotalLeaf, settxtTotalLeaf] = useState(4);
   const [txtOperator, settxtOperator] = useState("");
   const [lblCheckRoll, setlblCheckRoll] = useState({
     value: "",
@@ -44,13 +44,13 @@ function Fn_ScanSMTRollSht() {
   });
   const [lbltotalSht, setlbltotalSht] = useState("");
   const [GvSerial, SetGvSerial] = useState({
-    value: "",
+    value: [],
     disbled: "",
     visible: "none",
     style: {},
   });
-  const [txtLeafNo, SettxtLeafNo] = useState(Array(txtTotalLeaf).fill(""));
-
+  const [txtLeafNo, SettxtLeafNo] = useState(Array(GvSerial.length).fill(""));
+  // SettxtLeafNo(Array(txtTotalLeaf).fill(""))
   const [lblResult, setlblResult] = useState({
     value: "",
     disbled: "",
@@ -287,8 +287,9 @@ function Fn_ScanSMTRollSht() {
       });
     }
 
-    SettxtLeafNo(Array(txtTotalLeaf).fill(""));
+   
     SetGvSerial((prevState) => ({ ...prevState, value: dtData }));
+    SettxtLeafNo(Array(dtData.length).fill(""))
     return dtData;
   };
 
@@ -663,26 +664,13 @@ function Fn_ScanSMTRollSht() {
             _intCount += 1;
           }
         }
-        console.log(hfCheckRollPrdFlg,_bolError,'Check99')
         if (hfCheckRollPrdFlg == "Y" && !_bolError) {
           let strRollProduct = hfRollNo + hfCheckRollPrd;
           const start = parseInt(hfCheckRollPrdStart);
-          const end = parseInt(hfCheckRollPrdEnd);
-          // console.log(
-          //   "_strRollLeaf1",
-          //   strRollProduct,
-          //   "-",
-          //   _strRollLeaf.substring(start - 1, end),
-          //   "-",
-          //   hfRollNo,
-          //   "-",
-          //   hfCheckRollPrd,
-          //   "-"
-          // );
+          const end = parseInt(hfCheckRollPrdEnd);;
           if (strRollProduct != _strRollLeaf.substring(start - 1, end)) {
             _bolError = true;
             _strScanResultAll = "NG";
-            console.log("_strScanResultAll02", _strScanResultAll);
             for (let i = 0; i < dtSheet.length; i++) {
               dtSheet[i].UPDATE_FLG = "N";
               dtSheet[i].ROW_UPDATE = "N";
@@ -694,7 +682,6 @@ function Fn_ScanSMTRollSht() {
           }
         }
         if (!_bolError) {
-          console.log("เข้ามั้ย", dtSheet);
           for (let i = 0; i < dtSheet.length; i++) {
             _strLot = dtSheet[i].LOT_NO;
             let _strPrdName = dtSheet[i].PRODUCT;
@@ -726,18 +713,6 @@ function Fn_ScanSMTRollSht() {
                   _strRemark =
                     "Leaf barcode scan duplicate/หมายเลขบาร์โค้ดสแกนซ้ำกัน";
               }
-              // for (let _intSeq = _intRow; _intSeq < dtSheet.length; _intSeq++) {
-              //   console.log(_strShtNo,'Check08',dtSheet[_intSeq].SHT_NO ,)
-                
-              //   if (dtSheet[_intSeq].SHT_NO === _strShtNo) {
-              //     _bolError = true;
-              //     _strScanResultAll = "NG";
-              //     console.log("_strScanResultAll03", _strScanResultAll);
-              //     _strScanResultUpdate = "NG";
-              //     _strRemark =
-              //       "Leaf barcode scan duplicate/หมายเลขบาร์โค้ดสแกนซ้ำกัน";
-              //   }
-              // }
               console.log(hfConnLeafLength,_strShtNo.length,_bolError,'Check07')
               if (
                 (hfConnLeafLength === 0 ||
@@ -1029,6 +1004,7 @@ function Fn_ScanSMTRollSht() {
     }
    
     if (hfAutoDownload == "N") {
+      console.log("เข้าหรอจ้ะ4");
       await getInitialSheet();
       if (lbllog.value != "") {
         settxtRollLeaf((prevState) => ({
@@ -1046,8 +1022,9 @@ function Fn_ScanSMTRollSht() {
         fc_txtRollleaf.current.focus();
       }, 300);
     } else {
+      console.log("เข้าหรอจ้ะ3");
       if (lbllog.value != "") {
-        getInitialSheet();
+       await getInitialSheet();
         settxtRollLeaf((prevState) => ({
           ...prevState,
           value: "",
@@ -1065,6 +1042,7 @@ function Fn_ScanSMTRollSht() {
       ExportGridToCSV(dtSheet, columns);
      
     }
+    scrollToTop();
     hideLoading();
   }
   catch (error) {
@@ -1095,7 +1073,7 @@ function Fn_ScanSMTRollSht() {
       visible: false,
       value: "",
     }));
-    SettxtLeafNo(Array(txtTotalLeaf).fill(""))
+    SettxtLeafNo(Array(GvSerial.length).fill(""))
     if(txtOperator==''){
       setTimeout(() => {
         fc_txtOperator.current.focus();
@@ -1208,6 +1186,12 @@ function Fn_ScanSMTRollSht() {
 
     }
   
+  };
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const ExportGridToCSV = (data, ColumnsHeader) => {

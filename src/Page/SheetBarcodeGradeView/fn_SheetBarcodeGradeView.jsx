@@ -4,7 +4,12 @@ import React, { useState } from "react";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import {useLoading} from "../../loading/fn_loading"; 
+import {DataConfig} from "../Common/function_Common"; 
 function fn_SheetBarcodeGradeView() {
+  const{ConfigData} = DataConfig();
+
+  const {showLoading,hideLoading} = useLoading();
   const [gvResult, setGvResult] = useState([]);
   const [gvResultState, setGvResultState] = useState(false);
   const [lotNotextField, setLotNotextField] = useState("");
@@ -27,7 +32,9 @@ function fn_SheetBarcodeGradeView() {
     setLotNo_result("");
     setTotalSheet_result("0");
   };
+
   const setGrid = async () => {
+    showLoading('กำลังค้นหา กรุณารอสักครู่')
     let dtData = [];
     let strShowBy = "";
     strShowBy = radioValue;
@@ -71,6 +78,7 @@ function fn_SheetBarcodeGradeView() {
     }
 
     setTotalSheet_result(dtData.length);
+    hideLoading();
   };
 
   const predefinedColumns = [

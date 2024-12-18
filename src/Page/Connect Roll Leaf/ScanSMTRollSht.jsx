@@ -206,7 +206,11 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxtTotalLeaf(e.target.value);
                         }}
-
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handletxtTotalLeaf();
+                          }
+                        }}
                       ></TextField>
                     </TableCell>
                     <TableCell align="right">
@@ -287,7 +291,7 @@ function ScanSMTRoollSht() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
-
+                {console.log(txtLeafNo,'GvSerial')}
                   {Array.from({ length: GvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
