@@ -10,7 +10,7 @@ import {
   TableContainer,
   Paper,
   Typography,
-  Button,
+
   Select,
   MenuItem,
   FormControl,
@@ -21,7 +21,7 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-
+import { Button } from 'antd';
 import {
   ArrowRightOutlined,
   DeleteOutlined,
@@ -73,13 +73,12 @@ function ScanSheetMOTTime() {
       <Hearder />
 
 
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'100px' }}>
-          <Grid container spacing={2} style={{justifyContent: 'center' }}>
+      {/* <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",marginTop:'100px' }}> */}
+          <div className='Center_Layout'>
             <Grid >
               <Table
-                className="TableMot1"
-                component={Card}
-                sx={{ width: "100%", maxWidth: "800px", minWidth: "800px" }}
+                 className="Header_Center"
+                 component={Card}x={{ width: "100%", maxWidth: "800px", minWidth: "800px" }}
               >
                 <TableHead>
                   <TableRow>
@@ -248,22 +247,19 @@ function ScanSheetMOTTime() {
                   </TableRow>
                   {console.log('lblRemark2',lblRemark,lblResult.value)}
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
-                    <TableCell colSpan={3} align="center">
-                      <Card
-                        style={{
-                          background: "#DAD3BE",
-                          height: "40px",
-                          paddingTop: "6px",
-                          fontSize: "23px",
-                        }}
-                      >
-                        {lblSheet}
-                      </Card>
+                    <TableCell colSpan={3} align="center" style={{fontSize:'23px'}}>
+                       {lblSheet}
                     </TableCell>
                   </TableRow>
-                  {lblResult.value !== '' && lblRemark !== '' && (
+       
+
+                </TableBody>
+              </Table>
+              <br/>
+              <Table  component={Card}>
+              {lblResult.value !== '' && lblRemark !== '' && (
                   <TableRow style={{ height: "180px" }} >
-                    <TableCell colSpan={3}>
+                    <TableCell colSpan={3} style={{padding:0}}>
                       <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"
@@ -283,18 +279,17 @@ function ScanSheetMOTTime() {
                   <TableCell colSpan={3} align="center">
                   <Box display="flex" justifyContent="center" alignItems="center" width="100%">
                     <Box display="flex" justifyContent="space-between" alignItems="center" width="90%">
-                      <Button variant="contained" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
-                      <Button variant="contained" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
-                      <Button variant="contained" onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
+                    <Button  type="primary" size="large" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
+                      <Button  type="primary" size="large" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
+                      <Button  type="primary" size="large"  onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
                     </Box>
                   </Box>
                 </TableCell>
                   </TableRow>
-                </TableBody>
               </Table>
             </Grid>
-          </Grid>
-        </Box>
+          </div>
+        {/* </Box> */}
 
     </div>
   );

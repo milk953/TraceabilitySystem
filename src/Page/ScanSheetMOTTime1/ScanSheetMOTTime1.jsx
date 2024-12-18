@@ -269,9 +269,9 @@ function ScanSheetMOTTime() {
                 <TableCell colSpan={3} align="center">
                   <Box display="flex" justifyContent="center" alignItems="center" width="100%">
                     <Box display="flex" justifyContent="space-between" alignItems="center" width="90%">
-                      <Button variant="contained" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
-                      <Button variant="contained" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
-                      <Button variant="contained" onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
+                      <Button  type="primary" size="large" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
+                      <Button  type="primary" size="large" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
+                      <Button  type="primary" size="large"  onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
                     </Box>
                   </Box>
                 </TableCell>
