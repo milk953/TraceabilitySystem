@@ -222,6 +222,7 @@ background-color: #e0e0e0;
 }
 
 .Header_Center{
+  padding: 8px !important;
   width: 90px !important;
   text-align: center !important;
   font-size: 20px !important;
