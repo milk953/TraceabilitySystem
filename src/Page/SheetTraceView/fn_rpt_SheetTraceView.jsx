@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { dropWhile, values } from "lodash";
 import { color } from "framer-motion";
+import { useLoading } from "../../loading/fn_loading";
 
 function fn_rpt_SheetTraceView() {
+  const { showLoading, hideLoading } = useLoading();
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [txtProduct, settxtProduct] = useState("");
   const [ddlCavity, setddlCavity] = useState([]);
@@ -226,7 +228,7 @@ function fn_rpt_SheetTraceView() {
   };
 
   const ViewData = async (sheetno, dropdawn) => {
-    console.log("เข้ามานี่นะ")
+    showLoading("กำลังบันทึก กรุณารอสักครู่");
     setPanelNo1("");
     let txtSheetNo = sheetno;
     setlblMessage("");
@@ -721,6 +723,7 @@ function fn_rpt_SheetTraceView() {
           })
           .then((res) => {
             dtData = res.data;
+            console.log(dtData,"dtData1234")
           });
         if (dtData.length > 0) {
           let AOI_Result = "OK";
@@ -739,6 +742,7 @@ function fn_rpt_SheetTraceView() {
             }
           }
           StrResult = AOI_Result;
+          console.log(StrResult,"StrResult1")
           if (StrResult.trim() !== "") {
             setbtnAOIEFPC((prevState) => ({ ...prevState, value: StrResult }));
             settxtAOIEFPCTime(dtData[0].AOI_DATE);
@@ -947,6 +951,7 @@ function fn_rpt_SheetTraceView() {
     } catch (ex) {
       // setlblMessage("ERROR")
     }
+    hideLoading();
   };
   const btnAllLInk = (page) => {
     if (page == "SPI") {
@@ -1026,6 +1031,7 @@ function fn_rpt_SheetTraceView() {
     }
   };
   const ViewDataPcs = async (txtSheetNo, selectddlCavity) => {
+    showLoading("กำลังบันทึก กรุณารอสักครู่");
     let intPcsNo = 0;
     if (hfSMPJCavityFlg == "Y") {
       await axios
@@ -1671,6 +1677,7 @@ function fn_rpt_SheetTraceView() {
         
       } catch (error) {}
     }
+    hideLoading();
   };
   const createLink = (text) => {
     return (
