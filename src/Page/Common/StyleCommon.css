@@ -1,227 +1,216 @@
-
-.Header_CommonBG{ 
-    background: hsl(0, 0%, 27%) !important; 
-    color: #ffffff !important;
-    font-family: "Comfortaa", serif;
-    /* font-optical-sizing: auto;
+.Header_CommonBG {
+  background: hsl(0, 0%, 27%) !important;
+  color: #ffffff !important;
+  font-family: "Comfortaa", serif;
+  /* font-optical-sizing: auto;
     /* font-weight: <weight>; */
-    /* font-style: normal;  */
+  /* font-style: normal;  */
 }
 /* Card Scan */
-.Card-Common{
-    margin: auto;
-    width: 98%;
-    margin-top: 70px;
-    height: 100%;
-    padding:5px;
-    /* min-height:700px ; */
+.Card-Common {
+  margin: auto;
+  width: 98%;
+  margin-top: 70px;
+  height: 100%;
+  padding: 5px;
+  /* min-height:700px ; */
 }
 .Card-Common-Khun {
-    margin: auto;
-    width: 98%;
-    margin-top: 90px;
-    height: 100%;
-    padding:5px;
+  margin: auto;
+  width: 98%;
+  margin-top: 90px;
+  height: 100%;
+  padding: 5px;
 }
 
-.Card-lblLog{
-    height: 40px;
-    text-align: center;
-    background: #BB2525 !important;
-    padding-top: 18px;
-    color: yellow !important;
-    font-weight: bold;
-    margin-top: 10px;
-
+.Card-lblLog {
+  height: 40px;
+  text-align: center;
+  background: #bb2525 !important;
+  padding-top: 18px;
+  color: yellow !important;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-.Card-lblOP{
-    height: 40px;
-    text-align: center;
-    background: #acd0ee !important;
-    padding-top: 18px;
-    color: rgb(28, 39, 43) !important;
-    font-weight: bold;
-    margin-top: 10px;
-
+.Card-lblOP {
+  height: 40px;
+  text-align: center;
+  background: #acd0ee !important;
+  padding-top: 18px;
+  color: rgb(28, 39, 43) !important;
+  font-weight: bold;
+  margin-top: 10px;
 }
-.Img_GvResult{
-width: 360px;
-height: 300px;
-margin-bottom: 30px;
+.Img_GvResult {
+  width: 360px;
+  height: 300px;
+  margin-bottom: 30px;
 }
 .CSS-GvSerial {
-
-    margin-top: 10px;
+  margin-top: 10px;
 }
-.CSS-GvSerial th{
-    background-color: #12422e !important ;
-    color: #fff;
-    padding: 5px;
-}
-
-.CSS-GvSerial td{
-    padding: 4px 4px 4px 4px!important;
+.CSS-GvSerial th {
+  background-color: #12422e !important ;
+  color: #fff;
+  padding: 5px;
 }
 
-.Card-lblResult{
-    width: 100%;
-    margin: auto;
-    height: 45px;
-    text-align: center;
-    margin-bottom: 10px;
+.CSS-GvSerial td {
+  padding: 4px 4px 4px 4px !important;
 }
 
-.Card-lblTime{
-    width: 30%;
-    margin: auto;
-    height: 45px;
-    text-align: center;
-    margin-bottom: 10px;
+.Card-lblResult {
+  width: 100%;
+  margin: auto;
+  height: 45px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.Card-lblTime {
+  width: 30%;
+  margin: auto;
+  height: 45px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .tableGvResult .ant-table-thead > tr > th {
-    background-color: #31363F;
-    color: white;
-  }
-  .tableGvResult .ant-table-thead > tr > th {
-    background-color: #31363F;
-    color: white;
+  background-color: #31363f;
+  color: white;
+}
+.tableGvResult .ant-table-thead > tr > th {
+  background-color: #31363f;
+  color: white;
 }
 
-
-.tableGvResult{
-    width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
-
+.tableGvResult {
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
 }
 .input_txt .MuiInputBase-input {
   height: 10px;
 }
 
 .input_txt_Master .MuiInputBase-input {
-    height: 10px;
-    background-color: #fff;
-  }
-
+  height: 10px;
+  background-color: #fff;
+}
 
 .Select_dropDown .MuiInputBase-input {
-    height: 12px; 
-    padding: 10px 12px; 
-  }
+  height: 12px;
+  padding: 10px 12px;
+}
 
 .Bt_ibtBack {
-    height: 10px;
-    line-height: 10px; 
-    text-align: center; 
-    padding: 0;
-  }
-
-  .Icon_ibtBack {
-    padding: 0;
-  }
-  
-.Img1{
-    width: 320px;
-    height: 250px;
-    padding: 0px;
-    align-items: center;
-    /* margin: auto; */
-}
-.Tag-NG{
-    width: 100%;
-    text-align: center;
-    background-color: #BA0900;
-    color: #fff;
- }
-
-.Tag-OK{
-        width: 100%;
-        text-align: center;
-        background-color: #059212;
-        color: #fff;
- }
-
-.BtSave{
-    background-color: #1A5D1A !important ;
-    color: #fff !important;
-    height: 30px;
-  
+  height: 10px;
+  line-height: 10px;
+  text-align: center;
+  padding: 0;
 }
 
-.BtCancel{
-    background-color: #E0282E!important ;
-    color: #fff !important;
-    height: 30px;
+.Icon_ibtBack {
+  padding: 0;
+}
+
+.Img1 {
+  width: 320px;
+  height: 250px;
+  padding: 0px;
+  align-items: center;
+  /* margin: auto; */
+}
+.Tag-NG {
+  width: 100%;
+  text-align: center;
+  background-color: #ba0900;
+  color: #fff;
+}
+
+.Tag-OK {
+  width: 100%;
+  text-align: center;
+  background-color: #059212;
+  color: #fff;
+}
+
+.BtSave {
+  background-color: #1a5d1a !important ;
+  color: #fff !important;
+  height: 30px;
+}
+
+.BtCancel {
+  background-color: #e0282e !important ;
+  color: #fff !important;
+  height: 30px;
 }
 
 .tableGvResultView .ant-table-thead > tr > th {
-    background-color: #31363F;
-    color: white;
-  }
-  .tableGvResultView .ant-table-thead > tr > th {
-    background-color: #31363F;
-    color: white;
+  background-color: #31363f;
+  color: white;
+}
+.tableGvResultView .ant-table-thead > tr > th {
+  background-color: #31363f;
+  color: white;
 }
 
-
-.tableGvResultView{
-    width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
-
+.tableGvResultView {
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
 }
-.tableGvResultView td{
+.tableGvResultView td {
   font-size: 13px !important; /* กำหนดขนาดฟอนต์สำหรับเนื้อหาในเซลล์ */
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
-.tableGvResultView td,.tableGvResultView th{
+.tableGvResultView td,
+.tableGvResultView th {
   font-size: 13px !important; /* กำหนดขนาดฟอนต์สำหรับเนื้อหาในเซลล์ */
   /* padding-top: 0 !important;
   padding-bottom: 0 !important; */
-
 }
-
 
 /* --------------Not Use--------------------------- */
-.txtfield-disable{
-background-color: #e0e0e0;
+.txtfield-disable {
+  background-color: #e0e0e0;
 }
 
-.Status-On{
-    background: green;
-    color: #ffffff;
+.Status-On {
+  background: green;
+  color: #ffffff;
 }
 
-.Status-Off{
-    background: #BB2525;
-    color: #ffffff;
+.Status-Off {
+  background: #bb2525;
+  color: #ffffff;
 }
-.Card-Result{
-    margin-bottom: 10px;
-    width: 70%;
-    margin: auto;
-    height: 45px;
-    text-align: center;
-    
-
+.Card-Result {
+  margin-bottom: 10px;
+  width: 70%;
+  margin: auto;
+  height: 45px;
+  text-align: center;
 }
 
-.ButtonReplace{
-    background: green !important;
-
+.ButtonReplace {
+  color: white;
+  background: green !important;
 }
 
-.ButtonDelete{
-    background: red !important;
+.ButtonDelete {
+  color: white;
+  background: red !important;
 }
 
-.ButtonCancel{
-    background: rgb(112, 111, 111) !important;
+.ButtonCancel {
+  color: white;
+  background: rgb(112, 111, 111) !important;
 }
 
-.Header_Center{
+.Header_Center {
   width: 800px !important;
   text-align: center !important;
   font-size: 20px !important;
@@ -251,54 +240,54 @@ background-color: #e0e0e0;
   .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(even) {
     background-color: #ffffff; 
   } */
-  
-  .LableView{
-    height: 35px;
-    width: 100px;
-    border-spacing: 0px;
-    margin-right: 20px;
+
+.LableView {
+  height: 35px;
+  width: 100px;
+  border-spacing: 0px;
+  margin-right: 20px;
 }
-.RetriveBtn{
-    height: 35px;
+.RetriveBtn {
+  height: 35px;
 }
-.ClearBtn{
-    height: 35px;
+.ClearBtn {
+  height: 35px;
 }
 .custom-fvi-button:hover {
-    background-color: grey; /* สีพื้นหลังเมื่อ hover */
-  }
-  .ViewInput {
-    width: 300px ;
-    height: 35px;    
+  background-color: grey; /* สีพื้นหลังเมื่อ hover */
+}
+.ViewInput {
+  width: 300px;
+  height: 35px;
 }
 .ResultError {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f5f5f5;
-    font-family: "popins", sans-serif;
-    font-weight: 100;
-    height: 40px;
-    width: 100%;
-    background: #BB2525 !important;
-    color: yellow !important;
-  }
-  .ResultSuccess {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f5f5f5;
-    font-family: "popins", sans-serif;
-    font-weight: 100;
-    height: 40px;
-    width: 100%;
-    background: green!important;
-    color: white !important;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  font-family: "popins", sans-serif;
+  font-weight: 100;
+  height: 40px;
+  width: 100%;
+  background: #bb2525 !important;
+  color: yellow !important;
+}
+.ResultSuccess {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  font-family: "popins", sans-serif;
+  font-weight: 100;
+  height: 40px;
+  width: 100%;
+  background: green !important;
+  color: white !important;
+}
 
-  .Center_Layout{
-    display: flex;
-    margin: auto;
-    width: 800px;
-    margin-top: 80px; 
+.Center_Layout {
+  display: flex;
+  margin: auto;
+  width: 800px;
+  margin-top: 80px;
 }

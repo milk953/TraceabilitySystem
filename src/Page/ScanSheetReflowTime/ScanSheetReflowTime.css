@@ -67,3 +67,7 @@
   border : 1px solid red !important;
   text-align: center;
 }
+.btnBackReflow{
+  border: none !important;
+  border-color:white
+}

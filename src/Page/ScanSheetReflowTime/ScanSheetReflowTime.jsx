@@ -5,11 +5,11 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Button,
   TableHead,
   Paper,
   Card,
 } from "@mui/material";
+import { Button } from 'antd';
 import "./ScanSheetReflowTime.css";
 import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -82,8 +82,7 @@ function ScanSheetReflowTime() {
                 ></TextField>
               </TableCell>
               <TableCell>
-                <Button onClick={btnIbtback_Click}>
-                  {" "}
+                <Button style={{border:'none'}} onClick={btnIbtback_Click}>
                   <BackspaceIcon />
                 </Button>
               </TableCell>
@@ -155,13 +154,13 @@ function ScanSheetReflowTime() {
           <Table id="TableSave" component={Card}>
             <TableRow>
               <TableCell>
-                <Button variant="contained" className="ButtonReplace" onClick={btnReplace_Click}>Replace</Button>
+                <Button variant="contained" className="ButtonReplace" size="large" onClick={btnReplace_Click}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonDelete" onClick={btnDelete_Click}>Delete</Button>
+                <Button variant="contained" className="ButtonDelete" size="large" onClick={btnDelete_Click}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonCancel" onClick={btnCancel_Click}>Cancel</Button>
+                <Button variant="contained" className="ButtonCancel" size="large" onClick={btnCancel_Click}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>
