@@ -98,7 +98,7 @@ function ELT_Master() {
           </TableBody>
         </Table>
       </div>
-      <br></br>
+ 
    
       <div >
       <Table className="ELTTableSecond" component={Card}>
@@ -162,9 +162,10 @@ function ELT_Master() {
         >
           Submit
         </ButtonTable>
+        &nbsp;&nbsp;
         <ButtonTable
+        className="ButtonCancel"
                             style={{
-                              backgroundColor: "red",
                               width: "90px",
                               color: "white",
                             }}
