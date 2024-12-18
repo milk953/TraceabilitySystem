@@ -8,6 +8,7 @@ import {
   TableHead,
   Paper,
   Card,
+  Button as MuiBtn
 } from "@mui/material";
 import { Button } from 'antd';
 import "./ScanSheetReflowTime.css";
@@ -15,6 +16,7 @@ import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Hearder from "../Header/Header";
 import { fn_ScanSheetReflowTime } from "./fn_ScanSheetReflowTime";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import HomeIcon from "@mui/icons-material/Home";
 function ScanSheetReflowTime() {
   const {
@@ -48,6 +50,7 @@ function ScanSheetReflowTime() {
       FctxtmcNo.current.focus();
     }
   }, [txtSheetNoState, txtSheetNo, txtmcNo]);
+  const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -56,7 +59,7 @@ function ScanSheetReflowTime() {
         <Table id="TableMain" component={Card}>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={3}>Reflow Control Time</TableCell>
+              <TableCell colSpan={3} >{menuName}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -82,9 +85,9 @@ function ScanSheetReflowTime() {
                 ></TextField>
               </TableCell>
               <TableCell>
-                <Button style={{border:'none'}} onClick={btnIbtback_Click}>
+                <MuiBtn  onClick={btnIbtback_Click}>
                   <BackspaceIcon />
-                </Button>
+                </MuiBtn>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -111,7 +114,7 @@ function ScanSheetReflowTime() {
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={3} sx={{ textAlign: "center" }}>
+              <TableCell colSpan={3} sx={{ textAlign: "center",fontSize:'16px' }}>
                 {lblSheet}
               </TableCell>
             </TableRow>
@@ -138,6 +141,7 @@ function ScanSheetReflowTime() {
               sx={{
                 fontSize: "34px",
                 padding: "0px",
+                
                 color: lblRemark.styled?.color || "defaultColor",
                 background: lblRemark.styled?.background || "defaultBackground",
                 border : lblRemark.styled?.border || "defaultBorder",
