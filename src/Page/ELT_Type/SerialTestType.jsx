@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Hearder from "../Header/Header";
 import { fn_SerialTestType } from "./fn_SerialTestType";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import {
   Table,
   TableBody,
@@ -10,10 +11,11 @@ import {
   Paper,
   Card,
 } from "@mui/material";
-import {  Button } from "antd";
+import { Table as AntTable, Select, Button } from "antd";
 import "./SerialTestType.css";
 import { DeleteOutlined, PlusCircleOutlined } from "@ant-design/icons";
 function SerialTestType() {
+  const { menuName } = fn_Homepage();
   const {
     productData,
     productSelect,
@@ -26,6 +28,7 @@ function SerialTestType() {
     handleAddData,
     lblMassage,
     lblMassageState,
+    columns,
   } = fn_SerialTestType();
   return (
     <>
@@ -38,7 +41,7 @@ function SerialTestType() {
       <div className="ELTETYPEPnlForm">
         <Table className="ETYPEmasterTb" component={Card}>
           <TableHead>
-            <TableCell colSpan={4}>ELTType</TableCell>
+            <TableCell colSpan={4}> {menuName}</TableCell>
           </TableHead>
           <TableBody>
             <TableRow>
@@ -74,17 +77,33 @@ function SerialTestType() {
                 </select>
               </TableCell>
               <TableCell>
-                <Button 
+                <Button
                   type="primary"
                   icon={<PlusCircleOutlined />}
-                onClick={handleAddData}>Add</Button>
+                  onClick={handleAddData}
+                >
+                  Add
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </div>
       <div className="ELTTYPEpnlResult">
-        <Table id="ELTTYPETableResult" component={Paper}>
+        <AntTable
+          columns={columns}
+          dataSource={result}
+          style={{ width: "100%" }}
+          pagination={false}
+          size="small"
+          rowClassName={(record) => {
+            if (record.color === "green") return "green-row";
+            if (record.color === "red") return "red-row";
+            return "";
+          }}
+          className="tableGvResult"
+        />
+        {/* <Table id="ELTTYPETableResult" component={Paper}>
           <TableHead sx={{ height: "30px" }}>
             <TableCell>Product</TableCell>
             <TableCell>ELT Type</TableCell>
@@ -102,7 +121,12 @@ function SerialTestType() {
                   <Button
                     type="primary"
                     icon={<DeleteOutlined />}
-                    style={{ width: "90px", background: "red",alignItems:"center",margin:'0px' }}
+                    style={{
+                      width: "90px",
+                      background: "red",
+                      alignItems: "center",
+                      margin: "0px",
+                    }}
                     onClick={() =>
                       handleDelete({
                         product: row.product,
@@ -116,7 +140,7 @@ function SerialTestType() {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </Table> */}
       </div>
     </>
   );

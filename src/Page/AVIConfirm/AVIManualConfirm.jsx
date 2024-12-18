@@ -43,7 +43,9 @@ function AVIManualConfirm() {
   return (
     <>
       <Hearder />
-      <h1>AVIConfirm</h1>
+      <div className="Center_Layout">
+
+      </div>
       {/* <Card classNmae="AVIMainCard"> */}
         {lblResult && (
           <h3
@@ -62,6 +64,7 @@ function AVIManualConfirm() {
               <TableRow>
                 <TableCell
                   sx={{ width: "90px", textAlign: "center" }}
+                  // className="Header_Center"
                   colSpan={4}
                 >
                   {menuName}
