@@ -14,6 +14,8 @@ import "./AVIManualConfirm.css";
 import "../Common/StyleCommon.css";
 import { fn_AVIManualConfirm } from "./fn_AVIManualConfirm";
 import { SearchOutlined } from "@ant-design/icons";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
+
 function AVIManualConfirm() {
   const {
     eltType,
@@ -37,6 +39,7 @@ function AVIManualConfirm() {
     getSearchData,
     columns,
   } = fn_AVIManualConfirm();
+  const { menuName } = fn_Homepage();
   return (
     <>
       <Hearder />
@@ -61,7 +64,7 @@ function AVIManualConfirm() {
                   sx={{ width: "90px", textAlign: "center" }}
                   colSpan={4}
                 >
-                  AVI CONFIRM
+                  {menuName}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -71,7 +74,6 @@ function AVIManualConfirm() {
                   ELT Type :
                 </TableCell>
                 <TableCell>
-                  {console.log(eltType, "eltType")}
                   <Select
                     style={{
                       width: 300,

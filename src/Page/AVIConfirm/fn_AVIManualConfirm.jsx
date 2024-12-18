@@ -1,8 +1,9 @@
 import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import Swal from "sweetalert2";
+
 function fn_AVIManualConfirm() {
+  
   const plantCode = import.meta.env.VITE_FAC;
   const [eltType, setEltType] = useState([]);
   const [eltTypeSelect, setEltTypeSelect] = useState("");
@@ -108,7 +109,6 @@ function fn_AVIManualConfirm() {
       const resultRes = await getData("getDataSearch", { serial: pieceNo });
       const isDuplicate = result.some((item) => item.serial === pieceNo);
       if (!isDuplicate) {
-        console.log(resultRes, "resultRes");
         if (resultRes.length > 0) {
           setResult((prev) => [
             ...prev,
@@ -139,7 +139,6 @@ function fn_AVIManualConfirm() {
         setSeq((prevSeq) => prevSeq + 1); 
         setLblResult("");
       } else {
-        console.log("Duplicate serial: ", pieceNo);
         setLblResult("Dupplicate serial no.");
       }
     }

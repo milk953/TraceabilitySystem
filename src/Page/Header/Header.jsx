@@ -86,14 +86,6 @@ function Hearder() {
       </Tooltip>
     );
   };
-  // const RandomColour =()=>{
-  //   const letters = '0123456789ABCDEF';
-  //   let color = '#';
-  //   for (let i = 0; i < 6; i++) {
-  //     color += letters[Math.floor(Math.random() * 16)];
-  //   }
-  //   return color;
-  // }
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -153,11 +145,6 @@ function Hearder() {
 
             {user ? (
               <>
-                {" "}
-                {/* <Avatar sx={{ bgcolor: deepOrange[500], marginRight: "10px" }}>
-                  {user.charAt(0)}
-                  {surname.charAt(0)}
-                </Avatar> */}
                 <Avatar variant="square" src={ImgUser} /> &nbsp;&nbsp;
                 <Button
                   className="btnDate"
