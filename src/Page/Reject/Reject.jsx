@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import Hearder from "../Header/Header";
 import "../Common/StyleCommon.css";
 import "./Reject.css";
-// import "../Common/StyleCommon.css";
+import "../Common/StyleCommon.css";
+
 import { fn_Reject } from "./fn_Reject";
 import { Table as AntTable, Select, Button, Avatar } from "antd";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import excel from "/src/assets/excel.png";
 import {
   Table,
@@ -46,18 +48,14 @@ function Reject() {
     isShowlblResult,
   } = fn_Reject();
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
+  const { menuName } = fn_Homepage();
   return (
     <>
       <Hearder />
-      <h1>Reject Page</h1>
+      <div style={{marginTop:'70px'}}></div>
       {isShowlblResult && (
         <div className="divRejectResult">
-          {/* <h3 className="RejectResult" style={lblResult.styled}>
-        {lblResult.text}
-      </h3> */}
-
-          <Card
+           <Card
             className={
               lblResult.styled.color === "red"
                 ? "RejectResultError"
@@ -74,7 +72,7 @@ function Reject() {
           <TableHead>
             <TableRow>
               <TableCell colSpan={4} align="center">
-                Reject
+              {menuName}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -119,7 +117,8 @@ function Reject() {
                 </Button>
                 <Button
                   type="primary"
-                  style={{ width: "95px", background: "red" }}
+                  className="ButtonCancel"
+                  style={{ width: "95px" }}
                   onClick={handleBtnCancel_Click}
                 >
                   Cancel
