@@ -5,6 +5,7 @@ import { fn_ReJudgement } from "./fn_ReJudgement";
 import "../Common/StyleCommon.css";
 import excel from "/src/assets/excel.png";
 import { Table as AntTable, Select, Button, Avatar } from "antd";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import {
   Table,
   Paper,
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 import { SearchOutlined } from "@ant-design/icons";
 function ReJudgement() {
+  const { menuName } = fn_Homepage();
   const {
     lblResult,
     rdSelect,
@@ -44,7 +46,7 @@ function ReJudgement() {
     handleExport,
     columns,
     btnCancelClick,
-    isShowlblResult
+    isShowlblResult,
   } = fn_ReJudgement();
   useEffect(() => {
     if (serialState == true) {
@@ -54,10 +56,7 @@ function ReJudgement() {
   return (
     <>
       <Hearder />
-      <h1>ReJudgement</h1>
-      {/* <h3 className="ReJudgementResult" style={lblResult.styled}>
-        {lblResult.text}
-      </h3> */}
+      <div style={{ marginTop: "70px" }}></div>
       {isShowlblResult && (
         <div className="divRejudgeResult">
           <Card
@@ -77,7 +76,7 @@ function ReJudgement() {
           <TableHead>
             <TableRow>
               <TableCell sx={{ textAlign: "center" }} colSpan={4}>
-                Re-Judgement
+              {menuName}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -128,7 +127,8 @@ function ReJudgement() {
                 </Button>
                 <Button
                   type="primary"
-                  style={{ width: "95px", background: "red" }}
+                  style={{ width: "95px" }}
+                  className="ButtonCancel"
                   onClick={btnCancelClick}
                 >
                   Cancel
