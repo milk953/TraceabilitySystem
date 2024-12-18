@@ -27,12 +27,13 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
+
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSmt.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
-import { Table as AntTable } from "antd";
+import { Table as AntTable,Button as AntButton } from "antd";
 function ScanSMTRoollSht() {
   const {
     settxt_lotNo,
@@ -329,11 +330,11 @@ function ScanSMTRoollSht() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={Bt_Save}>
+                      <AntButton className="BtSave" onClick={Bt_Save}>
                         Save
-                      </Button>{" "}
+                      </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel" onClick={ibtCancel_Click}>Cancel</Button>
+                      <AntButton className="BtCancel" onClick={ibtCancel_Click}>Cancel</AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
