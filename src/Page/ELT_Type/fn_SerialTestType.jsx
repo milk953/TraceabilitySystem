@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { Table as AntTable, Select, Button } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 function fn_SerialTestType() {
   const plantCode = import.meta.env.VITE_FAC;
   const [productData, setProductData] = useState([]);
@@ -178,6 +180,56 @@ function fn_SerialTestType() {
         });
     }
   }
+  const columns = [
+    {
+      title: "Product",
+      dataIndex: "product",
+      key: "product",
+      align: "center",
+      // width: 50,
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "ELT Type",
+      dataIndex: "elt_type",
+      key: "elt_type",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Create Date",
+      dataIndex: "create_date",
+      key: "create_date",
+      align: "center",
+      render: (text, record, index) => {
+        return text;
+      },
+    },
+    {
+      title: "Action",
+      key: "action",
+      align: "center",
+      render: (text, record) => (
+        <Button
+          type="primary"
+          icon={<DeleteOutlined />}
+          style={{
+            width: "90px",
+            background: "red",
+            alignItems: "center",
+            margin: "0px",
+          }}
+          onClick={() => handleDelete(record)}
+        >
+          Delete
+        </Button>
+      ),
+    },
+  ]
   return {
     productData,
     productSelect,
@@ -189,7 +241,8 @@ function fn_SerialTestType() {
     handleDelete,
     handleAddData,
     lblMassage,
-    lblMassageState
+    lblMassageState,
+    columns
   };
 }
 
