@@ -4,8 +4,11 @@ import axios from "axios";
 import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import {useLoading} from "../../loading/fn_loading";  
+import {DataConfig} from "../Common/function_Common";
 
 function fn_ScanSheetDispenserTime() {
+  const{ConfigData} = DataConfig();
+  const holding_time_flg = ConfigData.DIS_HOLDINGTIME_FLG;
   const {showLoading,hideLoading} = useLoading();
   //State
   const [pnlSaveState, setPnlSaveState] = useState(false);
@@ -434,6 +437,7 @@ function fn_ScanSheetDispenserTime() {
           p_cb_no: Param.P_CB_NO,
           p_user: Param.P_USER,
           p_station: Param.P_STATION,
+          p_holding_time_flg: holding_time_flg,
         })
         .then((res) => {
           resultcallDispenser = res.data.P_ERROR;          

@@ -24,6 +24,7 @@ function fn_AVIManualConfirm() {
   const [getSearchData, setGetSearchData] = useState([]);
   const [seq, setSeq] = useState(1);
   const [updateFlg, setUpdateFlg] = useState(false);
+  const [lblResultState, setLblResultState] = useState(false);
   // const [dataNotfound, setDataNotfound] = useState([]);
   let dataNotfound = [];
   let SearchDataTest = [];
@@ -58,8 +59,10 @@ function fn_AVIManualConfirm() {
   };
   const btnSubmitClick = async () => {
     setLblResult("");
+    setLblResultState(false);
     if (resultSelect == "" || resultSelect == "--- SELECT ---") {
       setLblResult("Please select Result.");
+      setLblResultState(true);
       // Swal.fire({
       //   title: "Please select result.",
       //   icon: "error",
@@ -70,6 +73,7 @@ function fn_AVIManualConfirm() {
     }
     if (result == "") {
       setLblResult("Please input serial no.");
+      setLblResultState(true);
       // Swal.fire({
       //   title: "Please input serial no.",
       //   icon: "error",
@@ -105,6 +109,7 @@ function fn_AVIManualConfirm() {
     if (lblResult != "" && lblResult != "Dupplicate serial no.") {
       setResult([]);
       setLblResult("");
+      setLblResultState(false);
     } else {
       const resultRes = await getData("getDataSearch", { serial: pieceNo });
       const isDuplicate = result.some((item) => item.serial === pieceNo);
@@ -138,8 +143,10 @@ function fn_AVIManualConfirm() {
         }
         setSeq((prevSeq) => prevSeq + 1); 
         setLblResult("");
+        setLblResultState(false);
       } else {
         setLblResult("Dupplicate serial no.");
+        setLblResultState(true);
       }
     }
   };
@@ -165,6 +172,7 @@ function fn_AVIManualConfirm() {
     setResultSelect("--- SELECT ---");
     setPieceNo("");
     setLblResult("");
+    setLblResultState(false);
     pieceNoRef.current.focus();
   };
   async function getData(type, params) {
@@ -311,7 +319,8 @@ function fn_AVIManualConfirm() {
     dataNotfound,
     handleBtnCancel,
     getSearchData,
-    columns
+    columns,
+    lblResultState
   };
 }
 

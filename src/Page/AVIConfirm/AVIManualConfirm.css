@@ -20,6 +20,7 @@
   display: flex;
   margin: auto;
   width: 530px;
+  margin-top: 10px;
   /* margin-top: 70px; */
 }
 
@@ -45,4 +46,41 @@
   }
   .red-row {
     color: red; 
+  }
+
+  .AVIResultError {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    font-family: "popins", sans-serif;
+    font-weight: 100;
+    height: 40px;
+    width: 530px;
+    background: red !important;
+    color: yellow !important;
+  }
+  .AVIResultSuccess {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    font-family: "popins", sans-serif;
+    font-weight: 100;
+    height: 40px;
+    width: 530px;
+    background: green!important;
+    color: white !important;
+  }
+  .divAVIResult{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    font-family: "popins", sans-serif;
+    font-weight: 100;
+    height: 40px;
+    width: 530px;
+    margin: auto;
+    /* margin-top: 10px; */
   }
