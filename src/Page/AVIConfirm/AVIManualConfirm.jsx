@@ -38,179 +38,189 @@ function AVIManualConfirm() {
     handleBtnCancel,
     getSearchData,
     columns,
+    lblResultState,
   } = fn_AVIManualConfirm();
   const { menuName } = fn_Homepage();
   return (
     <>
       <Hearder />
-      <div className="Center_Layout">
-
-      </div>
+      <div className="Center_Layout"></div>
       {/* <Card classNmae="AVIMainCard"> */}
-        {lblResult && (
-          <h3
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              color: lblResult === "update complete." ? "blue" : "red",
-            }}
+      {lblResultState && (
+        <div className="divAVIResult">
+          {/* <h3
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        color: lblResult === "update complete." ? "blue" : "red",
+      }}
+    >
+      {lblResult}
+    </h3> */}
+          <Card
+            className={
+              lblResult === "update complete."
+                ? "AVIResultSuccess"
+                : "AVIResultError"
+            }
           >
             {lblResult}
-          </h3>
-        )}
-        <div className="DAVITableFirst">
-          <Table className="AVITableFirst" component={Card}>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{ width: "90px", textAlign: "center" }}
-                  // className="Header_Center"
-                  colSpan={4}
-                >
-                  {menuName}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell sx={{ width: "90px", textAlign: "center" }}>
-                  ELT Type :
-                </TableCell>
-                <TableCell>
-                  <Select
-                    style={{
-                      width: 300,
-                      textAlign: "left",
-                      marginLeft: "3px",
-                    }}
-                    value={eltTypeSelect}
-                    onChange={(value) => {
-                      setEltTypeSelect(value);
-                    }}
-                    disabled={eltTypeState.styled.disable}
-                    options={eltType.map((option, index) => ({
-                      value: option.elt_type,
-                      label: option.elt_type,
-                    }))}
-                  />
-                </TableCell>
-                <TableCell
-                  rowSpan={2}
-                  sx={{ verticalAlign: "middle", textAlign: "center" }}
-                >
-                  <Button
-                    type="primary"
-                    icon={<SearchOutlined />}
-                    onClick={btnRetrieveClick}
-                  >
-                    Search
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell sx={{ textAlign: "center" }}>Piece No. :</TableCell>
-                {/* <TableCell></TableCell> */}
-                <TableCell sx={{ width: "300px" }}>
-                  <input
-                    ref={pieceNoRef}
-                    style={{ width: "280px" }}
-                    onChange={(e) => setPieceNo(e.target.value)}
-                    // onBlur={handlePieceChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handlePieceChange();
-                      }
-                    }}
-                    value={pieceNo}
-                  ></input>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          </Card>
         </div>
-        <div className="DAVITableSecond">
-          <Table className="AVITableSecond" component={Card}>
+      )}
 
-            <TableBody>
-              <TableRow>
-                <TableCell sx={{ textAlign: "right" }}>Result :</TableCell>
-                <TableCell sx={{ width: "200px" }}>
-                  <Select
-                    style={{
-                      width: 200,
-                      textAlign: "left",
-                      // padding: "0px 5px 0px 0px",
-                    }}
-                    value={resultSelect}
-                    onChange={(value) => {
-                      handleResultSelect(value);
-                    }}
-                    options={[
-                      { value: "--- SELECT ---", label: "--- SELECT ---" },
-                      { value: "OK", label: "OK" },
-                      { value: "NG", label: "NG" },
-                      { value: "P-error", label: "P-error" },
-                      { value: "2D-error", label: "2D-error" },
-                    ]}
-                  />
-                </TableCell>
-                <TableCell sx={{ textAlign: "right" }}>Operator :</TableCell>
-                <TableCell sx={{ width: "100px" }}>
-                  <input
-                    style={{ width: "150px", backgroundColor: "#B2A8A8" }}
-                    disabled
-                    value={username}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell
-                  sx={{ width: "60px", textAlign: "center" }}
-                  colSpan={4}
+      <div className="DAVITableFirst">
+        <Table className="AVITableFirst" component={Card}>
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={{ width: "90px", textAlign: "center" }}
+                // className="Header_Center"
+                colSpan={4}
+              >
+                {menuName}
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell sx={{ width: "90px", textAlign: "center" }}>
+                ELT Type :
+              </TableCell>
+              <TableCell>
+                <Select
+                  style={{
+                    width: 300,
+                    textAlign: "left",
+                    marginLeft: "3px",
+                  }}
+                  value={eltTypeSelect}
+                  onChange={(value) => {
+                    setEltTypeSelect(value);
+                  }}
+                  disabled={eltTypeState.styled.disable}
+                  options={eltType.map((option, index) => ({
+                    value: option.elt_type,
+                    label: option.elt_type,
+                  }))}
+                />
+              </TableCell>
+              <TableCell
+                rowSpan={2}
+                sx={{ verticalAlign: "middle", textAlign: "center" }}
+              >
+                <Button
+                  type="primary"
+                  icon={<SearchOutlined />}
+                  onClick={btnRetrieveClick}
                 >
-                  <Button
-                    style={{
-                      backgroundColor: "green",
-                      width: "90px",
-                      color: "white",
-                    }}
-                    onClick={btnSubmitClick}
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "red",
-                      width: "90px",
-                      color: "white",
-                    }}
-                    onClick={handleBtnCancel}
-                  >
-                    Cancel
-                  </Button>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+                  Search
+                </Button>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell sx={{ textAlign: "center" }}>Piece No. :</TableCell>
+              {/* <TableCell></TableCell> */}
+              <TableCell sx={{ width: "300px" }}>
+                <input
+                  ref={pieceNoRef}
+                  style={{ width: "280px" }}
+                  onChange={(e) => setPieceNo(e.target.value)}
+                  // onBlur={handlePieceChange}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handlePieceChange();
+                    }
+                  }}
+                  value={pieceNo}
+                ></input>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      <div className="DAVITableSecond">
+        <Table className="AVITableSecond" component={Card}>
+          <TableBody>
+            <TableRow>
+              <TableCell sx={{ textAlign: "right" }}>Result :</TableCell>
+              <TableCell sx={{ width: "200px" }}>
+                <Select
+                  style={{
+                    width: 200,
+                    textAlign: "left",
+                    // padding: "0px 5px 0px 0px",
+                  }}
+                  value={resultSelect}
+                  onChange={(value) => {
+                    handleResultSelect(value);
+                  }}
+                  options={[
+                    { value: "--- SELECT ---", label: "--- SELECT ---" },
+                    { value: "OK", label: "OK" },
+                    { value: "NG", label: "NG" },
+                    { value: "P-error", label: "P-error" },
+                    { value: "2D-error", label: "2D-error" },
+                  ]}
+                />
+              </TableCell>
+              <TableCell sx={{ textAlign: "right" }}>Operator :</TableCell>
+              <TableCell sx={{ width: "100px" }}>
+                <input
+                  style={{ width: "150px", backgroundColor: "#B2A8A8" }}
+                  disabled
+                  value={username}
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell
+                sx={{ width: "60px", textAlign: "center" }}
+                colSpan={4}
+              >
+                <Button
+                  style={{
+                    backgroundColor: "green",
+                    width: "90px",
+                    color: "white",
+                  }}
+                  onClick={btnSubmitClick}
+                >
+                  Submit
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "red",
+                    width: "90px",
+                    color: "white",
+                  }}
+                  onClick={handleBtnCancel}
+                >
+                  Cancel
+                </Button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      {resultState && (
+        <div className="ELTTYPEpnlResult">
+          <AntTable
+            columns={columns}
+            dataSource={result}
+            style={{ width: "100%" }}
+            pagination={false}
+            size="small"
+            rowClassName={(record) => {
+              if (record.color === "green") return "green-row";
+              if (record.color === "red") return "red-row";
+              return "";
+            }}
+            className="tableGvResult"
+          />
         </div>
-        {resultState && (
-          <div className="ELTTYPEpnlResult">
-            <AntTable
-              columns={columns}
-              dataSource={result}
-              style={{ width: "100%" }}
-              pagination={false}
-              size="small"
-              rowClassName={(record) => {
-                if (record.color === "green") return "green-row";
-                if (record.color === "red") return "red-row";
-                return "";
-              }}
-              className="tableGvResult"
-            />
-          </div>
-        )}
-        <br></br>
+      )}
+      <br></br>
       {/* </Card> */}
     </>
   );

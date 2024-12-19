@@ -134,13 +134,13 @@ function ScanSMTSerialPcsNG() {
                   </TableRow>
                 </TableBody>
               </Table>
-              <Table component={Paper} className="masterFGlblTable">
+              <Table component={Card} className="masterFGlblTable">
                 <TableBody>
                   <TableRow>
-                    <TableCell style={{ width: 30, textAlign: "right" }}>
+                    <TableCell style={{ width: '85px', textAlign: "right" }}>
                       Lot :
                     </TableCell>
-                    <TableCell>{lblLot}</TableCell>
+                    <TableCell >{lblLot}</TableCell>
                     <TableCell
                       style={{ width: 30, color: "green", fontWeight: "bold" }}
                     >
@@ -170,15 +170,14 @@ function ScanSMTSerialPcsNG() {
                 {lblError}
               </Paper>
               ) }
-              &nbsp;&nbsp;
               {panalSerialState && (
-                <Table classname="masterFGgvSerial" component={Card}>
+                <Table classname="masterFGgvSerial" component={Card} style={{marginTop:'10px'}}>
                   <TableHead className="gvSerialHead" style={{background:'#12422e'}}>
                     <TableRow>
-                      <TableCell className="masterFGgvSerialCell" style={{color:'white'}}>
+                      <TableCell className="masterFGgvSerialCellHead" style={{color:'white',borderRight:"1px solid #d9d9d9" }}>
                         No.
                       </TableCell>
-                      <TableCell className="masterFGgvSerialCell" style={{color:'white'}}>
+                      <TableCell className="masterFGgvSerialCellHead" style={{color:'white'}}>
                         Serial No.
                       </TableCell>
                     </TableRow>
@@ -187,24 +186,24 @@ function ScanSMTSerialPcsNG() {
                     {gvSerial.map((row, index) => (
                       <TableRow
                         key={index}
-                        style={{ padding: "4px 4px 4px 4px" }}
+                        // style={{ padding: "4px 4px 4px 4px" }}
                       >
                         <TableCell
                           className="masterFGgvSerialCell"
-                          style={{ width: "40%", textAlign: "right" }}
+                          style={{ width: "20%", textAlign: "right" }}
                         >
                           {row.SEQ}
                         </TableCell>
                         <TableCell
                           className="masterFGgvSerialCell"
-                          style={{ width: "70%", paddingRight: "10px" }}
+                          style={{ width: "90%", paddingRight: "10px" }}
                         >
                           <input
                             id={`txtSerial_${index}`}
                             type="text"
                             style={{
                               padding:'5px',
-                              width: "300px",
+                              width: "330px",
                               textTransform: "uppercase",
                             }}
                             maxLength="30"
@@ -216,17 +215,7 @@ function ScanSMTSerialPcsNG() {
                                 handle_Save_Click();
                                 e.target.blur();
                               }
-                              // if (e.key === "Enter") {
-                              //   handletxtSerialChange(index, e);
-                              // }
-                              // if (e.key === "Enter" && index < ( gvSerial.length - 1)) {
-                              //   handletxtSerialChange(index, e);
-                              // }else if (index === ( gvSerial.length - 1)) {
-                              //   {console.log('index',index)}
-                              //   handle_Save_Click();
-                              // }
                             }}
-                            // disabled={isLastDisabled}
                             onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
@@ -295,10 +284,9 @@ function ScanSMTSerialPcsNG() {
                       // background: lblResult.value === "OK" ? "green" : lblResult.value === "NG" ? "red" : "white",
                       background:
                       lblResult.value === "OK"
-                        ? "#059212"
+                        ? "green"
                         : lblResult.value === "NG"
-                        ? "red"
-                        : "#BA0900",
+                        ? "red":'red'
                     }}
                   >
                     <Typography

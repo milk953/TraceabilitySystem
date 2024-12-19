@@ -33,8 +33,7 @@ function SerialTestType() {
   return (
     <>
       <Hearder />
-      <h1>ELTType</h1>
-      {/* <h3 style={{ display: "flex", justifyContent: "center" }}>{lblMassage}</h3> */}
+      <div style={{marginTop:'80px'}}/>
       {lblMassageState && (
         <Paper className="CardlblErrorELT">{lblMassage}</Paper>
       )}
