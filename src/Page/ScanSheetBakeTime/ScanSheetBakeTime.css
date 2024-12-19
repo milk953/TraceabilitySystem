@@ -3,7 +3,7 @@
   margin: auto;
   /* margin-top: 80px; */
   width: 600px;
-  height: 300px;
+  height: 240px;
 }
 #TableMainBaking {
   width: 600px !important;
@@ -11,7 +11,7 @@
 }
 #TableMainBaking th {
   text-align: center;
-  font-size: 38px;
+  font-size: 26px;
   background-color: #8c8c8c;
   color: white;
 }
@@ -23,7 +23,7 @@
   display: flex;
   margin: auto;
   width: 600px;
-  /* margin-top: 20px; */
+  margin-top: 20px;
 }
 /* #TableResultBaking {
     height: 180px;
@@ -32,6 +32,7 @@
 #TableResultBaking td {
   /* font-size: 80px; */
   text-align: center;
+  border:15px;
 }
 #TableResultBakingred td {
   /* font-size: 80px; */

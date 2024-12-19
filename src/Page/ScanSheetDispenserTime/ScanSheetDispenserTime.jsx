@@ -4,18 +4,22 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetDispenserTime.css";
 import "../Common/StyleCommon.css";
 import { fn_ScanSheetDispenserTime } from "./fn_ScanSheetDispenserTime";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import {
   TextField,
   Table,
   TableBody,
   TableCell,
   TableRow,
-  Button,
+  Button as MuiBtn,
   TableHead,
   Paper,
   Card,
 } from "@mui/material";
+import { Button } from "antd";
+
 function ScanSheetDispenserTime() {
+  const { menuName } = fn_Homepage();
   const {
     pnlSaveState,
     btnReplace_Click,
@@ -68,7 +72,7 @@ function ScanSheetDispenserTime() {
         <Table id="DispenserTableMain" component={Card}>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={3}>Reflow - Dispenser Control Time</TableCell>
+              <TableCell colSpan={3}>{menuName}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -95,10 +99,10 @@ function ScanSheetDispenserTime() {
                 ></TextField>
               </TableCell>
               <TableCell>
-                <Button onClick={ibtback_Click}>
+                <MuiBtn onClick={ibtback_Click}>
                   {" "}
                   <BackspaceIcon />
-                </Button>
+                </MuiBtn>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -192,13 +196,13 @@ function ScanSheetDispenserTime() {
           <Table id="DispenserTableSave" component={Card}>
             <TableRow>
               <TableCell>
-                <Button variant="contained" className="ButtonReplace"  onClick={btnReplace_Click}>Replace</Button>
+                <Button  className="ButtonReplace"  size='large' onClick={btnReplace_Click}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonDelete" onClick={btnDelete_Click}>Delete</Button>
+                <Button  className="ButtonDelete" size='large' onClick={btnDelete_Click}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonCancel" onClick={btnCancel_Click}>Cancel</Button>
+                <Button  className="ButtonCancel" size='large' onClick={btnCancel_Click}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>

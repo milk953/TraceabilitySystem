@@ -7,12 +7,13 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Button,
+  Button as MuiBtn,
   TableHead,
   Paper,
   Card,
 } from "@mui/material";
-
+import { Button } from 'antd';
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetBakeTime.css";
 import "../Common/StyleCommon.css";
@@ -57,7 +58,7 @@ function ScanSheetBakeTime() {
     ibtback_click,
     PnlShowresult,
   } = fn_ScanSheetBakeTime();
-
+  const { menuName } = fn_Homepage();
   return (
     <>
       <Hearder />
@@ -65,7 +66,7 @@ function ScanSheetBakeTime() {
       <Table id="TableMainBaking" component={Card}>
         <TableHead>
           <TableRow>
-            <TableCell colSpan={3}>Baking Record Time</TableCell>
+            <TableCell colSpan={3}>{menuName}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -143,9 +144,9 @@ function ScanSheetBakeTime() {
               ></TextField>
             </TableCell>
             <TableCell>
-              <Button onClick={ibtback_click}>
+              <MuiBtn onClick={ibtback_click}>
                 <BackspaceIcon />
-              </Button>
+              </MuiBtn>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -194,7 +195,6 @@ function ScanSheetBakeTime() {
           </TableRow>
         </TableBody>
       </Table>
-      &nbsp;
        {PnlShowresult && (       
       <div className="pnlResultBaking">
         <Table id={lblResult.text == "NG" ? "TableResultBakingred" : "TableResultBaking"} component={Card} style={{ height: '180px' }} >
@@ -218,13 +218,13 @@ function ScanSheetBakeTime() {
           <Table id="TableSaveBaking" component={Paper}>
             <TableRow>
               <TableCell>
-                <Button variant="contained" className="ButtonReplace" onClick={btnReplace}>Replace</Button>
+                <Button  className="ButtonReplace" size="large" onClick={btnReplace}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonDelete" onClick={btnDelete}>Delete</Button>
+                <Button className="ButtonDelete" size="large" onClick={btnDelete}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonCancel" onClick={btnCancel}>Cancel</Button>
+                <Button className="ButtonCancel" size="large" onClick={btnCancel}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>

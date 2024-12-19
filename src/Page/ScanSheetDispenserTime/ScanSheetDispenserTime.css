@@ -14,6 +14,7 @@
   font-size: 38px;
   background-color: #8c8c8c;
   color: white;
+  font-size: 26px;
 }
 
 .DispenserpnlResult {
@@ -29,6 +30,7 @@
 #DispenserTableResult td {
   /* font-size: 80px; */
   text-align: center;
+  border: 15px;
 }
 #DispenserTableResultred td {
   /* font-size: 80px; */
@@ -47,6 +49,7 @@
 }
 #DispenserTableSave td {
   text-align: center;
+  
 }
 
 #Dispenserlbltxt {
