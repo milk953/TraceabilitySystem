@@ -15,9 +15,11 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import { Button as ButtonTable } from "antd";
 import "../ScanAutoBendingTime/ScanAutoBendingTime.css";
 import { fn_ScanAutoBendingTime } from "./fn_ScanAutoBendingTime";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import "../Common/StyleCommon.css";
 import Swal from "sweetalert2";
 function ScanAutoBendingTime() {
+  const { menuName } = fn_Homepage();
   const {
     txtMCNo,
     settxtMCNo,
@@ -45,12 +47,14 @@ function ScanAutoBendingTime() {
   return (
     <>
       <Hearder />
-      <h1>Baking Time</h1>
-      <div className="DAVITableFirst_Bending">
-        <Table id="TableMainBending" component={Paper}>
+      <div className="Center_Layout">
+        <Table className="TableBendingRecord" 
+     
+        component={Card}
+        >
           <TableHead>
             <TableRow>
-              <TableCell colSpan={3}>Serial Bending Record Data</TableCell>
+              <TableCell colSpan={3}>{menuName}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,8 +66,9 @@ function ScanAutoBendingTime() {
                   // className="txtFieldbending"
 
                   disabled={txtMCNo.disbled}
+                  fullWidth
                   style={{
-                    width: "350px",
+                    // width: "350px",
                     padding: "0px",
                     backgroundColor: txtMCNo.disbled ? "#e0e0e0" : "inherit",
                   }}
@@ -91,8 +96,9 @@ function ScanAutoBendingTime() {
               <TableCell>
                 <TextField
                   size="small"
+                  fullWidth
                   style={{
-                    width: "350px",
+                    // width: "350px",
                     backgroundColor: txtLotNo.disbled ? "#e0e0e0" : "inherit",
                   }}
                   disabled={txtLotNo.disbled}
@@ -119,30 +125,24 @@ function ScanAutoBendingTime() {
             </TableRow>
             <TableRow>
               <TableCell id="lbltxtBending">Product Name:</TableCell>
-              <TableCell colSpan={3} sx={{ fontSize: "20px" }}>
+              <TableCell colSpan={3} sx={{ fontSize: "15px" }}>
                 {lblProductName.value}
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell colSpan={3} sx={{ textAlign: "center" }}>
-                {/* {lblSheet} */}
-              </TableCell>
-            </TableRow>
+       
           </TableBody>
         </Table>
       </div>
 
-      <div 
-      className="pnlDetail" 
-      style={{ marginBottom: "20px" }}>
+    
         {pnlDetail &&(
-        <Table component={Paper}>
+        <Table component={Card} className="pnlDetail" >
   <TableHead>
     <TableRow>
-      <TableCell sx={{ width: "10%", fontWeight: "bold" }} align="center">
+      <TableCell sx={{ width: "5%", fontWeight: "bold" }} align="center">
         No.
       </TableCell>
-      <TableCell sx={{ width: "30%", fontWeight: "bold" }} align="center">
+      <TableCell sx={{ width: "10%", fontWeight: "bold" }} align="center">
         Bending No.
       </TableCell>
       <TableCell sx={{ width: "30%", fontWeight: "bold" }} align="center">
@@ -164,10 +164,12 @@ function ScanAutoBendingTime() {
           {gvSerial[index].BENDING_NO}
         </TableCell>
         <TableCell
-          sx={{ borderRight: "1px solid #d9d9d9", textAlign: "center" }}
+          sx={{ borderRight: "1px solid #d9d9d9",padding:'0px' }}
         >
           <TextField
-            id="txtfild"
+            // id="txtfild"
+            className="input_txt"
+            style={{margin:'4px',width:'98%'}}
             size="small"
             fullWidth
             inputRef={(el) =>
@@ -211,6 +213,7 @@ function ScanAutoBendingTime() {
             display: "flex",
             justifyContent: "center",
             gap: "10px",
+            paddingTop:'5px'
           }}
         >
           <ButtonTable
@@ -238,15 +241,18 @@ function ScanAutoBendingTime() {
   </TableBody>
         </Table>
         )}  
-      </div>
-      {pnlDetail&&(
-      <div className="TableSave-bending">
-        <Table></Table>
-      </div>
-      )} 
+      
+    
       {pnlResult &&(
       <div className="pnlResult-Auto">
-        <Table component={Paper}>
+        <Table  
+        component={Card}    
+        sx={{
+      border: '0px solid red', 
+      '& .MuiTableCell-root': {
+        borderColor: 'red', 
+      },
+    }} >
           <TableRow>
             <TableCell sx={lblResult.style}>{lblResult.value}</TableCell>
           </TableRow>

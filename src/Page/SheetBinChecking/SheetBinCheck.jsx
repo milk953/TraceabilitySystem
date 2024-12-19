@@ -13,10 +13,10 @@ import {
 import  './SheetBinCheck.css'
 import Hearder from "../Header/Header";
 import {fn_SheetBinCheck} from "./fn_SheetBinCheck"
-import { color } from "framer-motion";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanBinCheck() {
 const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtSht,pnlResult} =fn_SheetBinCheck()
-
+const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -29,7 +29,7 @@ const {txtSheetNo,settxtSheetNo,lblSheet,lblResult,txtSheetNo_TextChanged,FctxtS
             <TableHead>
               
               <TableRow>
-                <TableCell style={{color:'white'}}colSpan={3}>Sheet Bin Checking</TableCell>
+                <TableCell style={{color:'white'}}colSpan={3}>{menuName}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -65,8 +65,8 @@ function fn_ScanAutoBendingTime() {
 
     const handletxtMCNo_TextChanged = async () => {
       setpnlResult(false)
-      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'green' ,height:'100px' }}));
-      setlblRemark((prevState) => ({ ...prevState, value: "", style: { fontSize:'20px' ,textAlign:'center' }}));
+      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'green' ,height:'100px',color:"white" }}));
+      setlblRemark((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'green' ,fontSize:'20px' ,textAlign:'center' ,color:"white"}}));
       sethfSerialCount("0")
       if(txtMCNo.value.trim() !== ""){
         let dtBending = []
@@ -92,7 +92,7 @@ function fn_ScanAutoBendingTime() {
         }else{
           setpnlResult(true)
           setlblResult((prevState) => ({ ...prevState, value: "NG", style: { backgroundColor: 'red' , color:'white', fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
-          ((prevState) => ({ ...prevState, value:`Machine ${txtMCNo.value} not found in master!`,style: { fontSize: '30px', padding: '0px' ,textAlign: 'center'}}));
+          setlblRemark((prevState) => ({ ...prevState, value:`Machine ${txtMCNo.value} not found in master!`,style: { fontSize: '30px', padding: '0px' ,textAlign: 'center', backgroundColor: 'red', color:'white'}}));
           setTimeout(() => {
             fcMCno.current.focus();
           }, 300);
@@ -103,8 +103,8 @@ function fn_ScanAutoBendingTime() {
     const handletxtLotNo_TextChanged = async() => {  
       let  dtProductSerial =[]
       setlblProductName((prevState) => ({ ...prevState, value: ""}));
-      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'red',color:'green' }}));
-      setlblRemark((prevState) => ({ ...prevState, value: "", style: { fontSize:'20px' ,textAlign:'center' }}));
+      setlblResult((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'red'}}));
+      setlblRemark((prevState) => ({ ...prevState, value: "", style: { backgroundColor: 'red',fontSize:'20px' ,textAlign:'center' }}));
       setpnlResult(false)
       if(txtLotNo.value.trim().toUpperCase() !== ""){
         let _strPrdName=""
@@ -129,7 +129,7 @@ function fn_ScanAutoBendingTime() {
         }else{
           setpnlResult(true)
           setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red',color:"white" ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
-          setlblRemark((prevState) => ({ ...prevState, value: 'LOT   '+txtLotNo.value+'  not found!' , style: { fontSize:'20px' ,textAlign:'center' }}));
+          setlblRemark((prevState) => ({ ...prevState, value: 'LOT   '+txtLotNo.value+'  not found!' , style: { backgroundColor: 'red',fontSize:'20px' ,textAlign:'center',color:"white" }}));
           settxtLotNo((prevState) => ({ ...prevState, value: '' }));
           setTimeout(() => {
             fcLotNo.current.focus();
@@ -258,10 +258,10 @@ function fn_ScanAutoBendingTime() {
     if(strError !== ""){
       console.log(strError,"strError")
       setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
-      setlblRemark((prevState) => ({ ...prevState, value:'Please Input Serial',style: { fontSize: '40px', padding: '0px' ,  textAlign: 'center' }}));
+      setlblRemark((prevState) => ({ ...prevState, value:'Please Input Serial',style: { backgroundColor: 'red',fontSize: '40px', padding: '0px' ,  textAlign: 'center',color:"white" }}));
     }
     else{ setlblResult((prevState) => ({ ...prevState, value:"OK",  disbled: false , style: { backgroundColor: 'green' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
-    setlblRemark((prevState) => ({ ...prevState, value:currentTime , style: { fontSize: '40px', padding: '0px' ,  textAlign: 'center' } }));}
+    setlblRemark((prevState) => ({ ...prevState, value:currentTime , style: { backgroundColor: 'green',fontSize: '40px', padding: '0px' ,  textAlign: 'center',color:"white" } }));}
     getInitialSerial();
     }
 

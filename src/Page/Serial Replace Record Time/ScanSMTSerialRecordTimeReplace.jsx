@@ -8,34 +8,23 @@ import {
   TableBody,
   TableRow,
   TableHead,
-  TableContainer,
   Paper,
   Typography,
-
-  Select,
-  MenuItem,
   FormControl,
-  InputLabel,
   Autocomplete,
   Box,
-  Checkbox,
   Grid,
-  Input,
 } from "@mui/material";
-import {
-  ArrowRightOutlined,
-  DeleteOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
-import { Table as AntTable } from "antd";
 import {  Button} from "antd"
 import "./ScanSMTSerialRecordTimeReplace.css";
 import Hearder from "../Header/Header";
-import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Common/StyleCommon.css";
 import  '../SheetBinChecking/SheetBinCheck.css'
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import {fn_ScanSMTSerialRecordTimeReplace} from './fn_ScanSMTSerialRecordTimeReplace'
+
 function ScanSMTSerialRecordTimeReplace() {
+  const { menuName } = fn_Homepage();
   const{  txtSerialNo_TextChanged,
     txtSerialRefer,
     settxtSerialRefer,
@@ -59,27 +48,23 @@ function ScanSMTSerialRecordTimeReplace() {
     <div>
       <Hearder />
       {/* <Card component={Paper} className="Card-Common"> */}
-      <div className="Card-Common">
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+      {/* <div className="Center_Layout"> */}
+        <Box className="Center_Layout">
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
-              
-             
-               
-           
               <Table
                 component={Card}
                 className="ReplaceRecord"
-                style={{ width: "40%" ,marginTop:'20px'}}
+                style={{ width: "600px" ,marginTop:'20px'}}
               >
                 <TableHead style={{ height: "50px" }}>
                   <TableRow>
                     <TableCell
                       colSpan={3}
                       align="center"
-                      style={{ fontSize: "30px" }}
+                      style={{ fontSize: "24px" }}
                     >
-                      <b>Serial Replace Record Time</b>
+                      {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -206,7 +191,7 @@ function ScanSMTSerialRecordTimeReplace() {
               <Table
                 className="CSS-GvSerial"
                 style={{
-                  width: "50%",
+                  width: "600px",
                   marginTop: "20px",
                 }}
                 component={Card}
@@ -280,7 +265,7 @@ function ScanSMTSerialRecordTimeReplace() {
               <Table
                 className="CSS-GvSerial"
                 style={{
-                  width: "50%",
+                  width: "600px",
                   marginTop: "20px",
                 }}
                 component={Card}
@@ -340,7 +325,7 @@ function ScanSMTSerialRecordTimeReplace() {
             </Grid>
           </Grid>
         </Box>
-       </div> 
+       {/* </div>  */}
       {/* </Card> */}
       {/* </Card> */}
   
