@@ -14,7 +14,9 @@ import {
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSheetOvenTime.css";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSheetOvenTime() {
+  const { menuName } = fn_Homepage();
   const {
     btnIbtback_Click,
     txtmcNo,
@@ -49,7 +51,7 @@ function ScanSheetOvenTime() {
           <TableHead>
             <TableRow>
               <TableCell colSpan={3} rowSpan={3}>
-                Dispenser - UV cure/Thermal cure <br /> Control Time
+              {menuName}
               </TableCell>
             </TableRow>
           </TableHead>
