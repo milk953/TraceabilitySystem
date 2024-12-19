@@ -84,7 +84,7 @@ function ScanSheetMOTTime() {
                   <TableRow>
                     <TableCell colSpan={3} className="Header_Center">
                     
-                       <b> Pre-Baking <ArrowRightOutlined /> MOT2 Control Time</b>
+                      Pre-Baking <ArrowRightOutlined /> MOT2 Control Time
                       
                     </TableCell>
                   </TableRow>
@@ -259,7 +259,7 @@ function ScanSheetMOTTime() {
               <Table  component={Card}>
               {lblResult.value !== '' && lblRemark !== '' && (
                   <TableRow style={{ height: "180px" }} >
-                    <TableCell colSpan={3} style={{padding:0}}>
+                    <TableCell colSpan={3} style={{padding:0,border:0}}>
                       <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"
