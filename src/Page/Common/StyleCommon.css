@@ -136,13 +136,13 @@
 }
 
 .BtSave {
-  background-color: #1a5d1a !important ;
+  background-color: green !important ;
   color: #fff !important;
   height: 30px;
 }
 
 .BtCancel {
-  background-color: #e0282e !important ;
+  background-color: red !important ;
   color: #fff !important;
   height: 30px;
 }
@@ -184,7 +184,7 @@
 }
 
 .Status-Off {
-  background: #bb2525;
+  background: red;
   color: #ffffff;
 }
 .Card-Result {

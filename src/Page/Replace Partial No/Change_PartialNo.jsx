@@ -10,7 +10,6 @@ import {
   TableContainer,
   Paper,
   Typography,
-  Button,
   Select,
   MenuItem,
   FormControl,
@@ -27,7 +26,7 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { Table as AntTable, Spin } from "antd";
+import { Table as AntTable, Spin, Button } from "antd";
 import "./ChangePartialNO.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -51,18 +50,20 @@ function ScanSheetMOTTime() {
     gvRow,
     loading,
     fc_txtSerialOld,
-    fc_txtSerialNew
+    fc_txtSerialNew,
+    BtnCancel_Click,
+    fc_total
   } = fn_Change_PartialNo();
 
   return (
     <div>
       <Hearder />
-     
-      <Card component={Paper} className="Card-Common">
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+
+      {/* <Card component={Paper} className="Card-Common"> */}
+        <Box className='Center_Layout'>
           <Grid container spacing={2}>
             <Grid item xs={10} md={12} align="center">
-              <Paper
+              {/* <Paper
                 className="Card-lblResult"
                 style={{
                   background: lblResult.style,
@@ -77,54 +78,55 @@ function ScanSheetMOTTime() {
                 >
                   {lblResult.value}
                 </Typography>
-              </Paper>
+              </Paper> */}
 
               <Table
                 component={Card}
-                className="ChangePartino"
-                style={{ width: "50%" }}
+                className="Header_Center"
+                style={{  }}
               >
-                <TableHead style={{ height: "60px" }}>
+                <TableHead >
                   <TableRow>
                     <TableCell
                       colSpan={3}
                       align="center"
-                      style={{ fontSize: "30px" }}
+                      
                     >
-                      <b>Replace Partial No.</b>
+                      Replace Partial No.
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell align="right" style={{ width: "150px" }}>
-                      <Typography>Total Partial No.:</Typography>
-                    </TableCell>
-                    <TableCell colSpan={2}>
-                      <TextField
-                        size="small"
-                        className="input_txt"
-                        style={{ width: "50%" }}
-                        fullWidth
-                        value={txtTotalPcs}
-                        onChange={(e) => {
-                          settxtTotalPcs(e.target.value);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtTotalPcs_TextChanged();
-                          }
-                        }}
-                        // onBlur={txtTotalPcs_TextChanged}
-                      />
-                    </TableCell>
-                  </TableRow>
+                <TableRow>
+  <TableCell align="center" style={{ width: "150px" }}>
+    <Box display="flex" alignItems="center" justifyContent="center">
+      <Typography>Total Partial No.:</Typography>
+      <TextField
+        size="small"
+        className="input_txt"
+        style={{ width: "50%", marginLeft: "8px" }}
+        fullWidth
+        value={txtTotalPcs}
+        onChange={(e) => {
+          settxtTotalPcs(e.target.value);
+        }}
+        inputRef={(el) => (fc_total.current = el)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            txtTotalPcs_TextChanged();
+          }
+        }}
+      />
+    </Box>
+  </TableCell>
+</TableRow>
                 </TableBody>
               </Table>
+              {console.log("gvSerial", gvSerial.value)}
               <Table
                 className="CSS-GvSerial"
                 style={{
-                  width: "50%",
+               
                   marginTop: "20px",
                   // display: gvSerial.visblew
                 }}
@@ -163,7 +165,9 @@ function ScanSheetMOTTime() {
                           className="input_txt"
                           size="small"
                           fullWidth
-                          inputRef={(el) => (fc_txtSerialOld.current[index] = el)}
+                          inputRef={(el) =>
+                            (fc_txtSerialOld.current[index] = el)
+                          }
                           value={txtSerialNo[index]}
                           // onBlur={(event) => {
                           //   handleSerialOldChange(index, event);
@@ -174,11 +178,13 @@ function ScanSheetMOTTime() {
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
-                              if (index < gvSerial.value.length ) {
-                                fc_txtSerialNew.current[index].focus();
+                              if (index < gvSerial.value.length-1) {
+                                console.log("index1", index);
+                                fc_txtSerialOld.current[index+1].focus();
                               } else {
-                                BtnSubmit_Click();
-                                event.target.blur();
+                                console.log("index2", index);
+                                fc_txtSerialNew.current[0].focus();
+                                // event.target.blur();
                               }
                             }
                           }}
@@ -190,24 +196,23 @@ function ScanSheetMOTTime() {
                           className="input_txt"
                           size="small"
                           fullWidth
-                          inputRef={(el) => (fc_txtSerialNew.current[index] = el)}
+                          inputRef={(el) =>
+                            (fc_txtSerialNew.current[index] = el)
+                          }
                           value={txtSerialNoNew[index]}
-                          // onBlur={(event) => {
-                          //   handleSerialNewChange(index, event);
-                          // }}
+           
                           onChange={(event) =>
                             handleSerialNewChange(index, event)
                           }
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
-                              if (index < gvSerial.value.length-1 ) {
-                               
-                                fc_txtSerialOld.current[index + 1].focus();
+                              if (index < gvSerial.value.length - 1) {
+                                fc_txtSerialNew.current[index+1].focus();
                               } else {
-                              
-                                BtnSubmit_Click();
                                 event.target.blur();
+                                BtnSubmit_Click();
+                          
                               }
                             }
                           }}
@@ -219,20 +224,26 @@ function ScanSheetMOTTime() {
                   <TableRow>
                     <TableCell colSpan={3} style={{ textAlign: "center" }}>
                       {/* ถ้า loading เป็น false จะแสดงปุ่ม Submit */}
-                      {!loading && (
-                        <Button className="BtSave" onClick={BtnSubmit_Click}>
+                      {/* {!loading && ( */}
+                        <Button
+                          type="primary"
+                          className="ButtonReplace"
+                          onClick={BtnSubmit_Click}
+                        >
                           Submit
                         </Button>
-                      )}
-<Button className="BtSave" onClick={BtnSubmit_Click}>
-                          Cancel
-                        </Button>
+                      {/* )}{" "} */}
+                      &nbsp;
+                      <Button type="primary" className="ButtonCancel" onClick={BtnCancel_Click}>
+                        Cancel
+                      </Button>
                       {/* ถ้า loading เป็น true จะแสดง Spin */}
-                      {loading && <Spin tip="Loading..." size="large" />}
+                      {/* {loading && <Spin tip="Loading..." size="large" />} */}
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
+              <br />
               <AntTable
                 columns={columns}
                 dataSource={gvRow.value}
@@ -240,15 +251,14 @@ function ScanSheetMOTTime() {
                 size="small"
                 bordered
                 className="tableGvResult"
-                style={{ width: "70%", display: gvRow.visble }}
+                style={{  display: gvRow.visble }}
               />
             </Grid>
             {/* <Grid item xs={10} md={7} >             */}
-
             {/* </Grid> */}
           </Grid>
         </Box>
-      </Card>
+      {/* </Card> */}
       {/* </Card> */}
     </div>
   );

@@ -1048,6 +1048,7 @@ function fn_ConfirmBarcodeGrade() {
     try {
       let dtSerial = await getInputSerial();
       console.log("dtserial", dtSerial);
+      
       let _strLotData = "";
       let _strLotRefData = "";
       let _strLot = "";
@@ -1097,6 +1098,9 @@ function fn_ConfirmBarcodeGrade() {
         let _intRowSerial = 0;
         if (!Check_Master) {
           for (let i = 0; i < dtSerial.length; i++) {
+            if(dtSerial[i].SERIAL == ""){
+              
+            }
             _strShtNoBack = dtSerial[i].BACK_SIDE;
             _strShtNoFront = dtSerial[i].FRONT_SIDE;
             if (hfSheetType == "D" && _strShtNoBack == _strShtNoFront) {
@@ -1123,10 +1127,10 @@ function fn_ConfirmBarcodeGrade() {
             }
 
             if (hfCheckLotSht == "Y" && dtSerial[i].SEQ == "1") {
-              const start = parseInt(hfCheckLotShtStart);
-              const end = parseInt(hfCheckLotShtEnd);
-              const substringBack = _strShtNoBack.substring(start - 1, end);
-              const substringFront = _strShtNoFront.substring(start - 1, end);
+              const start = parseInt(hfCheckLotShtStart)- 1;
+              const end = parseInt(hfCheckLotShtEnd)- 1;
+              const substringBack = _strShtNoBack.substring(start , end);
+              const substringFront = _strShtNoFront.substring(start, end);
               if (_strLotRef !== substringFront) {
                 _strScanResultAll = "NG";
                 _strErrorAll = "Sheet lot mix";

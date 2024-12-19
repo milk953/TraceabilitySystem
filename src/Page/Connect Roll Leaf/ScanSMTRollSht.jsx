@@ -330,11 +330,11 @@ function ScanSMTRoollSht() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <AntButton className="BtSave" onClick={Bt_Save}>
+                      <AntButton type="primary" className="ButtonReplace" onClick={Bt_Save}>
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <AntButton className="BtCancel" onClick={ibtCancel_Click}>Cancel</AntButton>
+                      <AntButton  type="primary" className="ButtonCancel" onClick={ibtCancel_Click}>Cancel</AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -367,7 +367,7 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       elevation={3}
                       style={{
-                        backgroundColor: lblResult.value=='OK' ? "green" : "#BA0900" ,
+                        backgroundColor: lblResult.value=='OK' ? "green" : "red" ,
                         display: gvScanResult,
                       }}
                     >

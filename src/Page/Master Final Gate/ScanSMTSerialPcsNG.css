@@ -1,5 +1,6 @@
 .masterFGmaintd {
   vertical-align: top;
+  
 }
 .masterFGmainTable {
   max-width: 400px;
@@ -12,6 +13,10 @@
   border-radius: 5px 5px 0 0 !important;
   color: #fff;
   font-size: 20px;
+}
+
+.masterFGlblTable td{
+  padding: 5px !important;
 }
 .masterFGTable td {
   padding: 5px !important;
@@ -29,28 +34,31 @@
   font-size: 16px;
   width: 230px;
 }
-.styleEnable{
+.styleEnable {
   background-color: "";
   padding: 3px !important;
   font-size: 16px;
   width: 230px;
 }
 
-
 .masterFGgvSerial {
   width: 400px !important;
   margin: left;
-  margin-top: 20px !important;
-
 }
 
 .masterFGgvSerialCell {
+  padding: 0px !important;
+  margin: auto;
+  text-align: center !important;
+  border-right: 1px solid #d9d9d9 !important;
+}
+.masterFGgvSerialCellHead {
   padding: 5px !important;
   margin: auto;
   text-align: center !important;
 }
 
-.gvScanResultMasterFinal{
+.gvScanResultMasterFinal {
   margin-top: 20px;
   width: auto;
   border: 1px solid rgb(221, 219, 219);
@@ -59,30 +67,28 @@
 
 .gvScanResultMasterFinal th {
   text-align: center;
-  border-right: 1px solid rgb(221, 219, 219) ;
+  border-right: 1px solid rgb(221, 219, 219);
   /* background-color: #378CE7;*/
-  background-color: #FF9800;
+  background-color: #ff9800;
   color: white;
   font-weight: 700;
   font-family: Arial;
 }
-.gvScanResultMasterFinal td{
+.gvScanResultMasterFinal td {
   text-align: center;
-  border-right: 1px solid rgb(221, 219, 219) ;
+  border-right: 1px solid rgb(221, 219, 219);
   /* font-weight: 700;
   font-family: Arial; */
 }
-.lblResultCardMasterFinal{
-
-    max-width: 1000px;
-    width: 100%;
-    /* margin: auto; */
-    /* margin-left: 0px; */
-    height: 45px;
-
+.lblResultCardMasterFinal {
+  max-width: 1000px;
+  width: 100%;
+  /* margin: auto; */
+  /* margin-left: 0px; */
+  height: 45px;
 }
 
-.lblResultMasterFinal{
+.lblResultMasterFinal {
   margin-left: 20px;
   width: 1000px;
   text-align: center;

@@ -195,7 +195,6 @@ function ScanSheetBakeTime() {
           </TableRow>
         </TableBody>
       </Table>
-      &nbsp;
        {PnlShowresult && (       
       <div className="pnlResultBaking">
         <Table id={lblResult.text == "NG" ? "TableResultBakingred" : "TableResultBaking"} component={Card} style={{ height: '180px' }} >
