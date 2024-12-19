@@ -55,6 +55,7 @@ function fn_Change_PartialNo() {
         return index + 1;
       },
       align: "center",
+      width:'30px'
     },
     {
       title: "Old Partial No.",
@@ -80,6 +81,7 @@ function fn_Change_PartialNo() {
       key: "Count",
       dataIndex: "FINALGATE_ROW",
       align: "center",
+       width:'60px',
       render: (text, record, index) => {
         return text;
       },
