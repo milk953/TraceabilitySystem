@@ -26,7 +26,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
 import Hearder from "../Header/Header";
 import "../Common/StyleCommon.css";
-import { Table as AntTable } from "antd";
+import { Table as AntTable,Button as AntButton } from "antd";
 import { fn_ConfirmBarcodeGrade } from "./fn_ConfirmBarcodeGrade";
 function ConfirmBarcodeGrade() {
   const {
@@ -93,7 +93,7 @@ function ConfirmBarcodeGrade() {
                   <TableRow>
                     <TableCell colSpan={3} align="center">
                       <Typography variant="h5">
-                        <b>Confirm Barcode Grade</b>
+                        Confirm Barcode Grade
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -141,7 +141,7 @@ function ConfirmBarcodeGrade() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button onClick={ibtBack_Click}>
+                      <Button className='Bt_ibtBack'onClick={ibtBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -463,22 +463,20 @@ function ConfirmBarcodeGrade() {
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={3} align="center">
-                        <Button
-                          variant="contained"
-                          size="small"
+                        <AntButton
+                         type="primary" className="ButtonReplace"
                           onClick={btnSave_Click}
                         >
                           Yes
-                        </Button>{" "}
+                        </AntButton>{" "}
                         &nbsp;&nbsp;
-                        <Button
-                          variant="contained"
-                          size="small"
-                          color="error"
+                        <AntButton
+                          
+                         type="primary" className="ButtonCancel"
                           onClick={btnCancel_Click}
                         >
                           Cancel
-                        </Button>
+                        </AntButton>
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -515,7 +513,7 @@ function ConfirmBarcodeGrade() {
                     className="Card-lblResult"
                     elevation={3}
                     style={{
-                      background: lblResult !== "OK" ? "#ff4d4f" : "green",
+                      background: lblResult !== "OK" ? "red" : "green",
                       // display: gvScanResult,
                     }}
                   >

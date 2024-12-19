@@ -51,6 +51,8 @@ function ScanSheetMOTTime() {
     loading,
     fc_txtSerialOld,
     fc_txtSerialNew,
+    BtnCancel_Click,
+    fc_total
   } = fn_Change_PartialNo();
 
   return (
@@ -95,31 +97,32 @@ function ScanSheetMOTTime() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell align="right" style={{ width: "150px" }}>
-                      <Typography>Total Partial No.:</Typography>
-                    </TableCell>
-                    <TableCell colSpan={2}>
-                      <TextField
-                        size="small"
-                        className="input_txt"
-                        style={{ width: "50%" }}
-                        fullWidth
-                        value={txtTotalPcs}
-                        onChange={(e) => {
-                          settxtTotalPcs(e.target.value);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtTotalPcs_TextChanged();
-                          }
-                        }}
-                        // onBlur={txtTotalPcs_TextChanged}
-                      />
-                    </TableCell>
-                  </TableRow>
+                <TableRow>
+  <TableCell align="center" style={{ width: "150px" }}>
+    <Box display="flex" alignItems="center" justifyContent="center">
+      <Typography>Total Partial No.:</Typography>
+      <TextField
+        size="small"
+        className="input_txt"
+        style={{ width: "50%", marginLeft: "8px" }}
+        fullWidth
+        value={txtTotalPcs}
+        onChange={(e) => {
+          settxtTotalPcs(e.target.value);
+        }}
+        inputRef={(el) => (fc_total.current = el)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            txtTotalPcs_TextChanged();
+          }
+        }}
+      />
+    </Box>
+  </TableCell>
+</TableRow>
                 </TableBody>
               </Table>
+              {console.log("gvSerial", gvSerial.value)}
               <Table
                 className="CSS-GvSerial"
                 style={{
@@ -207,8 +210,9 @@ function ScanSheetMOTTime() {
                               if (index < gvSerial.value.length - 1) {
                                 fc_txtSerialNew.current[index+1].focus();
                               } else {
-                                BtnSubmit_Click();
                                 event.target.blur();
+                                BtnSubmit_Click();
+                          
                               }
                             }
                           }}
@@ -230,7 +234,7 @@ function ScanSheetMOTTime() {
                         </Button>
                       {/* )}{" "} */}
                       &nbsp;
-                      <Button type="primary" className="ButtonCancel">
+                      <Button type="primary" className="ButtonCancel" onClick={BtnCancel_Click}>
                         Cancel
                       </Button>
                       {/* ถ้า loading เป็น true จะแสดง Spin */}

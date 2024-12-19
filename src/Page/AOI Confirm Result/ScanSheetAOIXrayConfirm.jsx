@@ -63,7 +63,7 @@ function ScanSheetMOTTime() {
                       colSpan={3}
                     
                     >
-                      <b>AOI Confirm Result</b>
+                      AOI Confirm Result
                     </TableCell>
                   </TableRow>
                 </TableHead>
