@@ -52,10 +52,10 @@ function Reject() {
   return (
     <>
       <Hearder />
-      <div style={{marginTop:'70px'}}></div>
+      <div style={{ marginTop: "70px" }}></div>
       {isShowlblResult && (
         <div className="divRejectResult">
-           <Card
+          <Card
             className={
               lblResult.styled.color === "red"
                 ? "RejectResultError"
@@ -66,13 +66,12 @@ function Reject() {
           </Card>
         </div>
       )}
-      &nbsp;
       <div className="DRejectTableFirst">
         <Table className="RejectTableFirst" component={Paper}>
           <TableHead>
             <TableRow>
               <TableCell colSpan={4} align="center">
-              {menuName}
+                {menuName}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -158,7 +157,6 @@ function Reject() {
           </TableBody>
         </Table>
       </div>
-      <br></br>
       <div className="DRejectTableSecond">
         <Table className="RejectTableSecond" component={Paper}>
           <TableBody>
@@ -206,7 +204,42 @@ function Reject() {
             </TableRow>
             <TableRow>
               <TableCell sx={{ textAlign: "center" }} colSpan={4}>
-                <Button
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "3px",
+                  }}
+                >
+                  <Button
+                    style={{
+                      backgroundColor: "green",
+                      width: "90px",
+                      color: "white",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    onClick={handleSubmit_Click}
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    style={{
+                      width: "90px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    icon={<Avatar shape="square" src={excel} size="small" />}
+                    onClick={handleExport}
+                  >
+                    Export
+                  </Button>
+                </div>
+                {/* <Button
                   style={{
                     backgroundColor: "green",
                     width: "90px",
@@ -222,7 +255,7 @@ function Reject() {
                   onClick={handleExport}
                 >
                   Export
-                </Button>
+                </Button> */}
               </TableCell>
             </TableRow>
           </TableBody>

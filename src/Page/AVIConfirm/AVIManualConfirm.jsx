@@ -167,7 +167,7 @@ function AVIManualConfirm() {
               <TableCell sx={{ textAlign: "right" }}>Operator :</TableCell>
               <TableCell sx={{ width: "100px" }}>
                 <input
-                  style={{ width: "150px", backgroundColor: "#B2A8A8" }}
+                  style={{ width: "150px", backgroundColor: "#e0e0e0" }}
                   disabled
                   value={username}
                 />

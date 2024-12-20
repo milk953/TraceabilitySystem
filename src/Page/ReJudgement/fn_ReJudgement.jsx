@@ -197,7 +197,7 @@ function fn_ReJudgement() {
     } else {
       if (lot == "") {
         setLblResult({
-          text: "Please input Lot no.",
+          text: "Please input lot again !",
           styled: { color: "red" },
         });
         setIsShowlblResult(true);
