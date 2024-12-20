@@ -616,7 +616,23 @@ function Fn_ScanSMTRollSht() {
     let _intCount = 0;
     let _intRow = 0;
     let _strLot = "";
-
+    const allSerialEmpty = dtSheet.every(item => item.SHT_NO === "");
+    if (allSerialEmpty) {
+      hideLoading();
+      setlbllog((prevState) => ({
+        ...prevState,
+        value: `Please Input Serial No.`,
+        visible: true,
+      }));
+      setlblResult((prevState) => ({
+        ...prevState,
+        value: '',
+      }));
+      setTimeout(() => {
+      fc_GvSerial.current[0].focus();
+    }, 300);
+      return;        
+    }
     let _strRollLeaf = txtRollLeaf.value;
     if (hfConnRollLength == txtRollLeaf.value.length ) {
       if (txtOperator != "") {

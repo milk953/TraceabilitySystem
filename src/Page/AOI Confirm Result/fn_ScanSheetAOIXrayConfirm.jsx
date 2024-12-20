@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {DataConfig} from "../Common/function_Common"; 
+import { DataConfig } from "../Common/function_Common";
 function fn_ScanSheetAOIXrayConfirm() {
-  const{ConfigData} = DataConfig();
-  console.log(ConfigData,'ConfigData');
+  const { ConfigData } = DataConfig();
+  console.log(ConfigData, "ConfigData");
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [lblResult, setlblResult] = useState("");
   const [lblSheet, setlblSheet] = useState("");
@@ -20,8 +20,8 @@ function fn_ScanSheetAOIXrayConfirm() {
     setlblSheet("");
     setlblRemark("");
     setTimeout(() => {
-        fc_txtSheet.current.focus();
-      }, 300);
+      fc_txtSheet.current.focus();
+    }, 300);
   }, []);
 
   const txtSheetNo_TextChanged = async () => {
@@ -36,9 +36,9 @@ function fn_ScanSheetAOIXrayConfirm() {
         })
         .then((res) => {
           let data = res.data[0];
-          console.log(data,'data')
+          console.log(data, "data");
           if (res.data.length > 0) {
-            strAOI = data.aoi_result            ;
+            strAOI = data.aoi_result;
             strXray = data.xray_result;
             strResult = data.scan_result;
           }
@@ -54,8 +54,8 @@ function fn_ScanSheetAOIXrayConfirm() {
     }
     settxtSheetNo("");
     setTimeout(() => {
-        fc_txtSheet.current.focus();
-      }, 300);
+      fc_txtSheet.current.focus();
+    }, 300);
   };
 
   const ibt_back = async () => {
@@ -64,9 +64,9 @@ function fn_ScanSheetAOIXrayConfirm() {
     setlblSheet("");
     setlblRemark("");
     setTimeout(() => {
-        fc_txtSheet.current.focus();
-      }, 300);
-  }
+      fc_txtSheet.current.focus();
+    }, 300);
+  };
 
   return {
     settxtSheetNo,
@@ -76,7 +76,7 @@ function fn_ScanSheetAOIXrayConfirm() {
     lblRemark,
     fc_txtSheet,
     txtSheetNo_TextChanged,
-    ibt_back
+    ibt_back,
   };
 }
 

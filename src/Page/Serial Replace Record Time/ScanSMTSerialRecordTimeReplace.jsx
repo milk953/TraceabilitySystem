@@ -245,8 +245,8 @@ function ScanSMTSerialRecordTimeReplace() {
                     Submit
                   </Button>
                   <Button
+                    className="ButtonCancel"
                     style={{
-                      backgroundColor: "red",
                       width: "90px",
                       color: "white",
                     }}
