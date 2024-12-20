@@ -662,9 +662,32 @@ function fn_ConfirmBarcodeGrade() {
   };
 
   const btnSave_Click = async () => {
-    if (hfMode == "SERIAL") {
-      setSerialData();
-    }
+    // if (hfMode == "SERIAL") {
+    //   setSerialData();
+    // }
+    const hasAnyInput = Array.from(fcGvSerial_txtSerial_0.current).some(
+      (input) => input.value.trim() !== ""
+  );
+
+  if (hasAnyInput == true) {
+      if (hfMode === "SERIAL") {
+        setSerialData();
+          // scrollToTop();
+         
+      }
+  } else{
+    setlblLog((prevState) => ({
+      ...prevState,
+      value: "Please input serial no./กรุณากรอก Serial No.",
+      visble: true,
+    }));
+    
+      setTimeout(() => {
+        fcGvSerial_txtSerial_0.current[0].focus();
+      }, 300);
+    
+      scrollToTop();
+     }
   };
 
   const handleSL_Product = async (value) => {
@@ -1048,7 +1071,6 @@ function fn_ConfirmBarcodeGrade() {
     try {
       let dtSerial = await getInputSerial();
       console.log("dtserial", dtSerial);
-      
       let _strLotData = "";
       let _strLotRefData = "";
       let _strLot = "";
@@ -1098,9 +1120,6 @@ function fn_ConfirmBarcodeGrade() {
         let _intRowSerial = 0;
         if (!Check_Master) {
           for (let i = 0; i < dtSerial.length; i++) {
-            if(dtSerial[i].SERIAL == ""){
-              
-            }
             _strShtNoBack = dtSerial[i].BACK_SIDE;
             _strShtNoFront = dtSerial[i].FRONT_SIDE;
             if (hfSheetType == "D" && _strShtNoBack == _strShtNoFront) {
@@ -1127,10 +1146,10 @@ function fn_ConfirmBarcodeGrade() {
             }
 
             if (hfCheckLotSht == "Y" && dtSerial[i].SEQ == "1") {
-              const start = parseInt(hfCheckLotShtStart)- 1;
-              const end = parseInt(hfCheckLotShtEnd)- 1;
-              const substringBack = _strShtNoBack.substring(start , end);
-              const substringFront = _strShtNoFront.substring(start, end);
+              const start = parseInt(hfCheckLotShtStart);
+              const end = parseInt(hfCheckLotShtEnd);
+              const substringBack = _strShtNoBack.substring(start - 1, end);
+              const substringFront = _strShtNoFront.substring(start - 1, end);
               if (_strLotRef !== substringFront) {
                 _strScanResultAll = "NG";
                 _strErrorAll = "Sheet lot mix";

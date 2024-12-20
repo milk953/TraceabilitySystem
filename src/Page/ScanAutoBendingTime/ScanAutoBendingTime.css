@@ -25,7 +25,7 @@
    
         display: flex;
         margin: auto;
-        width: 600px;
+        width: 700px !important;
         margin-top: 10px;
         
         /* border: 1px black solid; */
@@ -40,7 +40,7 @@
    
 }
 .pnlDetail td{
-    padding: 10px;
+    padding: 0px;
     border-radius: 1px;
 }
 
@@ -53,9 +53,10 @@
     
 }
 .pnlResult-Auto{
-    width: 600px;
+    width: 700px;
     margin: 0px auto;
     height: 200px;
+    margin-top: 10px;
 }
 .gvBending{
     display: flex;
@@ -88,11 +89,15 @@
   .DAVITableFirst_Bending{
   display: flex;
   margin: auto;
-  width: 530px;
-  margin-top: 20px;
+  /* width: 530px;
+  margin-top: 20px;  */
+  width: 800px !important;
+  text-align: center !important;
+  font-size: 20px !important;
+  height: 30px !important;
 }
-#TableMainBending {
-    width: 600px !important;
+.TableMainBending {
+    width: 00px !important;
     margin: 0 auto;
   }
   #TableMainBending th {
@@ -104,4 +109,28 @@
   #TableMainBending td {
    padding: 1%;
   }
+  .custom-table {
+    border: 1px solid red; /* เส้นขอบรอบ Table */
+  }
   
+  .custom-table .MuiTableCell-root {
+    border-color: red; /* เส้นขอบของแต่ละเซลล์ */
+  }
+  .TableBendingRecord{
+     
+    width: 700px !important;
+    text-align: center !important;
+    font-size: 20px !important;
+    height: 30px !important;
+    margin: auto;
+    
+  }
+  .TableBendingRecord th {
+    font-family: Arial;
+    padding: 8px !important;
+    background-color: #8c8c8c !important ;
+    border-radius: 5px 5px 0 0 !important;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+  }

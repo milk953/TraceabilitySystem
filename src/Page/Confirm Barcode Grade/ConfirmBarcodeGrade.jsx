@@ -379,14 +379,17 @@ function ConfirmBarcodeGrade() {
                   </TableBody>
                 </Table>
               )}
+                  
               {lblLog.visble == true && (
-                <Card component={Paper} className="Card-lblLog">
+              
+                <Card component={Paper} className="Card-lblLog" style={{marginTop:'10px'}}>
                   {lblLog.value}
                 </Card>
               )}
+            
               {console.log("dataGvSerial", dataGvSerial.value)}
               {dataGvSerial.visble == true && (
-                <Table className="CSS-GvSerialBarcode" component={Card}>
+                <Table className="CSS-GvSerialBarcode" component={Card} style={{marginTop:'10px'}}>
                   <TableHead>
                     <TableCell
                       sx={{ borderRight: "1px solid #d9d9d9" }}
