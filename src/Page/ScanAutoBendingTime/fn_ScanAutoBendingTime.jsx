@@ -122,10 +122,12 @@ function fn_ScanAutoBendingTime() {
           _strPrdName = res.data.prdName;
         });
         if(_strPrdName !== ""){
+          console.log(_strPrdName,"_strPrdName")
           setlblProductName((prevState) => ({ ...prevState, value:_strPrdName}));
           settxtLotNo((prevState) => ({ ...prevState, value: _strLot,disbled:true}));
           settxtMCNo((prevState) => ({ ...prevState,disbled:true}));
           getInitialSerial()
+          
         }else{
           setpnlResult(true)
           setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red',color:"white" ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' }}));
@@ -157,12 +159,14 @@ function fn_ScanAutoBendingTime() {
       // setvisiblgvSerial(true);
       setgvSerial(dtData); 
       settxtSerial( Array(dtData.length).fill(""))
-      if(dtData.length>0){
+      if(dtData.length > 0){
         setpnlDetail(true)
-      }
-      if(gvSerial.length >0){
+      }if(gvSerial.length >0){
+        setTimeout(() => {
         fcGvSerial_txtSerial_0.current[0].focus();
+      }, 300);
       }
+      
       return 0;
     };
     const btnCancel = async () => {
