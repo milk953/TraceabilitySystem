@@ -169,7 +169,6 @@ function ReJudgement() {
           </TableBody>
         </Table>
       </div>
-      <br></br>
       <Table className="ReJudgementTableSecond" component={Card}>
         <TableBody>
           <TableRow>
@@ -301,7 +300,6 @@ function ReJudgement() {
         </TableBody>
       </Table>
       &nbsp;
-      <br />
       {pnlTableDisplaySatate && (
         <div className="DReJudgementTableThird">
           <AntTable
