@@ -139,13 +139,13 @@ function ScanAutoBendingTime() {
         <Table component={Card} className="pnlDetail" >
   <TableHead>
     <TableRow>
-      <TableCell sx={{ width: "5%", fontWeight: "bold" }} align="center">
+      <TableCell sx={{ width: "5%", }} align="center">
         No.
       </TableCell>
-      <TableCell sx={{ width: "10%", fontWeight: "bold" }} align="center">
+      <TableCell sx={{ width: "10%", }} align="center">
         Bending No.
       </TableCell>
-      <TableCell sx={{ width: "30%", fontWeight: "bold" }} align="center">
+      <TableCell sx={{ width: "30%",  }} align="center">
         Serial No.
       </TableCell>
     </TableRow>
@@ -226,8 +226,8 @@ function ScanAutoBendingTime() {
             Submit
           </ButtonTable>
           <ButtonTable
+          className="ButtonCancel"
             style={{
-              backgroundColor: "red",
               color: "white",
               width: "90px",
             }}
@@ -248,9 +248,10 @@ function ScanAutoBendingTime() {
         <Table  
         component={Card}    
         sx={{
-      border: '0px solid red', 
-      '& .MuiTableCell-root': {
-        borderColor: 'red', 
+          border: '0px solid',
+          borderColor: lblResult.value === 'OK' ? 'green' : 'red',
+          '& .MuiTableCell-root': {
+            borderColor: lblResult.value === 'OK' ? 'green' : 'red',
       },
     }} >
           <TableRow>

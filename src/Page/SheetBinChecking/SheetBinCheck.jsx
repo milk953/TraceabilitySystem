@@ -5,7 +5,6 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Button,
   TableHead,
   Paper,
   Card
@@ -23,17 +22,13 @@ const { menuName } = fn_Homepage();
       <h1></h1>
    <div className="Pageshow-SheetBin">
         <div className="pnlMain1">
-         
           <Table id="TableMain1" component={Paper}>
-     
             <TableHead>
-              
               <TableRow>
                 <TableCell style={{color:'white'}}colSpan={3}>{menuName}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-             
               <TableRow>
                 <TableCell  sx={{fontSize:'15px'}}
                 id="lbltxt"
@@ -42,7 +37,7 @@ const { menuName } = fn_Homepage();
                   <TextField
                     size="small"
                     className="txtField1"
-                    value={txtSheetNo}
+                    value={txtSheetNo.trim()}
                     inputRef={FctxtSht}
                     onChange={(e) => {
                       settxtSheetNo(e.target.value);
@@ -52,13 +47,12 @@ const { menuName } = fn_Homepage();
                         txtSheetNo_TextChanged();
                       }
                     }}
-                    // onBlur={txtSheetNo_TextChanged}
                   ></TextField>
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={3} sx={{ textAlign: "center" }}>
+                <TableCell colSpan={3} sx={{ textAlign: "center" ,fontSize:'16px' }}>
                   {lblSheet}
                 </TableCell>
               </TableRow>
@@ -68,11 +62,6 @@ const { menuName } = fn_Homepage();
         {(pnlResult &&
       <div className="pnlResult1">
         <Table id="TableResult1" component={Card}>
-        {/* <TableRow>
-          <TableCell sx={{fontSize:'30px' ,backgroundColor:'#d0d9ff'}}>
-          {lblSheet}
-          </TableCell>
-        </TableRow > */}
           <TableRow sx={{height:'34px' }}>
             <TableCell
             sx={lblResult.styled}
