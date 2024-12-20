@@ -96,7 +96,6 @@ function fn_AOIManualConfirmP1() {
   };
 
   const BtnSubmit1_Click = async () => {
-    console.log("CheckComplete", CheckComplete);
     let AOI_SPI_Check = "";
     if (CheckComplete === "") {
       setDdlResult((prevState) => ({
@@ -169,6 +168,39 @@ function fn_AOIManualConfirmP1() {
         style: { background: "red" },
       }));
     }
+  };
+
+  const BtnCancle_Click = async () => {
+    setRbtAOIandSPIcheck((prevState) => ({
+      ...prevState,
+      value: "AOI",
+    }));
+    setTxtSerialNo((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+    setDdlResult((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+    setTxtCnt((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+    setLblResult((prevState) => ({
+      ...prevState,
+      value: "",
+      style: {},
+    }));
+    fnSetFocus("txtSerialNo_AOIManualConfirmP1_focus");
+    setRbtAOI((prevState) => ({
+      ...prevState,
+      value: true,
+    }));
+    setRbtSPI((prevState) => ({
+      ...prevState,
+      value: false,
+    }));
   };
 
   const txtSerialNo_TextChanged = async () => {
@@ -295,6 +327,7 @@ function fn_AOIManualConfirmP1() {
     txtCnt,
     btnRetrive_Click,
     BtnSubmit1_Click,
+    BtnCancle_Click,
   };
 }
 

@@ -23,6 +23,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import "./AOIManualConfirmP1.css";
 import "../Common/StyleCommon.css";
 import { fn_AOIManualConfirmP1 } from "../AOIManualConfirmP1/fn_AOIManualConfirmP1";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function AOIManualConfirmP1() {
   const {
     lblUser1,
@@ -38,221 +39,211 @@ function AOIManualConfirmP1() {
     txtCnt,
     btnRetrive_Click,
     BtnSubmit1_Click,
+    BtnCancle_Click,
   } = fn_AOIManualConfirmP1();
+  const { menuName } = fn_Homepage();
   return (
     <>
       <Hearder />
-      <Card
-        component={Paper}
-        className="Card-Common-Khun"
-        sx={{
-          backgroundColor: "transparent",
-          boxShadow: "none",
-        }}
-      >
-        {lblResult.value && (
-          <TableRow
-            sx={{
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-            }}
+      <div className="Center_Layout"></div>
+      {lblResult.value && (
+        <div className="divAOIManualConfirmP1Result">
+          <Card
+            className={
+              lblResult.style.color === "red" ? "ResultSuccess" : "ResultError"
+            }
           >
-            <TableCell
-              sx={{
-                width: "600px",
-                borderBottom: "0px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  color: "#ffffff",
-                  ...lblResult.style,
-                }}
-              >
-                {lblResult.value}
-              </Typography>
-            </TableCell>
-          </TableRow>
-        )}
-
-        <div className="DAOITableFirst">
-          <Table className="AOITableFirst" component={Paper}>
+            {lblResult.value}
+          </Card>
+        </div>
+      )}
+      {/* &nbsp; */}
+      <div className="AOIManualConfirmP1TableFirst">
+        <Table className="Header_Center" component={Paper}>
             <TableHead>
-              <TableCell colSpan={4}>P1 AOI/SPI Confirm</TableCell>
-            </TableHead>
-            <TableBody>
               <TableRow>
-                <TableCell sx={{ width: "90px", textAlign: "right" }}>
-                  Type :
-                </TableCell>
-
-                <TableCell>
-                  <Grid container spacing={0}>
-                    <Grid item xs={6} md={6} style={{ background: "#CCFFFF" }}>
-                      <FormControl>
-                        <RadioGroup
-                          row
-                          value={rbtAOIandSPIcheck.value}
-                          onChange={handleRadioChange}
-                        >
-                          <FormControlLabel
-                            value="AOI"
-                            control={<Radio size="small" />}
-                            label="AOI"
-                            style={{ margin: "0px" }}
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={6} md={6} style={{ background: "#CCFFCC" }}>
-                      <FormControl>
-                        <RadioGroup
-                          row
-                          value={rbtAOIandSPIcheck.value}
-                          onChange={handleRadioChange}
-                        >
-                          <FormControlLabel
-                            value="SPI"
-                            control={<Radio size="small" />}
-                            label="SPI"
-                            style={{ margin: "0px" }}
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                </TableCell>
-
-                <TableCell
-                  rowSpan={2}
-                  sx={{ verticalAlign: "middle", textAlign: "center" }}
-                >
-                  <Button
-                    type="primary"
-                    icon={<SearchOutlined />}
-                    onClick={btnRetrive_Click}
-                  >
-                    Search
-                  </Button>
+                <TableCell colSpan={4} align="center">
+                {menuName}
                 </TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell sx={{ textAlign: "right" }}>Piece No. :</TableCell>
+            </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell sx={{ width: "90px", textAlign: "right" }}>
+                Type :
+              </TableCell>
 
-                <TableCell sx={{ width: "60%" }}>
-                  <TextField
-                    id="txtSerialNo_AOIManualConfirmP1_focus"
-                    className="input_txt"
-                    size="small"
-                    fullWidth
-                    autoComplete="off"
-                    // disabled={txtOperator.disabled}
-                    // style={txtOperator.style}
-                    value={txtSerialNo.value}
+              <TableCell>
+                <Grid container spacing={0}>
+                  <Grid item xs={6} md={6} style={{ background: "#CCFFFF" }}>
+                    <FormControl>
+                      <RadioGroup
+                        row
+                        value={rbtAOIandSPIcheck.value}
+                        onChange={handleRadioChange}
+                      >
+                        <FormControlLabel
+                          value="AOI"
+                          control={<Radio size="small" />}
+                          label="AOI"
+                          style={{ margin: "0px" }}
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6} md={6} style={{ background: "#CCFFCC" }}>
+                    <FormControl>
+                      <RadioGroup
+                        row
+                        value={rbtAOIandSPIcheck.value}
+                        onChange={handleRadioChange}
+                      >
+                        <FormControlLabel
+                          value="SPI"
+                          control={<Radio size="small" />}
+                          label="SPI"
+                          style={{ margin: "0px" }}
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </TableCell>
+
+              <TableCell
+                rowSpan={2}
+                sx={{ verticalAlign: "middle", textAlign: "center" }}
+              >
+                <Button
+                  type="primary"
+                  icon={<SearchOutlined />}
+                  onClick={btnRetrive_Click}
+                >
+                  Search
+                </Button>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell sx={{ textAlign: "right" }}>Piece No. :</TableCell>
+
+              <TableCell sx={{ width: "60%" }}>
+                <TextField
+                  id="txtSerialNo_AOIManualConfirmP1_focus"
+                  className="input_txt"
+                  size="small"
+                  fullWidth
+                  autoComplete="off"
+                  // disabled={txtOperator.disabled}
+                  // style={txtOperator.style}
+                  value={txtSerialNo.value}
+                  onChange={(e) => {
+                    setTxtSerialNo((prevState) => ({
+                      ...prevState,
+                      value: e.target.value,
+                    }));
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      txtSerialNo_TextChanged();
+                    }
+                  }}
+                ></TextField>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      {/* &nbsp; */}
+      <div className="AOIManualConfirmP1TableLast">
+        <Table className="Header_Center" component={Paper}>
+          <TableBody>
+            <TableRow>
+              <TableCell sx={{ width: "90px", textAlign: "right" }} >Result : </TableCell>
+              <TableCell sx={{ width: "100px" }}>
+                <FormControl style={{ width: "100%" }} size="small">
+                  <Select
+                    className="field_select"
+                    sx={{
+                      height: 28,
+                      fontSize: 14,
+                      // color: ddlResult.value == " " ? "rgba(0, 0, 0, 0)" : "",
+                    }}
+                    value={ddlResult.value === "" ? " " : ddlResult.value}
                     onChange={(e) => {
-                      setTxtSerialNo((prevState) => ({
+                      setDdlResult((prevState) => ({
                         ...prevState,
                         value: e.target.value,
                       }));
                     }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        txtSerialNo_TextChanged();
-                      }
-                    }}
-                  ></TextField>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
-        <div className="DAOITableSecond">
-          <Table className="AOITableSecond" component={Paper}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Result</TableCell>
-                <TableCell>Operator</TableCell>
-                <TableCell colSpan={2}>Inspect Count</TableCell>
-                <TableCell colSpan={2}></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell style={{ width: "35%" }}>
-                  <FormControl style={{ width: "100%" }} size="small">
-                    <Select
-                      className="field_select"
-                      sx={{
-                        height: 28,
-                        fontSize: 14,
-                        // color: ddlResult.value == " " ? "rgba(0, 0, 0, 0)" : "",
-                      }}
-                      value={ddlResult.value === "" ? " " : ddlResult.value}
-                      onChange={(e) => {
-                        setDdlResult((prevState) => ({
-                          ...prevState,
-                          value: e.target.value,
-                        }));
-                      }}
-                    >
-                      {/* <MenuItem value=" " style={{ color: "rgba(0, 0, 0, 0)" }}>
+                  >
+                    {/* <MenuItem value=" " style={{ color: "rgba(0, 0, 0, 0)" }}>
                         <em>-SELECT-</em>
                       </MenuItem> */}
-                      <MenuItem value=" ">--- Select ---</MenuItem>
-                      <MenuItem value={"OK"}>OK</MenuItem>
-                      <MenuItem value={"NG"}>NG</MenuItem>
-                    </Select>
-                  </FormControl>
-                </TableCell>
-                <TableCell style={{ width: "35%" }}>
-                  <TextField
-                    className="field_text"
-                    size="small"
-                    disabled
-                    fullWidth
-                    autoComplete="off"
-                    style={{ width: "99%", backgroundColor: "#e0e0e0" }}
-                    value={txtOperatorCode.value}
-                  ></TextField>
-                </TableCell>
-                <TableCell style={{ width: "20%" }}>
-                  <TextField
-                    className="field_text"
-                    size="small"
-                    disabled
-                    fullWidth
-                    autoComplete="off"
-                    value={txtCnt.value}
-                    style={{ width: "99%", backgroundColor: "#e0e0e0" }}
-                  ></TextField>
-                </TableCell>
+                    <MenuItem value=" ">--- Select ---</MenuItem>
+                    <MenuItem value={"OK"}>OK</MenuItem>
+                    <MenuItem value={"NG"}>NG</MenuItem>
+                  </Select>
+                </FormControl>
+              </TableCell>
+              <TableCell sx={{ width: "90px",textAlign: "right" }} >Operator : </TableCell>
+              <TableCell sx={{ width: "200px" }}>
+                <TextField
+                  className="field_text"
+                  size="small"
+                  disabled
+                  fullWidth
+                  autoComplete="off"
+                  style={{ width: "100%", backgroundColor: "#e0e0e0" }}
+                  value={txtOperatorCode.value}
+                ></TextField>
+              </TableCell>
+              <TableCell sx={{ width: "110px", textAlign: "right" }}>Inspect Count : </TableCell>
+              <TableCell sx={{ width: "80px" }}>
+                <TextField
+                  className="field_text"
+                  size="small"
+                  disabled
+                  fullWidth
+                  autoComplete="off"
+                  value={txtCnt.value}
+                  style={{ width: "100%", backgroundColor: "#e0e0e0" }}
+                ></TextField>
+              </TableCell>
+            </TableRow>
+      
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      style={{ textAlign: "center", verticalAlign: "middle" }}
+                    >
+                      <Button
+                        style={{
+                          backgroundColor: "green",
+                          width: "90px",
+                          color: "white",
+                          marginRight: "16px", // เพิ่มระยะห่าง 12px ทางขวา
+                        }}
+                        onClick={BtnSubmit1_Click}
+                      >
+                        Submit
+                      </Button>
+                      <Button
+                        style={{
+                          backgroundColor: "red",
+                          width: "90px",
+                          color: "white",
+                        }}
+                         onClick={BtnCancle_Click}
+                      >
+                        Cancel
+                      </Button>
+                    </TableCell>
+                  </TableRow>
 
-                <TableCell
-                  rowSpan={2}
-                  sx={{ verticalAlign: "middle", textAlign: "center" }}
-                >
-                  <Button
-                    style={{
-                      backgroundColor: "green",
-                      width: "90px",
-                      color: "white",
-                    }}
-                    onClick={BtnSubmit1_Click}
-                  >
-                    Submit
-                  </Button>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
-
-        <br></br>
-      </Card>
+          </TableBody>
+        </Table>
+      </div>
+      <br></br>
     </>
   );
 }

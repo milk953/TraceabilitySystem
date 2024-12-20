@@ -54,13 +54,13 @@ function fn_Change_Serial() {
   const BtnSubmit_Click = async () => {
     Swal.fire({
       title: "Are you confirm submit?",
-      showDenyButton: false,
+      text: "Are you sure to submit this data",
+      icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Confirm",
       denyButtonText: "Cancel",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        showLoading("กำลังบันทึก กรุณารอสักครู่...");
         let dt = [];
         let CheckerHeaderFlg = false;
         let CheckerHeaderFlg3 = false;
@@ -85,11 +85,17 @@ function fn_Change_Serial() {
             value: strError,
             style: "red",
           }));
-          await new Promise(resolve => setTimeout(resolve, 1000));
           hideLoading();
+          Swal.fire({
+            title: strError,
+            icon: "error",
+            timer: 3000,
+            showConfirmButton: false,
+          });
+
           return;
         }
-
+        showLoading("กำลังบันทึก กรุณารอสักครู่...");
         try {
           for (let i = 0; i < dtData.length; i++) {
             const drRow = dtData[i];
@@ -110,10 +116,17 @@ function fn_Change_Serial() {
                     value: res.data[0].trc_028_changserial_getserialno,
                     style: "red",
                   }));
+                  hideLoading();
+                  Swal.fire({
+                    title: res.data[0].trc_028_changserial_getserialno,
+                    icon: "error",
+                    timer: 3000,
+                    showConfirmButton: false,
+                  });
                 }
               });
             if (Out1 > 0) {
-              await new Promise(resolve => setTimeout(resolve, 1000));
+              await new Promise((resolve) => setTimeout(resolve, 1000));
               hideLoading();
               return;
             }
@@ -140,6 +153,13 @@ function fn_Change_Serial() {
                     style: "red",
                   }));
                   hideLoading();
+                  Swal.fire({
+                    title: res.data[0].p_lblresult,
+                    icon: "error",
+                    timer: 3000,
+                    showConfirmButton: false,
+                  });
+                  hideLoading();
                   return;
                 }
                 if (
@@ -151,6 +171,13 @@ function fn_Change_Serial() {
                     value: res.data[0].response.lblresult,
                     style: "red",
                   }));
+                  hideLoading();
+                  Swal.fire({
+                    title: res.data[0].response.lblresult,
+                    icon: "error",
+                    timer: 3000,
+                    showConfirmButton: false,
+                  });
                   if (res.data[0].response.sheet_flg !== null) {
                     drRow.SHEET_FLG = res.data[0].response.sheet_flg;
                   }
@@ -189,7 +216,7 @@ function fn_Change_Serial() {
                 }
               });
             if (Out2 > 0) {
-              await new Promise(resolve => setTimeout(resolve, 1000));
+              await new Promise((resolve) => setTimeout(resolve, 1000));
               hideLoading();
               return;
             }
@@ -214,8 +241,7 @@ function fn_Change_Serial() {
                   strfinalgate_flg: drRow.FINALGATE_FLG,
                 },
               })
-              .then((res) => {
-              });
+              .then((res) => {});
           }
         } catch (ex) {
           strError = ex.message;
@@ -224,6 +250,13 @@ function fn_Change_Serial() {
             value: strError,
             style: "red",
           }));
+          hideLoading();
+          Swal.fire({
+            title: strError,
+            icon: "error",
+            timer: 3000,
+            showConfirmButton: false,
+          });
         }
         if (strError.trim() === "") {
           const newValues = [];
@@ -251,12 +284,19 @@ function fn_Change_Serial() {
             ),
             style: "#059212",
           }));
+          hideLoading();
+          Swal.fire({
+            title: "Change Serial Successed.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
           await getInitialSerial();
         }
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         hideLoading();
       } else if (result.isDenied) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         hideLoading();
         return;
       }
@@ -315,7 +355,7 @@ function fn_Change_Serial() {
       const serialGV = (txtSerialNoOld[intSeq] || "").trim().toUpperCase();
       const serialNEW = (txtSerialNoNew[intSeq] || "").trim().toUpperCase();
       // const serialGV = (txtSerialNoOld[intSeq] || "").replace(/\s+/g, "").toUpperCase();  -- ลบช่องว่างทั้งหมด
-      
+
       const drRow = {
         SEQ: gvSerial.value[intSeq].SEQ,
         SERIAL_OLD: serialGV,
@@ -327,13 +367,25 @@ function fn_Change_Serial() {
         FINALGATE_FLG: "N",
       };
       if (drRow.SERIAL_OLD == "") {
-        // strError = `${intSeq + 1} Please input Old Serial Number.`;
-        strError = `Please input Old Serial Number.`;
+        // strError = `${intSeq + 1} Please Input Old Serial Number.`;
+        strError = `Please Input Old Serial Number.`;
+        Swal.fire({
+          title: strError,
+          icon: "error",
+          timer: 3000,
+          showConfirmButton: false,
+        });
         break;
       }
       if (drRow.SERIAL_NEW == "") {
-        // strError = `${intSeq + 1} Please input New Serial Number.`;
-        strError = `Please input New Serial Number.`;
+        // strError = `${intSeq + 1} Please Input New Serial Number.`;
+        strError = `Please Input New Serial Number.`;
+        Swal.fire({
+          title: strError,
+          icon: "error",
+          timer: 3000,
+          showConfirmButton: false,
+        });
         break;
       }
       dtData.push(drRow);
@@ -356,6 +408,7 @@ function fn_Change_Serial() {
     setTxtSerialNoNew(newValues);
     if (event.key === "Enter") {
       fnSetFocus(`gvSerial_txtSerialNoNew_${index + 1}`);
+      event.target.blur();
     }
   };
 

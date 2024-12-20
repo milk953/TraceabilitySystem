@@ -1,10 +1,4 @@
-/* .AOITableFirst {
-  margin: auto;
-  width: 40%;
-}
-.AOITableFirst td {
-  padding: 5px;
-} */
+
 .AOITableFirst {
   height: 50px;
 }
@@ -21,25 +15,15 @@
   padding: 5px;
 }
 
-/* .DAOITableFirst {
+
+.DAVITableFirst {
   display: flex;
   margin: auto;
-  width: 40%;
-  margin-top: 10px;
-} */
-.DAOITableFirst {
-  display: flex;
-  margin: auto;
-  width: 600px;
-  margin-top: 0px;
+  width: 530px;
+  /* margin-top: 70px; */
 }
 
-.DAOITableSecond {
-  display: flex;
-  margin: auto;
-  width: 600px;
-  margin-top: 30px;
-}
+
 
 .AOITableSecond {
   margin: auto;
@@ -57,4 +41,59 @@
 }
 .field_select .MuiSelect-select {
   height: 10px;
+  width: 100%;
+}
+
+
+.AOIManualConfirmP1ResultError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  font-family: "popins", sans-serif;
+  font-weight: 100;
+  height: 40px;
+  width: 730px;
+  background: #BB2525 !important;
+  color: yellow !important;
+}
+.AOIManualConfirmP1ResultSuccess {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  font-family: "popins", sans-serif;
+  font-weight: 100;
+  height: 40px;
+  width: 730px;
+  background: green!important;
+  color: white !important;
+}
+
+.divAOIManualConfirmP1Result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  font-family: "popins", sans-serif;
+  font-weight: 100;
+  height: 40px;
+  width: 730px;
+  margin: auto;
+  /* margin-top: 10px; */
+}
+
+.AOIManualConfirmP1TableFirst {
+  display: flex;
+  margin: auto;
+  width: 730px;
+  margin-top: 5px;
+}
+
+
+.AOIManualConfirmP1TableLast {
+  display: flex;
+  margin: auto;
+  width: 730px;
+  margin-top: 5px;
 }
