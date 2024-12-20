@@ -70,13 +70,12 @@ function ReJudgement() {
           </Card>
         </div>
       )}
-      &nbsp;
       <div className="DReJudgementTableFirst">
         <Table className="ReJudgementTableFirst" component={Card}>
           <TableHead>
             <TableRow>
               <TableCell sx={{ textAlign: "center" }} colSpan={4}>
-              {menuName}
+                {menuName}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -170,7 +169,6 @@ function ReJudgement() {
           </TableBody>
         </Table>
       </div>
-      <br></br>
       <Table className="ReJudgementTableSecond" component={Card}>
         <TableBody>
           <TableRow>
@@ -262,29 +260,46 @@ function ReJudgement() {
           </TableRow>
           <TableRow>
             <TableCell sx={{ textAlign: "center" }} colSpan={4}>
-              <Button
+              <div
                 style={{
-                  backgroundColor: "green",
-                  width: "90px",
-                  color: "white",
+                  display: "flex",
+                  gap: "10px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "3px",
                 }}
-                onClick={btnSubmitClick}
               >
-                Submit
-              </Button>
-              &nbsp;
-              <Button
-                icon={<Avatar shape="square" src={excel} size="small" />}
-                onClick={handleExport}
-              >
-                Export
-              </Button>
+                <Button
+                  style={{
+                    backgroundColor: "green",
+                    width: "90px",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onClick={btnSubmitClick}
+                >
+                  Submit
+                </Button>
+                <Button
+                  style={{
+                    width: "90px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  icon={<Avatar shape="square" src={excel} size="small" />}
+                  onClick={handleExport}
+                >
+                  Export
+                </Button>
+              </div>
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
       &nbsp;
-      <br />
       {pnlTableDisplaySatate && (
         <div className="DReJudgementTableThird">
           <AntTable

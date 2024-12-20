@@ -33,7 +33,7 @@
   background-color: #8c8c8c !important ;
   border-radius: 5px 5px 0 0 !important;
   color: #fff;
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
 }
 
@@ -41,7 +41,7 @@
   display: flex;
   margin: auto;
   width: 600px;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 #TableResult1 {
   height: 180px;
@@ -49,6 +49,7 @@
 #TableResult1 td {
   /* font-size: 80px; */
   text-align: center;
+  border: 1px;
 }
 
 

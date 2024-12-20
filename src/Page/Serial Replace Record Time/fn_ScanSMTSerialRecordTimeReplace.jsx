@@ -365,7 +365,6 @@ function fn_ScanSMTSerialRecordTimeReplace() {
           _strRemark = "Serial barcode mix product";
           setcheckresult(true);
         }
-        console.log(hfConfigCheck, "////", _strRemark);
         if (hfConfigCheck == "Y" && _strRemark == "") {
           let _strConfigDigit = "";
           const startConfig = parseInt(hfConfigStart, 10);
@@ -382,7 +381,6 @@ function fn_ScanSMTSerialRecordTimeReplace() {
             setcheckresult(true);
           }
         }
-        console.log(hfSerialStartCode, "HHHH", _strRemark, _strSerial);
         if (hfSerialStartCode.trim() !== "" && _strRemark == "") {
           console.log(
             _strSerial.substring(0, hfSerialStartCode.length),

@@ -12,7 +12,7 @@ function fn_ScanSheetOvenTime() {
   const [txtSheetNo, setTxtSheetNo] = useState("");
   const FctxtSheetNo = useRef(null);
   const [txtSheetNoState, setTxtSheetNoState] = useState({
-    styled: { disabled: true, backgroundColor: "#B2A8A9" },
+    styled: { disabled: true, backgroundColor: "#e0e0e0" },
   });
   const [lblSheet, setLblSheet] = useState("");
   const [lblResult, setLblResult] = useState({
@@ -66,7 +66,7 @@ function fn_ScanSheetOvenTime() {
       FctxtmcNo.current.focus();
     } else {
       setTxtmcNoState({
-        styled: { disabled: true, focus: false, backgroundColor: "#B2A8A8" },
+        styled: { disabled: true, focus: false, backgroundColor: "#e0e0e0" },
       });
       setTxtSheetNo("");
       setTxtSheetNoState({
