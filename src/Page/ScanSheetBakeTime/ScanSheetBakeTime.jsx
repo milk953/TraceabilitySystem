@@ -62,7 +62,7 @@ function ScanSheetBakeTime() {
   return (
     <>
       <Hearder />
-      <h1>Baking Time</h1>
+      <div style={{marginTop:'80px'}} />
       <Table id="TableMainBaking" component={Card}>
         <TableHead>
           <TableRow>
@@ -71,7 +71,7 @@ function ScanSheetBakeTime() {
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell id="lbltxtBaking">Reference Process::</TableCell>
+            <TableCell id="lbltxtBaking">Reference Process:</TableCell>
             <TableCell className="CelltxtFieldbaging">
               <TextField
                 size="small"
@@ -153,10 +153,10 @@ function ScanSheetBakeTime() {
             <TableCell id="lbltxtBaking">Product Name:</TableCell>
             <TableCell className="CelltxtFieldbaging">
               <TextField
-              
+                id="txtProductNameBaking"
                 size="small"
                 // className="txtField"
-                style={{ width: "280px", backgroundColor: "lightgray" }}
+                style={{ width: "280px", backgroundColor: "#e0e0e0" }}
                 disabled={true}
                 value={lblProductName}
               ></TextField>

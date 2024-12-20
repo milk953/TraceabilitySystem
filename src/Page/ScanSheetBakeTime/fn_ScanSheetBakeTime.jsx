@@ -32,7 +32,7 @@ function fn_ScanSheetBakeTime() {
   const [txtSheetNoState, setTxtSheetNoState] = useState({
     disabled: false,
     styled: { backgroundColor: "white" },
-    // #dbdede
+    // #e0e0e0
   });
   const [pnlSaveState, setPnlSaveState] = useState(false);
   const [PnlShowresult, setPnlShowresult] = useState(false);
@@ -86,16 +86,16 @@ function fn_ScanSheetBakeTime() {
     setTxtProcessState({ disabled: false, autofocus: true });
     setTxtLotNoState({
       disabled: true,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
-    setTxtmcState({ disabled: true, styled: { backgroundColor: "#dbdede" } });
+    setTxtmcState({ disabled: true, styled: { backgroundColor: "#e0e0e0" } });
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
   };
   const ibtback_click = () => {
@@ -106,7 +106,7 @@ function fn_ScanSheetBakeTime() {
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
     setTxtLotNo("");
     setTxtmcState({
@@ -179,15 +179,15 @@ function fn_ScanSheetBakeTime() {
         setTxtLotNo(strLot);
         setTxtProcessState({
           disabled: true,
-          styled: { backgroundColor: "#dbdede" },
+          styled: { backgroundColor: "#e0e0e0" },
         });
         setTxtmcState({
           disabled: true,
-          styled: { backgroundColor: "#dbdede" },
+          styled: { backgroundColor: "#e0e0e0" },
         });
         setTxtLotNoState({
           disabled: true,
-          styled: { backgroundColor: "#dbdede" },
+          styled: { backgroundColor: "#e0e0e0" },
         });
         setTxtSheetNo("");
         setTxtSheetNoState({ disabled: false, Focus: true });
@@ -265,6 +265,7 @@ function fn_ScanSheetBakeTime() {
           }
         } else {
           // setLblSheet(txtSheetNo);
+          setLblSheet(txtSheetNo);
           setPnlSaveState(true);
           setPnlShowresult(true)
           PnlmainDisable();
@@ -395,31 +396,31 @@ function fn_ScanSheetBakeTime() {
   function PnlmainDisable() {
     setTxtProcessState({
       disabled: true,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
-    setTxtmcState({ disabled: true, styled: { backgroundColor: "#dbdede" } });
+    setTxtmcState({ disabled: true, styled: { backgroundColor: "#e0e0e0" } });
     setTxtLotNoState({
       disabled: true,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
   }
   function PnlmainEnable() {
     setTxtProcessState({
       disabled: false,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
-    // setTxtmcState({ disabled: false, styled: { backgroundColor: "#dbdede" } });
+    // setTxtmcState({ disabled: false, styled: { backgroundColor: "#e0e0e0" } });
     setTxtLotNoState({
       disabled: false,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
     setTxtSheetNoState({
       disabled: false,
-      styled: { backgroundColor: "#dbdede" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
   }
 

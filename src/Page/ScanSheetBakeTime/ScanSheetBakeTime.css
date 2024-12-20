@@ -11,7 +11,7 @@
 }
 #TableMainBaking th {
   text-align: center;
-  font-size: 26px;
+  font-size: 24px;
   background-color: #8c8c8c;
   color: white;
 }
@@ -56,12 +56,29 @@
 #lbltxtBaking {
   width: 150px;
   text-align: right;
+  
 }
 .txtFieldBaking {
   width: 280px;
-  padding: 1px;
+  /* padding: 1px; */
 }
 .CelltxtFieldbaging {
   width: 200px;
   padding: 1px;
+}
+#txtProcessBaking{
+  padding: 3px 3px 3px 3px;
+}
+#txtMcBaking{
+  padding: 3px 3px 3px 3px;
+}
+#txtLotNoBaking{
+  padding: 3px 3px 3px 3px;
+}
+#txtProductNameBaking{
+  padding: 3px 3px 3px 3px;
+}
+#txtSheetNoBaking{
+  padding: 3px 3px 3px 3px;
+
 }
