@@ -66,7 +66,6 @@ function Reject() {
           </Card>
         </div>
       )}
-      &nbsp;
       <div className="DRejectTableFirst">
         <Table className="RejectTableFirst" component={Paper}>
           <TableHead>
