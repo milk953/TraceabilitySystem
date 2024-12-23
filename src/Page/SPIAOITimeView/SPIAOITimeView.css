@@ -16,9 +16,16 @@
   padding: 4px 4px 4px 4px !important;
 } */
 
+.SPIAOITimeViewTableFirst {
+  display: flex;
+  margin: auto;
+  width: 730px;
+}
+
 .ChangeSpiaoitimeview {
   height: 50px;
 }
+
 .ChangeSpiaoitimeview th {
   font-family: Arial;
   padding: 8px;
@@ -31,5 +38,3 @@
 .ChangeSpiaoitimeview td {
   padding: 5px;
 }
-
-

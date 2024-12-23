@@ -53,7 +53,6 @@ function Change_Serial() {
   return (
     <div>
       <Hearder />
-      {/* <div className="Center_Layout"></div> */}
       <Box className="Center_Layout">
         <Grid container spacing={2}>
           <Grid item xs={10} md={12} align="center">
@@ -155,7 +154,7 @@ function Change_Serial() {
             <Table
               className="CSS-GvSerial"
               style={{
-                marginTop: "20px",
+                marginTop: "5px",
               }}
               component={Card}
             >
