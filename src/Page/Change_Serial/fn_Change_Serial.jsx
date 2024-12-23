@@ -408,7 +408,6 @@ function fn_Change_Serial() {
     setTxtSerialNoNew(newValues);
     if (event.key === "Enter") {
       fnSetFocus(`gvSerial_txtSerialNoNew_${index + 1}`);
-      event.target.blur();
     }
   };
 
