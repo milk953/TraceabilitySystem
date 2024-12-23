@@ -50,7 +50,7 @@ function AOIManualConfirmP1() {
         <div className="divAOIManualConfirmP1Result">
           <Card
             className={
-              lblResult.style.color === "red" ? "ResultSuccess" : "ResultError"
+              lblResult.style.color === "red" ? "ResultSuccess" : "ResultError" 
             }
           >
             {lblResult.value}
