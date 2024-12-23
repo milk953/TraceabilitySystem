@@ -9,7 +9,7 @@ import {
     TableHead,
     Paper,
     Typography,
-    Button,
+    //Button,
     Select,
     MenuItem,
     FormControl,
@@ -29,11 +29,11 @@ import {
     DeleteFilled,
     ClearOutlined
 } from "@ant-design/icons";
+import { Button } from "antd";
 import DeleteIcon from '@mui/icons-material/Delete';
 import "./SMTDeleteData.css";
 import Header from "../Header/Header.jsx";
 import { fn_SMTDeleteData } from "./fn_SMTDeleteData.jsx";
-import Item from "antd/es/list/Item.js";
 
 function SMTDeleteData() {
 
@@ -41,7 +41,7 @@ function SMTDeleteData() {
         pnlForm, lblResult, lblResultcolor, txtSheetNo, settxtSheetNo, txtRollLeaf, settxtRollLeaf, ddlELTType, ELTTypedata, txtSerialNo,
         txtFinalSerialNo, settxtFinalSerialNo, gvELTResult, gvELTData, gvFinalResult, gvFinalData, inputShtNo, btnShtDeleteClick, handleELTType,
         btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
-        btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect, inputELTSerial, inputFinalSerial
+        btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect, inputELTSerial, inputFinalSerial, settxtSerialNo
     } = fn_SMTDeleteData();
 
     return (
@@ -88,7 +88,12 @@ function SMTDeleteData() {
                         <TableHead sx={{ backgroundColor: "#2E073F" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
-                                    <Typography variant="h6">
+                                    <Typography
+                                        style={{
+                                            fontSize: "20px",
+                                            height: "30px"
+                                        }}
+                                    >
                                         Connect Sht&Pcs
                                     </Typography>
                                 </TableCell>
@@ -98,7 +103,7 @@ function SMTDeleteData() {
                             <TableRow>
                                 <TableCell align="center">
                                     <Typography
-                                        style={{ marginLeft: "22px" }}
+                                        style={{ marginLeft: "22px", }}
                                     >
                                         Sheet No. :
                                     </Typography>
@@ -153,7 +158,12 @@ function SMTDeleteData() {
                         <TableHead sx={{ backgroundColor: "#001F3F" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
-                                    <Typography variant="h6">
+                                    <Typography
+                                        style={{
+                                            fontSize: "20px",
+                                            height: "30px"
+                                        }}
+                                    >
                                         Connect Roll&Leaf
                                     </Typography>
                                 </TableCell>
@@ -202,20 +212,24 @@ function SMTDeleteData() {
 
                 <br />
                 <br />
+
                 <Card
                     component={Paper}
                     style={{
                         width: "780px",
                         margin: "10px",
-                        display: "flex",
-                        justifyContent: "center"
                     }}
                 >
                     <Table className="TbSMTDel">
                         <TableHead sx={{ backgroundColor: "#1A3636" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
-                                    <Typography variant="h6">
+                                    <Typography
+                                        style={{
+                                            fontSize: "20px",
+                                            height: "30px"
+                                        }}
+                                    >
                                         ELT Result
                                     </Typography>
                                 </TableCell>
@@ -226,7 +240,7 @@ function SMTDeleteData() {
                                 <TableCell>
                                     <Typography
                                         style={{
-                                            marginLeft: "25px"
+                                            marginLeft: "20px"
                                         }}
                                     >
                                         ELT Type :
@@ -259,54 +273,37 @@ function SMTDeleteData() {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
-                                            marginRight: "120px"
+                                            //marginRight: "120px"
                                         }}
                                         rows="10"
                                         cols="71"
-                                        maxLength="2500"
                                         value={txtSerialNo}
-                                        onChange={handleSerialNo}
+                                        onChange={(e) => {
+                                            settxtSerialNo(e.target.value);
+                                        }}
                                         ref={(el) => (inputELTSerial.current = el)}
                                     ></textarea>
                                 </TableCell>
-                                <TableCell >
+                                <TableCell>
                                     <Button
-                                        variant="contained"
-                                        sx={{
-                                            marginLeft: "-114px",
+                                        type="primary"
+                                        style={{
                                             textTransform: "none",
-                                            marginBottom: "100px"
                                         }}
-                                        size="small"
+                                        icon={<SearchOutlined />}
                                         onClick={btnSerialSearchClick}
                                     >
-                                        <SearchOutlined
-                                            style={{
-                                                fontSize: '20px'
-                                            }}
-                                        />&nbsp;
                                         Search
                                     </Button>
                                     <Button
-                                        variant="contained"
-                                        onClick={btnClearELTClick}
-                                        sx={{
-                                            marginLeft: "-90px",
-                                            backgroundColor: "#f5222d",
-                                            textTransform: "none",
-                                            width: "90px",
-                                            "&:hover": {
-                                                backgroundColor: "#d32020",
-                                            },
+                                        type="primary"
+                                        style={{
+                                            width: "95px",
+                                            background: "red",
                                         }}
-                                        size="small"
+                                        onClick={btnClearELTClick}
                                     >
-                                        <ClearOutlined
-                                            style={{
-                                                fontSize: '20px'
-                                            }}
-                                        />&nbsp;
-                                        Clear
+                                        Cancel
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -399,7 +396,12 @@ function SMTDeleteData() {
                         <TableHead sx={{ backgroundColor: "#3B3030" }}>
                             <TableRow>
                                 <TableCell colSpan={3} align="center">
-                                    <Typography variant="h6">
+                                    <Typography
+                                        style={{
+                                            fontSize: "20px",
+                                            height: "30px"
+                                        }}
+                                    >
                                         Final Gate
                                     </Typography>
                                 </TableCell>
@@ -416,7 +418,7 @@ function SMTDeleteData() {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
-                                            marginRight: "120px"
+                                            //marginRight: "120px"
                                         }}
                                         rows="10"
                                         cols="71"
@@ -428,7 +430,7 @@ function SMTDeleteData() {
                                     ></textarea>
                                 </TableCell>
                                 <TableCell >
-                                    <Button
+                                    {/* <Button
                                         variant="contained"
                                         sx={{
                                             marginLeft: "-114px",
@@ -465,6 +467,26 @@ function SMTDeleteData() {
                                             }}
                                         />&nbsp;
                                         Clear
+                                    </Button> */}
+                                    <Button
+                                        type="primary"
+                                        style={{
+                                            textTransform: "none",
+                                        }}
+                                        icon={<SearchOutlined />}
+                                        onClick={btnFinalSerialSearchClick}
+                                    >
+                                        Search
+                                    </Button>
+                                    <Button
+                                        type="primary"
+                                        style={{
+                                            width: "95px",
+                                            background: "red",
+                                        }}
+                                        onClick={btnClearFinalClick}
+                                    >
+                                        Cancel
                                     </Button>
                                 </TableCell>
                             </TableRow>
