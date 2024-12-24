@@ -67,7 +67,8 @@ function ScanSheetDispenserTime() {
   return (
     <div>
       <Hearder />
-      <h1>ScanSheetDispenserTime</h1>
+      {/* <h1>ScanSheetDispenserTime</h1> */}
+      <div style={{marginTop:'80px'}}></div>
       <div className="DispenserpnlMain">
         <Table id="DispenserTableMain" component={Card}>
           <TableHead>
