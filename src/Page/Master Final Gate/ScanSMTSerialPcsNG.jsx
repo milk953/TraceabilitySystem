@@ -16,7 +16,9 @@ import { Typography ,Table as AntTable  } from "antd";
 import { fn_ScanSMTSerialPcsNG } from "./fn_ScanSMTSerialPcsNG";
 import Pageimg from "/src/assets/1.jpg";
 import "../Common/StyleCommon.css";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialPcsNG() {
+  const { menuName } = fn_Homepage();
   const {
     hideImg,
     lblResultState,
@@ -62,7 +64,7 @@ function ScanSMTSerialPcsNG() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      Confirm Master Scan
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -74,7 +76,7 @@ function ScanSMTSerialPcsNG() {
                         id="txtLot"
                         className="masterFGtxtF"
                         value={txtLot}
-                        onChange={(e) => setTxtLot(e.target.value)}
+                        onChange={(e) => setTxtLot(e.target.value.trim())}
                         // onBlur={txtLot_Change}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -121,7 +123,7 @@ function ScanSMTSerialPcsNG() {
                       <input
                         className="masterFGtxtF"
                         id="txtMasterCode"
-                        onChange={(e) => setTxtMasterCode(e.target.value)}
+                        onChange={(e) => setTxtMasterCode(e.target.value.trim())}
                         value={txtMasterCode}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -264,12 +266,13 @@ function ScanSMTSerialPcsNG() {
               {hideImg && (
                 <img
                   style={{
-                    width: "320px",
-                    height: "250px",
+                    // width: "320px",
+                    // height: "250px",
                     padding: "0",
                     align: "center",
                     margin: "auto",
                   }}
+                  className="Img_GvResult"
                   src={Pageimg}
                   alt="Description of the image"
                 />

@@ -144,10 +144,12 @@ function fn_ScanSerialNo() {
   };
   const handle_Cancel_Click = () => {
     setGvSerial([]);
+    
     setGvSerialResult([]);
     SetFocus("txtSerial_0");
     setTxtSerial(gvSerial.map(() => ""));
     setLblErrorState(false);
+    setLblResultState(false);
     setMode("SERIAL");
     
     

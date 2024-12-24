@@ -1256,7 +1256,7 @@ function fn_ScanSMTSerialShtCopy() {
   };
   const handletxtBackSide = (index, event) => {
     const newValues = [...txtbackSide];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim();
     setTxtbackSide(newValues);
     if (event.key === "Enter") {
       try {
@@ -1365,7 +1365,7 @@ function fn_ScanSMTSerialShtCopy() {
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
     if (event.key === "Enter") {
       try {

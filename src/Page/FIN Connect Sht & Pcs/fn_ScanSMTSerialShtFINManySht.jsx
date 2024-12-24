@@ -957,7 +957,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const handleBackSideChange = (index, event) => {
     const newValues = [...txtSideBack];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     console.log(index, "index");
     setTxtSideBack(newValues);
     if (event.key === "Enter") {
@@ -970,7 +970,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const handleFrontSideChange = (index, event) => {
     const newValues = [...txtSideFront];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSideFront(newValues);
     console.log(index, "index");
     if (event.key === "Enter") {
@@ -1083,7 +1083,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
 
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
     if (event.key === "Enter") {
       try {
