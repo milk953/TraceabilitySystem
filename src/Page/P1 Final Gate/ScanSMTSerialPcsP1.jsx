@@ -13,10 +13,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import {Button as AntButton} from "antd";
 import { Typography, Table as AntTable } from "antd";
 import Pageimg from "/src/assets/1.jpg";
 import { fn_ScanSMTSerialPcsP1 } from "./fn_ScanSMTSerialPcsP1";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialPcsP1() {
+  const { menuName } = fn_Homepage();
   const {
     scanLot,
     setScanLot,
@@ -78,7 +81,7 @@ function ScanSMTSerialPcsP1() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      P1 Final Gate
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -137,19 +140,19 @@ function ScanSMTSerialPcsP1() {
                   </TableRow>
                 </TableBody>
               </Table>
-              <Table component={Paper}>
+              <Table component={Paper} className="P1FGTableSecond">
                 <TableBody>
                   <TableRow>
-                    <TableCell style={{ width: 30, textAlign: "right" }}>
+                    <TableCell style={{ width: 52, textAlign: "right" }}>
                       Lot :
                     </TableCell>
-                    <TableCell>{lblLot}</TableCell>
+                    <TableCell style={{textAlign:'left'}}>{lblLot}</TableCell>
                     <TableCell
                       style={{ width: 30, color: "green", fontWeight: "bold" }}
                     >
                       OK:
                     </TableCell>
-                    <TableCell style={{ width: 60 }}>{lblLotTotal}</TableCell>
+                    <TableCell style={{ width: 60 ,textAlign:'left'}}>{lblLotTotal}</TableCell>
                   </TableRow>
                 </TableBody>
                 <TableBody>
@@ -161,7 +164,7 @@ function ScanSMTSerialPcsP1() {
                     >
                       NG:
                     </TableCell>
-                    <TableCell>{lblSerialNG}</TableCell>
+                    <TableCell style={{ width: 60 ,textAlign:'left'}}>{lblSerialNG}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -177,7 +180,7 @@ function ScanSMTSerialPcsP1() {
                     <TableRow>
                       <TableCell
                         className="P1FGgvSerialCell"
-                        style={{ color: "white" }}
+                        style={{ color: "white",borderRight: "1px solid #e0e0e0" }}
                       >
                         No.
                       </TableCell>
@@ -197,7 +200,7 @@ function ScanSMTSerialPcsP1() {
                       >
                         <TableCell
                           className="P1FGgvSerialCell"
-                          style={{ width: "40%", textAlign: "right" }}
+                          style={{ width: "10%", textAlign: "right",borderRight: "1px solid #e0e0e0" }}
                         >
                           {row.SEQ}
                         </TableCell>
@@ -209,8 +212,8 @@ function ScanSMTSerialPcsP1() {
                           id={`txtSerial_${index}`}
                           type="text"
                           style={{
-                            padding: "5px",
-                            width: "300px",
+                            padding: "3px",
+                            width: "95%",
                             textTransform: "uppercase",
                           }}
                           maxLength="30"
@@ -240,9 +243,9 @@ function ScanSMTSerialPcsP1() {
                           gap: "10px",
                         }}
                       >
-                        <Button className="BtSave" onClick={btnSvae_Click}>SAVE</Button>
+                        <AntButton className="BtSave" onClick={btnSvae_Click}>Save</AntButton>
                         &nbsp;&nbsp;
-                        <Button className="BtCancel" onClick={btnCancel_Click}> Cancel</Button>
+                        <AntButton className="BtCancel" onClick={btnCancel_Click}> Cancel</AntButton>
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -289,10 +292,10 @@ function ScanSMTSerialPcsP1() {
                           : "white",
                       background:
                         lblResult.value === "OK"
-                          ? "#059212"
+                          ? "green"
                           : lblResult.value === "NG"
                           ? "red"
-                          : "#BA0900",
+                          : "red",
                     }}
                   >
                     <Typography

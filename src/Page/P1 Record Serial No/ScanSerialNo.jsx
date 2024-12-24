@@ -12,11 +12,14 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Button as AntButton } from "antd";
 import Pageimg from "/src/assets/1.jpg";
 import "./ScanSerialNo.css";
 import "../Common/StyleCommon.css";
 import { fn_ScanSerialNo } from "./fn_ScanSerialNo";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSerialNo() {
+  const { menuName } = fn_Homepage();
   const {
     operator,
     setOperator,
@@ -53,7 +56,7 @@ function ScanSerialNo() {
     gvSerial,
     getRowClassName,
     lblErrorState,
-    lblError
+    lblError,
   } = fn_ScanSerialNo();
   return (
     <>
@@ -65,7 +68,7 @@ function ScanSerialNo() {
               <TableHead>
                 <TableRow>
                   <TableCell colSpan={3} align="center">
-                    Record Serial No.
+                    {menuName}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -77,7 +80,9 @@ function ScanSerialNo() {
                       className="RecordSP1txtF"
                       id="txtOperator"
                       value={operator}
-                      onChange={(e) => setOperator(e.target.value.toUpperCase())}
+                      onChange={(e) =>
+                        setOperator(e.target.value.toUpperCase())
+                      }
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handle_Operator_Change();
@@ -146,7 +151,9 @@ function ScanSerialNo() {
                       className="RecordSP1txtF"
                       id="txtMagazine"
                       value={magazine}
-                      onChange={(e) => setMagazine(e.target.value.toUpperCase())}
+                      onChange={(e) =>
+                        setMagazine(e.target.value.toUpperCase())
+                      }
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handle_Magazine_Change();
@@ -175,16 +182,17 @@ function ScanSerialNo() {
                 </TableRow>
               </TableBody>
             </Table>
-            {lblErrorState && (
-                <Paper className="Card-lblLog">{lblError}</Paper>
-              )}
+            {lblErrorState && <Paper className="Card-lblLog">{lblError}</Paper>}
             {gvSerialState && (
               <Table className="RecordSP1gvSerial" component={Card}>
                 <TableHead style={{ background: "#12422e" }}>
                   <TableRow>
                     <TableCell
                       className="RecordSP1gvSerialCell"
-                      style={{ color: "white" }}
+                      style={{
+                        color: "white",
+                        borderRight: "1px solid #d9d9d9",
+                      }}
                     >
                       No.
                     </TableCell>
@@ -204,7 +212,11 @@ function ScanSerialNo() {
                     >
                       <TableCell
                         className="RecordSP1gvSerialCell"
-                        style={{ width: "30%", textAlign: "right" }}
+                        style={{
+                          width: "10%",
+                          textAlign: "right",
+                          borderRight: "1px solid #d9d9d9",
+                        }}
                       >
                         {row.SEQ}
                       </TableCell>
@@ -219,9 +231,15 @@ function ScanSerialNo() {
                           maxLength="30"
                           value={txtSerial[index]}
                           onKeyDown={(e) => {
-                            if (e.key === "Enter" && index <(gvSerial.length -1)) {
+                            if (
+                              e.key === "Enter" &&
+                              index < gvSerial.length - 1
+                            ) {
                               handletxtSerialChange(index, e);
-                            }else if (e.key === "Enter" && index === (gvSerial.length -1)){
+                            } else if (
+                              e.key === "Enter" &&
+                              index === gvSerial.length - 1
+                            ) {
                               handle_Save_Click();
                               e.target.blur();
                             }
@@ -233,17 +251,17 @@ function ScanSerialNo() {
                   ))}
                   <TableRow>
                     <TableCell colSpan={3} className="RecordSP1gvSerialSave">
-                      <Button className="BtSave" onClick={handle_Save_Click}>
-                        SAVE
-                      </Button>
+                      <AntButton className="BtSave" onClick={handle_Save_Click}>
+                        Save
+                      </AntButton>
                       &nbsp;&nbsp;
-                      <Button
+                      <AntButton
                         className="BtCancel"
                         onClick={handle_Cancel_Click}
                       >
                         {" "}
                         Cancel
-                      </Button>
+                      </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -254,6 +272,11 @@ function ScanSerialNo() {
             {hideImg && (
               <img
                 // className="RecordSP1ResultImg"
+                style={{
+                  padding: "0",
+                  alignItems: "center",
+                  margin: "auto",
+                }}
                 className="Img_GvResult"
                 src={Pageimg}
                 alt="Description of the image"
@@ -277,7 +300,6 @@ function ScanSerialNo() {
                   <Typography
                     variant="h4"
                     style={{
-
                       color: "white",
                       fontSize: "30px",
                     }}
@@ -289,7 +311,7 @@ function ScanSerialNo() {
                   className="tableGvResult"
                   columns={columns}
                   bordered
-                    dataSource={gvSerialResult}
+                  dataSource={gvSerialResult}
                   style={{ width: "980pxs", marginTop: "10px" }}
                   pagination={false}
                   rowClassName={getRowClassName}
