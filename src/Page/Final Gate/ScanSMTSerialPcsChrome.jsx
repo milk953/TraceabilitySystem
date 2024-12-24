@@ -322,12 +322,12 @@ function ScanSMTRoollSht() {
               </Paper>
               <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px", display: gvSerial.visble }}
+                style={{ marginTop: "10px", display: gvSerial.visble }}
                 component={Card}
               >
                 <TableHead>
                   <TableCell
-                    sx={{ borderRight: "1px solid #d9d9d9" }}
+                    sx={{ borderRight: "10px solid #d9d9d9" }}
                     align="center"
                   >
                     No.
@@ -455,7 +455,11 @@ function ScanSMTRoollSht() {
                     size="small"
                     bordered
                     className="tableGvResult"
-                    rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                    rowClassName={(record) => 
+                      record.SERIAL === '' ? '' : 
+                      record.SCAN_RESULT === "NG" ? "row-red" : 
+                      record.SCAN_RESULT === "OK" ? "row-green" : ""
+                    }
                   />
                 </>
               )}

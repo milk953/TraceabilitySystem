@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import {DataConfig} from "../Common/function_Common"; 
 function fn_ScanSheetMOTTime() {
   const{ConfigData} = DataConfig();
-  console.log(ConfigData,'ConfigData');
   const [txtlot, settxtlot] = useState({
     value: "",
     disbled: "",
@@ -33,16 +32,16 @@ function fn_ScanSheetMOTTime() {
     visble: "none",
     style: {},
     focus: false,
-  }); //visible 'none'ซ่อน//''โชว์
+  });
   const [txtSUSNo, settxtSUSNo] = useState({
     value: "",
     disbled: "",
     visble: "none",
     style: {},
-    focus: false, //falseยังไม่โฟกัส trueโฟกัส
-  }); //visible 'none'ซ่อน//''โชว์
+    focus: false, 
+  }); 
 
-  //lbl
+ 
   const [lblProductName, setlblProductName] = useState("");
   const [lblSheet, setlblSheet] = useState("");
   const [lblRemark, setlblRemark] = useState("");
@@ -50,7 +49,7 @@ function fn_ScanSheetMOTTime() {
     value: "",
     disbled: "",
     visble: "",
-    style: { color: "#EFBC9B" },
+    style: {},
   });
 
   //Button
@@ -760,6 +759,13 @@ function fn_ScanSheetMOTTime() {
   };
 
   const BtClick_back = async () => {
+    setpnlSave("none");
+
+    setlblSheet("");
+    setlblRemark("");
+    settxtSheet((prevState) => ({ ...prevState, value: "" }));
+    setlblResult((prevState) => ({ ...prevState, value: "" }));
+
     settxtlot((prevState) => ({
       ...prevState,
       disbled: false,

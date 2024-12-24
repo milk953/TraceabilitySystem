@@ -123,7 +123,7 @@ function ScanSheetMOTTime() {
                   <TableRow >
                     <TableCell
                       colSpan={3}
-                      style={{ height: "300px" }}
+                      style={{ height: "300px", padding: "0" ,border: 0}}
                       align="center"
                     >
                       <Paper
@@ -141,21 +141,22 @@ function ScanSheetMOTTime() {
                           flexDirection: "column",
                           textAlign: "center", 
                         }}
+                        
                       >
-                        <b
+                        <Typography
                           style={{
                             fontSize: "80px",
                             color: "#fff",
                           }}
                         >
                           {lblResult}
-                        </b>
+                        </Typography>
 
-                        <b style={{ fontSize: "25px", color: "#fff" }}>
+                        <Typography style={{ fontSize: "25px", color: "#fff" }}>
                           <span
                             dangerouslySetInnerHTML={{ __html: lblRemark }}
                           />
-                        </b>
+                        </Typography>
                       </Paper>
                     </TableCell>
                   </TableRow>

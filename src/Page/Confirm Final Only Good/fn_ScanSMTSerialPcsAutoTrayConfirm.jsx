@@ -717,6 +717,11 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   const txtPackingNo_TextChanged = async () => {
     
     if (txtPackingNo.value.trim().length !== 0) {
+      settxtPackingNo((prevState) => ({
+        ...prevState,
+       disbled: true,
+       style: { background: "#e0e0e0" },
+      }));
       let dtLotPassCount;
       let dtPackPassCount;
 
@@ -754,7 +759,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       SetMode("SERIAL");
     } else {
       SetMode("PACK");
-      console
+     
     }
   };
 
@@ -1782,13 +1787,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         } else {
           return text;
         }
-        // return (
-        //   <Tag
-        //     className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
-        //   >
-        //     {text}
-        //   </Tag>
-        // );
+        
       },
       align: "center",
     },

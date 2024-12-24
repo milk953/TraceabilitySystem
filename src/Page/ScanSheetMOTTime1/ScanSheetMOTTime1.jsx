@@ -251,7 +251,7 @@ function ScanSheetMOTTime() {
               <Table  component={Card}>
               {((lblResult.value !== undefined && lblResult.value !== '') || (lblRemark !== undefined && lblRemark !== '')) && (
                   <TableRow style={{ height: "180px" }} >
-                    <TableCell colSpan={3} style={{padding:0}}>
+                    <TableCell colSpan={3} style={{padding:0,border:0}}>
                       <Card style={{ ...lblResult.style, height: "230px" }}>
                         <Typography
                           align="center"

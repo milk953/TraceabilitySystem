@@ -43,7 +43,7 @@ function fn_ScanSheetAOIXrayConfirm() {
             strResult = data.scan_result;
           }
         });
-      setlblSheet(txtSheetNo + " " + currentTime);
+      setlblSheet(txtSheetNo + " [" + currentTime+ "]");
 
       setlblResult(strResult);
       setlblRemark("AOI : " + strAOI + " &nbsp;&nbsp; X-Ray : " + strXray);

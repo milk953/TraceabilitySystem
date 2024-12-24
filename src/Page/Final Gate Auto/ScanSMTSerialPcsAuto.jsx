@@ -28,7 +28,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./SerialPcsAuto.css";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable,Button as AntButton  } from 'antd';
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsAuto";
@@ -181,9 +181,9 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={1}>{lblLot}</TableCell>
                     <TableCell align="right">
-                      <Typography>OK :</Typography>
+                    <Typography style={{ color: 'green' }}>OK :</Typography>
                     </TableCell>
-                    <TableCell style={{ width: "70px" }} colSpan={2}>
+                    <TableCell style={{ width: "70px", color: 'green' }} colSpan={2}>
                       {lblLotTotal}
                     </TableCell>
                   </TableRow>
@@ -196,9 +196,9 @@ function ScanSMTRoollSht() {
                     </TableCell>
                  
                     <TableCell align="right" style={{ width: "40px" }}>
-                      <Typography>NG :</Typography>
+                      <Typography style={{ color: 'red' }}>NG :</Typography>
                     </TableCell>
-                    <TableCell colSpan={2}>{lblSerialNG}</TableCell>
+                    <TableCell colSpan={2} style={{color: 'red' }}>{lblSerialNG}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -278,13 +278,13 @@ function ScanSMTRoollSht() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={btnSave_Click}>
+                      <AntButton type="primary" className="ButtonReplace"  onClick={btnSave_Click}>
                         Save
-                      </Button>{" "}
+                      </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel" onClick={btnCancel_Click}>
+                      <AntButton  type="primary" className="BtCancel"  onClick={btnCancel_Click}>
                         Cancel
-                      </Button>
+                      </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -347,7 +347,7 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-                 
+                {console.log('gvScanResult.value',gvScanResult.value)}
                   <AntTable 
                 columns={columns}
                 dataSource={gvScanResult.value}
@@ -356,7 +356,11 @@ function ScanSMTRoollSht() {
                 size="small"
                 bordered
                 className="tableGvResult"
-                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                rowClassName={(record) => 
+                  record.SERIAL === '' ? '' : 
+                  record.SCAN_RESULT === "NG" ? "row-red" : 
+                  record.SCAN_RESULT === "OK" ? "row-green" : ""
+                }
                   
                 />
                 </>

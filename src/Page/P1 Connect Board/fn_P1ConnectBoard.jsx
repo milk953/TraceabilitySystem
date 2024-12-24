@@ -830,6 +830,7 @@ function fn_P1ConnectBoard() {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     try {
       let dtSerial = await getInputSerial();
+      console.log(dtSerial, "dtSerialxxxxxxx");
       let _strLotData;
       let _strLotRefData;
       let _strLot = "";
@@ -845,6 +846,45 @@ function fn_P1ConnectBoard() {
       setHfWeekCode("");
       let dataHfWeekCode = "";
       let _bolError = false;
+      
+      if (dtSerial.length == 0) {
+        hideLoading();
+        setlblLog((prevState) => ({
+          ...prevState,
+          value: `Please input Sheet Side No. !!!`,
+          visble: true,
+        }));
+        setlblResult((prevState) => ({
+          ...prevState,
+          value: '',
+        }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+        // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+        setTimeout(() => {
+        fcGvBackSide.current[1].focus();
+      }, 300);
+        return;        
+      }
+      const allSerialEmpty = dtSerial.every(item => item.SERIAL === ""||item.SERIAL === undefined);
+      console.log(allSerialEmpty, "allSerialEmpty");
+      if(allSerialEmpty){
+        hideLoading();
+        setlblLog((prevState) => ({
+          ...prevState,
+          value: `Please Input Serial No.`,
+          visble: true,
+        }));
+        setlblResult((prevState) => ({
+          ...prevState,
+          value: '',
+        }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+        // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+        setTimeout(() => {
+        fcGvSerial.current[1].focus();
+      }, 300);
+        return;  
+      }
       _strLotData = txtLot.value.toUpperCase().split(";");
       _strLot = _strLotData[0];
       _strLotRefData =  txtLotRef.value.toUpperCase().split(";");

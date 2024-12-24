@@ -28,7 +28,7 @@ import {
 } from "@ant-design/icons";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./SerialPcs.css";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable ,Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsAutoTrayConfirm } from "./fn_ScanSMTSerialPcsAutoTrayConfirm";
@@ -180,10 +180,10 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                       <Typography>Lot :</Typography>
                     </TableCell>
                     <TableCell colSpan={1}>{lblLot}</TableCell>
-                    <TableCell align="right">
-                      <Typography>OK :</Typography>
+                    <TableCell align="right" style={{color:'green'}}>
+                      <Typography >OK :</Typography>
                     </TableCell>
-                    <TableCell style={{ width: "70px" }} colSpan={2}>
+                    <TableCell style={{ width: "70px",color:'green' }} colSpan={2}>
                       {lblLotTotal}
                     </TableCell>
                   </TableRow>
@@ -195,10 +195,10 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                    
                     </TableCell>
                  
-                    <TableCell align="right" style={{ width: "40px" }}>
+                    <TableCell align="right" style={{ width: "40px" ,color:'red'}}>
                       <Typography>NG :</Typography>
                     </TableCell>
-                    <TableCell colSpan={2}>{lblSerialNG}</TableCell>
+                    <TableCell colSpan={2} style={{color:'red'}}>{lblSerialNG}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -273,13 +273,13 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={btnSave_Click}>
+                      <AntButton type="primary" className="BtSave" onClick={btnSave_Click}>
                         Save
-                      </Button>{" "}
+                      </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel" onClick={btnCancel_Click}>
+                      <AntButton type="primary"  className="BtCancel" onClick={btnCancel_Click}>
                         Cancel
-                      </Button>
+                      </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -351,7 +351,11 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                 size="small"
                 bordered
                 className="tableGvResult"
-                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                rowClassName={(record) => 
+                  record.SERIAL === '' ? '' : 
+                  record.SCAN_RESULT === "NG" ? "row-red" : 
+                  record.SCAN_RESULT === "OK" ? "row-green" : ""
+                }
                 />
                 </>
               )}

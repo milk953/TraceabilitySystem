@@ -1159,7 +1159,7 @@ function fn_ScanSMTSerialPcsChrome() {
           value: '',
         }));
         setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
-        setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+        // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
         setTimeout(() => {
         fc_txtSerial.current[0].focus();
       }, 300);

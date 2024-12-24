@@ -32,7 +32,7 @@ import "./ConnectBoard.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_P1ConnectBoard } from "./fn_P1ConnectBoard";
-import { Table as AntTable } from "antd";
+import { Table as AntTable ,Button as AntButton} from "antd";
 function P1ConnectBoard() {
   const {
     Product,
@@ -399,13 +399,13 @@ function P1ConnectBoard() {
 
                   <TableRow>
                     <TableCell colSpan={3} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" 
+                      <AntButton type="primary" className="BtSave" 
                       onClick={btnSave_Click}
                       >
                         Save
-                      </Button>{" "}
+                      </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel"  onClick={btnCancel_Click} >Cancel</Button>
+                      <AntButton type="primary" className="BtCancel"  onClick={btnCancel_Click} >Cancel</AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>

@@ -4,9 +4,9 @@ import Swal from "sweetalert2";
 import { Tag } from "antd";
 import * as XLSX from "xlsx";
 import { useLoading } from "../../loading/fn_loading";
-import {DataConfig} from "../Common/function_Common";
+import { DataConfig } from "../Common/function_Common";
 function fn_ScanSMTSerialPcsChrome() {
-  const{ConfigData} = DataConfig();
+  const { ConfigData } = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
@@ -165,15 +165,15 @@ function fn_ScanSMTSerialPcsChrome() {
   const fc_SlProduct = useRef([]);
 
   //env
-  console.log(';ConfigData',ConfigData);
+  console.log(";ConfigData", ConfigData);
   const FINAL_GATE_AUTO_PRD = ConfigData.FINAL_GATE_AUTO_PRD;
   const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
   const FINAL_GATE_MASTER_CODE = ConfigData.FINAL_GATE_MASTER_CODE;
-  const FINAL_GATE_SPECIAL_FLG =ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
   const Fac = ConfigData.FACTORY;
   const EXPORT_CSV_FLG = ConfigData.EXPORT_CSV_FLG;
-  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
   //PageLoad----------
   useEffect(() => {
     const fetchData = async () => {
@@ -398,6 +398,7 @@ function fn_ScanSMTSerialPcsChrome() {
           visble: "",
         }));
         setlblLot("");
+
         setlblLotTotal("");
         setlblSerialNG("");
         SetMode("LOT_ERROR");
@@ -541,7 +542,7 @@ function fn_ScanSMTSerialPcsChrome() {
         ...prevState,
         value: "",
         disbled: false,
-        style: { background: "" },
+        style: {},
       }));
       setlblLot("");
       setlblLotTotal("");
@@ -556,8 +557,8 @@ function fn_ScanSMTSerialPcsChrome() {
       settxtLot((prevState) => ({
         ...prevState,
         value: "",
-        disbled: true,
-        style: { background: "#e0e0e0" },
+        disbled: false,
+        style: {},
       }));
       setlblLot("");
       setlblLotTotal("");
@@ -682,6 +683,7 @@ function fn_ScanSMTSerialPcsChrome() {
   };
 
   const ibtBack_Click = async () => {
+    setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
     setSl_Product((prevState) => ({ ...prevState, disbled: false }));
     settxtLot((prevState) => ({
       ...prevState,
@@ -712,6 +714,7 @@ function fn_ScanSMTSerialPcsChrome() {
   };
 
   const ibtPackingBack_Click = async () => {
+    setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
     SetMode("PACK");
   };
 
@@ -752,7 +755,7 @@ function fn_ScanSMTSerialPcsChrome() {
     if (txtPackingNo.value.trim().length !== 0) {
       let dtLotPassCount;
       let dtPackPassCount;
-      let dtTotal
+      let dtTotal;
 
       await axios
         .post("/api/Common/getSerialPassByLot", {
@@ -795,44 +798,44 @@ function fn_ScanSMTSerialPcsChrome() {
     let intRow = 0;
 
     for (let intSeq = 0; intSeq < gvSerial.value.length; intSeq++) {
-        intRow++;
-        let drRow = {
-            SEQ: intRow,
-            SERIAL: txtSerial[intSeq].trim().toUpperCase(),
-            REJECT: "",
-            TOUCH_UP: "",
-            REJECT2: "",
-            REJECT_CODE: "",
-            SCAN_RESULT: "",
-            TEST_RESULT: "",
-            TYPE_TEST_RESULT: "",
-            REMARK: "",
-            REMARK_UPDATE: "",
-            ROW_COUNT: 0,
-            ROW_UPDATE: "N",
-            UPDATE_FLG: "N",
-            PACKING_NO: txtPackingNo.value.trim().toUpperCase(),
-            MASTER_NO: "",
-            FRONT_SHEET_NO: "",
-            BACK_SHEET_NO: "",
-            SHEET_PCS_NO: 0,
-            ROLL_LEAF_NO: ""
-        };
+      intRow++;
+      let drRow = {
+        SEQ: intRow,
+        SERIAL: txtSerial[intSeq].trim().toUpperCase(),
+        REJECT: "",
+        TOUCH_UP: "",
+        REJECT2: "",
+        REJECT_CODE: "",
+        SCAN_RESULT: "",
+        TEST_RESULT: "",
+        TYPE_TEST_RESULT: "",
+        REMARK: "",
+        REMARK_UPDATE: "",
+        ROW_COUNT: 0,
+        ROW_UPDATE: "N",
+        UPDATE_FLG: "N",
+        PACKING_NO: txtPackingNo.value.trim().toUpperCase(),
+        MASTER_NO: "",
+        FRONT_SHEET_NO: "",
+        BACK_SHEET_NO: "",
+        SHEET_PCS_NO: 0,
+        ROLL_LEAF_NO: "",
+      };
 
-        if (drRow.SERIAL !== "") {
-            for (let intNo = 0; intNo < intRow - 1; intNo++) {
-                if (drRow.SERIAL === txtSerial[intNo].trim().toUpperCase()) {
-                    drRow.ROW_COUNT = 9;
-                    break;
-                }
-            }
+      if (drRow.SERIAL !== "") {
+        for (let intNo = 0; intNo < intRow - 1; intNo++) {
+          if (drRow.SERIAL === txtSerial[intNo].trim().toUpperCase()) {
+            drRow.ROW_COUNT = 9;
+            break;
+          }
         }
+      }
 
-        dtData.push(drRow);
+      dtData.push(drRow);
     }
 
     return dtData;
-};
+  };
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
@@ -842,7 +845,7 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const setSerialDataTray = async () => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
-    setlblSerialNG(0)
+    setlblSerialNG(0);
     setlblLog((prevState) => ({
       ...prevState,
       value: ``,
@@ -858,7 +861,7 @@ function fn_ScanSMTSerialPcsChrome() {
       let _strScanResultAll = "OK";
       let _intRowSerial = 0;
       let _dblPlasmaRemain = parseFloat(hfPlasmaTime);
-      const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+      const allSerialEmpty = dtSerial.every((item) => item.SERIAL === "");
       if (allSerialEmpty) {
         hideLoading();
         setlblLog((prevState) => ({
@@ -868,14 +871,18 @@ function fn_ScanSMTSerialPcsChrome() {
         }));
         setlblResult((prevState) => ({
           ...prevState,
-          value: '',
+          value: "",
         }));
         setgvSerial((prevState) => ({ ...prevState, visble: "", value: "" }));
-        setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+        setgvScanResult((prevState) => ({
+          ...prevState,
+          visble: "",
+          value: "",
+        }));
         setTimeout(() => {
-        fc_txtSerial.current[0].focus();
-      }, 300);
-        return;        
+          fc_txtSerial.current[0].focus();
+        }, 300);
+        return;
       }
       if (!_bolTrayError) {
         // for (let i = 0; i < dtSerial.length; i++) {
@@ -1058,7 +1065,6 @@ function fn_ScanSMTSerialPcsChrome() {
                   _intRow < dtSerial.length;
                   _intRow++
                 ) {
-     
                   let isDuplicate = dtSerial.some((item, index) => {
                     console.log(
                       `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
@@ -1487,7 +1493,7 @@ function fn_ScanSMTSerialPcsChrome() {
               _bolError = true;
             }
 
-            if (_strScanResultUpdate=='NG') {
+            if (_strScanResultUpdate == "NG") {
               // setLblSerialNG(0)
               setlblSerialNG((prevValue) => {
                 const numericValue = parseInt(prevValue, 10);
@@ -1630,7 +1636,6 @@ function fn_ScanSMTSerialPcsChrome() {
           .then((res) => {
             console.log(res.data, "dtPackPassCountxx");
             dtPackPassCount = res.data.lot_count;
-          
           });
         if (dtLotPassCount > 0) {
           datalblLotTotal = dtLotPassCount;
@@ -1670,8 +1675,8 @@ function fn_ScanSMTSerialPcsChrome() {
         }));
       }
       console.log("EXPORT_CSV_FLG", EXPORT_CSV_FLG);
-      if(EXPORT_CSV_FLG=='Y'){
-        ExportCSV(dtSerial,columns);
+      if (EXPORT_CSV_FLG == "Y") {
+        ExportCSV(dtSerial, columns);
       }
       scrollToTop();
       await getInitialSerial();
@@ -1696,21 +1701,22 @@ function fn_ScanSMTSerialPcsChrome() {
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
     );
-  
+
     const headers = filteredColumns.map((col) => col.key);
-  
+
     const filteredData = data.map((row) =>
       filteredColumns.map((col) => row[col.dataIndex] || "")
     );
-  
+
     const csvContent = [
-      headers.join(","), 
-      ...filteredData.map((row) => row.join(",")) 
+      headers.join(","),
+      ...filteredData.map((row) => row.join(",")),
     ].join("\n");
-  
 
     const bom = "\uFEFF";
-    const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([bom + csvContent], {
+      type: "text/csv;charset=utf-8;",
+    });
     saveAs(blob, `Final_Gate_Auto.csv`);
   };
 
@@ -1728,7 +1734,7 @@ function fn_ScanSMTSerialPcsChrome() {
       title: "Serial No.",
       dataIndex: "SERIAL",
       key: "Serial No.",
-      align: "left",
+      align: "center",
       render: (text, record, index) => {
         return text;
       },
@@ -1767,8 +1773,10 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "TEST_RESULT",
 
       render: (text, record, index) => {
-        if (record.SERIAL == "") return "";
-        else {
+        console.log("record.Serial", record.SERIAL);
+        if (record.SERIAL == "") {
+          return "";
+        } else {
           return text;
         }
       },
@@ -1780,7 +1788,11 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        return text;
+        if (record.SERIAL == "") {
+          return "";
+        } else {
+          return text;
+        }
       },
       align: "center",
     },
