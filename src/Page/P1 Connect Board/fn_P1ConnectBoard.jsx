@@ -517,7 +517,7 @@ function fn_P1ConnectBoard() {
           value: Product[0].prd_name,
         }));
         settxtLot((prevState) => ({ ...prevState, value: "" }));
-        setGvSerial((prevState) => ({ ...prevState, visble: "", value: "" }));
+        setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
         settxtSerial(Array(GvSerial.value.length).fill(""));
         setlblLog((prevState) => ({
           ...prevState,
@@ -846,12 +846,12 @@ function fn_P1ConnectBoard() {
       setHfWeekCode("");
       let dataHfWeekCode = "";
       let _bolError = false;
-      
-      if (dtSerial.length == 0) {
+      const CheckFontSideBackSide = dtSerial.every(item => item.BACK_SIDE === ""||item.BACK_SIDE === undefined||item.FRONT_SIDE === ""||item.FRONT_SIDE === undefined);
+      if (dtSerial.length == 0||CheckFontSideBackSide) {
         hideLoading();
         setlblLog((prevState) => ({
           ...prevState,
-          value: `Please input Sheet Side No. !!!`,
+          value: `Please input Sheet Side No.`,
           visble: true,
         }));
         setlblResult((prevState) => ({
@@ -861,7 +861,7 @@ function fn_P1ConnectBoard() {
         setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
         // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
         setTimeout(() => {
-        fcGvBackSide.current[1].focus();
+        fcGvBackSide.current[0].focus();
       }, 300);
         return;        
       }
@@ -1613,6 +1613,7 @@ function fn_P1ConnectBoard() {
       behavior: 'smooth'
     });
   };
+
   const ExportCSV = (data, ColumnsHeader) => {
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
@@ -1634,17 +1635,6 @@ function fn_P1ConnectBoard() {
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, `P1_ConectBoard.csv`);
   };
-
-
-  // แบบเอาทั้งหมด
-  // function ExportCSV (DtData,Column) {
-  //   const date = new Date();
-  //   const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
-  //   const filteredData = DtData.filter(row => row.SERIAL !== '');
-  //   const csv = Papa.unparse(filteredData); 
-  //   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  //   saveAs(blob, `P1_ConectBoard_${formattedDate}.csv`); 
-  // }
 
 
   return {
