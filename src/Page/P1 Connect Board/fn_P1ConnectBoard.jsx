@@ -851,7 +851,7 @@ function fn_P1ConnectBoard() {
         hideLoading();
         setlblLog((prevState) => ({
           ...prevState,
-          value: `Please input Sheet Side No. !!!`,
+          value: `Please input Sheet Side No.`,
           visble: true,
         }));
         setlblResult((prevState) => ({
