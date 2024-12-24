@@ -127,7 +127,7 @@ function ConfirmBarcodeGrade() {
                         onChange={(e) => {
                           settxt_lotNo((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         disabled={txt_lotNo.disbled} //true พิมไม่ได้
@@ -184,7 +184,7 @@ function ConfirmBarcodeGrade() {
                         onChange={(e) =>
                           settxtLotRef((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }))
                         }
                         // onBlur={handleTxt_LotRef}
@@ -258,7 +258,7 @@ function ConfirmBarcodeGrade() {
                           // settxtRollLeaf(e.target.value);
                           settxtRollLeaf((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         // onBlur={handleTxt_RollLeaf}
@@ -283,7 +283,7 @@ function ConfirmBarcodeGrade() {
                         onChange={(e) =>
                           settxtMachineNo((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }))
                         }
                         // onKeyDown={(e) => {

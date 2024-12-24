@@ -165,7 +165,6 @@ function fn_ScanSMTSerialPcsChrome() {
   const fc_SlProduct = useRef([]);
 
   //env
-  console.log(";ConfigData", ConfigData);
   const FINAL_GATE_AUTO_PRD = ConfigData.FINAL_GATE_AUTO_PRD;
   const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
   const FINAL_GATE_MASTER_CODE = ConfigData.FINAL_GATE_MASTER_CODE;
@@ -839,7 +838,7 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     settxtSerial(newValues);
   };
 
