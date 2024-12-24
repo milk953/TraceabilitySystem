@@ -474,12 +474,13 @@ function ScanSMTSerialShtFINManySht() {
               {hideImg && (
                 <img
                   style={{
-                    width: "320px",
-                    height: "250px",
+                    // width: "320px",
+                    // height: "250px",
                     padding: "0",
                     align: "center",
                     margin: "auto",
                   }}
+                  className="Img_GvResult"
                   src={Pageimg}
                   alt="Description of the image"
                 />

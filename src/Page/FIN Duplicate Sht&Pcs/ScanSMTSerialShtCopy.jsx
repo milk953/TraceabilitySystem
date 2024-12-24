@@ -379,7 +379,8 @@ function ScanSMTSerialShtCopy() {
             <td className="tdResult">
               {hideImg && (
                 <img
-                  className="imgPage"
+                  // className="imgPage"
+                  className="Img_GvResult"
                   src={Pageimg}
                   alt="Description of the image"
                 />

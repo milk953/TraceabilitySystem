@@ -253,7 +253,8 @@ function ScanSerialNo() {
           <td className="RecordSP1ResultTd">
             {hideImg && (
               <img
-                className="RecordSP1ResultImg"
+                // className="RecordSP1ResultImg"
+                className="Img_GvResult"
                 src={Pageimg}
                 alt="Description of the image"
               />
@@ -267,10 +268,10 @@ function ScanSerialNo() {
                     alignItems: "center",
                     background:
                       lblResult.value === "OK"
-                        ? "#059212"
+                        ? "green"
                         : lblResult.value === "NG"
                         ? "red"
-                        : "#BA0900",
+                        : "red",
                   }}
                 >
                   <Typography
