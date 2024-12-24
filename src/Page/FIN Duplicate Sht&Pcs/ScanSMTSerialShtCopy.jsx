@@ -14,9 +14,11 @@ import {
 } from "@mui/material";
 import { Typography, Table as AntTable, Select } from "antd";
 import { fn_ScanSMTSerialShtCopy } from "./fn_ScanSMTSerialShtCopy";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import "../Common/StyleCommon.css";
 import "./ScanSMTSerialShtCopy.css";
 function ScanSMTSerialShtCopy() {
+  const { menuName } = fn_Homepage();
   const {
     gvBackSideState,
     lblErrorState,
@@ -78,7 +80,7 @@ function ScanSMTSerialShtCopy() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                    FIN Duplicate Sht&Pcs
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>

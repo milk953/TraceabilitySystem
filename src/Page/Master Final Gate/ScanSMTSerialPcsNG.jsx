@@ -16,7 +16,9 @@ import { Typography ,Table as AntTable  } from "antd";
 import { fn_ScanSMTSerialPcsNG } from "./fn_ScanSMTSerialPcsNG";
 import Pageimg from "/src/assets/1.jpg";
 import "../Common/StyleCommon.css";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialPcsNG() {
+  const { menuName } = fn_Homepage();
   const {
     hideImg,
     lblResultState,
@@ -62,7 +64,7 @@ function ScanSMTSerialPcsNG() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      Confirm Master Scan
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>

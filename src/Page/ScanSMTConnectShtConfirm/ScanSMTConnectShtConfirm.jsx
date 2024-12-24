@@ -17,7 +17,9 @@ import Pageimg from "/src/assets/1.jpg";
 import "../Common/StyleCommon.css";
 import { Typography } from "antd";
 import "./ScanSMTConnectShtConfirm.css";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTConnectShtConfirm() {
+  const { menuName } = fn_Homepage();
   const {
     hideImg,
     gvSerial,
@@ -68,7 +70,7 @@ function ScanSMTConnectShtConfirm() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      Confirm Sht&Pcs
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>

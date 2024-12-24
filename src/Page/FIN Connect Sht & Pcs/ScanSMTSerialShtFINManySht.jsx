@@ -28,7 +28,9 @@ import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialShtFINManySht } from "./fn_ScanSMTSerialShtFINManySht";
 import { Table as AntTable } from "antd";
 import Pageimg from "/src/assets/1.jpg";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialShtFINManySht() {
+  const { menuName } = fn_Homepage();
   const {
     productCombo,
     productSelect,
@@ -106,7 +108,7 @@ function ScanSMTSerialShtFINManySht() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      FIN Connect Sht & Pcs
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
