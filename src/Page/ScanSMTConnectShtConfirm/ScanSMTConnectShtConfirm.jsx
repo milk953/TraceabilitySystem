@@ -80,7 +80,7 @@ function ScanSMTConnectShtConfirm() {
                         id="ScanSMTConnectShtConfirmtxtLot"
                         className="ScanSMTConnectShtConfirmtxtF"
                         value={txtLot}
-                        onChange={(e) => setTxtLot(e.target.value)}
+                        onChange={(e) => setTxtLot(e.target.value.trim())}
                         // onBlur={txtLot_Change}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {

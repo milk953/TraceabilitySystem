@@ -166,7 +166,7 @@ function fn_ScanSMTConnectShtConfirm() {
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim();
     setTxtSerial(newValues);
 
     if (event.key === "Enter") {
