@@ -118,7 +118,7 @@ function ScanSMTSerialShtFINManySht() {
                         className="txtField"
                         id="txtlot"
                         value={lotValue}
-                        onChange={(e) => setLotValue(e.target.value)}
+                        onChange={(e) => setLotValue(e.target.value.trim())}
                         disabled={lotState.styled.disabled}
                         style={lotState.styled}
                         ref={Fctxtlot}
@@ -168,7 +168,7 @@ function ScanSMTSerialShtFINManySht() {
                         className="txtField"
                         value={txtLotRef}
                         onChange={
-                          ((e) => setTxtLotRef(e.target.value),
+                          ((e) => setTxtLotRef(e.target.value.trim()),
                           { txtLotRef_Change })
                         }
                       ></input>
