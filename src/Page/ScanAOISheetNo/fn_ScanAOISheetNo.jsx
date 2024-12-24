@@ -662,41 +662,60 @@ function fn_ScanAOISheetNo() {
     };
 
     const btnDeleteClick = async (rowno) => {
-        console.log(rowno, "////////////")
+        console.log(rowno, "////////////");
         let data = [];
+
         if (!isNaN(rowno)) {
             const selectedItem = gvScanResult.value.find(item => item.row_no === rowno);
             const strSheetNo = selectedItem.sheet_no;
-            await axios.post("/api/ScanAOISheetNo/DeleteAOISheetNo", {
-                strlotno: txtLotNo,
-                strsheetno: strSheetNo,
-            })
-                .then((res) => {
-                    data = res.data.p_error;
-                    console.log("ลบข้อมูลสำเร็จ =", data);
-                    swal.fire("success", "You delete data success", "success");
-                })
-                .catch((error) => {
-                    console.error("เกิดข้อผิดพลาด =", error);
-                    swal.fire("Error", error.data.message, "error");
+
+            try {
+                // ลบข้อมูล
+                const deleteRes = await axios.post("/api/ScanAOISheetNo/DeleteAOISheetNo", {
+                    strlotno: txtLotNo,
+                    strsheetno: strSheetNo,
                 });
-            await axios.post("/api/ScanAOISheetNo/GetAOISheetDataByLot", {
-                strlotno: txtLotNo,
-                strlayer: txtLayer
-            })
-                .then((res) => {
-                    data = res.data;
+
+                data = deleteRes.data.p_error;
+                console.log("ลบข้อมูลสำเร็จ =", data);
+
+                await swal.fire("Success", "You delete data success", "success");
+
+
+                const getDataRes = await axios.post("/api/ScanAOISheetNo/GetAOISheetDataByLot", {
+                    strlotno: txtLotNo,
+                    strlayer: txtLayer,
                 });
-            setgvScanResult(prevState => ({ ...prevState, visible: true, value: data }));
-            await axios.post("/api/ScanAOISheetNo/GetAOISheetCountbyLot", {
-                strlotno: txtLotNo,
-                strlayer: txtLayer
-            })
-                .then((res) => {
-                    const updatedValue = parseInt(res.data, 10) + 1;
-                    settxtNo(updatedValue);
+                data = getDataRes.data;
+                setgvScanResult(prevState => ({ ...prevState, visible: true, value: data }));
+
+                const getCountRes = await axios.post("/api/ScanAOISheetNo/GetAOISheetCountbyLot", {
+                    strlotno: txtLotNo,
+                    strlayer: txtLayer,
+                });
+                const updatedValue = parseInt(getCountRes.data, 10) + 1;
+                settxtNo(updatedValue);
+                setlblSEQ(updatedValue);
+
+                if (updatedValue <= txtTotalPcs) {
+                    await getInitialSerial(updatedValue, txtTotalPcs);
                     setlblSEQ(updatedValue);
-                });
+                    SetMode("SERIAL");
+                }
+
+                setTimeout(() => {
+                    inputSerial.current[0].focus();
+                }, 300);
+
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาด =", error);
+
+                await swal.fire("Error", error.message, "error");
+
+                setTimeout(() => {
+                    inputSerial.current[0].focus();
+                }, 300);
+            }
         }
     };
 

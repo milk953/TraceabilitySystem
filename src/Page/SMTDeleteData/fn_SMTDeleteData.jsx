@@ -32,15 +32,13 @@ function fn_SMTDeleteData() {
 
   useEffect(() => {
     PageLoad();
-    setTimeout(() => {
-      inputShtNo.current.focus();
-    }, 300);
   }, []);
 
   const PageLoad = async () => {
+    inputShtNo.current.focus();
     sethfUserName("");
     setpnlForm(false);
-    fn_GetELTType();
+    await fn_GetELTType();
   };
 
   const fn_GetELTType = async () => {
@@ -55,7 +53,7 @@ function fn_SMTDeleteData() {
   };
 
   const btnShtDeleteClick = async () => {
-    if (txtSheetNo.trim() !== "") {
+    if (txtSheetNo !== "") {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const result = await Swal.fire({
         title: 'Are you confirm delete?',
@@ -64,16 +62,25 @@ function fn_SMTDeleteData() {
         cancelButtonText: 'No',
         icon: 'warning',
       });
-      console.log(result);
 
       if (result.isConfirmed) {
-        Delete_Data("SHEET");
+        await Delete_Data("SHEET");
+        settxtSheetNo("");
         document.getElementById("rollleaf").focus();
       }
     } else {
-      setpnlForm(true);
-      setlblResult("Please input Sheet No.");
-      setlblResultcolor("#BA0900");
+      setTimeout(() => {
+        Swal.fire({
+          icon: "error",
+          text: "Please input Sheet No.",
+          timer: 3000, 
+          //showConfirmButton: false,
+        });
+      }, 500);
+      inputShtNo.current.focus();
+      //setpnlForm(true);
+      //setlblResult("Please input Sheet No.");
+      //setlblResultcolor("#BA0900");
     }
   };
 
@@ -111,9 +118,8 @@ function fn_SMTDeleteData() {
             let dtdelsht = res.data;
             if (dtdelsht === "") {
               Swal.fire('Success', 'You delete data success', 'success');
-              setlblResult(`Sheet No. ${txtSheetNo} Delete Complete.`);
-              setpnlForm(true);
-              settxtSheetNo("");
+              //setlblResult(`Sheet No. ${txtSheetNo} Delete Complete.`);
+              //setpnlForm(true);
             }
           });
       } else {
@@ -144,9 +150,9 @@ function fn_SMTDeleteData() {
     setddlELTType(value);
   };
 
-  const handleSerialNo = async (e) => {
-    const txtSerialNo = e.target.value;
-    settxtSerialNo(txtSerialNo);
+  const handleSerialNo = (e) => {
+    // const txtSerialNo = e.target.value;
+    // settxtSerialNo(txtSerialNo);
     // if (e.target.value.length <= 2500) {
     //   settxtSerialNo(e.target.value);
     // }
@@ -201,6 +207,7 @@ function fn_SMTDeleteData() {
       setgvELTResult(true);
     } else {
       setgvELTResult(false);
+      Swal.fire("Error", "Not found data", "error");
     }
     setgvELTData(dtData);
     console.log("gvELTData", dtData)
@@ -293,7 +300,7 @@ function fn_SMTDeleteData() {
 
     await axios.post("/api/SMTDeleteData/getFinalGateResult", {
       strplantcode: plantCode,
-      strfinalserialno: txtFinalSerialNo.trim().toUpperCase()
+      strfinalserialno: txtFinalSerialNo.toUpperCase()
     })
       .then((res) => {
         let dt = res.data;
@@ -317,6 +324,7 @@ function fn_SMTDeleteData() {
       setgvFinalResult(true);
     } else {
       setgvFinalResult(false);
+      Swal.fire("Error", "Not found data", "error");
     }
     setgvFinalData(dtData);
     console.log("gvELTData", dtData)
@@ -344,7 +352,7 @@ function fn_SMTDeleteData() {
               dtDelFinal = res.data.p_error;
               if (dtDelFinal === "") {
                 Swal.fire('Success', 'You delete data success', 'success');
-                setlblResult(`Final Gate Delete Complete.`);
+                //setlblResult(`Final Gate Delete Complete.`);
               }
             })
             .catch((error) => {
@@ -405,7 +413,7 @@ function fn_SMTDeleteData() {
     pnlForm, lblResult, lblResultcolor, txtSheetNo, settxtSheetNo, txtRollLeaf, settxtRollLeaf, ddlELTType, ELTTypedata, txtSerialNo,
     txtFinalSerialNo, settxtFinalSerialNo, gvELTResult, gvELTData, gvFinalResult, gvFinalData, inputShtNo, btnShtDeleteClick, handleELTType,
     btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
-    btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect, inputELTSerial, inputFinalSerial
+    btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect, inputELTSerial, inputFinalSerial, settxtSerialNo
   }
 };
 

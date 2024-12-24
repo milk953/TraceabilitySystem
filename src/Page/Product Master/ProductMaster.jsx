@@ -12,7 +12,7 @@ import {
     TableContainer,
     Paper,
     Typography,
-    Button,
+    //Button,
     Select,
     MenuItem,
     FormControl,
@@ -40,6 +40,7 @@ import {
     InfoCircleOutlined,
     DownloadOutlined
 } from "@ant-design/icons";
+import { Input, Button } from "antd";
 import { fn_ProductMaster } from "./function_ProductMaster.jsx";
 import * as XLSX from 'xlsx';
 import "../Common/StyleCommon.css";
@@ -171,11 +172,12 @@ function ProductMaster() {
                                     </TableCell>
                                     <TableCell>
                                         <Button
-                                            variant="contained"
-                                            size="small"
+                                            type="primary"
+                                            //className="RetriveBtn"
+                                            icon={<SearchOutlined />}
                                             onClick={btnRetriveClick}
                                         >
-                                            Retrive
+                                            Search
                                         </Button>
                                     </TableCell>
                                     <TableCell style={{ width: "420px" }}>
@@ -3506,7 +3508,7 @@ function ProductMaster() {
                         </Table>
                     </TableContainer>
                     <FormControlLabel
-                        sx={{ marginTop: "25px", color: "#ff4d4f" }}
+                        sx={{ marginTop: "5px", color: "#ff4d4f" }}
                         control={
                             <Checkbox
                                 size="small"
@@ -3522,10 +3524,12 @@ function ProductMaster() {
                         label="Delete Flag"
                     />
                     <Button
-                        variant="contained"
-                        size="small"
-                        color="success"
-                        sx={{ marginTop: "20px" }}
+                        style={{
+                            backgroundColor: "green",
+                            width: "90px",
+                            color: "white",
+                            marginTop: "15px"
+                        }}
                         onClick={btnSubmitClick}
                     >
                         Submit
