@@ -54,7 +54,7 @@ function ScanSheetReflowTime() {
   return (
     <div>
       <Hearder />
-      <h1>123</h1>
+      <div style={{marginTop:'80px'}}></div>
       <div className="pnlMain">
         <Table id="TableMain" component={Card}>
           <TableHead>

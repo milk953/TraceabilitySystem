@@ -52,7 +52,7 @@ function Reject() {
   return (
     <>
       <Hearder />
-      <div style={{ marginTop: "70px" }}></div>
+      <div style={{ marginTop: "80px" }}></div>
       {isShowlblResult && (
         <div className="divRejectResult">
           <Card

@@ -45,7 +45,7 @@ function ScanSheetOvenTime() {
   return (
     <div>
       <Hearder />
-      <h1>123</h1>
+      <div style={{marginTop:'80px'}}></div>
       <div className="pnlMainOvenTime">
         <Table id="TableMainOvenTime" component={Card}>
           <TableHead>
