@@ -20,7 +20,7 @@ import {
   Card,
   Typography,
 } from "@mui/material";
-
+import {Button as AntButton} from "antd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialShtFINManySht.css";
 import "../Common/StyleCommon.css";
@@ -112,7 +112,7 @@ function ScanSMTSerialShtFINManySht() {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell >Lot No.:</TableCell>
+                    <TableCell style={{textAlign:'right'}} >Lot No.:</TableCell>
                     <TableCell>
                       <input
                         className="txtField"
@@ -137,7 +137,7 @@ function ScanSMTSerialShtFINManySht() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Product:</TableCell>
+                    <TableCell style={{textAlign:'right'}}>Product:</TableCell>
                     <TableCell>
                       <FormControl fullWidth>
                         <select
@@ -161,7 +161,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell >Lot Ref. No.:</TableCell>
+                    <TableCell style={{textAlign:'right'}} >Lot Ref. No.:</TableCell>
                     <TableCell>
                       <input
                         size="small"
@@ -176,7 +176,7 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Operator:</TableCell>
+                    <TableCell style={{textAlign:'right'}}>Operator:</TableCell>
                     <TableCell>
                       <input
                         size="small"
@@ -196,12 +196,12 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Total Sht:</TableCell>
-                    <TableCell>{lblTotalSht}</TableCell>
+                    <TableCell style={{textAlign:'right'}}>Total Sht:</TableCell>
+                    <TableCell >{lblTotalSht}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Total Pcs:</TableCell>
+                    <TableCell style={{textAlign:'right'}}>Total Pcs:</TableCell>
                     <TableCell>{lblTotalPcs}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
@@ -263,8 +263,8 @@ function ScanSMTSerialShtFINManySht() {
                           key={index}
                           style={{ backgroundColor: "White" }}
                         >
-                          <TableCell>{row.SEQ}</TableCell>
-                          <TableCell>{row.TITLE}</TableCell>
+                          <TableCell style={{textAlign:'center',borderRight: "1px solid #d9d9d9",width:'10%'}}>{row.SEQ}</TableCell>
+                          <TableCell style={{textAlign:'center',borderRight: "1px solid #d9d9d9",width:'70%'}}>{row.TITLE}</TableCell>
                           <TableCell>
                             <input
                               type="text"
@@ -273,6 +273,7 @@ function ScanSMTSerialShtFINManySht() {
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
+                                padding: "0px 0px 0px 0px",
                               }}
                               maxLength="30"
                               className="styleEnable"
@@ -292,6 +293,7 @@ function ScanSMTSerialShtFINManySht() {
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
+                                padding: "0px 0px 0px 0px",
                               }}
                               maxLength="30"
                               ref={FcgvFrontside}
@@ -383,7 +385,6 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {console.log(gvSerial,'gvSerial')}
                       {gvSerial.map((row, index) => (
                         <TableRow
                           key={index}
@@ -409,8 +410,10 @@ function ScanSMTSerialShtFINManySht() {
                               id={`txtSerial_${index}`}
                               type="text"
                               style={{
-                                width: "90%",
+                                width: "98%",
                                 textTransform: "uppercase",
+                                padding:'0px',
+                                margin:'0px',
                               }}
                               maxLength="30"
                               className="styleEnable"
@@ -437,17 +440,17 @@ function ScanSMTSerialShtFINManySht() {
                             gap: "10px",
                           }}
                         >
-                          <Button className="BtSave" onClick={btnSave_Click}>
-                            SAVE
-                          </Button>
+                          <AntButton className="BtSave" onClick={btnSave_Click}>
+                            Save
+                          </AntButton>
                           &nbsp;&nbsp;
-                          <Button
+                          <AntButton
                             className="BtCancel"
                             onClick={btnCancel_Click}
                           >
                             {" "}
                             Cancel
-                          </Button>
+                          </AntButton>
                         </TableCell>
                       </TableRow>
                     </TableBody>
@@ -510,7 +513,10 @@ function ScanSMTSerialShtFINManySht() {
                   columns={columns}
                   bordered
                   dataSource={gvScanResult}
-                  style={{ width: "1000px",marginTop:"10px" }}
+                  style={{ width: "1000px",
+                    marginTop:"10px",
+                    boxShadow: "rgba(0, 0, 0, 0.10) 0px 3px 8px",
+                  }}
                   pagination={false}
                   rowClassName={getRowClassName}
                   size="small"
