@@ -103,6 +103,7 @@ function fn_ScanSheetDispenserTime() {
     FctxtSheetNo.current.focus();
   };
   const txtSheetno_change = async () => {
+    setPnlResultState(false);
     let rowCount = 0;
     let strError = "";
     let strStatus = "";
