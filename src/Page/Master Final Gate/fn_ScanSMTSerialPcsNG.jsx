@@ -713,7 +713,7 @@ function fn_ScanSMTSerialPcsNG() {
   const [isLastDisabled, setIsLastDisabled] = useState(false);
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value.toUpperCase();
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
     if (event.key === "Enter") {
       // SetFocus(`txtSerial_${index + 1}`);

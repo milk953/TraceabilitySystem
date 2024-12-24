@@ -74,7 +74,7 @@ function ScanSMTSerialPcsNG() {
                         id="txtLot"
                         className="masterFGtxtF"
                         value={txtLot}
-                        onChange={(e) => setTxtLot(e.target.value)}
+                        onChange={(e) => setTxtLot(e.target.value.trim())}
                         // onBlur={txtLot_Change}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -121,7 +121,7 @@ function ScanSMTSerialPcsNG() {
                       <input
                         className="masterFGtxtF"
                         id="txtMasterCode"
-                        onChange={(e) => setTxtMasterCode(e.target.value)}
+                        onChange={(e) => setTxtMasterCode(e.target.value.trim())}
                         value={txtMasterCode}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
