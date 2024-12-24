@@ -73,7 +73,6 @@ function fn_ScanSMTConnectShtConfirm() {
         Setdisable("disable", "ScanSMTConnectShtConfirmtxtLot");
         setPanalSerialState(true);
         hfMode = "SERIAL";
-        console.log("inSERialmode");
         getInitialSerial();
 
         break;
@@ -401,7 +400,7 @@ function fn_ScanSMTConnectShtConfirm() {
       title: "Sheet No. Front",
       dataIndex: "sheet_no_front",
       key: "sheet_no_front",
-      align: "left",
+      align: "center",
       width: 200,
       render: (text, record, index) => {
         return text;
@@ -411,7 +410,7 @@ function fn_ScanSMTConnectShtConfirm() {
       title: "Sheet No. Back",
       dataIndex: "sheet_no_back",
       key: "sheet_no_back",
-      align: "left",
+      align: "center",
       width: 200,
       render: (text, record, index) => {
         return text;
@@ -421,33 +420,45 @@ function fn_ScanSMTConnectShtConfirm() {
       title: "Scan Result",
       dataIndex: "scan_result",
       key: "scan_result",
-      align: "left",
+      align: "center",
       width: 130,
       render: (text, record, index) => {
-        const backgroundColor =
-          record.scan_result === "NG" ? "#f50" : 
-          record.scan_result === "OK" ? "#87d068" : 
-          "transparent";
-        
-        return (
-          < Tag style={{width:100,textAlign:'center'}}  color={backgroundColor} >
-            {text}
-          </Tag>
-        );
+        return text;       
       },
-      align: "center",
+      // render: (text, record, index) => {
+      //   const backgroundColor =
+      //     record.scan_result === "NG" ? "#f50" : 
+      //     record.scan_result === "OK" ? "#87d068" : 
+      //     "transparent";
+        
+      //   return (
+      //     < Tag style={{width:100,textAlign:'center'}}  color={backgroundColor} >
+      //       {text}
+      //     </Tag>
+      //   );
+      // },
+      // align: "center",
     },
     {
       title: "Remark",
       dataIndex: "remark",
       key: "remark",
-      align: "left",
+      align: "center",
       width: 200,
       render: (text, record, index) => {
         return text;
       },
     },
   ];
+  const getRowClassName = (record) => {
+    console.log(record,'ScanResult record');
+    if (record.scan_result === "NG") {
+      return 'row-red';
+    } else if (record.scan_result === "OK") {
+      return 'row-green';
+    }
+    return '';
+  };
   return {
     hideImg,
     gvSerial,
@@ -475,7 +486,8 @@ function fn_ScanSMTConnectShtConfirm() {
     gvResutlState,
     lblResult,
     lblErrorState,
-    handle_ibtnBack_Click
+    handle_ibtnBack_Click,
+    getRowClassName
   };
 }
 

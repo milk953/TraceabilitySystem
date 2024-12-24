@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Table as AntTable, Select } from "antd";
+import { Table as AntTable, Select, Button as AntdBtn } from "antd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
 import React, { useEffect } from "react";
@@ -44,6 +44,7 @@ function ScanSMTConnectShtConfirm() {
     lblResult,
     lblErrorState,
     handle_ibtnBack_Click,
+    getRowClassName
   } = fn_ScanSMTConnectShtConfirm();
   useEffect(() => {
     if (panalSerialState == true && gvSerial != "" && txtSerial == "") {
@@ -152,11 +153,7 @@ function ScanSMTConnectShtConfirm() {
               </Table>
               {lblErrorState && (
                 <Card
-                  // style={{
-                  //   textAlign: "center",
-                  //   background: "red",
-                  //   color: "yellow",
-                  // }}
+  
                   className="Card-lblLog"
                 >
                   {lblError}
@@ -215,17 +212,17 @@ function ScanSMTConnectShtConfirm() {
                           gap: "10px",
                         }}
                       >
-                        <Button className="BtSave" onClick={handle_Save_Click}>
-                          SAVE
-                        </Button>
+                        <AntdBtn className="BtSave" onClick={handle_Save_Click}>
+                          Save
+                        </AntdBtn>
                         &nbsp;&nbsp;
-                        <Button
+                        <AntdBtn
                           className="BtCancel"
                           onClick={handle_Cancel_Click}
                         >
                           {" "}
                           Cancel
-                        </Button>
+                        </AntdBtn>
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -266,10 +263,10 @@ function ScanSMTConnectShtConfirm() {
                       alignItems: "center",
                       background:
                         lblResult === "OK"
-                          ? "#059212"
+                          ? "green"
                           : lblResult === "NG"
                           ? "red"
-                          : "#BA0900",
+                          : "red",
                     }}
                   >
                     <Typography
@@ -295,6 +292,7 @@ function ScanSMTConnectShtConfirm() {
                     style={{ width: "100%" }}
                     pagination={false}
                     size="small"
+                    rowClassName={getRowClassName}
                   />
                   // </Paper>
                 )}
