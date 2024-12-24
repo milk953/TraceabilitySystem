@@ -91,7 +91,7 @@ function ScanSMTSerialShtCopy() {
                         className="FinCopytxtF"
                         value={txtlotNo}
                         onChange={(e) => {
-                          setTxtlotNo(e.target.value);
+                          setTxtlotNo(e.target.value.trim());
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -137,7 +137,7 @@ function ScanSMTSerialShtCopy() {
                       id = 'txtLotRefFinCopy'
                       value={txtLotRef} 
                       onChange={(e) => {
-                        setTxtLotRef(e.target.value);
+                        setTxtLotRef(e.target.value.trim());
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -152,10 +152,12 @@ function ScanSMTSerialShtCopy() {
                   <TableRow>
                     <TableCell>Total Sht:</TableCell>
                     <TableCell className="CelllblSpan">{lblTotalSht}</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Pcs:</TableCell>
                     <TableCell className="CelllblSpan">{lblTotalPcs}</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                   {pnlRollLeafState && (
                     <>
@@ -264,7 +266,6 @@ function ScanSMTSerialShtCopy() {
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
                   <TableHead
-                    className="gvSerialHead"
                     style={{ background: "#12422e" }}
                   >
                     <TableRow>
@@ -391,10 +392,10 @@ function ScanSMTSerialShtCopy() {
                       background: lblResult.text === "OK" ? "green" : lblResult.text === "NG" ? "red" : "white",
                       background:
                       lblResult.text === "OK"
-                        ? "#059212"
+                        ? "green"
                         : lblResult.text === "NG"
                         ? "red"
-                        : "#BA0900",
+                        : "red",
                     }}
                   >
                     <Typography
