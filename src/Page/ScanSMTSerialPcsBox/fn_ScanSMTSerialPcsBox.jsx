@@ -594,7 +594,7 @@ function fn_ScanSMTSerialPcsBox() {
   };
 
   const ibtBack_Click = () => {
-    setdis_ddlProduct(true);
+    setdis_ddlProduct(false);
     settxtPcsTray((prevState) => ({
       ...prevState,
       value: "",
@@ -620,29 +620,73 @@ function fn_ScanSMTSerialPcsBox() {
     scrollToTop();
   };
 
+  // const btnSave_Click = async () => {
+  //   const hasAnyInput = Array.from(fc_txtSerial.current).some(
+  //     (input) => input.value.trim() !== ""
+  //   );
+  //   if (hasAnyInput == true) {
+  //     if (hfMode == "SERIAL") {
+  //       setSerialDataTray();
+  //       scrollToTop();
+  //     }
+  //   } else {
+  //     setlblLog((prevState) => ({
+  //       ...prevState,
+  //       value: "Please Input Serial No.",
+  //     }));
+  //     setpnlLog(true);
+  //     setpnlgvScanResult(false)
+  //     scrollToTop();
+  //     setTimeout(() => {
+  //       fc_txtSerial.current[0].focus();
+  //     }, 300);
+  //   }
+  // };
+
   const btnSave_Click = async () => {
+    // ตรวจสอบว่า fc_txtSerial.current มีค่าก่อน
+    if (!fc_txtSerial.current || !Array.isArray(fc_txtSerial.current)) {
+      console.error("fc_txtSerial.current is not available or not an array.");
+      setlblLog((prevState) => ({
+        ...prevState,
+        value: "Unexpected error: Input elements not found.",
+      }));
+      setpnlLog(true);
+      scrollToTop();
+      return;
+    }
+  
+    // ตรวจสอบว่ามี input ใดที่ไม่ว่าง
     const hasAnyInput = Array.from(fc_txtSerial.current).some(
-      (input) => input.value.trim() !== ""
+      (input) => input && input.value.trim() !== ""
     );
-    if (hasAnyInput == true) {
-      if (hfMode == "SERIAL") {
+  
+    if (hasAnyInput) {
+      if (hfMode === "SERIAL") {
         setSerialDataTray();
         scrollToTop();
       }
     } else {
+      // แจ้งเตือนให้ใส่ Serial No.
       setlblLog((prevState) => ({
         ...prevState,
         value: "Please Input Serial No.",
       }));
       setpnlLog(true);
-      setpnlgvScanResult(false)
+      setpnlgvScanResult(false);
       scrollToTop();
+  
+      // รอ 300ms และโฟกัสที่ input แรก
       setTimeout(() => {
-        fc_txtSerial.current[0].focus();
+        if (fc_txtSerial.current[0]) {
+          fc_txtSerial.current[0].focus();
+        } else {
+        }
       }, 300);
     }
   };
-
+  
+  
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     let GetFinalGateMasterCheckResult = "";
@@ -2409,7 +2453,7 @@ function fn_ScanSMTSerialPcsBox() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     settxtSerial(newValues);
   };
 

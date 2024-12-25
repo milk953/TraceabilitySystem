@@ -16,10 +16,11 @@ import {
   Grid,
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable,Button as AntButton } from 'antd';
 import "../Final Gate/SerialPcs.css";
 import Hearder from "../Header/Header";
 import "../Common/StyleCommon.css";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import Pageimg from "/src/assets/1.jpg";
 import { fn_ScanSMTPackingConfirm } from "../ScanSMTPackingConfirm/fn_ScanSMTPackingConfirm";
 function ScanSMTPackingConfirm() {
@@ -53,6 +54,7 @@ function ScanSMTPackingConfirm() {
     columns,
 
   } = fn_ScanSMTPackingConfirm();
+    const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -63,7 +65,7 @@ function ScanSMTPackingConfirm() {
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Packing Confirm Sheet</Typography>
+                    <Typography variant="h6">{menuName}</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -78,7 +80,7 @@ function ScanSMTPackingConfirm() {
                         style={{ ...txtLot.style ,backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit'}}
                         disabled={txtLot.disbled} 
                         inputRef={(el) => (fntxtLot.current = el)}
-                        value={txtLot.value}
+                        value={txtLot.value.trim()}
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
@@ -125,8 +127,6 @@ function ScanSMTPackingConfirm() {
                       </FormControl>
                     </TableCell>
                   </TableRow>
-
-                  <TableRow></TableRow>
                   <TableRow>
                     <TableCell align="right">
                       <Typography>Total Sheet. :</Typography>
@@ -154,9 +154,7 @@ function ScanSMTPackingConfirm() {
               {pnlSerial &&(
                 <Table
                 className="CSS-GvSerial"
-                style={{
-                  marginTop: "20px",
-                }}
+              
                 component={Card}
               >
                 
@@ -210,24 +208,25 @@ function ScanSMTPackingConfirm() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button
-                        className="BtSave"
-                         onClick={btnSave_Click}
-                      >
-                        Save
-                      </Button>{" "}
-                      &nbsp;&nbsp;
-                      <Button
-                        className="BtCancel"
-                        onClick={btnCancel_Click}
-                      >
-                        Cancel
-                      </Button>
+         
+                       <AntButton
+                                                                     type="primary" className="ButtonReplace"
+                                                                      onClick={btnSave_Click}
+                                                                    >
+                                                                      Save
+                                                                    </AntButton>{" "}
+                                                                    &nbsp;&nbsp;
+                                                                    <AntButton
+                                                                      
+                                                                     type="primary" className="ButtonCancel"
+                                                                      onClick={btnCancel_Click}
+                                                                    >
+                                                                      Cancel
+                                                                    </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>)}
-           
             </Grid>
             <Grid
               item
@@ -258,17 +257,18 @@ function ScanSMTPackingConfirm() {
            
               <>
                 {lblResult.value !== "" &&(
-                  <Paper
-                    className=".Card-Result"
+                  <Card
+                    // className="Card-Result"
                     style={{
                       width: "100%", 
                       background:'#fcf3cf',
-                      marginBottom:'10px'
+                      marginBottom:'10px',
+                      borderRadius:'3px'
                     }}
                   >
                     <Typography
                       variant="h4"
-                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',fontSize:'50px',color:'white'}}
+                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? 'red' : 'green',fontSize:'50px',color:'white'}}
                     >
                    
                    {lblResult.value}
@@ -276,16 +276,16 @@ function ScanSMTPackingConfirm() {
                     </Typography>
                     <Typography
                       variant="h4"
-                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? '#BA0900' : '#059212',color:'white'}}
+                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? 'red' : 'green',color:'white'}}
                     >
                    
                    {lblRemark.value}
  
                     </Typography>
-                  </Paper>
+                  </Card>
  )}
               
-               
+              
               {pnlgvScanResult &&(
                        <AntTable 
                 columns={columns}

@@ -17,7 +17,8 @@ import {
   Grid,
 } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable,Button as AntButton } from 'antd';
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import Pageimg from "/src/assets/1.jpg";
 import "../Common/StyleCommon.css";
 import "../Final Gate/SerialPcs.css";
@@ -30,6 +31,7 @@ function ScanSMTSerialPcsBox() {
   ,lblBoxFull,btnSave_Click,ibtBox_Click,ibtPack_Click,pnlSerial,txtSerial
   ,pnlLog,pnlOP,handleSerialChange,lblResult,fntxtLot,fntxtMachine,fntxtTray,fntxtBox,fntxtPack,fc_txtSerial,fntxtOP,btnCancel_Click,
   gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTSerialPcsBox()
+   const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -40,7 +42,7 @@ function ScanSMTSerialPcsBox() {
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Packing Gate</Typography>
+                    <Typography variant="h6">{menuName}</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -56,7 +58,7 @@ function ScanSMTSerialPcsBox() {
                           }}
                         disabled={txtLot.disbled}
                         inputRef={(el) => (fntxtLot.current = el)}
-                        value={txtLot.value}
+                        value={txtLot.value.trim()}
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
@@ -189,7 +191,7 @@ function ScanSMTSerialPcsBox() {
                         size="small"
                         inputRef={(el) => (fntxtBox.current = el)}
 
-                        value={txtBox.value}
+                        value={txtBox.value.trim()}
                         onChange={(e) => {
                           settxtBox((prevState) => ({
                             ...prevState,
@@ -350,8 +352,7 @@ function ScanSMTSerialPcsBox() {
               {pnlSerial && (
               <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px",
-                   }}
+               
                 component={Card}
               >
                 <TableHead>
@@ -403,16 +404,31 @@ function ScanSMTSerialPcsBox() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave"
+                      {/* <Button className="BtSave"
                       onClick={btnSave_Click}
                       >Save</Button> &nbsp;&nbsp;
                       <Button className="BtCancel" 
                       onClick={btnCancel_Click}
-                      >Cancel</Button>
+                      >Cancel</Button> */}
+                      <AntButton
+                         type="primary" className="ButtonReplace"
+                          onClick={btnSave_Click}
+                        >
+                          Save
+                        </AntButton>{" "}
+                        &nbsp;&nbsp;
+                        <AntButton
+                          
+                         type="primary" className="ButtonCancel"
+                          onClick={btnCancel_Click}
+                        >
+                          Cancel
+                        </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </Table>)}
+              </Table>
+            )}
             </Grid>
             <Grid
               item
@@ -470,7 +486,7 @@ function ScanSMTSerialPcsBox() {
                
               </Paper>
               </div>
-              <br/>
+           
                       <AntTable 
                 columns={columns}
                 dataSource={gvScanResult}
