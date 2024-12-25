@@ -27,12 +27,16 @@ import {
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { Table as AntTabl } from "antd";
+import {
+  Table as AntTabl,
+  Button as ButtonAndt,
+  Avatar as AvatarAndt,
+} from "antd";
 import "./ScanConfirmMagazineP1.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Common/StyleCommon.css";
-import excel from "../../../src/assets/excel.png";
+import excel from "/src/assets/excel.png";
 import { fn_ScanConfirmMagazineP1 } from "../ScanConfirmMagazineP1/fn_ScanConfirmMagazineP1";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanConfirmMagazineP1() {
@@ -97,7 +101,7 @@ function ScanConfirmMagazineP1() {
                       onChange={(e) => {
                         setTxtOperator((prevState) => ({
                           ...prevState,
-                          value: e.target.value,
+                          value: e.target.value.trim(),
                         }));
                       }}
                       onKeyDown={(e) => {
@@ -134,7 +138,7 @@ function ScanConfirmMagazineP1() {
                       onChange={(e) => {
                         setTxtLotNo((prevState) => ({
                           ...prevState,
-                          value: e.target.value.toUpperCase(),
+                          value: e.target.value.trim(),
                         }));
                       }}
                       onKeyDown={(e) => {
@@ -171,7 +175,7 @@ function ScanConfirmMagazineP1() {
                       onChange={(e) => {
                         setTxtMagNo((prevState) => ({
                           ...prevState,
-                          value: e.target.value.toUpperCase(),
+                          value: e.target.value.trim().toLocaleUpperCase(),
                         }));
                       }}
                       onKeyDown={(e) => {
@@ -182,7 +186,7 @@ function ScanConfirmMagazineP1() {
                     ></TextField>
                   </TableCell>
                   <TableCell>
-                    <Button
+                    {/* <Button
                       size="small"
                       disabled={ibtExcel.disabled}
                       startIcon={
@@ -202,7 +206,18 @@ function ScanConfirmMagazineP1() {
                       }}
                     >
                       Export
-                    </Button>
+                    </Button> */}
+                    <ButtonAndt
+                      style={{ marginLeft: "20px", height: "30px" }}
+                      size="small"
+                      disabled={ibtExcel.disabled}
+                      icon={
+                        <AvatarAndt shape="square" src={excel} size="small" />
+                      }
+                      onClick={() => ibtExcel_Click()}
+                    >
+                      Export
+                    </ButtonAndt>
                   </TableCell>
                 </TableRow>
 
@@ -221,7 +236,7 @@ function ScanConfirmMagazineP1() {
                             color: "#006699",
                             display: "flex",
                             justifyContent: "center",
-                            fontSize: "20px",
+                            fontSize: "16px",
                           }}
                         >
                           {lblProduct.value}
@@ -251,12 +266,11 @@ function ScanConfirmMagazineP1() {
               <Paper
                 elevation={3}
                 className={
-                  lblResult.value == "OK" ? "ResultSuccess" : "ResultError"
+                  lblResult.value == "OK" ? "ScanConfirmMagazineP1ResultSuccess" : "ScanConfirmMagazineP1ResultError"
                 }
                 style={{
                   marginTop: "5px",
                   height: "200px",
-                 
                 }}
                 // className="ManglblLog"
                 // style={{

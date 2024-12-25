@@ -50,7 +50,7 @@ function AOIManualConfirmP1() {
         <div className="divAOIManualConfirmP1Result">
           <Card
             className={
-              lblResult.style.color === "red" ? "ResultSuccess" : "ResultError" 
+              lblResult.style.background === "red" ? "AOIManualConfirmP1ResultError" : "AOIManualConfirmP1ResultSuccess"
             }
           >
             {lblResult.value}
@@ -60,13 +60,13 @@ function AOIManualConfirmP1() {
       {/* &nbsp; */}
       <div className="AOIManualConfirmP1TableFirst">
         <Table className="Header_Center" component={Paper}>
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={4} align="center">
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan={4} align="center">
                 {menuName}
-                </TableCell>
-              </TableRow>
-            </TableHead>
+              </TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             <TableRow>
               <TableCell sx={{ width: "90px", textAlign: "right" }}>
@@ -139,7 +139,7 @@ function AOIManualConfirmP1() {
                   onChange={(e) => {
                     setTxtSerialNo((prevState) => ({
                       ...prevState,
-                      value: e.target.value,
+                      value: e.target.value.trim().toLocaleUpperCase(),
                     }));
                   }}
                   onKeyDown={(e) => {
@@ -158,7 +158,9 @@ function AOIManualConfirmP1() {
         <Table className="Header_Center" component={Paper}>
           <TableBody>
             <TableRow>
-              <TableCell sx={{ width: "90px", textAlign: "right" }} >Result : </TableCell>
+              <TableCell sx={{ width: "90px", textAlign: "right" }}>
+                Result :{" "}
+              </TableCell>
               <TableCell sx={{ width: "100px" }}>
                 <FormControl style={{ width: "100%" }} size="small">
                   <Select
@@ -185,7 +187,9 @@ function AOIManualConfirmP1() {
                   </Select>
                 </FormControl>
               </TableCell>
-              <TableCell sx={{ width: "90px",textAlign: "right" }} >Operator : </TableCell>
+              <TableCell sx={{ width: "90px", textAlign: "right" }}>
+                Operator :{" "}
+              </TableCell>
               <TableCell sx={{ width: "200px" }}>
                 <TextField
                   className="field_text"
@@ -197,7 +201,9 @@ function AOIManualConfirmP1() {
                   value={txtOperatorCode.value}
                 ></TextField>
               </TableCell>
-              <TableCell sx={{ width: "110px", textAlign: "right" }}>Inspect Count : </TableCell>
+              <TableCell sx={{ width: "110px", textAlign: "right" }}>
+                Inspect Count :{" "}
+              </TableCell>
               <TableCell sx={{ width: "80px" }}>
                 <TextField
                   className="field_text"
@@ -210,36 +216,38 @@ function AOIManualConfirmP1() {
                 ></TextField>
               </TableCell>
             </TableRow>
-      
-                  <TableRow>
-                    <TableCell
-                      colSpan={6}
-                      style={{ textAlign: "center", verticalAlign: "middle" }}
-                    >
-                      <Button
-                        style={{
-                          backgroundColor: "green",
-                          width: "90px",
-                          color: "white",
-                          marginRight: "16px", // เพิ่มระยะห่าง 12px ทางขวา
-                        }}
-                        onClick={BtnSubmit1_Click}
-                      >
-                        Submit
-                      </Button>
-                      <Button
-                        style={{
-                          backgroundColor: "red",
-                          width: "90px",
-                          color: "white",
-                        }}
-                         onClick={BtnCancle_Click}
-                      >
-                        Cancel
-                      </Button>
-                    </TableCell>
-                  </TableRow>
 
+            <TableRow>
+              <TableCell
+                colSpan={6}
+                style={{ textAlign: "center", verticalAlign: "middle" }}
+              >
+                <Button
+                  style={{
+                    // backgroundColor: "green",
+                    // width: "90px",
+                    // color: "white",
+                    // marginRight: "16px",
+                  }}
+                  className="ButtonReplace"
+                  onClick={BtnSubmit1_Click}
+                >
+                  Submit
+                </Button>
+                &nbsp;&nbsp;
+                <Button
+                  // style={{
+                  //   backgroundColor: "red",
+                  //   width: "90px",
+                  //   color: "white",
+                  // }}
+                  className="ButtonCancel"
+                  onClick={BtnCancle_Click}
+                >
+                  Cancel
+                </Button>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </div>

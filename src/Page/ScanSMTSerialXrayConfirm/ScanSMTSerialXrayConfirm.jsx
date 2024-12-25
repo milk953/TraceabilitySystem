@@ -147,19 +147,19 @@ function ScanSMTSerialXrayConfirm() {
                         className="input_txt"
                         size="small"
                         value={txtTotalPCS.value}
-                        // onChange={(e) => {
-                        //   setTxtTotalPCS((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
+                        onChange={(e) => {
+                          setTxtTotalPCS((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
 
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtTotalPCS_TextChanged();
-                        //   }
-                        // }}
-                        style={{ width: "95%" }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtTotalPCS_TextChanged();
+                          }
+                        }}
+                        style={{ width: "100%" }}
                       ></TextField>
                     </TableCell>
                     <TableCell colSpan={2}>

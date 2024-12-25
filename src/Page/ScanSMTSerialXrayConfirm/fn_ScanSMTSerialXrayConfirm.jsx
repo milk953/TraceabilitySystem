@@ -8,7 +8,10 @@ import { useLoading } from "../../loading/fn_loading";
 function fn_ScanSMTSerialXrayConfirm() {
   const { showLoading, hideLoading } = useLoading();
 
+  // เพิ่มนี้มา --
   let hfSerialCountBackup = "";
+  let hfTotalSht = "";
+  // จบ --
   let statusBackupCount = false;
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
@@ -135,9 +138,15 @@ function fn_ScanSMTSerialXrayConfirm() {
   }, []);
 
   const handleSerialChange = async (index, event) => {
+    // setLblPnlLog((prevState) => ({
+    //   ...prevState,
+    //   value: "Invalid lot no.",
+    //   visble: true,
+    // }));
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim();
     setTxtSerial(newValues);
+    console.log("newValues : ",newValues,"index + 1 : ",index + 1)
     if (event.key === "Enter") {
       fnSetFocus(`gvSerial_txtSerial_${index + 1}`);
     }
@@ -186,7 +195,6 @@ function fn_ScanSMTSerialXrayConfirm() {
   };
 
   const btnSave_Click = async () => {
-    console.log("txtSerialtxtSerialtxtSerialtxtSerial", txtSerial);
     let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
@@ -204,8 +212,14 @@ function fn_ScanSMTSerialXrayConfirm() {
     }
   };
 
-  const ddlProduct_SelectedIndexChanged = async () => {
+  const ddlProduct_SelectedIndexChanged = async (value) => {
     await getProductSerialMaster(ddlProduct.value);
+    // เพิ่มนี้มา -- 
+    setDdlProduct((prevState) => ({
+      ...prevState,
+      value: value,
+    }));
+    // จบ --
     if (txtLot.value.trim().toUpperCase() !== "") {
       setLblPnlLog((prevState) => ({
         ...prevState,
@@ -402,12 +416,10 @@ function fn_ScanSMTSerialXrayConfirm() {
         } catch (ex) {
           console.error(ex);
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
-          console.log("intProduct : ", intProduct);
           if (intProduct > 0) {
             strPrdName =
               strPrdName.slice(0, intProduct) +
               strPrdName.slice(intProduct + 1, intProduct + 11);
-            console.log("strPrdName : ", strPrdName);
             try {
               setDdlProduct((prevState) => ({
                 ...prevState,
@@ -476,7 +488,8 @@ function fn_ScanSMTSerialXrayConfirm() {
   };
 
   const txtTotalPCS_TextChanged = async () => {
-    if (isNaN(txtTotalPCS.value)) {
+    if (!isNaN(txtTotalPCS.value)) {
+      // hfTotalSht = txtTotalPCS.value;
       SetMode("SERIAL");
       fnSetFocus("gvSerial_txtSerial_0");
     } else {
@@ -490,8 +503,28 @@ function fn_ScanSMTSerialXrayConfirm() {
 
   const getInitialSerial = async () => {
     let dtData = [];
+    // เพิ่มนี้มา --
     const hfSerialCountData =
-      statusBackupCount === true ? hfSerialCount : hfSerialCountBackup;
+      txtTotalPCS.value !== ""
+        ? txtTotalPCS.value
+        : statusBackupCount === true
+        ? hfSerialCount
+        : hfSerialCountBackup;
+    // console.log(
+    //   "hfSerialCountData : ",
+    //   hfSerialCountData,
+    //   "statusBackupCount : ",
+    //   statusBackupCount,
+    //   "hfSerialCount : ",
+    //   hfSerialCount,
+    //   "hfSerialCountBackup : ",
+    //   hfSerialCountBackup,
+    //   "txtTotalPCS.value : ",
+    //   txtTotalPCS.value,
+    //   "hfTotalSht : ",
+    //   hfTotalSht
+    // );
+    // เพิ่มนี้มา --
     for (let intRow = 1; intRow <= parseInt(hfSerialCountData, 10); intRow++) {
       dtData.push({
         SEQ: intRow,
@@ -599,11 +632,6 @@ function fn_ScanSMTSerialXrayConfirm() {
         }));
       }
       if (_strErrorAll !== "") {
-        console.log(
-          "แสดงผลลัพธ์ที่ได้ _strErrorAll : ",
-          lblResult.value + `\n` + _strErrorAll,
-          " : "
-        );
         setLblResult((prevState) => ({
           ...prevState,
           value: lblResult.value + `\n` + _strErrorAll,
@@ -755,7 +783,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       title: "Serial No.",
       dataIndex: "serial",
       key: "Serial No.",
-      align: "left",
+      align: "center",
       render: (text, record, index) => {
         return text;
       },
@@ -806,7 +834,6 @@ function fn_ScanSMTSerialXrayConfirm() {
   ];
 
   function fnSetFocus(txtField) {
-    console.log("txtField : ", txtField);
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
     }, 300);
