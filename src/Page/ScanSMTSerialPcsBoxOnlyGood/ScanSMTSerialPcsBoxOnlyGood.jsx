@@ -21,12 +21,13 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable,Button as AntButton  } from 'antd';
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Pageimg from "/src/assets/1.jpg";
 import "../Common/StyleCommon.css";
 import "../Final Gate/SerialPcs.css";
 import Hearder from "../Header/Header";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import {fn_ScanSMTSerialPcsBoxOnlyGood} from './fn_ScanSMTSerialPcsBoxOnlyGood'
 function ScanSMTRoollSht() {
 const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlProduct,ddlProduct_SelectedIndexChanged,
@@ -36,7 +37,7 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
 ,lblBoxFull,btnSave_Click,ibtBox_Click,ibtPack_Click,pnlSerial,txtSerial
 ,pnlLog,pnlOP,handleSerialChange,lblResult,fntxtLot,fntxtMachine,fntxtTray,fntxtBox,fntxtPack,fc_txtSerial,fntxtOP,btnCancel,
 gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTSerialPcsBoxOnlyGood()
-
+   const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -48,7 +49,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
               <Table className="FinalGate" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Packing Gate Only Good</Typography>
+                    <Typography variant="h6">{menuName}</Typography>
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -65,7 +66,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                         disabled={txtLot.disbled} //true พิมไม่ได้
                         //inputRef={fntxtLot}
                         inputRef={(el) => (fntxtLot.current = el)}
-                        value={txtLot.value}
+                        value={txtLot.value.trim()}
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
@@ -87,7 +88,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                       </Button>
                     </TableCell>
                   </TableRow>
-                  {console.log(lblLog,"มาแล้วจ้า")}
                   <TableRow>
                     <TableCell align="right">
                       <Typography>Product :</Typography>
@@ -133,7 +133,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                       <Typography>Machine No :</Typography>
                     </TableCell>
                     <TableCell colSpan={4}>
-                      {console.log(txtMachine.disbled,"disbled")}
                       <TextField
                         className="input_txt"
                         size="small"
@@ -208,7 +207,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                         size="small"
                         inputRef={(el) => (fntxtBox.current = el)}
 
-                        value={txtBox.value}
+                        value={txtBox.value.trim()}
                         onChange={(e) => {
                           settxtBox((prevState) => ({
                             ...prevState,
@@ -242,7 +241,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
 
-                        value={txtPack.value}
+                        value={txtPack.value.trim()}
                         onChange={(e) => {
                           settxtPack((prevState) => ({
                             ...prevState,
@@ -371,8 +370,8 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
               {pnlSerial && (
               <Table
                 className="CSS-GvSerial"
-                style={{ marginTop: "20px",
-                   }}
+                // style={{ marginTop: "20px",
+                //    }}
                 component={Card}
               >
                 <TableHead>
@@ -428,12 +427,20 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave"
-                      onClick={btnSave_Click}
-                      >Save</Button> &nbsp;&nbsp;
-                      <Button className="BtCancel" 
-                      onClick={btnCancel}
-                      >Cancel</Button>
+                       <AntButton
+                                               type="primary" className="ButtonReplace"
+                                                onClick={btnSave_Click}
+                                              >
+                                                Save
+                                              </AntButton>{" "}
+                                              &nbsp;&nbsp;
+                                              <AntButton
+                                                
+                                               type="primary" className="ButtonCancel"
+                                                onClick={btnCancel}
+                                              >
+                                                Cancel
+                                              </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -496,7 +503,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                
               </Paper>
                    </div>
-                   <br/>
                       <AntTable 
                 columns={columns}
                 dataSource={gvScanResult}

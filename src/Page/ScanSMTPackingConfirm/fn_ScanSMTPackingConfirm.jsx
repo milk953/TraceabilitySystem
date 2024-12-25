@@ -40,7 +40,7 @@ function fn_ScanSMTPackingConfirm() {
   const [gvScanResult, setgvScanResult] = useState([]);
 
   const [pnlLog, setpnlLog] = useState("");
-  const [pnlSerial, setpnlSerial] = useState("");
+  const [pnlSerial, setpnlSerial] = useState(false);
   const [pnlgvScanResult, setpnlgvScanResult] = useState("");
   // const [pnlLot,setpnlLot] = useState(false);
  
@@ -87,7 +87,7 @@ function fn_ScanSMTPackingConfirm() {
     setTimeout(() => {
       fntxtLot.current.focus();
     }, 300);
-    fetchData();
+    await GetProductData();
   };
 
   const btnCancel_Click = async () => {
@@ -98,6 +98,7 @@ function fn_ScanSMTPackingConfirm() {
     // setpnlgvScanResult(false);
 
   };
+
   const btnSave_Click = async () => {
     const hasAnyInput = Array.from(fngvSerial_txtSerial_0.current).some(input => input.value.trim() !== "");
     if (hasAnyInput == true) {
@@ -116,6 +117,7 @@ function fn_ScanSMTPackingConfirm() {
     }
   
   };
+
   const SetMode = (_strType) => {
     switch (_strType) {
       case "LOT":
@@ -173,11 +175,13 @@ function fn_ScanSMTPackingConfirm() {
 
   const getInitialSerial = async () => {
     let dtData = [];
+    console.log(hfShtScan,"hfShtScan")
     for (let intRow = 0; intRow < hfShtScan; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
+    console.log(dtData,"dtData")
     setgvSerial(dtData);
     settxtSerial(Array(gvSerial.length).fill(""));
     if (gvSerial.length > 0) {
@@ -187,6 +191,7 @@ function fn_ScanSMTPackingConfirm() {
     }
     return 0;
   };
+
   const txtLot_TextChanged = async () => {
     let strLotData = "";
     let strLot = "";
@@ -286,12 +291,14 @@ function fn_ScanSMTPackingConfirm() {
       setpnlLog(true);
       sethfMode("LOT");
       // setgvSerial([])
+      
       setTimeout(() => {
         fntxtLot.current.focus();
       }, 300);
     }
     getShtDataBylot(strLot);
   };
+
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     if (txtLot.value.trim().toUpperCase() !== "") {
@@ -309,6 +316,7 @@ function fn_ScanSMTPackingConfirm() {
       SetMode("LOT");
     }
   };
+
   const setSerialData = async () => {
     let dtSerial = await getInputSerial();
     let dtSheet = await getSheetResult();
@@ -421,6 +429,7 @@ function fn_ScanSMTPackingConfirm() {
     getShtDataBylot(txtLot.value.trim().toUpperCase());
     fngvSerial_txtSerial_0.current[0].focus();
   };
+
   const getInputSerial = async () => {
     let dtData = [];
     let intRow = 0;
@@ -438,6 +447,7 @@ function fn_ScanSMTPackingConfirm() {
 
     return dtData;
   };
+
   const getSheetResult = async () => {
     let dtData = [];
     let intRow = 0;
@@ -453,6 +463,7 @@ function fn_ScanSMTPackingConfirm() {
     }
     return dtData;
   };
+
   const getShtDataBylot = async (_strLot) => {
     let dtSheet = [];
     let intOK = 0;
@@ -467,8 +478,15 @@ function fn_ScanSMTPackingConfirm() {
       .then((res) => {
         dtSheet = res.data;
         setgvScanResult(dtSheet);
+        console.log(dtSheet,"dtSheet")
         if (dtSheet.length > 0) {
+          console.log("มาได้ไงอ่ะงง")
           setpnlgvScanResult(true);
+          setpnlSerial(true)
+        }
+        else{
+          setpnlgvScanResult(false);
+          setpnlSerial(false)
         }
       });
     for (let row = 0; row < dtSheet.length; row++) {
@@ -482,9 +500,10 @@ function fn_ScanSMTPackingConfirm() {
     }
     return 0;
   };
+
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     settxtSerial(newValues);
   };
 

@@ -21,7 +21,8 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable ,Button as AntButton } from 'antd';
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import { fn_ScanSMTSerialSpotHeat } from "./fn_ScanSMTSerialSpotHeat";
 function ScanSMTSerialSpotHeat() {
   const {
@@ -35,8 +36,9 @@ function ScanSMTSerialSpotHeat() {
     settxtTotalPCS,
     fcGvSerial_txtSerial_0,handleTotal_Sht,fcTotalSht,
     fcProduct,fcLotNo,lblLog,pnlLog,ibtBack_Click,btnSave_Click,setSlProduct,hfMode,txtSerial,handleSerialChange,
-    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product,dataGvSerial,columns
+    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product,dataGvSerial,columns,getRowClassName
   } = fn_ScanSMTSerialSpotHeat();
+      const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -54,7 +56,7 @@ function ScanSMTSerialSpotHeat() {
                   <TableRow>
                     <TableCell colSpan={3} align="center">
                       <Typography variant="h5">
-                        <b>Spot Heat Result Checking</b>
+                        {menuName}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -71,7 +73,7 @@ function ScanSMTSerialSpotHeat() {
                         size="small"
                         fullWidth
                         disabled={txtLot.disbled} 
-                        value={txtLot.value}
+                        value={txtLot.value.trim()}
                         // inputRef={fcLotNo}
                         inputRef={(el) => (fcLotNo.current = el)}
                         style={{ backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit'}}
@@ -100,16 +102,17 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
                         <Autocomplete
-                            inputRef={fcProduct}
+                            // inputRef={fcProduct}
+                            inputRef={(el) => (fcProduct.current = el)}
                           className="Select_dropDown"
                           value={SlProduct}
                           disabled={visibledll_product}
-                          onChange={(e) => {
-                            setSlProduct(e.target.value);
-                            // handleddlProduct();
+                          onChange={(e, value) => {
+                            // setSlProduct(e.target.value);
+                            handleddlProduct(value);
                           }}
                        
-                          onInputChange={handleddlProduct}
+                          // onInputChange={handleddlProduct}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
                             <TextField
@@ -132,6 +135,7 @@ function ScanSMTSerialSpotHeat() {
                         className="input_txt"
                         value={txtTotalPCS.value}
                         inputRef={fcTotalSht}
+                        
                         onChange={(e) => {
                           settxtTotalPCS((prevState)=>({...prevState,value:e.target.value}))
                         
@@ -181,8 +185,9 @@ function ScanSMTSerialSpotHeat() {
                         >
                           {index + 1}
                         </TableCell>
+                        {/* {console.log("fcGvSerial_txtSerial_0.current:", fcGvSerial_txtSerial_0.current)} */}
                         <TableCell>
-                          {" "}
+                    
                           <TextField
                             className="input_txt"
                             size="small"
@@ -219,7 +224,7 @@ function ScanSMTSerialSpotHeat() {
                   </TableRow>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      <Button
+                      {/* <Button
                        className="BtSave"
                        
                           onClick={btnSave_Click}
@@ -234,7 +239,21 @@ function ScanSMTSerialSpotHeat() {
                           onClick={btnCancel_Click}
                       >
                         Cancel
-                      </Button>
+                      </Button> */}
+                           <AntButton
+                                               type="primary" className="ButtonReplace"
+                                                onClick={btnSave_Click}
+                                              >
+                                                Save
+                                              </AntButton>{" "}
+                                              &nbsp;&nbsp;
+                                              <AntButton
+                                                
+                                               type="primary" className="ButtonCancel"
+                                                onClick={btnCancel_Click}
+                                              >
+                                                Cancel
+                                              </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -281,7 +300,7 @@ function ScanSMTSerialSpotHeat() {
                     style={{ paddingTop: "3px", color: "#fff" }}
                   >{lblResult.text}</Typography>
                 </Paper>
-              <br/>
+ 
                 <AntTable 
                 columns={columns}
                 dataSource={gvScanResult}
@@ -290,10 +309,7 @@ function ScanSMTSerialSpotHeat() {
                 size="small"
                 bordered
                 className="tableGvResult"
-                rowClassName={(record) => 
-                  (record.SCAN_RESULT === "NG" || record.SCAN_RESULT === "NO") ? "row-red" : 
-                  record.SCAN_RESULT === "OK" ? "row-green" : ""
-                }
+                rowClassName={getRowClassName}
                 
 
                 />
