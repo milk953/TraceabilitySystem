@@ -30,6 +30,7 @@ import {
     ClearOutlined
 } from "@ant-design/icons";
 import { Button } from "antd";
+import { Table as AntTable } from 'antd';
 import DeleteIcon from '@mui/icons-material/Delete';
 import "./SMTDeleteData.css";
 import Header from "../Header/Header.jsx";
@@ -40,8 +41,10 @@ function SMTDeleteData() {
     const {
         pnlForm, lblResult, lblResultcolor, txtSheetNo, settxtSheetNo, txtRollLeaf, settxtRollLeaf, ddlELTType, ELTTypedata, txtSerialNo,
         txtFinalSerialNo, settxtFinalSerialNo, gvELTResult, gvELTData, gvFinalResult, gvFinalData, inputShtNo, btnShtDeleteClick, handleELTType,
-        btnRollDeleteClick, handleSerialNo, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
-        btnClearFinalClick, selectedRows, handleRowSelect, selectedRow, handleSelect, inputELTSerial, inputFinalSerial, settxtSerialNo
+        btnRollDeleteClick, columnsconrollleaf, btnSerialSearchClick, btnELTDeleteClick, btnFinalSerialSearchClick, btnFinalDeleteClick, btnClearELTClick,
+        btnClearFinalClick, columnseltresult, rowSelectelt, columnsfinalresult, rowSelectFinal, inputELTSerial, inputFinalSerial, settxtSerialNo, btnSearchShtnoClick,
+        gvConShtPcs, gvConShtPcsData, columnsconshtpcs, rowSelection, btnShtCancelClick, rowSelect, btnSearchRollleafClick, gvConRollLeaf, gvConRollLeafData,
+        btnRollCancelClick
     } = fn_SMTDeleteData();
 
     return (
@@ -80,7 +83,7 @@ function SMTDeleteData() {
                 <Card
                     component={Paper}
                     style={{
-                        width: "780px",
+                        width: "823px",
                         margin: "10px",
                     }}
                 >
@@ -120,24 +123,22 @@ function SMTDeleteData() {
                                         }}
                                         onKeyDown={(e) => {
                                             if (e.key === "Enter") {
-                                                btnShtDeleteClick();
+                                                btnSearchShtnoClick();
                                             }
                                         }}
                                     />
                                 </TableCell>
-                                <TableCell align="center">
-                                    <Button className="Bt_del"
-                                        onClick={btnShtDeleteClick}
+                                <TableCell>
+                                    <Button
+                                        align="center"
+                                        type="primary"
+                                        style={{
+                                            textTransform: "none",
+                                        }}
+                                        icon={<SearchOutlined />}
+                                        onClick={btnSearchShtnoClick}
                                     >
-                                        <Tooltip title="Delete" placement="right-end">
-                                            <DeleteIcon
-                                                sx={{
-                                                    fontSize: 35,
-                                                    color: "red",
-                                                    padding: 0
-                                                }}
-                                            />
-                                        </Tooltip>
+                                        Search
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -145,12 +146,54 @@ function SMTDeleteData() {
                     </Table>
                 </Card>
 
+
+                {gvConShtPcs && (
+                    <AntTable
+                        rowSelection={rowSelection}
+                        columns={columnsconshtpcs}
+                        dataSource={gvConShtPcsData}
+                        rowKey={(record) => JSON.stringify
+                            ({
+                                count: record.count,
+                                lot_no: record.lot_no,
+                                product_name: record.product_name,
+                                front_sheet_no: record.front_sheet_no,
+                                back_sheet_no: record.back_sheet_no
+                            })}
+                        style={{ width: '823px' }}
+                        pagination={false}
+                        size="small"
+                        bordered
+                        className="tableGvResult"
+                    />
+                )}
+                {gvConShtPcs && (
+                    <TableRow>
+                        <TableCell align="center">
+                            <Button className="ButtonDelete"
+                                type="primary"
+                                onClick={btnShtDeleteClick}
+                            >
+                                Delete
+                            </Button>&nbsp;&nbsp;
+                            <Button
+                                className="ButtonCancel"
+                                type="primary"
+                                onClick={btnShtCancelClick}
+                            >
+                                Cancel
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                )}
+
+
                 <br />
                 <br />
                 <Card
                     component={Paper}
                     style={{
-                        width: "780px",
+                        width: "823px",
                         margin: "10px",
                     }}
                 >
@@ -186,23 +229,22 @@ function SMTDeleteData() {
                                         }}
                                         onKeyDown={(e) => {
                                             if (e.key === "Enter") {
-                                                btnRollDeleteClick();
+                                                btnSearchRollleafClick();
                                             }
                                         }}
                                     />
                                 </TableCell>
-                                <TableCell align="center">
-                                    <Button className="Bt_del"
-                                        onClick={btnRollDeleteClick}
+                                <TableCell>
+                                    <Button
+                                        align="center"
+                                        type="primary"
+                                        style={{
+                                            textTransform: "none",
+                                        }}
+                                        icon={<SearchOutlined />}
+                                        onClick={btnSearchRollleafClick}
                                     >
-                                        <Tooltip title="Delete" placement="right-end">
-                                            <DeleteIcon
-                                                style={{
-                                                    fontSize: 35,
-                                                    color: "red",
-                                                }}
-                                            />
-                                        </Tooltip>
+                                        Search
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -210,13 +252,53 @@ function SMTDeleteData() {
                     </Table>
                 </Card>
 
+                {gvConRollLeaf && (
+                    <AntTable
+                        rowSelection={rowSelect}
+                        columns={columnsconrollleaf}
+                        dataSource={gvConRollLeafData}
+                        rowKey={(record) => JSON.stringify
+                            ({
+                                count: record.count,
+                                lot_no: record.lot_no,
+                                product_name: record.product_name,
+                                roll_no: record.roll_no,
+                                roll_leaf: record.roll_leaf
+                            })}
+                        style={{ width: '823px' }}
+                        pagination={false}
+                        size="small"
+                        bordered
+                        className="tableGvResult"
+                    />
+                )}
+                {gvConRollLeaf && (
+                    <TableRow>
+                        <TableCell align="center">
+                            <Button className="ButtonDelete"
+                                type="primary"
+                                onClick={btnRollDeleteClick}
+                            >
+                                Delete
+                            </Button>&nbsp;&nbsp;
+                            <Button
+                                className="ButtonCancel"
+                                type="primary"
+                                onClick={btnRollCancelClick}
+                            >
+                                Cancel
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                )}
+
                 <br />
                 <br />
 
                 <Card
                     component={Paper}
                     style={{
-                        width: "780px",
+                        width: "823px",
                         margin: "10px",
                     }}
                 >
@@ -237,11 +319,11 @@ function SMTDeleteData() {
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                <TableCell>
+                                <TableCell align="center">
                                     <Typography
-                                        style={{
-                                            marginLeft: "20px"
-                                        }}
+                                    // style={{
+                                    //     marginLeft: "20px"
+                                    // }}
                                     >
                                         ELT Type :
                                     </Typography>
@@ -273,7 +355,7 @@ function SMTDeleteData() {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
-                                            //marginRight: "120px"
+                                            paddingRight: "60px"
                                         }}
                                         rows="10"
                                         cols="71"
@@ -295,16 +377,17 @@ function SMTDeleteData() {
                                     >
                                         Search
                                     </Button>
-                                    <Button
+                                    {/* <Button
+                                        className="ButtonCancel"
                                         type="primary"
                                         style={{
                                             width: "95px",
-                                            background: "red",
+                                            //background: "red",
                                         }}
                                         onClick={btnClearELTClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </Button> */}
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -312,83 +395,49 @@ function SMTDeleteData() {
                 </Card>
 
                 {gvELTResult && (
-                    <div className="divgvELTResult">
-                        <TableContainer
-                            component={Paper}
-                            style={{
-                                width: "780px",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-between",
-                            }}
-                        >
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>
-                                            Select
-                                        </TableCell>
-                                        <TableCell>No</TableCell>
-                                        <TableCell>Type</TableCell>
-                                        <TableCell>Serial No.</TableCell>
-                                        <TableCell>Result</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {Array.from({ length: gvELTData.length }, (_, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell align="center">
-                                                <Checkbox
-                                                    size="small"
-                                                    style={{ padding: "0" }}
-                                                    checked={selectedRows[index]}
-                                                    onChange={(event) => handleRowSelect(index, event)}
-                                                />
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {gvELTData[index].SEQ}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {gvELTData[index].ELT_TYPE}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {gvELTData[index].SERIAL_NO}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {gvELTData[index].ELT_RESULT}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
+                    <AntTable
+                        rowSelection={rowSelectelt}
+                        columns={columnseltresult}
+                        dataSource={gvELTData}
+                        rowKey={(record) => JSON.stringify
+                            ({
+                                ELT_TYPE: record.ELT_TYPE,
+                                SERIAL_NO: record.SERIAL_NO,
+                                TABLE_NAME: record.TABLE_NAME
+                            })}
+                        style={{ width: '823px' }}
+                        pagination={false}
+                        size="small"
+                        bordered
+                        className="tableGvResult"
+                    />
                 )}
-                <div style={{
-                    //display: "flex",
-                    marginTop: "10px",
-                    justifyContent: "center",
-                    marginBottom: "10px",
-                }}>
-                    <Button className="Bt_del"
-                        style={{ backgroundColor: "#fff" }}
-                        onClick={btnELTDeleteClick}
-                    >
-                        <Tooltip title="Delete" placement="right-end">
-                            <DeleteIcon
-                                style={{
-                                    fontSize: 35,
-                                    color: "red",
-                                }}
-                            />
-                        </Tooltip>
-                    </Button>
-                </div>
+                {gvELTResult && (
+                    <TableRow>
+                        <TableCell align="center">
+                            <Button className="ButtonDelete"
+                                type="primary"
+                                onClick={btnELTDeleteClick}
+                            >
+                                Delete
+                            </Button>&nbsp;&nbsp;
+                            <Button
+                                className="ButtonCancel"
+                                type="primary"
+                                onClick={btnClearELTClick}
+                            >
+                                Cancel
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                )}
 
+                <br />
+                <br />
                 <Card
                     component={Paper}
                     style={{
-                        width: "780px",
+                        width: "823px",
                         margin: "10px",
                     }}
                 >
@@ -418,7 +467,7 @@ function SMTDeleteData() {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
-                                            //marginRight: "120px"
+                                            paddingRight: "60px"
                                         }}
                                         rows="10"
                                         cols="71"
@@ -429,45 +478,7 @@ function SMTDeleteData() {
                                         ref={(el) => (inputFinalSerial.current = el)}
                                     ></textarea>
                                 </TableCell>
-                                <TableCell >
-                                    {/* <Button
-                                        variant="contained"
-                                        sx={{
-                                            marginLeft: "-114px",
-                                            textTransform: "none",
-                                            marginBottom: "100px"
-                                        }}
-                                        size="small"
-                                        onClick={btnFinalSerialSearchClick}
-                                    >
-                                        <SearchOutlined
-                                            style={{
-                                                fontSize: '20px'
-                                            }}
-                                        />&nbsp;
-                                        Search
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        onClick={btnClearFinalClick}
-                                        sx={{
-                                            marginLeft: "-90px",
-                                            backgroundColor: "#f5222d",
-                                            textTransform: "none",
-                                            width: "90px",
-                                            "&:hover": {
-                                                backgroundColor: "#d32020",
-                                            },
-                                        }}
-                                        size="small"
-                                    >
-                                        <ClearOutlined
-                                            style={{
-                                                fontSize: '20px'
-                                            }}
-                                        />&nbsp;
-                                        Clear
-                                    </Button> */}
+                                <TableCell>
                                     <Button
                                         type="primary"
                                         style={{
@@ -478,16 +489,17 @@ function SMTDeleteData() {
                                     >
                                         Search
                                     </Button>
-                                    <Button
+                                    {/* <Button
+                                        className="ButtonCancel"
                                         type="primary"
                                         style={{
                                             width: "95px",
-                                            background: "red",
+                                            //background: "red",
                                         }}
                                         onClick={btnClearFinalClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </Button> */}
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -495,73 +507,41 @@ function SMTDeleteData() {
                 </Card>
 
                 {gvFinalResult && (
-                    <div className="divgvELTResult">
-                        <TableContainer
-                            component={Paper}
-                            style={{
-                                width: "100%",
-                                display: "flex",
-                                flexDirection: "column",
-                                // justifyContent: "space-between",
-                            }}
-                        >
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Select</TableCell>
-                                        <TableCell>No</TableCell>
-                                        <TableCell>Serial No.</TableCell>
-                                        <TableCell>Result</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {Array.from({ length: gvFinalData.length }, (_, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell align="center">
-                                                <Checkbox
-                                                    size="small"
-                                                    style={{ padding: "0" }}
-                                                    checked={selectedRow[index]}
-                                                    onChange={(event) => handleSelect(index, event)}
-                                                />
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {gvFinalData[index].SEQ}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {gvFinalData[index].SERIAL_NO}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {gvFinalData[index].FINAL_RESULT}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
+                    <AntTable
+                        rowSelection={rowSelectFinal}
+                        columns={columnsfinalresult}
+                        dataSource={gvFinalData}
+                        rowKey={(record) => JSON.stringify
+                            ({
+                                SERIAL_NO: record.SERIAL_NO
+                            })}
+                        style={{ width: '823px' }}
+                        pagination={false}
+                        size="small"
+                        bordered
+                        className="tableGvResult"
+                    />
                 )}
 
-                <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "10px",
-                    marginBottom: "2px"
-                }}>
-                    <Button className="Bt_del"
-                        style={{ backgroundColor: "#fff" }}
-                        onClick={btnFinalDeleteClick}
-                    >
-                        <Tooltip title="Delete" placement="right-end">
-                            <DeleteIcon
-                                style={{
-                                    fontSize: 35,
-                                    color: "red",
-                                }}
-                            />
-                        </Tooltip>
-                    </Button>
-                </div>
+                {gvFinalResult && (
+                    <TableRow>
+                        <TableCell align="center">
+                            <Button className="ButtonDelete"
+                                type="primary"
+                                onClick={btnFinalDeleteClick}
+                            >
+                                Delete
+                            </Button>&nbsp;&nbsp;
+                            <Button
+                                className="ButtonCancel"
+                                type="primary"
+                                onClick={btnClearFinalClick}
+                            >
+                                Cancel
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                )}
             </Box>
         </div>
     )
