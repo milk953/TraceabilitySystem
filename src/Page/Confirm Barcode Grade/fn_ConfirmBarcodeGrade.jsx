@@ -1055,8 +1055,8 @@ function fn_ConfirmBarcodeGrade() {
 };
   const handleBackSideChange = async (index, event) => {
     const newValues = [...txtSideBack.value];
-    newValues[index] = event.target.value.trim();
-    settxtSideBack((prevState) => ({ ...prevState, value: newValues.trim().toUpperCase() }));
+    newValues[index] = event.target.value.trim().toUpperCase();
+    settxtSideBack((prevState) => ({ ...prevState, value: newValues }));
   };
 
   const handleSerialChange = async (index, event) => {
