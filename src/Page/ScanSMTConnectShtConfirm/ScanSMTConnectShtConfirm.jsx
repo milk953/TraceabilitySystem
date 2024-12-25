@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Table as AntTable, Select } from "antd";
+import { Table as AntTable, Select, Button as AntdBtn } from "antd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
 import React, { useEffect } from "react";
@@ -17,7 +17,9 @@ import Pageimg from "/src/assets/1.jpg";
 import "../Common/StyleCommon.css";
 import { Typography } from "antd";
 import "./ScanSMTConnectShtConfirm.css";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTConnectShtConfirm() {
+  const { menuName } = fn_Homepage();
   const {
     hideImg,
     gvSerial,
@@ -44,6 +46,7 @@ function ScanSMTConnectShtConfirm() {
     lblResult,
     lblErrorState,
     handle_ibtnBack_Click,
+    getRowClassName
   } = fn_ScanSMTConnectShtConfirm();
   useEffect(() => {
     if (panalSerialState == true && gvSerial != "" && txtSerial == "") {
@@ -67,7 +70,7 @@ function ScanSMTConnectShtConfirm() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      Confirm Sht&Pcs
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -79,7 +82,7 @@ function ScanSMTConnectShtConfirm() {
                         id="ScanSMTConnectShtConfirmtxtLot"
                         className="ScanSMTConnectShtConfirmtxtF"
                         value={txtLot}
-                        onChange={(e) => setTxtLot(e.target.value)}
+                        onChange={(e) => setTxtLot(e.target.value.trim())}
                         // onBlur={txtLot_Change}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -96,10 +99,10 @@ function ScanSMTConnectShtConfirm() {
                   </TableRow>
                   <TableRow>
                     <TableCell>Product:</TableCell>
-                    <TableCell>
+                    <TableCell colSpan={2}>
                       <Select
                         style={{
-                          width: 240,
+                          width: '98%',
                           textAlign: "left",
                           padding: "0px 5px 0px 0px",
                         }}
@@ -114,7 +117,7 @@ function ScanSMTConnectShtConfirm() {
                         }))}
                       ></Select>
                     </TableCell>
-                    <TableCell></TableCell>
+                    {/* <TableCell></TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Sht:</TableCell>
@@ -152,11 +155,7 @@ function ScanSMTConnectShtConfirm() {
               </Table>
               {lblErrorState && (
                 <Card
-                  // style={{
-                  //   textAlign: "center",
-                  //   background: "red",
-                  //   color: "yellow",
-                  // }}
+  
                   className="Card-lblLog"
                 >
                   {lblError}
@@ -215,17 +214,17 @@ function ScanSMTConnectShtConfirm() {
                           gap: "10px",
                         }}
                       >
-                        <Button className="BtSave" onClick={handle_Save_Click}>
-                          SAVE
-                        </Button>
+                        <AntdBtn className="BtSave" onClick={handle_Save_Click}>
+                          Save
+                        </AntdBtn>
                         &nbsp;&nbsp;
-                        <Button
+                        <AntdBtn
                           className="BtCancel"
                           onClick={handle_Cancel_Click}
                         >
                           {" "}
                           Cancel
-                        </Button>
+                        </AntdBtn>
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -247,12 +246,13 @@ function ScanSMTConnectShtConfirm() {
               {hideImg && (
                 <img
                   style={{
-                    width: "320px",
-                    height: "250px",
+                    // width: "320px",
+                    // height: "250px",
                     padding: "0",
                     align: "center",
                     margin: "auto",
                   }}
+                  className="Img_GvResult"
                   src={Pageimg}
                   alt="Description of the image"
                 />
@@ -266,10 +266,10 @@ function ScanSMTConnectShtConfirm() {
                       alignItems: "center",
                       background:
                         lblResult === "OK"
-                          ? "#059212"
+                          ? "green"
                           : lblResult === "NG"
                           ? "red"
-                          : "#BA0900",
+                          : "red",
                     }}
                   >
                     <Typography
@@ -295,6 +295,7 @@ function ScanSMTConnectShtConfirm() {
                     style={{ width: "100%" }}
                     pagination={false}
                     size="small"
+                    rowClassName={getRowClassName}
                   />
                   // </Paper>
                 )}

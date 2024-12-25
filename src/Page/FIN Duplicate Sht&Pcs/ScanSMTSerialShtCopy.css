@@ -25,7 +25,7 @@
   text-align: right;
 }
 .FinCopyTable .CelllblSpan {
-  border: 0px solid black;
+  /* border: 0px solid black; */
   margin-right: 10px;
   /* background-color: #B0EBB4 !important ; */
   text-align: left !important;
@@ -50,10 +50,13 @@
   margin: left;
   margin-top: 20px !important;
 }
+
+
 .FinCopygvSerialCell {
-  padding: 5px !important;
+  padding: 3px !important;
   margin: auto;
   text-align: center !important;
+  border-right: 1px solid #d9d9d9
 }
 .imgPage {
   width: 320px;

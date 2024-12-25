@@ -597,7 +597,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         visble: "",
         value: "",
         disbled: false,
-        style: { background: "#" },
+        style: { background: "" },
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
@@ -804,7 +804,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     settxtSerial(newValues);
   };
 
@@ -1687,7 +1687,6 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     return _strErrorUpdate
   };
 
-
   const ExportCSV = (data, ColumnsHeader) => {
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.title !== "" && col.key !== null && col.title !== undefined
@@ -1708,6 +1707,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, `ConfirmFinalGateOnlyGood.csv`);
   };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

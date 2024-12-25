@@ -1145,7 +1145,7 @@ function fn_ScanSMTSerialPcsP1() {
       hfMode = "TRAY";
       // SetFocus('txtTray');//ไม่มี
     } else if (type == "SERIAL") {
-      setddlProductState(true);
+      setddlProductState(false);
       Setdisable("disable", "P1FGScanLot");
       setlblErrorState(false);
       setpanalSerialState(true);

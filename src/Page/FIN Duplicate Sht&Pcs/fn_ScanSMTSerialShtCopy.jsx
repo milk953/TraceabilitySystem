@@ -160,6 +160,37 @@ function fn_ScanSMTSerialShtCopy() {
       sethfMode("LOT");
       SetFocus("txtlotNoFinCopy");
       setProductSelected(ddlProduct[0].prd_name);
+    }else{
+      setLblError("");
+      setLblErrorState(false);
+      let result = await getData("GetConnectShtMasterCheckResult", value);
+      if (result == "OK") {
+        await getCountDataBylot(txtlotNo);
+        getIntitiaSheet();
+        if (hfCheckRollSht == "Y") {
+          setPnlRollLeafState(true);
+          setTxtRollLeaf("");
+          SetFocus("txtRollLeafFinCopy");
+        }else{
+          setMode("SERIAL");
+          setTxtMachineNo("");
+          if (hfReqMachine == "Y") {
+            setPnlMachineState(true);
+            SetFocus("txtMachineNoFinCopy");
+          } else {
+            setPnlMachineState(false);
+            SetFocus("txtbackSide_0");
+          }
+        }
+      } else {
+        productSelected(ddlProduct[0].prd_name);
+        
+        setGvSerial([]);
+        setLblError(`${value} not test master! / ${value} ยังไม่ทดสอบมาสเตอร์`)
+        setLblErrorState(true);
+        sethfMode("LOT");
+        SetFocus('txtlotNoFinCopy')
+      }
     }
   };
   const handle_Save_Click = async () => {
@@ -815,7 +846,20 @@ function fn_ScanSMTSerialShtCopy() {
           setLblError(error.message);
         });
       return dtData;
-    } else if (type == "GetLotSerialCountData") {
+    } else if (type == "GetConnectShtMasterCheckResult") {
+      let result = "";
+      await axios
+        .post("/api/ScanFin/GetConnectShtMasterCheckResult", {
+          strPrdname: params,
+        })
+        .then((res) => {
+          result = res.data.prd_name;
+        })
+        .catch((error) => {
+          result = error.message;
+        });
+      return result;
+    }else if (type == "GetLotSerialCountData") {
       let drSerialCount = [];
       await axios
         .post("/api/ScanFin/GetLotSerialCountData", {
@@ -1256,7 +1300,7 @@ function fn_ScanSMTSerialShtCopy() {
   };
   const handletxtBackSide = (index, event) => {
     const newValues = [...txtbackSide];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim();
     setTxtbackSide(newValues);
     if (event.key === "Enter") {
       try {
@@ -1365,7 +1409,7 @@ function fn_ScanSMTSerialShtCopy() {
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
     if (event.key === "Enter") {
       try {

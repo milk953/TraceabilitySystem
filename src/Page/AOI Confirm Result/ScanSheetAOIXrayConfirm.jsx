@@ -79,7 +79,7 @@ function ScanSheetMOTTime() {
                         inputRef={(el) => (fc_txtSheet.current = el)}
                         value={txtSheetNo}
                         onChange={(e) => {
-                          settxtSheetNo(e.target.value);
+                          settxtSheetNo(e.target.value.trim().toUpperCase());
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {

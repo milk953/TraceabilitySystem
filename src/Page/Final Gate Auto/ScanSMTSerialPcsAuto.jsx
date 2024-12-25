@@ -69,7 +69,7 @@ function ScanSMTRoollSht() {
     lblTime,
     columns
   } = fn_ScanSMTSerialPcsChrome();
-  console.log("lblTime", lblTime);
+
   return (
     // <div>
       <>
@@ -100,7 +100,7 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -319,8 +319,7 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#52c41a" : "#ff4d4f",
-                        // width: "70%", // ควบคุมขนาดของ Paper
+                          lblResult.value === "OK" ? "green" : "red",
                       }}
                     >
                       <Typography

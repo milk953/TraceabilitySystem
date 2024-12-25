@@ -14,9 +14,11 @@ import {
 } from "@mui/material";
 import { Typography, Table as AntTable, Select } from "antd";
 import { fn_ScanSMTSerialShtCopy } from "./fn_ScanSMTSerialShtCopy";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 import "../Common/StyleCommon.css";
 import "./ScanSMTSerialShtCopy.css";
 function ScanSMTSerialShtCopy() {
+  const { menuName } = fn_Homepage();
   const {
     gvBackSideState,
     lblErrorState,
@@ -78,7 +80,7 @@ function ScanSMTSerialShtCopy() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                    FIN Duplicate Sht&Pcs
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -91,7 +93,7 @@ function ScanSMTSerialShtCopy() {
                         className="FinCopytxtF"
                         value={txtlotNo}
                         onChange={(e) => {
-                          setTxtlotNo(e.target.value);
+                          setTxtlotNo(e.target.value.trim());
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -108,10 +110,10 @@ function ScanSMTSerialShtCopy() {
                   </TableRow>
                   <TableRow>
                     <TableCell>Product:</TableCell>
-                    <TableCell>
+                    <TableCell colSpan={2}>
                       <Select
                         style={{
-                          width: 213,
+                          width: '98%',
                           textAlign: "left",
                           padding: "0px 5px 0px 0px",
                         }}
@@ -122,13 +124,14 @@ function ScanSMTSerialShtCopy() {
                         onChange={(value) => {
                           ddlproduct_Change(value);
                         }}
+              
                         options={ddlProduct.map((item) => ({
                           label: item.prd_name,
                           value: item.prd_name,
                         }))}
                       ></Select>
                     </TableCell>
-                    <TableCell></TableCell>
+                    {/* <TableCell></TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell>Lot Ref. No.:</TableCell>
@@ -137,7 +140,7 @@ function ScanSMTSerialShtCopy() {
                       id = 'txtLotRefFinCopy'
                       value={txtLotRef} 
                       onChange={(e) => {
-                        setTxtLotRef(e.target.value);
+                        setTxtLotRef(e.target.value.trim());
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -152,10 +155,12 @@ function ScanSMTSerialShtCopy() {
                   <TableRow>
                     <TableCell>Total Sht:</TableCell>
                     <TableCell className="CelllblSpan">{lblTotalSht}</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Pcs:</TableCell>
                     <TableCell className="CelllblSpan">{lblTotalPcs}</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                   {pnlRollLeafState && (
                     <>
@@ -264,7 +269,6 @@ function ScanSMTSerialShtCopy() {
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
                   <TableHead
-                    className="gvSerialHead"
                     style={{ background: "#12422e" }}
                   >
                     <TableRow>
@@ -376,7 +380,8 @@ function ScanSMTSerialShtCopy() {
             <td className="tdResult">
               {hideImg && (
                 <img
-                  className="imgPage"
+                  // className="imgPage"
+                  className="Img_GvResult"
                   src={Pageimg}
                   alt="Description of the image"
                 />
@@ -391,10 +396,10 @@ function ScanSMTSerialShtCopy() {
                       background: lblResult.text === "OK" ? "green" : lblResult.text === "NG" ? "red" : "white",
                       background:
                       lblResult.text === "OK"
-                        ? "#059212"
+                        ? "green"
                         : lblResult.text === "NG"
                         ? "red"
-                        : "#BA0900",
+                        : "red",
                     }}
                   >
                     <Typography

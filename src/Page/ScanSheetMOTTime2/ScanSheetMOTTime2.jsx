@@ -106,7 +106,7 @@ function ScanSheetMOTTime() {
                         onChange={(e) => {
                           settxtMCNo((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -132,7 +132,7 @@ function ScanSheetMOTTime() {
                         onChange={(e) => {
                           settxtlot((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -174,7 +174,7 @@ function ScanSheetMOTTime() {
                         onChange={(e) => {
                           settxtSheet((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -204,7 +204,7 @@ function ScanSheetMOTTime() {
                         onChange={(e) => {
                           settxtCBNo((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -233,7 +233,7 @@ function ScanSheetMOTTime() {
                         onChange={(e) => {
                           settxtSUSNo((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {

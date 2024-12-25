@@ -15,7 +15,7 @@ import {
   Box,
   Grid,
 } from "@mui/material";
-import { Table as AntTable } from "antd";
+import { Table as AntTable,Button as AntButton } from "antd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./SerialPcs.css";
 import "../Common/StyleCommon.css";
@@ -95,7 +95,7 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -249,7 +249,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={1}>{lblLot}</TableCell>
                     <TableCell align="right">
-                      <Typography>OK :</Typography>
+                      <Typography style={{color:'green'}}>OK :</Typography>
                     </TableCell>
                     <TableCell style={{ width: "70px" }} colSpan={2}>
                       {lblLotTotal}
@@ -274,7 +274,7 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxtPcsTray((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         style={{ ...txtPcsTray.style, width: "60px" }}
@@ -291,7 +291,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     {/* <TableCell style={{ width: "70px",}}></TableCell> */}
                     <TableCell align="right" style={{ width: "40px" }}>
-                      <Typography>NG :</Typography>
+                      <Typography style={{color:'red'}}>NG :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>{lblSerialNG}</TableCell>
                   </TableRow>
@@ -327,7 +327,7 @@ function ScanSMTRoollSht() {
               >
                 <TableHead>
                   <TableCell
-                    sx={{ borderRight: "10px solid #d9d9d9" }}
+                    sx={{ borderRight: "1px solid #d9d9d9" }}
                     align="center"
                   >
                     No.
@@ -376,13 +376,13 @@ function ScanSMTRoollSht() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={btnSave_Click}>
+                      <AntButton className="BtSave" onClick={btnSave_Click}>
                         Save
-                      </Button>{" "}
+                      </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <Button className="BtCancel" onClick={btnCancel_Click}>
+                      <AntButton className="BtCancel" onClick={btnCancel_Click}>
                         Cancel
-                      </Button>
+                      </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -421,7 +421,7 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#059212" : "#BA0900",
+                          lblResult.value === "OK" ? "green" : "red",
                       }}
                     >
                       <Typography
