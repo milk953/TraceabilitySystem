@@ -197,13 +197,13 @@ function ScanSheetDispenserTime() {
           <Table id="DispenserTableSave" component={Card}>
             <TableRow>
               <TableCell>
-                <Button  className="ButtonReplace"  size='large' onClick={btnReplace_Click}>Replace</Button>
+                <Button  className="ButtonReplace"  size='middle' onClick={btnReplace_Click}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button  className="ButtonDelete" size='large' onClick={btnDelete_Click}>Delete</Button>
+                <Button  className="ButtonDelete" size='middle' onClick={btnDelete_Click}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button  className="ButtonCancel" size='large' onClick={btnCancel_Click}>Cancel</Button>
+                <Button  className="ButtonCancel" size='middle' onClick={btnCancel_Click}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>

@@ -218,13 +218,13 @@ function ScanSheetBakeTime() {
           <Table id="TableSaveBaking" component={Paper}>
             <TableRow>
               <TableCell>
-                <Button  className="ButtonReplace" size="large" onClick={btnReplace}>Replace</Button>
+                <Button  className="ButtonReplace" size="middle" onClick={btnReplace}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button className="ButtonDelete" size="large" onClick={btnDelete}>Delete</Button>
+                <Button className="ButtonDelete" size="middle" onClick={btnDelete}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button className="ButtonCancel" size="large" onClick={btnCancel}>Cancel</Button>
+                <Button className="ButtonCancel" size="middle" onClick={btnCancel}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>

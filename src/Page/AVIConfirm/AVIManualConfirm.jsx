@@ -188,7 +188,9 @@ function AVIManualConfirm() {
                 >
                   Submit
                 </Button>
+                &nbsp;&nbsp;
                 <Button
+                className="ButtonCancel"
                   style={{
                     backgroundColor: "red",
                     width: "90px",

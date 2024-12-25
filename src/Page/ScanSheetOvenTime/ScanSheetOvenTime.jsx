@@ -115,7 +115,6 @@ function ScanSheetOvenTime() {
           </TableBody>
         </Table>
       </div>
-      &nbsp;
       {pnlResultState && (
         <div className="pnlResult">
            <Table id={lblResult.text == "NG" ? "TableResultOvenTimered" : "TableResultOvenTime"} component={Card} style={{ height: '180px' }}>

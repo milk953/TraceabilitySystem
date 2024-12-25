@@ -26,12 +26,12 @@ function fn_ScanSheetDispenserTime() {
   });
   const [txtSheetNoState, setTxtSheetNoState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#B2A8A8" },
+    styled: { backgroundColor: "#e0e0e0" },
     open: true,
   });
   const [txtCBnoState, setTxtCBnoState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#B2A8A8" },
+    styled: { backgroundColor: "#e0e0e0" },
     open: true,
   });
   //lblResutl
@@ -73,27 +73,27 @@ function fn_ScanSheetDispenserTime() {
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
 
     if (hfCBNoFlg == "Y") {
       // setTxtCBno("");
       setTxtCBnoState({
         disabled: true,
-        styled: { backgroundColor: "#B2A8A8" },
+        styled: { backgroundColor: "#e0e0e0" },
         open: true,
       });
     } else {
       setTxtCBnoState({
         disabled: true,
-        styled: { backgroundColor: "#B2A8A8" },
+        styled: { backgroundColor: "#e0e0e0" },
         open: false,
       });
     }
   }
 //txtChange 
   const txtMcno_change = () => {
-    setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
+    setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#e0e0e0" } });
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: false,
@@ -141,7 +141,7 @@ function fn_ScanSheetDispenserTime() {
             
             setTxtCBnoState({
               disabled: true,
-              styled: { backgroundColor: "#B2A8A8" },
+              styled: { backgroundColor: "#e0e0e0" },
               open: true,
 
             })
@@ -233,7 +233,7 @@ function fn_ScanSheetDispenserTime() {
             
             setTxtCBnoState({
               disabled: true,
-              styled: { backgroundColor: "#B2A8A8" },
+              styled: { backgroundColor: "#e0e0e0" },
               open: true,
 
             })
@@ -249,7 +249,7 @@ function fn_ScanSheetDispenserTime() {
           setPnlSaveState(true);
           setTxtCBnoState({
             disabled: true,
-            styled: { backgroundColor: "#B2A8A8" },
+            styled: { backgroundColor: "#e0e0e0" },
             open: true,
           })
           setPnlResultState(true);
@@ -364,13 +364,13 @@ function fn_ScanSheetDispenserTime() {
     setTxtSheetNo("");
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtCBno("");
     setTxtCBnoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtmcNoState({
@@ -394,15 +394,15 @@ function fn_ScanSheetDispenserTime() {
   }
   
   function PnlmainDisable() {
-    setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
+    setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#e0e0e0" } });
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtCBnoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
   }
@@ -410,9 +410,9 @@ function fn_ScanSheetDispenserTime() {
     setTxtmcNoState({ disabled: false, styled: { backgroundColor: "white" } });
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
-    setTxtCBnoState({ disabled: true, styled: { backgroundColor: "#B2A8A8" } });
+    setTxtCBnoState({ disabled: true, styled: { backgroundColor: "#e0e0e0" } });
   }
   async function getData(Config, Param) {
     if (Config == "DeleteDispenserRecordTimeData") {

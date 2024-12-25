@@ -151,7 +151,7 @@ function ReJudgement() {
                   id="txtLotnoRejudege"
                   style={{
                     width: "300px",
-                    border: "1px solid black",
+                    // border: "1px solid black",
                     margin: "0px",
                   }}
                   type="text"
@@ -197,7 +197,7 @@ function ReJudgement() {
               />
             </TableCell>
             <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
-              Operator :{" "}
+              Operator :
             </TableCell>
             <TableCell>
               <input
@@ -206,7 +206,7 @@ function ReJudgement() {
                 onChange={(e) => setTxtOperator(e.target.value)}
                 style={{
                   width: "120px",
-                  border: "1px solid black",
+                  // border: "1px solid black",
                   margin: "0px",
                 }}
                 type="text"
@@ -241,7 +241,7 @@ function ReJudgement() {
               />
             </TableCell>
             <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
-              Qualified :{" "}
+              Qualified :
             </TableCell>
             <TableCell>
               <input
@@ -250,7 +250,7 @@ function ReJudgement() {
                 onChange={(e) => setTxtQualified(e.target.value)}
                 style={{
                   width: "120px",
-                  border: "1px solid black",
+                  // border: "1px solid black",
                   margin: "0px",
                 }}
                 type="text"

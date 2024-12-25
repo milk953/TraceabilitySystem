@@ -8,7 +8,7 @@ function fn_ScanSheetReflowTime() {
   const FctxtmcNo = useRef(null);
   const [txtmcNoState, setTxtmcNoState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#B2A8A8" },
+    styled: { backgroundColor: "#e0e0e0" },
     open: true,
   });
 
@@ -16,7 +16,7 @@ function fn_ScanSheetReflowTime() {
   const FctxtSheetNo = useRef(null);
   const [txtSheetNoState, setTxtSheetNoState] = useState({
     disabled: false,
-    styled: { backgroundColor: "#B2A8A8" },
+    styled: { backgroundColor: "#e0e0e0" },
     state: false,
   });
   const [lblSheet, setLblSheet] = useState("");
@@ -50,7 +50,7 @@ function fn_ScanSheetReflowTime() {
     setTxtmcNoState({ disabled: false, open: true });
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
     setLblResult({ text: "", styled: { color: "" } });
     setLblSheet("");
@@ -62,7 +62,7 @@ function fn_ScanSheetReflowTime() {
   const handleTxtMcNo = () => {
     setTxtmcNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtSheetNo("");
@@ -145,8 +145,8 @@ function fn_ScanSheetReflowTime() {
       }
       setTxtSheetNo("");
       setTxtmcNoState({
-        disabled: false,
-        styled: { backgroundColor: "#B2A8A8" },
+        disabled: true,
+        styled: { backgroundColor: "#e0e0e0" },
         open: true,
       });
       setTxtSheetNoState({ disabled: false, state: true });
@@ -164,7 +164,7 @@ function fn_ScanSheetReflowTime() {
     setPnlShowresult(false);
     setTxtmcNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtSheetNoState({
@@ -226,7 +226,7 @@ function fn_ScanSheetReflowTime() {
     setTxtSheetNo("");
     setTxtmcNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtSheetNoState({ disabled: false, state: true });
@@ -263,7 +263,7 @@ function fn_ScanSheetReflowTime() {
     setTxtSheetNo("");
     setTxtmcNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtSheetNoState({ disabled: false, state: true });
@@ -274,7 +274,7 @@ function fn_ScanSheetReflowTime() {
     setTxtmcNoState({ disabled: false, open: true });
     setTxtSheetNoState({
       disabled: true,
-      styled: { backgroundColor: "#B2A8A8" },
+      styled: { backgroundColor: "#e0e0e0" },
     });
     setLblResult({ text: "", styled: { color: "" } });
     setLblSheet("");
