@@ -55,7 +55,7 @@ function ScanSMTSerialRecordTimeReplace() {
               <Table
                 component={Card}
                 className="ReplaceRecord"
-                style={{ width: "600px" ,marginTop:'20px'}}
+                style={{ width: "600px" }}
               >
                 <TableHead style={{ height: "50px" }}>
                   <TableRow>
@@ -109,7 +109,7 @@ function ScanSMTSerialRecordTimeReplace() {
                         disabled={txtSerialRefer.disbled} 
                         style={{backgroundColor: txtSerialRefer.disbled ? '#e0e0e0' : 'inherit',width:"80%"}}
                         
-                          value={txtSerialRefer.value}
+                          value={txtSerialRefer.value.trim().toUpperCase()}
                           onChange={(e) => {
                             settxtSerialRefer((prevState) => ({
                               ...prevState,
@@ -137,7 +137,7 @@ function ScanSMTSerialRecordTimeReplace() {
                             style={{ backgroundColor: txtSerialReplace.disbled ? '#e0e0e0' : 'inherit',width:"80%"}}
                          
                           disabled={txtSerialReplace.disbled} 
-                          value={txtSerialReplace.value}
+                          value={txtSerialReplace.value.trim().toUpperCase()}
                           onChange={(e) => {
                             settxtSerialReplace((prevState) => ({
                               ...prevState,
@@ -192,7 +192,7 @@ function ScanSMTSerialRecordTimeReplace() {
                 className="CSS-GvSerial"
                 style={{
                   width: "600px",
-                  marginTop: "20px",
+                  marginTop: "5px",
                 }}
                 component={Card}
               >
@@ -266,7 +266,7 @@ function ScanSMTSerialRecordTimeReplace() {
                 className="CSS-GvSerial"
                 style={{
                   width: "600px",
-                  marginTop: "20px",
+                  marginTop: "10px",
                 }}
                 component={Card}
               >

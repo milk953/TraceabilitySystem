@@ -511,7 +511,7 @@ function Fn_ScanSMTRollSht() {
         disbled: false,
         style: {},
       }));
-      // setlbllog((prevState) => ({ ...prevState, visible: false }));
+      setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
       setHfMode("SHEET");
     }
@@ -607,6 +607,7 @@ function Fn_ScanSMTRollSht() {
   };
 
   const setRollSheetData = async () => {
+    setlbllog((prevState) => ({ ...prevState, visible: false }));
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     try{
     let _strFileError = "";
@@ -1233,6 +1234,7 @@ function Fn_ScanSMTRollSht() {
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, `ConnectRollLeaf.csv`);
   };
+
   return {
     settxt_lotNo,
     txt_lotNo,
