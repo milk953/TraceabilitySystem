@@ -112,10 +112,10 @@ function ScanSMTSerialPcsP1() {
                   <TableRow>
                     <TableCell>Product:</TableCell>
                     {
-                      <TableCell>
+                      <TableCell colSpan={2}>
                         {ddlproduct && (
                           <select
-                            style={{ width: 240, padding: "5px" }}
+                            style={{ width: '98%', padding: "5px" }}
                             onChange={(e) => {
                               setProductSelected(e.target.value);
                               ddlproduct_Change(e.target.value);
@@ -136,7 +136,6 @@ function ScanSMTSerialPcsP1() {
                         )}
                       </TableCell>
                     }
-                    <TableCell></TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

@@ -140,8 +140,8 @@ function ScanSMTSerialShtFINManySht() {
                   </TableRow>
                   <TableRow>
                     <TableCell style={{textAlign:'right'}}>Product:</TableCell>
-                    <TableCell>
-                      <FormControl fullWidth>
+                    <TableCell colSpan={2}>
+                      <FormControl style={{ width: "94%" }}>
                         <select
                           onInputChange={(e) =>
                             ProductSelect_Change(e.target.value)
@@ -160,7 +160,7 @@ function ScanSMTSerialShtFINManySht() {
                         </select>
                       </FormControl>
                     </TableCell>
-                    <TableCell></TableCell>
+                    {/* <TableCell></TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell style={{textAlign:'right'}} >Lot Ref. No.:</TableCell>

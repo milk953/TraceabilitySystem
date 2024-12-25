@@ -93,10 +93,10 @@ function ScanSMTSerialPcsNG() {
                   </TableRow>
                   <TableRow>
                     <TableCell>Product:</TableCell>
-                    <TableCell>
+                    <TableCell colSpan={2}>
                       {ddlproduct && (
                         <select
-                          style={{ width: 240 }}
+                          style={{ width: 310 }}
                           onChange={(e) => {
                             setProductSelected(e.target.value);
                             ddlproduct_Change();
@@ -115,7 +115,7 @@ function ScanSMTSerialPcsNG() {
                         </select>
                       )}
                     </TableCell>
-                    <TableCell></TableCell>
+                    {/* <TableCell></TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell>Master Code:</TableCell>

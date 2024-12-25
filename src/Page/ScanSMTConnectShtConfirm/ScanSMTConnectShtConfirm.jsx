@@ -99,10 +99,10 @@ function ScanSMTConnectShtConfirm() {
                   </TableRow>
                   <TableRow>
                     <TableCell>Product:</TableCell>
-                    <TableCell>
+                    <TableCell colSpan={2}>
                       <Select
                         style={{
-                          width: 240,
+                          width: '98%',
                           textAlign: "left",
                           padding: "0px 5px 0px 0px",
                         }}
@@ -117,7 +117,7 @@ function ScanSMTConnectShtConfirm() {
                         }))}
                       ></Select>
                     </TableCell>
-                    <TableCell></TableCell>
+                    {/* <TableCell></TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Sht:</TableCell>

@@ -110,10 +110,10 @@ function ScanSMTSerialShtCopy() {
                   </TableRow>
                   <TableRow>
                     <TableCell>Product:</TableCell>
-                    <TableCell>
+                    <TableCell colSpan={2}>
                       <Select
                         style={{
-                          width: 213,
+                          width: '98%',
                           textAlign: "left",
                           padding: "0px 5px 0px 0px",
                         }}
@@ -124,13 +124,14 @@ function ScanSMTSerialShtCopy() {
                         onChange={(value) => {
                           ddlproduct_Change(value);
                         }}
+              
                         options={ddlProduct.map((item) => ({
                           label: item.prd_name,
                           value: item.prd_name,
                         }))}
                       ></Select>
                     </TableCell>
-                    <TableCell></TableCell>
+                    {/* <TableCell></TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell>Lot Ref. No.:</TableCell>

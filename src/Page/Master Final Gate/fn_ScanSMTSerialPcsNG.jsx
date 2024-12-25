@@ -89,7 +89,6 @@ function fn_ScanSMTSerialPcsNG() {
   var hfCheckEFPCAVI = "";
   //inpage
   // let hfLotAll ;
-  console.log("ConfigData",ConfigData);
   const export_csv_flg = ConfigData.EXPORT_CSV_FLG;
   const [isDisabledSave, setIsDisabledSave] = useState(false);
   const [hfLotAll, SetHfLotAll] = useState("");
@@ -702,10 +701,11 @@ function fn_ScanSMTSerialPcsNG() {
     setSerialDataTray();
     
   };
-  const ddlproduct_Change = () => {
-    getData("getProductSerialMaster", productSelected);
+  const ddlproduct_Change = async () => {
+    await getData("getProductSerialMaster", productSelected);
     if (lblLot != "") {
-      getData("getProductSerialMaster", productSelected);
+      await getData("getProductSerialMaster", productSelected);
+      setMode("SERIAL");
     } else {
       setMode("LOT");
     }
