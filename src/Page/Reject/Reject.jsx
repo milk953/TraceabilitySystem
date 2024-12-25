@@ -138,7 +138,7 @@ function Reject() {
                 <input
                   style={{
                     width: "300px",
-                    border: "1px solid black",
+                    // border: "1px solid black",
                     margin: "0px",
                   }}
                   type="text"
@@ -194,7 +194,7 @@ function Reject() {
                   onChange={(e) => setTxtOperator(e.target.value)}
                   style={{
                     width: "200px",
-                    border: "1px solid black",
+                    // border: "1px solid black",
                     margin: "0px",
                   }}
                   type="text"

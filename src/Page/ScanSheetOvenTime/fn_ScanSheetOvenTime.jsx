@@ -54,7 +54,7 @@ function fn_ScanSheetOvenTime() {
     });
     setPnlResultState(false);
     setTxtSheetNoState({
-      styled: { disabled: true, backgroundColor: "#B2A8A8" },
+      styled: { disabled: true, backgroundColor: "#e0e0e0" },
     });
     setLblSheet("");
     setLblRemark("");
