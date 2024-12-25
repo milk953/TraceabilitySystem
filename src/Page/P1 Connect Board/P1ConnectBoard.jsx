@@ -405,7 +405,7 @@ function P1ConnectBoard() {
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <AntButton type="primary" className="BtCancel"  onClick={btnCancel_Click} >Cancel</AntButton>
+                      <AntButton type="primary" className="ButtonCancel"  onClick={btnCancel_Click} >Cancel</AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>

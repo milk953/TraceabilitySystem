@@ -256,8 +256,9 @@ function Fn_ScanSMTRollSht() {
         SetGvSerial((prevState) => ({
           ...prevState,
           value: "",
-          visible: false,
+          visible:'none',
         }));
+        
         setlbllog((prevState) => ({
           ...prevState,
           value: `Invalid lot no.`,
@@ -291,7 +292,7 @@ function Fn_ScanSMTRollSht() {
     SetGvSerial((prevState) => ({ ...prevState, value: dtData }));
     SettxtLeafNo(Array(dtData.length).fill(""))
     return dtData;
-  };
+  };                                                                                                                                                                                                                                                                                                                                                                                                                      
 
   const getProductSerialMaster = async (strPrdName) => {
     let data = [];
@@ -1073,7 +1074,7 @@ function Fn_ScanSMTRollSht() {
 
   const handleTextFieldChange = (index, event) => {
     const newData = [...txtLeafNo];
-    newData[index] = event.target.value;
+    newData[index] = event.target.value.trim().toUpperCase();
     SettxtLeafNo(newData);
   };
 
@@ -1203,6 +1204,7 @@ function Fn_ScanSMTRollSht() {
     }
   
   };
+  
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

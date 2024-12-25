@@ -100,7 +100,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -277,7 +277,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <AntButton type="primary"  className="BtCancel" onClick={btnCancel_Click}>
+                      <AntButton type="primary"  className="ButtonCancel" onClick={btnCancel_Click}>
                         Cancel
                       </AntButton>
                     </TableCell>

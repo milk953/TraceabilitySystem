@@ -106,7 +106,7 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxt_lotNo((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -254,7 +254,7 @@ function ScanSMTRoollSht() {
                         onChange={(e) => {
                           settxtRollLeaf((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {

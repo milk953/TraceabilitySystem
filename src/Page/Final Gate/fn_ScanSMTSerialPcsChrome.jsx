@@ -1122,7 +1122,7 @@ function fn_ScanSMTSerialPcsChrome() {
 
   const handleSerialChange = async (index, event) => {
     const Ops = [...txtSerial];
-    Ops[index] = event.target.value;
+    Ops[index] = event.target.value.trim().toUpperCase();
     settxtSerial(Ops);
   };
 
