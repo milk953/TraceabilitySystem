@@ -125,7 +125,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const FctxtBoardnoB = useRef(null);
   // disabled State
   const [disabledState, setDisabledState] = useState({
-    styled: { disabled: true, backgroundColor: "#B2A8A8" },
+    styled: { disabled: true, backgroundColor: "#e0e0e0" },
   });
   const [enableState, setEnableState] = useState({
     styled: { disabled: false, backgroundColor: "" },
@@ -195,10 +195,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     Setmode("SERIAL");
     setTxtSerial(gvSerial.map(() => ""))
     setlblLogState(false);
+    setHideImg(true);
     if(txtOperator == ""){
       FctxtOperator.current.focus();
     }else{
-      // FcgvBackside.current.focus();
       document.getElementById(`gvBackside_0`).focus();
     }
   };
@@ -215,6 +215,21 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   async function setSerialData() {
     await getData("getProductSerialMaster", productSelect);
+    if(txtSideFront == '' || txtSideBack  == '' ){
+      setlblLog("Please input Sheet Side No. !!!");
+      setlblLogState(true);
+      if (txtSideBack == "") {
+        setTimeout(() => {
+          SetFocus("gvBackside_0");          
+        }, 100);
+      }else{
+        setTimeout(() => {
+          SetFocus("gvFrontside_0");            
+          }, 100);
+        
+      }
+      return;
+    }
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     var dtSerial = [];
     dtSerial = await getInputSerial();
@@ -974,10 +989,17 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setTxtSideFront(newValues);
     console.log(index, "index");
     if (event.key === "Enter") {
-      try {
-        document.getElementById(`gvBackside_${index+1}`).focus();
-      } catch (e) {
-        document.getElementById(`txtSerial_0`).focus();
+      if(newValues[index] != ''){
+        try {
+          setlblLogState(false);
+          document.getElementById(`gvBackside_${index+1}`).focus();
+
+        } catch (e) {
+          document.getElementById(`txtSerial_0`).focus();
+        }
+      }else{
+        setlblLog("Please input Sheet Side No. !!!");
+        setlblLogState(true);
       }
     }    
   };

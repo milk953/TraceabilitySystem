@@ -124,7 +124,6 @@ function ScanSMTSerialShtFINManySht() {
                         disabled={lotState.styled.disabled}
                         style={lotState.styled}
                         ref={Fctxtlot}
-                        // onBlur={txtLot_Change}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtLot_Change();
@@ -147,7 +146,6 @@ function ScanSMTSerialShtFINManySht() {
                             ProductSelect_Change(e.target.value)
                           }
                           onChange={(e) => ProductSelect_Change(e.target.value)}
-                          // onBlur={ProductSelect_Change}
                           value={productSelect}
                           disabled={selectproductState}
                           ref={FcSelectproduct}
@@ -160,7 +158,6 @@ function ScanSMTSerialShtFINManySht() {
                         </select>
                       </FormControl>
                     </TableCell>
-                    {/* <TableCell></TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell style={{textAlign:'right'}} >Lot Ref. No.:</TableCell>
@@ -495,10 +492,10 @@ function ScanSMTSerialShtFINManySht() {
                       alignItems: "center",
                       background:
                         lblResult.text === "OK"
-                          ? "#059212"
+                          ? "green"
                           : lblResult.text === "NG"
                           ? "red"
-                          : "#BA0900",
+                          : "red",
                     }}
                   >
                     <Typography
