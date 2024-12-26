@@ -238,22 +238,14 @@ function Change_Serial() {
                     style={{ textAlign: "center", verticalAlign: "middle" }}
                   >
                     <Button
-                      style={{
-                        backgroundColor: "green",
-                        width: "90px",
-                        color: "white",
-                        marginRight: "16px", // เพิ่มระยะห่าง 12px ทางขวา
-                      }}
+                      className="ButtonReplace"
                       onClick={BtnSubmit_Click}
                     >
                       Submit
                     </Button>
+                    &nbsp;&nbsp;
                     <Button
-                      style={{
-                        backgroundColor: "red",
-                        width: "90px",
-                        color: "white",
-                      }}
+                      className="ButtonCancel"
                       onClick={BtnCancle_Click}
                     >
                       Cancel

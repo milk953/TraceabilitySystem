@@ -165,6 +165,11 @@ function fn_ScanSMTConnectRollConfirm() {
   const btnCancel_Click = async () => {
     const newValues = []; // กำหนดให้ newValues เป็นอาร์เรย์ว่าง
     setTxtSerial(newValues); // รีเซ็ตค่า txtSerial เป็นอาร์เรย์ว่าง
+    setLblRemark("");
+    setLblResult((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
     SetMode("SERIAL");
     fnSetFocus("gvSerial_txtSerial_0");
   };
@@ -184,6 +189,16 @@ function fn_ScanSMTConnectRollConfirm() {
         setTxtSerial(newValues);
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } else {
+        setLblPnlLog((prevState) => ({
+          ...prevState,
+          value: `Please Input Serial No.`,
+          visble: true,
+        }));
+        setLblResult((prevState) => ({
+          ...prevState,
+          value: "",
+        }));
+        setLblRemark("");
         fnSetFocus("gvSerial_txtSerial_0");
       }
       hideLoading();
@@ -192,7 +207,7 @@ function fn_ScanSMTConnectRollConfirm() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
   };
 
@@ -506,8 +521,14 @@ function fn_ScanSMTConnectRollConfirm() {
 
     return 0;
   };
-  const ddlProduct_SelectedIndexChanged = async () => {
+  const ddlProduct_SelectedIndexChanged = async (value) => {
     if (txtLot.value.trim().toUpperCase() !== "") {
+          // เพิ่มนี้มา --
+    setDdlProduct((prevState) => ({
+      ...prevState,
+      value: value,
+    }));
+    // จบ --
       setLblPnlLog((prevState) => ({
         ...prevState,
         value: "",

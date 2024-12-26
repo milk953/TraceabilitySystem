@@ -16,13 +16,14 @@ import {
   Box,
   Grid,
 } from "@mui/material";
-import { Table as AntTable } from "antd";
+import { Table as AntTable, Button as ButtonAndt } from "antd";
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTConnectRollConfirm.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTConnectRollConfirm } from "./fn_ScanSMTConnectRollConfirm";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTConnectRollConfirm() {
   const {
     txtLot,
@@ -50,6 +51,7 @@ function ScanSMTConnectRollConfirm() {
     lblRemark,
     showSheetNo,
   } = fn_ScanSMTConnectRollConfirm();
+   const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -57,13 +59,13 @@ function ScanSMTConnectRollConfirm() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="ScanSMT" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
+                <TableRow>
                   <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">
-                    Confirm Roll Leaf
-                    </Typography>
+                    {menuName}
                   </TableCell>
+                </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
@@ -88,7 +90,9 @@ function ScanSMTConnectRollConfirm() {
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
+                            e.preventDefault();
                             txtLot_TextChanged();
+                            e.target.blur();
                           }
                         }}
                       ></TextField>
@@ -146,12 +150,12 @@ function ScanSMTConnectRollConfirm() {
                         variant="body1"
                         style={{
                           width: "100%",
-                          color: "#059212",
+                          color: "green",
                           display: "flex",
                           justifyContent: "center",
                         }}
                       >
-                        <span style={{ color: "#059212" }}>OK : </span> &nbsp;
+                        <span style={{ color: "green" }}>OK : </span> &nbsp;
                         {lblShtCount}
                       </Typography>
                     </TableCell>
@@ -221,7 +225,7 @@ function ScanSMTConnectRollConfirm() {
                         </TableRow>
                       )
                     )}
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
                       <Button className="BtSave" onClick={btnSave_Click}>
                         Save
@@ -230,6 +234,26 @@ function ScanSMTConnectRollConfirm() {
                       <Button className="BtCancel" onClick={btnCancel_Click}>
                         Cancel
                       </Button>
+                    </TableCell>
+                  </TableRow> */}
+                      <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      style={{ textAlign: "center", verticalAlign: "middle" }}
+                    >
+                      <ButtonAndt
+                        className="ButtonReplace"
+                        onClick={btnSave_Click}
+                      >
+                        Save
+                      </ButtonAndt>
+                      &nbsp;&nbsp;
+                      <ButtonAndt
+                        className="ButtonCancel"
+                        onClick={btnCancel_Click}
+                      >
+                        Cancel
+                      </ButtonAndt>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -265,7 +289,7 @@ function ScanSMTConnectRollConfirm() {
                       elevation={3}
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#059212" : "#ff4d4f",
+                          lblResult.value === "OK" ? "green" : "red",
 
                         display: gvScanResult,
                       }}
@@ -283,7 +307,7 @@ function ScanSMTConnectRollConfirm() {
                       className="Card-lblResult"
                       elevation={3}
                       style={{
-                        background: lblRemark === "" ? "#059212" : "#ff4d4f",
+                        background: lblRemark === "" ? "green" : "red",
                         display: gvScanResult,
                       }}
                     >

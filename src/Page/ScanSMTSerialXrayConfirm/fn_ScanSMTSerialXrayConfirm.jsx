@@ -8,7 +8,10 @@ import { useLoading } from "../../loading/fn_loading";
 function fn_ScanSMTSerialXrayConfirm() {
   const { showLoading, hideLoading } = useLoading();
 
+  // เพิ่มนี้มา --
   let hfSerialCountBackup = "";
+  let hfTotalSht = "";
+  // จบ --
   let statusBackupCount = false;
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
@@ -136,7 +139,7 @@ function fn_ScanSMTSerialXrayConfirm() {
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value.trim();
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
     if (event.key === "Enter") {
       fnSetFocus(`gvSerial_txtSerial_${index + 1}`);
@@ -181,12 +184,35 @@ function fn_ScanSMTSerialXrayConfirm() {
     statusBackupCount = true;
     const newValues = [];
     setTxtSerial(newValues);
+    setPnlSerial((prevState) => ({
+      ...prevState,
+      visble: false,
+    }));
+    setGvScanResult((prevState) => ({
+      ...prevState,
+      value: [],
+      visble: false,
+    }));
     SetMode("SERIAL");
     fnSetFocus("gvSerial_txtSerial_0");
   };
 
   const btnSave_Click = async () => {
-    console.log("txtSerialtxtSerialtxtSerialtxtSerial", txtSerial);
+    // let CheckValue = false;
+    // if (hfMode == "SERIAL") {
+    //   showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
+    //   if (Array.isArray(txtSerial)) {
+    //     const Value = txtSerial.some((item) => item !== "");
+    //     CheckValue = Value;
+    //   }
+    //   if (txtSerial !== "" && CheckValue !== false) {
+    //     await setSerialData();
+    //     await new Promise((resolve) => setTimeout(resolve, 1000));
+    //   } else {
+    //     fnSetFocus("gvSerial_txtSerial_0");
+    //   }
+    //   hideLoading();
+    // }
     let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
@@ -198,14 +224,36 @@ function fn_ScanSMTSerialXrayConfirm() {
         await setSerialData();
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } else {
-        fnSetFocus("gvSerial_txtSerial_0");
+        setLblPnlLog((prevState) => ({
+          ...prevState,
+          value: `Please Input Serial No.`,
+          visble: true,
+        }));
+        setLblResult((prevState) => ({
+          ...prevState,
+          value: "",
+        }));
+        setGvScanResult((prevState) => ({
+          ...prevState,
+          visble: false,
+          value: "",
+        }));
+        setTimeout(() => {
+          fnSetFocus("gvSerial_txtSerial_0");
+        }, 300);
       }
       hideLoading();
     }
   };
 
-  const ddlProduct_SelectedIndexChanged = async () => {
+  const ddlProduct_SelectedIndexChanged = async (value) => {
     await getProductSerialMaster(ddlProduct.value);
+    // เพิ่มนี้มา --
+    setDdlProduct((prevState) => ({
+      ...prevState,
+      value: value,
+    }));
+    // จบ --
     if (txtLot.value.trim().toUpperCase() !== "") {
       setLblPnlLog((prevState) => ({
         ...prevState,
@@ -402,12 +450,10 @@ function fn_ScanSMTSerialXrayConfirm() {
         } catch (ex) {
           console.error(ex);
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
-          console.log("intProduct : ", intProduct);
           if (intProduct > 0) {
             strPrdName =
               strPrdName.slice(0, intProduct) +
               strPrdName.slice(intProduct + 1, intProduct + 11);
-            console.log("strPrdName : ", strPrdName);
             try {
               setDdlProduct((prevState) => ({
                 ...prevState,
@@ -476,7 +522,8 @@ function fn_ScanSMTSerialXrayConfirm() {
   };
 
   const txtTotalPCS_TextChanged = async () => {
-    if (isNaN(txtTotalPCS.value)) {
+    if (!isNaN(txtTotalPCS.value)) {
+      // hfTotalSht = txtTotalPCS.value;
       SetMode("SERIAL");
       fnSetFocus("gvSerial_txtSerial_0");
     } else {
@@ -490,8 +537,28 @@ function fn_ScanSMTSerialXrayConfirm() {
 
   const getInitialSerial = async () => {
     let dtData = [];
+    // เพิ่มนี้มา --
     const hfSerialCountData =
-      statusBackupCount === true ? hfSerialCount : hfSerialCountBackup;
+      txtTotalPCS.value !== ""
+        ? txtTotalPCS.value
+        : statusBackupCount === true
+        ? hfSerialCount
+        : hfSerialCountBackup;
+    // console.log(
+    //   "hfSerialCountData : ",
+    //   hfSerialCountData,
+    //   "statusBackupCount : ",
+    //   statusBackupCount,
+    //   "hfSerialCount : ",
+    //   hfSerialCount,
+    //   "hfSerialCountBackup : ",
+    //   hfSerialCountBackup,
+    //   "txtTotalPCS.value : ",
+    //   txtTotalPCS.value,
+    //   "hfTotalSht : ",
+    //   hfTotalSht
+    // );
+    // เพิ่มนี้มา --
     for (let intRow = 1; intRow <= parseInt(hfSerialCountData, 10); intRow++) {
       dtData.push({
         SEQ: intRow,
@@ -536,6 +603,25 @@ function fn_ScanSMTSerialXrayConfirm() {
     let _strErrorAll = "";
     let _strUpdateError = "";
     let _bolError = false;
+    // const allSerialEmpty = dtSerial.every((item) => item.serial === "");
+    // if (allSerialEmpty) {
+    //   hideLoading();
+    //   setLblPnlLog((prevState) => ({
+    //     ...prevState,
+    //     value: `Please Input Serial No.`,
+    //     visble: "",
+    //   }));
+    //   setLblResult((prevState) => ({
+    //     ...prevState,
+    //     value: "",
+    //   }));
+    //   setGvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+    //   // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+    //   setTimeout(() => {
+    //     fnSetFocus("gvSerial_txtSerial_0");
+    //   }, 300);
+    //   return;
+    // }
     _strLotData = txtLot.value.trim().toUpperCase().split(";");
     _strLot = _strLotData[0];
     if (txtLot.value.trim() !== "" && dtSerial.length > 0) {
@@ -599,11 +685,6 @@ function fn_ScanSMTSerialXrayConfirm() {
         }));
       }
       if (_strErrorAll !== "") {
-        console.log(
-          "แสดงผลลัพธ์ที่ได้ _strErrorAll : ",
-          lblResult.value + `\n` + _strErrorAll,
-          " : "
-        );
         setLblResult((prevState) => ({
           ...prevState,
           value: lblResult.value + `\n` + _strErrorAll,
@@ -755,7 +836,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       title: "Serial No.",
       dataIndex: "serial",
       key: "Serial No.",
-      align: "left",
+      align: "center",
       render: (text, record, index) => {
         return text;
       },
@@ -806,7 +887,6 @@ function fn_ScanSMTSerialXrayConfirm() {
   ];
 
   function fnSetFocus(txtField) {
-    console.log("txtField : ", txtField);
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
     }, 300);

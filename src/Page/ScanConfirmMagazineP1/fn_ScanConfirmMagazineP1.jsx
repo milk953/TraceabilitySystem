@@ -5,7 +5,7 @@ import { Tag } from "antd";
 import { values } from "lodash";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 function fn_ScanConfirmMagazineP1() {
   const plantCode = import.meta.env.VITE_FAC;
@@ -108,7 +108,13 @@ function fn_ScanConfirmMagazineP1() {
               }));
               SetMode("MAGAZINE");
             } else {
-              alert('Invalid Lot No. Please check again!')
+              // alert('Invalid Lot No. Please check again!')
+              Swal.fire({
+                title: "Invalid Lot No. Please check again!",
+                icon: "error",
+                timer: 2000,
+                showConfirmButton: false,
+              });
               setTxtLotNo((prevState) => ({
                 ...prevState,
                 value: "",
@@ -117,21 +123,32 @@ function fn_ScanConfirmMagazineP1() {
             }
           });
       } else {
-        alert('Invalid Lot No. Please check again!')
+        // alert('Invalid Lot No. Please check again!')
+        Swal.fire({
+          title: "Invalid Lot No. Please check again!",
+          icon: "error",
+          timer: 2000,
+          showConfirmButton: false,
+        });
         setTxtLotNo((prevState) => ({
           ...prevState,
           value: "",
         }));
         SetMode("LOT");
-        
       }
     } else {
-      alert('Invalid Lot No. Please check again!')
-        setTxtLotNo((prevState) => ({
-          ...prevState,
-          value: "",
-        }));
-        SetMode("LOT");
+      // alert('Invalid Lot No. Please check again!')
+      Swal.fire({
+        title: "Invalid Lot No. Please check again!",
+        icon: "error",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      setTxtLotNo((prevState) => ({
+        ...prevState,
+        value: "",
+      }));
+      SetMode("LOT");
     }
   };
 
@@ -155,7 +172,7 @@ function fn_ScanConfirmMagazineP1() {
 
   const txtMagNo_TextChanged = async () => {
     let strError = "";
-    let lblTotalPcsCheck ;
+    let lblTotalPcsCheck;
     try {
       const res1 = await axios.post("/api/GetCountSerialByLotMagazine", {
         dataList: {
@@ -165,7 +182,7 @@ function fn_ScanConfirmMagazineP1() {
         },
       });
       let data = res1.data.flat().flat();
-      lblTotalPcsCheck = data[0].lot_count
+      lblTotalPcsCheck = data[0].lot_count;
       setLblTotalPcs((prevState) => ({
         ...prevState,
         value: data[0].lot_count,
@@ -439,7 +456,6 @@ function fn_ScanConfirmMagazineP1() {
       document.getElementById(`${txtField}`).focus();
     }, 300);
   }
-
 
   return {
     txtOperator,

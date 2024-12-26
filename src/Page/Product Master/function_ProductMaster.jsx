@@ -360,7 +360,7 @@ function fn_ProductMaster() {
         settxtCheckPrdShtFromDisabled(true);
         settxtCheckPrdShtToDisabled(true);
       }
-      settxtSerialStartCode("THA")
+      settxtSerialStartCode("THA");
       setselCheckIC("N");
       setReqProcControlTimeCheck(false);
       settxtProcControlTime("");
@@ -439,7 +439,7 @@ function fn_ProductMaster() {
 
   const handleKeyProductName = (event) => {
     const txtProduct = event.target.value;
-    settxtProduct(txtProduct);
+    settxtProduct(txtProduct.trim());
     setErrorPrdName(false);
     setErrorPrdNameMessage("");
   };
@@ -1226,7 +1226,7 @@ function fn_ProductMaster() {
       setReqConfigCheck(false);
       setReqConfigRunCheck(false);
       settxtAddInfo("");
-      settxtSerialStartCode("");
+      settxtSerialStartCode("THA");
       settxtUpdateBy("");
       settxtUpdateDate("");
       if (FIX_CHECK_PRODUCT_MIX === "Y") {
@@ -1380,9 +1380,15 @@ function fn_ProductMaster() {
       setAutoPressBCheck(false);
       setConnShtReqProductFlg(false);
 
+      settxtConfigWord("");
+      settxtConfigStart("");
+      settxtConfigEnd("");
+      settxtDupStart("");
+      settxtDupEnd("");
+
       if (Data === "") {
         setpnlMessage(true);
-        setlblMessageColor("#ff4d4f");
+        setlblMessageColor("red");
         setlblMessage("Not found");
       } else {
 
@@ -1972,7 +1978,7 @@ function fn_ProductMaster() {
 
     } catch (error) {
       setpnlMessage(true);
-      setlblMessageColor("#ff4d4f");
+      setlblMessageColor("red");
       setlblMessage(error);
     }
   };

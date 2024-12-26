@@ -22,7 +22,8 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-import { Table as AntTable } from "antd";
+import { Table as AntTable, Button as ButtonAndt } from "antd";
+
 import Pageimg from "/src/assets/1.jpg";
 import {
   ArrowRightOutlined,
@@ -34,7 +35,7 @@ import "./ScanSMTSerialXrayConfirm.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialXrayConfirm } from "./fn_ScanSMTSerialXrayConfirm";
-
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialXrayConfirm() {
   const {
     txtLot,
@@ -59,6 +60,7 @@ function ScanSMTSerialXrayConfirm() {
     columns,
     lblResult,
   } = fn_ScanSMTSerialXrayConfirm();
+    const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -66,11 +68,13 @@ function ScanSMTSerialXrayConfirm() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="ScanSMT" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
-                  <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">X-Ray Result Checking</Typography>
-                  </TableCell>
+                         <TableRow>
+                                 <TableCell colSpan={4} align="center">
+                                   {menuName}
+                                 </TableCell>
+                               </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
@@ -147,19 +151,18 @@ function ScanSMTSerialXrayConfirm() {
                         className="input_txt"
                         size="small"
                         value={txtTotalPCS.value}
-                        // onChange={(e) => {
-                        //   setTxtTotalPCS((prevState) => ({
-                        //     ...prevState,
-                        //     value: e.target.value,
-                        //   }));
-                        // }}
-
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtTotalPCS_TextChanged();
-                        //   }
-                        // }}
-                        style={{ width: "95%" }}
+                        onChange={(e) => {
+                          setTxtTotalPCS((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtTotalPCS_TextChanged();
+                          }
+                        }}
+                        style={{ width: "100%" }}
                       ></TextField>
                     </TableCell>
                     <TableCell colSpan={2}>
@@ -224,14 +227,10 @@ function ScanSMTSerialXrayConfirm() {
                               value={txtSerial[index] || ""}
                               onKeyDown={(event) => {
                                 if (event.key === "Enter") {
-                                  if (
-                                    txtTotalPCS.value == index + 1 
-                                  ) {
-                                    // &&
-                                    // txtSerial[index] !== "" &&
-                                    // txtSerial[index] !== null &&
-                                    // txtSerial[index] !== undefined
+                                  event.preventDefault();
+                                  if (Number(txtTotalPCS.value) === index + 1) {
                                     btnSave_Click();
+                                    event.target.blur();
                                   } else {
                                     handleSerialChange(index, event);
                                   }
@@ -245,7 +244,7 @@ function ScanSMTSerialXrayConfirm() {
                         </TableRow>
                       )
                     )}
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
                       <Button className="BtSave" onClick={btnSave_Click}>
                         Save
@@ -254,6 +253,26 @@ function ScanSMTSerialXrayConfirm() {
                       <Button className="BtCancel" onClick={btnCancel_Click}>
                         Cancel
                       </Button>
+                    </TableCell>
+                  </TableRow> */}
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      style={{ textAlign: "center", verticalAlign: "middle" }}
+                    >
+                      <ButtonAndt
+                        className="ButtonReplace"
+                        onClick={btnSave_Click}
+                      >
+                        Save
+                      </ButtonAndt>
+                      &nbsp;&nbsp;
+                      <ButtonAndt
+                        className="ButtonCancel"
+                        onClick={btnCancel_Click}
+                      >
+                        Cancel
+                      </ButtonAndt>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -292,7 +311,7 @@ function ScanSMTSerialXrayConfirm() {
                         elevation={3}
                         style={{
                           background:
-                            lblResult.value == "OK" ? "#059212" : "#BA0900",
+                            lblResult.value == "OK" ? "green" : "red",
                           display: gvScanResult.visble ? "" : "none",
                         }}
                       >
@@ -313,7 +332,13 @@ function ScanSMTSerialXrayConfirm() {
                     size="small"
                     bordered
                     className="tableGvResult"
-                    rowClassName={(record) => (record.scan_result === "-" ? "row-red" : record.scan_result ===  "PASS X-RAY" ? "row-green" : "")}
+                    rowClassName={(record) =>
+                      record.scan_result === "-"
+                        ? "row-red"
+                        : record.scan_result === "PASS X-RAY"
+                        ? "row-green"
+                        : ""
+                    }
                   />
                 </>
               )}

@@ -90,6 +90,12 @@ function ScanSMTSerialPcsBox() {
                           value={selectddlProduct.value}
                           disabled={dis_ddlProduct} 
                           sx={{
+                            '& .MuiAutocomplete-root': {
+                              backgroundColor: dis_ddlProduct ? '#e0e0e0' : 'inherit',
+                            },
+                            '& .MuiAutocomplete-inputRoot': {
+                              backgroundColor: dis_ddlProduct ? '#e0e0e0' : 'inherit',
+                            },
                             '& .MuiAutocomplete-input': {
                               backgroundColor: dis_ddlProduct ? '#e0e0e0' : 'inherit',
                             },
@@ -465,7 +471,7 @@ function ScanSMTSerialPcsBox() {
                
                 style={{
                   background: 
-                  lblResult.value == "NG" ?  "#BA0900":"#059212",
+                  lblResult.value == "NG" ?  "red":"green",
                 
                 }}
               >

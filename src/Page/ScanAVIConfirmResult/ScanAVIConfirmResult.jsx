@@ -135,7 +135,7 @@ function ScanAVIConfirmResult() {
                       onChange={(e) => {
                         setTxtSerialBarcode((prevState) => ({
                           ...prevState,
-                          value: e.target.value,
+                          value: e.target.value.trim().toLocaleUpperCase(),
                         }));
                       }}
                       onKeyDown={(e) => {
@@ -147,10 +147,10 @@ function ScanAVIConfirmResult() {
                   </TableCell>
                 </TableRow>
                 {lblNo.value !== "" && (
-                  <TableRow style={{ backgroundColor: "yellow" }}>
+                  <TableRow style={{ backgroundColor: "white" }}>
                     <TableCell align="center" colSpan={2}>
                       <Typography
-                        style={{ color: "#0000CC", fontSize: "16px" }}
+                        style={{ color: "black", fontSize: "16px" }}
                       >
                         {lblNo.value}
                       </Typography>

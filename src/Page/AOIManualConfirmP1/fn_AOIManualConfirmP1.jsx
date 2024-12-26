@@ -4,7 +4,8 @@ import { color } from "framer-motion";
 
 function fn_AOIManualConfirmP1() {
   const plantCode = import.meta.env.VITE_FAC;
-  const Username = localStorage.getItem("Username");
+  // const Username = localStorage.getItem("Username");
+  let Username = localStorage.getItem("IDCode");
   const Lastname = localStorage.getItem("Lastname");
   const [hfUserID, setHfUserID] = useState("");
   const [hfUserStation, setHfUserStation] = useState("");
@@ -136,11 +137,11 @@ function fn_AOIManualConfirmP1() {
           setLblResult((prevState) => ({
             ...prevState,
             value:
-              txtSerialNo.value +
+              txtSerialNo.value.trim().toUpperCase() +
               " => " +
               ddlResult.value +
               " update complete.",
-            style: { background: "#059212" },
+            style: { background: "green" },
           }));
           setDdlResult((prevState) => ({
             ...prevState,

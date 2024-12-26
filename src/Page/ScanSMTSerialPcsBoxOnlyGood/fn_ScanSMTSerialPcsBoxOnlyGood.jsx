@@ -1175,6 +1175,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const ibtBack_Click = () => {
     settxtPcsTray((prevState) => ({ ...prevState, value: "" }));
     setdis_ddlProduct(false);
+    setselectddlProduct((prevState) => ({value: ddlProduct[0].prd_name}));
     settxtLot((prevState) => ({
       ...prevState,
       value: "",

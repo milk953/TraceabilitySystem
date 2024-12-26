@@ -315,7 +315,7 @@ function fn_ScanSMTSerialPcsBox() {
       // await getProductSerialMaster(data[0].prd_name);
     });
   };
-
+console.log(ddlProduct,"setddlProduct")
   const columns = [
     {
       title: "No.",
@@ -595,6 +595,7 @@ function fn_ScanSMTSerialPcsBox() {
 
   const ibtBack_Click = () => {
     setdis_ddlProduct(false);
+    setselectddlProduct((prevState) => ({ value:ddlProduct[0].prd_name }));
     settxtPcsTray((prevState) => ({
       ...prevState,
       value: "",
@@ -688,6 +689,7 @@ function fn_ScanSMTSerialPcsBox() {
   
   
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
+    console.log(selectvalue,"selectvalue")
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     let GetFinalGateMasterCheckResult = "";
     if (lblLot.value !== "") {
