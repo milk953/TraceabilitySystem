@@ -19,7 +19,7 @@ function fn_ScanSMTSerialSht() {
   const [pnlLog, setpnlLog] = useState(false);
   const [lblLog, setlblLog] = useState("");
   const [lblResult, setlblResult] = useState("");
-  const [lblResultcolor, setlblResultcolor] = useState("#059212");
+  const [lblResultcolor, setlblResultcolor] = useState("green");
   const [pnlBoard, setpnlBoard] = useState(false);
   const [txtBoardNoB, settxtBoardNoB] = useState("");
   const [txtBoardNoF, settxtBoardNoF] = useState("");
@@ -1163,9 +1163,9 @@ function fn_ScanSMTSerialSht() {
 
       setlblResult(_strScanResultAll);
       if (_strScanResultAll === "NG") {
-        setlblResultcolor("#BA0900");
+        setlblResultcolor("red");
       } else {
-        setlblResultcolor("#059212");
+        setlblResultcolor("green");
       }
       if (_strErrorAll !== "") {
         setlblResult(_strErrorAll);
@@ -1173,7 +1173,7 @@ function fn_ScanSMTSerialSht() {
 
       setgvScanData(dtSerial);
       setgvScanResult(true);
-      await getInitialSheet();
+      //await getInitialSheet();
       await getInitialSerial();
 
     } else {
@@ -1208,12 +1208,17 @@ function fn_ScanSMTSerialSht() {
     let _strLot = "";
     _strLot = strLotData[0];
 
+    if (!Array.isArray(txtgvSerial)) {
+      console.error("txtgvSerial is not an array:", txtgvSerial);
+      return [];
+    }
+
     for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
       intRow = intRow + 1;
 
       if (gvSerialData[intSeq].TYPE === "SHT") {
         strFrontSide = txtgvSerial[intSeq];
-        console.log(txtgvSerial[intSeq], "////////////")
+        console.log(strFrontSide, "////////////")
       } else {
         const backSideIndex = txtSideBack[0];
         const backSideText = backSideIndex;
@@ -1245,7 +1250,7 @@ function fn_ScanSMTSerialSht() {
           };
 
           if (hfConnShtStatusFlg === "Y") {
-            _strSerialData = txtgvSerial[intSeq].split(hfConnShtStatusSplit);
+            _strSerialData = txtgvSerial[intSeq]?.split(hfConnShtStatusSplit) || [];
             drRow.SERIAL = _strSerialData[parseInt(hfConnShtStatusSerialColumn)];
             if (_strSerialData.length >= parseInt(hfConnShtStatusStatusColumn)) {
               drRow.SERIAL_STATUS = _strSerialData[parseInt(hfConnShtStatusStatusColumn)];
@@ -1575,11 +1580,16 @@ function fn_ScanSMTSerialSht() {
       dataIndex: "SCAN_RESULT",
 
       render: (text, record, index) => {
-        return text ? (
-          < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
-            {text}
-          </Tag>
-        ) : null;
+        if (record.SERIAL == "") {
+          return "";
+        } else {
+          return text;
+        }
+        // return text ? (
+        //   < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+        //     {text}
+        //   </Tag>
+        // ) : null;
       },
       align: "center",
     },

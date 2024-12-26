@@ -93,7 +93,7 @@ function SMTDeleteData() {
                                 <TableCell colSpan={3} align="center">
                                     <Typography
                                         style={{
-                                            fontSize: "20px",
+                                            fontSize: "24px",
                                             height: "30px"
                                         }}
                                     >
@@ -169,7 +169,7 @@ function SMTDeleteData() {
                 )}
                 {gvConShtPcs && (
                     <TableRow>
-                        <TableCell align="center">
+                        <TableCell align="center" style={{border: "none"}}>
                             <Button className="ButtonDelete"
                                 type="primary"
                                 onClick={btnShtDeleteClick}
@@ -203,7 +203,7 @@ function SMTDeleteData() {
                                 <TableCell colSpan={3} align="center">
                                     <Typography
                                         style={{
-                                            fontSize: "20px",
+                                            fontSize: "24px",
                                             height: "30px"
                                         }}
                                     >
@@ -274,7 +274,7 @@ function SMTDeleteData() {
                 )}
                 {gvConRollLeaf && (
                     <TableRow>
-                        <TableCell align="center">
+                        <TableCell align="center" style={{border: "none"}}>
                             <Button className="ButtonDelete"
                                 type="primary"
                                 onClick={btnRollDeleteClick}
@@ -308,7 +308,7 @@ function SMTDeleteData() {
                                 <TableCell colSpan={3} align="center">
                                     <Typography
                                         style={{
-                                            fontSize: "20px",
+                                            fontSize: "24px",
                                             height: "30px"
                                         }}
                                     >
@@ -414,7 +414,7 @@ function SMTDeleteData() {
                 )}
                 {gvELTResult && (
                     <TableRow>
-                        <TableCell align="center">
+                        <TableCell align="center" style={{border: "none"}}>
                             <Button className="ButtonDelete"
                                 type="primary"
                                 onClick={btnELTDeleteClick}
@@ -447,7 +447,7 @@ function SMTDeleteData() {
                                 <TableCell colSpan={3} align="center">
                                     <Typography
                                         style={{
-                                            fontSize: "20px",
+                                            fontSize: "24px",
                                             height: "30px"
                                         }}
                                     >
@@ -525,7 +525,7 @@ function SMTDeleteData() {
 
                 {gvFinalResult && (
                     <TableRow>
-                        <TableCell align="center">
+                        <TableCell align="center" style={{border: "none"}}>
                             <Button className="ButtonDelete"
                                 type="primary"
                                 onClick={btnFinalDeleteClick}
