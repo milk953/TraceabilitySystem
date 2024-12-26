@@ -171,7 +171,7 @@ function fn_ScanSMTConnectRollConfirm() {
       value: "",
     }));
     SetMode("SERIAL");
-    fnSetFocus("gvSerial_txtSerial_0");
+    fnSetFocus("gvSerial_txtSerial_ScanSMTConnectRollConfirm_0");
   };
 
   const btnSave_Click = async () => {
@@ -199,7 +199,7 @@ function fn_ScanSMTConnectRollConfirm() {
           value: "",
         }));
         setLblRemark("");
-        fnSetFocus("gvSerial_txtSerial_0");
+        fnSetFocus("gvSerial_txtSerial_ScanSMTConnectRollConfirm_0");
       }
       hideLoading();
     }
@@ -517,7 +517,7 @@ function fn_ScanSMTConnectRollConfirm() {
       SetMode("SERIAL_ERROR");
     }
     await getShtDataBylot(txtLot.value);
-    fnSetFocus("gvSerial_txtSerial_0");
+    fnSetFocus("gvSerial_txtSerial_ScanSMTConnectRollConfirm_0");
 
     return 0;
   };
@@ -535,7 +535,7 @@ function fn_ScanSMTConnectRollConfirm() {
         visble: false,
       }));
       SetMode("SERIAL");
-      fnSetFocus("gvSerial_txtSerial_0");
+      fnSetFocus("gvSerial_txtSerial_ScanSMTConnectRollConfirm_0");
     } else {
       setDdlProduct((prevState) => ({
         ...prevState,
@@ -579,7 +579,7 @@ function fn_ScanSMTConnectRollConfirm() {
 
           await getProductSerialMaster(strPrdName);
           SetMode("SERIAL");
-          fnSetFocus("gvSerial_txtSerial_0");
+          fnSetFocus("gvSerial_txtSerial_ScanSMTConnectRollConfirm_0");
         } catch (ex) {
           console.error(ex);
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
@@ -597,7 +597,7 @@ function fn_ScanSMTConnectRollConfirm() {
 
               await getProductSerialMaster(strPrdName);
               SetMode("SERIAL");
-              fnSetFocus("gvSerial_txtSerial_0");
+              fnSetFocus("gvSerial_txtSerial_ScanSMTConnectRollConfirm_0");
             } catch (ex2) {
               setLblPnlLog((prevState) => ({
                 ...prevState,
@@ -910,7 +910,7 @@ function fn_ScanSMTConnectRollConfirm() {
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    }, 300);
+    }, 0);
   }
   return {
     txtLot,

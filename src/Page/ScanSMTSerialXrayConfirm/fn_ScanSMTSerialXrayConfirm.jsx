@@ -142,7 +142,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
     if (event.key === "Enter") {
-      fnSetFocus(`gvSerial_txtSerial_${index + 1}`);
+      fnSetFocus(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`);
     }
   };
 
@@ -194,7 +194,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       visble: false,
     }));
     SetMode("SERIAL");
-    fnSetFocus("gvSerial_txtSerial_0");
+    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
   };
 
   const btnSave_Click = async () => {
@@ -209,7 +209,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     //     await setSerialData();
     //     await new Promise((resolve) => setTimeout(resolve, 1000));
     //   } else {
-    //     fnSetFocus("gvSerial_txtSerial_0");
+    //     fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
     //   }
     //   hideLoading();
     // }
@@ -239,7 +239,7 @@ function fn_ScanSMTSerialXrayConfirm() {
           value: "",
         }));
         setTimeout(() => {
-          fnSetFocus("gvSerial_txtSerial_0");
+          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
         }, 300);
       }
       hideLoading();
@@ -446,7 +446,7 @@ function fn_ScanSMTSerialXrayConfirm() {
             }));
           }
           SetMode("SERIAL");
-          fnSetFocus("gvSerial_txtSerial_0");
+          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
         } catch (ex) {
           console.error(ex);
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
@@ -469,7 +469,7 @@ function fn_ScanSMTSerialXrayConfirm() {
                 }));
               }
               SetMode("SERIAL");
-              fnSetFocus("gvSerial_txtSerial_0");
+              fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
             } catch (ex2) {
               setLblPnlLog((prevState) => ({
                 ...prevState,
@@ -525,7 +525,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     if (!isNaN(txtTotalPCS.value)) {
       // hfTotalSht = txtTotalPCS.value;
       SetMode("SERIAL");
-      fnSetFocus("gvSerial_txtSerial_0");
+      fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
     } else {
       setTxtTotalPCS((prevState) => ({
         ...prevState,
@@ -618,7 +618,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     //   setGvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
     //   // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
     //   setTimeout(() => {
-    //     fnSetFocus("gvSerial_txtSerial_0");
+    //     fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
     //   }, 300);
     //   return;
     // }
@@ -708,7 +708,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       }));
       SetMode("SERIAL_ERROR");
     }
-    fnSetFocus("gvSerial_txtSerial_0");
+    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
     return 0;
   };
 
@@ -889,7 +889,7 @@ function fn_ScanSMTSerialXrayConfirm() {
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    }, 300);
+    }, 0);
   }
 
   return {

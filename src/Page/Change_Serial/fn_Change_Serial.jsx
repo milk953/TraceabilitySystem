@@ -395,7 +395,7 @@ function fn_Change_Serial() {
 
   const handleSerialOldChange = async (index, event) => {
     const newValues = [...txtSerialNoOld];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     // newValues[index] = event.target.value.trim();
     setTxtSerialNoOld(newValues);
     if (event.key === "Enter") {
@@ -404,7 +404,7 @@ function fn_Change_Serial() {
   };
   const handleSerialNewChange = async (index, event) => {
     const newValues = [...txtSerialNoNew];
-    newValues[index] = event.target.value;
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerialNoNew(newValues);
     if (event.key === "Enter") {
       fnSetFocus(`gvSerial_txtSerialNoNew_${index + 1}`);
@@ -414,7 +414,7 @@ function fn_Change_Serial() {
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    }, 300);
+    }, 0);
   }
 
   return {

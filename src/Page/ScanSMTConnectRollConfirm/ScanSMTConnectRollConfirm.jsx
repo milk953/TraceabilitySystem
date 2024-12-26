@@ -85,7 +85,7 @@ function ScanSMTConnectRollConfirm() {
                         onChange={(e) => {
                           setTxtLot((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -142,6 +142,7 @@ function ScanSMTConnectRollConfirm() {
                         className="input_txt"
                         size="small"
                         value={lblTotalSht}
+                        InputProps={{ readOnly: true }}
                         style={{ width: "95%" }}
                       ></TextField>
                     </TableCell>
@@ -204,18 +205,23 @@ function ScanSMTConnectRollConfirm() {
                               size="small"
                               autoComplete="off"
                               fullWidth
-                              id={`gvSerial_txtSerial_${index}`}
+                              id={`gvSerial_txtSerial_ScanSMTConnectRollConfirm_${index}`}
                               className="input_txt"
                               value={txtSerial[index] || ""}
                               onChange={(event) =>
                                 handleSerialChange(index, event)
                               }
                               onKeyDown={(e) => {
+                                // if (
+                                //   e.key === "Enter" &&
+                                //   txtSerial[index] !== "" &&
+                                //   txtSerial[index] !== null &&
+                                //   txtSerial[index] !== undefined
+                                // ) {
+                                //   btnSave_Click();
+                                // }
                                 if (
-                                  e.key === "Enter" &&
-                                  txtSerial[index] !== "" &&
-                                  txtSerial[index] !== null &&
-                                  txtSerial[index] !== undefined
+                                  e.key === "Enter" 
                                 ) {
                                   btnSave_Click();
                                 }

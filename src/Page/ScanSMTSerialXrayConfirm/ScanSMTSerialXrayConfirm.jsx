@@ -60,7 +60,7 @@ function ScanSMTSerialXrayConfirm() {
     columns,
     lblResult,
   } = fn_ScanSMTSerialXrayConfirm();
-    const { menuName } = fn_Homepage();
+  const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -70,11 +70,11 @@ function ScanSMTSerialXrayConfirm() {
             <Grid item xs={10} md={4}>
               <Table className="Header_Left" component={Paper}>
                 <TableHead>
-                         <TableRow>
-                                 <TableCell colSpan={4} align="center">
-                                   {menuName}
-                                 </TableCell>
-                               </TableRow>
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">
+                      {menuName}
+                    </TableCell>
+                  </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
@@ -94,7 +94,7 @@ function ScanSMTSerialXrayConfirm() {
                         onChange={(e) => {
                           setTxtLot((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -152,9 +152,11 @@ function ScanSMTSerialXrayConfirm() {
                         size="small"
                         value={txtTotalPCS.value}
                         onChange={(e) => {
+                          const inputValue = e.target.value.trim();
+                          const numericValue = inputValue.replace(/\D/g, "");
                           setTxtTotalPCS((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: numericValue,
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -222,7 +224,7 @@ function ScanSMTSerialXrayConfirm() {
                               size="small"
                               fullWidth
                               autoComplete="off"
-                              id={`gvSerial_txtSerial_${index}`}
+                              id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
                               className="input_txt"
                               value={txtSerial[index] || ""}
                               onKeyDown={(event) => {
@@ -310,8 +312,7 @@ function ScanSMTSerialXrayConfirm() {
                         className="Card-lblResult"
                         elevation={3}
                         style={{
-                          background:
-                            lblResult.value == "OK" ? "green" : "red",
+                          background: lblResult.value == "OK" ? "green" : "red",
                           display: gvScanResult.visble ? "" : "none",
                         }}
                       >
