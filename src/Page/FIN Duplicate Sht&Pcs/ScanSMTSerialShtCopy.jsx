@@ -12,6 +12,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import {Button as AntButton} from "antd";
 import { Typography, Table as AntTable, Select } from "antd";
 import { fn_ScanSMTSerialShtCopy } from "./fn_ScanSMTSerialShtCopy";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
@@ -224,8 +225,6 @@ function ScanSMTSerialShtCopy() {
                             id={`txtbackSide_${index}`}
                             type="text"
                             style={{
-                              // padding:'5px',
-                              // width: "100px",
                               textTransform: "uppercase",
                             }}
                             maxLength="30"
@@ -265,7 +264,6 @@ function ScanSMTSerialShtCopy() {
               {lblErrorState && (
                 <Paper className="Card-lblLog">{lblError}</Paper>
               )}
-              &nbsp;
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
                   <TableHead
@@ -357,20 +355,20 @@ function ScanSMTSerialShtCopy() {
                           gap: "10px",
                         }}
                       >
-                        <Button
+                        <AntButton
                           className="BtSave"
                           onClick={handle_Save_Click}
                         >
-                          SAVE
-                        </Button>
+                          Save
+                        </AntButton>
                         &nbsp;&nbsp;
-                        <Button
+                        <AntButton
                           className="BtCancel"
                           onClick={handle_Cancel_Click}
                         >
                           {" "}
                           Cancel
-                        </Button>
+                        </AntButton>
                       </TableCell>
                     </TableRow>
                   </TableBody>
