@@ -35,7 +35,7 @@ import "./ScanSMTSerialXrayConfirm.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialXrayConfirm } from "./fn_ScanSMTSerialXrayConfirm";
-
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialXrayConfirm() {
   const {
     txtLot,
@@ -60,6 +60,7 @@ function ScanSMTSerialXrayConfirm() {
     columns,
     lblResult,
   } = fn_ScanSMTSerialXrayConfirm();
+    const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -67,11 +68,13 @@ function ScanSMTSerialXrayConfirm() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="ScanSMT" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
-                  <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">X-Ray Result Checking</Typography>
-                  </TableCell>
+                         <TableRow>
+                                 <TableCell colSpan={4} align="center">
+                                   {menuName}
+                                 </TableCell>
+                               </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
