@@ -653,20 +653,22 @@ function fn_rpt_SheetTraceView() {
         setdtddlCavity([]);
         setselectddlCavity(dtPcsNo[0].pcs_no);
       }
-      if (txtSheetNo.trim() !== "" && txtProduct.trim() !== "") {
+      console.log(txtSheetNo,'txtSheetNo111',Product)
+      if (txtSheetNo.trim() !== "" && Product.trim() !== "") {
+        console.log("เขาแล้วววว")
         let dtData = [];
         //757 มิ้วทำ
+        console.log(FAC,txtSheetNo,dropdawn,Product,hfSMPJCavityFlg,"ออออออออ")
         await axios
           .post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
             _strPlantCode: FAC,
             _strSheetNo: txtSheetNo,
-            _intPcsNo: dropdawn,
+            _intPcsNo: dropdawn||0,
             _strPrdName: Product,
             _strSMPJCavityFlg: hfSMPJCavityFlg,
           })
           .then((res) => {
             dtData = res.data;
-            console.log(dtData,"dtData222")
           });
         if (dtData.length > 0) {
           let AOM_Result = "OK";
@@ -713,12 +715,13 @@ function fn_rpt_SheetTraceView() {
           }
         }
         //793
+        console.log(FAC,txtSheetNo,dropdawn,txtProduct,hfSMPJCavityFlg,"ออออออออ")
         await axios
           .post("/api/ViewTraceSheet/GetSerialAOIEFPCResult", {
             _strPlantCode: FAC,
             _strFrontSheetNo: txtSheetNo,
-            _intPcsNo: dropdawn,
-            _strProduct: txtProduct,
+            _intPcsNo: dropdawn|| 0,
+            _strProduct: Product,
             _strSMPJCavityFlg: hfSMPJCavityFlg,
           })
           .then((res) => {
@@ -773,7 +776,7 @@ function fn_rpt_SheetTraceView() {
         await axios
           .post("/api/ViewTraceSheet/GetSerialOSTResult", {
             SerialNo: txtSheetNo.trim().toUpperCase(),
-            intPCSNo: dropdawn,
+            intPCSNo: dropdawn||0,
             strSMPJCavityFlg: hfSMPJCavityFlg,
           })
           .then((res) => {
@@ -825,7 +828,7 @@ function fn_rpt_SheetTraceView() {
         await axios
           .post("/api/ViewTraceSheet/GetSerialAVIResult", {
             _strFrontSheetNo: txtSheetNo.trim().toUpperCase(),
-            _intPcsNo: dropdawn,
+            _intPcsNo: dropdawn||0,
             _strSMPJCavityFlgfv: hfSMPJCavityFlg,
           })
           .then((res) => {
@@ -873,7 +876,7 @@ function fn_rpt_SheetTraceView() {
         // 900
         await axios
           .post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
-            intPCSNo: dropdawn,
+            intPCSNo: dropdawn||0,
             strSMPJCavityFlg: hfSMPJCavityFlg,
             strSheetNo: txtSheetNo,
           })

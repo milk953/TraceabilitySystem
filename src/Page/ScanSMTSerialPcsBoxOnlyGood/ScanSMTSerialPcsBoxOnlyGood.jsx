@@ -101,6 +101,12 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                         
                           disabled={dis_ddlProduct} //true พิมไม่ได้
                           sx={{
+                            '& .MuiAutocomplete-root': {
+                              backgroundColor: dis_ddlProduct ? '#e0e0e0' : 'inherit',
+                            },
+                            '& .MuiAutocomplete-inputRoot': {
+                              backgroundColor: dis_ddlProduct ? '#e0e0e0' : 'inherit',
+                            },
                             '& .MuiAutocomplete-input': {
                               backgroundColor: dis_ddlProduct ? '#e0e0e0' : 'inherit',
                             },
@@ -483,7 +489,7 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                
                 style={{
                   background: 
-                  lblResult.value == "NG" ?   "#BA0900":"#059212",
+                  lblResult.value == "NG" ?   "red":"green",
                   
                 }}
               >
