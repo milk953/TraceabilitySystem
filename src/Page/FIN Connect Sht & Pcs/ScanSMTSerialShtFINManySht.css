@@ -16,11 +16,11 @@
 .maintd{
   vertical-align: top;
   height: 300px !important;
-  width: 430px !important;
+  width: 440px !important;
 }
 .mainTable {
   
-  width: 430px !important;
+  width: 440px !important;
 }
 .mainTable th {
   /* background-color: rgb(243, 8, 8); */
@@ -54,7 +54,7 @@
   width: 400px !important;
 }
 .gvBackSide{
-  width: 430px !important;
+  width: 440px !important;
 }
 .gvBackSide td {
   padding: 3px;
@@ -91,7 +91,7 @@
 }
 
 .txtField {
-  padding: 1px !important;
+  padding: 3px !important;
   font-size: 16px !important;
   width: 220px !important;
 }
@@ -103,7 +103,7 @@
 
 .gvSerial {
   
-  width: 430px !important;
+  width: 440px !important;
   margin-top: 5px !important;
 }
 .gvSerial th{

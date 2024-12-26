@@ -270,6 +270,9 @@ function fn_ScanSMTSerialShtCopy() {
       setTimeout(() => {
         document.getElementById("txtbackSide_0").focus();        
       }, 200);
+    }else{
+      setLblError("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด");
+      setLblErrorState(true);
     }
   };
   const handle_txtLotRef_Change = (e) => {
@@ -356,7 +359,7 @@ function fn_ScanSMTSerialShtCopy() {
       hideLoading();
       setLblError("Please Input Serial No.");
       setLblErrorState(true);
-      SetFocus("txtSerial_0");
+      SetFocus("txtSerial_1");
       setLblResultState(false);
       setGvScanResult([]);
       return;        

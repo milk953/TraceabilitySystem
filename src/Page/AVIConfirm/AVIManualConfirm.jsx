@@ -190,9 +190,10 @@ function AVIManualConfirm() {
                 </Button>
                 &nbsp;&nbsp;
                 <Button
+                type="primary"
                 className="ButtonCancel"
                   style={{
-                    backgroundColor: "red",
+                    
                     width: "90px",
                     color: "white",
                   }}
