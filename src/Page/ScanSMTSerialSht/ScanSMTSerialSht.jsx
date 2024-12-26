@@ -22,7 +22,7 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -419,11 +419,11 @@ function ScanSMTSerialSht() {
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerialShtPcs" style={{ position: "relative" }}>
+                        <div className="divgvSerialShtPcs">
                             <TableContainer
                                 component={Paper}
                                 style={{
-                                    width: "100%",
+                                    width: "430px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
@@ -470,27 +470,28 @@ function ScanSMTSerialSht() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonCancel"
+                                        style={{height: "30px"}}
+                                        type="primary"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
@@ -529,7 +530,7 @@ function ScanSMTSerialSht() {
                                     </Typography>
                                 </Paper>
                             </div>
-                            <br />
+                            
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -539,6 +540,7 @@ function ScanSMTSerialSht() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                             />
 
                         </>

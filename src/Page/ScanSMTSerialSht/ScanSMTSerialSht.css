@@ -122,9 +122,8 @@
 .divgvSerialShtPcs {
     justify-content: center;
     display: flex;
-    max-width: 100%;
+    /* max-width: 100%; */
     overflow-x: auto;
-    width: 482px;
 }
 
 .divgvSerialShtPcs th {
