@@ -117,7 +117,7 @@ function SMTDeleteData() {
                                         size="small"
                                         fullWidth
                                         inputRef={(el) => (inputShtNo.current = el)}
-                                        value={txtSheetNo}
+                                        value={txtSheetNo.trim()}
                                         onChange={(e) => {
                                             settxtSheetNo(e.target.value);
                                         }}
@@ -223,7 +223,7 @@ function SMTDeleteData() {
                                         id="rollleaf"
                                         size="small"
                                         fullWidth
-                                        value={txtRollLeaf}
+                                        value={txtRollLeaf.trim()}
                                         onChange={(e) => {
                                             settxtRollLeaf(e.target.value);
                                         }}

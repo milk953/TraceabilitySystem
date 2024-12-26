@@ -84,6 +84,7 @@ function fn_SMTDeleteData() {
               icon: "error",
               text: "Dupplicate Sheet No.",
             });
+            settxtSheetNo("");
           }
         });
 
@@ -184,6 +185,7 @@ function fn_SMTDeleteData() {
   const btnShtCancelClick = async () => {
     setgvConShtPcsData([]);
     setgvConShtPcs(false);
+    settxtSheetNo("");
     inputShtNo.current.focus();
   };
 
@@ -211,6 +213,7 @@ function fn_SMTDeleteData() {
               icon: "error",
               text: "Dupplicate Roll Leaf No.",
             });
+            settxtRollLeaf("");
           }
         });
 
@@ -312,6 +315,7 @@ function fn_SMTDeleteData() {
   const btnRollCancelClick = async () => {
     setgvConRollLeafData([]);
     setgvConRollLeaf(false);
+    settxtRollLeaf("");
     document.getElementById("rollleaf").focus();
   };
 
