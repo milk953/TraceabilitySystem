@@ -138,15 +138,9 @@ function fn_ScanSMTSerialXrayConfirm() {
   }, []);
 
   const handleSerialChange = async (index, event) => {
-    // setLblPnlLog((prevState) => ({
-    //   ...prevState,
-    //   value: "Invalid lot no.",
-    //   visble: true,
-    // }));
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value.trim();
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
-    console.log("newValues : ",newValues,"index + 1 : ",index + 1)
     if (event.key === "Enter") {
       fnSetFocus(`gvSerial_txtSerial_${index + 1}`);
     }
@@ -190,11 +184,35 @@ function fn_ScanSMTSerialXrayConfirm() {
     statusBackupCount = true;
     const newValues = [];
     setTxtSerial(newValues);
+    setPnlSerial((prevState) => ({
+      ...prevState,
+      visble: false,
+    }));
+    setGvScanResult((prevState) => ({
+      ...prevState,
+      value: [],
+      visble: false,
+    }));
     SetMode("SERIAL");
     fnSetFocus("gvSerial_txtSerial_0");
   };
 
   const btnSave_Click = async () => {
+    // let CheckValue = false;
+    // if (hfMode == "SERIAL") {
+    //   showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
+    //   if (Array.isArray(txtSerial)) {
+    //     const Value = txtSerial.some((item) => item !== "");
+    //     CheckValue = Value;
+    //   }
+    //   if (txtSerial !== "" && CheckValue !== false) {
+    //     await setSerialData();
+    //     await new Promise((resolve) => setTimeout(resolve, 1000));
+    //   } else {
+    //     fnSetFocus("gvSerial_txtSerial_0");
+    //   }
+    //   hideLoading();
+    // }
     let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
@@ -206,7 +224,23 @@ function fn_ScanSMTSerialXrayConfirm() {
         await setSerialData();
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } else {
-        fnSetFocus("gvSerial_txtSerial_0");
+        setLblPnlLog((prevState) => ({
+          ...prevState,
+          value: `Please Input Serial No.`,
+          visble: true,
+        }));
+        setLblResult((prevState) => ({
+          ...prevState,
+          value: "",
+        }));
+        setGvScanResult((prevState) => ({
+          ...prevState,
+          visble: false,
+          value: "",
+        }));
+        setTimeout(() => {
+          fnSetFocus("gvSerial_txtSerial_0");
+        }, 300);
       }
       hideLoading();
     }
@@ -214,7 +248,7 @@ function fn_ScanSMTSerialXrayConfirm() {
 
   const ddlProduct_SelectedIndexChanged = async (value) => {
     await getProductSerialMaster(ddlProduct.value);
-    // เพิ่มนี้มา -- 
+    // เพิ่มนี้มา --
     setDdlProduct((prevState) => ({
       ...prevState,
       value: value,
@@ -569,6 +603,25 @@ function fn_ScanSMTSerialXrayConfirm() {
     let _strErrorAll = "";
     let _strUpdateError = "";
     let _bolError = false;
+    // const allSerialEmpty = dtSerial.every((item) => item.serial === "");
+    // if (allSerialEmpty) {
+    //   hideLoading();
+    //   setLblPnlLog((prevState) => ({
+    //     ...prevState,
+    //     value: `Please Input Serial No.`,
+    //     visble: "",
+    //   }));
+    //   setLblResult((prevState) => ({
+    //     ...prevState,
+    //     value: "",
+    //   }));
+    //   setGvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
+    //   // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
+    //   setTimeout(() => {
+    //     fnSetFocus("gvSerial_txtSerial_0");
+    //   }, 300);
+    //   return;
+    // }
     _strLotData = txtLot.value.trim().toUpperCase().split(";");
     _strLot = _strLotData[0];
     if (txtLot.value.trim() !== "" && dtSerial.length > 0) {

@@ -22,7 +22,8 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-import { Table as AntTable } from "antd";
+import { Table as AntTable, Button as ButtonAndt } from "antd";
+
 import Pageimg from "/src/assets/1.jpg";
 import {
   ArrowRightOutlined,
@@ -153,7 +154,6 @@ function ScanSMTSerialXrayConfirm() {
                             value: e.target.value,
                           }));
                         }}
-
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtTotalPCS_TextChanged();
@@ -224,14 +224,10 @@ function ScanSMTSerialXrayConfirm() {
                               value={txtSerial[index] || ""}
                               onKeyDown={(event) => {
                                 if (event.key === "Enter") {
-                                  if (
-                                    txtTotalPCS.value == index + 1 
-                                  ) {
-                                    // &&
-                                    // txtSerial[index] !== "" &&
-                                    // txtSerial[index] !== null &&
-                                    // txtSerial[index] !== undefined
+                                  event.preventDefault();
+                                  if (Number(txtTotalPCS.value) === index + 1) {
                                     btnSave_Click();
+                                    event.target.blur();
                                   } else {
                                     handleSerialChange(index, event);
                                   }
@@ -245,7 +241,7 @@ function ScanSMTSerialXrayConfirm() {
                         </TableRow>
                       )
                     )}
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
                       <Button className="BtSave" onClick={btnSave_Click}>
                         Save
@@ -254,6 +250,26 @@ function ScanSMTSerialXrayConfirm() {
                       <Button className="BtCancel" onClick={btnCancel_Click}>
                         Cancel
                       </Button>
+                    </TableCell>
+                  </TableRow> */}
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      style={{ textAlign: "center", verticalAlign: "middle" }}
+                    >
+                      <ButtonAndt
+                        className="ButtonReplace"
+                        onClick={btnSave_Click}
+                      >
+                        Save
+                      </ButtonAndt>
+                      &nbsp;&nbsp;
+                      <ButtonAndt
+                        className="ButtonCancel"
+                        onClick={btnCancel_Click}
+                      >
+                        Cancel
+                      </ButtonAndt>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -292,7 +308,7 @@ function ScanSMTSerialXrayConfirm() {
                         elevation={3}
                         style={{
                           background:
-                            lblResult.value == "OK" ? "#059212" : "#BA0900",
+                            lblResult.value == "OK" ? "green" : "red",
                           display: gvScanResult.visble ? "" : "none",
                         }}
                       >
@@ -313,7 +329,13 @@ function ScanSMTSerialXrayConfirm() {
                     size="small"
                     bordered
                     className="tableGvResult"
-                    rowClassName={(record) => (record.scan_result === "-" ? "row-red" : record.scan_result ===  "PASS X-RAY" ? "row-green" : "")}
+                    rowClassName={(record) =>
+                      record.scan_result === "-"
+                        ? "row-red"
+                        : record.scan_result === "PASS X-RAY"
+                        ? "row-green"
+                        : ""
+                    }
                   />
                 </>
               )}
