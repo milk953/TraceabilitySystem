@@ -104,6 +104,7 @@ function ProductMaster() {
                         style={{
                             background: lblMessageColor,
                             textAlign: "center",
+                            marginBottom: "5px"
                         }}
                     >
                         <Typography
@@ -140,7 +141,7 @@ function ProductMaster() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={4} align="center">
-                                        <Typography variant="h6">
+                                        <Typography style={{fontSize: "24px"}}>
                                             Product Master
                                         </Typography>
                                     </TableCell>
