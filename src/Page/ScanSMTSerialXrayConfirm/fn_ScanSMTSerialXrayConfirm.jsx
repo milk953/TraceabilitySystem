@@ -886,12 +886,17 @@ function fn_ScanSMTSerialXrayConfirm() {
     },
   ];
 
+  // function fnSetFocus(txtField) {
+  //   setTimeout(() => {
+  //     document.getElementById(`${txtField}`).focus();
+  //   }, 0);
+  // }
   function fnSetFocus(txtField) {
-    setTimeout(() => {
-      document.getElementById(`${txtField}`).focus();
-    }, 0);
+    const element = document.getElementById(txtField);
+    if (element) {
+      element.focus();
+    }
   }
-
   return {
     txtLot,
     setTxtLot,
