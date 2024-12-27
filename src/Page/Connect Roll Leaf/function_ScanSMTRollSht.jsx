@@ -49,7 +49,7 @@ function Fn_ScanSMTRollSht() {
     visible: "none",
     style: {},
   });
-  const [txtLeafNo, SettxtLeafNo] = useState(Array(GvSerial.length).fill(""));
+  const [txtLeafNo, SettxtLeafNo] = useState(Array(txtTotalLeaf).fill(""));
   // SettxtLeafNo(Array(txtTotalLeaf).fill(""))
   const [lblResult, setlblResult] = useState({
     value: "",
@@ -623,7 +623,7 @@ function Fn_ScanSMTRollSht() {
       hideLoading();
       setlbllog((prevState) => ({
         ...prevState,
-        value: `Please Input Serial No.`,
+        value: `Please Input Leaf No.`,
         visible: true,
       }));
       setlblResult((prevState) => ({
@@ -1085,13 +1085,17 @@ function Fn_ScanSMTRollSht() {
   };
 
   const ibtCancel_Click = () => {
-
+    setlbllog((prevState) => ({
+      ...prevState,
+      value: ``,
+      visible: false,
+    }));
     setgvScanResult((prevState) => ({
       ...prevState,
       visible: false,
       value: "",
     }));
-    SettxtLeafNo(Array(GvSerial.length).fill(""))
+    SettxtLeafNo(Array(txtTotalLeaf).fill(""))
     if(txtOperator==''){
       setTimeout(() => {
         fc_txtOperator.current.focus();

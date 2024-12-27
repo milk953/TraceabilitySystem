@@ -205,7 +205,10 @@ function ScanSMTRoollSht() {
                         style={{ width: "70px" }}
                         value={txtTotalLeaf}
                         onChange={(e) => {
-                          settxtTotalLeaf(e.target.value);
+                          const value = e.target.value;
+                          if (/^\d*$/.test(value)) {
+                            settxtTotalLeaf(value);
+                          }
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -302,7 +305,7 @@ function ScanSMTRoollSht() {
                         {index + 1}
                       </TableCell>
                       <TableCell>
-                        {" "}
+                        {console.log('txtLeafNotxtLeafNo',txtLeafNo)}
                         <TextField
                           size="small"
                           fullWidth
