@@ -233,8 +233,6 @@ function ScanSMTPackingConfirm() {
               xs={10}
               md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -268,7 +266,7 @@ function ScanSMTPackingConfirm() {
                   >
                     <Typography
                       variant="h4"
-                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? 'red' : 'green',fontSize:'50px',color:'white'}}
+                      style={{ paddingTop: "5px",textAlign:'center',backgroundColor:lblResult.value !== "OK" ? 'red' : 'green',fontSize:'40px',color:'white'}}
                     >
                    
                    {lblResult.value}

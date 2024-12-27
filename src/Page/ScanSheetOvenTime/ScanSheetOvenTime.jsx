@@ -61,7 +61,7 @@ function ScanSheetOvenTime() {
               <TableCell>
                 <TextField
                   size="small"
-                  className="txtField"
+                  className="txtFieldOven"
                   disabled={txtmcNoState.styled.disabled}
                   sx={txtmcNoState.styled}
                   inputRef={FctxtmcNo}
@@ -89,7 +89,7 @@ function ScanSheetOvenTime() {
               <TableCell>
                 <TextField
                   size="small"
-                  className="txtField"
+                  className="txtFieldOven"
                   disabled={txtSheetNoState.styled.disabled}
                   sx={txtSheetNoState.styled}
                   value={txtSheetNo}
@@ -116,7 +116,7 @@ function ScanSheetOvenTime() {
         </Table>
       </div>
       {pnlResultState && (
-        <div className="pnlResult">
+        <div className="pnlResultOven">
            <Table id={lblResult.text == "NG" ? "TableResultOvenTimered" : "TableResultOvenTime"} component={Card} style={{ height: '180px' }}>
             <TableRow>
               <TableCell

@@ -187,7 +187,8 @@ function fn_ScanSheetReflowTime() {
     }, 200);
   }
 
-  const btnReplace_Click = async () => {
+  const btnReplace_Click = async (e) => {
+    // e.target.blur();
     var strError = "";
     var strStatus = "";
     const res = await axios
@@ -249,7 +250,7 @@ function fn_ScanSheetReflowTime() {
         setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
         setPnlShowresult(true);
       });
-    setLblSheet(`${lblSheet} Delete`);
+    setLblSheet(`${lblSheet} Delete Success`);
     setLblRemark(strError);
     if (strError == "") {
       setPnlSaveState(false);

@@ -270,7 +270,11 @@ function ScanSMTSerialPcsBox() {
                     <TableCell align="right" style={{ width: "100px" }}>
                       <Typography>Pcs/Tray :</Typography>
                     </TableCell>
-                    <TableCell style={{ width: "130px" }}>
+                    <TableCell style={{
+                        width: "130px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}>
                       <TextField
                          className="input_txt"
                         size="small"
@@ -293,8 +297,9 @@ function ScanSMTSerialPcsBox() {
                           }
                         }}
                       ></TextField>
-                      &nbsp; 
-                      {lblLastTray.value}
+                      &nbsp; <p style={{ margin: 0 }}>{lblLastTray.value}</p>
+                      {/* &nbsp; 
+                      {lblLastTray.value} */}
                     </TableCell>
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography style={{color:'red'}}>NG :</Typography>
@@ -441,8 +446,6 @@ function ScanSMTSerialPcsBox() {
               xs={10}
               md={8}
               style={{
-            
-              
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -458,7 +461,7 @@ function ScanSMTSerialPcsBox() {
                   marginBottom: "30px",
                 }}
                 src={Pageimg} 
-                alt="Description of the image"
+               
               />
               </>
               )} 
