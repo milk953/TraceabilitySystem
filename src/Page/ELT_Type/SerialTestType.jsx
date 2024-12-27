@@ -44,7 +44,7 @@ function SerialTestType() {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>Product:</TableCell>
+              <TableCell style={{textAlign:'right'}}>Product:</TableCell>
               <TableCell>
                 <select
                   onInputChange={(e) => productSelectChange(e.target.value)}
@@ -61,7 +61,7 @@ function SerialTestType() {
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>ELT Type:</TableCell>
+              <TableCell style={{textAlign:'right'}}>ELT Type:</TableCell>
               <TableCell>
                 <select
                   onInputChange={(e) => ELTTypeSelectChange(e.target.value)}

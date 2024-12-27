@@ -53,9 +53,9 @@
 #lbltxt {
   width: 150px;
   text-align: right;
-  font-size: 16px;
+  font-size: 14px;
 }
-.txtField {
+.txtFieldReflow {
   width: 250px !important;
   padding: 1px;
 }

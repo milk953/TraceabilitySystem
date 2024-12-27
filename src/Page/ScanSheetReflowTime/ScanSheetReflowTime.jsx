@@ -68,7 +68,7 @@ function ScanSheetReflowTime() {
               <TableCell>
                 <TextField
                   size="small"
-                  className="txtField"
+                  className="txtFieldReflow"
                   disabled={txtmcNoState.disabled}
                   sx={txtmcNoState.styled}
                   inputRef={FctxtmcNo}
@@ -95,7 +95,7 @@ function ScanSheetReflowTime() {
               <TableCell>
                 <TextField
                   size="small"
-                  className="txtField"
+                  className="txtFieldReflow"
                   disabled={txtSheetNoState.disabled}
                   sx={txtSheetNoState.styled}
                   value={txtSheetNo}
@@ -114,7 +114,7 @@ function ScanSheetReflowTime() {
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={3} sx={{ textAlign: "center",fontSize:'16px' }}>
+              <TableCell colSpan={3} sx={{ textAlign: "center",fontSize:'14px' }}>
                 {lblSheet}
               </TableCell>
             </TableRow>
