@@ -292,19 +292,25 @@ function fn_ScanSheetBakeTime() {
     }
   };
   const btnDelete = async () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to Delete this record?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteData();
-      }
-    });
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "Do you want to Delete this record?",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     deleteData();
+    //   }
+    // });
+    if (txtSheetNo == "") {
+      setFocus("txtSheetNoBaking");
+    }else{
+      await deleteData();
+    }
+    
   };
   async function deleteData(){
     let strError = "";
@@ -334,20 +340,25 @@ function fn_ScanSheetBakeTime() {
     setFocus("txtSheetNoBaking");
   }
   const btnReplace = async () => {
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to replace this record?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Replace();
-      }
-    });
+    if (txtSheetNo == "") {
+      setFocus("txtSheetNoBaking");
+    }else{
+      await Replace();
+    }
+    
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "Do you want to replace this record?",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     Replace();
+    //   }
+    // });
     
   };
   async function Replace(){

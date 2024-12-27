@@ -32,4 +32,9 @@
   border: 1px solid red !important;
   text-align: center;
 }
-
+.pnlResultOven {
+  display: flex;
+  margin: auto;
+  width: 600px;
+  margin-top: 40px;
+}
