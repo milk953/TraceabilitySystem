@@ -327,7 +327,7 @@ function fn_ScanSheetDispenserTime() {
     console.log(strError)
     setLblRemark({text:strError,color:'white',backgroundColor:'red'});
     if (strError == "") {
-      setLblSheet(`${lblSheet} Delete`);
+      setLblSheet(`${lblSheet} Delete Success`);
       setPnlResultState(false);
     }else{
       setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
