@@ -7,19 +7,13 @@ import {
   TableBody,
   TableRow,
   TableHead,
-  TableContainer,
   Paper,
   Typography,
   Button,
-  Select,
-  MenuItem,
   FormControl,
-  InputLabel,
   Autocomplete,
   Box,
-  Checkbox,
   Grid,
-  Input,
 } from "@mui/material";
 import { Table as AntTable,Button as AntButton  } from 'antd';
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -289,7 +283,11 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                     <TableCell align="right" style={{ width: "100px" }}>
                       <Typography>Pcs/Tray :</Typography>
                     </TableCell>
-                    <TableCell style={{ width: "130px" }}>
+                    <TableCell  style={{
+                        width: "130px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}>
                       <TextField
                         className="input_txt"
                         size="small"
@@ -303,7 +301,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                         }}
                         style={{backgroundColor: txtPcsTray.disbled ? '#e0e0e0' : 'inherit',  width: "60px" }}
                         disabled={txtPcsTray.disbled} //true พิมไม่ได้
-                        // // inputRef={fc_txtLotNo}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtPcsTray_TextChanged();
@@ -314,7 +311,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                       &nbsp; 
                       {lblLastTray.value}
                     </TableCell>
-                    {/* <TableCell style={{ width: "70px",}}></TableCell> */}
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography style={{color:'red'}}>NG :</Typography>
                     </TableCell>
@@ -458,8 +454,6 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
               xs={10}
               md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

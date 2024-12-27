@@ -265,12 +265,9 @@ function ScanSMTSerialSpotHeat() {
               xs={10}
               md={8}
               style={{
-                margin: "auto",
-                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                
               }}
             >
               {visiblegvScanResult == false && (
@@ -288,10 +285,11 @@ function ScanSMTSerialSpotHeat() {
               </>)}
               {visiblegvScanResult && (
               <>
+                <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                 <Paper
                   className="Card-lblResult"
                   // elevation={3}
-                  style={{ background: lblResult.text !=='OK'? "#BA0900":"#059212",}}
+                  style={{ background: lblResult.text !=='OK'? "red":"green",}}
                   
                 
                 >
@@ -300,7 +298,7 @@ function ScanSMTSerialSpotHeat() {
                     style={{ paddingTop: "3px", color: "#fff" }}
                   >{lblResult.text}</Typography>
                 </Paper>
- 
+                </div>
                 <AntTable 
                 columns={columns}
                 dataSource={gvScanResult}
