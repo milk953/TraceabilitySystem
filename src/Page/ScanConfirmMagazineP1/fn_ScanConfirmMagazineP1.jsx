@@ -375,7 +375,8 @@ function fn_ScanConfirmMagazineP1() {
           value: data,
         }));
         let exportMenuName = (menuName || "").replace(/ /g, "_");
-        FN_ExportGridView(exportMenuName + "&&" + "Serial_" + txtLotNo.value + ".xlsx", data);
+        let fileName = exportMenuName ? `${exportMenuName}_Serial_${txtLotNo.value}.xlsx` : `Serial_${txtLotNo.value}.xlsx`;
+        FN_ExportGridView(fileName, data);
       });
   };
 
