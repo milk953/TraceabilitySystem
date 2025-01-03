@@ -79,7 +79,7 @@ function ScanSMTSerialXrayConfirm() {
                 <TableBody>
                   <TableRow>
                     <TableCell align="right">
-                      <Typography> LotNo. :</Typography>
+                      <Typography> Lot No. :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
@@ -97,9 +97,16 @@ function ScanSMTSerialXrayConfirm() {
                             value: e.target.value.trim(),
                           }));
                         }}
+                        // onKeyDown={(e) => {
+                        //   if (e.key === "Enter") {
+                        //     txtLot_TextChanged();
+                        //   }
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
+                            e.preventDefault();
                             txtLot_TextChanged();
+                            e.target.blur();
                           }
                         }}
                       ></TextField>
@@ -142,7 +149,7 @@ function ScanSMTSerialXrayConfirm() {
 
                   <TableRow>
                     <TableCell align="right">
-                      <Typography>Total Sht:</Typography>
+                      <Typography>Total Sht :</Typography>
                     </TableCell>
                     <TableCell>
                       <TextField
@@ -270,7 +277,7 @@ function ScanSMTSerialXrayConfirm() {
                       </ButtonAndt>
                       &nbsp;&nbsp;
                       <ButtonAndt
-                        className="ButtonCancel"
+                        className="ButtonDelete"
                         onClick={btnCancel_Click}
                       >
                         Cancel

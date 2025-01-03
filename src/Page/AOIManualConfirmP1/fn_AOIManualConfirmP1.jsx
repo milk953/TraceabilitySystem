@@ -130,6 +130,7 @@ function fn_AOIManualConfirmP1() {
             strPlantCode: plantCode,
             strSheet_no: txtSerialNo.value.trim().toUpperCase(),
             strRbtAOI: AOI_SPI_Check,
+            strPage: 'AOIManualConfirmP1',
           },
         })
         .then((res) => {

@@ -572,6 +572,7 @@ function fn_ScanSMTSerialPcsNG() {
             strPrdName: params.strPrdName,
             strLot: params.strLot,
             strUserID: params.strHfUserId,
+            strPage: params.strPage,
             data: [
               {
                 SERIAL: params.strSerial,
@@ -1379,6 +1380,7 @@ function fn_ScanSMTSerialPcsNG() {
               strTestResult: dtSerial[insertDt].TEST_RESULT,
               strRemarkUpdate: dtSerial[insertDt].REMARK_UPDATE,
               strScanResult: dtSerial[insertDt].SCAN_RESULT,
+              strPage:'ScanSMTSerialPcsNG',
             });
 
             if (_strErrorUpdate != "") {

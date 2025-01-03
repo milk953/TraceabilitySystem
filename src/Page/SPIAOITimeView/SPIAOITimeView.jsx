@@ -73,7 +73,7 @@ function SPIAOITimeView() {
                   onChange={(e) => {
                     setTxtSPIMCNo((prevState) => ({
                       ...prevState,
-                      value: e.target.value,
+                      value: e.target.value.trim(),
                     }));
                   }}
                 />
@@ -134,7 +134,7 @@ function SPIAOITimeView() {
                   onChange={(e) => {
                     setTxtAOIMCNo((prevState) => ({
                       ...prevState,
-                      value: e.target.value,
+                      value: e.target.value.trim(),
                     }));
                   }}
                 />

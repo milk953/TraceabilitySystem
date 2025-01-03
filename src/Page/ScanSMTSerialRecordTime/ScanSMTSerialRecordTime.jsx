@@ -30,10 +30,11 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialRecordTime.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialRecordTime } from "./fn_ScanSMTSerialRecordTime";
-import { green } from "@mui/material/colors";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function ScanSMTSerialRecordTime() {
 
+    const { menuName } = fn_Homepage();
     const {
         selectedrbt, txtMachine, settxtMachine, handleChangeMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtLotNo, settxtLotNo,
         selProduct, setselProduct, txtRackNo, settxtRackNo, lblLot, lblLotTotal, lblLog, visiblelog, lblResult, pnlSerial, gvScanResult, istxtOpDisabled,
@@ -62,13 +63,14 @@ function ScanSMTSerialRecordTime() {
                             margin: "4px",
                         }}
                     >
-                        <Table className="TbScanSMTSerial">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={5} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             Serial Record Time
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>

@@ -61,10 +61,8 @@
 .divgvBackSidePcs {
     justify-content: center;
     display: flex;
-    max-width: 100%;
     overflow-x: auto;
-    width: 482px;
-    position: relative;
+    /* width: 482px; */
 }
 
 .divgvBackSidePcs th {
