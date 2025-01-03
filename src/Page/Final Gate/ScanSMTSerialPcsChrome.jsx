@@ -22,7 +22,9 @@ import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsChrome";
 import Pageimg from "/src/assets/1.jpg";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTRoollSht() {
+  const { menuName } = fn_Homepage();
   const {
     txtLot,
     settxtLot,
@@ -73,10 +75,11 @@ function ScanSMTRoollSht() {
           <Grid container spacing={2}>
             {/* style={{border:'1px solid red'}} */}
             <Grid item xs={10} md={4}>
-              <Table className="FinalGate" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Final Gate</Typography>
+                    {/* <Typography variant="h6">Final Gate</Typography> */}
+                    {menuName}
                   </TableCell>
                 </TableHead>
                 <TableBody>

@@ -28,7 +28,9 @@ import Hearder from "../Header/Header";
 import "../Common/StyleCommon.css";
 import { Table as AntTable,Button as AntButton } from "antd";
 import { fn_ConfirmBarcodeGrade } from "./fn_ConfirmBarcodeGrade";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ConfirmBarcodeGrade() {
+  const { menuName } = fn_Homepage();
   const {
     settxt_lotNo,
     txt_lotNo,
@@ -88,13 +90,14 @@ function ConfirmBarcodeGrade() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="TableBarcode" component={Card}>
+              <Table className="Header_Left" component={Card}>
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      <Typography variant="h5">
+                      {/* <Typography variant="h5">
                         Confirm Barcode Grade
-                      </Typography>
+                      </Typography> */}
+                      {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -475,7 +478,7 @@ function ConfirmBarcodeGrade() {
                         &nbsp;&nbsp;
                         <AntButton
                           
-                         type="primary" className="ButtonCancel"
+                         type="primary" className="BtCancel"
                           onClick={btnCancel_Click}
                         >
                           Cancel

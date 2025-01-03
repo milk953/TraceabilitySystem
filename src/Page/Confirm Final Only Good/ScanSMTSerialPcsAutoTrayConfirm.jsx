@@ -33,7 +33,9 @@ import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsAutoTrayConfirm } from "./fn_ScanSMTSerialPcsAutoTrayConfirm";
 import Pageimg from "/src/assets/1.jpg";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialPcsAutoTrayConfirm() {
+  const { menuName } = fn_Homepage();
   const {
     txtLot,
     settxtLot,
@@ -78,10 +80,11 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
         <Box sx={{ display: "flex", alignItems: "flex-start"}}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="FinalGateAuto" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Final Gate Confirm Only Good</Typography>
+                    {/* <Typography variant="h6">Final Gate Confirm Only Good</Typography> */}
+                    {menuName}
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -277,7 +280,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <AntButton type="primary"  className="ButtonCancel" onClick={btnCancel_Click}>
+                      <AntButton type="primary"  className="BtCancel" onClick={btnCancel_Click}>
                         Cancel
                       </AntButton>
                     </TableCell>
