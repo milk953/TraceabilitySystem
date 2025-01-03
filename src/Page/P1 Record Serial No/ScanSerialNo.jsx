@@ -61,7 +61,7 @@ function ScanSerialNo() {
   return (
     <>
       <Header />
-      <Card component={Paper} className="RecordSP1Card">
+      <Card component={Paper} className="Card-Common">
         <table>
           <td className="RecordSP1maintd">
             <Table className="RecordSP1Table" component={Paper}>
@@ -312,7 +312,7 @@ function ScanSerialNo() {
                   columns={columns}
                   bordered
                   dataSource={gvSerialResult}
-                  style={{ width: "980pxs", marginTop: "10px" }}
+                  style={{ width: "1050px", marginTop: "10px" }}
                   pagination={false}
                   rowClassName={getRowClassName}
                   size="small"

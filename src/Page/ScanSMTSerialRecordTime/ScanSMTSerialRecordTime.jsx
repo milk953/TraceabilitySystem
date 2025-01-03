@@ -22,12 +22,12 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import confirmImg from "/src/assets/confirm.png";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "/src/Page/ScanSMTSerialRecordTime/ScanSMTSerialRecordTime.css";
+import "./ScanSMTSerialRecordTime.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialRecordTime } from "./fn_ScanSMTSerialRecordTime";
 import { green } from "@mui/material/colors";
@@ -54,14 +54,9 @@ function ScanSMTSerialRecordTime() {
                 className="Card-Common"
                 sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-5px",
-                        marginTop: "-10px"
-                    }}
-                >
+                <Box justifyContent="space-between">
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "490px",
                             margin: "4px",
@@ -72,7 +67,7 @@ function ScanSMTSerialRecordTime() {
                                 <TableRow>
                                     <TableCell colSpan={5} align="center">
                                         <Typography variant="h6">
-                                            Serial/Sheet Record Time
+                                            Serial Record Time
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
@@ -480,6 +475,7 @@ function ScanSMTSerialRecordTime() {
                             </TableBody>
                         </Table>
                     </TableContainer>
+
                     <Paper
                         elevation={2}
                         style={{
@@ -488,7 +484,6 @@ function ScanSMTSerialRecordTime() {
                             height: "40px",
                             display: 'flex',
                             alignItems: 'center',
-                            marginLeft: "24px",
                         }}
                     >
                         <Typography align="left"
@@ -505,7 +500,7 @@ function ScanSMTSerialRecordTime() {
                             {lblLot}
                         </Typography>
                         <Typography
-                            style={{ padding: "5px" }}
+                            style={{ padding: "5px", color: "green" }}
                         >
                             OK :
                         </Typography>
@@ -528,7 +523,7 @@ function ScanSMTSerialRecordTime() {
                                 height: "auto",
                                 display: 'flex',
                                 alignItems: 'center',
-                                marginLeft: "24px",
+                                //marginLeft: "24px",
                                 padding: "0 10px",
                                 boxSizing: "border-box",
                             }}
@@ -556,7 +551,7 @@ function ScanSMTSerialRecordTime() {
                             className="Card-lblLog"
                             style={{
                                 width: "490px",
-                                marginLeft: "23px",
+                                marginLeft: "2px",
                             }}
                         >
                             {lblLog}
@@ -564,14 +559,15 @@ function ScanSMTSerialRecordTime() {
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerial" style={{ position: "relative" }}>
+                        <div className="divgvSerial">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
-                                    width: "100%",
+                                    width: "495px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "10px"
                                 }}
                             >
                                 <Table>
@@ -607,27 +603,28 @@ function ScanSMTSerialRecordTime() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonCancel"
+                                        style={{ height: "30px" }}
+                                        type="primary"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
@@ -635,7 +632,7 @@ function ScanSMTSerialRecordTime() {
                 </Box>
 
 
-                <div className="divgvScanResultRec" style={{ position: "relative" }}>
+                <div className="divgvScanResultRec">
                     {gvScanResult === false && (
                         <>
                             <img
@@ -666,7 +663,7 @@ function ScanSMTSerialRecordTime() {
                                     </Typography>
                                 </Paper>
                             </div>
-                            <br />
+
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -676,6 +673,7 @@ function ScanSMTSerialRecordTime() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
 
                         </>

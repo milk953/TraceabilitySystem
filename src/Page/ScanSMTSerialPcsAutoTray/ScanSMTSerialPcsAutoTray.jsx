@@ -22,7 +22,7 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -57,7 +57,7 @@ function ScanSMTSerialPcsAutoTray() {
                     }}
                 >
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "420px",
                             margin: "4px",
@@ -84,7 +84,7 @@ function ScanSMTSerialPcsAutoTray() {
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLot}
+                                            value={txtLot.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
@@ -144,7 +144,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                 size="small"
                                                 inputRef={inputPackingNo}
                                                 fullWidth
-                                                value={txtPackingNo}
+                                                value={txtPackingNo.trim()}
                                                 disabled={txtPackingNoDisabled}
                                                 style={{
                                                     backgroundColor: txtPackingNoDisabled ? "#e0e0e0" : "inherit",
@@ -221,14 +221,14 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableCell>
                                     <TableCell>
                                         <Typography
-                                            style={{ color: "#ff4d4f" }}
+                                            style={{ color: "red" }}
                                         >
                                             NG :
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Typography
-                                            style={{ color: "#ff4d4f" }}
+                                            style={{ color: "red" }}
                                         >
                                             {lblSerialNG}
                                         </Typography>
@@ -254,12 +254,13 @@ function ScanSMTSerialPcsAutoTray() {
                     {pnlSerial && (
                         <div className="divgvSerialPcs">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
-                                    width: "460px",
+                                    width: "420px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "10px"
                                 }}
                             >
                                 <Table>
@@ -296,27 +297,28 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonCancel"
+                                        style={{ height: "30px" }}
+                                        type="primary"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
@@ -354,7 +356,7 @@ function ScanSMTSerialPcsAutoTray() {
                             <div className="gvScanResultContainer">
                                 <Paper
                                     className="Card-lblResult"
-                                    elevation={3}
+                                    //elevation={3}
                                     style={{
                                         background: lblResultcolor,
                                         textAlign: "center",
@@ -391,7 +393,7 @@ function ScanSMTSerialPcsAutoTray() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
-                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
                         </>
                     )}

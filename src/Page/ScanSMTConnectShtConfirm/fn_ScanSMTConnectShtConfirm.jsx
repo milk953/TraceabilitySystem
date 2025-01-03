@@ -104,6 +104,7 @@ function fn_ScanSMTConnectShtConfirm() {
     }
   };
   const txtLot_Change = async () => {
+    setLblErrorState(false);
     setLblError("");
     let strLotAll;
     let strLot;
@@ -276,7 +277,6 @@ function fn_ScanSMTConnectShtConfirm() {
           drSerialCount = res.data;
         })
         .catch((error) => {
-          // Swal.fire("Error", error.message);
           alert(error.message);
         });
       return drSerialCount;
@@ -294,11 +294,6 @@ function fn_ScanSMTConnectShtConfirm() {
           result = res.data.p_error;
         })
         .catch((error) => {
-        //   Swal.fire({
-        //     icon: "error",
-        //     title: "Error",
-        //     text: error.message,
-        //   });
         alert(error.message);
         });
       return result;
@@ -312,7 +307,6 @@ function fn_ScanSMTConnectShtConfirm() {
       });
     }
     setGvSerial(arrSerial);
-    // SetFocus(`txtSerial_0`);
   }
   async function setSerialData() {
     let dtSerial = getInputSerial();

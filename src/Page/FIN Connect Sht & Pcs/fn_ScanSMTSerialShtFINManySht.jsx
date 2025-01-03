@@ -194,6 +194,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setProductSelect(productCombo[0].prd_name);
     setTimeOut(Fctxtlot)
     sethfMode("lot");
+    setHideImg(true);
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");

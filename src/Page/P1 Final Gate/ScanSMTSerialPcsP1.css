@@ -12,6 +12,7 @@
   border-radius: 5px 5px 0 0 !important;
   color: #fff;
   font-size: 20px;
+  height: 25px;
 }
 .P1FGTable td {
   padding: 5px !important;
@@ -80,7 +81,6 @@
 }
 .lblResultCardP1FG{
 
-  max-width: 1000px;
   width: 100%;
   /* margin: auto; */
   /* margin-left: 0px; */
@@ -90,7 +90,7 @@
 
 .lblResultP1FG{
 margin-left: 20px;
-width: 1000px;
+width: 1050px;
 text-align: center;
 font-size: 80px;
 /* height: 0px; */
