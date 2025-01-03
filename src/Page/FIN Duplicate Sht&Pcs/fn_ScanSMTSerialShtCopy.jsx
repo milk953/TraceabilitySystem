@@ -743,7 +743,7 @@ function fn_ScanSMTSerialShtCopy() {
                 strUserID: txtOperator,
                 strPlantCode: plantCode,
                 hfUserStation: hfUserStation,
-                strProgram: "frm_ScanSMTSerialShtFIN",
+                strProgram: "FIN Duplicate Sht&Pcs",
               });
               if (_strUpdateError != "") {
                 _strScanResultAll = "NG";
@@ -788,7 +788,8 @@ function fn_ScanSMTSerialShtCopy() {
       setLblError("Please input Sheet Side No. !!!");
       setMode("SERIAL_ERROR");
     }
-    getCountDataBylot(txtlotNo);
+    getCountDataBylot(txtlotNo.split(";")[0]);
+    alert(txtlotNo.split(";")[0]);
     setTxtRollLeaf("");
     setTxtbackSide(gvBackSide.map(() => ""));
     setTxtMachineNo("");
@@ -862,7 +863,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = error.message;
         });
       return result;
-    }else if (type == "GetLotSerialCountData") {
+    } else if (type == "GetLotSerialCountData") {
       let drSerialCount = [];
       await axios
         .post("/api/ScanFin/GetLotSerialCountData", {
@@ -904,8 +905,7 @@ function fn_ScanSMTSerialShtCopy() {
           result = error.message;
         });
       return result;
-    } 
-    else if (type == "GetConnectShtPlasmaTime") {
+    } else if (type == "GetConnectShtPlasmaTime") {
       let result = "";
       await axios
         .post("/api/ScanFin/GetConnectShtPlasmaTime", {
@@ -921,8 +921,7 @@ function fn_ScanSMTSerialShtCopy() {
           setLblError(error.message);
         });
       return result;
-    }
-    else if (type == "GetSheetDuplicateConnectShtType") {
+    } else if (type == "GetSheetDuplicateConnectShtType") {
       let result = "";
       await axios
         .post("/api/ScanFin/GetSheetDuplicateConnectShtType", {

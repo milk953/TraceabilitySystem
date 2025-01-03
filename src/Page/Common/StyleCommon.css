@@ -244,11 +244,12 @@
   border-radius: 5px 5px 0 0 !important;
   font-size: 24px;
   color: #fff;
+  height: 25px;
 }
 
 .Header_Left td {
-  /* padding: 4px 4px 4px 4px !important; */
-  padding: 8px !important;
+  padding: 4px 4px 4px 4px !important;
+  /* padding: 8px !important; */
 }
 
 /* .tableGvResult .ant-table-tbody .ant-table-cell:nth-child(odd) {

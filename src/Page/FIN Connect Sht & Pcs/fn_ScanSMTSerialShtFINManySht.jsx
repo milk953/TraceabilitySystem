@@ -3,9 +3,13 @@ import { Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import {useLoading} from "../../loading/fn_loading";  
+import {DataConfig} from "../Common/function_Common";
+
 const fn_ScanSMTSerialShtFINManySht = () => {
   //region useState
   //env State
+  const{ConfigData} = DataConfig();
+  const FAC = ConfigData.VITE_FAC_A1;
   let AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
   let CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
   let CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
@@ -478,7 +482,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           _strReturn = await getData("SetSerialLotShtELTTable", {
             strSheetNo: dtSerial[x].SHEET,
             strPrdName: productSelect,
-            strPlantCode: "5",
+            strPlantCode: FAC,
             strSideF: dtSerial[x].FRONT_SIDE,
             strSideB: dtSerial[x].BACK_SIDE,
             strPcsno: dtSerial[x].SEQ,
@@ -686,7 +690,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                 strUserID: txtOperator,
                 strPlantCode: plantCode,
                 hfUserStation: hfUserStation,
-                strProgram: "frm_ScanSMTSerialShtFIN",
+                strProgram: "FIN Connect Sht&Pcs",
               });
               if (_strUpdateError != "") {
                 _strScanResultAll = "NG";

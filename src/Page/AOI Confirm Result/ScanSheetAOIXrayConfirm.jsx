@@ -32,9 +32,10 @@ import "./AOIXrayConfirm.css";
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Common/StyleCommon.css";
-import { Margin } from "@mui/icons-material";
 import { fn_ScanSheetAOIXrayConfirm } from "../AOI Confirm Result/fn_ScanSheetAOIXrayConfirm";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSheetMOTTime() {
+  const { menuName } = fn_Homepage();
   const {
     settxtSheetNo,
     txtSheetNo,
@@ -49,7 +50,6 @@ function ScanSheetMOTTime() {
   return (
     <div>
       <Hearder />
-
           <Grid className="Center_Layout">
             <Grid >
               <Table
@@ -61,9 +61,9 @@ function ScanSheetMOTTime() {
                   <TableRow>
                     <TableCell
                       colSpan={3}
-                    
                     >
-                      AOI Confirm Result
+                    {menuName}
+                      {/* AOI Confirm Result */}
                     </TableCell>
                   </TableRow>
                 </TableHead>
