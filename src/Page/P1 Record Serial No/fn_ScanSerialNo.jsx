@@ -144,7 +144,7 @@ function fn_ScanSerialNo() {
   };
   const handle_Cancel_Click = () => {
     setGvSerial([]);
-    
+    setHideImg(true);
     setGvSerialResult([]);
     SetFocus("txtSerial_0");
     setTxtSerial(gvSerial.map(() => ""));
