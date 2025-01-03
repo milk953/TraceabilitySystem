@@ -239,6 +239,7 @@ function fn_Change_Serial() {
                   strreject_flg: drRow.REJECT_FLG,
                   strchecker_flg: drRow.CHECKER1_FLG,
                   strfinalgate_flg: drRow.FINALGATE_FLG,
+                  strPage: "Change_Serial",
                 },
               })
               .then((res) => {});

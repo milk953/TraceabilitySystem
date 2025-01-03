@@ -4,6 +4,7 @@ import axios from "axios";
 import { color } from "framer-motion";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTConnectRollConfirm() {
   const { showLoading, hideLoading } = useLoading();
@@ -119,7 +120,9 @@ function fn_ScanSMTConnectRollConfirm() {
     style: {},
   });
   const hfCheckOST = "Y";
-  const plantCode = import.meta.env.VITE_FAC;
+  // const plantCode = import.meta.env.VITE_FAC;
+  const { ConfigData } = DataConfig();
+  const plantCode = ConfigData.FACTORY;
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
   const gvSerialRefs = useRef([]);
@@ -523,12 +526,12 @@ function fn_ScanSMTConnectRollConfirm() {
   };
   const ddlProduct_SelectedIndexChanged = async (value) => {
     if (txtLot.value.trim().toUpperCase() !== "") {
-          // เพิ่มนี้มา --
-    setDdlProduct((prevState) => ({
-      ...prevState,
-      value: value,
-    }));
-    // จบ --
+      // เพิ่มนี้มา --
+      setDdlProduct((prevState) => ({
+        ...prevState,
+        value: value,
+      }));
+      // จบ --
       setLblPnlLog((prevState) => ({
         ...prevState,
         value: "",
