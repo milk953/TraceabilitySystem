@@ -23,15 +23,17 @@ import {
     Tooltip,
 } from "@mui/material";
 import Pageimg from "/src/assets/1.jpg";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialShtConfirm.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialShtConfirm } from "./fn_ScanSMTSerialShtConfirm";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function ScanSMTSerialShtConfirm() {
 
+    const { menuName } = fn_Homepage();
     const {
         txtLotNo, settxtLotNo, selProduct, Productdata, lblTotalSht, visiblelog, lblLog, pnlSerial, txtLotDisabled, selProDisabled,
         gvScanResult, inputLot, ddlProduct, lblResultcolor, gvScanData, txtgvSerial, handleChangeLot, ibtBackClick, lblResult,
@@ -49,19 +51,20 @@ function ScanSMTSerialShtConfirm() {
             >
                 <Box justifyContent="space-between">
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "400px",
                             margin: "4px",
                         }}
                     >
-                        <Table className="TbScanSMTSerialSht">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={3} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             Confirm Sheet No.
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -76,7 +79,7 @@ function ScanSMTSerialShtConfirm() {
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
@@ -86,11 +89,6 @@ function ScanSMTSerialShtConfirm() {
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
-                                                    handleChangeLot();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                if (txtLotNo !== "") {
                                                     handleChangeLot();
                                                 }
                                             }}
@@ -146,8 +144,8 @@ function ScanSMTSerialShtConfirm() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "404px",
-                                marginLeft: "20px",
+                                width: "403px",
+                                marginLeft: "2px",
                             }}
                         >
                             {lblLog}
@@ -155,14 +153,15 @@ function ScanSMTSerialShtConfirm() {
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerialSht" style={{ position: "relative" }}>
+                        <div className="divgvSerialSht">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
-                                    width: "100%",
+                                    width: "400px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "4px"
                                 }}
                             >
                                 <Table>
@@ -194,7 +193,6 @@ function ScanSMTSerialShtConfirm() {
                                                             handleChangeSerial(index, e);
                                                         }}
                                                         onKeyDown={(e) => handleKeygvSerial(e, index)}
-                                                        onBlur={(e) => handleKeygvSerial(e, index)}
                                                     />
                                                 </TableCell>
                                             </TableRow>
@@ -202,27 +200,28 @@ function ScanSMTSerialShtConfirm() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonCancel"
+                                        style={{ height: "30px" }}
+                                        type="primary"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
@@ -245,7 +244,7 @@ function ScanSMTSerialShtConfirm() {
                     {gvScanResult && (
                         <>
 
-                            <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+                            <div style={{ display: "flex", gap: "10px", width: "100%", marginTop: "2px" }}>
                                 <Paper
                                     className="Card-lblResult"
                                     style={{
@@ -261,7 +260,7 @@ function ScanSMTSerialShtConfirm() {
                                     </Typography>
                                 </Paper>
                             </div>
-                            <br />
+                           
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -271,6 +270,7 @@ function ScanSMTSerialShtConfirm() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
 
                         </>
