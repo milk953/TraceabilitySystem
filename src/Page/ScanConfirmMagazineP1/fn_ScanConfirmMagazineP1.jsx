@@ -198,7 +198,7 @@ function fn_ScanConfirmMagazineP1() {
             strLotno: txtLotNo.value,
             strMgzNo: txtMagNo.value.trim().toUpperCase(),
             strStation: hfUserStation,
-            strUpdateProgram: menuName || "",
+            strUpdateProgram: 'ScanConfirmMagazineP1',
           },
         });
         let data2 = res2.data.flat().flat();
