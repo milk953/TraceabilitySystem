@@ -70,7 +70,7 @@ function ScanSMTConnectRollConfirm() {
                 <TableBody>
                   <TableRow>
                     <TableCell align="right">
-                      <Typography> LotNo. :</Typography>
+                      <Typography> Lot No. :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
@@ -255,7 +255,7 @@ function ScanSMTConnectRollConfirm() {
                       </ButtonAndt>
                       &nbsp;&nbsp;
                       <ButtonAndt
-                        className="ButtonCancel"
+                        className="ButtonDelete"
                         onClick={btnCancel_Click}
                       >
                         Cancel
