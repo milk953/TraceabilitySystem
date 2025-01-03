@@ -258,10 +258,13 @@ function fn_ScanSMTSerialPcsP1() {
     setlblErrorState(false);
     SetMode("LOT");
     SetFocus("P1FGScanLot");
+    setHideImg(true);
   };
   const btnCancel_Click = () => {
     setTxtSerial(gvSerial.map(() => ""));
     SetFocus("txtSerial_0");
+    setlblResultState(false);
+    setHideImg(true);
   };
   const btnSvae_Click = () => {
     setSerialDataTray();
@@ -1051,7 +1054,9 @@ function fn_ScanSMTSerialPcsP1() {
     if(dtLotPassCount != ''){
       setlblLotTotal(dtLotPassCount);
     }
-    btnCancel_Click();
+    // btnCancel_Click();
+    setTxtSerial(gvSerial.map(() => ""));
+    SetFocus("txtSerial_0");
     hideLoading();
     scrollToTop();
   }

@@ -17,6 +17,7 @@
   border-radius: 5px 5px 0 0 !important;
   color: #fff;
   font-size: 20px;
+  height: 25px;
 }
 
 .RecordSP1txtF {
@@ -37,12 +38,12 @@
 }
 .lblResultRecordSP1 {
   margin-left: 20px;
-  width: 1000px;
+  width: 1050px;
   text-align: center;
   font-size: 80px;
 }
 .lblResultCardRecordSP1 {
-  max-width: 1000px;
+  max-width: 1045px;
   width: 100%;
   height: 45px;
 }
@@ -54,7 +55,7 @@
   min-height: 200px;
   padding: 20px;
   overflow: auto;
-  margin-top: 80px;
+  margin-top: 70px;
 }
 .RecordSP1TextFSerial {
   padding: 3px;
