@@ -11,6 +11,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Button as AntButton } from "antd";
 import "./ScanSMTSerialPcsNG.css";
 import { Typography ,Table as AntTable  } from "antd";
 import { fn_ScanSMTSerialPcsNG } from "./fn_ScanSMTSerialPcsNG";
@@ -144,7 +145,7 @@ function ScanSMTSerialPcsNG() {
                     </TableCell>
                     <TableCell >{lblLot}</TableCell>
                     <TableCell
-                      style={{ width: 30, color: "green", fontWeight: "bold" }}
+                      style={{ width: 30, color: "green" }}
                     >
                       OK:
                     </TableCell>
@@ -156,7 +157,7 @@ function ScanSMTSerialPcsNG() {
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell
-                      style={{ width: 30, color: "red", fontWeight: "bold" }}
+                      style={{ width: 30, color: "red" }}
                     >
                       NG:
                     </TableCell>
@@ -232,19 +233,19 @@ function ScanSMTSerialPcsNG() {
                           gap: "10px",
                         }}
                       >
-                        <Button 
+                        <AntButton 
                         className="BtSave" 
                         onClick={handle_Save_Click}>
-                          SAVE
-                        </Button>
+                          Save
+                        </AntButton>
                         &nbsp;&nbsp;
-                        <Button
+                        <AntButton
                           className="BtCancel"
                           onClick={handle_Cancel_Click}
                         >
                           {" "}
                           Cancel
-                        </Button>
+                        </AntButton>
                       </TableCell>
                     </TableRow>
                   </TableBody>
