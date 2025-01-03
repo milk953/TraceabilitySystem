@@ -1578,6 +1578,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   strPrdName: _strPrdName,
                   strLot: _strLot,
                   strUserID: hfUserID,
+                  strPage:'ScanSMTSerialPcsAuto', 
                   data: [
                     {
                       SERIAL: dtSerial[drRow].SERIAL,
