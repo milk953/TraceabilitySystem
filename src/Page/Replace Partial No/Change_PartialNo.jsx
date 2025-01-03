@@ -32,7 +32,9 @@ import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Common/StyleCommon.css";
 import { fn_Change_PartialNo } from "../Replace Partial No/fn_Change_PartialNo";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSheetMOTTime() {
+  const { menuName } = fn_Homepage();
   const {
     columns,
     settxtSerialNo,
@@ -92,7 +94,8 @@ function ScanSheetMOTTime() {
                       align="center"
                       
                     >
-                      Replace Partial No.
+                         {menuName}
+                      {/* Replace Partial No. */}
                     </TableCell>
                   </TableRow>
                 </TableHead>

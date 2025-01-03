@@ -34,7 +34,9 @@ import "../ScanSheetMOTTime1/ScanSheetMOTTime1.css"
 import Hearder from "../Header/Header";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { fn_ScanSheetMOTTime } from "./fn_ScanSheetMOTTime1";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSheetMOTTime() {
+  const { menuName } = fn_Homepage();
   const {
     txtLotNo_TextChanged,
     settxtlot,
@@ -85,7 +87,8 @@ function ScanSheetMOTTime() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} >
-                     Pre-Baking <ArrowRightOutlined /> MOT1 Control Time
+                      {menuName}
+                     {/* Pre-Baking <ArrowRightOutlined /> MOT1 Control Time */}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -270,9 +273,9 @@ function ScanSheetMOTTime() {
                 <TableCell colSpan={3} align="center">
                   <Box display="flex" justifyContent="center" alignItems="center" width="100%">
                     <Box display="flex" justifyContent="space-between" alignItems="center" width="90%">
-                      <Button  type="primary" size="large" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
-                      <Button  type="primary" size="large" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
-                      <Button  type="primary" size="large"  onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
+                      <Button  type="primary" size="middle" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
+                      <Button  type="primary" size="middle" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
+                      <Button  type="primary" size="middle"  onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
                     </Box>
                   </Box>
                 </TableCell>
