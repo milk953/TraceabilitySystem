@@ -30,9 +30,11 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import "/src/Page/ScanSMTSerialPcsAutoTray/ScanSMTSerialPcsAutoTray.css";
 import Header from "../Header/Header";
 import { fn_ScanSMTSerialPcsAutoTray } from "./fn_ScanSMTSerialPcsAutoTray";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function ScanSMTSerialPcsAutoTray() {
 
+    const { menuName } = fn_Homepage();
     const {
         txtLot, selProduct, Productdata, txtPackingNo, lblLot, lblLotTotal, txtPcsTray, lblSerialNG, lblLog, visiblelog,
         lblResult, lblResultcolor, lblTime, pnlPackingGroup, pnlSerial, hfSerialCount, txtgvSerial, txtLotDisabled, selProDisabled,
@@ -63,13 +65,14 @@ function ScanSMTSerialPcsAutoTray() {
                             margin: "4px",
                         }}
                     >
-                        <Table className="TbScanSMTSerialPcs">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={5} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             Final Gate Only Good
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
