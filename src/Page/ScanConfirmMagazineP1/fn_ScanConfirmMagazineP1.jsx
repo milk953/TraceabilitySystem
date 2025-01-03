@@ -6,9 +6,12 @@ import { values } from "lodash";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import Swal from "sweetalert2";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function fn_ScanConfirmMagazineP1() {
   const plantCode = import.meta.env.VITE_FAC;
+  const { menuName } = fn_Homepage();
+  console.log("แสดงชื่อของ Menu Name : ",menuName);
   const [hfUserID, setHfUserID] = useState("");
   const [hfUserStation, setHfUserStation] = useState("");
   const [txtLotNo, setTxtLotNo] = useState({
@@ -195,6 +198,7 @@ function fn_ScanConfirmMagazineP1() {
             strLotno: txtLotNo.value,
             strMgzNo: txtMagNo.value.trim().toUpperCase(),
             strStation: hfUserStation,
+            strUpdateProgram: menuName || "",
           },
         });
         let data2 = res2.data.flat().flat();
@@ -370,7 +374,8 @@ function fn_ScanConfirmMagazineP1() {
           ...prevState,
           value: data,
         }));
-        FN_ExportGridView("Serail_" + txtLotNo.value + ".xlsx", data);
+        let exportMenuName = (menuName || "").replace(/ /g, "_");
+        FN_ExportGridView(exportMenuName + "&&" + "Serial_" + txtLotNo.value + ".xlsx", data);
       });
   };
 
