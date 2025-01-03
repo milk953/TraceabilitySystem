@@ -20,7 +20,7 @@ function fn_ScanSMTSerialRecordTime() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("#059212");
+    const [lblResultcolor, setlblResultcolor] = useState("green");
     const [pnlMachine, setpnlMachine] = useState(true);
     const [pnlRackNo, setpnlRackNo] = useState(false);
     const [lblOP, setlblOP] = useState("");
@@ -419,7 +419,7 @@ function fn_ScanSMTSerialRecordTime() {
                 strPrdName = res.data.prdName[0];
             });
         console.log("PrdName:", strPrdName);
-        if (strPrdName !== "") {
+        if (strPrdName !== undefined) {
             setlblLog("");
             setvisiblelog(false);
             settxtLotNo(strLot);
@@ -1295,7 +1295,7 @@ function fn_ScanSMTSerialRecordTime() {
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
-                                setlblResultcolor("#BA0900");
+                                setlblResultcolor("red");
                                 setlblLog(_strErrorUpdate);
                                 setvisiblelog(true);
                             }
@@ -1308,9 +1308,9 @@ function fn_ScanSMTSerialRecordTime() {
         }
 
         if (_strScanResultAll === "NG") {
-            setlblResultcolor("#BA0900");
+            setlblResultcolor("red");
         } else {
-            setlblResultcolor("#059212");
+            setlblResultcolor("green");
         }
 
         await getCountDataBylot(lblLot);
@@ -1328,8 +1328,9 @@ function fn_ScanSMTSerialRecordTime() {
     };
 
     const handleChangeSerial = (index, event) => {
+        const trimmedValue = event.target.value.trim();
         const newValue = [...txtgvSerial];
-        newValue[index] = event.target.value;
+        newValue[index] = trimmedValue;
         settxtgvSerial(newValue);
     };
 
@@ -1381,17 +1382,16 @@ function fn_ScanSMTSerialRecordTime() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-                if (text == '')
+                if (record.SERIAL == "") {
+                    return "";
+                } else {
                     return text;
-                else {
-                    return (
-                        <Tag
-                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
-                        >
-                            {text}
-                        </Tag>
-                    );
                 }
+                // return text ? (
+                //   < Tag className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""} >
+                //     {text}
+                //   </Tag>
+                // ) : null;
             },
             align: "center",
         },

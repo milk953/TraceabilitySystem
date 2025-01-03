@@ -22,10 +22,10 @@ function fn_ScanSMTSerialPcsAutoTray() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("#059212");
+    const [lblResultcolor, setlblResultcolor] = useState("green");
     const [lblTime, setlblTime] = useState("");
     const [pnlPackingGroup, setpnlPackingGroup] = useState(false);
-    const [lblTimecolor, setlblTimecolor] = useState("#059212");
+    const [lblTimecolor, setlblTimecolor] = useState("green");
     const [lblLastTray, setlblLastTray] = useState("Not Use");
 
     //hiddenfield
@@ -397,9 +397,10 @@ function fn_ScanSMTSerialPcsAutoTray() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const newValues = [...txtgvSerial];
-        newValues[index] = e.target.value;
-        settxtgvSerial(newValues);
+        const trimmedValue = e.target.value.trim();
+        const newValue = [...txtgvSerial];
+        newValue[index] = trimmedValue;
+        settxtgvSerial(newValue);
     };
 
     const btnSaveClick = async () => {
@@ -1151,9 +1152,9 @@ function fn_ScanSMTSerialPcsAutoTray() {
             setlblResult(_strScanResultAll);
 
             if (_strScanResultAll === "NG") {
-                setlblResultcolor("#BA0900");
+                setlblResultcolor("red");
             } else {
-                setlblResultcolor("#059212");
+                setlblResultcolor("green");
             }
 
             console.log(hfPlasmaCheck, hfPlasmaHideTime, "_dblPlasmaRemain")
@@ -1170,11 +1171,11 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         const minutes = Math.floor(fractionalPart * 60);
                         newlblTime += `${minutes} min. `;
                         setlblTime(newlblTime);
-                        setlblTimecolor("#059212");
+                        setlblTimecolor("green");
                     }
                 } else {
                     setlblTime("Over " + hfPlasmaTime + " hr.");
-                    setlblTimecolor("#BA0900");
+                    setlblTimecolor("red");
                 }
             } else {
                 setlblTime("");
@@ -1233,7 +1234,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
             if (_strErrorUpdate !== "") {
                 setlblResult("Error : " + _strErrorUpdate);
-                setlblResultcolor("#BA0900");
+                setlblResultcolor("red");
             }
 
 
