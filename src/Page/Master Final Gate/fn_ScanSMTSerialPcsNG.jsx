@@ -690,6 +690,7 @@ function fn_ScanSMTSerialPcsNG() {
   };
   const handle_Cancel_Click = () => {
     // setMode("SERIAL");
+    setHideImg(true);
     setLblResultState(false);
     setLblSerialNG(0);
     setTxtSerial(gvSerial.map(() => ""));

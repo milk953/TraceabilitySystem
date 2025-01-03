@@ -161,7 +161,6 @@ function ScanSMTConnectShtConfirm() {
                   {lblError}
                 </Card>
               )}
-              &nbsp;&nbsp;
               {panalSerialState && (
                 <Table className="GvSerialConnectConfirm" component={Card}>
                   <TableHead>
@@ -284,7 +283,7 @@ function ScanSMTConnectShtConfirm() {
                   </Paper>
                 </div>
               )}
-              <div style={{ width: "900px" }}>
+              <div style={{ width: "1050px" }}>
                 {gvResutlState && (
                   // <Paper>
                   <AntTable

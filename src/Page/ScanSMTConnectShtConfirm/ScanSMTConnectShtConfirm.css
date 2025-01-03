@@ -12,6 +12,7 @@
   border-radius: 5px 5px 0 0 !important;
   color: #fff;
   font-size: 20px;
+  height: 25px;
 }
 .ScanSMTConnectShtConfirmTable td {
   padding: 5px !important;
@@ -31,7 +32,7 @@
 }
 /*  */
 .tableGvResultConncetShtConfirm .ant-table{
-  margin-left: 50px;
+  margin-left: 30px;
   box-shadow:rgba(0, 0, 0, 0.10) 0px 3px 8px !important;
   border: 1px black;
 }
@@ -54,6 +55,7 @@
 }
 .GvSerialConnectConfirm{
   border-radius: 10% ;
+  margin-top: 10px;
 
 }
 .GvSerialConnectConfirm th{
@@ -72,18 +74,19 @@
 }
 
 .lblResultConfirmConnect{
-  margin-left: 20px;
-  width: 600px;
+  /* margin-left: 20px; */
+  width: 1050px;
   text-align: center;
   font-size: 80px;
   /* height: 100px; */
 }
 .lblResultCardConfirmConnect{
   
-  width: 850px !important;
+  width: 1020px !important;
   width: 100%;
   margin-left: 30px;
   height: 45px;
+  margin-bottom: 5px;
 
 }
 .row-red {
