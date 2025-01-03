@@ -233,7 +233,8 @@ function ScanConfirmMagazineP1() {
                           variant="body1"
                           style={{
                             width: "100%",
-                            color: "#006699",
+                            // color: "#006699",
+                            color: "black",
                             display: "flex",
                             justifyContent: "center",
                             fontSize: "16px",

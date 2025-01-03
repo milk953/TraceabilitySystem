@@ -44,11 +44,13 @@ function fn_Change_PartialNo() {
   const SERIAL_DATABASE_SWITCH = ConfigData.SERIAL_DATABASE_SWITCH;
   const Fac = ConfigData.FACTORY;
   const IP = localStorage.getItem("ipAddress");
+
   //PageLoad----------
   useEffect(() => {
     getInitialSerial();
   }, []);
   //-------------------
+
   const columns = [
     {
       title: "No.",
@@ -64,7 +66,7 @@ function fn_Change_PartialNo() {
       title: "Old Partial No.",
       dataIndex: "SERIAL_OLD",
       key: "Old Partial No.",
-      align: "left",
+      align: "center",
       render: (text, record, index) => {
         return text;
       },
@@ -73,7 +75,7 @@ function fn_Change_PartialNo() {
       title: "New Partial No.",
       dataIndex: "SERIAL_NEW",
       key: "New Partial No.",
-      align: "left",
+      align: "center",
       render: (text, record, index) => {
         return text;
       },
@@ -117,6 +119,7 @@ function fn_Change_PartialNo() {
       }, 300);
     }
   };
+  
   const getInputSerial = async (strError) => {
     let dtData = [];
 
@@ -247,6 +250,7 @@ function fn_Change_PartialNo() {
                   IP_ADDRESS: IP,
                   PLANT_CODE: Fac,
                   strOldSerial: strOldSerial,
+                  update_program : 'Replace Partial No'
                 },
               })
               .then((res) => {

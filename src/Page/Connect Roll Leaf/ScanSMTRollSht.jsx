@@ -34,7 +34,9 @@ import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
 import { Table as AntTable,Button as AntButton } from "antd";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTRoollSht() {
+  const { menuName } = fn_Homepage();
   const {
     settxt_lotNo,
     txt_lotNo,
@@ -81,7 +83,7 @@ function ScanSMTRoollSht() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="ScanSMT" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={4} align="center">
                     <Typography variant="h6">
@@ -187,7 +189,7 @@ function ScanSMTRoollSht() {
                         value={txtOperator}
                         onChange={(e, value) => {
                           settxtOperator(e.target.value);
-                          console.log(e.target.value,'txtoper');
+                        
                       }}
                    
 
@@ -337,7 +339,7 @@ function ScanSMTRoollSht() {
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <AntButton  type="primary" className="ButtonCancel" onClick={ibtCancel_Click}>Cancel</AntButton>
+                      <AntButton  type="primary" className="BtCancel" onClick={ibtCancel_Click}>Cancel</AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>

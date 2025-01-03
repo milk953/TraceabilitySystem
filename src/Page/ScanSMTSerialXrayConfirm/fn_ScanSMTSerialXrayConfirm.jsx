@@ -885,6 +885,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       align: "center",
     },
   ];
+ 
 
   // function fnSetFocus(txtField) {
   //   setTimeout(() => {
