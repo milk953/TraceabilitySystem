@@ -375,7 +375,8 @@ function fn_ScanConfirmMagazineP1() {
           value: data,
         }));
         let exportMenuName = (menuName || "").replace(/ /g, "_");
-        let fileName = exportMenuName ? `${exportMenuName}_Serial_${txtLotNo.value}.xlsx` : `Serial_${txtLotNo.value}.xlsx`;
+        // let fileName = exportMenuName ? `${exportMenuName}_Serial_${txtLotNo.value}.xlsx` : `Serial_${txtLotNo.value}.xlsx`;
+        let fileName = exportMenuName ? `${exportMenuName}.xlsx` : `P1_Confirm_Magazine.xlsx`;
         FN_ExportGridView(fileName, data);
       });
   };
