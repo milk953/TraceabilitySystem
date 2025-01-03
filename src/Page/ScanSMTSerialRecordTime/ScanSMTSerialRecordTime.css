@@ -41,12 +41,10 @@
     min-width: 50px !important;
 }
 
-.divgvSerial {
+/* .divgvSerial {
     justify-content: center;
     display: flex;
-    max-width: 100%;
-    width: 550px;
-}
+} */
 
 .divgvSerial th {
     text-align: center;

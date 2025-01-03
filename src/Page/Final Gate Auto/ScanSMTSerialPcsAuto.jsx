@@ -33,7 +33,9 @@ import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialPcsChrome } from "./fn_ScanSMTSerialPcsAuto";
 import Pageimg from "/src/assets/1.jpg";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTRoollSht() {
+  const { menuName } = fn_Homepage();
   const {
     txtLot,
     settxtLot,
@@ -78,10 +80,11 @@ function ScanSMTRoollSht() {
         <Box sx={{ display: "flex", alignItems: "flex-start"}}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="FinalGateAuto" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">Final Gate Auto</Typography>
+                    {/* <Typography variant="h6">Final Gate Auto</Typography> */}
+                    {menuName}
                   </TableCell>
                 </TableHead>
                 <TableBody>

@@ -226,7 +226,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       } else {
         setLblPnlLog((prevState) => ({
           ...prevState,
-          value: `Please Input Serial No.`,
+          value: `Please Input Leaf No.`,
           visble: true,
         }));
         setLblResult((prevState) => ({

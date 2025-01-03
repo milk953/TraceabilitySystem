@@ -86,9 +86,10 @@ function ScanSMTRoollSht() {
               <Table className="Header_Left" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">
+                    {/* <Typography variant="h6">
                       Connect Roll/Sht & Leaf
-                    </Typography>
+                    </Typography> */}
+                    {menuName}
                   </TableCell>
                 </TableHead>
                 <TableBody>

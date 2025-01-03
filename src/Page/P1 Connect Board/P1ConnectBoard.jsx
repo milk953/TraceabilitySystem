@@ -33,7 +33,9 @@ import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { fn_P1ConnectBoard } from "./fn_P1ConnectBoard";
 import { Table as AntTable ,Button as AntButton} from "antd";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 function P1ConnectBoard() {
+  const { menuName } = fn_Homepage();
   const {
     Product,
     ddlProduct,
@@ -86,9 +88,10 @@ function P1ConnectBoard() {
               <Table className="ScanSMT" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={4} align="center">
-                    <Typography variant="h6">
+                    {/* <Typography variant="h6">
                     P1 Connect CB & Pcs
-                    </Typography>
+                    </Typography> */}
+                     {menuName}
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -405,7 +408,7 @@ function P1ConnectBoard() {
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <AntButton type="primary" className="ButtonCancel"  onClick={btnCancel_Click} >Cancel</AntButton>
+                      <AntButton type="primary" className="BtCancel"  onClick={btnCancel_Click} >Cancel</AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
