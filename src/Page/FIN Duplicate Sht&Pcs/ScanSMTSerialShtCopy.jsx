@@ -81,7 +81,7 @@ function ScanSMTSerialShtCopy() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                    {menuName}
+                    {menuName || 'FIN Duplicate Sht&Pcs'}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -264,6 +264,7 @@ function ScanSMTSerialShtCopy() {
               {lblErrorState && (
                 <Paper className="Card-lblLog">{lblError}</Paper>
               )}
+              
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
                   <TableHead
