@@ -79,7 +79,7 @@ function ScanConfirmMagazineP1() {
               <TableHead>
                 <TableRow>
                   <TableCell colSpan={4} align="center">
-                    {menuName}
+                    {menuName ? menuName : "P1 Confirm Magazine"}
                   </TableCell>
                 </TableRow>
               </TableHead>

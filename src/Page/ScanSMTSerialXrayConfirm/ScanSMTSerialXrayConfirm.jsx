@@ -72,7 +72,7 @@ function ScanSMTSerialXrayConfirm() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={4} align="center">
-                      {menuName}
+                    {menuName ? menuName : 'X-Ray Result Checking'}
                     </TableCell>
                   </TableRow>
                 </TableHead>
