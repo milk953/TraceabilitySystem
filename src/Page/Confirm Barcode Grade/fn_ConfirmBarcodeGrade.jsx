@@ -1086,7 +1086,7 @@ function fn_ConfirmBarcodeGrade() {
       let dataHfWeekCode = "";
       let _bolError = false;
       // console.log("dtSeriallll", txtSideBack.value,txtSideFront.value);
-      const allSheetEmpty = dtSerial.every(item => item.BACK_SIDE === ""||item.FRONT_SIDE === "" ||item.length<0);
+      const allSheetEmpty = dtSerial.every(item => item.length<=0||item.BACK_SIDE === ""||item.FRONT_SIDE === "" );
       if(allSheetEmpty) {
         hideLoading();
         setlblLog((prevState) => ({
@@ -1094,10 +1094,11 @@ function fn_ConfirmBarcodeGrade() {
           value: `Please Input Sheet No.`,
           visble: true,
         }));
-        setlblResult((prevState) => ({
-          ...prevState,
-          value: '',
-        }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: false, value: "" }));
+        // setlblResult((prevState) => ({
+        //   ...prevState,
+        //   value: '',
+        // }));
         
         setTimeout(() => {
           fcGvBackSide_txtsideback_0.current[0].focus();
@@ -1132,10 +1133,11 @@ function fn_ConfirmBarcodeGrade() {
           value: `Please Input Serial No.`,
           visble: true,
         }));
-        setlblResult((prevState) => ({
-          ...prevState,
-          value: '',
-        }));
+        // setlblResult((prevState) => ({
+        //   ...prevState,
+        //   value: '',
+        // }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: false, value: "" }));
         // setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
         // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
         setTimeout(() => {
