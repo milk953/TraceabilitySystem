@@ -108,7 +108,7 @@ function ScanSMTSerialShtFINManySht() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                    {menuName || 'FIN Connect Sht&Pcs'} 
+                    {menuName} 
                     </TableCell>
                   </TableRow>
                 </TableHead>

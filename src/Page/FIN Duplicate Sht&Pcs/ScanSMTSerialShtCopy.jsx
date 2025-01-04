@@ -81,7 +81,7 @@ function ScanSMTSerialShtCopy() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                    {menuName || 'FIN Duplicate Sht&Pcs'}
+                    {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
