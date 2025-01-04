@@ -1677,6 +1677,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
             TEST_RESULT: dtSerial[i].TEST_RESULT,
             REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
             PACKING_NO: dtSerial[i].PACKING_NO,
+            strPage:'ScanSMTSerialPcsAutoTray',
           },
           // data:dtSerial
         })

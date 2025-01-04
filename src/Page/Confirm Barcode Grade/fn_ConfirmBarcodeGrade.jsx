@@ -814,13 +814,11 @@ function fn_ConfirmBarcodeGrade() {
   };
 
   const handleTxt_LotRef = async () => {
-    if (txtOperator.value != "") {
-      const strLotData = txtLotRef.value.trim().toUpperCase().split(";");
-      settxtLotRef((prevState) => ({ ...prevState, value: strLotData[0] }));
+    const strLotData = txtLotRef.value.trim().toUpperCase().split(";");
+    settxtLotRef((prevState) => ({ ...prevState, value: strLotData[0] }));
       setTimeout(() => {
         fcOperator.current.focus();
       }, 300);
-    }
   };
 
   const SetMode = async (_strType) => {
@@ -1087,36 +1085,20 @@ function fn_ConfirmBarcodeGrade() {
       setHfWeekCode("");
       let dataHfWeekCode = "";
       let _bolError = false;
-      console.log("dtSeriallll", txtSideBack.value,txtSideFront.value);
-      if(txtSideBack.value[0]==''||txtSideFront[0]=='') {
-        hideLoading();
-        setlblLog((prevState) => ({
-          ...prevState,
-          value: `Please Input Sheet No. Front/Back`,
-          visble: true,
-        }));
-        setlblResult((prevState) => ({
-          ...prevState,
-          value: '',
-        }));
-        
-        setTimeout(() => {
-          fcGvBackSide_txtsideback_0.current[0].focus();
-        }, 300);
-        scrollToTop();
-          return;        
-      }
-            if(txtSideBack.value[0]=='') {
+      // console.log("dtSeriallll", txtSideBack.value,txtSideFront.value);
+      const allSheetEmpty = dtSerial.every(item => item.length<=0||item.BACK_SIDE === ""||item.FRONT_SIDE === "" );
+      if(allSheetEmpty) {
         hideLoading();
         setlblLog((prevState) => ({
           ...prevState,
           value: `Please Input Sheet No.`,
           visble: true,
         }));
-        setlblResult((prevState) => ({
-          ...prevState,
-          value: '',
-        }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: false, value: "" }));
+        // setlblResult((prevState) => ({
+        //   ...prevState,
+        //   value: '',
+        // }));
         
         setTimeout(() => {
           fcGvBackSide_txtsideback_0.current[0].focus();
@@ -1124,7 +1106,26 @@ function fn_ConfirmBarcodeGrade() {
         scrollToTop();
           return;        
       }
-      const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+      //       if(txtSideBack.value[0]=='') {
+      //   hideLoading();
+      //   setlblLog((prevState) => ({
+      //     ...prevState,
+      //     value: `Please Input Sheet No.`,
+      //     visble: true,
+      //   }));
+      //   setlblResult((prevState) => ({
+      //     ...prevState,
+      //     value: '',
+      //   }));
+        
+      //   setTimeout(() => {
+      //     fcGvBackSide_txtsideback_0.current[0].focus();
+      //   }, 300);
+      //   scrollToTop();
+      //     return;        
+      // }
+      
+      const allSerialEmpty = dtSerial.every(item => item.SERIAL === "" ||item.length<0);
       if (allSerialEmpty) {
         hideLoading();
         setlblLog((prevState) => ({
@@ -1132,10 +1133,11 @@ function fn_ConfirmBarcodeGrade() {
           value: `Please Input Serial No.`,
           visble: true,
         }));
-        setlblResult((prevState) => ({
-          ...prevState,
-          value: '',
-        }));
+        // setlblResult((prevState) => ({
+        //   ...prevState,
+        //   value: '',
+        // }));
+        setgvScanResult((prevState) => ({ ...prevState, visble: false, value: "" }));
         // setgvScanResult((prevState) => ({ ...prevState, visble: "", value: "" }));
         // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
         setTimeout(() => {

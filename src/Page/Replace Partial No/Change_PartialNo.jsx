@@ -110,8 +110,14 @@ function ScanSheetMOTTime() {
         style={{ width: "50%", marginLeft: "8px" }}
         fullWidth
         value={txtTotalPcs}
+        // onChange={(e) => {
+        //   settxtTotalPcs(e.target.value);
+        // }}
         onChange={(e) => {
-          settxtTotalPcs(e.target.value);
+          const value = e.target.value;
+          if (/^\d*$/.test(value)) {
+            settxtTotalPcs(value);
+          }
         }}
         inputRef={(el) => (fc_total.current = el)}
         onKeyDown={(e) => {

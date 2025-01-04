@@ -30,9 +30,11 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Header from "../Header/Header";
 import "./ScanSMTSerialSht.css";
 import { fn_ScanSMTSerialSht } from "./fn_ScanSMTSerialSht";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function ScanSMTSerialSht() {
 
+    const { menuName } = fn_Homepage();
     const {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtLotRef, settxtLotRef, lblTotalSht, lblTotalPcs, txtRollLeaf, settxtRollLeaf,
         lblCheckRoll, lblCheckRollcolor, txtMachineNo, settxtMachineNo, pnlRollLeaf, pnlMachine, pnlLog, lblLog, lblResult, lblResultcolor,
@@ -53,19 +55,20 @@ function ScanSMTSerialSht() {
             >
                 <Box >
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "430px",
                             margin: "4px",
                         }}
                     >
-                        <Table className="TbScanSMTSerialShtPcs">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={3} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             SMT Connect Sht & Pcs
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -80,7 +83,7 @@ function ScanSMTSerialSht() {
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
@@ -242,10 +245,10 @@ function ScanSMTSerialSht() {
                     {pnlBackSide && (
                         <div className="divgvBackSidePcs">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
                                     width: "100%",
-                                    marginBottom: "1px",
+                                    marginTop: "5px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
@@ -294,7 +297,7 @@ function ScanSMTSerialSht() {
                     {pnlFrontSide && (
                         <div className="divgvFrontSideShtPcs">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
                                     width: "100%",
                                     marginBottom: "1px",
@@ -339,7 +342,7 @@ function ScanSMTSerialSht() {
                     {pnlBoard && (
                         <Box className="divpnlBoardShtPcs">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
                                     width: "430px",
                                     margin: "10px",
@@ -411,7 +414,7 @@ function ScanSMTSerialSht() {
                             className="Card-lblLog"
                             style={{
                                 width: "433px",
-                                marginLeft: "23px",
+                                marginLeft: "2px",
                             }}
                         >
                             {lblLog}
@@ -421,12 +424,13 @@ function ScanSMTSerialSht() {
                     {pnlSerial && (
                         <div className="divgvSerialShtPcs">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
                                     width: "430px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "10px"
                                 }}
                             >
                                 <Table>

@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "../Common/StyleCommon.css";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common";
 
 function fn_ScanSMTSerialSpotHeat() {
+  const{ConfigData} = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
   const [visibledll_product, setvisibledll_product] = useState(true);
@@ -95,8 +97,9 @@ function fn_ScanSMTSerialSpotHeat() {
   const [hfMode, setHfMode] = useState("");
   const [hfSerialCount, setHfSerialCount] = useState("");
 
-  const CONNECT_SERIAL_ERROR = "999999";
-  const FAC1 = "5";
+  const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+  const FAC1 = ConfigData.FACTORY;
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -651,7 +654,6 @@ function fn_ScanSMTSerialSpotHeat() {
       key: "Scan Result",
       dataIndex: "SCAN_RESULT",
       render: (text, record, index) => {
-        console.log(record.SCAN_RESULT,"SCAN_RESULT")
         if(record.SERIAL == "" ||record.SERIAL==undefined){
           return '';
         }else{
@@ -683,7 +685,6 @@ function fn_ScanSMTSerialSpotHeat() {
     },
   ];
   const getRowClassName = (record) => {
-    console.log(record.SCAN_RESULT,"record.SCAN_RESULT")
     if(record.SERIAL == "" ||record.SERIAL==undefined){
       return '';
     }

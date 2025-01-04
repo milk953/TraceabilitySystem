@@ -2021,6 +2021,7 @@ console.log(ddlProduct,"setddlProduct")
                     strPrdName: _strPrdName,
                     strLot: _strLot,
                     strUserID: hfUserID,
+                    strPage:'ScanSMTSerialPcsBox',
                     data: [
                       {
                         SERIAL: dtSerial[drRow].SERIAL,

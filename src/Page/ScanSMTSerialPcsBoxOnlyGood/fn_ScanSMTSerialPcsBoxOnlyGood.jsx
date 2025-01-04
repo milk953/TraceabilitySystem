@@ -1507,7 +1507,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               {
                 strPlantCode: FAC,
                 strPrdname: _strPrdName,
-                strWeekCodeType: hfWeekCodeType,
+                strWeekCodeType: hfWeekCodeType
                 // strSerial: dtSerial[drRow].SERIAL,
               },
             ],
@@ -2270,6 +2270,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                     strLot: _strLot,
                     strUserID: hfUserID,
                     strStation: hfUserStation,
+                    strPage:'ScanSMTSerialPcsBoxOnlyGood',
                     SCAN_RESULT: dtSerial[i].SCAN_RESULT,
                     SERIAL: dtSerial[i].SERIAL,
                     UPDATE_FLG: dtSerial[i].UPDATE_FLG,

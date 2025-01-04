@@ -1126,7 +1126,7 @@ function fn_ScanSMTSerialPcsChrome() {
     settxtSerial(Ops);
   };
 
-  const setSerialDataTray = async () => {
+  const setSerialDataTray = async ()   => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     setlblSerialNG(0)
     setlblLog((prevState) => ({
@@ -1888,6 +1888,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   strPrdName: _strPrdName,
                   strLot: _strLot,
                   strUserID: hfUserID,
+                  strPage:'ScanSMTSerialPcs',
                   data: [
                     {
                       SERIAL: dtSerial[drRow].SERIAL,

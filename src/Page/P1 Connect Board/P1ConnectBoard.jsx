@@ -85,7 +85,7 @@ function P1ConnectBoard() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="ScanSMT" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={4} align="center">
                     {/* <Typography variant="h6">
@@ -112,7 +112,7 @@ function P1ConnectBoard() {
                         onChange={(e) => {
                           settxtLot((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {
@@ -174,7 +174,7 @@ function P1ConnectBoard() {
                         onChange={(e) => {
                           settxtLotRef((prevState) => ({
                             ...prevState,
-                            value: e.target.value,
+                            value: e.target.value.trim(),
                           }));
                         }}
                         onKeyDown={(e) => {

@@ -1,10 +1,10 @@
 import React, { useState,useRef,useEffect } from 'react'
 import axios from 'axios'
-
-import { color } from 'framer-motion'
+import {DataConfig} from "../Common/function_Common";
 
 function fn_ScanAutoBendingTime() {
-        const FAC = import.meta.env.VITE_FAC;
+  const{ConfigData} = DataConfig();
+        const FAC = ConfigData.FACTORY;
     const[txtMCNo,settxtMCNo] = useState({value: "",disbled: "",visble: "",style: "",})
     const [txtLotNo,settxtLotNo] = useState({value: "",disbled: "",visble: "",style: "",})
     const [lblProductName,setlblProductName] = useState({value: "",disbled: "",visble: "",style: "",})
@@ -54,7 +54,6 @@ function fn_ScanAutoBendingTime() {
 
     useEffect(() => {
       if(txtLotNo.value !== "") {
-      //   console.log("เข้ามาจ้า")
         if(gvSerial.length >0 ){
         fcGvSerial_txtSerial_0.current[0].focus();
       } 
@@ -79,7 +78,6 @@ function fn_ScanAutoBendingTime() {
         })
         .then((res) =>{
       dtBending  =res.data
-      console.log(dtBending,"dtBending")
         });
         if(dtBending.length > 0){
           setgvBending(dtBending);
@@ -122,7 +120,6 @@ function fn_ScanAutoBendingTime() {
           _strPrdName = res.data.prdName;
         });
         if(_strPrdName !== ""){
-          console.log(_strPrdName,"_strPrdName")
           setlblProductName((prevState) => ({ ...prevState, value:_strPrdName}));
           settxtLotNo((prevState) => ({ ...prevState, value: _strLot,disbled:true}));
           settxtMCNo((prevState) => ({ ...prevState,disbled:true}));
@@ -260,7 +257,6 @@ function fn_ScanAutoBendingTime() {
     
     setpnlResult(true)
     if(strError !== ""){
-      console.log(strError,"strError")
       setlblResult((prevState) => ({ ...prevState, value:"NG",  disbled: false , style: { backgroundColor: 'red' ,fontSize: '70px', padding: '0px' ,  textAlign: 'center' ,color:'white'}}));
       setlblRemark((prevState) => ({ ...prevState, value:'Please Input Serial',style: { backgroundColor: 'red',fontSize: '40px', padding: '0px' ,  textAlign: 'center',color:"white" }}));
     }
