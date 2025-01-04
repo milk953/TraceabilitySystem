@@ -22,15 +22,17 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
 import Pageimg from "/src/assets/1.jpg";
 import "./ScanAOISheetNo.css";
 import { fn_ScanAOISheetNo } from "./fn_ScanAOISheetNo";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function ScanAOISheetNo() {
+    const { menuName } = fn_Homepage();
     const {
         txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtNo, settxtNo, txtLeaf, settxtLeaf, txtLayer, settxtLayer,
         txtLotNo, settxtLotNo, lblProduct, ibtOperator, ibtback, ibtLayerBack, ibtLotBack, pnlSerial, gvSerial, lblSEQ, txtgvSerial,
@@ -49,25 +51,26 @@ function ScanAOISheetNo() {
                 sx={{ display: "flex" }}
             >
                 <Box justifyContent="space-between"
-                    // sx={{
-                    //     marginLeft: "-5px",
-                    //     marginTop: "-10px"
-                    // }}
+                // sx={{
+                //     marginLeft: "-5px",
+                //     marginTop: "-10px"
+                // }}
                 >
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "440px",
-                            margin: "4px",
+                            //margin: "4px",
                         }}
                     >
-                        <Table className="TbScanAOISheetNo">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={5} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                              AOI Sheet No.
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -82,7 +85,7 @@ function ScanAOISheetNo() {
                                             size="small"
                                             inputRef={(el) => (inputOperator.current = el)}
                                             fullWidth
-                                            value={txtOperator}
+                                            value={txtOperator.trim()}
                                             disabled={txtOperatorDisabled}
                                             style={{
                                                 backgroundColor: txtOperatorDisabled ? "#e0e0e0" : "inherit",
@@ -121,7 +124,7 @@ function ScanAOISheetNo() {
                                             size="small"
                                             inputRef={(el) => (inputTotalPcs.current = el)}
                                             fullWidth
-                                            value={txtTotalPcs}
+                                            value={txtTotalPcs.trim()}
                                             disabled={txtTotalPcsDisabled}
                                             style={{
                                                 width: "80px",
@@ -215,7 +218,7 @@ function ScanAOISheetNo() {
                                             size="small"
                                             inputRef={(el) => (inputLayer.current = el)}
                                             fullWidth
-                                            value={txtLayer}
+                                            value={txtLayer.trim()}
                                             disabled={txtLayerDisabled}
                                             style={{
                                                 width: "80px",
@@ -252,7 +255,7 @@ function ScanAOISheetNo() {
                                             size="small"
                                             inputRef={(el) => (inputLot.current = el)}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={txtLotNoDisabled}
                                             style={{
                                                 backgroundColor: txtLotNoDisabled ? "#e0e0e0" : "inherit",
@@ -293,12 +296,13 @@ function ScanAOISheetNo() {
                     {pnlSerial && (
                         <div className="divgvSerialAOISheetNo">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
                                     width: "100%",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "10px"
                                 }}
                             >
                                 <Table>
@@ -338,38 +342,39 @@ function ScanAOISheetNo() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSave_Click}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonCancel"
+                                        style={{ height: "30px" }}
+                                        type="primary"
                                         onClick={btnCancel_Click}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
                     )}
 
                     {pnlResult && (
-                        <div style={{ marginLeft: "2px", width: "100%" }}>
+                        <div style={{ width: "100%" }}>
                             <Paper
                                 className="Card-lblResult"
                                 style={{
-                                    width: "450px",
+                                    width: "440px",
                                     background: lblResultcolor,
                                 }}
                             >
@@ -402,7 +407,7 @@ function ScanAOISheetNo() {
                                 columns={columnsgvReject}
                                 dataSource={gvReject.value}
                                 rowKey={(record) => record.SEQ}
-                                style={{ width: '90%', marginLeft: "70px" }}
+                                style={{ width: '98%', marginLeft: "20px" }}
                                 pagination={false}
                                 size="small"
                                 bordered
@@ -417,7 +422,7 @@ function ScanAOISheetNo() {
                                 columns={columns}
                                 dataSource={gvScanResult.value}
                                 rowKey={(record) => record.seq}
-                                style={{ width: '90%', marginLeft: "70px" }}
+                                style={{ width: '98%', marginLeft: "20px" }}
                                 pagination={false}
                                 size="small"
                                 bordered

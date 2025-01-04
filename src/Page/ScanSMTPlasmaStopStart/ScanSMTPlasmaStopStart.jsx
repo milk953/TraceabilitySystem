@@ -28,9 +28,11 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "/src/Page/ScanSMTPlasmaStopStart/ScanSMTPlasmaStopStart.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTPlasmaStopStart } from "./fn_ScanSMTPlasmaStopStart";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function ScanSMTPlasmaStopStart() {
 
+    const { menuName } = fn_Homepage();
     const {
         txtLotNo, settxtLotNo, selProduct, Productdata, selectedrbt, txtPartialNo, settxtPartialNo, lblPatialNo, visiblelog, lblLog,
         pnlStatus, txtLotDisabled, selProductDisabled, txtPartialDisabled, inputLot, ddlProduct, inputPartial, handleChangeLot, ibtBackClick,
@@ -45,25 +47,22 @@ function ScanSMTPlasmaStopStart() {
                 className="Card-Common"
                 sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-8px",
-                    }}
-                >
+                <Box justifyContent="space-between">
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "502px",
                             margin: "4px"
                         }}
                     >
-                        <Table className="TbScanSMTPlasma">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={4} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             Stop/Start Record Time
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -78,7 +77,7 @@ function ScanSMTPlasmaStopStart() {
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
@@ -191,7 +190,7 @@ function ScanSMTPlasmaStopStart() {
                                             size="small"
                                             inputRef={inputPartial}
                                             fullWidth
-                                            value={txtPartialNo}
+                                            value={txtPartialNo.trim()}
                                             disabled={txtPartialDisabled}
                                             style={{
                                                 backgroundColor: txtPartialDisabled ? "#e0e0e0" : "inherit",
@@ -218,7 +217,7 @@ function ScanSMTPlasmaStopStart() {
                             height: "40px",
                             display: 'flex',
                             alignItems: 'center',
-                            marginLeft: "26px",
+                            marginLeft: "4px",
                         }}
                     >
                         <Typography align="left"
@@ -254,14 +253,13 @@ function ScanSMTPlasmaStopStart() {
                         <Card
                             component={Paper}
                             style={{
-                                width: "502px",
+                                width: "504px",
                                 height: "80px",
                                 margin: 'auto',
                                 textAlign: "center",
                                 background: lblStatusColor,
                                 paddingTop: "9px",
                                 marginTop: "1px",
-                                marginLeft: "26px",
                             }}
                         >
                             <Typography

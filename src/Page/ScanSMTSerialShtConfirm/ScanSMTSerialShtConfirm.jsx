@@ -228,7 +228,7 @@ function ScanSMTSerialShtConfirm() {
                     )}
                 </Box>
 
-                <div className="divgvScanResultSht" style={{ position: "relative" }}>
+                <div className="divgvScanResultSht">
 
                     {gvScanResult === false && (
                         <>

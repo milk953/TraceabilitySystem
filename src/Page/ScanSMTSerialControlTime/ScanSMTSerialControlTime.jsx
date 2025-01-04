@@ -22,15 +22,18 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import "/src/Page/ScanSMTSerialControlTime/ScanSMTSerialControlTime.css";
+import "./ScanSMTSerialControlTime.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialControlTime } from "./fn_ScanSMTSerialControlTime";
 import Pageimg from "/src/assets/1.jpg";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
+
 function ScanSMTSerialControlTime() {
 
+    const { menuName } = fn_Homepage();
     const {
         txtMachine, settxtMachine, handleChangeMachine, txtOperator, settxtOperator, txtTotalPcs, settxtTotalPcs, txtLotNo, settxtLotNo, selProduct,
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
@@ -47,26 +50,22 @@ function ScanSMTSerialControlTime() {
                 className="Card-Common"
                 sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between"
-                    sx={{
-                        marginLeft: "-6px",
-                        marginTop: "-10px"
-                    }}
-                >
+                <Box justifyContent="space-between">
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "450px",
                             margin: "4px",
                         }}
                     >
-                        <Table className="TbScanSMTSerialCon">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={3} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             Confirm Process Time
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -85,7 +84,7 @@ function ScanSMTSerialControlTime() {
                                             style={{
                                                 backgroundColor: txtMachineDisabled ? "#e0e0e0" : "inherit",
                                             }}
-                                            value={txtMachine}
+                                            value={txtMachine.trim()}
                                             onChange={(e) => {
                                                 settxtMachine(e.target.value);
                                             }}
@@ -122,7 +121,7 @@ function ScanSMTSerialControlTime() {
                                             style={{
                                                 backgroundColor: txtOpDisabled ? "#e0e0e0" : "inherit",
                                             }}
-                                            value={txtOperator}
+                                            value={txtOperator.trim()}
                                             onChange={(e) => {
                                                 settxtOperator(e.target.value);
                                             }}
@@ -158,7 +157,7 @@ function ScanSMTSerialControlTime() {
                                                 backgroundColor: txtTotalPcsDisabled ? "#e0e0e0" : "inherit",
                                             }}
                                             inputRef={inputTotalPcs}
-                                            value={txtTotalPcs}
+                                            value={txtTotalPcs.trim()}
                                             disabled={txtTotalPcsDisabled}
                                             onChange={(e) => {
                                                 settxtTotalPcs(e.target.value);
@@ -199,7 +198,7 @@ function ScanSMTSerialControlTime() {
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
@@ -258,7 +257,7 @@ function ScanSMTSerialControlTime() {
                             height: "40px",
                             display: 'flex',
                             alignItems: 'center',
-                            marginLeft: "24px",
+                            marginLeft: "4px",
                         }}
                     >
                         <Typography align="left"
@@ -282,7 +281,7 @@ function ScanSMTSerialControlTime() {
                             className="Card-lblLog"
                             style={{
                                 width: "453px",
-                                marginLeft: "23px",
+                                marginLeft: "2px",
                             }}
                         >
                             {lblLog}
@@ -290,14 +289,15 @@ function ScanSMTSerialControlTime() {
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerialCon" style={{ position: "relative" }}>
+                        <div className="divgvSerialCon">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
-                                    width: "100%",
+                                    width: "453px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "10px"
                                 }}
                             >
                                 <Table>
@@ -333,34 +333,35 @@ function ScanSMTSerialControlTime() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonCancel"
+                                        style={{ height: "30px" }}
+                                        type="primary"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
                     )}
                 </Box>
 
-                <div className="divgvScanResultCon" style={{ position: "relative" }}>
+                <div className="divgvScanResultCon">
                     {gvScanResult === false && (
                         <>
                             <img
@@ -391,7 +392,7 @@ function ScanSMTSerialControlTime() {
                                     </Typography>
                                 </Paper>
                             </div>
-                            <br />
+                            
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -401,6 +402,7 @@ function ScanSMTSerialControlTime() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
                             />
 
                         </>

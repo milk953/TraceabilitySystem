@@ -41,6 +41,8 @@ function fn_ScanSheetInspect() {
     const [gvExport, setgvExport] = useState(false);
     const [gvExportData, setgvExportData] = useState([]);
 
+    const [istxtPrdDisabled, setistxtPrdDisabled] = useState(false);
+    const [istxtRollnoDisabled, setistxtRollnoDisabled] = useState(false);
     const [isBinNoDisabled, setisBinNoDisabled] = useState(false);
     const [isShtNoDisabled, setisShtNoDisabled] = useState(false);
     const [istxtLotDisabled, setistxtLotDisabled] = useState(false);
@@ -532,6 +534,8 @@ function fn_ScanSheetInspect() {
         if (strType === "LOT") {
             settxtLotNo("");
             settxtProduct("");
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setselBinNo("");
             setisBinNoDisabled(true);
             settxtShtNo("");
@@ -547,6 +551,8 @@ function fn_ScanSheetInspect() {
         } else if (strType === "LOT_ERROR") {
             settxtLotNo("");
             settxtProduct("");
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setselBinNo("");
             setisBinNoDisabled(true);
             settxtShtNo("");
@@ -558,6 +564,8 @@ function fn_ScanSheetInspect() {
             inputLot.current.focus();
         } else if (strType === "DATE") {
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setisBinNoDisabled(false);
             setisShtNoDisabled(false);
             setlabellog("");
@@ -568,6 +576,8 @@ function fn_ScanSheetInspect() {
             inputScanBy.current?.focus();
         } else if (strType === "SHEET") {
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setisBinNoDisabled(false);
             setisShtNoDisabled(false);
             setlabellog("");
@@ -579,12 +589,16 @@ function fn_ScanSheetInspect() {
         } else if (strType === "SHEET_ERROR") {
             settxtShtNo("");
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setvisiblelog(true);
             setpnlSerial(false);
             setpnlSuccess(false);
             inputShtNo.current.focus();
         } else if (strType === "SHEET_CONFIRM") {
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setvisiblelog(true);
             setpnlSerial(true);
             setpnlSuccess(false);
@@ -696,7 +710,7 @@ function fn_ScanSheetInspect() {
         txtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, gvScanResult, inputScanDate,
         ibtDateRefresh, ddlBinNoData, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin, gvScanData,
         handleShtNo, ibtExportClick, inputScanBy, inputShtNo, btnCancel, btDelShtClick, btDelLotClick, settxtShtNo,
-        btCancelClick, columns
+        btCancelClick, columns, istxtPrdDisabled, istxtRollnoDisabled
     }
 }
 
