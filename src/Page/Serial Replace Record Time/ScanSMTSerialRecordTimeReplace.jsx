@@ -64,7 +64,7 @@ function ScanSMTSerialRecordTimeReplace() {
                       align="center"
                       style={{ fontSize: "24px" }}
                     >
-                      {menuName}
+                      {menuName ? menuName : 'Serial Replace Recode Time'}
                     </TableCell>
                   </TableRow>
                 </TableHead>

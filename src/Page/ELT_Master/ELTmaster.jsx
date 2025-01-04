@@ -65,7 +65,7 @@ function ELT_Master() {
       <div className="ELTMmasterPnlForm">
         <Table className="Header_Center" component={Card}>
           <TableHead>
-            <TableCell colSpan={4}>{menuName}</TableCell>
+            <TableCell colSpan={4}>{menuName ? menuName : 'ELT Master'}</TableCell>
           </TableHead>
           <TableBody>
             <TableRow>

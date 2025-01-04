@@ -48,7 +48,7 @@ function ScanSMTSerialSpotHeat() {
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
               <Table
-                className="ScanSMT"
+                className="Header_Left"
                 component={Card}
                 sx={{ width: "100%" }}
               >
@@ -56,7 +56,7 @@ function ScanSMTSerialSpotHeat() {
                   <TableRow>
                     <TableCell colSpan={3} align="center">
                       <Typography variant="h5">
-                        {menuName}
+                      {menuName ? menuName : 'Spot Heat Result Checking'}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -241,7 +241,7 @@ function ScanSMTSerialSpotHeat() {
                         Cancel
                       </Button> */}
                            <AntButton
-                                               type="primary" className="ButtonReplace"
+                                               type="primary" className="BtSave"
                                                 onClick={btnSave_Click}
                                               >
                                                 Save
@@ -249,7 +249,7 @@ function ScanSMTSerialSpotHeat() {
                                               &nbsp;&nbsp;
                                               <AntButton
                                                 
-                                               type="primary" className="ButtonCancel"
+                                               type="primary" className="BtCancel"
                                                 onClick={btnCancel_Click}
                                               >
                                                 Cancel

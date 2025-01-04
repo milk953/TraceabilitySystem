@@ -1,6 +1,5 @@
 import React, { useEffect, useState ,useRef} from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 
 function fn_SheetBinCheck() {
 const [txtSheetNo,settxtSheetNo] = useState("")
