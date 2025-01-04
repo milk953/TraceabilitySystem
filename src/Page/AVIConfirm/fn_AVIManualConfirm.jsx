@@ -1,10 +1,10 @@
 import axios from "axios";
-import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-
+import {DataConfig} from "../Common/function_Common";
 function fn_AVIManualConfirm() {
   
-  const plantCode = import.meta.env.VITE_FAC;
+  const{ConfigData} = DataConfig();
+  const plantCode = ConfigData.FACTORY;
   const [eltType, setEltType] = useState([]);
   const [eltTypeSelect, setEltTypeSelect] = useState("");
   const [eltTypeState, setEltTypeState] = useState({
@@ -23,11 +23,8 @@ function fn_AVIManualConfirm() {
   const [resultSelect, setResultSelect] = useState("--- SELECT ---");
   const [getSearchData, setGetSearchData] = useState([]);
   const [seq, setSeq] = useState(1);
-  const [updateFlg, setUpdateFlg] = useState(false);
   const [lblResultState, setLblResultState] = useState(false);
-  // const [dataNotfound, setDataNotfound] = useState([]);
   let dataNotfound = [];
-  let SearchDataTest = [];
   useEffect(() => {
     Pageload();
     setUsername(localStorage.getItem("IDCode") || "");
@@ -38,17 +35,11 @@ function fn_AVIManualConfirm() {
   }
   const btnRetrieveClick = async () => {
     if (pieceNo == "") {
-      // Swal.fire({
-      //   title: "Please input serial no.",
-      //   icon: "warning",
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      // });
       return;
     } else {
       setResultState(true);
       setEltTypeState({
-        styled: { disable: true, backgroundColor: "#B2A8A8" },
+        styled: { disable: true, backgroundColor: "#e0e0e0" },
       });
       await SearchData();
       setPieceNo("");
@@ -63,23 +54,11 @@ function fn_AVIManualConfirm() {
     if (resultSelect == "" || resultSelect == "--- SELECT ---") {
       setLblResult("Please select Result.");
       setLblResultState(true);
-      // Swal.fire({
-      //   title: "Please select result.",
-      //   icon: "error",
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      // });
       return;
     }
     if (result == "") {
       setLblResult("Please input serial no.");
       setLblResultState(true);
-      // Swal.fire({
-      //   title: "Please input serial no.",
-      //   icon: "error",
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      // });
       return;
     }
     for(let i = 0; i < result.length; i++){
@@ -105,7 +84,6 @@ function fn_AVIManualConfirm() {
   };
   
   const SearchData = async () => {
-    let updatedData = [];
     if (lblResult != "" && lblResult != "Dupplicate serial no.") {
       setResult([]);
       setLblResult("");
@@ -155,7 +133,7 @@ function fn_AVIManualConfirm() {
     } else {
       setResultState(true);
       setEltTypeState({
-        styled: { disable: true, backgroundColor: "#B2A8A8" },
+        styled: { disable: true, backgroundColor: "#e0e0e0" },
       });
       await SearchData();
       setPieceNo("");
@@ -167,7 +145,6 @@ function fn_AVIManualConfirm() {
     });
     setResult([]);
     setSeq(1);
-    // setEltTypeSelect(eltType[0].elt_type);
     setResultState(false);
     setResultSelect("--- SELECT ---");
     setPieceNo("");
@@ -207,8 +184,6 @@ function fn_AVIManualConfirm() {
         .then((res) => {
           if (res.status == 200) {
             result = res.data;
-          
-            // });
           } else if (res.status == 204) {
             dataNotfound.push({ dataNotfound: params.serial });
           }
