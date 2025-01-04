@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {useLoading} from "../../loading/fn_loading";  
+import {DataConfig} from "../Common/function_Common";
+
 function fn_ScanSerialNo() {
+  const{ConfigData} = DataConfig();
   const hiddenParams = {
     hfSerialLength: "0",
     hfSerialFixFlag: "N",
@@ -47,7 +50,7 @@ function fn_ScanSerialNo() {
     hfTotalPcs: "1",
   };
   const _strTagNewLine ='/';
-  const Fac = import.meta.env.VITE_FAC;
+  const Fac = ConfigData.FACTORY;
   const [operator, setOperator] = useState("");
   const [pcs, setPcs] = useState("");
   const [lotNo, setLotNo] = useState("");
@@ -297,7 +300,8 @@ function fn_ScanSerialNo() {
             strPlantCode: Fac,
             strLotNo: lotNo,
             strStation: userStation,
-            strMagaZine: magazine
+            strMagaZine: magazine,
+            strProgram :"ScanSerialNo"
           },
         })
         .then((res) => {
