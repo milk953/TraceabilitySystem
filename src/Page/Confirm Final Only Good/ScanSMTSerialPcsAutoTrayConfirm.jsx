@@ -317,7 +317,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                       className="Card-lblResult"
                       style={{
                         background:
-                          lblResult.value === "OK" ? "#52c41a" : " #BA0900",
+                          lblResult.value === "OK" ? "green" : " red",
                         // width: "70%", // ควบคุมขนาดของ Paper
                       }}
                     >
