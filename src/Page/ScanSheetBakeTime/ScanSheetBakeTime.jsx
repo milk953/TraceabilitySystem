@@ -63,10 +63,10 @@ function ScanSheetBakeTime() {
     <>
       <Hearder />
       <div style={{marginTop:'80px'}} />
-      <Table id="TableMainBaking" component={Card}>
+      <Table className="TableMainBaking" component={Card}>
         <TableHead>
           <TableRow>
-            <TableCell colSpan={3}>{menuName}</TableCell>
+            <TableCell colSpan={3}>{menuName || 'Baking Record Time'}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

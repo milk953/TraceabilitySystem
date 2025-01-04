@@ -517,6 +517,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
               IP_ADDRESS: hfUserID,
               SEQ: dtData[drRow].SEQ,
               txt_Serial: txtSerialRefer.value,
+              strPage:'SerialReplaceRecordTime'
             },
           ],
         })

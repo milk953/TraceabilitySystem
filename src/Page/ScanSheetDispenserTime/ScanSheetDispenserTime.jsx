@@ -73,7 +73,7 @@ function ScanSheetDispenserTime() {
         <Table id="DispenserTableMain" component={Card}>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={3}>{menuName}</TableCell>
+              <TableCell colSpan={3}>{menuName || 'Dispenser Control Time'}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

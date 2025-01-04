@@ -1,7 +1,7 @@
 import axios from "axios";
-import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { notification } from "antd";
+import {DataConfig} from "../Common/function_Common";
 import Swal from "sweetalert2";
 function fn_ScanSheetBakeTime() {
   //lbl
@@ -55,7 +55,9 @@ function fn_ScanSheetBakeTime() {
 
   const [hfConnLeafLength, setHfConnLeafLength] = useState("20");
   const [hfFactory, setHfFactory] = useState("A1");
-  const plantCode = import.meta.env.VITE_FAC;
+  const{ConfigData} = DataConfig();
+  const plantCode = ConfigData.FACTORY; 
+   
   function setFocus(id) {
     document.getElementById(id).focus();
   }
@@ -292,19 +294,19 @@ function fn_ScanSheetBakeTime() {
     }
   };
   const btnDelete = async () => {
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "Do you want to Delete this record?",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     deleteData();
-    //   }
-    // });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to Delete this record?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteData();
+      }
+    });
     if (txtSheetNo == "") {
       setFocus("txtSheetNoBaking");
     }else{

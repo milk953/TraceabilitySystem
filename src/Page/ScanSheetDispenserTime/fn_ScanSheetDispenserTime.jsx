@@ -61,7 +61,8 @@ function fn_ScanSheetDispenserTime() {
     PageLoad();
   }, []);
   function PageLoad() {
-    let strPlantCodeHidden = import.meta.env.VITE_FAC;
+    let strPlantCodeHidden = ConfigData.FACTORY; 
+   
     let ip = localStorage.getItem("ip");
     setStrPlantCode;
     strPlantCodeHidden;

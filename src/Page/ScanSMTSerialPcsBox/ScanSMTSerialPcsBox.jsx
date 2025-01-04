@@ -39,10 +39,10 @@ function ScanSMTSerialPcsBox() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="FinalGate" component={Paper}>
+              <Table className="Header_Left" component={Paper}>
                 <TableHead>
                   <TableCell colSpan={5} align="center">
-                    <Typography variant="h6">{menuName}</Typography>
+                    {menuName ? menuName : 'Packing Gate'}
                   </TableCell>
                 </TableHead>
                 <TableBody>
@@ -415,14 +415,9 @@ function ScanSMTSerialPcsBox() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      {/* <Button className="BtSave"
-                      onClick={btnSave_Click}
-                      >Save</Button> &nbsp;&nbsp;
-                      <Button className="BtCancel" 
-                      onClick={btnCancel_Click}
-                      >Cancel</Button> */}
+             
                       <AntButton
-                         type="primary" className="ButtonReplace"
+                         type="primary" className="BtSave"
                           onClick={btnSave_Click}
                         >
                           Save
@@ -430,7 +425,7 @@ function ScanSMTSerialPcsBox() {
                         &nbsp;&nbsp;
                         <AntButton
                           
-                         type="primary" className="ButtonCancel"
+                         type="primary" className="BtCancel"
                           onClick={btnCancel_Click}
                         >
                           Cancel

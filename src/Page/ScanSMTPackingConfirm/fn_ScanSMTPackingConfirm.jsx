@@ -1,10 +1,9 @@
 //Eye
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Tag } from "antd";
-import Swal from "sweetalert2";
-
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSMTPackingConfirm() {
+  const{ConfigData} = DataConfig();
   const [txtLot, settxtLot] = useState({ value: "", disbled: "", style: {} });
   const [ddlProduct, setddlProduct] = useState([]);
   const [selectddlProduct, setselectddlProduct] = useState({
@@ -53,7 +52,7 @@ function fn_ScanSMTPackingConfirm() {
   const [hfUserStation, sethfUserStation] = useState("");
   const [hfMode, sethfMode] = useState("");
   let hfShtScan = "1";
-  const FAC = import.meta.env.VITE_FAC;
+  const FAC = ConfigData.FACTORY;
 
   useEffect(() => {
     let ID = localStorage.getItem("ipAddress");

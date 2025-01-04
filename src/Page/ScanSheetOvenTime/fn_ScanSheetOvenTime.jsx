@@ -2,8 +2,10 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import {useLoading} from "../../loading/fn_loading";
 import Swal from "sweetalert2";
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSheetOvenTime() {
-  const Fac = import.meta.env.VITE_FAC;
+  const{ConfigData} = DataConfig();
+  const Fac = ConfigData.FACTORY;  
   const [txtmcNo, setTxtmcNo] = useState("");
   const [txtmcNoState, setTxtmcNoState] = useState({
     styled: { disabled: false, focus: true, backgroundColor: "white" },
@@ -95,7 +97,7 @@ function fn_ScanSheetOvenTime() {
         const res = await axios
           .post("api/setsmtprocflowoven", {
             p_sheet_no: txtSheetNo,
-            p_user: "frm_ScanSheetDispenserTime",
+            p_user: "ScanSheetOvenTime",
             p_station: txtmcNo,
             strPlantCode: Fac,
           })

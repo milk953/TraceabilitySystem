@@ -1,8 +1,7 @@
 import axios from "axios";
-import { set } from "lodash";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import styled from "styled-components";
 import {notification} from 'antd';
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSheetReflowTime() {
   const [txtmcNo, setTxtmcNo] = useState("");
   const FctxtmcNo = useRef(null);
@@ -11,7 +10,7 @@ function fn_ScanSheetReflowTime() {
     styled: { backgroundColor: "#e0e0e0" },
     open: true,
   });
-
+  const{ConfigData} = DataConfig();
   const [txtSheetNo, setTxtSheetNo] = useState("");
   const FctxtSheetNo = useRef(null);
   const [txtSheetNoState, setTxtSheetNoState] = useState({
@@ -38,9 +37,10 @@ function fn_ScanSheetReflowTime() {
   const [hfSPIPeriod, setHfSPIPeriod] = useState("10");
   const [hfConnLeafLength, setHfConnLeafLength] = useState("20");
   const [hfFactory, setHfFactory] = useState("A1");
-  const CompanyCode = import.meta.env.VITE_COMPANY_CODE;
-  const Product_type = import.meta.env.VITE_PRODUCT_KIND;
-  const plantCode = import.meta.env.VITE_FAC;
+  const CompanyCode = ConfigData.COMPANY_CODE;
+  const Product_type = ConfigData.PRODUCT_KIND;
+  const plantCode = ConfigData.FACTORY;
+
 
   useEffect(() => {
     Pageload();

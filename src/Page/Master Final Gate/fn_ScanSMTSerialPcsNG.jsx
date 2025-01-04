@@ -99,8 +99,8 @@ function fn_ScanSMTSerialPcsNG() {
   const FINAL_GATE_SPECIAL_SERIAL_VAR = ":P_SERIAL_NO";
   const FINAL_GATE_SPECIAL_MESSAGE = "Csig value less then 3000";
   const FINAL_GATE_SPECIAL_OK = "OK";
-  const FINAL_GATE_MASTER_CODE = import.meta.env.VITE_FINAL_GATE_MASTER_CODE;
-  const Fac = import.meta.env.VITE_FAC;
+  const FINAL_GATE_MASTER_CODE = ConfigData.FINAL_GATE_MASTER_CODE;
+  const Fac = ConfigData.FACTORY;
   const {showLoading,hideLoading} = useLoading();
   //lable
   const [lblError, setLblError] = useState("");

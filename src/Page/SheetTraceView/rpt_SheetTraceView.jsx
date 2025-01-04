@@ -25,12 +25,10 @@ import {
 import { Table as AntTable } from "antd";
 import { Input, Button } from "antd";
 import "../Common/StyleCommon.css";
-import Pageimg from "/src/assets/1.jpg";
 import Header from "../Header/Header";
 import "./rpt_SheetTraceView.css";
-import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
+import { SearchOutlined, ClearOutlined, UndoOutlined } from "@ant-design/icons";
 import { fn_rpt_SheetTraceView } from "./fn_rpt_SheetTraceView";
-import styled from "styled-components";
 
 function rpt_SheetTraceView() {
   const {
@@ -124,10 +122,7 @@ function rpt_SheetTraceView() {
               <TableBody>
                 <TableRow>
                   <TableCell align="right" colSpan={4}>
-                    {/* <Typography>
-                                            Sheet No. :
-                                        </Typography>
-                                         */}
+              
                     <Button
                       disabled
                       colSpan={4}
@@ -141,23 +136,7 @@ function rpt_SheetTraceView() {
                   </TableCell>
 
                   <TableCell align="center">
-                    {/* <TextField
-                                            // className="TxtField"
-                                            size="small"
-                                            sx={{ width: "123%" }}
-                                        // inputRef={(el) => (inputShtNo.current = el)}
-                                        inputRef={(el) => (fntxtSheetNo.current = el)}
-                                        value={txtSheetNo}
-                                        onChange={(e) => {
-                                            settxtSheetNo(e.target.value);
-                                        }}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                btnRetrive();
-                                            }
-                                          }}
-                                        />
-                                         */}
+                 
                     <Input
                       size="small"
                       id="RollLeafTextFiledFirst"
@@ -173,30 +152,16 @@ function rpt_SheetTraceView() {
                     />
                   </TableCell>
                   <TableCell align="center">
-                    {/* <Button
-                                            variant="contained"
-                                            sx={{ width: "30%" }}
-                                        onClick={btnRetrive}
-                                        >
-                                            Retrive
-                                        </Button>{" "} */}
                     <Button
                       type="primary"
                       className="RetriveBtn"
                       icon={<SearchOutlined />}
                       onClick={btnRetrive}
                     >
-                     Search
+                      Search
                     </Button>
                     &nbsp;&nbsp;&nbsp;
-                    {/* <Button
-                                            variant="contained"
-                                            sx={{ width: "20%" }}
-                                            color="error"
-                                        onClick={btnClear}
-                                        >
-                                            Clear
-                                        </Button> */}
+                
                     <Button
                       type="primary"
                       style={{
@@ -204,7 +169,7 @@ function rpt_SheetTraceView() {
                         borderColor: "#f5222d",
                       }}
                       className="ClearBtn"
-                      icon={<ClearOutlined />}
+                      icon={<UndoOutlined />}
                       onClick={btnClear}
                     >
                       Clear
@@ -215,148 +180,139 @@ function rpt_SheetTraceView() {
             </Table>
           </div>
           {/* <Card className="card-style-product"> */}
-            <div className="Product">
-              <Table>
-                <TableBody>
-                  <TableRow>
-                    <TableCell
-                    // className="color-bg-product"
-                     >
-                      {/* <Typography>Product :</Typography> */}
-                      <Button
+          <div className="Product">
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                  >
+                    <Button
                       disabled
-                    //   colSpan={4}
-                      style={{ color: "white", backgroundColor: "#31363F" ,width:'97%'}}
+                      style={{
+                        color: "white",
+                        backgroundColor: "#31363F",
+                        width: "97%",
+                      }}
                       type="primary"
                       className="LableView"
                       iconPosition={"end"}
                     >
-                     Product :
+                      Product :
                     </Button>
-                    </TableCell>
-                    <TableCell>
-                      {/* <TextField
-                        className="input_txt"
-                        size="small"
-                        style={{ width: "194px", backgroundColor: "#e0e0e0"  }}
-                        value={txtProduct}
-                        onChange={(e) => {
-                          settxtProduct(e.target.value);
-                        }}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      /> */}
-                       <Input
+                  </TableCell>
+                  <TableCell>
+                
+                    <Input
                       size="small"
                       className="ViewInput"
-                      style={{width:'170px'}}
+                      style={{ width: "170px" }}
                       value={txtProduct}
                       onChange={(e) => settxtProduct(e.target.value)}
                       disabled
                     />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell 
-                    //className="color-bg-product"
-                    >
-                      {/* <Typography>Lot No. :</Typography> */}
-                      <Button
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                  >
+             
+                    <Button
                       disabled
-                     
-                      style={{ color: "white", backgroundColor: "#31363F" ,width:'97%' }}
+                      style={{
+                        color: "white",
+                        backgroundColor: "#31363F",
+                        width: "97%",
+                      }}
                       type="primary"
                       className="LableView"
                       iconPosition={"end"}
                     >
                       Lot No. :
                     </Button>
-                    </TableCell>
-                    <TableCell>
-                      <a
-                        href={`/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
-                        style={{ fontSize: "16px" }}
-                      >
-                        {hypLotNo}
-                      </a>
-                    </TableCell>
-                  </TableRow>
+                  </TableCell>
+                  <TableCell>
+                    <a
+                      href={`/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
+                      style={{ fontSize: "16px" }}
+                    >
+                      {hypLotNo}
+                    </a>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    {/* <Typography>{lblCavity.value}</Typography> */}
+                    <Button
+                      disabled
+                      style={{
+                        color: "white",
+                        backgroundColor: "#31363F",
+                        width: "97%",
+                      }}
+                      type="primary"
+                      className="LableView"
+                      iconPosition={"end"}
+                    >
+                      {lblCavity.value} :
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <FormControl fullWidth>
+                      {/* ตรงนี้ยังติด */}
+
+                      <FormControl fullWidth>
+                        <Select
+                          style={{ height: "33px" }}
+                          size="small"
+                          value={selectddlCavity}
+                          onChange={(e) => ddlCavity_SelectedIndexChanged(e)}
+                          displayEmpty
+                        >
+                          {ddlCavity.map((option) => (
+                            <MenuItem key={option.pcs_no} value={option.pcs_no}>
+                              {option.pcs_name} {/* แสดง text */}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </FormControl>
+                  </TableCell>
+                </TableRow>
+                {lblShtMachine.visible && (
                   <TableRow>
                     <TableCell
-                    //  className="color-bg-product"
+                    //className="color-bg-product"
                     >
-                      {/* <Typography>{lblCavity.value}</Typography> */}
+                      {/* <Typography>Machine. :</Typography> */}
                       <Button
-                      disabled
-            
-                      style={{ color: "white", backgroundColor: "#31363F" ,width:'97%'}}
-                      type="primary"
-                      className="LableView"
-                      iconPosition={"end"}
-                    >
-                     {lblCavity.value} :
-                    </Button>
+                        disabled
+                        style={{
+                          color: "white",
+                          backgroundColor: "#31363F",
+                          width: "97%",
+                        }}
+                        type="primary"
+                        className="LableView"
+                        iconPosition={"end"}
+                      >
+                        Machine. :
+                      </Button>
                     </TableCell>
                     <TableCell>
-                      <FormControl fullWidth>
-                        {/* ตรงนี้ยังติด */}
-                  
-                        <FormControl fullWidth >
-                          <Select
-                           style={{height:"33px"}}
-                            size="small"
-                            value={selectddlCavity}
-                           // onChange={ddlCavity_SelectedIndexChanged}
-                            onChange={(e) => ddlCavity_SelectedIndexChanged(e)}
-                            // onBlur={ddlCavity_SelectedIndexChanged}
-                            displayEmpty
-                          >
-                            {ddlCavity.map((option) => (
-                              <MenuItem
-                                key={option.pcs_no}
-                                value={option.pcs_no}
-                              >
-                                {option.pcs_name} {/* แสดง text */}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </FormControl>
+                      <Typography
+                      // sx={{ textAlign: "center" }}
+                      >
+                        {lblShtMachine.value}
+                      </Typography>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {hypMaterial.value}
+                      </Typography>
                     </TableCell>
                   </TableRow>
-                  {lblShtMachine.visible && (
-                    <TableRow>
-                      <TableCell 
-                      //className="color-bg-product"
-                      >
-                        {/* <Typography>Machine. :</Typography> */}
-                        <Button
-                      disabled
-                   
-                      style={{ color: "white", backgroundColor: "#31363F" ,width:'97%' }}
-                      type="primary"
-                      className="LableView"
-                      iconPosition={"end"}
-                    >
-                     Machine. :
-                    </Button>
-                      </TableCell>
-                      <TableCell>
-                        <Typography 
-                        // sx={{ textAlign: "center" }}
-                        >
-                          {lblShtMachine.value}
-                        </Typography>
-                        <Typography sx={{ textAlign: "center" }}>
-                          {hypMaterial.value}
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                   )} 
-                </TableBody>
-              </Table>
-            </div>
+                )}
+              </TableBody>
+            </Table>
+          </div>
           {/* </Card> */}
           <div className="TbPiece">
             <TableContainer
@@ -397,11 +353,12 @@ function rpt_SheetTraceView() {
                         style={{
                           height: "33px",
                           width: "90%",
-                          backgroundColor: "#B6BBC4", 
-                          ...btnAOMEFPC.style, // รวมสไตล์เพิ่มเติมจาก btnAOMEFPC.style
+                          backgroundColor: "#B6BBC4",
+                          ...btnAOMEFPC.style,
                           color: "white",
                         }}
                         className="hover-button"
+                        disabled
                       >
                         {btnAOMEFPC.value}
                       </Button>
@@ -413,8 +370,8 @@ function rpt_SheetTraceView() {
                         value={txtAOMEFPCCnt}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -426,8 +383,8 @@ function rpt_SheetTraceView() {
                         value={txtAOMEFPCTime}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -442,8 +399,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -460,6 +417,7 @@ function rpt_SheetTraceView() {
                           width: "90%",
                           ...btnAOIEFPC.style,
                         }}
+                        disabled
                         className="hover-button"
                       >
                         {btnAOIEFPC.value}
@@ -472,8 +430,8 @@ function rpt_SheetTraceView() {
                         value={txtAOIEFPCCnt}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -485,8 +443,8 @@ function rpt_SheetTraceView() {
                         value={txtAOIEFPCTime}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -498,8 +456,8 @@ function rpt_SheetTraceView() {
                         value={txtAOIEFPCMachine}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         InputProps={{
                           readOnly: true,
@@ -516,10 +474,10 @@ function rpt_SheetTraceView() {
                         onClick={() => btnAllLInk("OST")}
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
-                          color: "white", // สีของข้อความ
+                          backgroundColor: "#B6BBC4",
+                          color: "white",
                           width: "90%",
-                          ...btnOST.style, // รวมสไตล์จาก btnOST.style
+                          ...btnOST.style,
                         }}
                         className="hover-button"
                       >
@@ -533,8 +491,8 @@ function rpt_SheetTraceView() {
                         value={txtOSTCnt}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -546,8 +504,8 @@ function rpt_SheetTraceView() {
                         value={txtOSTTime}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -559,8 +517,8 @@ function rpt_SheetTraceView() {
                         value={txtOSTMachine}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         InputProps={{
                           readOnly: true,
@@ -575,12 +533,13 @@ function rpt_SheetTraceView() {
                       <Button
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
-                          color: "white", // สีข้อความ
+                          backgroundColor: "#B6BBC4",
+                          color: "white",
                           width: "90%",
-                          ...btnAVI.style, // รวมสไตล์เพิ่มเติมจาก btnAVI.style
+                          ...btnAVI.style,
                         }}
                         className="hover-button"
+                        disabled
                       >
                         {btnAVI.value}
                       </Button>
@@ -592,8 +551,8 @@ function rpt_SheetTraceView() {
                         value={txtAVICnt}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -605,8 +564,8 @@ function rpt_SheetTraceView() {
                         value={txtAVITime}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -619,8 +578,8 @@ function rpt_SheetTraceView() {
                         value={txtAVIMachine}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -632,12 +591,13 @@ function rpt_SheetTraceView() {
                       <Button
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
-                          color: "white", // สีของข้อความ
+                          backgroundColor: "#B6BBC4",
+                          color: "white",
                           width: "90%",
-                          ...btnFVI.style, // รวมสไตล์เพิ่มเติมจาก btnFVI.style
+                          ...btnFVI.style,
                         }}
                         className="hover-button"
+                        disabled
                       >
                         {btnFVI.value}
                       </Button>
@@ -649,8 +609,8 @@ function rpt_SheetTraceView() {
                         value={txtFVICnt}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         InputProps={{
                           readOnly: true,
@@ -665,8 +625,8 @@ function rpt_SheetTraceView() {
                         value={txtFVITime}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         InputProps={{
                           readOnly: true,
@@ -682,8 +642,8 @@ function rpt_SheetTraceView() {
                         value={txtFVIMachine}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         InputProps={{
                           readOnly: true,
@@ -699,7 +659,7 @@ function rpt_SheetTraceView() {
                         onClick={() => btnAllLInk("SPI")}
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
+                          backgroundColor: "#B6BBC4",
                           color: "white",
                           width: "90%",
                           ...btnSPI.style,
@@ -715,8 +675,8 @@ function rpt_SheetTraceView() {
                         size="small"
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         value={txtSPICnt}
                         InputProps={{
@@ -732,8 +692,8 @@ function rpt_SheetTraceView() {
                         value={txtSPITime}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         InputProps={{
                           readOnly: true,
@@ -749,8 +709,8 @@ function rpt_SheetTraceView() {
                         value={txtSPIMachine}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                         InputProps={{
                           readOnly: true,
@@ -766,9 +726,9 @@ function rpt_SheetTraceView() {
                         onClick={() => btnAllLInk("PRE_AOI")}
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
+                          backgroundColor: "#B6BBC4",
                           width: "90%",
-                          ...btnPre.style, 
+                          ...btnPre.style,
                         }}
                         className="hover-button"
                       >
@@ -785,8 +745,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -801,8 +761,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -818,8 +778,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -831,11 +791,12 @@ function rpt_SheetTraceView() {
                       <Button
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
+                          backgroundColor: "#B6BBC4",
                           color: "white",
                           width: "90%",
                         }}
                         className="hover-button"
+                        disabled
                       >
                         {btnReflow.value}
                       </Button>
@@ -850,8 +811,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -866,8 +827,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -883,8 +844,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -896,10 +857,10 @@ function rpt_SheetTraceView() {
                         onClick={() => btnAllLInk("AOI")}
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
+                          backgroundColor: "#B6BBC4",
                           color: "white",
                           width: "90%",
-                          ...btnAOI.style, 
+                          ...btnAOI.style,
                         }}
                         className="hover-button"
                       >
@@ -916,8 +877,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -932,8 +893,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -949,8 +910,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -963,7 +924,7 @@ function rpt_SheetTraceView() {
                         onClick={() => btnAllLInk("XARY")}
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
+                          backgroundColor: "#B6BBC4",
                           color: "white",
                           width: "90%",
                         }}
@@ -982,8 +943,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -998,8 +959,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -1014,8 +975,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -1028,10 +989,10 @@ function rpt_SheetTraceView() {
                         onClick={() => btnAllLInk("AOI_COA")}
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
+                          backgroundColor: "#B6BBC4",
                           color: "white",
                           width: "90%",
-                          ...btnAOICOA.style, // ใช้สไตล์เพิ่มเติมจาก btnAOICOA.style
+                          ...btnAOICOA.style,
                         }}
                         className="hover-button"
                       >
@@ -1048,8 +1009,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -1064,8 +1025,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -1080,8 +1041,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -1093,7 +1054,7 @@ function rpt_SheetTraceView() {
                       <Button
                         style={{
                           height: "33px",
-                          backgroundColor: "#B6BBC4", 
+                          backgroundColor: "#B6BBC4",
                           color: "white",
                           width: "90%",
                         }}
@@ -1112,8 +1073,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -1128,8 +1089,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
@@ -1144,8 +1105,8 @@ function rpt_SheetTraceView() {
                         }}
                         disabled
                         sx={{
-                          pointerEvents: "none", // ป้องกันการมี pointer หรือ interaction
-                          caretColor: "transparent", // ซ่อน cursor ที่กระพริบ
+                          pointerEvents: "none",
+                          caretColor: "transparent",
                         }}
                       />
                     </TableCell>
