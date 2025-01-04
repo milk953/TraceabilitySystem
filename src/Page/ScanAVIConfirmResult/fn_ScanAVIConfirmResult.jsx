@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanAVIConfirmResult() {
   const [lblNo, setLblNo] = useState({
@@ -84,7 +85,9 @@ function fn_ScanAVIConfirmResult() {
 
   const [Product, setProduct] = useState([]);
   const [TestType, setTestType] = useState([]);
-  const plantCode = import.meta.env.VITE_FAC;
+  // const plantCode = import.meta.env.VITE_FAC;
+  const { ConfigData } = DataConfig();
+  const plantCode = ConfigData.FACTORY;
 
   useEffect(() => {
     const fetchData = async () => {
