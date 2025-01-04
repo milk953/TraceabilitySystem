@@ -429,9 +429,10 @@ function fn_ScanSMTSerialSht() {
   };
 
   const handleChangeSerial = (index, e) => {
-    const newValues = [...txtgvSerial];
-    newValues[index] = e.target.value;
-    settxtgvSerial(newValues);
+    const trimmedValue = e.target.value.trim();
+    const newValue = [...txtgvSerial];
+    newValue[index] = trimmedValue;
+    settxtgvSerial(newValue);
   };
 
   const handleChangegvBackSide = (index, e) => {
