@@ -25,7 +25,7 @@ const { menuName } = fn_Homepage();
           <Table id="TableMain1" component={Paper}>
             <TableHead>
               <TableRow>
-                <TableCell style={{color:'white'}}colSpan={3}>{menuName}</TableCell>
+                <TableCell style={{color:'white'}}colSpan={3}>{menuName ? menuName : 'Sheet Bin Checking'}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

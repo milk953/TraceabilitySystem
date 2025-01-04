@@ -54,7 +54,7 @@ function ScanAutoBendingTime() {
         >
           <TableHead>
             <TableRow>
-              <TableCell colSpan={3}>{menuName}</TableCell>
+              <TableCell colSpan={3}>  {menuName ? menuName : 'Serial Bending Record Data'}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
