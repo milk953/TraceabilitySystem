@@ -75,7 +75,7 @@ function ReJudgement() {
           <TableHead>
             <TableRow>
               <TableCell sx={{ textAlign: "center" }} colSpan={4}>
-                {menuName}
+                {menuName || "Re-Judgement"}
               </TableCell>
             </TableRow>
           </TableHead>

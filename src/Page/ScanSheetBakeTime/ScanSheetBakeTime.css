@@ -5,17 +5,19 @@
   width: 600px;
   height: 240px;
 }
-#TableMainBaking {
+.TableMainBaking {
   width: 600px !important;
   margin: 0 auto;
 }
-#TableMainBaking th {
+.TableMainBaking th {
   text-align: center;
   font-size: 24px;
   background-color: #8c8c8c;
   color: white;
+  padding: 8px !important;
+  height: 30px;
 }
-#TableMainBaking td {
+.TableMainBaking td {
   padding: 1%;
 }
 
