@@ -231,7 +231,7 @@ function fn_rpt_SheetTraceView() {
   };
 
   const ViewData = async (sheetno, dropdawn) => {
-    showLoading("กำลังโหลด กรุณารอสักครู่");
+    showLoading("กำลังค้นหา กรุณารอสักครู่");
     setPanelNo1("");
     let txtSheetNo = sheetno;
     setlblMessage("");
