@@ -14,13 +14,7 @@ import {
   Select,
   MenuItem,
   FormControl,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  InputLabel,
-  Autocomplete,
   Box,
-  Tooltip,
 } from "@mui/material";
 import { Table as AntTable } from "antd";
 import { Input, Button } from "antd";
@@ -117,16 +111,15 @@ function rpt_SheetTraceView() {
           <Typography sx={{ textAlign: "center", color: "red" }}>
             {lblMessage}
           </Typography>
-          <div className="divSheetTable">
+          <div className="">
             <Table className="TbViewTraceSheet">
               <TableBody>
                 <TableRow>
-                  <TableCell align="right" colSpan={4}>
-              
+                  <TableCell align="right">
                     <Button
                       disabled
                       colSpan={4}
-                      style={{ color: "white", backgroundColor: "#31363F" }}
+                      style={{ color: "white", backgroundColor: "#31363F" ,width:"97%"}}
                       type="primary"
                       className="LableView"
                       iconPosition={"end"}
@@ -136,10 +129,9 @@ function rpt_SheetTraceView() {
                   </TableCell>
 
                   <TableCell align="center">
-                 
                     <Input
                       size="small"
-                      id="RollLeafTextFiledFirst"
+                     // id="RollLeafTextFiledFirst"
                       className="ViewInput"
                       placeholder="Please Input Sheet No"
                       value={txtSheetNo}
@@ -161,7 +153,6 @@ function rpt_SheetTraceView() {
                       Search
                     </Button>
                     &nbsp;&nbsp;&nbsp;
-                
                     <Button
                       type="primary"
                       style={{
@@ -176,141 +167,122 @@ function rpt_SheetTraceView() {
                     </Button>
                   </TableCell>
                 </TableRow>
+                
               </TableBody>
             </Table>
           </div>
           {/* <Card className="card-style-product"> */}
-          <div className="Product">
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell
-                  >
-                    <Button
-                      disabled
-                      style={{
-                        color: "white",
-                        backgroundColor: "#31363F",
-                        width: "97%",
-                      }}
-                      type="primary"
-                      className="LableView"
-                      iconPosition={"end"}
-                    >
-                      Product :
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                
-                    <Input
-                      size="small"
-                      className="ViewInput"
-                      style={{ width: "170px" }}
-                      value={txtProduct}
-                      onChange={(e) => settxtProduct(e.target.value)}
-                      disabled
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                  >
-             
-                    <Button
-                      disabled
-                      style={{
-                        color: "white",
-                        backgroundColor: "#31363F",
-                        width: "97%",
-                      }}
-                      type="primary"
-                      className="LableView"
-                      iconPosition={"end"}
-                    >
-                      Lot No. :
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <a
-                      href={`/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
-                      style={{ fontSize: "16px" }}
-                    >
-                      {hypLotNo}
-                    </a>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    {/* <Typography>{lblCavity.value}</Typography> */}
-                    <Button
-                      disabled
-                      style={{
-                        color: "white",
-                        backgroundColor: "#31363F",
-                        width: "97%",
-                      }}
-                      type="primary"
-                      className="LableView"
-                      iconPosition={"end"}
-                    >
-                      {lblCavity.value} :
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <FormControl fullWidth>
-                      {/* ตรงนี้ยังติด */}
-
-                      <FormControl fullWidth>
-                        <Select
-                          style={{ height: "33px" }}
-                          size="small"
-                          value={selectddlCavity}
-                          onChange={(e) => ddlCavity_SelectedIndexChanged(e)}
-                          displayEmpty
-                        >
-                          {ddlCavity.map((option) => (
-                            <MenuItem key={option.pcs_no} value={option.pcs_no}>
-                              {option.pcs_name} {/* แสดง text */}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </FormControl>
-                  </TableCell>
-                </TableRow>
-                {lblShtMachine.visible && (
-                  <TableRow>
-                    <TableCell
-                    //className="color-bg-product"
-                    >
-                      {/* <Typography>Machine. :</Typography> */}
-                      <Button
-                        disabled
-                        style={{
-                          color: "white",
-                          backgroundColor: "#31363F",
-                          width: "97%",
-                        }}
-                        type="primary"
-                        className="LableView"
-                        iconPosition={"end"}
-                      >
-                        Machine. :
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Typography
-                      // sx={{ textAlign: "center" }}
-                      >
-                        {lblShtMachine.value}
-                      </Typography>
-                      <Typography sx={{ textAlign: "center" }}>
-                        {hypMaterial.value}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
+          <div>
+            <Table className="Sheet-Table-Search">
+            <TableRow>
+  <TableCell style={{ padding: '4px' }}>
+    <Button
+      disabled
+      style={{
+        color: "white",
+        backgroundColor: "#31363F",
+        width: "97%",
+      }}
+      type="primary"
+      className="LableView"
+      iconPosition={"end"}
+    >
+      Product :
+    </Button>
+  </TableCell>
+  <TableCell style={{ padding: '4px' }}>
+    <Input
+      size="small"
+      className="ViewInput"
+      style={{ width: "170px" }}
+      value={txtProduct}
+      onChange={(e) => settxtProduct(e.target.value)}
+      disabled
+    />
+  </TableCell>
+  <TableCell style={{ padding: '4px' }}>
+    <Button
+      disabled
+      style={{
+        color: "white",
+        backgroundColor: "#31363F",
+        width: "97%",
+      }}
+      type="primary"
+      className="LableView"
+      iconPosition={"end"}
+    >
+      Lot No. :
+    </Button>
+  </TableCell>
+  <TableCell style={{ padding: '4px' }}>
+    <a
+      href={`/TraceabilitySystem/LotTraceView?lot=${hypLotNo}`}
+      style={{ fontSize: "16px" }}
+    >
+      {hypLotNo}
+    </a>
+  </TableCell>
+</TableRow>
+<TableRow >
+  <TableCell style={{ padding: '4px' }}>
+    <Button
+      disabled
+      style={{
+        color: "white",
+        backgroundColor: "#31363F",
+        width: "97%",
+      }}
+      type="primary"
+      className="LableView"
+      iconPosition={"end"}
+    >
+      {lblCavity.value} :
+    </Button>
+  </TableCell>
+  <TableCell style={{ padding: '4px' }}>
+    <FormControl fullWidth>
+      <Select
+        style={{ height: "33px" }}
+        size="small"
+        value={selectddlCavity}
+        onChange={(e) => ddlCavity_SelectedIndexChanged(e)}
+        displayEmpty
+      >
+        {ddlCavity.map((option) => (
+          <MenuItem key={option.pcs_no} value={option.pcs_no}>
+            {option.pcs_name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  </TableCell>
+  {lblShtMachine.visible && (
+    <TableCell style={{ padding: '4px' }}>
+      <Button
+        disabled
+        style={{
+          color: "white",
+          backgroundColor: "#31363F",
+          width: "97%",
+        }}
+        type="primary"
+        className="LableView"
+        iconPosition={"end"}
+      >
+        Machine. :
+      </Button>
+    </TableCell>
+  )}
+  <TableCell style={{ padding: '4px' }}>
+    <Typography>
+      {lblShtMachine.value}
+    </Typography>
+    <Typography sx={{ textAlign: "center" }}>
+      {hypMaterial.value}
+    </Typography>
+  </TableCell>
+</TableRow>
             </Table>
           </div>
           {/* </Card> */}

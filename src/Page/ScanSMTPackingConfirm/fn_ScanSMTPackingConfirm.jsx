@@ -174,13 +174,11 @@ function fn_ScanSMTPackingConfirm() {
 
   const getInitialSerial = async () => {
     let dtData = [];
-    console.log(hfShtScan,"hfShtScan")
     for (let intRow = 0; intRow < hfShtScan; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
-    console.log(dtData,"dtData")
     setgvSerial(dtData);
     settxtSerial(Array(gvSerial.length).fill(""));
     if (gvSerial.length > 0) {
@@ -477,9 +475,7 @@ function fn_ScanSMTPackingConfirm() {
       .then((res) => {
         dtSheet = res.data;
         setgvScanResult(dtSheet);
-        console.log(dtSheet,"dtSheet")
         if (dtSheet.length > 0) {
-          console.log("มาได้ไงอ่ะงง")
           setpnlgvScanResult(true);
           setpnlSerial(true)
         }

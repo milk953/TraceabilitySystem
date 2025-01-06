@@ -315,7 +315,6 @@ function fn_ScanSMTSerialPcsBox() {
       // await getProductSerialMaster(data[0].prd_name);
     });
   };
-console.log(ddlProduct,"setddlProduct")
   const columns = [
     {
       title: "No.",
@@ -647,7 +646,6 @@ console.log(ddlProduct,"setddlProduct")
   const btnSave_Click = async () => {
     // ตรวจสอบว่า fc_txtSerial.current มีค่าก่อน
     if (!fc_txtSerial.current || !Array.isArray(fc_txtSerial.current)) {
-      console.error("fc_txtSerial.current is not available or not an array.");
       setlblLog((prevState) => ({
         ...prevState,
         value: "Unexpected error: Input elements not found.",
@@ -689,7 +687,6 @@ console.log(ddlProduct,"setddlProduct")
   
   
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
-    console.log(selectvalue,"selectvalue")
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     let GetFinalGateMasterCheckResult = "";
     if (lblLot.value !== "") {

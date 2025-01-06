@@ -96,7 +96,6 @@ function fn_ELTmaster() {
         styled: { color: "white" ,backgroundColor:'red', fontSize:'50px' },
       });
     } else {
-      console.log(IP,"IP",hfUserName)
       await axios
         .post(
           "/api/ELTmaster/Submit_ELT",
