@@ -67,16 +67,13 @@ function ScanSheetInspect() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={3} align="center">
-                                        {/* <Typography variant="h6">
-                                            Sheet Inspection
-                                        </Typography> */}
-                                        {menuName}
+                                    {menuName ? menuName : "P1 Confirm Process"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -109,7 +106,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">   
                                         <Typography>Product :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -153,7 +150,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">   
                                         <Typography>Roll No :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -178,7 +175,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Scan By :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -200,7 +197,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Scan Date :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -233,7 +230,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Shift :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -263,7 +260,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Week Code :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -285,7 +282,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Bin No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -320,7 +317,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Sheet No. :</Typography>
                                     </TableCell>
                                     <TableCell>

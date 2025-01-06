@@ -78,6 +78,7 @@ function fn_ScanSheetInspect() {
     };
 
     const ClearLot = () => {
+        setselShift("A");
         settxtLotNo("");
         settxtRollNo("");
         settxtScanBy("");
@@ -85,6 +86,7 @@ function fn_ScanSheetInspect() {
         setistxtLotDisabled(false);
         setpnlSerial(false);
         SetMode("LOT");
+        fetchData();
         setTimeout(() => {
             inputLot.current.focus();
         }, 200);
