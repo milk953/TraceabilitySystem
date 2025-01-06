@@ -241,6 +241,7 @@ function fn_ScanSMTSerialBackendConfirm() {
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
+        settxtgvSerial("");
         inputgvSerial.current[0].focus();
     };
 
