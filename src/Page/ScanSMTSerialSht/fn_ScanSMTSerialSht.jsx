@@ -429,7 +429,7 @@ function fn_ScanSMTSerialSht() {
   };
 
   const handleChangeSerial = (index, e) => {
-    const trimmedValue = e.target.value.trim();
+    const trimmedValue = e.target.value.trim().toUpperCase();
     const newValue = [...txtgvSerial];
     newValue[index] = trimmedValue;
     settxtgvSerial(newValue);
@@ -1088,7 +1088,8 @@ function fn_ScanSMTSerialSht() {
                     strMachine: dtRowLeaf[i].MACHINE,
                     strUserID: hfUserStation,
                     strOperator: "SerialShtPcs",
-                    strPlantCode: plantCode
+                    strPlantCode: plantCode,
+                    strProgram : 'ScanSMTSerialSht'
                   })
                     .then((res) => {
                       _strUpdateError = res.data.p_error;
@@ -1120,6 +1121,7 @@ function fn_ScanSMTSerialSht() {
               USER_ID: hfUserID,
               REMARK: dtSerial[i].REMARK,
               LOT: _strLot,
+              strProgram : 'ScanSMTSerialSht'
             })
               .then((res) => {
                 _strUpdateError = res.data.p_error;
@@ -1134,7 +1136,7 @@ function fn_ScanSMTSerialSht() {
                 dataList:
                 {
                   strUserID: hfUserStation,
-                  strProgram: "frm_ScanSMTSerialSht",
+                  strProgram: "ScanSMTSerialSht",
                   strPlantCode: plantCode,
                   strStation: hfUserStation,
                   data: [{

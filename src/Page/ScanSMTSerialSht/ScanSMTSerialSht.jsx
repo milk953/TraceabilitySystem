@@ -74,7 +74,7 @@ function ScanSMTSerialSht() {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -107,10 +107,10 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell colSpan={2}>
                                         <Autocomplete
                                             className="Select_dropDown"
                                             disabled={selProDisabled}
@@ -132,7 +132,7 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot Ref. No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -153,7 +153,7 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Total Sht :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -161,7 +161,7 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Total Pcs :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -171,7 +171,7 @@ function ScanSMTSerialSht() {
                                 {pnlRollLeaf && (
                                     <>
                                         <TableRow>
-                                            <TableCell>
+                                            <TableCell align="right">
                                                 <Typography>Roll Leaf No. :</Typography>
                                             </TableCell>
                                             <TableCell colSpan={3}>
@@ -197,7 +197,7 @@ function ScanSMTSerialSht() {
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell>
+                                            <TableCell align="right">
                                                 <Typography>Check Roll :</Typography>
                                             </TableCell>
                                             <TableCell>
@@ -216,7 +216,7 @@ function ScanSMTSerialSht() {
 
                                 {pnlMachine && (
                                     <TableRow>
-                                        <TableCell>
+                                        <TableCell align="right">
                                             <Typography>Machine No. :</Typography>
                                         </TableCell>
                                         <TableCell colSpan={3}>
@@ -247,19 +247,15 @@ function ScanSMTSerialSht() {
                             <TableContainer
                                 component={Card}
                                 style={{
-                                    width: "100%",
-                                    marginTop: "5px",
+                                    width: "430px",
+                                    marginTop: "10px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    border: "1px solid #d9d9d9",
                                 }}
                             >
-                                <Table
-                                    sx={{
-                                        minWidth: 380,
-                                    }}
-                                    aria-label="simple table"
-                                >
+                                <Table>
                                     <TableBody>
                                         {Array.from(
                                             { length: gvBackSide.length },
@@ -489,7 +485,7 @@ function ScanSMTSerialSht() {
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
-                                        className="ButtonCancel"
+                                        className="ButtonDelete"
                                         style={{height: "30px"}}
                                         type="primary"
                                         onClick={btnCancelClick}

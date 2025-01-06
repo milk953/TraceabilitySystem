@@ -55,7 +55,6 @@ function ScanSMTSerialControlTime() {
                         component={Card}
                         style={{
                             width: "450px",
-                            margin: "4px",
                         }}
                     >
                         <Table className="Header_Left">
@@ -71,7 +70,7 @@ function ScanSMTSerialControlTime() {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Machine No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -108,7 +107,7 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Operator :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -145,7 +144,7 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Total Pcs. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -189,7 +188,7 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -222,10 +221,10 @@ function ScanSMTSerialControlTime() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell colSpan={2}>
                                         <Autocomplete
                                             id="selectPdControl"
                                             disabled={selProDisabled}
@@ -257,10 +256,10 @@ function ScanSMTSerialControlTime() {
                             height: "40px",
                             display: 'flex',
                             alignItems: 'center',
-                            marginLeft: "4px",
+                            // marginLeft: "4px",
                         }}
                     >
-                        <Typography align="left"
+                        <Typography align="right"
                             style={{ padding: "5px" }}
                         >
                             Lot :
@@ -280,8 +279,8 @@ function ScanSMTSerialControlTime() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "453px",
-                                marginLeft: "2px",
+                                width: "451px",
+                                // marginLeft: "2px",
                             }}
                         >
                             {lblLog}
@@ -293,11 +292,12 @@ function ScanSMTSerialControlTime() {
                             <TableContainer
                                 component={Card}
                                 style={{
-                                    width: "453px",
+                                    width: "450px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
-                                    marginTop: "10px"
+                                    marginTop: "10px",
+                                    border: "1px solid #d9d9d9",
                                 }}
                             >
                                 <Table>
@@ -348,7 +348,7 @@ function ScanSMTSerialControlTime() {
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
-                                        className="ButtonCancel"
+                                        className="ButtonDelete"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}
@@ -382,6 +382,7 @@ function ScanSMTSerialControlTime() {
                                     style={{
                                         background: lblResultcolor,
                                         width: "100%",
+                                        marginLeft: "10px"
                                     }}
                                 >
                                     <Typography
@@ -397,7 +398,7 @@ function ScanSMTSerialControlTime() {
                                 columns={columns}
                                 dataSource={gvScanData}
                                 rowKey={(record) => record.SEQ}
-                                style={{ width: '100%' }}
+                                style={{ width: '99%', marginLeft: "10px" }}
                                 pagination={false}
                                 size="small"
                                 bordered

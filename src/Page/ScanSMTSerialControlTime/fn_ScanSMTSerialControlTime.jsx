@@ -843,7 +843,7 @@ function fn_ScanSMTSerialControlTime() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const trimmedValue = e.target.value.trim();
+        const trimmedValue = e.target.value.trim().toUpperCase();
         const newValue = [...txtgvSerial];
         newValue[index] = trimmedValue;
         settxtgvSerial(newValue);

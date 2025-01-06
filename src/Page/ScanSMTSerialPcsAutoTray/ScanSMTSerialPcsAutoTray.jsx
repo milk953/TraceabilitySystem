@@ -62,7 +62,6 @@ function ScanSMTSerialPcsAutoTray() {
                         component={Card}
                         style={{
                             width: "420px",
-                            margin: "4px",
                         }}
                     >
                         <Table className="Header_Left">
@@ -78,7 +77,7 @@ function ScanSMTSerialPcsAutoTray() {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography> Scan Lot :</Typography>
                                     </TableCell>
                                     <TableCell colSpan={3}>
@@ -111,10 +110,10 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell colSpan={4}>
                                         <Autocomplete
                                             className="Select_dropDown"
                                             disabled={selProDisabled}
@@ -138,7 +137,7 @@ function ScanSMTSerialPcsAutoTray() {
 
                                 {pnlPackingGroup && (
                                     <TableRow>
-                                        <TableCell>
+                                        <TableCell align="right">
                                             <Typography> Packing No :</Typography>
                                         </TableCell>
                                         <TableCell colSpan={3}>
@@ -173,7 +172,7 @@ function ScanSMTSerialPcsAutoTray() {
                                 )}
 
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -195,7 +194,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Pcs/Tray :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -263,7 +262,8 @@ function ScanSMTSerialPcsAutoTray() {
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
-                                    marginTop: "10px"
+                                    marginTop: "10px",
+                                    border: "1px solid #d9d9d9",
                                 }}
                             >
                                 <Table>
@@ -315,7 +315,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
-                                        className="ButtonCancel"
+                                        className="ButtonDelete"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}

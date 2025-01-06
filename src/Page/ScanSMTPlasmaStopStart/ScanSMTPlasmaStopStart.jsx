@@ -52,7 +52,7 @@ function ScanSMTPlasmaStopStart() {
                         component={Card}
                         style={{
                             width: "502px",
-                            margin: "4px"
+                            // margin: "4px"
                         }}
                     >
                         <Table className="Header_Left">
@@ -68,7 +68,7 @@ function ScanSMTPlasmaStopStart() {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -101,10 +101,10 @@ function ScanSMTPlasmaStopStart() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell colSpan={2}>
                                         <Autocomplete
                                             className="Select_dropDown"
                                             disabled={selProductDisabled}
@@ -126,7 +126,7 @@ function ScanSMTPlasmaStopStart() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Time :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -181,7 +181,7 @@ function ScanSMTPlasmaStopStart() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Partial/Packing No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -217,7 +217,6 @@ function ScanSMTPlasmaStopStart() {
                             height: "40px",
                             display: 'flex',
                             alignItems: 'center',
-                            marginLeft: "4px",
                         }}
                     >
                         <Typography align="left"
