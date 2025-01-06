@@ -2,8 +2,8 @@ import React from "react";
 import Header from "../Header/Header";
 import "./rollTraceView.css";
 import { Input, Button, Tag, Table } from "antd";
-import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
-import { Card, Paper } from "@mui/material";
+import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
+import { Card, Paper, Typography } from "@mui/material";
 import { fn_rollTraceView } from "./fn_rollTraceView";
 import "../Common/StyleCommon.css";
 function rollTraceView() {
@@ -23,13 +23,10 @@ function rollTraceView() {
   return (
     <>
       <Header />
-      <h1>ViewTraceRoll</h1>
+      {/* <h1>ViewTraceRoll</h1> */}
 
-      <Card component={Paper}>
+      <Card component={Paper} className="Card-Common">
         <div className="RollTracetextField">
-          {/* <Tag color="blue" style={{ fontSize: 20, verticalAlign: "center",height:40}}>
-           <span style={{padding:'0 10 0 0 '}}> Roll Leaf No.</span>
-          </Tag> */}
           <Button
             disabled
             style={{ color: "white", backgroundColor: "#31363F" }}
@@ -45,7 +42,7 @@ function rollTraceView() {
             className="RollTraceInput"
             placeholder="Please Input Roll Leaf"
             value={RollLeafTextFiled}
-            onChange={(e) => setRollLeafTextFiled(e.target.value)}
+            onChange={(e) => setRollLeafTextFiled(e.target.value.trim())}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 enterBtn();
@@ -58,19 +55,18 @@ function rollTraceView() {
             icon={<SearchOutlined />}
             onClick={enterBtn}
           >
-            Retrive
+            Search
           </Button>
           <Button
             type="primary"
             style={{ backgroundColor: "#f5222d", borderColor: "#f5222d" }}
             className="RollTraceBtn"
-            icon={<ClearOutlined />}
+            icon={<UndoOutlined />}
             onClick={clearViwe}
           >
             Clear
           </Button>
         </div>
-
         <div className="RollTraceShowData">
           <table className="tableRollTrace">
             <tr>
@@ -85,7 +81,9 @@ function rollTraceView() {
                     Product
                   </Button>
                 </th>
-                <th className="labelShowData" >{Product}</th>
+                <th className="labelShowData">
+                  <Typography>{Product}</Typography>
+                </th>
               </td>
               <td>
                 <th>
@@ -97,7 +95,9 @@ function rollTraceView() {
                     Roll No.
                   </Button>
                 </th>
-                <th className="labelShowData">{RollNo}</th>
+                <th className="labelShowData">
+                  <Typography>{RollNo}</Typography>
+                </th>
               </td>
             </tr>
             <tr>
@@ -112,12 +112,14 @@ function rollTraceView() {
                   </Button>
                 </th>
                 <th className="labelShowData">
-                  <a
-                    href={`LotRollLeafNo?ROLLNO=${LotNo}&product=${Product}`}
-                    target="_blank"
-                  >
-                    {LotNo}{" "}
-                  </a>
+                  <Typography>
+                    <a
+                      href={`LotRollLeafNo?ROLLNO=${LotNo}&product=${Product}`}
+                      target="_blank"
+                    >
+                      {LotNo}{" "}
+                    </a>
+                  </Typography>
                 </th>
               </td>
               <td>
@@ -130,10 +132,11 @@ function rollTraceView() {
                     Roll Sheet No.
                   </Button>
                 </th>
-                <th className="labelShowData">{RollSheetNo}</th>
+                <th className="labelShowData">
+                  <Typography>{RollSheetNo}</Typography>
+                </th>
               </td>
             </tr>
-         
           </table>
         </div>
         {gvResultState && (
