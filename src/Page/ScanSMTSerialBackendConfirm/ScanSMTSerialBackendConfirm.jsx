@@ -69,13 +69,13 @@ function ScanSMTSerialBackendConfirm() {
                                         {/* <Typography variant="h6">
                                             SMT Backend E-Mapping
                                         </Typography> */}
-                                        {menuName}
+                                         {menuName ? menuName : "SMT Backend E-Mapping"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -113,7 +113,7 @@ function ScanSMTSerialBackendConfirm() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -138,7 +138,7 @@ function ScanSMTSerialBackendConfirm() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Total Sht :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -259,7 +259,7 @@ function ScanSMTSerialBackendConfirm() {
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
-                                        className="ButtonCancel"
+                                        className="ButtonDelete"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}
