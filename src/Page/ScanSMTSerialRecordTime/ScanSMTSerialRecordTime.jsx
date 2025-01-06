@@ -59,8 +59,7 @@ function ScanSMTSerialRecordTime() {
                     <TableContainer
                         component={Card}
                         style={{
-                            width: "490px",
-                            margin: "4px",
+                            width: "500px",
                         }}
                     >
                         <Table className="Header_Left">
@@ -117,7 +116,7 @@ function ScanSMTSerialRecordTime() {
                                 </TableRow>
                                 {pnlMachine && (
                                     <TableRow>
-                                        <TableCell>
+                                        <TableCell align="right">
                                             <Typography>Machine No. :</Typography>
                                         </TableCell>
                                         <TableCell colSpan={3}>
@@ -158,7 +157,7 @@ function ScanSMTSerialRecordTime() {
                                     </TableRow>
                                 )}
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>OP/Partial No. :</Typography>
                                     </TableCell>
                                     <TableCell colSpan={3}>
@@ -200,7 +199,7 @@ function ScanSMTSerialRecordTime() {
 
                                 {pnlOPReJudge && (
                                     <TableRow>
-                                        <TableCell>
+                                        <TableCell align="right">
                                             <Typography>OP-Rejudgement :</Typography>
                                         </TableCell>
                                         <TableCell colSpan={3}>
@@ -243,7 +242,7 @@ function ScanSMTSerialRecordTime() {
 
                                 {pnlAreaRejudge && (
                                     <TableRow>
-                                        <TableCell>
+                                        <TableCell align="right">
                                             <Typography>Area-Rejudgement :</Typography>
                                         </TableCell>
                                         <TableCell colSpan={3}>
@@ -297,7 +296,7 @@ function ScanSMTSerialRecordTime() {
                                 )}
 
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Total Pcs. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -385,7 +384,7 @@ function ScanSMTSerialRecordTime() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell colSpan={3}>
@@ -395,7 +394,7 @@ function ScanSMTSerialRecordTime() {
                                             id="lotno"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={istxtLotDisabled}
                                             style={{
                                                 backgroundColor: istxtLotDisabled ? "#e0e0e0" : "inherit",
@@ -419,10 +418,10 @@ function ScanSMTSerialRecordTime() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell colSpan={4}>
                                         <Autocomplete
                                             id="select"
                                             disabled={isselProDisabled}
@@ -481,7 +480,7 @@ function ScanSMTSerialRecordTime() {
                     <Paper
                         elevation={2}
                         style={{
-                            width: "490px",
+                            width: "500px",
                             margin: "auto",
                             height: "40px",
                             display: 'flex',
@@ -520,7 +519,7 @@ function ScanSMTSerialRecordTime() {
                         <Paper
                             elevation={3}
                             style={{
-                                width: "490px",
+                                width: "500px",
                                 margin: "auto",
                                 height: "auto",
                                 display: 'flex',
@@ -552,7 +551,7 @@ function ScanSMTSerialRecordTime() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "490px",
+                                width: "500px",
                                 marginLeft: "2px",
                             }}
                         >
@@ -565,7 +564,7 @@ function ScanSMTSerialRecordTime() {
                             <TableContainer
                                 component={Card}
                                 style={{
-                                    width: "495px",
+                                    width: "500px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
@@ -620,7 +619,7 @@ function ScanSMTSerialRecordTime() {
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
-                                        className="ButtonCancel"
+                                        className="ButtonDelete"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}

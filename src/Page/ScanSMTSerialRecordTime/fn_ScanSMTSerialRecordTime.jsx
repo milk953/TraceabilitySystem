@@ -1274,7 +1274,7 @@ function fn_ScanSMTSerialRecordTime() {
                         dataList:
                         {
                             strUserID: txtOperator,
-                            strProgram: "frm_ScanSMTSerialRecordTime",
+                            strProgram: "ScanSMTSerialRecordTime",
                             strPlantCode: plantCode,
                             strStation: hfUserStation,
                             strOPRejudge: txtOPRejudge,
@@ -1328,7 +1328,7 @@ function fn_ScanSMTSerialRecordTime() {
     };
 
     const handleChangeSerial = (index, event) => {
-        const trimmedValue = event.target.value.trim();
+        const trimmedValue = event.target.value.trim().toUpperCase();
         const newValue = [...txtgvSerial];
         newValue[index] = trimmedValue;
         settxtgvSerial(newValue);

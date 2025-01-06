@@ -54,7 +54,7 @@ function ScanSMTSerialShtConfirm() {
                         component={Card}
                         style={{
                             width: "400px",
-                            margin: "4px",
+                            // margin: "4px",
                         }}
                     >
                         <Table className="Header_Left">
@@ -70,7 +70,7 @@ function ScanSMTSerialShtConfirm() {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -103,10 +103,10 @@ function ScanSMTSerialShtConfirm() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell colSpan={2}>
                                         <Autocomplete
                                             className="Select_dropDown"
                                             disabled={selProDisabled}
@@ -128,7 +128,7 @@ function ScanSMTSerialShtConfirm() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Total Sht :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -161,7 +161,8 @@ function ScanSMTSerialShtConfirm() {
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
-                                    marginTop: "4px"
+                                    marginTop: "10px",
+                                    border: "1px solid #d9d9d9",
                                 }}
                             >
                                 <Table>
@@ -215,7 +216,7 @@ function ScanSMTSerialShtConfirm() {
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
-                                        className="ButtonCancel"
+                                        className="ButtonDelete"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}
@@ -244,7 +245,7 @@ function ScanSMTSerialShtConfirm() {
                     {gvScanResult && (
                         <>
 
-                            <div style={{ display: "flex", gap: "10px", width: "100%", marginTop: "2px" }}>
+                            <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                                 <Paper
                                     className="Card-lblResult"
                                     style={{

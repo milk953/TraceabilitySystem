@@ -397,7 +397,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const trimmedValue = e.target.value.trim();
+        const trimmedValue = e.target.value.trim().toUpperCase();
         const newValue = [...txtgvSerial];
         newValue[index] = trimmedValue;
         settxtgvSerial(newValue);
@@ -1225,6 +1225,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             TEST_RESULT: dtSerial[i].TEST_RESULT,
                             REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
                             PACKING_NO: dtSerial[i].PACKING_NO,
+                            strPage: 'ScanSMTSerialPcsAutoTray'
                         },
                     })
                     .then((res) => {
