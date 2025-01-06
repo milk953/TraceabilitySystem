@@ -22,15 +22,17 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Header from "../Header/Header";
 import "./ScanSMTSerialShtMaster.css";
 import { fn_ScanSMTSerialShtMaster } from "./fn_ScanSMTSerialShtMaster";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function ScanSMTSerialShtMaster() {
+    const { menuName } = fn_Homepage();
     const {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtLotRef, settxtLotRef, txtMasterCode, settxtMasterCode, lblTotalSht, lblTotalPcs,
         txtRollLeaf, settxtRollLeaf, txtMachineNo, settxtMachineNo, pnlRollLeaf, pnlMachine, pnlLog, lblLog, lblResult, lblResultcolor,
@@ -48,25 +50,22 @@ function ScanSMTSerialShtMaster() {
                 className="Card-Common"
                 sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between"
-                // sx={{
-                //     marginLeft: "-6px",
-                // }}
-                >
+                <Box justifyContent="space-between">
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "430px",
-                            margin: "4px",
+                            //margin: "3px",
                         }}
                     >
-                        <Table className="TbScanSMTSerialShtMas">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell colSpan={5} align="center">
-                                        <Typography variant="h6">
+                                    <TableCell colSpan={3} align="center">
+                                        {/* <Typography variant="h6">
                                             Master Connect Sht & Pcs
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -75,13 +74,13 @@ function ScanSMTSerialShtMaster() {
                                     <TableCell>
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell>
                                         <TextField
                                             className="input_txt"
                                             size="small"
                                             inputRef={(el) => (inputLot.current = el)}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
@@ -110,7 +109,7 @@ function ScanSMTSerialShtMaster() {
                                     <TableCell>
                                         <Typography>Product :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell>
                                         <Autocomplete
                                             className="Select_dropDown"
                                             disabled={selProDisabled}
@@ -135,7 +134,7 @@ function ScanSMTSerialShtMaster() {
                                     <TableCell>
                                         <Typography>Lot Ref. No. :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell>
                                         <TextField
                                             className="input_txt"
                                             size="small"
@@ -156,13 +155,13 @@ function ScanSMTSerialShtMaster() {
                                     <TableCell>
                                         <Typography>Master Code :</Typography>
                                     </TableCell>
-                                    <TableCell colSpan={3}>
+                                    <TableCell>
                                         <TextField
                                             className="input_txt"
                                             size="small"
                                             inputRef={(el) => (inputMasterCode.current = el)}
                                             fullWidth
-                                            value={txtMasterCode}
+                                            value={txtMasterCode.trim()}
                                             onChange={(e) => {
                                                 settxtMasterCode(e.target.value);
                                             }}
@@ -196,13 +195,13 @@ function ScanSMTSerialShtMaster() {
                                             <TableCell>
                                                 <Typography>Roll Leaf No. :</Typography>
                                             </TableCell>
-                                            <TableCell colSpan={3}>
+                                            <TableCell>
                                                 <TextField
                                                     className="input_txt"
                                                     size="small"
                                                     inputRef={(el) => (inputRollLeaf.current = el)}
                                                     fullWidth
-                                                    value={txtRollLeaf}
+                                                    value={txtRollLeaf.trim()}
                                                     disabled={txtRollLeafDisabled}
                                                     style={{
                                                         backgroundColor: txtRollLeafDisabled ? "#e0e0e0" : "inherit",
@@ -226,13 +225,13 @@ function ScanSMTSerialShtMaster() {
                                         <TableCell>
                                             <Typography>Machine No. :</Typography>
                                         </TableCell>
-                                        <TableCell colSpan={3}>
+                                        <TableCell>
                                             <TextField
                                                 className="input_txt"
                                                 size="small"
                                                 inputRef={(el) => (inputMachineNo.current = el)}
                                                 fullWidth
-                                                value={txtMachineNo}
+                                                value={txtMachineNo.trim()}
                                                 onChange={(e) => {
                                                     settxtMachineNo(e.target.value);
                                                 }}
@@ -252,21 +251,17 @@ function ScanSMTSerialShtMaster() {
                     {pnlBackSide && (
                         <div className="divgvBackSideMas">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
-                                    width: "480px",
-                                    marginBottom: "1px",
+                                    width: "430px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "10px",
+                                    border: "1px solid #d9d9d9",
                                 }}
                             >
-                                <Table
-                                    sx={{
-                                        minWidth: 380,
-                                    }}
-                                    aria-label="simple table"
-                                >
+                                <Table>
                                     <TableBody>
                                         {Array.from(
                                             { length: gvBackSide.length },
@@ -305,21 +300,17 @@ function ScanSMTSerialShtMaster() {
                     {pnlFrontSide && (
                         <div className="divgvFrontSideShtMas">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
                                     width: "100%",
-                                    marginBottom: "1px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    marginTop: "10px",
+                                    border: "1px solid #dcdcdc",
                                 }}
                             >
-                                <Table
-                                    sx={{
-                                        minWidth: 380,
-                                    }}
-                                    aria-label="simple table"
-                                >
+                                <Table>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell
@@ -362,12 +353,13 @@ function ScanSMTSerialShtMaster() {
                     {pnlSerial && (
                         <div className="divgvSerialShtMas">
                             <TableContainer
-                                component={Paper}
+                                component={Card}
                                 style={{
                                     width: "430px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
+                                    border: "1px solid #d9d9d9",
                                 }}
                             >
                                 <Table>
@@ -404,7 +396,6 @@ function ScanSMTSerialShtMaster() {
                                                             handleChangeSerial(index, e);
                                                         }}
                                                         onKeyDown={(e) => handleKeygvSerial(e, index)}
-                                                        onBlur={(e) => handleKeygvSerial(e, index)}
                                                     />
                                                 </TableCell>
                                             </TableRow>
@@ -412,27 +403,28 @@ function ScanSMTSerialShtMaster() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonCancel"
+                                        style={{ height: "30px" }}
+                                        type="primary"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
@@ -471,7 +463,7 @@ function ScanSMTSerialShtMaster() {
                                     </Typography>
                                 </Paper>
                             </div>
-                            <br />
+                    
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -481,7 +473,7 @@ function ScanSMTSerialShtMaster() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
-                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
 
                         </>

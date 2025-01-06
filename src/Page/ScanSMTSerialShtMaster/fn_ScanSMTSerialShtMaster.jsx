@@ -18,7 +18,7 @@ function fn_ScanSMTSerialShtMaster() {
     const [pnlLog, setpnlLog] = useState(false);
     const [lblLog, setlblLog] = useState("");
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("#059212");
+    const [lblResultcolor, setlblResultcolor] = useState("green");
 
     //Table
     const [pnlBackSide, setpnlBackSide] = useState(false);
@@ -390,9 +390,10 @@ function fn_ScanSMTSerialShtMaster() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const newValues = [...txtgvSerial];
-        newValues[index] = e.target.value;
-        settxtgvSerial(newValues);
+        const trimmedValue = e.target.value.trim();
+        const newValue = [...txtgvSerial];
+        newValue[index] = trimmedValue;
+        settxtgvSerial(newValue);
     };
 
     const handleChangegvBackSide = (index, e) => {
@@ -413,6 +414,7 @@ function fn_ScanSMTSerialShtMaster() {
             settxtgvSerial("");
             settxtSideBack("");
             scrollToTop();
+            setTimeout(() => setlblResult(""), 5000);
         }
     };
 
@@ -522,7 +524,7 @@ function fn_ScanSMTSerialShtMaster() {
     };
 
     const setSerialData = async () => {
-        
+
         if (txtMasterCode === MASTER_SHEET) {
             const dtSerial = await getInputSerial();
             console.log(dtSerial)
@@ -537,6 +539,7 @@ function fn_ScanSMTSerialShtMaster() {
             let _strErrorAll = "";
             let _strUpdateError = "";
             sethfWeekCode("");
+            setlblResult("");
 
             let _bolError = false;
             const _strLotData = txtLotNo.toUpperCase().split(";");
@@ -1011,7 +1014,8 @@ function fn_ScanSMTSerialShtMaster() {
                                             strMachine: dtRowLeaf[i].MACHINE,
                                             strUserID: hfUserStation,
                                             strOperator: "SerialShtPcs",
-                                            strPlantCode: plantCode
+                                            strPlantCode: plantCode,
+                                            strProgram : 'ScanSMTSerialShtMaster'
                                         })
                                             .then((res) => {
                                                 _strUpdateError = res.data.p_error;
@@ -1042,6 +1046,7 @@ function fn_ScanSMTSerialShtMaster() {
                         USER_ID: hfUserID,
                         REMARK: dtSerial[i].REMARK,
                         LOT: _strLot,
+                        strProgram : 'ScanSMTSerialShtMaster'
                     })
                         .then((res) => {
                             _strUpdateError = res.data.p_error;
@@ -1059,9 +1064,9 @@ function fn_ScanSMTSerialShtMaster() {
 
                 setlblResult(_strScanResultAll);
                 if (_strScanResultAll === "NG") {
-                    setlblResultcolor("#BA0900");
+                    setlblResultcolor("red");
                 } else {
-                    setlblResultcolor("#059212");
+                    setlblResultcolor("green");
                 }
                 if (_strErrorAll !== "") {
                     setlblResult(lblResult + "/" + _strErrorAll);
@@ -1112,6 +1117,11 @@ function fn_ScanSMTSerialShtMaster() {
         let dtData = [];
         let intRow = 0;
         let strFrontSide = "";
+
+        if (!Array.isArray(txtgvSerial)) {
+            console.error("txtgvSerial is not an array:", txtgvSerial);
+            return [];
+        }
 
         for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
             intRow = intRow + 1;

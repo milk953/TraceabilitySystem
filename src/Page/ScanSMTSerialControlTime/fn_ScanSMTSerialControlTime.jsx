@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTSerialControlTime() {
     const [txtMachine, settxtMachine] = useState("");
@@ -14,7 +15,7 @@ function fn_ScanSMTSerialControlTime() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("#059212");
+    const [lblResultcolor, setlblResultcolor] = useState("green");
 
     //hiddenfield
     const hfUserID = localStorage.getItem("hfUserID");
@@ -91,16 +92,18 @@ function fn_ScanSMTSerialControlTime() {
     const ddlProduct = useRef(null);
     const inputgvSerial = useRef([]);
 
-    const plantCode = import.meta.env.VITE_FAC;
-    const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-    const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
+    const { ConfigData } = DataConfig();
+
+    const plantCode = ConfigData.FACTORY;
+    const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+    const CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND;
     const _strTagNewLine = "/";
     const { showLoading, hideLoading } = useLoading();
 
     useEffect(() => {
         localStorage.setItem("hfUserID", localStorage.getItem("ipAddress"));
         localStorage.setItem("hfUserStation", localStorage.getItem("ipAddress"));
-        sethfPlantCode(import.meta.env.VITE_FAC);
+        sethfPlantCode(plantCode);
         sethfProductKind(import.meta.env.VITE_PRODUCT_KIND);
         sethfMode("");
         getProductData();
@@ -130,6 +133,8 @@ function fn_ScanSMTSerialControlTime() {
         setgvScanData([]);
         setlblResult("");
         setlblLot("");
+        setvisiblelog(false);
+        setlblLog("");
         setselProduct(Productdata[0].prd_name);
     };
 
@@ -148,6 +153,8 @@ function fn_ScanSMTSerialControlTime() {
         setlblResult("");
         setlblLot("");
         settxtLotNo("");
+        setvisiblelog(false);
+        setlblLog("");
         setselProduct(Productdata[0].prd_name);
     };
 
@@ -170,6 +177,8 @@ function fn_ScanSMTSerialControlTime() {
         setlblLot("");
         setselProduct(Productdata[0].prd_name);
         settxtLotNo("");
+        setvisiblelog(false);
+        setlblLog("");
     };
 
     const handleChangeLot = async () => {
@@ -185,7 +194,7 @@ function fn_ScanSMTSerialControlTime() {
                 strPrdName = res.data.prdName[0];
             });
         console.log("PrdName2:", strPrdName);
-        if (strPrdName !== "") {
+        if (strPrdName !== undefined) {
             setlblLog("");
             setvisiblelog(false);
             settxtLotNo(strLot);
@@ -294,6 +303,22 @@ function fn_ScanSMTSerialControlTime() {
 
         setlblLog("");
         showLoading('กำลังบันทึก กรุณารอสักครู่');
+
+        const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+        if (allSerialEmpty) {
+            hideLoading();
+            setlblLog("Please Input Serial No.");
+            setvisiblelog(true);
+            setTimeout(() => {
+                inputgvSerial.current[0].focus();
+            }, 100);
+            setgvScanResult(false);
+            setgvScanData([]);
+            return;
+        } else {
+            setvisiblelog(false);
+            setlblLog("");
+        }
 
         if (_strLot !== "") {
             if (_strLot.length === 9 && _strPrdName !== "") {
@@ -515,7 +540,7 @@ function fn_ScanSMTSerialControlTime() {
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
-                                setlblResultcolor("#BA0900");
+                                setlblResultcolor("red");
                                 setlblLog(_strErrorUpdate);
                                 setvisiblelog(true);
                             } else {
@@ -530,9 +555,9 @@ function fn_ScanSMTSerialControlTime() {
         }
 
         if (_strScanResultAll === "NG") {
-            setlblResultcolor("#BA0900");
+            setlblResultcolor("red");
         } else {
-            setlblResultcolor("#059212");
+            setlblResultcolor("green");
         }
 
         if (!bolTrayError) {
@@ -817,9 +842,10 @@ function fn_ScanSMTSerialControlTime() {
         }
     };
 
-    const handleChangeSerial = (index, event) => {
+    const handleChangeSerial = (index, e) => {
+        const trimmedValue = e.target.value.trim();
         const newValue = [...txtgvSerial];
-        newValue[index] = event.target.value;
+        newValue[index] = trimmedValue;
         settxtgvSerial(newValue);
     };
 
@@ -865,16 +891,10 @@ function fn_ScanSMTSerialControlTime() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-                if (text == '')
+                if (record.SERIAL == "") {
+                    return "";
+                } else {
                     return text;
-                else {
-                    return (
-                        <Tag
-                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
-                        >
-                            {text}
-                        </Tag>
-                    );
                 }
             },
             align: "center",

@@ -50,7 +50,9 @@ function AOIManualConfirmP1() {
         <div className="divAOIManualConfirmP1Result">
           <Card
             className={
-              lblResult.style.background === "red" ? "AOIManualConfirmP1ResultError" : "AOIManualConfirmP1ResultSuccess"
+              lblResult.style.background === "red"
+                ? "AOIManualConfirmP1ResultError"
+                : "AOIManualConfirmP1ResultSuccess"
             }
           >
             {lblResult.value}
@@ -63,7 +65,7 @@ function AOIManualConfirmP1() {
           <TableHead>
             <TableRow>
               <TableCell colSpan={4} align="center">
-                {menuName}
+                {menuName ? menuName : "P1 AOI/SPI Confirm"}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -223,12 +225,14 @@ function AOIManualConfirmP1() {
                 style={{ textAlign: "center", verticalAlign: "middle" }}
               >
                 <Button
-                  style={{
-                    // backgroundColor: "green",
-                    // width: "90px",
-                    // color: "white",
-                    // marginRight: "16px",
-                  }}
+                  style={
+                    {
+                      // backgroundColor: "green",
+                      // width: "90px",
+                      // color: "white",
+                      // marginRight: "16px",
+                    }
+                  }
                   className="ButtonReplace"
                   onClick={BtnSubmit1_Click}
                 >

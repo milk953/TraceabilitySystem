@@ -25,7 +25,7 @@ function fn_ScanAOISheetNo() {
     const [lblSEQ, setlblSEQ] = useState("");
     const [txtgvSerial, settxtgvSerial] = useState("");
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("#059212");
+    const [lblResultcolor, setlblResultcolor] = useState("green");
     const [gvScanResult, setgvScanResult] = useState({ visible: false, value: [] });
     const [gvReject, setgvReject] = useState({ visible: false, value: [] });
 
@@ -248,9 +248,10 @@ function fn_ScanAOISheetNo() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const newValues = [...txtgvSerial];
-        newValues[index] = e.target.value;
-        settxtgvSerial(newValues);
+        const trimmedValue = e.target.value.trim();
+        const newValue = [...txtgvSerial];
+        newValue[index] = trimmedValue;
+        settxtgvSerial(newValue);
     };
 
     const btnSave_Click = async () => {
@@ -546,7 +547,7 @@ function fn_ScanAOISheetNo() {
             setlblResult(_strScanResultAll);
 
             if (_strScanResultAll === "NG") {
-                setlblResultcolor("#BA0900");
+                setlblResultcolor("red");
             } else {
                 console.log("มาไหม", dtSerial.length)
                 for (let i = 0; i < dtSerial.length; i++) {
@@ -565,9 +566,9 @@ function fn_ScanAOISheetNo() {
 
                     if (_strErrorUpdate !== "") {
                         setlblResult("Error :" + _strErrorUpdate);
-                        setlblResultcolor("#BA0900");
+                        setlblResultcolor("red");
                     } else {
-                        setlblResultcolor("#059212");
+                        setlblResultcolor("green");
                     }
                 }
             }
@@ -777,15 +778,6 @@ function fn_ScanAOISheetNo() {
             title: "No.",
             dataIndex: "SEQ",
             key: "No.",
-            align: "center",
-            render: (text, record, index) => {
-                return text;
-            },
-        },
-        {
-            title: "Leaf",
-            dataIndex: "LEAF",
-            key: "Leaf",
             align: "center",
             render: (text, record, index) => {
                 return text;
