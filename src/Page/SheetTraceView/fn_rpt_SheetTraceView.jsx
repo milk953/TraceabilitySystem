@@ -3,8 +3,11 @@ import axios from "axios";
 import { dropWhile, values } from "lodash";
 import { color } from "framer-motion";
 import { useLoading } from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common";
 
 function fn_rpt_SheetTraceView() {
+  const{ConfigData} = DataConfig();
+
   const { showLoading, hideLoading } = useLoading();
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [txtProduct, settxtProduct] = useState("");
@@ -127,11 +130,11 @@ function fn_rpt_SheetTraceView() {
 
   const fntxtSheetNo = useRef([]);
 
-  const SERIAL_DATABASE_SWITCH = import.meta.env.VITE_SERIAL_DATABASE_SWITCH;
-  const FAC = import.meta.env.VITE_FAC;
+  const SERIAL_DATABASE_SWITCH = ConfigData.SERIAL_DATABASE_SWITCH;
+  const FAC = ConfigData.FACTORY;
   const searchParams = new URLSearchParams(window.location.search);
   const SHEETNO = searchParams.get("SHEETNO");
-  const SPI_Maker = import.meta.env.VITE_SPI_MAKER;
+  const SPI_Maker = ConfigData.SPI_MAKER;
   useEffect(() => {
     if (SHEETNO !== "") {
       settxtSheetNo(SHEETNO);
@@ -151,7 +154,7 @@ function fn_rpt_SheetTraceView() {
   }, [SHEETNO]);
 
   const Clear_View = () => {
-    console.log("OKมาจ้า")
+
     setbtnSPI((prevState) => ({ ...prevState, value: "", style:  ""}));
     settxtSPICnt("");
     settxtSPITime("");
@@ -228,7 +231,7 @@ function fn_rpt_SheetTraceView() {
   };
 
   const ViewData = async (sheetno, dropdawn) => {
-    showLoading("กำลังบันทึก กรุณารอสักครู่");
+    showLoading("กำลังโหลด กรุณารอสักครู่");
     setPanelNo1("");
     let txtSheetNo = sheetno;
     setlblMessage("");
@@ -262,7 +265,7 @@ function fn_rpt_SheetTraceView() {
         .post("/api/ViewTraceSheet/GetLotSheet", {
           dataList: {
             strPlantCode: FAC,
-            strSheetNo: txtSheetNo,
+            strSheetNo: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -292,7 +295,7 @@ function fn_rpt_SheetTraceView() {
         .post("/api/ViewTraceSheet/GetProductSheet", {
           dataList: {
             strPlantCode: FAC,
-            strSheetNo: txtSheetNo,
+            strSheetNo: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -313,7 +316,7 @@ function fn_rpt_SheetTraceView() {
         .post("/api/ViewTraceSheet/GetSPI", {
           dataList: {
             strPlantCode: FAC,
-            strSheetNo: txtSheetNo,
+            strSheetNo: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -365,7 +368,7 @@ function fn_rpt_SheetTraceView() {
         .post("/api/ViewTraceSheet/GetPreAOI", {
           dataList: {
             strplantcode: FAC,
-            strsheetno: txtSheetNo,
+            strsheetno: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -399,7 +402,7 @@ function fn_rpt_SheetTraceView() {
         .post("/api/ViewTraceSheet/GetAOI", {
           dataList: {
             plantcode: FAC,
-            sheetno: txtSheetNo,
+            sheetno: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -467,7 +470,7 @@ function fn_rpt_SheetTraceView() {
         .post("/api/ViewTraceSheet/GetAOI_Coating", {
           dataList: {
             strplantcode: FAC,
-            strsheetno: txtSheetNo,
+            strsheetno: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -530,7 +533,7 @@ function fn_rpt_SheetTraceView() {
       //' SMT Inspection resul 488
       await axios
         .post("/api/ViewTraceSheet/Getinspection", {
-          dataList: { strplantcode: FAC, strsheetno: txtSheetNo },
+          dataList: { strplantcode: FAC, strsheetno: txtSheetNo.trim().toUpperCase()},
         })
         .then((res) => {
           dt = res.data;
@@ -560,7 +563,7 @@ function fn_rpt_SheetTraceView() {
         .post("/api/ViewTraceSheet/Get_LOT_SHEET_SERIAL", {
           dataList: {
             plantcode: FAC,
-            sheetno: txtSheetNo,
+            sheetno: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -585,7 +588,7 @@ function fn_rpt_SheetTraceView() {
       await axios
         .post("/api/ViewTraceSheet/getxray", {
           dataList: {
-            sheetno: txtSheetNo,
+            sheetno: txtSheetNo.trim().toUpperCase(),
           },
         })
         .then((res) => {
@@ -653,16 +656,14 @@ function fn_rpt_SheetTraceView() {
         setdtddlCavity([]);
         setselectddlCavity(dtPcsNo[0].pcs_no);
       }
-      console.log(txtSheetNo,'txtSheetNo111',Product)
       if (txtSheetNo.trim() !== "" && Product.trim() !== "") {
-        console.log("เขาแล้วววว")
+
         let dtData = [];
         //757 มิ้วทำ
-        console.log(FAC,txtSheetNo,dropdawn,Product,hfSMPJCavityFlg,"ออออออออ")
         await axios
           .post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
             _strPlantCode: FAC,
-            _strSheetNo: txtSheetNo,
+            _strSheetNo: txtSheetNo.trim().toUpperCase(),
             _intPcsNo: dropdawn||0,
             _strPrdName: Product,
             _strSMPJCavityFlg: hfSMPJCavityFlg,
@@ -715,18 +716,16 @@ function fn_rpt_SheetTraceView() {
           }
         }
         //793
-        console.log(FAC,txtSheetNo,dropdawn,txtProduct,hfSMPJCavityFlg,"ออออออออ")
         await axios
           .post("/api/ViewTraceSheet/GetSerialAOIEFPCResult", {
             _strPlantCode: FAC,
-            _strFrontSheetNo: txtSheetNo,
+            _strFrontSheetNo: txtSheetNo.trim().toUpperCase(),
             _intPcsNo: dropdawn|| 0,
             _strProduct: Product,
             _strSMPJCavityFlg: hfSMPJCavityFlg,
           })
           .then((res) => {
             dtData = res.data;
-            console.log(dtData,"dtData1234")
           });
         if (dtData.length > 0) {
           let AOI_Result = "OK";
@@ -745,7 +744,6 @@ function fn_rpt_SheetTraceView() {
             }
           }
           StrResult = AOI_Result;
-          console.log(StrResult,"StrResult1")
           if (StrResult.trim() !== "") {
             setbtnAOIEFPC((prevState) => ({ ...prevState, value: StrResult }));
             settxtAOIEFPCTime(dtData[0].AOI_DATE);
@@ -878,7 +876,7 @@ function fn_rpt_SheetTraceView() {
           .post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
             intPCSNo: dropdawn||0,
             strSMPJCavityFlg: hfSMPJCavityFlg,
-            strSheetNo: txtSheetNo,
+            strSheetNo: txtSheetNo.trim().toUpperCase(),
           })
           .then((res) => {
             dtData = res.data;
@@ -923,7 +921,7 @@ function fn_rpt_SheetTraceView() {
         await axios
           .post("/api/Common/GetSMTSheetReflowResult", {
             strplantcode: FAC,
-            strsheetno: txtSheetNo,
+            strsheetno: txtSheetNo.trim().toUpperCase(),
           })
           .then((res) => {
             dtReflow = res.data;
@@ -960,7 +958,7 @@ function fn_rpt_SheetTraceView() {
     if (page == "SPI") {
       if (txtSPICnt !== "") {
         window.open(
-          `/TraceabilitySystem/SPIResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}`,
+          `/TraceabilitySystem/SPIResult?sheet_no=${txtSheetNo.trim().toUpperCase()}&PRODUCT_NAME=${txtProduct.trim()}`,
           "_blank"
         );
       } else {
@@ -969,14 +967,14 @@ function fn_rpt_SheetTraceView() {
     } else if (page == "PRE_AOI") {
       if (TxtPreCnt !== "") {
         window.open(
-          `/TraceabilitySystem/PREResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}`,
+          `/TraceabilitySystem/PREResult2?sheet_no=${txtSheetNo.trim().toUpperCase()}&PRODUCT_NAME=${txtProduct.trim()}`,
           "_blank"
         );
       }
     } else if (page == "OST") {
       if (txtSheetNo !== "") {
         window.open(
-          `/TraceabilitySystem/OSTResult?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`,
+          `/TraceabilitySystem/OSTResult?sheet_no=${txtSheetNo.trim().toUpperCase()}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`,
           "_blank"
         );
       } else {
@@ -985,7 +983,7 @@ function fn_rpt_SheetTraceView() {
     } else if (page == "AOI") {
       if (txtAOICnt !== "") {
         window.open(
-          `/TraceabilitySystem/AOIResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${txtAOICnt}`,
+          `/TraceabilitySystem/AOIResult2?sheet_no=${txtSheetNo.trim().toUpperCase()}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${txtAOICnt}`,
           "_blank"
         );
       }
@@ -993,19 +991,19 @@ function fn_rpt_SheetTraceView() {
       let SERIAL_NO = "0";
       if (SERIAL_DATABASE_SWITCH == "1") {
         window.open(
-          `/TraceabilitySystem/XRayResult?sheet_no=${txtSheetNo}&serial_no=${SERIAL_NO}&INSPECT_NO=${txtXRayCnt.trim()}&INSPECT_DATE=${txtXRayTime.trim()}`,
+          `/TraceabilitySystem/XRayResult?sheet_no=${txtSheetNo.trim().toUpperCase()}&serial_no=${SERIAL_NO}&INSPECT_NO=${txtXRayCnt.trim()}&INSPECT_DATE=${txtXRayTime.trim()}`,
           "_blank"
         );
       } else {
         window.open(
-          `/TraceabilitySystem/XRayResult?sheet_no=${txtSheetNo}&serial_no=${SERIAL_NO}&INSPECT_NO=${txtXRayCnt.trim()}&INSPECT_DATE=${txtXRayTime.trim()}`,
+          `/TraceabilitySystem/XRayResult?sheet_no=${txtSheetNo.trim().toUpperCase()}&serial_no=${SERIAL_NO}&INSPECT_NO=${txtXRayCnt.trim()}&INSPECT_DATE=${txtXRayTime.trim()}`,
           "_blank"
         );
       }
     } else if (page == "AOI_COA") {
       if (txtAOICOACnt !== "") {
         window.open(
-          `/TraceabilitySystem/AOICOAResult2?sheet_no=${txtSheetNo}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`,
+          `/TraceabilitySystem/AOICOAResult2?sheet_no=${txtSheetNo.trim().toUpperCase()}&PRODUCT_NAME=${txtProduct.trim()}&panel_no=${PanelNo1}`,
           "_blank"
         );
       }
@@ -1034,7 +1032,7 @@ function fn_rpt_SheetTraceView() {
     }
   };
   const ViewDataPcs = async (txtSheetNo, selectddlCavity) => {
-    showLoading("กำลังบันทึก กรุณารอสักครู่");
+    showLoading("กำลัง กรุณารอสักครู่");
     let intPcsNo = 0;
     if (hfSMPJCavityFlg == "Y") {
       await axios
@@ -1050,7 +1048,6 @@ function fn_rpt_SheetTraceView() {
       intPcsNo = selectddlCavity;
     }
     if (intPcsNo > 0) {
-      console.log("เข้าจ้า-ภภภ-", intPcsNo);
       setlblMessage("");
       let DBOpenFlg = false;
       let dt = [];
@@ -1063,14 +1060,13 @@ function fn_rpt_SheetTraceView() {
         await axios
           .post("/api/ViewTracePiece/GetSerialAOMEFPCResult", {
             _strPlantCode: FAC,
-            _strSheetNo: txtSheetNo,
+            _strSheetNo: txtSheetNo.trim().toUpperCase(),
             _intPcsNo: intPcsNo,
             _strPrdName: txtProduct,
             _strSMPJCavityFlg: hfSMPJCavityFlg,
           })
           .then((res) => {
             dtData = res.data;
-            console.log(dtData, "dtData666");
           });
         if (dtData.length > 0) {
           StrResult = dtData[0].AOM_RESULT;
@@ -1220,7 +1216,7 @@ function fn_rpt_SheetTraceView() {
           .post("/api/ViewTracePiece/GetSerialAVIBadmarkResult", {
             intPCSNo: selectddlCavity,
             strSMPJCavityFlg: hfSMPJCavityFlg,
-            strSheetNo: txtSheetNo,
+            strSheetNo: txtSheetNo.trim().toUpperCase(),
           })
           .then((res) => {
             dtData = res.data;
@@ -1261,9 +1257,7 @@ function fn_rpt_SheetTraceView() {
           }
         }
       }
-      console.log("ถึงตรงนี้แล้วจ้า0");
       try {
-        console.log("ถึงตรงนี้แล้วจ้า1");
         //1194
         let dtData = [];
         await axios
@@ -1272,12 +1266,11 @@ function fn_rpt_SheetTraceView() {
               strplantcode: FAC,
               strprd: txtProduct,
               strintPcsNo: intPcsNo,
-              strsheetno: txtSheetNo,
+              strsheetno: txtSheetNo.trim().toUpperCase(),
             },
           })
           .then((res) => {
             dtData = res.data;
-            console.log(dtData,"dtData3")
           });
         //1215
         if (dtData.length > 0) {
@@ -1292,7 +1285,7 @@ function fn_rpt_SheetTraceView() {
             .post("/api/ViewTraceSheet/GetSPI_RSLT", {
               dataList: {
                 plantcode: FAC,
-                sheetno: txtSheetNo,
+                sheetno: txtSheetNo.trim().toUpperCase(),
                 _PanelNo: PanelNo,
               },
             })
@@ -1334,7 +1327,6 @@ function fn_rpt_SheetTraceView() {
           settxtSPITime(dtData[0].spr_inspect_date);
           settxtSPIMachine(dtData[0].spr_machine_name);
           setbtnSPI((prevState) => ({ ...prevState, value: StrResult }));
-          console.log(StrResult, "StrResultStrResult");
           switch (StrResult.toUpperCase()) {
             case "GOOD":
             case "OK":
@@ -1374,7 +1366,7 @@ function fn_rpt_SheetTraceView() {
             .post("/api/ViewTraceSheet/GetSPI_RSLT", {
               dataList: {
                 plantcode: FAC,
-                sheetno: txtSheetNo,
+                sheetno: txtSheetNo.trim().toUpperCase(),
                 _PanelNo: "",
               },
             })
@@ -1403,12 +1395,11 @@ function fn_rpt_SheetTraceView() {
           }
         }
         if (btnSPI.value == "") {
-            console.log("ไม่เข้านะคะ")
           await axios
             .post("/api/ViewTraceSheet/GetRslt_Header", {
               dataList: {
                 plantcode: FAC,
-                sheetno: txtSheetNo,
+                sheetno: txtSheetNo.trim().toUpperCase(),
               },
             })
             .then((res) => {
@@ -1460,7 +1451,7 @@ function fn_rpt_SheetTraceView() {
             .post("/api/ViewTraceSheet/GetPreSPI", {
               dataList: {
                 plantcode: FAC,
-                sheetno: txtSheetNo,
+                sheetno: txtSheetNo.trim().toUpperCase(),
               },
             })
             .then((res) => {
@@ -1468,7 +1459,6 @@ function fn_rpt_SheetTraceView() {
    
             });
           if (dtData.length > 0) {
-            console.log(dtData[0].prh_inspect_count,"PREDATA")
             setTxtPreCnt(dtData[0].prh_inspect_count);
             settxtPreTime(dtData[0].prh_inspect_date);
             settxtPreMachine(dtData[0].prh_machine_id);
@@ -1486,7 +1476,7 @@ function fn_rpt_SheetTraceView() {
                       .post("/api/ViewTraceSheet/GetPRD_NG_DETAIL", {
                         dataList: {
                           plantcode: FAC,
-                          sheetno: txtSheetNo,
+                          sheetno: txtSheetNo.trim().toUpperCase(),
                           intPcsNo: intPcsNo,
                         },
                       })
@@ -1513,43 +1503,38 @@ function fn_rpt_SheetTraceView() {
             .post("/api/ViewTraceSheet/GetAoi_rslt", {
               dataList: {
                 plantcode: FAC,
-                sheetno: txtSheetNo,
+                sheetno: txtSheetNo.trim().toUpperCase(),
                 intPcsNo: intPcsNo,
               },
             })
             .then((res) => {
                 dtData = res.data;
-                console.log("มาจ้าหนูๆ",dtData)
             });
           if (dtData.length > 0) {
-            console.log("มาจ้าหนูๆ11",dtData)
             setbtnAOI((prevState) => ({...prevState, disbled: false,style: { backgroundColor: "green", color: "white", value: "OK" }}));
             settxtAOICnt(dtData[0].aor_inspect_count);
             settxtAOITime(dtData[0].aor_inspect_date);
             settxtAOIMachine(dtData[0].aor_machine_no);
           } else {
-             console.log("มาละจ้า2222")
             await axios
               .post("/api/ViewTraceSheet/GetAoi_rslt_short", {
                 dataList: {
                   plantcode: FAC,
-                  sheetno: txtSheetNo,
+                  sheetno: txtSheetNo.trim().toUpperCase(),
                 },
               })
               .then((res) => {
                 dt = res.data;
-                console.log(dt[0],"dt1")
               });
             if (dt.length > 0) {
               settxtAOICnt(dt[0].aor_inspect_count);
               settxtAOITime(dt[0].aor_inspect_date);
               settxtAOIMachine(dt[0].aor_machine_no);
-              console.log(dt,"OK1")
               await axios
                 .post("/api/ViewTraceSheet/GetAoi_rslt_short2", {
                   dataList: {
                     plantcode: FAC,
-                    sheetno: txtSheetNo,
+                    sheetno: txtSheetNo.trim().toUpperCase(),
                     intPcs: intPcsNo,
                   },
                 })
@@ -1578,7 +1563,7 @@ function fn_rpt_SheetTraceView() {
                 settxtAOITime(dt[0].aor_inspect_date);
                 settxtAOIMachine(dt[0].aor_machine_no);
               } else {
-                console.log("Ok2")
+         
                 setbtnAOI((prevState) => ({...prevState,
                   style: {
                     backgroundColor: "green",
@@ -1594,12 +1579,11 @@ function fn_rpt_SheetTraceView() {
               .post("/api/ViewTraceSheet/GetAoi_rslt_short", {
                 dataList: {
                   plantcode: FAC,
-                  sheetno: txtSheetNo,
+                  sheetno: txtSheetNo.trim().toUpperCase(),
                 },
               })
               .then((res) => {
                 dt = res.data;
-                console.log(res.data, "res.data444");
               });
             if (dt.length > 0) {
               setbtnAOI((prevState) => ({
@@ -1655,7 +1639,7 @@ function fn_rpt_SheetTraceView() {
             .post("/api/ViewTraceSheet/Get_LOT_SHEET_SERIAL", {
               dataList: {
                 plantcode: FAC,
-                sheetno: txtSheetNo,
+                sheetno: txtSheetNo.trim().toUpperCase(),
               },
             })
             .then((res) => {
