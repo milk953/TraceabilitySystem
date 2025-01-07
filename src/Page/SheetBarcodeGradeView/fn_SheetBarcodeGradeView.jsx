@@ -286,7 +286,7 @@ gvResult.forEach((row) => {
 
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], { type: "application/octet-stream" });
-      saveAs(blob, `${lotNo_result}_${resultValue}.xlsx`);
+      saveAs(blob, `Barcode Grade Report.xlsx`);
     });
   };
 
