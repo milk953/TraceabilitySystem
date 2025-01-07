@@ -1547,14 +1547,14 @@ function fn_P1ConnectBoard() {
 
   const handleBackSideChange = (index, event) => {
     const newData = [...txtSideBack];
-    newData[index] = event.target.value;
+    newData[index] = event.target.value.trim().toUpperCase();
     console.log(newData, "newData1");
     settxtSideBack(newData);
   };
 
   const handleSerialChange = (index, event) => {
     const newData = [...txtSerial];
-    newData[index] = event.target.value;
+    newData[index] = event.target.value.trim().toUpperCase();;
     console.log(newData, "newData2");
     settxtSerial(newData);
   };

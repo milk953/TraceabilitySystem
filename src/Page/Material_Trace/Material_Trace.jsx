@@ -36,12 +36,12 @@ function LotTraceView() {
       <Card component={Paper} className="Card-Common">
         <div style={{ marginTop: "5px", marginLeft: "10px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Text>Vendor Lot NO : </Text>&nbsp;
+            <Text>Vendor Lot No. : </Text>&nbsp;
             <Input
               // placeholder="Vendor Lot NO : "
               style={{ width: "250px", marginRight: "10px" }}
               value={txtLotNo}
-              onChange={(e) => settxtLotNo(e.target.value)}
+              onChange={(e) => settxtLotNo(e.target.value.trim())}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   ViewData(e.target.value,txtInviceNo);
@@ -53,7 +53,7 @@ function LotTraceView() {
               // placeholder="Invoice No.:"
               style={{ width: "250px", marginRight: "10px" }}
               value={txtInviceNo}
-              onChange={(e) => settxtInviceNo(e.target.value)}
+              onChange={(e) => settxtInviceNo(e.target.value.trim())}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   ViewData(txtLotNo,e.target.value);

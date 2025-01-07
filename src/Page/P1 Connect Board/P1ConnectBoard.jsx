@@ -198,7 +198,7 @@ function P1ConnectBoard() {
                         className="input_txt"
                         size="small"
                         disabled
-                        style={{width:'80px'}}
+                        style={{width:'80px',backgroundColor:'#e0e0e0'}}
                         inputProps={{
                           style: { textAlign: 'center' }, // จัดข้อความให้อยู่ตรงกลาง
                         }}
@@ -213,7 +213,7 @@ function P1ConnectBoard() {
                     </TableCell>
                     <TableCell colSpan={3}>
                       <TextField
-                       style={{width:'80px'}}
+                       style={{width:'80px',backgroundColor:'#e0e0e0'}}
                         className="input_txt"
                         size="small"
                         disabled

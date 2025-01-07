@@ -318,7 +318,7 @@ function ScanSMTSerialPcsAutoTrayConfirm() {
                       style={{
                         background:
                           lblResult.value === "OK" ? "green" : " red",
-                        // width: "70%", // ควบคุมขนาดของ Paper
+                       
                       }}
                     >
                       <Typography

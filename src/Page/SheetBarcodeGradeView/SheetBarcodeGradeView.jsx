@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../Header/Header";
-import { Card, Paper } from "@mui/material";
+import { Card, Paper,TableCell } from "@mui/material";
 import { Input, Button, Tag, Table, Select, Radio, Avatar } from "antd";
 import { SearchOutlined, FileExcelOutlined } from "@ant-design/icons";
 import "./SheetBarcodeGradeView.css";
@@ -44,7 +44,7 @@ function SheetBarcodeGradeView() {
           className="ReportBadLotNoInput"
           placeholder="Please Input Lot No"
           value={lotNotextField}
-          onChange={(e) => setLotNotextField(e.target.value)}
+          onChange={(e) => setLotNotextField(e.target.value.trim())}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               RetriveBtn();
@@ -126,7 +126,15 @@ function SheetBarcodeGradeView() {
                   Product
                 </Button>
               </th>
-              <th className="ReportBadLabelTxt">{product_result}</th>
+              <th className="ReportBadLabelTxt">  <Input
+                      size="small"
+                      className="ViewInput"
+                      style={{width:'170px'}}
+                      value={product_result}
+                      // onChange={(e) => settxtProduct(e.target.value)}
+                      disabled
+                    /></th> 
+              {/* <th className="ReportBadLabelTxt">{product_result}</th> */}
             </td>
           </tr>
           <tr>
@@ -142,14 +150,20 @@ function SheetBarcodeGradeView() {
                   Lot No.
                 </Button>
               </th>
-              <th className="ReportBadLabelTxt">
-                <a
+              <TableCell className="ReportBadLabelTxt" style={{border:0}}>
+              <a
+                     href={`LotRollLeafNo?LOTNO=${lotNo_result}&product=${product_result}`}
+                        style={{ fontSize: "16px" }}
+                      >
+                        {lotNo_result}
+                      </a>
+                {/* <a
                   href={`LotRollLeafNo?LOTNO=${lotNo_result}&product=${product_result}`}
                   target="#"
                 >
                   {lotNo_result}
-                </a>
-              </th>
+                </a> */}
+              </TableCell>
             </td>
           </tr>
           <tr>
@@ -165,7 +179,7 @@ function SheetBarcodeGradeView() {
                   Total Sheet
                 </Button>
               </th>
-              <th className="ReportBadLabelTxt">{totalSheet_result}</th>
+              <TableCell className="ReportBadLabelTxt" style={{border:0}}>{totalSheet_result}</TableCell>
             </td>
           </tr>
         </table>
