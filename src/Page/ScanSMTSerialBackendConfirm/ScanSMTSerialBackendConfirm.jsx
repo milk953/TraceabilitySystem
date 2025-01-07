@@ -22,15 +22,18 @@ import {
     Box,
     Tooltip,
 } from "@mui/material";
-import { Table as AntTable } from 'antd';
+import { Table as AntTable, Button as AntButton } from 'antd';
 import "../Common/StyleCommon.css";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialBackendConfirm.css";
 import Hearder from "../Header/Header";
 import { fn_ScanSMTSerialBackendConfirm } from "./fn_ScanSMTSerialBackendConfirm";
 import Pageimg from "/src/assets/1.jpg";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
+
 function ScanSMTSerialBackendConfirm() {
 
+    const { menuName } = fn_Homepage();
     const {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtTotalPCS, settxtTotalPCS, lblLog, visiblelog, lblResultcolor, lblResult,
         pnlSerial, gvScanResult, txtgvSerial, txtLotDisabled, selProDisabled, txtTotalDisabled, gvScanData, handleChangeLot,
@@ -47,31 +50,32 @@ function ScanSMTSerialBackendConfirm() {
                 sx={{ display: "flex" }}
             >
                 <Box justifyContent="space-between"
-                    // sx={{
-                    //     marginLeft: "-6px",
-                    //     marginTop: "-10px"
-                    // }}
+                // sx={{
+                //     marginLeft: "-6px",
+                //     marginTop: "-10px"
+                // }}
                 >
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
-                            width: "400px",
-                            margin: "4px",
+                            width: "430px",
+                            //margin: "4px",
                         }}
                     >
-                        <Table className="TbScanSMTSerialBack">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={3} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             SMT Backend E-Mapping
-                                        </Typography>
+                                        </Typography> */}
+                                         {menuName ? menuName : "SMT Backend E-Mapping"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -80,7 +84,7 @@ function ScanSMTSerialBackendConfirm() {
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLotNo}
+                                            value={txtLotNo.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
@@ -109,7 +113,7 @@ function ScanSMTSerialBackendConfirm() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -134,7 +138,7 @@ function ScanSMTSerialBackendConfirm() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Total Sht :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -185,8 +189,8 @@ function ScanSMTSerialBackendConfirm() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "404px",
-                                marginLeft: "20px",
+                                width: "430px",
+                                // marginLeft: "20px",
                             }}
                         >
                             {lblLog}
@@ -194,10 +198,17 @@ function ScanSMTSerialBackendConfirm() {
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerialBack" style={{ position: "relative" }}>
+                        <div className="divgvSerialBack">
                             <TableContainer
-                                component={Paper}
-                                className="CSS-GvSerial"
+                                component={Card}
+                                style={{
+                                    width: "430px",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                    marginTop: "10px",
+                                    border: "1px solid #d9d9d9",
+                                }}
                             >
                                 <Table>
                                     <TableHead>
@@ -233,27 +244,28 @@ function ScanSMTSerialBackendConfirm() {
                                     </TableBody>
                                 </Table>
                                 <div style={{
-                                    marginTop: "auto",
+                                    marginTop: "8px",
                                     display: "flex",
                                     justifyContent: "center",
-                                    gap: "10px",
-                                    marginLeft: "5px",
-                                    marginBottom: "2px"
+                                    // marginLeft: "5px",
+                                    // marginBottom: "2px"
                                 }}
                                 >
-                                    <Button
-                                        className="BtSave"
+                                    <AntButton className="BtSave"
+                                        type="primary"
                                         onClick={btnSaveClick}
                                     >
                                         Save
-                                    </Button>{" "}
+                                    </AntButton>
                                     &nbsp;&nbsp;
-                                    <Button
-                                        className="BtCancel"
+                                    <AntButton
+                                        className="ButtonDelete"
+                                        style={{ height: "30px" }}
+                                        type="primary"
                                         onClick={btnCancelClick}
                                     >
                                         Cancel
-                                    </Button>
+                                    </AntButton>
                                 </div>
                             </TableContainer>
                         </div>
@@ -291,7 +303,7 @@ function ScanSMTSerialBackendConfirm() {
                                     </Typography>
                                 </Paper>
                             </div>
-                            <br />
+                           
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -301,6 +313,7 @@ function ScanSMTSerialBackendConfirm() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
 
                         </>

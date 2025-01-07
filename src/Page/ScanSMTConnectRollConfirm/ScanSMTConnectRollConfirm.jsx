@@ -63,7 +63,7 @@ function ScanSMTConnectRollConfirm() {
                 <TableHead>
                 <TableRow>
                   <TableCell colSpan={4} align="center">
-                    {menuName}
+                  {menuName ? menuName : 'Confirm Roll Leaf'}
                   </TableCell>
                 </TableRow>
                 </TableHead>

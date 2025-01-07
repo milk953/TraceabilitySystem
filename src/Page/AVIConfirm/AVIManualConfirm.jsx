@@ -48,15 +48,6 @@ function AVIManualConfirm() {
       {/* <Card classNmae="AVIMainCard"> */}
       {lblResultState && (
         <div className="divAVIResult">
-          {/* <h3
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        color: lblResult === "update complete." ? "blue" : "red",
-      }}
-    >
-      {lblResult}
-    </h3> */}
           <Card
             className={
               lblResult === "update complete."
@@ -78,7 +69,7 @@ function AVIManualConfirm() {
                 // className="Header_Center"
                 colSpan={4}
               >
-                {menuName}
+                {menuName || "AVI Confirm"}
               </TableCell>
             </TableRow>
           </TableHead>

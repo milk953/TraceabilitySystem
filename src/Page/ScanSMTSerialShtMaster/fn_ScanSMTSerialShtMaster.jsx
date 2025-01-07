@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTSerialShtMaster() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -18,7 +19,7 @@ function fn_ScanSMTSerialShtMaster() {
     const [pnlLog, setpnlLog] = useState(false);
     const [lblLog, setlblLog] = useState("");
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("#059212");
+    const [lblResultcolor, setlblResultcolor] = useState("green");
 
     //Table
     const [pnlBackSide, setpnlBackSide] = useState(false);
@@ -120,12 +121,12 @@ function fn_ScanSMTSerialShtMaster() {
     const inputSideBack = useRef([]);
     const inputgvSerial = useRef([]);
     const inputMasterCode = useRef([]);
-
-    const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-    const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-    const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
-    const MASTER_SHEET = import.meta.env.VITE_SHT_PCS_MASTER_CODE;
-    const plantCode = import.meta.env.VITE_FAC;
+    const { ConfigData } = DataConfig();
+    const plantCode = ConfigData.FACTORY;
+    const AUTO_SCAN_CHECK_FLG = ConfigData.AUTO_SCAN_CHECK_FLG;
+    const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+    const CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND; CONNECT_SERIAL_NOT_FOUND
+    const MASTER_SHEET = ConfigData.SHT_PCS_MASTER_CODE; 
 
     const { showLoading, hideLoading } = useLoading();
 
@@ -390,9 +391,10 @@ function fn_ScanSMTSerialShtMaster() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const newValues = [...txtgvSerial];
-        newValues[index] = e.target.value;
-        settxtgvSerial(newValues);
+        const trimmedValue = e.target.value.trim();
+        const newValue = [...txtgvSerial];
+        newValue[index] = trimmedValue;
+        settxtgvSerial(newValue);
     };
 
     const handleChangegvBackSide = (index, e) => {
@@ -413,6 +415,8 @@ function fn_ScanSMTSerialShtMaster() {
             settxtgvSerial("");
             settxtSideBack("");
             scrollToTop();
+            // setTimeout(() => setlblResult(""), 5000);
+            // setTimeout(() => setgvScanResult(false), 5000);
         }
     };
 
@@ -522,7 +526,7 @@ function fn_ScanSMTSerialShtMaster() {
     };
 
     const setSerialData = async () => {
-        
+
         if (txtMasterCode === MASTER_SHEET) {
             const dtSerial = await getInputSerial();
             console.log(dtSerial)
@@ -537,6 +541,7 @@ function fn_ScanSMTSerialShtMaster() {
             let _strErrorAll = "";
             let _strUpdateError = "";
             sethfWeekCode("");
+            setlblResult("");
 
             let _bolError = false;
             const _strLotData = txtLotNo.toUpperCase().split(";");
@@ -562,6 +567,7 @@ function fn_ScanSMTSerialShtMaster() {
                 }
 
                 let _intRowSerial = 0;
+                let CheckValue = false;
                 for (let i = 0; i < dtSerial.length; i++) {
                     _strShtNoBack = dtSerial[i].BACK_SIDE;
                     _strShtNoFront = dtSerial[i].FRONT_SIDE;
@@ -576,6 +582,35 @@ function fn_ScanSMTSerialShtMaster() {
                         settxtgvSerial("");
                         hideLoading();
                     }
+
+                    if (_strShtNoBack === undefined) {
+                        setpnlLog(true);
+                        setlblLog("Please input Sheet Side");
+                        setTimeout(() => {
+                            inputSideBack.current[0].focus();
+                        }, 200);
+                        settxtSideBack("");
+                        settxtgvSerial("");
+                        hideLoading();
+                    }
+                    //------------------------------------------
+                    if (Array.isArray(txtgvSerial)) {
+                        const Value = txtgvSerial.slice(1).some((item) => item.trim() !== "");
+                        CheckValue = Value;
+                      }
+
+                      if (CheckValue === false) {
+                        setlblLog(`Please Input Serial No.`);
+                        setpnlLog(true);
+                        inputgvSerial.current[0].focus();
+                        settxtgvSerial("");
+                        setgvScanData([]);
+                        setgvScanResult(false);
+                        hideLoading();
+                      } 
+
+
+                    //------------------------------------------
 
                     if (hfCheckPrdSht === "Y" && dtSerial[i].SEQ === 1 && !_bolError) {
                         if (hfCheckPrdAbbr !== _strShtNoBack.substring(parseInt(hfCheckPrdShtStart) - 1, parseInt(hfCheckPrdShtEnd)
@@ -1011,7 +1046,8 @@ function fn_ScanSMTSerialShtMaster() {
                                             strMachine: dtRowLeaf[i].MACHINE,
                                             strUserID: hfUserStation,
                                             strOperator: "SerialShtPcs",
-                                            strPlantCode: plantCode
+                                            strPlantCode: plantCode,
+                                            strProgram : 'ScanSMTSerialShtMaster'
                                         })
                                             .then((res) => {
                                                 _strUpdateError = res.data.p_error;
@@ -1042,6 +1078,7 @@ function fn_ScanSMTSerialShtMaster() {
                         USER_ID: hfUserID,
                         REMARK: dtSerial[i].REMARK,
                         LOT: _strLot,
+                        strProgram : 'ScanSMTSerialShtMaster'
                     })
                         .then((res) => {
                             _strUpdateError = res.data.p_error;
@@ -1059,12 +1096,13 @@ function fn_ScanSMTSerialShtMaster() {
 
                 setlblResult(_strScanResultAll);
                 if (_strScanResultAll === "NG") {
-                    setlblResultcolor("#BA0900");
+                    setlblResultcolor("red");
                 } else {
-                    setlblResultcolor("#059212");
+                    setlblResultcolor("green");
                 }
                 if (_strErrorAll !== "") {
-                    setlblResult(lblResult + "/" + _strErrorAll);
+                    // setlblResult(lblResult + "/" + _strErrorAll);
+                    setlblResult(_strErrorAll);
                 }
 
                 setgvScanData(dtSerial);
@@ -1112,6 +1150,11 @@ function fn_ScanSMTSerialShtMaster() {
         let dtData = [];
         let intRow = 0;
         let strFrontSide = "";
+
+        if (!Array.isArray(txtgvSerial)) {
+            console.error("txtgvSerial is not an array:", txtgvSerial);
+            return [];
+        }
 
         for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
             intRow = intRow + 1;

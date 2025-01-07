@@ -59,7 +59,8 @@ function ScanAVIConfirmResult() {
               <TableHead>
                 <TableRow>
                   <TableCell colSpan={4} align="center">
-                    {menuName}
+                    {menuName ? menuName : " AVI Result Checking"}
+                    
                   </TableCell>
                 </TableRow>
               </TableHead>

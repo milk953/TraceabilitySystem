@@ -51,7 +51,7 @@ function ScanSheetOvenTime() {
           <TableHead>
             <TableRow>
               <TableCell colSpan={3} rowSpan={3}>
-              {menuName}
+              {menuName || 'UV Cure/Thermal Cure Control Time'}
               </TableCell>
             </TableRow>
           </TableHead>

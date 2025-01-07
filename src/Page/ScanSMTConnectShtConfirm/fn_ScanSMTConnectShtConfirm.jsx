@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { get, set } from "lodash";
 import Swal from "sweetalert2";
-import { SoundFilled } from "@ant-design/icons";
-import { FitnessCenter } from "@mui/icons-material";
 import { Tag } from "antd";
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSMTConnectShtConfirm() {
+  const{ConfigData} = DataConfig();
   const [hideImg, setHideImg] = useState(true);
   const [gvSerial, setGvSerial] = useState([]);
   const [panalSerialState, setPanalSerialState] = useState(false);
@@ -30,7 +29,7 @@ function fn_ScanSMTConnectShtConfirm() {
   let hfMode = "";
   let hfShtScan = 1;
 
-  const Fac = import.meta.env.VITE_FAC;
+  const Fac = ConfigData.FACTORY;
   useEffect(() => {
     Pageload();
     setMode("LOT");

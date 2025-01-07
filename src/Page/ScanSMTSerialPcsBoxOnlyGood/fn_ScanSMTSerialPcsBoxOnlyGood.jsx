@@ -1438,7 +1438,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const btnSave_Click = async () => {
     // ตรวจสอบว่า fc_txtSerial.current มีค่าก่อน
     if (!fc_txtSerial.current || !Array.isArray(fc_txtSerial.current)) {
-      console.error("fc_txtSerial.current is not available or not an array.");
       setlblLog((prevState) => ({
         ...prevState,
         value: "Unexpected error: Input elements not found.",

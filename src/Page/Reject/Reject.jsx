@@ -47,7 +47,6 @@ function Reject() {
     handleBtnCancel_Click,
     isShowlblResult,
   } = fn_Reject();
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const { menuName } = fn_Homepage();
   return (
     <>
@@ -71,7 +70,7 @@ function Reject() {
           <TableHead>
             <TableRow>
               <TableCell colSpan={4} align="center">
-                {menuName}
+                {menuName || 'Reject'}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -138,7 +137,6 @@ function Reject() {
                 <input
                   style={{
                     width: "300px",
-                    // border: "1px solid black",
                     margin: "0px",
                   }}
                   type="text"

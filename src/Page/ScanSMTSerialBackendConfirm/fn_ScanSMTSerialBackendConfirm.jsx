@@ -11,7 +11,7 @@ function fn_ScanSMTSerialBackendConfirm() {
     const [lblLog, setlblLog] = useState("");
     const [visiblelog, setvisiblelog] = useState(false);
     const [lblResult, setlblResult] = useState("");
-    const [lblResultcolor, setlblResultcolor] = useState("#059212");
+    const [lblResultcolor, setlblResultcolor] = useState("green");
 
     //hiddenfield
     const hfUserID = localStorage.getItem("ipAddress");
@@ -227,9 +227,10 @@ function fn_ScanSMTSerialBackendConfirm() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const newValues = [...txtgvSerial];
-        newValues[index] = e.target.value;
-        settxtgvSerial(newValues);
+        const trimmedValue = e.target.value.trim();
+        const newValue = [...txtgvSerial];
+        newValue[index] = trimmedValue;
+        settxtgvSerial(newValue);
     };
 
     const btnSaveClick = async () => {
@@ -240,6 +241,7 @@ function fn_ScanSMTSerialBackendConfirm() {
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
+        settxtgvSerial("");
         inputgvSerial.current[0].focus();
     };
 
@@ -417,9 +419,9 @@ function fn_ScanSMTSerialBackendConfirm() {
 
             setlblResult(_strScanResultAll);
             if (_strScanResultAll === "OK") {
-                setlblResultcolor("#059212");
+                setlblResultcolor("green");
             } else {
-                setlblResultcolor("#BA0900");
+                setlblResultcolor("red");
             }
             if (_strErrorAll !== "") {
                 setlblResult(`${lblResult} / ${_strErrorAll}`);
@@ -619,16 +621,10 @@ function fn_ScanSMTSerialBackendConfirm() {
             dataIndex: "SCAN_RESULT",
 
             render: (text, record, index) => {
-                if (text == '')
+                if (record.SERIAL == "") {
+                    return "";
+                } else {
                     return text;
-                else {
-                    return (
-                        <Tag
-                            className={text === "OK" ? "Tag-OK" : text === "NG" ? "Tag-NG" : ""}
-                        >
-                            {text}
-                        </Tag>
-                    );
                 }
             },
             align: "center",

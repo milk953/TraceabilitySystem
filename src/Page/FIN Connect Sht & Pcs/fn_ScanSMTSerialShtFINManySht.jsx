@@ -9,14 +9,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   //region useState
   //env State
   const{ConfigData} = DataConfig();
-  const FAC = ConfigData.VITE_FAC_A1;
-  let AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-  let CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  let CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
-  let ROLL_SHT_ROLL_START_DIGIT = import.meta.env
-    .VITE_ROLL_SHT_ROLL_START_DIGIT;
-  let plantCode = import.meta.env.VITE_FAC;
-  let ROLL_SHT_ROLL_LENGTH = import.meta.env.VITE_ROLL_SHT_ROLL_LENGTH;
+  const FAC = ConfigData.FACTORY;
+  let CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+  let plantCode = ConfigData.FACTORY;
+
+  let AUTO_SCAN_CHECK_FLG = ConfigData.AUTO_SCAN_CHECK_FLG;
+  let CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND;
+  let ROLL_SHT_ROLL_START_DIGIT = ConfigData.ROLL_SHT_ROLL_START_DIGIT;
+  let ROLL_SHT_ROLL_LENGTH =ConfigData.ROLL_SHT_ROLL_LENGTH;
+  
   var _strEventArgument = "";
   // hidden Satate
   const [hfUserID, sethfUserID] = useState("");

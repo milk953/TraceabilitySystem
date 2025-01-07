@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import { Tag } from "antd";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
+import { set } from "lodash";
 
 function fn_ScanSheetInspect() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -41,6 +42,8 @@ function fn_ScanSheetInspect() {
     const [gvExport, setgvExport] = useState(false);
     const [gvExportData, setgvExportData] = useState([]);
 
+    const [istxtPrdDisabled, setistxtPrdDisabled] = useState(false);
+    const [istxtRollnoDisabled, setistxtRollnoDisabled] = useState(false);
     const [isBinNoDisabled, setisBinNoDisabled] = useState(false);
     const [isShtNoDisabled, setisShtNoDisabled] = useState(false);
     const [istxtLotDisabled, setistxtLotDisabled] = useState(false);
@@ -76,6 +79,7 @@ function fn_ScanSheetInspect() {
     };
 
     const ClearLot = () => {
+        setselShift("A");
         settxtLotNo("");
         settxtRollNo("");
         settxtScanBy("");
@@ -83,6 +87,7 @@ function fn_ScanSheetInspect() {
         setistxtLotDisabled(false);
         setpnlSerial(false);
         SetMode("LOT");
+        fetchData();
         setTimeout(() => {
             inputLot.current.focus();
         }, 200);
@@ -359,9 +364,11 @@ function fn_ScanSheetInspect() {
             if (txtWeekCode.length !== 4) {
                 setlabellog("Please input correct week code.");
                 SetMode("SHEET_ERROR");
+                setvisiblelog(true);
             } else if (txtScanBy.trim() === "") {
                 setlabellog("Please input scan by.");
                 SetMode("SHEET_ERROR");
+                setvisiblelog(true);
             } else {
                 await axios.post("/api/Common/getproductshtinspectdup", {
                     strLotno: txtLotNo,
@@ -532,6 +539,8 @@ function fn_ScanSheetInspect() {
         if (strType === "LOT") {
             settxtLotNo("");
             settxtProduct("");
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setselBinNo("");
             setisBinNoDisabled(true);
             settxtShtNo("");
@@ -547,6 +556,8 @@ function fn_ScanSheetInspect() {
         } else if (strType === "LOT_ERROR") {
             settxtLotNo("");
             settxtProduct("");
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setselBinNo("");
             setisBinNoDisabled(true);
             settxtShtNo("");
@@ -558,6 +569,8 @@ function fn_ScanSheetInspect() {
             inputLot.current.focus();
         } else if (strType === "DATE") {
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setisBinNoDisabled(false);
             setisShtNoDisabled(false);
             setlabellog("");
@@ -568,6 +581,8 @@ function fn_ScanSheetInspect() {
             inputScanBy.current?.focus();
         } else if (strType === "SHEET") {
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setisBinNoDisabled(false);
             setisShtNoDisabled(false);
             setlabellog("");
@@ -579,12 +594,16 @@ function fn_ScanSheetInspect() {
         } else if (strType === "SHEET_ERROR") {
             settxtShtNo("");
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setvisiblelog(true);
             setpnlSerial(false);
             setpnlSuccess(false);
             inputShtNo.current.focus();
         } else if (strType === "SHEET_CONFIRM") {
             setistxtLotDisabled(true);
+            setistxtPrdDisabled(true);
+            setistxtRollnoDisabled(true);
             setvisiblelog(true);
             setpnlSerial(true);
             setpnlSuccess(false);
@@ -696,7 +715,7 @@ function fn_ScanSheetInspect() {
         txtShtNo, labellog, visiblelog, pnlSuccess, handleLotNo, inputLot, pnlSerial, gvScanResult, inputScanDate,
         ibtDateRefresh, ddlBinNoData, istxtLotDisabled, isBinNoDisabled, isShtNoDisabled, handleselShtBin, gvScanData,
         handleShtNo, ibtExportClick, inputScanBy, inputShtNo, btnCancel, btDelShtClick, btDelLotClick, settxtShtNo,
-        btCancelClick, columns
+        btCancelClick, columns, istxtPrdDisabled, istxtRollnoDisabled
     }
 }
 

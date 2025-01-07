@@ -5,13 +5,16 @@ import { useLoading } from "../../loading/fn_loading";
 import ExcelJS from "exceljs";
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
+import {DataConfig} from "../Common/function_Common";
 
 function fn_ScanSMTSerialPcsP1() {
-  const Fac = import.meta.env.VITE_FAC;
+  
+  const{ConfigData} = DataConfig();
+  const Fac = ConfigData.FACTORY;
   const hfUserID = localStorage.getItem("ipAddress");
   const hfUserStation = localStorage.getItem("ipAddress");
   const DUPLICATE_CHECK_FLG = "0";
-  const export_csv_flg = import.meta.env.VITE_EXPORT_CSV_FLG;
+  const export_csv_flg = ConfigData.EXPORT_CSV_FLG;
   let hfMode = "";
   const hiddenParams = {
     hfSerialLength: "0",
@@ -64,11 +67,13 @@ function fn_ScanSMTSerialPcsP1() {
     hfExportCSV : export_csv_flg
   };
   const {showLoading,hideLoading} = useLoading();
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_SERIAL_VAR = import.meta.env.VITE_FINAL_GATE_SPECIAL_SERIAL_VAR;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
-  const FINAL_GATE_SPECIAL_OK = import.meta.env.VITE_FINAL_GATE_SPECIAL_OK;
+  // ConfigData.FINAL_GATE_SPECIAL_FLG
+  const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+  const FINAL_GATE_SPECIAL_SERIAL_VAR = ConfigData.FINAL_GATE_SPECIAL_SERIAL_VAR;
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
+  const FINAL_GATE_SPECIAL_OK = ConfigData.FINAL_GATE_SPECIAL_OK;
+  
   const _strTagNewLine = "/";
   const [scanLot, setScanLot] = useState("");
   const [ddlproduct, setddlproduct] = useState([]);

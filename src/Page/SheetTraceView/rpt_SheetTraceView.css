@@ -1,31 +1,36 @@
 .TbViewTraceSheet {
-    margin: auto;
+  margin: auto;
 }
 
 .TbViewTraceSheet td {
-    border: none;
-    padding: px;
+  border: none;
+  padding: px;
 }
-.divSheetTable{
-    margin: auto;
-    width: 50%;
-    display: flex;
-    align-items: center;
+.divSheetTable {
+  margin: auto;
+  width: 50%;
+  display: flex;
+  align-items: center;
 }
 .Product {
-    margin: auto;
-    display: flex;
- 
+  margin: auto;
+  display: flex;
 }
 
 .Product td {
-    border: none;
-    padding: 6px;
-    border: 1px solid#fdfefe ;
+  border: none;
+  padding: 6px;
+  border: 1px solid#fdfefe;
 }
-.color-bg-product{
-
-background-color:#aed6f1
+.color-bg-product {
+  background-color: #aed6f1;
+}
+.Sheet-Table-Search td {
+  border-bottom: none;
+}
+.Sheet-Table-Search tr {
+  padding: 0px;
+  margin: 0px;
 }
 
 /* .card-style-product {

@@ -80,7 +80,7 @@ function Change_Serial() {
               <TableHead>
                 <TableRow>
                   <TableCell colSpan={4} align="center">
-                    {menuName}
+                    {menuName ? menuName : "Serial Config"}
                   </TableCell>
                 </TableRow>
               </TableHead>

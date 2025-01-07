@@ -2,15 +2,17 @@ import axios from "axios";
 import { Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import {useLoading} from "../../loading/fn_loading";
+import {DataConfig} from "../Common/function_Common";
 function fn_ScanSMTSerialShtCopy() {
+  const{ConfigData} = DataConfig();
   //hidden parameter
-  const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env
-    .VITE_CONNECT_SERIAL_NOT_FOUND;
-  const ROLL_SHT_ROLL_START_DIGIT = import.meta.env
-    .VITE_ROLL_SHT_ROLL_START_DIGIT;
-  const ROLL_SHT_ROLL_LENGTH = import.meta.env.VITE_ROLL_SHT_ROLL_LENGTH;
+  const plantCode = ConfigData.FACTORY;
+  const AUTO_SCAN_CHECK_FLG = ConfigData.AUTO_SCAN_CHECK_FLG;
+  const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+  const CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND;
+  const ROLL_SHT_ROLL_START_DIGIT = ConfigData.ROLL_SHT_ROLL_START_DIGIT;
+  const ROLL_SHT_ROLL_LENGTH = ConfigData.ROLL_SHT_ROLL_LENGTH;
+
   const [hfUserID, sethfUserID] = useState("");
   const [hfUserStation, sethfUserStation] = useState("");
   const [hfMode, sethfMode] = useState("");
@@ -86,7 +88,6 @@ function fn_ScanSMTSerialShtCopy() {
   var hfReqBoardNo = "";
   let _strTagNewLine = '/'
   //State
-  const plantCode = import.meta.env.VITE_FAC;
   const [gvBackSideState, setGvBackSideState] = useState(false);
   const [lblErrorState, setLblErrorState] = useState(false);
   const [lblError, setLblError] = useState("");
@@ -727,6 +728,7 @@ function fn_ScanSMTSerialShtCopy() {
                 USER_ID: hfUserID,
                 REMARK: dtSerial[drRow].REMARK,
                 LOT: _strLot,
+                strProgram : 'ScanSMTSerialShtCopy'
               })
             }        
             if (_strUpdateError != "") {
@@ -1042,6 +1044,7 @@ function fn_ScanSMTSerialShtCopy() {
             strIntRow: params.strIntRow,
             strProduct: params.strProduct,
             strMachine: params.strMachine,
+            strProgram : 'ScanSMTSerialShtCopy'
           },
         })
         .then((res) => {
@@ -1067,6 +1070,7 @@ function fn_ScanSMTSerialShtCopy() {
         USER_ID: params.USER_ID,
         REMARK: params.REMARK,
         LOT: params.LOT,
+        strProgram : params.strProgram
       }).then((res) => {
         result = res.data.p_error;
       }).catch((error) => {

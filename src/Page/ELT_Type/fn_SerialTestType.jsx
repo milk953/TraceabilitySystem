@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { Table as AntTable, Select, Button } from "antd";
+import { Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import {DataConfig} from "../Common/function_Common";
 function fn_SerialTestType() {
-  const plantCode = import.meta.env.VITE_FAC;
+  const{ConfigData} = DataConfig();
+  const plantCode = ConfigData.FACTORY;  
   const [productData, setProductData] = useState([]);
   const [productSelect, setProductSelect] = useState("");
   const [ELTTypeData, setELTTypeData] = useState([]);

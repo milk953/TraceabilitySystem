@@ -65,15 +65,6 @@ function ScanSMTSerialPcsP1() {
       <Card
         component={Paper}
         className="Card-Common"
-        // style={{
-        //   margin: "auto",
-        //   width: "95%",
-        //   maxWidth: "1450px",
-        //   minHeight: "200px",
-        //   padding: "20px",
-        //   overflow: "auto",
-        //   marginTop: "80px",
-        // }}
       >
         <table>
           <tr>
