@@ -69,7 +69,7 @@ function ScanSMTSerialRecordTime() {
                                         {/* <Typography variant="h6">
                                             Serial Record Time
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "Serial Record Time"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>

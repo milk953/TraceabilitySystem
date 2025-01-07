@@ -64,7 +64,7 @@ function ScanSMTSerialControlTime() {
                                         {/* <Typography variant="h6">
                                             Confirm Process Time
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "Confirm Process Time"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>

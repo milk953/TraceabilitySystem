@@ -62,7 +62,7 @@ function ScanSMTPlasmaStopStart() {
                                         {/* <Typography variant="h6">
                                             Stop/Start Record Time
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "Stop/Start Record Time"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>

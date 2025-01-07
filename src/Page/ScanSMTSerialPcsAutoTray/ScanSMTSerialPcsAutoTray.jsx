@@ -71,7 +71,7 @@ function ScanSMTSerialPcsAutoTray() {
                                         {/* <Typography variant="h6">
                                             Final Gate Only Good
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "Final Gate Only Good"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>

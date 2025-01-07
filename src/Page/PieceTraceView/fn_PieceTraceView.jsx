@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLoading } from "../../loading/fn_loading";
+import { DataConfig } from "../Common/function_Common"; 
 
 function fn_PieceTraceView() {
+  const { ConfigData } = DataConfig();
   const [txtSerialNo, settxtSerialNo] = useState("");
   const [txtSerialChip, settxtSerialChip] = useState({ visible: false, value: "" });
   const [txtProduct, settxtProduct] = useState("");
@@ -221,14 +223,14 @@ function fn_PieceTraceView() {
   let PanelNo = "";
   const SPI_Maker = "ABC";
   const strConnectNAPK = "NAPK";
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
   const FINAL_GATE_SPECIAL_OK = "OK";
-  const FINAL_GATE_SPECIAL_TYPE = import.meta.env.VITE_FINAL_GATE_SPECIAL_TYPE;
+  const FINAL_GATE_SPECIAL_TYPE = ConfigData.FINAL_GATE_SPECIAL_TYPE;
   let SERIAL_DATABASE_SWITCH = 0;
   const AOI_SHOW_ERROR = "SIP HEIGHT";
-  const plantCode = import.meta.env.VITE_FAC;
+  const plantCode = ConfigData.FACTORY;
 
   //focus
   const inputPiece = useRef([]);
@@ -258,7 +260,6 @@ function fn_PieceTraceView() {
     if (Serial == "" || Serial == null || Serial == undefined) {
       Clear_View();
     } else {
-      console.log("Serial", Serial);
       settxtSerialNo(Serial);
       setSerialSearch(Serial);
       //ViewData();
@@ -486,7 +487,6 @@ function fn_PieceTraceView() {
     let strFinalGateStation = "";
     let SerialNo = txtSerialNo.toUpperCase().trim();
     let ProductName = txtProduct;
-    console.log(SerialNo, "SerialNo")
     showLoading("กำลังค้นหา กรุณารอสักครู่...");
 
     try {
@@ -558,7 +558,7 @@ function fn_PieceTraceView() {
             ProductName = dtSerial.productname;
             sethypLotNo(dtSerial.lotno);
           } else {
-            setlblMessage("Error : SMT_SERIAL_NO isn't Found!");
+            setlblMessage("Error : TRC_SERIAL_NO isn't Found!");
           }
         } else if (dt.product_name !== "") {
           ProductName = dt.product_name;
@@ -568,7 +568,7 @@ function fn_PieceTraceView() {
             ProductName = dtSerial.productname;
             sethypLotNo(dtSerial.lotno);
           } else {
-            setlblMessage("Error : SMT_SERIAL_NO isn't Found!");
+            setlblMessage("Error : TRC_SERIAL_NO isn't Found!");
           }
         }
         settxtProduct(ProductName)
@@ -587,7 +587,6 @@ function fn_PieceTraceView() {
 
       if (dt1 !== null) {
         SheetType = dt1.sheet_type;
-        console.log("SheetType", SheetType)
         BarcodeSide = dt1.lamination_side;
 
         settxtShtType(SheetType);

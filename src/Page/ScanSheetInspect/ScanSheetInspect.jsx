@@ -67,7 +67,7 @@ function ScanSheetInspect() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={3} align="center">
-                                    {menuName ? menuName : "P1 Confirm Process"}
+                                    {menuName ? menuName : "Sheet Inspection"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
