@@ -48,6 +48,7 @@ function Change_Serial() {
     lblResult,
     gvNewSerial,
     fnSetFocus,
+    fc_txtSerialOld, fc_txtSerialNew,
   } = fn_Change_Serial();
   const { menuName } = fn_Homepage();
   return (
@@ -190,15 +191,28 @@ function Change_Serial() {
                           size="small"
                           fullWidth
                           autoComplete="off"
-                          id={`gvSerial_txtSerialNoOld_${index}`}
+                          // id={`gvSerial_txtSerialNoOld_${index}`}
+                          inputRef={(el) =>
+                            (fc_txtSerialOld.current[index] = el)
+                          }
                           className="input_txt"
                           value={txtSerialNoOld[index] || ""}
+                          // onKeyDown={(event) => {
+                          //   if (event.key === "Enter") {
+                          //     if (txtTotalPcs.value == index + 1) {
+                          //       fnSetFocus(`gvSerial_txtSerialNoNew_${0}`);
+                          //     } else {
+                          //       handleSerialOldChange(index, event);
+                          //     }
+                          //   }
+                          // }}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
-                              if (txtTotalPcs.value == index + 1) {
-                                fnSetFocus(`gvSerial_txtSerialNoNew_${0}`);
+                              event.preventDefault();
+                              if (index < gvSerial.value.length-1) {
+                                fc_txtSerialOld.current[index+1].focus();  
                               } else {
-                                handleSerialOldChange(index, event);
+                                fc_txtSerialNew.current[0].focus();
                               }
                             }
                           }}
@@ -213,15 +227,30 @@ function Change_Serial() {
                           size="small"
                           fullWidth
                           autoComplete="off"
-                          id={`gvSerial_txtSerialNoNew_${index}`}
+                          // id={`gvSerial_txtSerialNoNew_${index}`}
+                          inputRef={(el) =>
+                            (fc_txtSerialNew.current[index] = el)
+                          }
                           className="input_txt"
                           value={txtSerialNoNew[index] || ""}
+                          // onKeyDown={(event) => {
+                          //   if (event.key === "Enter") {
+                          //     if (txtTotalPcs.value == index + 1) {
+                          //       BtnSubmit_Click();
+                          //     } else {
+                          //       handleSerialNewChange(index, event);
+                          //     }
+                          //   }
+                          // }}
                           onKeyDown={(event) => {
                             if (event.key === "Enter") {
-                              if (txtTotalPcs.value == index + 1) {
-                                BtnSubmit_Click();
+                              event.preventDefault();
+                              if (index < gvSerial.value.length - 1) {
+                                fc_txtSerialNew.current[index+1].focus();
                               } else {
-                                handleSerialNewChange(index, event);
+                                event.target.blur();
+                                BtnSubmit_Click();
+                          
                               }
                             }
                           }}
