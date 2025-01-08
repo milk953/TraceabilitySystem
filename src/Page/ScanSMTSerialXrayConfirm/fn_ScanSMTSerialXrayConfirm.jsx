@@ -127,6 +127,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     visble: false,
     style: {},
   });
+  const fc_txtSerial = useRef([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -141,9 +142,9 @@ function fn_ScanSMTSerialXrayConfirm() {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
-    if (event.key === "Enter") {
-      fnSetFocus(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`);
-    }
+    // if (event.key === "Enter") {
+    //   fnSetFocus(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`);
+    // }
   };
 
   const getProduct = async () => {
@@ -194,7 +195,10 @@ function fn_ScanSMTSerialXrayConfirm() {
       visble: false,
     }));
     SetMode("SERIAL");
-    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    setTimeout(() => {
+      fc_txtSerial.current[0].focus();
+    }, 300);
   };
 
   const btnSave_Click = async () => {
@@ -238,8 +242,11 @@ function fn_ScanSMTSerialXrayConfirm() {
           visble: false,
           value: "",
         }));
+        // setTimeout(() => {
+        //   fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+        // }, 300);
         setTimeout(() => {
-          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+          fc_txtSerial.current[0].focus();
         }, 300);
       }
       hideLoading();
@@ -446,7 +453,10 @@ function fn_ScanSMTSerialXrayConfirm() {
             }));
           }
           SetMode("SERIAL");
-          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+          // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+          setTimeout(() => {
+            fc_txtSerial.current[0].focus();
+          }, 300);
         } catch (ex) {
           console.error(ex);
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
@@ -469,7 +479,10 @@ function fn_ScanSMTSerialXrayConfirm() {
                 }));
               }
               SetMode("SERIAL");
-              fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+              // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+              setTimeout(() => {
+                fc_txtSerial.current[0].focus();
+              }, 300);
             } catch (ex2) {
               setLblPnlLog((prevState) => ({
                 ...prevState,
@@ -525,7 +538,12 @@ function fn_ScanSMTSerialXrayConfirm() {
     if (!isNaN(txtTotalPCS.value)) {
       // hfTotalSht = txtTotalPCS.value;
       SetMode("SERIAL");
-      fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+      const newValues = [];
+      setTxtSerial(newValues);
+      // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+      setTimeout(() => {
+        fc_txtSerial.current[0].focus();
+      }, 300);
     } else {
       setTxtTotalPCS((prevState) => ({
         ...prevState,
@@ -701,6 +719,8 @@ function fn_ScanSMTSerialXrayConfirm() {
         ...prevState,
         visble: false,
       }));
+      const newValues = [];
+      setTxtSerial(newValues);
     } else {
       setLblPnlLog((prevState) => ({
         ...prevState,
@@ -708,7 +728,10 @@ function fn_ScanSMTSerialXrayConfirm() {
       }));
       SetMode("SERIAL_ERROR");
     }
-    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    setTimeout(() => {
+      fc_txtSerial.current[0].focus();
+    }, 300);
     return 0;
   };
 
@@ -885,19 +908,18 @@ function fn_ScanSMTSerialXrayConfirm() {
       align: "center",
     },
   ];
- 
 
-  // function fnSetFocus(txtField) {
-  //   setTimeout(() => {
-  //     document.getElementById(`${txtField}`).focus();
-  //   }, 0);
-  // }
   function fnSetFocus(txtField) {
-    const element = document.getElementById(txtField);
-    if (element) {
-      element.focus();
-    }
+    setTimeout(() => {
+      document.getElementById(`${txtField}`).focus();
+    }, 0);
   }
+  // function fnSetFocus(txtField) {
+  //   const element = document.getElementById(txtField);
+  //   if (element) {
+  //     element.focus();
+  //   }
+  // }
   return {
     txtLot,
     setTxtLot,
@@ -920,6 +942,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     gvScanResult,
     columns,
     lblResult,
+    fc_txtSerial,
   };
 }
 
