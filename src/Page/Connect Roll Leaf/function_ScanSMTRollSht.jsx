@@ -951,6 +951,7 @@ function Fn_ScanSMTRollSht() {
                   strUserID: hfUserStation,
                   strOperator: txtOperator,
                   strPlantCode: Fac,
+                   strProgram : 'ScanSMTRollSht'
                 })
                 .then((res) => {
                   console.log('save2',res.data)
@@ -1080,6 +1081,7 @@ function Fn_ScanSMTRollSht() {
   };
 
   const ibtback_Click = () => {
+    settxtTotalLeaf(0);
     SetMode("LOT");
 
   };

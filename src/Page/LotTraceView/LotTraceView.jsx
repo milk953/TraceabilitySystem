@@ -66,7 +66,7 @@ function LotTraceView() {
       style={{ width: "250px" }}
       value={txtLotNo}
       onChange={(e) => {
-        settxtLotNo(e.target.value);
+        settxtLotNo(e.target.value.trim());
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
@@ -81,7 +81,7 @@ function LotTraceView() {
       style={{ width: "300px" }}
       value={txtSheetNo}
       onChange={(e) => {
-        settxtSheetNo(e.target.value);
+        settxtSheetNo(e.target.value.trim().toUpperCase());
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
@@ -95,7 +95,7 @@ function LotTraceView() {
       style={{ width: "300px" }}
       value={txtSerialNo}
       onChange={(e) => {
-        settxtSerialNo(e.target.value);
+        settxtSerialNo(e.target.value.trim().toUpperCase());
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {

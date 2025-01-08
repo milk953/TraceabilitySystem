@@ -18,9 +18,9 @@ function LotTraceView() {
   return (
     <>
       <Hearder />
-      <h1>Roll Leaf No.</h1>
+      {/* <h1>Roll Leaf No.</h1> */}
       <Card component={Paper} className="Card-Common">
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div style={{ display: "flex", gap: "10px",marginBottom:'10px' }}>
           <Card
             component={Paper}
             className="Card-ViewRollTitlePage"
@@ -48,7 +48,7 @@ function LotTraceView() {
           </Card>
          
         </div>
-        <br />
+       
         
         {/* {console.log('tblFrontSheet',tblFrontSheet,columnsFRONT)}
         <Table

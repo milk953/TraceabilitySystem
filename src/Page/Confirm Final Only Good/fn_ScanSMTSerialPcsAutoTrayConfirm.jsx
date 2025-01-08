@@ -697,6 +697,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   const ibtPackingBack_Click = async () => {
     setlblLotTotal(0);
     setlblSerialNG(0)
+    setgvScanResult((prevState)=>({...prevState,value:'',visble:false}))
     SetMode("PACK");
   };
 

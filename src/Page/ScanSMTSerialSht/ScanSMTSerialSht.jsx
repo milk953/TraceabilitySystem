@@ -68,7 +68,7 @@ function ScanSMTSerialSht() {
                                         {/* <Typography variant="h6">
                                             SMT Connect Sht & Pcs
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "SMT Connect Sht & Pcs"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>

@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import { Tag } from "antd";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
+import { set } from "lodash";
 
 function fn_ScanSheetInspect() {
     const [txtLotNo, settxtLotNo] = useState("");
@@ -78,6 +79,7 @@ function fn_ScanSheetInspect() {
     };
 
     const ClearLot = () => {
+        setselShift("A");
         settxtLotNo("");
         settxtRollNo("");
         settxtScanBy("");
@@ -85,6 +87,7 @@ function fn_ScanSheetInspect() {
         setistxtLotDisabled(false);
         setpnlSerial(false);
         SetMode("LOT");
+        fetchData();
         setTimeout(() => {
             inputLot.current.focus();
         }, 200);
@@ -361,9 +364,11 @@ function fn_ScanSheetInspect() {
             if (txtWeekCode.length !== 4) {
                 setlabellog("Please input correct week code.");
                 SetMode("SHEET_ERROR");
+                setvisiblelog(true);
             } else if (txtScanBy.trim() === "") {
                 setlabellog("Please input scan by.");
                 SetMode("SHEET_ERROR");
+                setvisiblelog(true);
             } else {
                 await axios.post("/api/Common/getproductshtinspectdup", {
                     strLotno: txtLotNo,

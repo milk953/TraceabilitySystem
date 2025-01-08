@@ -274,11 +274,21 @@ function ScanSMTRoollSht() {
                         size="small"
                         inputRef={(el) => (fc_txtTray.current = el)}
                         value={txtPcsTray.value}
+                        // onChange={(e) => {
+                        //   settxtPcsTray((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value.trim(),
+                        //   }));
+                        // }}
                         onChange={(e) => {
-                          settxtPcsTray((prevState) => ({
-                            ...prevState,
-                            value: e.target.value.trim(),
-                          }));
+                          const value = e.target.value;
+                          if (/^\d*$/.test(value)) {
+                            // settxtTotalLeaf(value);
+                            settxtPcsTray((prevState) => ({
+                                  ...prevState,
+                                  value:value
+                                }));
+                          }
                         }}
                         style={{ ...txtPcsTray.style, width: "60px" }}
                         disabled={txtPcsTray.disbled}
