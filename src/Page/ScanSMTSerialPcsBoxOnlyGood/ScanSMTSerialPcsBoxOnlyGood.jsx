@@ -288,26 +288,27 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                         display: "flex",
                         alignItems: "center",
                       }}>
-                      <TextField
-                        className="input_txt"
-                        size="small"
-                        inputRef={(el) => (fntxtTray.current = el)}
-                        value={txtPcsTray.value}
-                        onChange={(e) => {
-                          settxtPcsTray((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
-                        style={{backgroundColor: txtPcsTray.disbled ? '#e0e0e0' : 'inherit',  width: "60px" }}
-                        disabled={txtPcsTray.disbled} //true พิมไม่ได้
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            txtPcsTray_TextChanged();
-                          }
-                        }}
-                        //onBlur={txtPcsTray_TextChanged}
-                      ></TextField>
+                     <TextField
+  className="input_txt"
+  size="small"
+  inputRef={(el) => (fntxtTray.current = el)}
+  value={txtPcsTray.value}
+  onChange={(e) => {
+    const value = e.target.value.replace(/[^0-9]/g, ''); // กรองอักขระพิเศษออก
+    settxtPcsTray((prevState) => ({
+      ...prevState,
+      value: value,
+    }));
+  }}
+  style={{ backgroundColor: txtPcsTray.disbled ? '#e0e0e0' : 'inherit', width: "60px" }}
+  disabled={txtPcsTray.disbled} // true พิมไม่ได้
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      txtPcsTray_TextChanged();
+    }
+  }}
+  // onBlur={txtPcsTray_TextChanged}
+></TextField>
                       &nbsp; 
                       {lblLastTray.value}
                     </TableCell>

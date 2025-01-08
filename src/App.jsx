@@ -89,7 +89,8 @@ import ScanSMTConfirmMOTP1 from "./Page/ScanSMTConfirmMOTP1/ScanSMTConfirmMOTP1"
 import {LoadingProvider} from "./loading/fn_loading";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
-const backendUrl = import.meta.env.VITE_SERVICE_URL;
+// const backendUrl = import.meta.env.VITE_SERVICE_URL;
+const backendUrl = `http://${window.location.hostname}:3001`;
 axios.defaults.baseURL = backendUrl;
 
 const App = () => {

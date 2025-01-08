@@ -130,22 +130,24 @@ function ScanSMTSerialSpotHeat() {
                       <Typography>Total Sht :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      <TextField
-                        size="small"
-                        className="input_txt"
-                        value={txtTotalPCS.value}
-                        inputRef={fcTotalSht}
-                        
-                        onChange={(e) => {
-                          settxtTotalPCS((prevState)=>({...prevState,value:e.target.value}))
-                        
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleTotal_Sht();
-                          }
-                        }}
-                      />
+                    <TextField
+  size="small"
+  className="input_txt"
+  value={txtTotalPCS.value}
+  inputRef={fcTotalSht}
+  onChange={(e) => {
+    const value = e.target.value.replace(/[^0-9]/g, ''); // กรองอักขระที่ไม่ใช่ตัวเลขออก
+    settxtTotalPCS((prevState) => ({
+      ...prevState,
+      value: value,
+    }));
+  }}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      handleTotal_Sht();
+    }
+  }}
+/>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -185,7 +187,6 @@ function ScanSMTSerialSpotHeat() {
                         >
                           {index + 1}
                         </TableCell>
-                        {/* {console.log("fcGvSerial_txtSerial_0.current:", fcGvSerial_txtSerial_0.current)} */}
                         <TableCell>
                     
                           <TextField
