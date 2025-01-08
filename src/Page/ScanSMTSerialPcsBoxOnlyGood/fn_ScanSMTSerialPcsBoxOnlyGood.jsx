@@ -1042,8 +1042,8 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
           value: "",
           disbled: true,
         }));
-        setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
-        setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
+        //setlblLotTotal((prevState) => ({ ...prevState, value: "" }));
+        //setlblSerialNG((prevState) => ({ ...prevState, value: "" }));
         setlblBox((prevState) => ({ ...prevState, value: "" }));
         setlblBoxFull((prevState) => ({ ...prevState, value: "" }));
         setlblBoxTotal((prevState) => ({ ...prevState, value: "" }));
@@ -1295,6 +1295,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       }
       settxtBox((prevState) => ({ ...prevState, value: _strBoxNo }));
       setlblBox((prevState) => ({ ...prevState, value: _strBoxNo }));
+   
       if (_strError == "") {
         let _dtTrayCount = [];
         setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));

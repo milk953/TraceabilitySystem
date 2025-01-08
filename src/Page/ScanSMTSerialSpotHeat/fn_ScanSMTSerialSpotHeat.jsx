@@ -358,6 +358,7 @@ function fn_ScanSMTSerialSpotHeat() {
     setvisiblegvScanResult(false);
     setSlProduct(Product[0].prd_name);
     await SetMode("LOT");
+    fcLotNo.current.focus();
   };
 
   const btnCancel_Click = async () => {

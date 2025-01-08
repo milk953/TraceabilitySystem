@@ -1475,9 +1475,6 @@ function fn_ScanSMTSerialPcsBox() {
                 }
                 if (!_bolError) {
                   let isDuplicate = dtSerial.some((item, index) => {
-                    // console.log(
-                    //   `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
-                    // );
                     return (
                       index !== _intRowSerial &&
                       _strSerial.toUpperCase() === item.SERIAL.toUpperCase()
