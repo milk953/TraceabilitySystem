@@ -149,7 +149,7 @@ function ScanAVIConfirmResult() {
                 </TableRow>
                 {lblNo.value !== "" && (
                   <TableRow style={{ backgroundColor: "white" }}>
-                    <TableCell align="center" colSpan={2}>
+                    <TableCell align="center" colSpan={4}>
                       <Typography
                         style={{ color: "black", fontSize: "16px" }}
                       >

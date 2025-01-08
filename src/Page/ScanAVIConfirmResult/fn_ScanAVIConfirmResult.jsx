@@ -129,7 +129,7 @@ function fn_ScanAVIConfirmResult() {
       fnSetFocus("txtSerialBarcode");
     };
     fetchData();
-  }, []);
+  }, [plantCode]);
 
   const ddlProduct_SelectedIndexChanged = async () => {
     await axios
