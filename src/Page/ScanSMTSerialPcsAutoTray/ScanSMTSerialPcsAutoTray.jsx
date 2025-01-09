@@ -187,7 +187,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableCell>
                                     <TableCell>
                                         <Typography
-                                            style={{ color: "green" }}
+                                        // style={{ color: "green" }}
                                         >
                                             {lblLotTotal}
                                         </Typography>
@@ -230,7 +230,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableCell>
                                     <TableCell>
                                         <Typography
-                                            style={{ color: "red" }}
+                                        // style={{ color: "red" }}
                                         >
                                             {lblSerialNG}
                                         </Typography>
@@ -363,25 +363,24 @@ function ScanSMTSerialPcsAutoTray() {
                                     style={{
                                         background: lblResultcolor,
                                         textAlign: "center",
-                                        width: "70%",
                                     }}
                                 >
-                                    <Typography variant="h4" style={{ paddingTop: "3px", color: "#fff" }}>
+                                    <Typography variant="h4" style={{ paddingTop: "5px", color: "#fff" }}>
                                         {lblResult}
                                     </Typography>
                                 </Paper>
 
                                 <Paper
                                     className="Card-lblResult"
-                                    elevation={3}
                                     style={{
                                         background: lblTimecolor,
                                         textAlign: "center",
                                         marginLeft: "10px",
                                         width: "30%",
+                                        display: lblTime === '' ? 'none' : '',
                                     }}
                                 >
-                                    <Typography variant="h4" style={{ paddingTop: "3px", color: "#fff" }}>
+                                    <Typography variant="h4" style={{ paddingTop: "5px", color: "#fff" }}>
                                         {lblTime}
                                     </Typography>
                                 </Paper>

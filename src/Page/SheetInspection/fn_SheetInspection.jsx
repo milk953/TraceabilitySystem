@@ -52,10 +52,10 @@ function fn_SheetInspection() {
     const btnExport_Click = async () => {
         let nameFile = '';
         if (gvDataXOut.visible) {
-            nameFile = `SheetInspectionXOut.xls`;
+            nameFile = `SheetInspectionXOut.xlsx`;
             exportExcelFile(gvDataXOut.value, nameFile);
         } else {
-            nameFile = `SheetInspectionSheetNo.xls`;
+            nameFile = `SheetInspectionSheetNo.xlsx`;
             exportExcelFile(gvDataSheet.value, nameFile);
         }
     };

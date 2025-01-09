@@ -57,8 +57,8 @@ function ScanSMTSerialSht() {
                     <TableContainer
                         component={Card}
                         style={{
-                            width: "430px",
-                            margin: "4px",
+                            width: "431px",
+                            // margin: "4px",
                         }}
                     >
                         <Table className="Header_Left">
@@ -296,18 +296,12 @@ function ScanSMTSerialSht() {
                                 component={Card}
                                 style={{
                                     width: "100%",
-                                    marginBottom: "1px",
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Table
-                                    sx={{
-                                        minWidth: 380,
-                                    }}
-                                    aria-label="simple table"
-                                >
+                                <Table>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell
@@ -341,20 +335,16 @@ function ScanSMTSerialSht() {
                                 component={Card}
                                 style={{
                                     width: "430px",
-                                    margin: "10px",
+                                    border: "1px solid #d9d9d9",
+                                    marginTop: "10px",
                                 }}
                             >
-                                <Table
-                                    sx={{
-                                        minWidth: 380,
-                                        margin: "auto",
-                                    }}
-                                >
+                                <Table>
                                     <TableHead></TableHead>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell
-                                                align="left"
+                                                align="right"
                                             >
                                                 Bottom Fixture :
                                             </TableCell>
@@ -377,7 +367,7 @@ function ScanSMTSerialSht() {
                                         </TableRow>
                                         <TableRow>
                                             <TableCell
-                                                align="left"
+                                                align="right"
                                             >
                                                 Top Fixture :
                                             </TableCell>
@@ -409,8 +399,7 @@ function ScanSMTSerialSht() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "433px",
-                                marginLeft: "2px",
+                                width: "432px",
                             }}
                         >
                             {lblLog}
@@ -486,7 +475,7 @@ function ScanSMTSerialSht() {
                                     &nbsp;&nbsp;
                                     <AntButton
                                         className="ButtonDelete"
-                                        style={{height: "30px"}}
+                                        style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}
                                     >
@@ -530,7 +519,7 @@ function ScanSMTSerialSht() {
                                     </Typography>
                                 </Paper>
                             </div>
-                            
+
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -540,7 +529,7 @@ function ScanSMTSerialSht() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
-                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
 
                         </>

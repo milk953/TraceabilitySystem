@@ -121,7 +121,7 @@ function ScanAOISheetNo() {
                       size="small"
                       inputRef={(el) => (inputOperator.current = el)}
                       fullWidth
-                      value={txtOperator.trim()}
+                      value={txtOperator.trim().toUpperCase()}
                       disabled={txtOperatorDisabled}
                       style={{
                         backgroundColor: txtOperatorDisabled
@@ -245,7 +245,7 @@ function ScanAOISheetNo() {
                           : "inherit",
                       }}
                       onChange={(e) => {
-                        settxtLeaf(e.target.value);
+                        settxtLeaf(e.target.value.trim());
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -265,7 +265,7 @@ function ScanAOISheetNo() {
                       size="small"
                       inputRef={(el) => (inputLayer.current = el)}
                       fullWidth
-                      value={txtLayer.trim()}
+                      value={txtLayer}
                       disabled={txtLayerDisabled}
                       style={{
                         width: "80px",
@@ -274,7 +274,7 @@ function ScanAOISheetNo() {
                           : "inherit",
                       }}
                       onChange={(e) => {
-                        settxtLayer(e.target.value);
+                        settxtLayer(e.target.value.trim().toUpperCase());
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -433,7 +433,7 @@ function ScanAOISheetNo() {
           )}
 
           {pnlResult && (
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%", marginTop: "10px" }}>
               <Paper
                 className="Card-lblResult"
                 style={{
@@ -470,7 +470,7 @@ function ScanAOISheetNo() {
                 columns={columnsgvReject}
                 dataSource={gvReject.value}
                 rowKey={(record) => record.SEQ}
-                style={{ width: "98%", marginLeft: "20px" }}
+                style={{ width: "98%", marginLeft: "16px", marginBottom: "10px" }}
                 pagination={false}
                 size="small"
                 bordered
@@ -485,7 +485,7 @@ function ScanAOISheetNo() {
                 columns={columns}
                 dataSource={gvScanResult.value}
                 rowKey={(record) => record.seq}
-                style={{ width: "98%", marginLeft: "20px" }}
+                style={{ width: "98%", marginLeft: "16px" }}
                 pagination={false}
                 size="small"
                 bordered
