@@ -24,5 +24,12 @@
 .row-green .ant-table-cell {
   color: green; 
 }
+.Card-lblResult-ScanSMTConnectRollConfirm {
+  width: 100%;
+  margin: auto;
+  min-height: 45px;
+  text-align: center;
+  margin-bottom: 10px;
+}
 
   
