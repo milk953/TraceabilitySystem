@@ -508,7 +508,7 @@ function ScanSMTSerialRecordTime() {
                         <Typography
                             style={{
                                 fontSize: "16px",
-                                color: "green"
+                                //color: "green"
                             }}
                         >
                             {lblLotTotal}
