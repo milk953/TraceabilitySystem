@@ -111,7 +111,8 @@ function fn_ScanSMTPlasmaStopStart() {
       .then((res) => {
         strPrdName = res.data.prdName[0];
         console.log("PrdName:", strPrdName);
-        if (strPrdName !== "") {
+        
+        if (strPrdName !== undefined) {
           setlblLog("");
           setvisiblelog(false);
           settxtLotNo(strLot);

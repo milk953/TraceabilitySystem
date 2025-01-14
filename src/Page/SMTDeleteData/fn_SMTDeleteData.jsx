@@ -111,6 +111,7 @@ function fn_SMTDeleteData() {
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
+    
   };
 
   const columnsconshtpcs = [
