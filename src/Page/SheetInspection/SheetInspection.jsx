@@ -75,7 +75,7 @@ function SheetInspection() {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -118,7 +118,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -161,7 +161,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Roll No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -204,7 +204,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Invoice No :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -250,7 +250,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Packing Date :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -342,7 +342,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Report Type :</Typography>
                                     </TableCell>
                                     <TableCell>

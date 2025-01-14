@@ -83,9 +83,12 @@ function ScanSMTSerialControlTime() {
                                             style={{
                                                 backgroundColor: txtMachineDisabled ? "#e0e0e0" : "inherit",
                                             }}
-                                            value={txtMachine.trim()}
+                                            value={txtMachine}
                                             onChange={(e) => {
-                                                settxtMachine(e.target.value);
+                                                const value = e.target.value.trim().toUpperCase();
+                                                if (value.length <= 25 && !/[ก-๙]/.test(value)) {
+                                                    settxtMachine(value);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -120,9 +123,12 @@ function ScanSMTSerialControlTime() {
                                             style={{
                                                 backgroundColor: txtOpDisabled ? "#e0e0e0" : "inherit",
                                             }}
-                                            value={txtOperator.trim()}
+                                            value={txtOperator}
                                             onChange={(e) => {
-                                                settxtOperator(e.target.value);
+                                                const value = e.target.value.trim().toUpperCase();
+                                                if (value.length <= 25 && !/[ก-๙]/.test(value)) {
+                                                    settxtOperator(value);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -159,7 +165,10 @@ function ScanSMTSerialControlTime() {
                                             value={txtTotalPcs.trim()}
                                             disabled={txtTotalPcsDisabled}
                                             onChange={(e) => {
-                                                settxtTotalPcs(e.target.value);
+                                                const value = e.target.value;
+                                                if (/^\d*$/.test(value) && value.length <= 3) {
+                                                    settxtTotalPcs(value);
+                                                }
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
@@ -252,7 +261,6 @@ function ScanSMTSerialControlTime() {
                         elevation={2}
                         style={{
                             width: "450px",
-                            margin: "auto",
                             height: "40px",
                             display: 'flex',
                             alignItems: 'center',
@@ -266,7 +274,7 @@ function ScanSMTSerialControlTime() {
                         </Typography>
                         <Typography
                             style={{
-                                fontSize: "18px",
+                                fontSize: "16px",
                                 paddingRight: "150px",
                             }}
                         >
@@ -382,7 +390,6 @@ function ScanSMTSerialControlTime() {
                                     style={{
                                         background: lblResultcolor,
                                         width: "100%",
-                                        marginLeft: "10px"
                                     }}
                                 >
                                     <Typography
@@ -398,7 +405,7 @@ function ScanSMTSerialControlTime() {
                                 columns={columns}
                                 dataSource={gvScanData}
                                 rowKey={(record) => record.SEQ}
-                                style={{ width: '99%', marginLeft: "10px" }}
+                                style={{ width: '100%' }}
                                 pagination={false}
                                 size="small"
                                 bordered

@@ -59,6 +59,7 @@ function ScanSMTSerialXrayConfirm() {
     gvScanResult,
     columns,
     lblResult,
+    fc_txtSerial,
   } = fn_ScanSMTSerialXrayConfirm();
   const { menuName } = fn_Homepage();
   return (
@@ -231,17 +232,29 @@ function ScanSMTSerialXrayConfirm() {
                               size="small"
                               fullWidth
                               autoComplete="off"
-                              id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
+                              // id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
+                              inputRef={(el) => (fc_txtSerial.current[index] = el)}
                               className="input_txt"
                               value={txtSerial[index] || ""}
+                              // onKeyDown={(event) => {
+                              //   if (event.key === "Enter") {
+                              //     event.preventDefault();
+                              //     if (Number(txtTotalPCS.value) === index + 1) {
+                              //       btnSave_Click();
+                              //       event.target.blur();
+                              //     } else {
+                              //       handleSerialChange(index, event);
+                              //     }
+                              //   }
+                              // }}
                               onKeyDown={(event) => {
                                 if (event.key === "Enter") {
                                   event.preventDefault();
-                                  if (Number(txtTotalPCS.value) === index + 1) {
+                                  if (index < gvSerial.value.length - 1) {
+                                    fc_txtSerial.current[index + 1].focus();
+                                  } else {
                                     btnSave_Click();
                                     event.target.blur();
-                                  } else {
-                                    handleSerialChange(index, event);
                                   }
                                 }
                               }}

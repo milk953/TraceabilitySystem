@@ -2,9 +2,9 @@
     margin: auto;
 }
 
-.TbSMTDel th{
+.TbSMTDel th {
     /* background-color: #8c8c8c; */
-    border-radius: 5px  5px 0 0;
+    border-radius: 5px 5px 0 0;
     color: #fff;
     padding: 5px;
 }
@@ -14,7 +14,7 @@
 }
 
 
-.Bt_del{
+.Bt_del {
     padding: 4px !important;
 }
 
@@ -38,14 +38,14 @@
 .divgvELTResult th {
     text-align: center;
     font-size: 16px;
-    background-color: #12422e !important ;
+    background-color: #12422e !important;
     color: #fff;
     border-right: 1px solid rgb(221, 219, 219);
     padding: 5px;
 }
 
 .divgvELTResult td {
-    padding: 4px 4px 4px 4px!important;
+    padding: 4px 4px 4px 4px !important;
     border-right: 1px solid #d9d9d9;
 }
 
@@ -53,4 +53,20 @@
     width: 52%;
     height: 45px;
     text-align: center;
+}
+
+/* CSS สำหรับเปลี่ยนสีของ checkbox เมื่อเลือกแล้ว */
+.ant-checkbox-input:checked+.ant-checkbox-inner {
+    background-color: #1890ff !important;
+    /* เปลี่ยนสีของ checkbox เมื่อเลือกเป็นสีน้ำเงิน หรือเลือกสีอื่นๆ ตามต้องการ */
+    border-color: #1890ff !important;
+    /* เปลี่ยนเส้นขอบของ checkbox เมื่อเลือก */
+}
+
+/* ซ่อนสถานะ mixed (aria-checked="mixed") */
+.ant-checkbox-input[aria-checked="mixed"]+.ant-checkbox-inner::after {
+    background: transparent !important;
+    /* ซ่อนสัญลักษณ์ที่แสดงสถานะ mixed */
+    border-color: transparent !important;
+    /* ซ่อนเส้นขอบ */
 }

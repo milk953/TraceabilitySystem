@@ -71,8 +71,7 @@ function fn_ScanAOISheetNo() {
   const inputSerial = useRef([]);
 
   const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env
-    .VITE_CONNECT_SERIAL_NOT_FOUND;
+  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
   const plantCode = import.meta.env.VITE_FAC;
 
   const { showLoading, hideLoading } = useLoading();
@@ -262,7 +261,7 @@ function fn_ScanAOISheetNo() {
   };
 
   const handleChangeSerial = (index, e) => {
-    const trimmedValue = e.target.value.trim();
+    const trimmedValue = e.target.value.trim().toUpperCase();
     const newValue = [...txtgvSerial];
     newValue[index] = trimmedValue;
     settxtgvSerial(newValue);
@@ -271,29 +270,29 @@ function fn_ScanAOISheetNo() {
   const btnSave_Click = async () => {
     let CheckValue = false;
     if (hfMode === "SERIAL") {
-      // await setSerialDataTray();
-      // settxtgvSerial("");
-      // setTimeout(() => {
+      await setSerialDataTray();
+      settxtgvSerial("");
+      setTimeout(() => {
+        inputSerial.current[0].focus();
+      }, 300);
+      // if (Array.isArray(txtgvSerial)) {
+      //   const Value = txtgvSerial.some((item) => item !== "");
+      //   CheckValue = Value;
+      // }
+      // if (txtgvSerial !== "" && CheckValue !== false) {
+      //   setpnlLog(false);
+      //   await setSerialDataTray();
+      //   const newValues = [];
+      //   settxtgvSerial(newValues);
+      //   await new Promise((resolve) => setTimeout(resolve, 1000));
+      // } else {
+      //   setlblLog(`Please Input Sheet No.`);
+      //   setpnlLog(true);
+      //   setTimeout(() => {
       //     inputSerial.current[0].focus();
-      // }, 300);
-      if (Array.isArray(txtgvSerial)) {
-        const Value = txtgvSerial.some((item) => item.trim() !== "");
-        CheckValue = Value;
-      }
-      if (txtgvSerial !== "" && CheckValue !== false) {
-        setpnlLog(false);
-        await setSerialDataTray();
-        const newValues = [];
-        settxtgvSerial(newValues);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      } else {
-        setlblLog(`Please Input Sheet No.`);
-        setpnlLog(true);
-        setTimeout(() => {
-          inputSerial.current[0].focus();
-        }, 300);
-        settxtgvSerial("");
-      }
+      //   }, 300);
+      //   settxtgvSerial("");
+      // }
     }
   };
 
@@ -449,7 +448,9 @@ function fn_ScanAOISheetNo() {
     } else if (strType === "SERIAL") {
       settxtTotalPcsDisabled(true);
       setpnlSerial(true);
-      setpnlResult(false);
+      setTimeout(() => {
+        setpnlResult(false);
+      }, 300);
       setibtLayerBack((prevState) => ({ ...prevState, disabled: false }));
       sethfMode("SERIAL");
       setTimeout(() => {
@@ -490,13 +491,27 @@ function fn_ScanAOISheetNo() {
     let _intRowSerial = 0;
 
     setgvReject((prevState) => ({ ...prevState, visible: false, value: [] }));
+
+    const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
+    const anySerialIncomplete = dtSerial.some(item => item.SERIAL === "");
+
+    if (allSerialEmpty || anySerialIncomplete) {
+      hideLoading();
+      setlblLog("Please Input Sheet No.");
+      setpnlLog(true);
+      setTimeout(() => {
+        inputSerial.current[0].focus();
+      }, 100);
+      return;
+    } else {
+      setpnlLog(false);
+      setlblLog("");
+    }
+
     showLoading("กำลังบันทึก กรุณารอสักครู่");
 
-    console.log(dtSerial, "dtserial");
     if (!_bolTrayError) {
-      console.log(dtSerial, "dtserial");
       for (let i = 0; i < dtSerial.length; i++) {
-        console.log(dtSerial, "dtSerial");
         if (dtSerial[i].SERIAL !== "") {
           let _intCount = 0;
           let _strRemark = "";
@@ -607,13 +622,13 @@ function fn_ScanAOISheetNo() {
         _intRowSerial = _intRowSerial + 1;
       }
 
-      setpnlResult(true);
       setlblResult(_strScanResultAll);
 
       if (_strScanResultAll === "NG") {
+        hideLoading();
+        setpnlResult(true);
         setlblResultcolor("red");
       } else {
-        console.log("มาไหม", dtSerial.length);
         for (let i = 0; i < dtSerial.length; i++) {
           let _strErrorUpdate = "";
           await axios
@@ -630,9 +645,11 @@ function fn_ScanAOISheetNo() {
             });
 
           if (_strErrorUpdate !== "") {
+            setpnlResult(true);
             setlblResult("Error :" + _strErrorUpdate);
             setlblResultcolor("red");
           } else {
+            setpnlResult(true);
             setlblResultcolor("green");
           }
         }
