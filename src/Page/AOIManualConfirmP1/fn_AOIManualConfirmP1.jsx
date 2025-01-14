@@ -130,7 +130,7 @@ function fn_AOIManualConfirmP1() {
             strPlantCode: plantCode,
             strSheet_no: txtSerialNo.value.trim().toUpperCase(),
             strRbtAOI: AOI_SPI_Check,
-            strPage: 'AOIManualConfirmP1',
+            strPage: "AOIManualConfirmP1",
           },
         })
         .then((res) => {
@@ -161,9 +161,11 @@ function fn_AOIManualConfirmP1() {
             ...prevState,
             value: "",
           }));
+          setCheckComplete("");
           fnSetFocus("txtSerialNo_AOIManualConfirmP1_focus");
         });
     } catch (ex) {
+      setCheckComplete("");
       setLblResult((prevState) => ({
         ...prevState,
         value: ex.message,
@@ -203,6 +205,7 @@ function fn_AOIManualConfirmP1() {
       ...prevState,
       value: false,
     }));
+    setCheckComplete("");
   };
 
   const txtSerialNo_TextChanged = async () => {
@@ -287,6 +290,7 @@ function fn_AOIManualConfirmP1() {
       value: "",
       style: {},
     }));
+    setCheckComplete("");
     fnSetFocus("txtSerialNo_AOIManualConfirmP1_focus");
     if (value === "AOI") {
       setRbtAOI((prevState) => ({
