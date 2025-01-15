@@ -126,7 +126,7 @@ function fn_ScanSMTSerialShtMaster() {
     const AUTO_SCAN_CHECK_FLG = ConfigData.AUTO_SCAN_CHECK_FLG;
     const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
     const CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND; CONNECT_SERIAL_NOT_FOUND
-    const MASTER_SHEET = ConfigData.SHT_PCS_MASTER_CODE; 
+    const MASTER_SHEET = ConfigData.SHT_PCS_MASTER_CODE;
 
     const { showLoading, hideLoading } = useLoading();
 
@@ -391,7 +391,7 @@ function fn_ScanSMTSerialShtMaster() {
     };
 
     const handleChangeSerial = (index, e) => {
-        const trimmedValue = e.target.value.trim();
+        const trimmedValue = e.target.value.trim().toUpperCase();
         const newValue = [...txtgvSerial];
         newValue[index] = trimmedValue;
         settxtgvSerial(newValue);
@@ -399,21 +399,19 @@ function fn_ScanSMTSerialShtMaster() {
 
     const handleChangegvBackSide = (index, e) => {
         const newValues = [...txtSideBack];
-        newValues[index] = e.target.value;
+        newValues[index] = e.target.value.trim().toUpperCase();
         settxtSideBack(newValues);
     };
 
     const handleChangegvFontSide = (index, e) => {
         const newValues = [...txtSideFront];
-        newValues[index] = e.target.value;
+        newValues[index] = e.target.value.trim().toUpperCase();
         settxtSideFront(newValues);
     };
 
     const btnSaveClick = async () => {
         if (hfMode === "SERIAL") {
             await setSerialData();
-            settxtgvSerial("");
-            settxtSideBack("");
             scrollToTop();
             // setTimeout(() => setlblResult(""), 5000);
             // setTimeout(() => setgvScanResult(false), 5000);
@@ -500,6 +498,8 @@ function fn_ScanSMTSerialShtMaster() {
             }
         }
 
+        settxtgvSerial("");
+        settxtSideBack("");
         setgvSerialData(dtData);
         console.log("gvserialdata:", dtData)
         return dtData;
@@ -527,6 +527,7 @@ function fn_ScanSMTSerialShtMaster() {
 
     const setSerialData = async () => {
 
+        showLoading('กำลังบันทึก กรุณารอสักครู่');
         if (txtMasterCode === MASTER_SHEET) {
             const dtSerial = await getInputSerial();
             console.log(dtSerial)
@@ -543,6 +544,32 @@ function fn_ScanSMTSerialShtMaster() {
             sethfWeekCode("");
             setlblResult("");
 
+            const CheckFontSideBackSide = dtSerial.every(item => item.BACK_SIDE === "" || item.BACK_SIDE === undefined || item.FRONT_SIDE === "" || item.FRONT_SIDE === undefined);
+            if (dtSerial.length === 0 || CheckFontSideBackSide) {
+                hideLoading();
+                setlblLog("Please input Sheet Side No.");
+                setpnlLog(true);
+                setlblResult("");
+                setgvScanResult(false);
+                setgvScanData([]);
+                setTimeout(() => {
+                    inputSideBack.current[0].focus();
+                }, 300);
+                return;
+            }
+
+            const allSerialEmpty = dtSerial.every(item => item.SERIAL === "" || item.SERIAL === undefined);
+            if (allSerialEmpty) {
+                hideLoading();
+                setpnlLog(true);
+                setlblLog("Please Input Serial No.");
+                setgvScanResult(false);
+                setgvScanData([]);
+                setTimeout(() => {
+                    inputgvSerial.current[1].focus();
+                }, 300);
+            }
+
             let _bolError = false;
             const _strLotData = txtLotNo.toUpperCase().split(";");
             _strLot = _strLotData[0];
@@ -550,7 +577,7 @@ function fn_ScanSMTSerialShtMaster() {
             _strLotRef = _strLotRefData[0];
 
             setpnlLog(false);
-            showLoading('กำลังบันทึก กรุณารอสักครู่');
+
 
             if (txtLotNo !== "" && dtSerial.length > 0) {
                 if (hfCheckWeekCode === "Y") {
@@ -597,9 +624,9 @@ function fn_ScanSMTSerialShtMaster() {
                     if (Array.isArray(txtgvSerial)) {
                         const Value = txtgvSerial.slice(1).some((item) => item.trim() !== "");
                         CheckValue = Value;
-                      }
+                    }
 
-                      if (CheckValue === false) {
+                    if (CheckValue === false) {
                         setlblLog(`Please Input Serial No.`);
                         setpnlLog(true);
                         inputgvSerial.current[0].focus();
@@ -607,7 +634,7 @@ function fn_ScanSMTSerialShtMaster() {
                         setgvScanData([]);
                         setgvScanResult(false);
                         hideLoading();
-                      } 
+                    }
 
 
                     //------------------------------------------
@@ -1047,7 +1074,7 @@ function fn_ScanSMTSerialShtMaster() {
                                             strUserID: hfUserStation,
                                             strOperator: "SerialShtPcs",
                                             strPlantCode: plantCode,
-                                            strProgram : 'ScanSMTSerialShtMaster'
+                                            strProgram: 'ScanSMTSerialShtMaster'
                                         })
                                             .then((res) => {
                                                 _strUpdateError = res.data.p_error;
@@ -1078,7 +1105,7 @@ function fn_ScanSMTSerialShtMaster() {
                         USER_ID: hfUserID,
                         REMARK: dtSerial[i].REMARK,
                         LOT: _strLot,
-                        strProgram : 'ScanSMTSerialShtMaster'
+                        strProgram: 'ScanSMTSerialShtMaster'
                     })
                         .then((res) => {
                             _strUpdateError = res.data.p_error;

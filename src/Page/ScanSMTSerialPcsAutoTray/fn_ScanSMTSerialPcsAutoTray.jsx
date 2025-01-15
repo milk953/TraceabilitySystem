@@ -1162,7 +1162,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 if (_dblPlasmaRemain > 0) {
                     //setlblTime("Remain ");
                     if (Math.floor(_dblPlasmaRemain) > 0) {
-                        const formattedText = `${Math.floor(_dblPlasmaRemain)} Hr.`;
+                        const formattedText = `${Math.floor(_dblPlasmaRemain)} hr.`;
                         setlblTime("Remain" + formattedText);
                     }
                     const fractionalPart = _dblPlasmaRemain % 1;

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLoading } from "../../loading/fn_loading";
+import { DataConfig } from "../Common/function_Common"; 
 
 function fn_PieceTraceView() {
+  const { ConfigData } = DataConfig();
   const [txtSerialNo, settxtSerialNo] = useState("");
   const [txtSerialChip, settxtSerialChip] = useState({ visible: false, value: "" });
   const [txtProduct, settxtProduct] = useState("");
@@ -221,14 +223,14 @@ function fn_PieceTraceView() {
   let PanelNo = "";
   const SPI_Maker = "ABC";
   const strConnectNAPK = "NAPK";
-  const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
-  const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
-  const FINAL_GATE_SPECIAL_MESSAGE = import.meta.env.VITE_FINAL_GATE_SPECIAL_MESSAGE;
+  const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
+  const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
+  const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
   const FINAL_GATE_SPECIAL_OK = "OK";
-  const FINAL_GATE_SPECIAL_TYPE = import.meta.env.VITE_FINAL_GATE_SPECIAL_TYPE;
+  const FINAL_GATE_SPECIAL_TYPE = ConfigData.FINAL_GATE_SPECIAL_TYPE;
   let SERIAL_DATABASE_SWITCH = 0;
   const AOI_SHOW_ERROR = "SIP HEIGHT";
-  const plantCode = import.meta.env.VITE_FAC;
+  const plantCode = ConfigData.FACTORY;
 
   //focus
   const inputPiece = useRef([]);
@@ -258,7 +260,6 @@ function fn_PieceTraceView() {
     if (Serial == "" || Serial == null || Serial == undefined) {
       Clear_View();
     } else {
-      console.log("Serial", Serial);
       settxtSerialNo(Serial);
       setSerialSearch(Serial);
       //ViewData();
@@ -276,110 +277,110 @@ function fn_PieceTraceView() {
     settxtShtType("");
 
     //SPI
-    setbtnSPIFColor("#E0E0E0");
+    setbtnSPIFColor("#B6BBC4");
     settxtSPICntF("");
     settxtSPITimeF("");
-    setbtnSPIBColor("#E0E0E0");
+    setbtnSPIBColor("#B6BBC4");
     settxtSPICntB("");
     settxtSPITimeB("");
 
     //PreAOI
-    setbtnPreAOIFColor("#E0E0E0");
+    setbtnPreAOIFColor("#B6BBC4");
     settxtPreAOICntF("");
     settxtPreTimeF("");
     setbtnPreAOIB("");
-    setbtnPreAOIBColor("#E0E0E0");
+    setbtnPreAOIBColor("#B6BBC4");
     settxtPreAOICntB("");
     settxtPreTimeB("");
 
     //AOI
-    setbtnAOIFColor("#E0E0E0");
+    setbtnAOIFColor("#B6BBC4");
     settxtAOICntF("");
     settxtAOITimeF("");
-    setbtnAOIBColor("#E0E0E0");
+    setbtnAOIBColor("#B6BBC4");
     settxtAOICntB("");
     settxtAOITimeB("");
 
     //XRAY
-    setbtnXRAY_FColor("#E0E0E0");
+    setbtnXRAY_FColor("#B6BBC4");
     settxtXRAYCnt_F("");
     settxtXRAYTime_F("");
-    setbtnXRAY_BColor("#E0E0E0");
+    setbtnXRAY_BColor("#B6BBC4");
     settxtXRAYCnt_B("");
     settxtXRAYTime_B("");
 
     //AOICOAT
-    setbtnAOICOAFColor("#E0E0E0");
+    setbtnAOICOAFColor("#B6BBC4");
     settxtAOICOACntF("");
     settxtAOICOATimeF("");
-    setbtnAOICOABColor("#E0E0E0");
+    setbtnAOICOABColor("#B6BBC4");
     settxtAOICOACntB("");
     settxtAOICOATimeB("");
 
     //SMT
-    setbtnSMTIntFColor("#E0E0E0");
+    setbtnSMTIntFColor("#B6BBC4");
     settxtSMTIntCntF("");
     settxtSMTIntTimeF("");
-    setbtnSMTIntBColor("#E0E0E0");
+    setbtnSMTIntBColor("#B6BBC4");
     settxtSMTIntCntB("");
     settxtSMTIntTimeB("");
 
     //Reject1
-    setbtnReject1Color("#E0E0E0");
+    setbtnReject1Color("#B6BBC4");
     settxtRejectCnt1("");
     settxtRejectTime1("");
 
     //TouchUp
-    setbtnTouchUpColor("#E0E0E0");
+    setbtnTouchUpColor("#B6BBC4");
     settxtTouchUpCnt("");
     settxtTouchUpTime("");
 
     //FQC
-    setbtnFQCColor("#E0E0E0");
+    setbtnFQCColor("#B6BBC4");
     settxtFQCTime(prevState => ({ ...prevState, value: "" }));
 
     //Bending
-    setbtnBendingColor("#E0E0E0");
+    setbtnBendingColor("#B6BBC4");
     settxtBendingTime("");
     setlblBendingMachine("");
 
     //ELT1
-    setbtnELT1Color("#E0E0E0");
+    setbtnELT1Color("#B6BBC4");
     settxtELTCnt1(prevState => ({ ...prevState, value: "" }));
     settxtELTTime1(prevState => ({ ...prevState, value: "" }));
 
     //ELT2
-    setbtnELT2Color("#E0E0E0");
+    setbtnELT2Color("#B6BBC4");
     settxtELTCnt2(prevState => ({ ...prevState, value: "" }));
     settxtELTTime2(prevState => ({ ...prevState, value: "" }));
 
     //ELT3
-    setbtnELT3Color("#E0E0E0");
+    setbtnELT3Color("#B6BBC4");
     settxtELTCnt3(prevState => ({ ...prevState, value: "" }));
     settxtELTTime3(prevState => ({ ...prevState, value: "" }));
 
     //ELT4
-    setbtnELT4Color("#E0E0E0");
+    setbtnELT4Color("#B6BBC4");
     settxtELTCnt4(prevState => ({ ...prevState, value: "" }));
     settxtELTTime4(prevState => ({ ...prevState, value: "" }));
 
     //ELT5
-    setbtnELT5Color("#E0E0E0");
+    setbtnELT5Color("#B6BBC4");
     settxtELTCnt5(prevState => ({ ...prevState, value: "" }));
     settxtELTTime5(prevState => ({ ...prevState, value: "" }));
 
     //ELT6
-    setbtnELT6Color("#E0E0E0");
+    setbtnELT6Color("#B6BBC4");
     settxtELTCnt6(prevState => ({ ...prevState, value: "" }));
     settxtELTTime6(prevState => ({ ...prevState, value: "" }));
 
     //ELT7
-    setbtnELT7Color("#E0E0E0");
+    setbtnELT7Color("#B6BBC4");
     settxtELTCnt7(prevState => ({ ...prevState, value: "" }));
     settxtELTTime7(prevState => ({ ...prevState, value: "" }));
 
     //AOMEFPC
-    setbtnAOMEFPCColor("#E0E0E0");
+    setbtnAOMEFPCColor("#B6BBC4");
     settxtAOMEFPCCntF("");
     settxtAOMEFPCTimeF("");
     sethfAOMRollLeafNo("");
@@ -387,7 +388,7 @@ function fn_PieceTraceView() {
     sethfAOMPcsNo("");
 
     //AOIEFPC
-    setbtnAOIEFPCColor("#E0E0E0");
+    setbtnAOIEFPCColor("#B6BBC4");
     settxtAOIEFPCCntF("");
     settxtAOIEFPCTimeF("");
     sethfAOIRollLeafNo("");
@@ -395,47 +396,47 @@ function fn_PieceTraceView() {
     sethfAOIPcsNo("");
 
     //OST
-    setbtnOSTColor("#E0E0E0");
+    setbtnOSTColor("#B6BBC4");
     settxtOSTCntF("");
     settxtOSTTimeF("");
     sethfOSTSheetNo("");
     sethfOSTPcsNo("");
 
     //AVI
-    setbtnAVIFColor("#E0E0E0");
+    setbtnAVIFColor("#B6BBC4");
     settxtAVICntF("");
     settxtAVITimeF("");
 
-    setbtnAVIBColor("#E0E0E0");
+    setbtnAVIBColor("#B6BBC4");
     settxtAVICntB("");
     settxtAVITimeB("");
 
-    setbtnAVIMarkFColor("#E0E0E0");
+    setbtnAVIMarkFColor("#B6BBC4");
     settxtAVIMarkCntF("");
     settxtAVIMarkTimeF("");
 
-    setbtnAVIMarkBColor("#E0E0E0");
+    setbtnAVIMarkBColor("#B6BBC4");
     settxtAVIMarkCntB("");
     settxtAVIMarkTimeB("");
 
     //Reflow
-    setbtnReflowFColor("#E0E0E0");
+    setbtnReflowFColor("#B6BBC4");
     settxtReflowCntF("");
     settxtReflowTimeF("");
 
-    setbtnReflowBColor("#E0E0E0");
+    setbtnReflowBColor("#B6BBC4");
     settxtReflowCntB("");
     settxtReflowTimeB("");
 
     //FinalGate
-    setbtnFinalGateColor("#E0E0E0");
+    setbtnFinalGateColor("#B6BBC4");
     settxtFinalGateTime("");
     setlblFinalGateRemark("");
     //BarcodeGrade
-    setbtnBarcodeGradeColor("#E0E0E0");
+    setbtnBarcodeGradeColor("#B6BBC4");
     settxtBarcodeGradeTime(prevState => ({ ...prevState, value: "" }));
     //ScanPack
-    setbtnScanPackColor("#E0E0E0");
+    setbtnScanPackColor("#B6BBC4");
     setlblScanPackRemark("");
   };
 
@@ -486,7 +487,6 @@ function fn_PieceTraceView() {
     let strFinalGateStation = "";
     let SerialNo = txtSerialNo.toUpperCase().trim();
     let ProductName = txtProduct;
-    console.log(SerialNo, "SerialNo")
     showLoading("กำลังค้นหา กรุณารอสักครู่...");
 
     try {
@@ -530,10 +530,10 @@ function fn_PieceTraceView() {
         strFinalGateStation = dtPrd.update_by;
 
         if (dtPrd.final_result === "OK" || dtPrd.final_result === "PASS") {
-          setbtnFinalGateColor("#059212");
+          setbtnFinalGateColor("green");
           setlblFinalGateRemark("");
         } else {
-          setbtnFinalGateColor("#BA0900");
+          setbtnFinalGateColor("red");
           setlblFinalGateRemark(dtPrd.elt_remarks);
         }
         settxtFinalGateTime(dtPrd.update_date);
@@ -558,7 +558,7 @@ function fn_PieceTraceView() {
             ProductName = dtSerial.productname;
             sethypLotNo(dtSerial.lotno);
           } else {
-            setlblMessage("Error : SMT_SERIAL_NO isn't Found!");
+            setlblMessage("Error : TRC_SERIAL_NO isn't Found!");
           }
         } else if (dt.product_name !== "") {
           ProductName = dt.product_name;
@@ -568,7 +568,7 @@ function fn_PieceTraceView() {
             ProductName = dtSerial.productname;
             sethypLotNo(dtSerial.lotno);
           } else {
-            setlblMessage("Error : SMT_SERIAL_NO isn't Found!");
+            setlblMessage("Error : TRC_SERIAL_NO isn't Found!");
           }
         }
         settxtProduct(ProductName)
@@ -587,7 +587,6 @@ function fn_PieceTraceView() {
 
       if (dt1 !== null) {
         SheetType = dt1.sheet_type;
-        console.log("SheetType", SheetType)
         BarcodeSide = dt1.lamination_side;
 
         settxtShtType(SheetType);
@@ -600,19 +599,19 @@ function fn_PieceTraceView() {
             settxtAOICntF("#fff");
             settxtAOITimeFColor("#fff");
 
-            settxtSPICntBColor("#e0e0e0");
-            settxtSPITimeBColor("#e0e0e0");
-            settxtPreAOICntBColor("#e0e0e0");
-            settxtPreTimeBColor("#e0e0e0");
-            settxtAOICntBColor("#e0e0e0");
-            settxtAOITimeBColor("#e0e0e0");
+            settxtSPICntBColor("#B6BBC4");
+            settxtSPITimeBColor("#B6BBC4");
+            settxtPreAOICntBColor("#B6BBC4");
+            settxtPreTimeBColor("#B6BBC4");
+            settxtAOICntBColor("#B6BBC4");
+            settxtAOITimeBColor("#B6BBC4");
           } else {
-            settxtSPICntFColor("#e0e0e0");
-            settxtSPITimeFColor("#e0e0e0");
-            settxtPreAOICntFColor("#e0e0e0");
-            settxtPreTimeFColor("#e0e0e0");
-            settxtAOICntFColor("#e0e0e0");
-            settxtAOITimeFColor("#e0e0e0");
+            settxtSPICntFColor("#B6BBC4");
+            settxtSPITimeFColor("#B6BBC4");
+            settxtPreAOICntFColor("#B6BBC4");
+            settxtPreTimeFColor("#B6BBC4");
+            settxtAOICntFColor("#B6BBC4");
+            settxtAOITimeFColor("#B6BBC4");
           }
         } else {
           settxtSPICntFColor("#fff");
@@ -785,19 +784,19 @@ function fn_PieceTraceView() {
             case "WN":
             case "PASS":
             case "RPASS":
-              setbtnSPIFColor("#059212");
+              setbtnSPIFColor("green");
               break;
             case "NG":
             case "FAIL":
             case "BADMARK":
             case "SKIP":
-              setbtnSPIFColor("#BA0900");
+              setbtnSPIFColor("red");
               break;
             case "":
               setbtnSPIF(prevState => ({ ...prevState, value: "" }));
               break;
             default:
-              setbtnSPIFColor("#059212");
+              setbtnSPIFColor("green");
               break;
           }
         } else {
@@ -816,7 +815,7 @@ function fn_PieceTraceView() {
             settxtSPICntF(dt5.int_count);
             settxtSPITimeF(dt5.inspect_date);
             setbtnSPIF(prevState => ({ ...prevState, value: StrResult }));
-            setbtnSPIFColor("#BA0900");
+            setbtnSPIFColor("red");
           } else {
             setbtnSPIF(prevState => ({ ...prevState, disabled: true }));
             settxtSPICntF("");
@@ -895,19 +894,19 @@ function fn_PieceTraceView() {
             case "WN":
             case "PASS":
             case "RPASS":
-              setbtnSPIBColor("#059212");
+              setbtnSPIBColor("green");
               break;
             case "NG":
             case "FAIL":
             case "BADMARK":
             case "SKIP":
-              setbtnSPIBColor("#BA0900");
+              setbtnSPIBColor("red");
               break;
             case "":
               setbtnSPIB(prevState => ({ ...prevState, value: "" }));
               break;
             default:
-              setbtnSPIBColor("#059212");
+              setbtnSPIBColor("green");
               break;
           }
         } else {
@@ -925,7 +924,7 @@ function fn_PieceTraceView() {
             settxtSPICntB(dt8.int_count);
             settxtSPITimeB(dt8.inspect_date);
             setbtnSPIB(prevState => ({ ...prevState, value: StrResult }));
-            setbtnSPIBColor("#BA0900");
+            setbtnSPIBColor("red");
           } else {
             setbtnSPIB(prevState => ({ ...prevState, visible: false }));
             settxtSPICntB("");
@@ -958,16 +957,16 @@ function fn_PieceTraceView() {
             case "WN":
             case "PASS":
             case "RPASS":
-              setbtnSPIFColor("#059212");
+              setbtnSPIFColor("green");
               break;
             case "NG":
             case "FAIL":
             case "BADMARK":
             case "SKIP":
-              setbtnSPIFColor("#BA0900");
+              setbtnSPIFColor("red");
               break;
             default:
-              setbtnSPIFColor("#059212");
+              setbtnSPIFColor("green");
               break;
           }
         }
@@ -996,7 +995,7 @@ function fn_PieceTraceView() {
             case "WN":
             case "PASS":
             case "RPASS":
-              setbtnPreAOIFColor("#059212");
+              setbtnPreAOIFColor("green");
               setbtnPreAOIF(prevState => ({ ...prevState, value: "OK" }));
 
               break;
@@ -1020,16 +1019,16 @@ function fn_PieceTraceView() {
                   case "WN":
                   case "PASS":
                   case "RPASS":
-                    setbtnPreAOIFColor("#059212");
+                    setbtnPreAOIFColor("green");
                     setbtnPreAOIF(prevState => ({ ...prevState, value: "OK" }));
                     break;
                   default:
-                    setbtnPreAOIFColor("#BA0900");
+                    setbtnPreAOIFColor("red");
                     setbtnPreAOIF(prevState => ({ ...prevState, value: "NG" }));
                     break;
                 }
               } else {
-                setbtnPreAOIFColor("#059212");
+                setbtnPreAOIFColor("green");
                 setbtnPreAOIF(prevState => ({ ...prevState, value: "OK" }));
               }
           }
@@ -1063,7 +1062,7 @@ function fn_PieceTraceView() {
             case "WN":
             case "PASS":
             case "RPASS":
-              setbtnPreAOIBColor("#059212");
+              setbtnPreAOIBColor("green");
               setbtnPreAOIB(prevState => ({ ...prevState, value: "OK" }));
 
               break;
@@ -1087,16 +1086,16 @@ function fn_PieceTraceView() {
                   case "WN":
                   case "PASS":
                   case "RPASS":
-                    setbtnPreAOIBColor("#059212");
+                    setbtnPreAOIBColor("green");
                     setbtnPreAOIB(prevState => ({ ...prevState, value: "OK" }));
                     break;
                   default:
-                    setbtnPreAOIBColor("#BA0900");
+                    setbtnPreAOIBColor("red");
                     setbtnPreAOIB(prevState => ({ ...prevState, value: "NG" }));
                     break;
                 }
               } else {
-                setbtnPreAOIBColor("#059212");
+                setbtnPreAOIBColor("green");
                 setbtnPreAOIB(prevState => ({ ...prevState, value: "OK" }));
               }
           }
@@ -1122,7 +1121,7 @@ function fn_PieceTraceView() {
         if (dt14.length > 0) {
           dt14 = dt14[0];
           setbtnAOIF(prevState => ({ ...prevState, disabled: false }));
-          setbtnAOIFColor("#059212");
+          setbtnAOIFColor("green");
           setbtnAOIF(prevState => ({ ...prevState, value: "OK" }));
           settxtAOICntF(dt14.inspect_count);
           settxtAOITimeF(dt14.inspect_date);
@@ -1153,7 +1152,7 @@ function fn_PieceTraceView() {
 
             if (dt16.length > 0) {
               dt16 = dt16[0];
-              setbtnAOIFColor("#BA0900");
+              setbtnAOIFColor("red");
               setbtnAOIF(prevState => ({ ...prevState, value: dt16.result }));
               for (let i = 0; i < dt16.length; i++) {
                 if (AOI_SHOW_ERROR.includes(dt16.error_code.toString().toUpperCase().trim())) {
@@ -1166,7 +1165,7 @@ function fn_PieceTraceView() {
               settxtAOITimeF(dt16.inspect_date);
             } else {
               setbtnAOIF(prevState => ({ ...prevState, disabled: false }));
-              setbtnAOIFColor("#059212");
+              setbtnAOIFColor("green");
               setbtnAOIF(prevState => ({ ...prevState, value: "OK" }));
             }
           } else {
@@ -1190,7 +1189,7 @@ function fn_PieceTraceView() {
         if (dt17.length > 0) {
           dt17 = dt17[0];
           setbtnAOIB(prevState => ({ ...prevState, disabled: false }));
-          setbtnAOIBColor("#059212");
+          setbtnAOIBColor("green");
           setbtnAOIB(prevState => ({ ...prevState, value: "OK" }));
           settxtAOICntB(dt17.inspect_count);
           settxtAOITimeB(dt17.inspect_date);
@@ -1217,7 +1216,7 @@ function fn_PieceTraceView() {
               });
             if (dt19.length > 0) {
               dt19 = dt19[0];
-              setbtnAOIBColor("#BA0900");
+              setbtnAOIBColor("red");
               setbtnAOIB(prevState => ({ ...prevState, value: dt19.result }));
               for (let i = 0; i < dt19.length; i++) {
                 if (AOI_SHOW_ERROR.includes(dt19.error_code.toString().toUpperCase().trim())) {
@@ -1229,7 +1228,7 @@ function fn_PieceTraceView() {
               settxtAOITimeB(dt19.inspect_date);
             } else {
               setbtnAOIB(prevState => ({ ...prevState, disabled: false }));
-              setbtnAOIBColor("#059212");
+              setbtnAOIBColor("green");
               setbtnAOIB(prevState => ({ ...prevState, value: "OK" }));
             }
           } else {
@@ -1263,13 +1262,13 @@ function fn_PieceTraceView() {
             case "WN":
             case "PASS":
             case "RPASS":
-              setbtnAOIFColor("#059212");
+              setbtnAOIFColor("green");
               break;
             case "NG":
             case "FAIL":
             case "BADMARK":
             case "SKIP":
-              setbtnAOIFColor("#BA0900");
+              setbtnAOIFColor("red");
               break;
           }
         }
@@ -1287,7 +1286,7 @@ function fn_PieceTraceView() {
         if (dt21.length > 0) {
           dt21 = dt21[0];
           setbtnAOICOAF(prevState => ({ ...prevState, disabled: false }));
-          setbtnAOICOAFColor("#059212");
+          setbtnAOICOAFColor("green");
           setbtnAOICOAF(prevState => ({ ...prevState, value: "OK" }));
           settxtAOICOACntF(dt21.inspect_count);
           settxtAOICOATimeF(dt21.inspect_date);
@@ -1314,7 +1313,7 @@ function fn_PieceTraceView() {
               });
             if (dt23.length > 0) {
               dt23 = dt23[0];
-              setbtnAOICOAFColor("#BA0900");
+              setbtnAOICOAFColor("red");
               setbtnAOICOAF(prevState => ({ ...prevState, value: dt23.result }));
               for (i = 0; dt23.length; i++) {
                 if (AOI_SHOW_ERROR.includes(dt23.error_code.toString().toUpperCase().trim())) {
@@ -1327,7 +1326,7 @@ function fn_PieceTraceView() {
               settxtAOICOATimeF(dt23.inspect_date);
             } else {
               setbtnAOICOAF(prevState => ({ ...prevState, disabled: false }));
-              setbtnAOICOAFColor("#059212");
+              setbtnAOICOAFColor("green");
               setbtnAOICOAF(prevState => ({ ...prevState, value: "OK" }));
             }
           } else {
@@ -1351,7 +1350,7 @@ function fn_PieceTraceView() {
         if (dt24.length > 0) {
           dt24 = dt24[0];
           setbtnAOICOAB(prevState => ({ ...prevState, disabled: false }));
-          setbtnAOICOABColor("#059212");
+          setbtnAOICOABColor("green");
           setbtnAOICOAB(prevState => ({ ...prevState, value: "OK" }));
           settxtAOICOACntB(dt24.inspect_count);
           settxtAOICOATimeB(dt24.inspect_date);
@@ -1378,7 +1377,7 @@ function fn_PieceTraceView() {
               });
             if (dt26.length > 0) {
               dt26 = dt26[0];
-              setbtnAOICOABColor("#BA0900");
+              setbtnAOICOABColor("red");
               setbtnAOICOAB(prevState => ({ ...prevState, value: dt26.result }));
               for (i = 0; dt26.length; i++) {
                 if (AOI_SHOW_ERROR.includes(dt26.error_code.toString().toUpperCase().trim())) {
@@ -1391,7 +1390,7 @@ function fn_PieceTraceView() {
               settxtAOICOATimeB(dt26.inspect_date);
             } else {
               setbtnAOICOAB(prevState => ({ ...prevState, disabled: false }));
-              setbtnAOICOABColor("#059212");
+              setbtnAOICOABColor("green");
               setbtnAOICOAB(prevState => ({ ...prevState, value: "OK" }));
             }
           } else {
@@ -1425,13 +1424,13 @@ function fn_PieceTraceView() {
             case "WN":
             case "PASS":
             case "RPASS":
-              setbtnAOICOAFColor("#059212");
+              setbtnAOICOAFColor("green");
               break;
             case "NG":
             case "FAIL":
             case "BADMARK":
             case "SKIP":
-              setbtnAOICOAFColor("#BA0900");
+              setbtnAOICOAFColor("red");
               break;
           }
         }
@@ -1454,9 +1453,9 @@ function fn_PieceTraceView() {
           settxtSMTIntCntF(dt28.inspect_count);
           settxtSMTIntTimeF(dt28.inspect_date);
           if (btnSMTIntF === "NG") {
-            setbtnSMTIntFColor("#BA0900");
+            setbtnSMTIntFColor("red");
           } else {
-            setbtnSMTIntFColor("#059212");
+            setbtnSMTIntFColor("green");
           }
         }
       }
@@ -1478,9 +1477,9 @@ function fn_PieceTraceView() {
           settxtSMTIntTimeB(dt29.inspect_date);
 
           if (btnSMTIntB === "NG") {
-            setbtnSMTIntBColor("#BA0900");
+            setbtnSMTIntBColor("red");
           } else {
-            setbtnSMTIntBColor("#059212");
+            setbtnSMTIntBColor("green");
           }
         }
       }
@@ -1498,7 +1497,7 @@ function fn_PieceTraceView() {
         dt30 = dt30[0];
         setbtnReject1(dt30.reject_code);
         if (dt30.reject_code !== "") {
-          setbtnReject1Color("#BA0900");
+          setbtnReject1Color("red");
         }
         settxtRejectCnt1(dt30.inspect_count);
         settxtRejectTime1(dt30.update_date);
@@ -1516,9 +1515,9 @@ function fn_PieceTraceView() {
         dt31 = dt31[0];
         setbtnTouchUp(dt31.touchup_result);
         if (dt31.touchup_result === "NG") {
-          setbtnTouchUpColor("#BA0900");
+          setbtnTouchUpColor("red");
         } else {
-          setbtnTouchUpColor("#059212");
+          setbtnTouchUpColor("green");
         }
         settxtTouchUpCnt(dt31.touchup_count);
         settxtTouchUpTime(dt31.update_date);
@@ -1549,11 +1548,11 @@ function fn_PieceTraceView() {
 
           if (dt32.ins_date === "") {
             setbtnFQC(prevState => ({ ...prevState, value: "SKIP" }));
-            setbtnFQCColor("#BA0900");
+            setbtnFQCColor("red");
             settxtFQCTime(prevState => ({ ...prevState, value: "" }));
           } else {
             setbtnFQC(prevState => ({ ...prevState, value: "OK" }));
-            setbtnFQCColor("#059212");
+            setbtnFQCColor("green");
             settxtFQCTime(prevState => ({ ...prevState, value: dt32.ins_date }));
 
             setlblFQCMachine(prevState => ({ ...prevState, visible: true, value: "Machine no.: " + dt32.machine_no }));
@@ -1573,7 +1572,7 @@ function fn_PieceTraceView() {
       if (dt33.length > 0) {
         dt33 = dt33[0];
         setbtnBending("OK");
-        setbtnBendingColor("#059212");
+        setbtnBendingColor("green");
         settxtBendingTime(dt33.bending_date);
         setlblBendingMachine(dt33.bending_no);
       }
@@ -1641,9 +1640,9 @@ function fn_PieceTraceView() {
                 setbtnELT1(prevState => ({ ...prevState, value: dt1.prod_result }));
                 if (dt1.prod_result === dt34[i].stt_col_pass_result ||
                   dt1.prod_result === "OK" || dt1.prod_result === "PASS") {
-                  setbtnELT1Color("#059212");
+                  setbtnELT1Color("green");
                 } else {
-                  setbtnELT1Color("#BA0900");
+                  setbtnELT1Color("red");
                 }
                 setbtnELT1(prevState => ({ ...prevState, visible: true }));
                 settxtELTTime1(prevState => ({ ...prevState, value: dt1.inspect_date }));
@@ -1672,7 +1671,7 @@ function fn_PieceTraceView() {
                   if (_intCheckPass === 0) {
                     setbtnELT1(prevState => ({ ...prevState, value: "NG" }));
                     settxtELTTime1(prevState => ({ ...prevState, value: FINAL_GATE_SPECIAL_MESSAGE }));
-                    setbtnELT1Color("#BA0900");
+                    setbtnELT1Color("red");
                   }
                 }
               }
@@ -1690,9 +1689,9 @@ function fn_PieceTraceView() {
                 setbtnELT2(prevState => ({ ...prevState, value: dt2.prod_result }));
                 if (dt2.prod_result === dt34[i].stt_col_pass_result ||
                   dt2.prod_result === "OK" || dt2.prod_result === "PASS") {
-                  setbtnELT2Color("#059212");
+                  setbtnELT2Color("green");
                 } else {
-                  setbtnELT2Color("#BA0900");
+                  setbtnELT2Color("red");
                 }
                 setbtnELT2(prevState => ({ ...prevState, visible: true }));
                 settxtELTTime2(prevState => ({ ...prevState, value: dt2.inspect_date }));
@@ -1721,7 +1720,7 @@ function fn_PieceTraceView() {
                   if (_intCheckPass === 0) {
                     setbtnELT2(prevState => ({ ...prevState, value: "NG" }));
                     settxtELTTime2(prevState => ({ ...prevState, value: FINAL_GATE_SPECIAL_MESSAGE }));
-                    setbtnELT2Color("#BA0900");
+                    setbtnELT2Color("red");
                   }
                 }
               }
@@ -1738,9 +1737,9 @@ function fn_PieceTraceView() {
                 setbtnELT3(prevState => ({ ...prevState, value: dt3.prod_result }));
                 if (btnELT3 === dt34[i].stt_col_pass_result ||
                   btnELT3 === "OK" || btnELT3 === "PASS") {
-                  setbtnELT3Color("#059212");
+                  setbtnELT3Color("green");
                 } else {
-                  setbtnELT3Color("#BA0900");
+                  setbtnELT3Color("red");
                 }
                 setbtnELT3(prevState => ({ ...prevState, visible: true }));
                 settxtELTTime3(prevState => ({ ...prevState, value: dt3.inspect_date }));
@@ -1769,7 +1768,7 @@ function fn_PieceTraceView() {
                   if (_intCheckPass === 0) {
                     setbtnELT3(prevState => ({ ...prevState, value: "NG" }));
                     settxtELTTime3(prevState => ({ ...prevState, value: FINAL_GATE_SPECIAL_MESSAGE }));
-                    setbtnELT3Color("#BA0900");
+                    setbtnELT3Color("red");
                   }
                 }
               }
@@ -1786,9 +1785,9 @@ function fn_PieceTraceView() {
                 setbtnELT4(prevState => ({ ...prevState, value: dt4.prod_result }));
                 if (btnELT4 === dt34[i].stt_col_pass_result ||
                   btnELT4 === "OK" || btnELT4 === "PASS") {
-                  setbtnELT4Color("#059212");
+                  setbtnELT4Color("green");
                 } else {
-                  setbtnELT4Color("#BA0900");
+                  setbtnELT4Color("red");
                 }
                 setbtnELT4(prevState => ({ ...prevState, visible: true }));
                 settxtELTTime4(prevState => ({ ...prevState, value: dt4.inspect_date }));
@@ -1817,7 +1816,7 @@ function fn_PieceTraceView() {
                   if (_intCheckPass === 0) {
                     setbtnELT4(prevState => ({ ...prevState, value: "NG" }));
                     settxtELTTime4(prevState => ({ ...prevState, value: FINAL_GATE_SPECIAL_MESSAGE }));
-                    setbtnELT4Color("#BA0900");
+                    setbtnELT4Color("red");
                   }
                 }
               }
@@ -1834,9 +1833,9 @@ function fn_PieceTraceView() {
                 setbtnELT5(prevState => ({ ...prevState, value: dt5.prod_result }));
                 if (btnELT5 === dt34[i].stt_col_pass_result ||
                   btnELT5 === "OK" || btnELT5 === "PASS") {
-                  setbtnELT5Color("#059212");
+                  setbtnELT5Color("green");
                 } else {
-                  setbtnELT5Color("#BA0900");
+                  setbtnELT5Color("red");
                 }
                 setbtnELT5(prevState => ({ ...prevState, visible: true }));
                 settxtELTTime5(prevState => ({ ...prevState, value: dt5.inspect_date }));
@@ -1865,7 +1864,7 @@ function fn_PieceTraceView() {
                   if (_intCheckPass === 0) {
                     setbtnELT5(prevState => ({ ...prevState, value: "NG" }));
                     settxtELTTime5(prevState => ({ ...prevState, value: FINAL_GATE_SPECIAL_MESSAGE }));
-                    setbtnELT5Color("#BA0900");
+                    setbtnELT5Color("red");
                   }
                 }
               }
@@ -1882,9 +1881,9 @@ function fn_PieceTraceView() {
                 setbtnELT6(prevState => ({ ...prevState, value: dt6.prod_result }));
                 if (btnELT6 === dt34[i].stt_col_pass_result ||
                   btnELT6 === "OK" || btnELT6 === "PASS") {
-                  setbtnELT6Color("#059212");
+                  setbtnELT6Color("green");
                 } else {
-                  setbtnELT6Color("#BA0900");
+                  setbtnELT6Color("red");
                 }
                 setbtnELT6(prevState => ({ ...prevState, visible: true }));
                 settxtELTTime6(prevState => ({ ...prevState, value: dt6.inspect_date }));
@@ -1913,7 +1912,7 @@ function fn_PieceTraceView() {
                   if (_intCheckPass === 0) {
                     setbtnELT6(prevState => ({ ...prevState, value: "NG" }));
                     settxtELTTime6(prevState => ({ ...prevState, value: FINAL_GATE_SPECIAL_MESSAGE }));
-                    setbtnELT6Color("#BA0900");
+                    setbtnELT6Color("red");
                   }
                 }
               }
@@ -1931,9 +1930,9 @@ function fn_PieceTraceView() {
                 setbtnELT7(prevState => ({ ...prevState, value: dt7.prod_result }));
                 if (btnELT7 === dt34[i].stt_col_pass_result ||
                   btnELT7 === "OK" || btnELT7 === "PASS") {
-                  setbtnELT7Color("#059212");
+                  setbtnELT7Color("green");
                 } else {
-                  setbtnELT7Color("#BA0900");
+                  setbtnELT7Color("red");
                 }
                 setbtnELT7(prevState => ({ ...prevState, visible: true }));
                 settxtELTTime7(prevState => ({ ...prevState, value: dt7.inspect_date }));
@@ -1962,7 +1961,7 @@ function fn_PieceTraceView() {
                   if (_intCheckPass === 0) {
                     setbtnELT7(prevState => ({ ...prevState, value: "NG" }));
                     settxtELTTime7(prevState => ({ ...prevState, value: FINAL_GATE_SPECIAL_MESSAGE }));
-                    setbtnELT7Color("#BA0900");
+                    setbtnELT7Color("red");
                   }
                 }
               }
@@ -1989,9 +1988,9 @@ function fn_PieceTraceView() {
           dt35 = dt35[0];
           setbtnXRAY_F(dt35.xray_result);
           if (btnXRAY_F === "NG") {
-            setbtnXRAY_FColor("#BA0900");
+            setbtnXRAY_FColor("red");
           } else {
-            setbtnXRAY_FColor("#059212");
+            setbtnXRAY_FColor("green");
           }
           settxtXRAYTime_F(dt35.xray_date);
           settxtXRAYCnt_F(dt35.xray_count);
@@ -2015,9 +2014,9 @@ function fn_PieceTraceView() {
           dt36 = dt36[0];
           setbtnXRAY_B(dt36.xray_result);
           if (btnXRAY_B === "NG" || btnXRAY_B === "FAIL") {
-            setbtnXRAY_BColor("#BA0900");
+            setbtnXRAY_BColor("red");
           } else {
-            setbtnXRAY_BColor("#059212");
+            setbtnXRAY_BColor("green");
           }
           settxtXRAYTime_B(dt36.xray_date);
           settxtXRAYCnt_B(dt36.xray_count);
@@ -2044,9 +2043,9 @@ function fn_PieceTraceView() {
           setlblBarcodeTitle(prevState => ({ ...prevState, visible: true }));
           setbtnBarcodeGrade(prevState => ({ ...prevState, visible: true, value: dt.barcode_grade }));
           if ("A,B,C".includes(btnBarcodeGrade)) {
-            setbtnBarcodeGradeColor("#059212");
+            setbtnBarcodeGradeColor("green");
           } else {
-            setbtnBarcodeGradeColor("#BA0900");
+            setbtnBarcodeGradeColor("red");
           }
           settxtBarcodeGradeTime(prevState => ({ ...prevState, visible: true, value: dt.inspect_date }));
         }
@@ -2094,11 +2093,11 @@ function fn_PieceTraceView() {
       if (strPlasmaResult.toUpperCase() === "OK" ||
         strPlasmaResult.toUpperCase() === "PASS" ||
         strPlasmaResult.toUpperCase() === "GOOD") {
-        setbtnScanPackColor("#059212");
-        setlblScanPackRemarkColor("#059212");
+        setbtnScanPackColor("green");
+        setlblScanPackRemarkColor("green");
       } else if (strPlasmaResult === "NG" || strPlasmaResult === "FAIL") {
-        setbtnScanPackColor("#BA0900");
-        setlblScanPackRemarkColor("#BA0900");
+        setbtnScanPackColor("red");
+        setlblScanPackRemarkColor("red");
       }
     }
 
@@ -2135,9 +2134,9 @@ function fn_PieceTraceView() {
             sethfAOMLeafNo(dtData[0].LEAF_NO);
             sethfAOMPcsNo(dtData[0].PCS_NO);
             if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-              setbtnAOMEFPCColor("#059212");
+              setbtnAOMEFPCColor("green");
             } else {
-              setbtnAOMEFPCColor("#BA0900");
+              setbtnAOMEFPCColor("red");
             }
           }
         }
@@ -2166,10 +2165,10 @@ function fn_PieceTraceView() {
             sethfAOMLeafNo(dtData.LEAF_NO);
             sethfAOMPcsNo(dtData.PCS_NO);
             if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-              setbtnAOMEFPCColor("#059212");
+              setbtnAOMEFPCColor("green");
             } else {
               setbtnAOMEFPC(prevState => ({ ...prevState, disabled: false }));
-              setbtnAOMEFPCColor("#BA0900");
+              setbtnAOMEFPCColor("red");
             }
           }
         }
@@ -2204,10 +2203,10 @@ function fn_PieceTraceView() {
             sethfAOILeafNo(dtData.LEAF_NO);
             sethfAOIPcsNo(dtData.PCS_NO);
             if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-              setbtnAOIEFPCColor("#059212");
+              setbtnAOIEFPCColor("green");
             } else {
               setbtnAOIEFPC(prevState => ({ ...prevState, disabled: false }));
-              setbtnAOIEFPCColor("#BA0900");
+              setbtnAOIEFPCColor("red");
             }
           }
         }
@@ -2235,10 +2234,10 @@ function fn_PieceTraceView() {
             sethfAOILeafNo(dtData.LEAF_NO);
             sethfAOIPcsNo(dtData.PCS_NO);
             if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-              setbtnAOIEFPCColor("#059212");
+              setbtnAOIEFPCColor("green");
             } else {
               setbtnAOIEFPC(prevState => ({ ...prevState, disabled: false }));
-              setbtnAOIEFPCColor("#BA0900");
+              setbtnAOIEFPCColor("red");
             }
           }
         }
@@ -2271,9 +2270,9 @@ function fn_PieceTraceView() {
 
         setbtnOST(prevState => ({ ...prevState, disabled: false }));
         if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-          setbtnOSTColor("#059212");
+          setbtnOSTColor("green");
         } else {
-          setbtnOSTColor("#BA0900");
+          setbtnOSTColor("red");
         }
       }
       if (dt2.back_sheet_no !== "" && btnOST === "") {
@@ -2297,9 +2296,9 @@ function fn_PieceTraceView() {
 
           setbtnOST(prevState => ({ ...prevState, disabled: false }));
           if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-            setbtnOSTColor("#059212");
+            setbtnOSTColor("green");
           } else {
-            setbtnOSTColor("#BA0900");
+            setbtnOSTColor("red");
           }
         }
       }
@@ -2326,9 +2325,9 @@ function fn_PieceTraceView() {
         settxtAVICntF(dtData.PCS_NO);
         setbtnAVIF(prevState => ({ ...prevState, disabled: false }));
         if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-          setbtnAVIFColor("#059212");
+          setbtnAVIFColor("green");
         } else {
-          setbtnAVIFColor("#BA0900");
+          setbtnAVIFColor("red");
         }
       }
     }
@@ -2354,9 +2353,9 @@ function fn_PieceTraceView() {
         settxtAVICntB(dtData.PCS_NO);
         setbtnAVIB(prevState => ({ ...prevState, disabled: false }));
         if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-          setbtnAVIBColor("#059212");
+          setbtnAVIBColor("green");
         } else if (StrResult !== "") {
-          setbtnAVIBColor("#BA0900");
+          setbtnAVIBColor("red");
         }
       }
     }
@@ -2383,9 +2382,9 @@ function fn_PieceTraceView() {
           settxtAVIMarkCntF(dtData.PCS_NO);
           setbtnAVIMarkF(prevState => ({ ...prevState, disabled: false }));
           if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-            setbtnAVIMarkFColor("#059212");
+            setbtnAVIMarkFColor("green");
           } else if (StrResult !== "") {
-            setbtnAVIMarkFColor("#BA0900");
+            setbtnAVIMarkFColor("red");
           }
         }
       }
@@ -2413,9 +2412,9 @@ function fn_PieceTraceView() {
           settxtAVIMarkCntB(dtData.PCS_NO);
           setbtnAVIMarkB(prevState => ({ ...prevState, disabled: false }));
           if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-            setbtnAVIMarkBColor("#059212");
+            setbtnAVIMarkBColor("green");
           } else {
-            setbtnAVIMarkBColor("#BA0900");
+            setbtnAVIMarkBColor("red");
           }
         }
       }
@@ -2441,9 +2440,9 @@ function fn_PieceTraceView() {
         settxtReflowCntF(dtData.reflow_count);
         setbtnReflowF(prevState => ({ ...prevState, disabled: false }));
         if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-          setbtnReflowFColor("#059212");
+          setbtnReflowFColor("green");
         } else {
-          setbtnReflowFColor("#BA0900");
+          setbtnReflowFColor("red");
         }
       }
     }
@@ -2468,9 +2467,9 @@ function fn_PieceTraceView() {
         settxtReflowCntB(dtData.reflow_count);
         setbtnReflowB(prevState => ({ ...prevState, disabled: false }));
         if (StrResult === "GOOD" || StrResult === "OK" || StrResult === "PASS") {
-          setbtnReflowBColor("#059212");
+          setbtnReflowBColor("green");
         } else {
-          setbtnReflowBColor("#BA0900");
+          setbtnReflowBColor("red");
         }
       }
     }

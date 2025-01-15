@@ -59,15 +59,14 @@ function ScanSheetInspect() {
                     <TableContainer
                         component={Card}
                         style={{
-                            width: "412px",
-                            margin: "3px",
+                            width: "415px",
                         }}
                     >
                         <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={3} align="center">
-                                    {menuName ? menuName : "P1 Confirm Process"}
+                                        {menuName ? menuName : "Sheet Inspection"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -106,7 +105,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell align="right">   
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -150,7 +149,7 @@ function ScanSheetInspect() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell align="right">   
+                                    <TableCell align="right">
                                         <Typography>Roll No :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -350,12 +349,11 @@ function ScanSheetInspect() {
                         <Paper
                             elevation={3}
                             style={{
-                                width: "414px",
-                                margin: "auto",
+                                width: "416px",
+                                // margin: "auto",
                                 height: "50px",
                                 textAlign: "center",
                                 marginTop: "10px",
-                                //marginLeft: "3px",
                                 backgroundColor: "green",
                             }}
                         >
@@ -372,12 +370,11 @@ function ScanSheetInspect() {
                         <Paper
                             elevation={3}
                             style={{
-                                width: "414px",
-                                margin: "auto",
-                                height: "50px",
+                                width: "416px",
+                                // margin: "auto",
+                                height: "100px",
                                 textAlign: "center",
                                 marginTop: "10px",
-                                // marginLeft: "3px",
                                 backgroundColor: "red",
                             }}
                         >
@@ -387,9 +384,15 @@ function ScanSheetInspect() {
                             >
                                 NG
                             </Typography>
+                            <Typography
+                                variant="h4"
+                                style={{ paddingTop: "5px", color: "#fff" }}
+                            >
+                                {labellog}
+                            </Typography>
                         </Paper>
                     )}
-                    {visiblelog && (
+                    {/* {visiblelog && (
                         <Paper
                             elevation={3}
                             className="Card-lblLog"
@@ -401,49 +404,52 @@ function ScanSheetInspect() {
                         >
                             {labellog}
                         </Paper>
-                    )}
+                    )} */}
 
                     {pnlSerial && (
-                        <Paper
-                            elevation={3}
+                    <Paper
+                        elevation={3}
+                        style={{
+                            width: "415px",
+                            margin: "auto",
+                            height: "40px",
+                            textAlign: "center",
+                            marginTop: "1px",
+                            // marginLeft: "3px",
+                        }}
+                    >
+                        <AntButton
+                            className="ButtonDelete"
+                            type="primary"
                             style={{
-                                width: "410px",
-                                margin: "auto",
-                                height: "40px",
-                                textAlign: "center",
-                                marginTop: "1px",
-                                // marginLeft: "3px",
+                                marginTop: "5px",
+                                marginRight: "40px",
                             }}
+                            onClick={btDelShtClick}
                         >
-                            <Button
-                                size="small"
-                                style={{
-                                    marginTop: "5px",
-                                    marginRight: "50px",
-                                }}
-                                onClick={btDelShtClick}
-                            >
-                                Delete Sheet
-                            </Button>
-                            <Button
-                                size="small"
-                                style={{
-                                    marginTop: "5px",
-                                    marginRight: "50px",
-                                }}
-                                onClick={btDelLotClick}
-                            >
-                                Delete Lot
-                            </Button>
-                            <Button
-                                size="small"
-                                style={{ marginTop: "5px" }}
-                                ref={btnCancel}
-                                onClick={btCancelClick}
-                            >
-                                Cancel
-                            </Button>
-                        </Paper>
+                            Delete Sheet
+                        </AntButton>
+                        <AntButton
+                            className="ButtonDelete"
+                            type="primary"
+                            style={{
+                                marginTop: "5px",
+                                marginRight: "40px",
+                            }}
+                            onClick={btDelLotClick}
+                        >
+                            Delete Lot
+                        </AntButton>
+                        <AntButton
+                            className="ButtonCancel"
+                            type="primary"
+                            style={{ marginTop: "5px", width: "100px" }}
+                            ref={btnCancel}
+                            onClick={btCancelClick}
+                        >
+                            Cancel
+                        </AntButton>
+                    </Paper>
                     )}
                 </Box>
 
@@ -465,7 +471,7 @@ function ScanSheetInspect() {
                                 columns={columns}
                                 dataSource={gvScanData}
                                 rowKey={(record) => record.seq}
-                                style={{ width: '100%', marginTop: "2px" }}
+                                style={{ width: '100%' }}
                                 pagination={false}
                                 size="small"
                                 bordered

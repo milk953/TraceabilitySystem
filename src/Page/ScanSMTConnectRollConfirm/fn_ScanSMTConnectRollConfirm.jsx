@@ -187,6 +187,11 @@ function fn_ScanSMTConnectRollConfirm() {
       }
       setShowSheetNo(txtSerial[0]);
       if (txtSerial !== "" && CheckValue !== false) {
+        setLblPnlLog((prevState) => ({
+          ...prevState,
+          value: ``,
+          visble: false,
+        }));
         await setSerialData();
         const newValues = [];
         setTxtSerial(newValues);

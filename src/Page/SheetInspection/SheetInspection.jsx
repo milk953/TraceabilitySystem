@@ -27,6 +27,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { Button, Avatar, Table as AntTable } from "antd";
+import { SearchOutlined} from "@ant-design/icons";
 import "../Common/StyleCommon.css";
 import Pageimg from "/src/assets/1.jpg";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -35,8 +36,10 @@ import excel from "/src/assets/excel.png";
 import "../SheetInspection/SheetInspection.css";
 import "../LotTraceView/ViewLot.css";
 import { fn_SheetInspection } from "./fn_SheetInspection";
+import { fn_Homepage } from "../Homepage/fn_Homepage";
 
 function SheetInspection() {
+    const { menuName } = fn_Homepage(); 
     const {
         txtProductFrom, settxtProductFrom, txtProductTo, settxtProductTo, txtLotFrom, settxtLotFrom, txtLotTo, settxtLotTo, txtRollFrom, settxtRollFrom,
         txtRollTo, settxtRollTo, txtInvFrom, settxtInvFrom, txtInvTo, settxtInvTo, txtDateFrom, settxtDateFrom, txtDateTo, settxtDateTo, selectcbx,
@@ -51,32 +54,28 @@ function SheetInspection() {
                 className="Card-Common"
                 sx={{ display: "flex" }}
             >
-                <Box justifyContent="space-between"
-                // sx={{
-                //     marginLeft: "-5px",
-                //     marginTop: "-10px",
-                // }}
-                >
+                <Box justifyContent="space-between">
                     <TableContainer
-                        component={Paper}
+                        component={Card}
                         style={{
                             width: "800px",
-                            margin: "4px",
+                            // margin: "4px",
                         }}
                     >
-                        <Table className="TbSheetInspection">
+                        <Table className="Header_Left">
                             <TableHead>
                                 <TableRow>
                                     <TableCell colSpan={4} align="center">
-                                        <Typography variant="h6">
+                                        {/* <Typography variant="h6">
                                             Sheet Inspection Report
-                                        </Typography>
+                                        </Typography> */}
+                                        {menuName ? menuName : "Sheet Inspection Report"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Product :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -119,7 +118,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Lot No :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -162,7 +161,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Roll No. :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -205,7 +204,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Invoice No :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -239,19 +238,19 @@ function SheetInspection() {
                                             onChange={(e) => {
                                                 settxtInvTo(e.target.value.toUpperCase());
                                             }}
-                                            // onKeyDown={(e) => {
-                                            //     setTimeout(() => {
-                                            //         const element = document.getElementById("datefrom");
-                                            //         if (element) {
-                                            //             element.focus();
-                                            //         }
-                                            //     }, 0);
-                                            // }}
+                                        // onKeyDown={(e) => {
+                                        //     setTimeout(() => {
+                                        //         const element = document.getElementById("datefrom");
+                                        //         if (element) {
+                                        //             element.focus();
+                                        //         }
+                                        //     }, 0);
+                                        // }}
                                         />
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Packing Date :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -330,11 +329,11 @@ function SheetInspection() {
                                                             id="dateto"
                                                             size="small"
                                                             style={{ width: '120px' }}
-                                                            // onKeyDown={(e) => {
-                                                            //     if (e.key === "Enter") {
-                                                            //         document.getElementById("xout").focus();
-                                                            //     }
-                                                            // }}
+                                                        // onKeyDown={(e) => {
+                                                        //     if (e.key === "Enter") {
+                                                        //         document.getElementById("xout").focus();
+                                                        //     }
+                                                        // }}
                                                         />
                                                     )}
                                                 />
@@ -343,7 +342,7 @@ function SheetInspection() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <Typography>Report Type :</Typography>
                                     </TableCell>
                                     <TableCell>
@@ -391,11 +390,20 @@ function SheetInspection() {
                                     <TableCell></TableCell>
                                     <TableCell>
                                         <div style={{ display: "flex", alignItems: "center" }}>
-                                            <Button
+                                            {/* <Button
                                                 className="BtExcute"
                                                 onClick={btnExecute_Click}
                                             >
                                                 Execute
+                                            </Button> */}
+                                            <Button
+                                                type="primary"
+                                                className="RetriveBtn"
+                                                style={{height: "32px"}}
+                                                icon={<SearchOutlined />}
+                                                onClick={btnExecute_Click}
+                                            >
+                                                Search
                                             </Button>
                                             <Button
                                                 style={{ marginLeft: "20px" }}
@@ -416,7 +424,7 @@ function SheetInspection() {
 
                         <AntTable
                             dataSource={gvDataXOut.value}
-                            style={{ width: '1480px', marginLeft: "5px" }}
+                            style={{ width: '1480px'}}
                             columns={columnsXOutData}
                             rowKey={(record) => record.lot_no}
                             className="tableGvResultViewLot"
@@ -433,7 +441,7 @@ function SheetInspection() {
 
                         <AntTable
                             dataSource={gvDataSheet.value}
-                            style={{ width: '1400px', marginLeft: "5px" }}
+                            style={{ width: '1400px' }}
                             columns={columnsSheetNoData}
                             rowKey={(record) => record.seq}
                             className="tableGvResultViewLot"

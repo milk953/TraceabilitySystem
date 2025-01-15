@@ -264,7 +264,7 @@ function ScanSMTSerialShtCopy() {
               {lblErrorState && (
                 <Paper className="Card-lblLog">{lblError}</Paper>
               )}
-              
+              &nbsp;
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
                   <TableHead

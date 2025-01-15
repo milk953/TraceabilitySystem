@@ -62,7 +62,7 @@ function ScanSMTPlasmaStopStart() {
                                         {/* <Typography variant="h6">
                                             Stop/Start Record Time
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "Stop/Start Record Time"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -213,7 +213,6 @@ function ScanSMTPlasmaStopStart() {
                         elevation={2}
                         style={{
                             width: "502px",
-                            margin: "auto",
                             height: "40px",
                             display: 'flex',
                             alignItems: 'center',
@@ -226,7 +225,7 @@ function ScanSMTPlasmaStopStart() {
                         </Typography>
                         <Typography
                             style={{
-                                fontSize: "18px",
+                                fontSize: "16px",
                                 marginLeft: "6px",
                                 color: "#660033",
                             }}
@@ -240,8 +239,7 @@ function ScanSMTPlasmaStopStart() {
                             elevation={3}
                             className="Card-lblLog"
                             style={{
-                                width: "505px",
-                                marginLeft: "25px",
+                                width: "503px",
                             }}
                         >
                             {lblLog}
@@ -252,13 +250,11 @@ function ScanSMTPlasmaStopStart() {
                         <Card
                             component={Paper}
                             style={{
-                                width: "504px",
+                                width: "503px",
                                 height: "80px",
-                                margin: 'auto',
                                 textAlign: "center",
                                 background: lblStatusColor,
-                                paddingTop: "9px",
-                                marginTop: "1px",
+                                marginTop: "10px"
                             }}
                         >
                             <Typography

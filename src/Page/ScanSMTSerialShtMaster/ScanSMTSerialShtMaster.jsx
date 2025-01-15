@@ -180,7 +180,7 @@ function ScanSMTSerialShtMaster() {
                       fullWidth
                       value={txtLotRef}
                       onChange={(e) => {
-                        settxtLotRef(e.target.value);
+                        settxtLotRef(e.target.value.trim().toUpperCase());
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -200,9 +200,9 @@ function ScanSMTSerialShtMaster() {
                       size="small"
                       inputRef={(el) => (inputMasterCode.current = el)}
                       fullWidth
-                      value={txtMasterCode.trim()}
+                      value={txtMasterCode}
                       onChange={(e) => {
-                        settxtMasterCode(e.target.value);
+                        settxtMasterCode(e.target.value.trim().toUpperCase());
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {

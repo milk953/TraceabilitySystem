@@ -120,7 +120,7 @@ function ScanSMTConfirmMOTP1() {
                   <TableCell align="right">
                     <Typography>Product :</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell colSpan={2}>
                     <Autocomplete
                       className="Select_dropDown"
                       disabled={selProduct.disabled}
@@ -179,6 +179,7 @@ function ScanSMTConfirmMOTP1() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
+                  border: "1px solid #d9d9d9"
                 }}
               >
                 <Table>

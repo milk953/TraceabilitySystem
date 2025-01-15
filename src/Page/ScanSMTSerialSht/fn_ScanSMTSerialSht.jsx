@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
 import Swal from 'sweetalert2';
+import { useLoading } from "../../loading/fn_loading";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTSerialSht() {
   const [txtLotNo, settxtLotNo] = useState("");
@@ -130,12 +132,15 @@ function fn_ScanSMTSerialSht() {
   const inputSideBack = useRef([]);
   const inputgvSerial = useRef([]);
 
-  const AUTO_SCAN_CHECK_FLG = import.meta.env.VITE_AUTO_SCAN_CHECK_FLG;
-  const CONNECT_SERIAL_ERROR = import.meta.env.VITE_CONNECT_SERIAL_ERROR;
-  const CONNECT_SERIAL_NOT_FOUND = import.meta.env.VITE_CONNECT_SERIAL_NOT_FOUND;
+  const { ConfigData } = DataConfig();
+  const { showLoading, hideLoading } = useLoading();
+
+  const AUTO_SCAN_CHECK_FLG = ConfigData.AUTO_SCAN_CHECK_FLG;
+  const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
+  const CONNECT_SERIAL_NOT_FOUND = ConfigData.CONNECT_SERIAL_NOT_FOUND;
   const ROLL_SHT_ROLL_START_DIGIT = 1;
   const ROLL_SHT_ROLL_LENGTH = 12;
-  const plantCode = import.meta.env.VITE_FAC;
+  const plantCode = ConfigData.FACTORY;
 
   useEffect(() => {
     PageLoad();
@@ -429,21 +434,20 @@ function fn_ScanSMTSerialSht() {
   };
 
   const handleChangeSerial = (index, e) => {
-    const trimmedValue = e.target.value.trim().toUpperCase();
-    const newValue = [...txtgvSerial];
-    newValue[index] = trimmedValue;
-    settxtgvSerial(newValue);
+    const newData = [...txtgvSerial];
+    newData[index] = e.target.value.trim().toUpperCase();
+    settxtgvSerial(newData);
   };
 
   const handleChangegvBackSide = (index, e) => {
     const newValues = [...txtSideBack];
-    newValues[index] = e.target.value;
+    newValues[index] = e.target.value.trim().toUpperCase();
     settxtSideBack(newValues);
   };
 
   const handleChangegvFontSide = (index, e) => {
     const newValues = [...txtSideFront];
-    newValues[index] = e.target.value;
+    newValues[index] = e.target.value.trim().toUpperCase();
     settxtSideFront(newValues);
   };
 
@@ -460,8 +464,6 @@ function fn_ScanSMTSerialSht() {
   const btnSaveClick = async () => {
     if (hfMode === "SERIAL") {
       await setSerialData();
-      settxtgvSerial("");
-      settxtSideBack("");
     }
   };
 
@@ -550,6 +552,8 @@ function fn_ScanSMTSerialSht() {
       }
     }
 
+    settxtSideBack("");
+    settxtgvSerial("");
     setgvSerialData(dtData);
     console.log("gvserialdata:", dtData)
     return dtData;
@@ -564,11 +568,13 @@ function fn_ScanSMTSerialSht() {
       });
     }
 
+    settxtSideBack("");
     setGvBackSide(dtData1);
     setpnlBackSide(true);
   };
 
   const setSerialData = async () => {
+    showLoading('กำลังบันทึก กรุณารอสักครู่')
     const dtSerial = await getInputSerial();
     let _strLot = "";
     let _strLotRef = "";
@@ -583,12 +589,38 @@ function fn_ScanSMTSerialSht() {
     sethfWeekCode("");
 
     let _bolError = false;
+    setpnlLog(false);
+
+    const CheckFontSideBackSide = dtSerial.every(item => item.BACK_SIDE === "" || item.BACK_SIDE === undefined || item.FRONT_SIDE === "" || item.FRONT_SIDE === undefined);
+    if (dtSerial.length === 0 || CheckFontSideBackSide) {
+      hideLoading();
+      setlblLog("Please input Sheet Side No.");
+      setpnlLog(true);
+      setlblResult("");
+      setgvScanResult(false);
+      setgvScanData([]);
+      setTimeout(() => {
+        inputSideBack.current[0].focus();
+      }, 300);
+      return;
+    }
+
+    const allSerialEmpty = dtSerial.every(item => item.SERIAL === ""||item.SERIAL === undefined);
+    if (allSerialEmpty) {
+      hideLoading();
+      setpnlLog(true);
+      setlblLog("Please Input Serial No.");
+      setgvScanResult(false);
+      setgvScanData([]);
+      setTimeout(() => {
+        inputgvSerial.current[1].focus();
+      }, 300);
+    }
+
     const _strLotData = txtLotNo.toUpperCase().split(";");
     _strLot = _strLotData[0];
     const _strLotRefData = txtLotRef.toUpperCase().split(";");
     _strLotRef = _strLotRefData[0];
-
-    setpnlLog(false);
 
     if (txtLotNo !== "" && dtSerial.length > 0) {
       if (hfCheckWeekCode === "Y") {
@@ -609,13 +641,13 @@ function fn_ScanSMTSerialSht() {
         _strShtNoBack = dtSerial[i].BACK_SIDE;
         _strShtNoFront = dtSerial[i].FRONT_SIDE;
 
-        if (_strShtNoFront === undefined) {
-          setpnlLog(true);
-          setlblLog("Please input Sheet Side");
-          setTimeout(() => {
-            inputSideBack.current[0].focus();
-          }, 200);
-        }
+        // if (_strShtNoFront === undefined) {
+        //   setpnlLog(true);
+        //   setlblLog("Please input Sheet Side");
+        //   setTimeout(() => {
+        //     inputSideBack.current[0].focus();
+        //   }, 200);
+        // }
 
         if (hfSheetType === "D" && _strShtNoBack === _strShtNoFront) {
           _strScanResultAll = "NG";
@@ -623,7 +655,7 @@ function fn_ScanSMTSerialSht() {
           _bolError = true;
         }
 
-        if (hfCheckPrdSht === "Y" && dtSerial[i].SEQ === 1 && !_bolError) {
+        if (hfCheckPrdSht === "Y" && parseInt(dtSerial[i].SEQ) === 1 && !_bolError) {
           if (hfCheckPrdAbbr !== _strShtNoBack.substring(parseInt(hfCheckPrdShtStart) - 1, parseInt(hfCheckPrdShtEnd)
           )) {
             _strScanResultAll = "NG";
@@ -638,7 +670,7 @@ function fn_ScanSMTSerialSht() {
           }
         }
 
-        if (hfCheckLotSht === "Y" && dtSerial[i].SEQ === 1 && !_bolError) {
+        if (hfCheckLotSht === "Y" && parseInt(dtSerial[i].SEQ) === 1 && !_bolError) {
           if (_strLotRef !== _strShtNoBack.substring(parseInt(hfCheckLotShtStart) - 1, parseInt(hfCheckLotShtEnd)
           )) {
             _strScanResultAll = "NG";
@@ -1089,7 +1121,7 @@ function fn_ScanSMTSerialSht() {
                     strUserID: hfUserStation,
                     strOperator: "SerialShtPcs",
                     strPlantCode: plantCode,
-                    strProgram : 'ScanSMTSerialSht'
+                    strProgram: 'ScanSMTSerialSht'
                   })
                     .then((res) => {
                       _strUpdateError = res.data.p_error;
@@ -1121,7 +1153,7 @@ function fn_ScanSMTSerialSht() {
               USER_ID: hfUserID,
               REMARK: dtSerial[i].REMARK,
               LOT: _strLot,
-              strProgram : 'ScanSMTSerialSht'
+              strProgram: 'ScanSMTSerialSht'
             })
               .then((res) => {
                 _strUpdateError = res.data.p_error;
@@ -1180,6 +1212,7 @@ function fn_ScanSMTSerialSht() {
       await getInitialSerial();
 
     } else {
+      setlblLog(true);
       setlblLog("Please input Sheet Side No. !!! ");
       SetMode("SERIAL_ERROR");
     }
@@ -1200,6 +1233,7 @@ function fn_ScanSMTSerialSht() {
     } else {
       inputSideBack.current[0].focus();
     }
+    hideLoading();
   };
 
   const getInputSerial = async () => {

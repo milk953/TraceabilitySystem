@@ -69,7 +69,7 @@ function ScanSMTSerialRecordTime() {
                                         {/* <Typography variant="h6">
                                             Serial Record Time
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "Serial Record Time"}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -129,7 +129,7 @@ function ScanSMTSerialRecordTime() {
                                                 style={{
                                                     backgroundColor: istxtMachineDisabled ? "#e0e0e0" : "inherit",
                                                 }}
-                                                value={txtMachine.toUpperCase()}
+                                                value={txtMachine.trim().toUpperCase()}
                                                 onChange={(e) => {
                                                     const value = e.target.value;
                                                     if (value.length <= 25 && !/[ก-๙]/.test(value)) {
@@ -170,7 +170,7 @@ function ScanSMTSerialRecordTime() {
                                             style={{
                                                 backgroundColor: istxtOpDisabled ? "#e0e0e0" : "inherit",
                                             }}
-                                            value={txtOperator}
+                                            value={txtOperator.trim().toUpperCase()}
                                             onChange={(e) => {
                                                 const value = e.target.value;
                                                 if (value.length <= 100 && !/[ก-๙]/.test(value)) {
@@ -494,7 +494,7 @@ function ScanSMTSerialRecordTime() {
                         </Typography>
                         <Typography
                             style={{
-                                fontSize: "18px",
+                                fontSize: "16px",
                                 paddingRight: "150px",
                             }}
                         >
@@ -507,8 +507,8 @@ function ScanSMTSerialRecordTime() {
                         </Typography>
                         <Typography
                             style={{
-                                fontSize: "18px",
-                                color: "green"
+                                fontSize: "16px",
+                                //color: "green"
                             }}
                         >
                             {lblLotTotal}

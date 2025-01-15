@@ -29,6 +29,8 @@ function fn_Change_Serial() {
     visble: false,
     style: {},
   });
+  const fc_txtSerialOld = useRef([]);
+  const fc_txtSerialNew = useRef([]);
   const [txtSerialNoOld, setTxtSerialNoOld] = useState("");
   const [txtSerialNoNew, setTxtSerialNoNew] = useState("");
   const [hfSerialCount, setHfSerialCount] = useState("");
@@ -341,7 +343,10 @@ function fn_Change_Serial() {
     }));
     setHfSerialCount(DatatxtTotalPcs);
     if (dtData.length > 0) {
-      fnSetFocus("gvSerial_txtSerialNoOld_0");
+      // fnSetFocus("gvSerial_txtSerialNoOld_0");
+      setTimeout(() => {
+        fc_txtSerialOld.current[0].focus();
+      }, 300);
     }
 
     return 0;
@@ -400,7 +405,10 @@ function fn_Change_Serial() {
     // newValues[index] = event.target.value.trim();
     setTxtSerialNoOld(newValues);
     if (event.key === "Enter") {
-      fnSetFocus(`gvSerial_txtSerialNoOld_${index + 1}`);
+      // fnSetFocus(`gvSerial_txtSerialNoOld_${index + 1}`);
+      setTimeout(() => {
+        fc_txtSerialOld.current[0].focus();
+      }, 300);
     }
   };
   const handleSerialNewChange = async (index, event) => {
@@ -408,7 +416,10 @@ function fn_Change_Serial() {
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerialNoNew(newValues);
     if (event.key === "Enter") {
-      fnSetFocus(`gvSerial_txtSerialNoNew_${index + 1}`);
+      // fnSetFocus(`gvSerial_txtSerialNoNew_${index + 1}`);
+      setTimeout(() => {
+        fc_txtSerialNew.current[0].focus();
+      }, 300);
     }
   };
 
@@ -432,6 +443,8 @@ function fn_Change_Serial() {
     lblResult,
     gvNewSerial,
     fnSetFocus,
+    fc_txtSerialOld,
+    fc_txtSerialNew,
   };
 }
 

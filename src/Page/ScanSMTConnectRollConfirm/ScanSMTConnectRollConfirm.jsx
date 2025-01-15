@@ -51,7 +51,7 @@ function ScanSMTConnectRollConfirm() {
     lblRemark,
     showSheetNo,
   } = fn_ScanSMTConnectRollConfirm();
-   const { menuName } = fn_Homepage();
+  const { menuName } = fn_Homepage();
   return (
     <div>
       <Hearder />
@@ -61,11 +61,11 @@ function ScanSMTConnectRollConfirm() {
             <Grid item xs={10} md={4}>
               <Table className="Header_Left" component={Paper}>
                 <TableHead>
-                <TableRow>
-                  <TableCell colSpan={4} align="center">
-                  {menuName ? menuName : 'Confirm Roll Leaf'}
-                  </TableCell>
-                </TableRow>
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">
+                      {menuName ? menuName : "Confirm Roll Leaf"}
+                    </TableCell>
+                  </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
@@ -220,9 +220,7 @@ function ScanSMTConnectRollConfirm() {
                                 // ) {
                                 //   btnSave_Click();
                                 // }
-                                if (
-                                  e.key === "Enter" 
-                                ) {
+                                if (e.key === "Enter") {
                                   btnSave_Click();
                                 }
                               }}
@@ -242,7 +240,7 @@ function ScanSMTConnectRollConfirm() {
                       </Button>
                     </TableCell>
                   </TableRow> */}
-                      <TableRow>
+                  <TableRow>
                     <TableCell
                       colSpan={6}
                       style={{ textAlign: "center", verticalAlign: "middle" }}
@@ -277,7 +275,7 @@ function ScanSMTConnectRollConfirm() {
                 alignItems: "center",
               }}
             >
-              {gvScanResult.visble == false && (
+              {gvScanResult.visble === false && (
                 <>
                   <img
                     className="Img_GvResult"
@@ -287,34 +285,40 @@ function ScanSMTConnectRollConfirm() {
                 </>
               )}
 
-              {gvScanResult.visble == true && (
+              {gvScanResult.visble === true && (
                 <>
-                  {lblResult.value !== "" && (
-                    <Paper
-                      className="Card-lblResult"
-                      elevation={3}
-                      style={{
-                        background:
-                          lblResult.value === "OK" ? "green" : "red",
-
-                        display: gvScanResult,
-                      }}
+                  {/* {lblResult.value !== "" && (
+                    <div
+                      style={{ display: "flex", gap: "10px", width: "100%" }}
                     >
-                      <Typography
-                        variant="h4"
-                        style={{ paddingTop: "5px", color: "#fff" }}
+                      <Paper
+                        className="Card-lblResult"
+                        elevation={3}
+                        style={{
+                          background:
+                            lblResult.value === "OK" ? "green" : "red",
+                          display: gvScanResult.visble ? "" : "none",
+                        }}
                       >
-                        {lblResult.value}
-                      </Typography>
-                    </Paper>
+                        <Typography
+                          variant="h4"
+                          style={{ paddingTop: "5px", color: "#fff" }}
+                        >
+                          {lblResult.value}
+                        </Typography>
+                      </Paper>
+                    </div>
                   )}
                   {lblRemark !== "" && (
+                           <div
+                           style={{ display: "flex", gap: "10px", width: "100%" }}
+                         >
                     <Paper
                       className="Card-lblResult"
                       elevation={3}
                       style={{
                         background: lblRemark === "" ? "green" : "red",
-                        display: gvScanResult,
+                        display: gvScanResult.visble ? "" : "none",
                       }}
                     >
                       <Typography
@@ -324,6 +328,39 @@ function ScanSMTConnectRollConfirm() {
                         {lblRemark}
                       </Typography>
                     </Paper>
+                    </div>
+                  )} */}
+                  {(lblResult.value !== "" || lblRemark !== "") && (
+                    <div
+                      style={{ display: "flex", gap: "10px", width: "100%" }}
+                    >
+                      <Paper
+                        className="Card-lblResult-ScanSMTConnectRollConfirm"
+                        elevation={3}
+                        style={{
+                          background:
+                            lblResult.value === "OK" ? "green" : "red",
+                          display: gvScanResult.visble ? "" : "none",
+                        }}
+                      >
+                        {lblResult.value !== "" && (
+                          <Typography
+                            variant="h4"
+                            style={{ paddingTop: "5px", color: "#fff" }}
+                          >
+                            {lblResult.value}
+                          </Typography>
+                        )}
+                        {lblRemark !== "" && (
+                          <Typography
+                            variant="h4"
+                            style={{ paddingTop: "5px", color: "#fff" }}
+                          >
+                            {lblRemark}
+                          </Typography>
+                        )}
+                      </Paper>
+                    </div>
                   )}
 
                   <AntTable
@@ -333,7 +370,13 @@ function ScanSMTConnectRollConfirm() {
                     size="small"
                     bordered
                     className="tableGvResult"
-                    rowClassName={(record) => (record.scan_result === "NG" ? "row-red" : record.scan_result ===  "OK" ? "row-green" : "")}
+                    rowClassName={(record) =>
+                      record.scan_result === "NG"
+                        ? "row-red"
+                        : record.scan_result === "OK"
+                        ? "row-green"
+                        : ""
+                    }
                   />
                 </>
               )}

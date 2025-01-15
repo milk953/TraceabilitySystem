@@ -29,7 +29,7 @@ import Pageimg from "/src/assets/1.jpg";
 import Header from "../Header/Header";
 import "./PieceTraceView.css";
 import { fn_PieceTraceView } from "./fn_PieceTraceView";
-import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
+import { SearchOutlined, ClearOutlined, UndoOutlined } from "@ant-design/icons";
 
 function PieceTraceView() {
     const {
@@ -82,18 +82,18 @@ function PieceTraceView() {
                     <Typography sx={{ textAlign: 'center', color: 'red' }}>
                         {lblMessage}
                     </Typography>
-                    <div className="divTb">
+                    <div>
                         <Table className="TbViewTracePiece">
                             <TableBody>
                                 <TableRow>
-                                    <TableCell align="right" colSpan={4}>
+                                    <TableCell align="right">
                                         {/* <Typography>
                                             Piece No. :
                                         </Typography> */}
                                         <Button
                                             disabled
                                             colSpan={4}
-                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            style={{ color: "white", backgroundColor: "#31363F", width:"97%" }}
                                             type="primary"
                                             className="LableView"
                                             iconPosition={"end"}
@@ -106,8 +106,9 @@ function PieceTraceView() {
                                         <Input
                                             className="ViewInput"
                                             size="small"
+                                            placeholder="Please Input Piece No"
                                             ref={(el) => (inputPiece.current = el)}
-                                            style={{ width: "92%" }}
+                                            // style={{ width: "93%" }}
                                             value={txtSerialNo}
                                             onChange={(e) => {
                                                 settxtSerialNo(e.target.value);
@@ -122,7 +123,6 @@ function PieceTraceView() {
                                     <TableCell align="left">
                                         <Button
                                             type="primary"
-                                            //variant="contained"
                                             className="RetriveBtn"
                                             icon={<SearchOutlined />}
                                             onClick={btnRetrive_Click}
@@ -131,15 +131,13 @@ function PieceTraceView() {
                                         </Button>
                                         &nbsp;&nbsp;&nbsp;
                                         <Button
-                                            //variant="contained"
                                             type="primary"
                                             className="ClearBtn"
-                                            icon={<ClearOutlined />}
+                                            icon={<UndoOutlined />}
                                             style={{
                                                 backgroundColor: "#f5222d",
                                                 borderColor: "#f5222d",
                                             }}
-                                            color="error"
                                             onClick={btnClear_Click}
                                         >
                                             Clear
@@ -178,14 +176,14 @@ function PieceTraceView() {
                         <Table >
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell  style={{ padding: '4px' }}>
                                         {/* <Typography>
                                             Product :
                                         </Typography> */}
                                         <Button
                                             disabled
-                                            colSpan={4}
-                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            // colSpan={4}
+                                            style={{ color: "white", backgroundColor: "#31363F", width:"90%" }}
                                             type="primary"
                                             className="LableView"
                                             iconPosition={"end"}
@@ -215,7 +213,7 @@ function PieceTraceView() {
                                         <Button
                                             disabled
                                             colSpan={4}
-                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            style={{ color: "white", backgroundColor: "#31363F", width:"90%" }}
                                             type="primary"
                                             className="LableView"
                                             iconPosition={"end"}
@@ -241,7 +239,7 @@ function PieceTraceView() {
                                         <Button
                                             disabled
                                             colSpan={4}
-                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            style={{ color: "white", backgroundColor: "#31363F", width:"90%" }}
                                             type="primary"
                                             className="LableView"
                                             iconPosition={"end"}
@@ -265,7 +263,7 @@ function PieceTraceView() {
                                         <Button
                                             disabled
                                             colSpan={4}
-                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            style={{ color: "white", backgroundColor: "#31363F", width:"90%" }}
                                             type="primary"
                                             className="LableView"
                                             iconPosition={"end"}
@@ -291,7 +289,7 @@ function PieceTraceView() {
                                         <Button
                                             disabled
                                             colSpan={4}
-                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            style={{ color: "white", backgroundColor: "#31363F", width:"90%" }}
                                             type="primary"
                                             className="LableView"
                                             iconPosition={"end"}
@@ -321,7 +319,7 @@ function PieceTraceView() {
                                         <Button
                                             disabled
                                             colSpan={4}
-                                            style={{ color: "white", backgroundColor: "#31363F" }}
+                                            style={{ color: "white", backgroundColor: "#31363F", width:"90%" }}
                                             type="primary"
                                             className="LableView"
                                             iconPosition={"end"}
@@ -362,13 +360,15 @@ function PieceTraceView() {
                                 flexDirection: "column",
                                 justifyContent: "space-between",
                                 boxShadow: "none",
+                                marginTop: "40px",
+                                border: "1px solid #d9d9d9",
                             }}
                         >
                             <Table>
                                 <TableHead>
                                     <TableRow>
                                         <TableCell rowSpan={"2"}>Type</TableCell>
-                                        <TableCell rowSpan={"2"} style={{ width: "200px" }}> Process</TableCell>
+                                        <TableCell rowSpan={"2"} style={{ width: "200px" }}>Process</TableCell>
                                         <TableCell colSpan={"3"} style={{ width: "500px" }}>Front side</TableCell>
                                         <TableCell colSpan={"3"} style={{ width: "500px" }}>Back side</TableCell>
                                     </TableRow>

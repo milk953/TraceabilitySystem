@@ -7,23 +7,24 @@
 
 .TbViewTracePiece {
     margin: auto;
-    margin-left: 150px;
+    margin-top: 5px;
 }
 
 .TbViewTracePiece td {
     border: none;
-    padding: 4px;
+    padding: 10px;
 }
 
 .divTbProduct {
     margin: auto;
     display: flex;
-    margin-top: 30px;
+    /* margin-top: 10px; */
+    margin-left: 420px;
 }
 
 .divTbProduct td {
     border: none;
-    padding: 6px;
+    padding: 4px;
 }
 
 .TbPiece {

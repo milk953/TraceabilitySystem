@@ -354,13 +354,19 @@ function fn_ScanSMTSerialShtCopy() {
     let _bolError = false;
     hfWeekCode = "";
     setLblErrorState(false);
-    console.log(dtSerial,'dtSerial')
     const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
     if (allSerialEmpty) {
       hideLoading();
       setLblError("Please Input Serial No.");
       setLblErrorState(true);
-      SetFocus("txtSerial_1");
+      // SetFocus("txtSerial_1");
+      if(txtbackSide == ""){
+        SetFocus("txtbackSide_0");
+      }else if (txtSerial[0] == ''){
+        SetFocus("txtSerial_0");
+      }else if (txtSerial[1] == ''){
+        SetFocus("txtSerial_1");
+      }
       setLblResultState(false);
       setGvScanResult([]);
       return;        
@@ -441,7 +447,6 @@ function fn_ScanSMTSerialShtCopy() {
           _strErrorAll = "Please input board no."
           _bolError = true
         }
-        console.log(_strScanResultAll,'_strScanResultAll ',_strErrorAll)
         if(dtSerial[i].SERIAL != ""){
           let _strSerial = dtSerial[i].SERIAL;
           let _strTestResult = "None";
@@ -781,7 +786,6 @@ function fn_ScanSMTSerialShtCopy() {
       }
      
       setGvScanResult(dtSerial);
-      console.log(dtSerial,'dtSerialLast')
       setTxtSerial(gvSerial.map(() => ""));
       getIntitiaSheet();
       getInitialSerial();
@@ -791,7 +795,6 @@ function fn_ScanSMTSerialShtCopy() {
       setMode("SERIAL_ERROR");
     }
     getCountDataBylot(txtlotNo.split(";")[0]);
-    alert(txtlotNo.split(";")[0]);
     setTxtRollLeaf("");
     setTxtbackSide(gvBackSide.map(() => ""));
     setTxtMachineNo("");

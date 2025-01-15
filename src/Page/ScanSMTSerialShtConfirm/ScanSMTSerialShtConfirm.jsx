@@ -64,7 +64,7 @@ function ScanSMTSerialShtConfirm() {
                                         {/* <Typography variant="h6">
                                             Confirm Sheet No.
                                         </Typography> */}
-                                        {menuName}
+                                        {menuName ? menuName : "Confirm Sheet No."}
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
