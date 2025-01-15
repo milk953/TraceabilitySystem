@@ -695,6 +695,7 @@ function fn_ScanSMTSerialPcsChrome() {
       ...prevState,
       visble: "none",
     }));
+    setSl_Product((prevState) => ({ ...prevState, value: Product[0].prd_name }));
     setgvSerial((prevState) => ({ ...prevState, visble: "none" }));
     SetMode("LOT");
     setTimeout(() => {
@@ -703,6 +704,11 @@ function fn_ScanSMTSerialPcsChrome() {
   };
 
   const btnCancel_Click = async () => {
+    setlblResult((prevState) => ({
+      ...prevState,
+      value: "",
+    }));
+    setgvScanResult((prevState) => ({ ...prevState, visble: false, value: "" }));
     SetMode("SERIAL");
   };
 
