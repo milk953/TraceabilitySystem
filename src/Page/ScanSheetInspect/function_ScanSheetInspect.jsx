@@ -113,14 +113,14 @@ function fn_ScanSheetInspect() {
                         settxtRollNo(dtData[0][1]);
                     }
                 });
-            console.log(strPrdName);
+     
 
             await axios.post("/api/Common/getProductShtGroup", {
                 strprdname: strPrdName
             })
                 .then(async (res) => {
                     let dtGroup = res.data;
-                    console.log("dtGroup", dtGroup);
+                  
                     if (strPrdName !== "" && dtGroup !== "") {
                         settxtProduct(strPrdName);
                         sethfBINGroup(dtGroup.bin_group);
@@ -130,7 +130,7 @@ function fn_ScanSheetInspect() {
                         sethfSerialEnd(dtGroup.serial_end_digit);
                         sethfControlStart(dtGroup.control_start_digit);
                         sethfControlEnd(dtGroup.control_end_digit);
-                        console.log("hfBINGroup", dtGroup.bin_group);
+                 
                         if (dtGroup.control_type === "ROLL" && txtRollNo === "") {
                             settxtLotNo("");
                             settxtProduct("");
@@ -197,7 +197,7 @@ function fn_ScanSheetInspect() {
             });
 
         } else {
-            console.log(nameFile, "nameFile");
+
             exportExcelFile(gvExportData, nameFile);
         }
     };
@@ -282,7 +282,7 @@ function fn_ScanSheetInspect() {
     };
 
     // const dataTableexport = [...gvExportData];
-    // // console.log("gvexport:", dataTableexport);
+
     // const ExportToExcel = () => {
     //     const ScanSheetInspect = [
     //         [
@@ -342,7 +342,7 @@ function fn_ScanSheetInspect() {
             inputShtNo.current.focus();  
         }, 200);
         selShtXOut.current?.focus();
-        console.log(value, 'handleselShtBin')
+
     };
 
     useEffect(() => {
@@ -377,7 +377,7 @@ function fn_ScanSheetInspect() {
                     .then((res) => {
                         boolDup = res.data;
                     });
-                console.log("boolDup", boolDup);
+            
                 if (boolDup) {
                     setlabellog("Please confirm for delete?");
                     SetMode("SHEET_CONFIRM");
@@ -440,7 +440,7 @@ function fn_ScanSheetInspect() {
     };
 
     const getSheetInspectData = async () => {
-        console.log("มาไหม", hfBINGroup, selBinNo);
+    
         try {
             const res = await axios.post("/api/getProductShtInspect", {
                 strLot: txtLotNo,
@@ -454,7 +454,7 @@ function fn_ScanSheetInspect() {
             if (data.length > 0) {
                 setgvScanResult(true);
             }
-            console.log("naaa", data.length, data);
+     
         } catch (error) {
             console.error('Error fetching getProductShtIn:', error.message);
         }

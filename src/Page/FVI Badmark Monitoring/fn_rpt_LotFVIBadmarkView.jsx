@@ -151,7 +151,7 @@ function fn_rpt_LotFVIBadmarkView() {
         if (dtProduct.length > 0) {
           dtProduct = dtProduct[0].LOT_PRD_NAME;
           setlblProduct((prevState) => ({ ...prevState, value: dtProduct }));
-          console.log(txtBarcode.value,"txtBarcode.value")
+
           await axios
           .post("/api/Common/GetFVIBadmarkResultByLot", {
             _strPrdName: dtProduct,
@@ -160,7 +160,7 @@ function fn_rpt_LotFVIBadmarkView() {
           })
           .then((res) => {
             dtResult = res.data;
-            console.log(dtResult,"OK")
+   
           });
         }
       }else{
@@ -208,7 +208,7 @@ function fn_rpt_LotFVIBadmarkView() {
     let strOstResult = "";
     let strAoiResult = "";
     if (hfBarcodeType == "LOT") {
-      console.log("hfBarcodeType ",hfBarcodeType)
+     
       await axios
         .post("/api/Common/GetFVIBadmarkResultByLot", {
           _strPrdName: lblProduct.value,

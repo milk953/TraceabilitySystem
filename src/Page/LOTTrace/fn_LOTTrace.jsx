@@ -43,7 +43,7 @@ function fn_LOTTrace() {
   const ViewData = async (strlot) => {
     setloading(true);
     reset()
-    console.log("ViewData", strlot);
+
     let Meterial1 = [];
     let Meterial2 = [];
     if (strlot.length < 9) {
@@ -59,7 +59,7 @@ function fn_LOTTrace() {
         txtLotNo: strlot,
       })
       .then((res) => {
-        console.log("ProdRoll", res.data);
+
         setdataProdRoll(res.data);
       });
 
@@ -93,7 +93,7 @@ function fn_LOTTrace() {
         txtLotNo: strlot,
       })
       .then((res) => {
-        console.log("Meterial1", res.data);
+
         Meterial1 = res.data;
       });
 
@@ -102,10 +102,10 @@ function fn_LOTTrace() {
         txtLotNo: strlot,
       })
       .then((res) => {
-        console.log("Meterial2", res.data);
+
         Meterial2 = res.data;
       });
-    console.log(Meterial1.concat(Meterial2), "Meterial1.concat(Meterial2)");
+
     setdataMaterial(Meterial1.concat(Meterial2));
     await axios
       .post("/api/ViewTraceLot/GetDetail", {
@@ -113,7 +113,7 @@ function fn_LOTTrace() {
       })
       .then((res) => {
         // setdataNext(res.data)
-        console.log("GetDetail", res.data);
+
         setdataDetail(res.data);
       });
     setloading(false);

@@ -562,20 +562,7 @@ function fn_ScanSMTSerialXrayConfirm() {
         : statusBackupCount === true
         ? hfSerialCount
         : hfSerialCountBackup;
-    // console.log(
-    //   "hfSerialCountData : ",
-    //   hfSerialCountData,
-    //   "statusBackupCount : ",
-    //   statusBackupCount,
-    //   "hfSerialCount : ",
-    //   hfSerialCount,
-    //   "hfSerialCountBackup : ",
-    //   hfSerialCountBackup,
-    //   "txtTotalPCS.value : ",
-    //   txtTotalPCS.value,
-    //   "hfTotalSht : ",
-    //   hfTotalSht
-    // );
+
     // เพิ่มนี้มา --
     for (let intRow = 1; intRow <= parseInt(hfSerialCountData, 10); intRow++) {
       dtData.push({
@@ -836,7 +823,7 @@ function fn_ScanSMTSerialXrayConfirm() {
             setHfCheckSPIB(dtProductSerial.prm_sht_spi_b);
             setHfSerialStartCode(dtProductSerial.slm_serial_start_code);
             setHfSerialInfo(dtProductSerial.prm_additional_info);
-            console.log("Updated successfully!");
+      
           }
         });
     } catch (ex) {

@@ -297,13 +297,13 @@ function fn_ScanSMTSerialShtMaster() {
 
     const handleChangeMasterCode = async () => {
         if (txtMasterCode.trim() !== "") {
-            console.log(MASTER_SHEET)
+
             if (txtMasterCode === MASTER_SHEET) {
                 setpnlLog(false);
                 setlblLog("");
                 const datagetPd = await getProductSerialMaster(selProduct);
                 // await getInitialSheet(datagetPd.slm_sht_scan);
-                console.log("hfCheckRollSht", datagetPd.prm_conn_roll_sht_flg);
+         
                 if (datagetPd.prm_conn_roll_sht_flg === "Y") {
                     setpnlRollLeaf(true);
                     settxtRollLeaf("");
@@ -343,7 +343,7 @@ function fn_ScanSMTSerialShtMaster() {
     const handleChangeRollLeaf = async () => {
         setpnlLog(false);
         setlblLog("");
-        console.log("hfConnRollLength", hfConnRollLength)
+  
         if (txtRollLeaf !== "" && txtRollLeaf.length === parseInt(hfConnRollLength)) {
             let strRollProduct = hfRollNo + hfCheckRollPrd;
             if (hfCheckRollPrdFlg === "Y" &&
@@ -501,7 +501,7 @@ function fn_ScanSMTSerialShtMaster() {
         settxtgvSerial("");
         settxtSideBack("");
         setgvSerialData(dtData);
-        console.log("gvserialdata:", dtData)
+  
         return dtData;
     };
 
@@ -530,7 +530,7 @@ function fn_ScanSMTSerialShtMaster() {
         showLoading('กำลังบันทึก กรุณารอสักครู่');
         if (txtMasterCode === MASTER_SHEET) {
             const dtSerial = await getInputSerial();
-            console.log(dtSerial)
+
             let _strLot = "";
             let _strLotRef = "";
             let _strPrdName = selProduct;
@@ -589,7 +589,7 @@ function fn_ScanSMTSerialShtMaster() {
                     })
                         .then((res) => {
                             sethfWeekCode(res.data);
-                            console.log("hfWeekCode", res.data);
+                     
                         });
                 }
 
@@ -751,7 +751,7 @@ function fn_ScanSMTSerialShtMaster() {
                                 const end = parseInt(hfSerialEndDigit);
                                 _strFixDigit = _strSerial.substring(start - 1, end);
 
-                                console.log(_strFixDigit, hfSerialDigit);
+                     
                                 if (_strFixDigit !== hfSerialDigit) {
                                     _strScanResultUpdate = "NG";
                                     _strRemark = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -893,7 +893,7 @@ function fn_ScanSMTSerialShtMaster() {
                         })
                             .then((res) => {
                                 _strReturn = res.data[0].p_error;
-                                console.log(_strReturn, "setseriallotshtelttable");
+                             
                                 if (_strReturn !== "") {
                                     dtSerial[i].SCAN_RESULT = "NG";
                                     dtSerial[i].REMARK = "No sheet ELT result / ไม่พบผลการทดสอบ ELT";
@@ -1109,7 +1109,7 @@ function fn_ScanSMTSerialShtMaster() {
                     })
                         .then((res) => {
                             _strUpdateError = res.data.p_error;
-                            console.log("/////////")
+          
                         });
                 }
 
@@ -1188,7 +1188,7 @@ function fn_ScanSMTSerialShtMaster() {
 
             if (gvSerialData[intSeq].TYPE === "SHT") {
                 strFrontSide = txtgvSerial[intSeq];
-                console.log("strFrontSide", strFrontSide);
+              
             } else {
                 const backSideIndex = txtSideBack[0];
                 const backSideText = backSideIndex;
@@ -1215,7 +1215,7 @@ function fn_ScanSMTSerialShtMaster() {
                 }
             }
         }
-        console.log("dtData", dtData);
+
         return dtData;
     };
 
@@ -1379,7 +1379,7 @@ function fn_ScanSMTSerialShtMaster() {
             .then((res) => {
                 dtSerailCount = res.data[0];
             });
-        console.log("dtSerailCount", dtSerailCount);
+    
         if (dtSerailCount.length !== "") {
             setlblTotalSht(dtSerailCount.count_sht.toLocaleString('en-US'));
             setlblTotalPcs(dtSerailCount.count_pcs.toLocaleString('en-US'));
@@ -1435,7 +1435,7 @@ function fn_ScanSMTSerialShtMaster() {
             }
             _strShtNoOld = _dtSerial[i].FRONT_SIDE;
         }
-        console.log("_dtData", _dtData);
+
         return _dtData;
     };
 
@@ -1446,7 +1446,7 @@ function fn_ScanSMTSerialShtMaster() {
             if (nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]
             ) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick', nextIndex);
+         
             } else if (nextIndex === gvSerialData.length) {
                 btnSaveClick();
             }

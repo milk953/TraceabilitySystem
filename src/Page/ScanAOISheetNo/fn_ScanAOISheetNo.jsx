@@ -208,7 +208,7 @@ function fn_ScanAOISheetNo() {
           .then((res) => {
             dtLotData = res.data.flat().flat();
           });
-        console.log(dtLotData);
+
         if (dtLotData.length > 0) {
           setlblProduct(dtLotData[0][0]);
           sethfRollNo(dtLotData[0][1]);
@@ -464,7 +464,7 @@ function fn_ScanAOISheetNo() {
     let dtData = [];
     if (parseInt(TotalPcs) > parseInt(No)) {
       setlblSEQ(No);
-      console.log(hfSerialCount);
+
       for (let intRow = 0; intRow < hfSerialCount; intRow++) {
         let drRow = {
           SEQ: intRow + 1,
@@ -536,7 +536,7 @@ function fn_ScanAOISheetNo() {
 
               _bolError = true;
               _bolTrayError = true;
-              console.log("เข้าเงื่อนไข 1");
+  
             }
           }
 
@@ -554,7 +554,7 @@ function fn_ScanAOISheetNo() {
 
                 _bolError = true;
                 _bolTrayError = true;
-                console.log("เข้าเงื่อนไข 2");
+   
               }
             }
 
@@ -567,7 +567,7 @@ function fn_ScanAOISheetNo() {
 
                 _bolError = true;
                 _bolTrayError = true;
-                console.log("เข้าเงื่อนไข 3");
+         
               }
             }
           }
@@ -582,7 +582,7 @@ function fn_ScanAOISheetNo() {
 
               _bolError = true;
               _bolTrayError = true;
-              console.log("เข้าเงื่อนไข 4", hfSerialLength);
+            
             }
           }
 
@@ -603,7 +603,7 @@ function fn_ScanAOISheetNo() {
 
               _bolError = true;
               _bolTrayError = true;
-              console.log("เข้าเงื่อนไข 5");
+           
             }
           }
 
@@ -617,7 +617,7 @@ function fn_ScanAOISheetNo() {
           dtSerial[i].REMARK = "Barcode can not scan / สแกนบาร์โค้ดไม่ได้";
           dtSerial[i].ROW_UPDATE = "N";
           _bolTrayError = true;
-          console.log("เข้าเงื่อนไข 6");
+      
         }
         _intRowSerial = _intRowSerial + 1;
       }
@@ -665,7 +665,7 @@ function fn_ScanAOISheetNo() {
           .then((res) => {
             dtReject = res.data;
           });
-        console.log(dtReject, "dtReject");
+    
         if (dtReject.length > 0) {
           setgvReject((prevState) => ({
             ...prevState,
@@ -732,7 +732,7 @@ function fn_ScanAOISheetNo() {
         ROW_UPDATE: "N",
       });
     }
-    console.log(dtData);
+
     return dtData;
   };
 
@@ -742,7 +742,7 @@ function fn_ScanAOISheetNo() {
       const nextIndex = index + 1;
       if (nextIndex < gvSerial.length && inputSerial.current[nextIndex]) {
         inputSerial.current[nextIndex].focus();
-        console.log("Calling btnSaveClick", nextIndex);
+
       } else if (nextIndex === gvSerial.length) {
         btnSave_Click();
       }
@@ -750,7 +750,7 @@ function fn_ScanAOISheetNo() {
   };
 
   const btnDeleteClick = async (rowno) => {
-    console.log(rowno, "////////////");
+ 
     let data = [];
 
     if (!isNaN(rowno)) {
@@ -770,7 +770,7 @@ function fn_ScanAOISheetNo() {
         );
 
         data = deleteRes.data.p_error;
-        console.log("ลบข้อมูลสำเร็จ =", data);
+  
 
         await swal.fire("Success", "You delete data success", "success");
 

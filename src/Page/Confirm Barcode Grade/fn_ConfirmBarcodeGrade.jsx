@@ -214,7 +214,7 @@ function fn_ConfirmBarcodeGrade() {
 
       if (strLotData.length >= 2) {
         strLot = strLotData[0];
-        console.log(strLot, "strLot");
+  
         await axios
           .post("/api/Common/getProductDataByLot", {
             strLot: strLot,
@@ -256,14 +256,14 @@ function fn_ConfirmBarcodeGrade() {
                 fcOperator.current.focus();
               }, 300);
               if (datagetPd.prm_conn_roll_sht_flg == "Y") {
-                console.log("fcRollleaf", fcRollleaf);
+        
                 settxtRollLeaf((prevState) => ({
                   ...prevState,
                   value: "",
                   visble: "",
                 }));
                 SetMode("SERIAL");
-                console.log("Focus1");
+    
               } else {
                 SetMode("SERIAL");
                 settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
@@ -272,7 +272,7 @@ function fn_ConfirmBarcodeGrade() {
                     ...prevState,
                     visble: "",
                   }));
-                  console.log("Focus2");
+           
                   // setTimeout(() => {
                   //   fctMachchine.current.focus();
                   // }, 300);
@@ -461,7 +461,7 @@ function fn_ConfirmBarcodeGrade() {
         prdName: strPrdName,
       })
       .then((res) => {
-        console.log("GetSerialProductByProduct", res.data);
+
         data = res.data[0];
         if (data != null) {
           setHfSerialLength(data.slm_serial_length);
@@ -560,7 +560,7 @@ function fn_ConfirmBarcodeGrade() {
       .then((res) => {
         dtCavity = res.data;
 
-        console.log("GetCavitySerialBarcodeGrade", dtCavity);
+
       });
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
       if (dtCavity.length > 0) {
@@ -581,16 +581,16 @@ function fn_ConfirmBarcodeGrade() {
         }
       }
     }
-    console.log("กงนี้ค้าบบบ", dtData);
+
     if (dtData.length > 0) {
-      console.log("กงนี้0", hfShtScan, hfSerialCount);
+
       setdataGvSerial((prevState) => ({
         ...prevState,
         visble: true,
         value: dtData,
       }));
     } else {
-      console.log("กงนี้1", hfShtScan, hfSerialCount);
+
 
       setdataGvSerial((prevState) => ({
         ...prevState,
@@ -605,7 +605,7 @@ function fn_ConfirmBarcodeGrade() {
 
   useEffect(() => {
     if (hfShtScan != "" && hfSerialCount != "") {
-      console.log("งเข้า");
+
       getInitialSerial();
     }
   }, [hfSerialCount, hfShtScan]);
@@ -732,20 +732,14 @@ function fn_ConfirmBarcodeGrade() {
   const handleTxt_RollLeaf = async () => {
     setlblLog((prevState) => ({ ...prevState, value: "", visble: false }));
     //ถ้าถูกติ้ก
-    console.log(
-      "handleTxt_RollLeaf0",
-      Check_Master,
-      txtRollLeaf.value,
-      txtRollLeaf.value.length,
-      hfConnRollLength
-    );
+   
     if (
       Check_Master == true ||
       (txtRollLeaf.value !== "" &&
         txtRollLeaf.value.length === hfConnRollLength)
     ) {
       const strRollProduct = hfRollNo + hfCheckRollPrd;
-      console.log("handleTxt_RollLeaf1", hfCheckRollPrdFlg);
+    
       if (hfCheckRollPrdFlg === "Y") {
         if (
           !Check_Master &&
@@ -856,7 +850,7 @@ function fn_ConfirmBarcodeGrade() {
       }, 300);
     }
     if (_strType == "SERIAL") {
-      console.log("เข้ากงนี้999");
+    
       settxt_lotNo((prevState) => ({
         ...prevState,
         disbled: true,
@@ -940,7 +934,7 @@ function fn_ConfirmBarcodeGrade() {
     let _strShtNoOld = "";
     let _strRollNo = "";
     _strRollNo = hfRollNo;
-    console.log("fffff", _dtSerial);
+   
 
     for (let i = 0; i < _dtSerial.length; i++) {
       if (
@@ -989,14 +983,14 @@ function fn_ConfirmBarcodeGrade() {
       _dtData.push(data);
       _strShtNoOld = _dtSerial[i].FRONT_SIDE;
     }
-    console.log("กงนี้ค้าบ1", _dtData);
+   
     return _dtData;
   };
 
   const handleTxt_Opreator = async () => {
     if (txtOperator.value != "") {
       if (hfCheckRollSht == "Y") {
-        console.log(hfCheckRollSht, "oper1");
+       
         settxtRollLeaf((prevState) => ({
           ...prevState,
           value: "",
@@ -1013,7 +1007,7 @@ function fn_ConfirmBarcodeGrade() {
       } else {
         await SetMode("SERIAL");
         settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
-        console.log(hfReqMachine, "oper2");
+      
         if (hfReqMachine == "Y") {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
           setTimeout(() => {
@@ -1067,7 +1061,7 @@ function fn_ConfirmBarcodeGrade() {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     try {
       let dtSerial = await getInputSerial();
-      console.log("dtserial", dtSerial);
+     
       let _strLotData = "";
       let _strLotRefData = "";
       let _strLot = "";
@@ -1085,7 +1079,7 @@ function fn_ConfirmBarcodeGrade() {
       setHfWeekCode("");
       let dataHfWeekCode = "";
       let _bolError = false;
-      // console.log("dtSeriallll", txtSideBack.value,txtSideFront.value);
+     
       const allSheetEmpty = dtSerial.every(item => item.length<=0||item.BACK_SIDE === ""||item.FRONT_SIDE === "" );
       if(allSheetEmpty) {
         hideLoading();
@@ -1168,7 +1162,7 @@ function fn_ConfirmBarcodeGrade() {
               STRPROC: hfDateInProc,
             })
             .then((res) => {
-              console.log("getWeekCodebyLot", res.data);
+            
               setHfWeekCode(res.data);
               dataHfWeekCode = res.data;
             });
@@ -1249,11 +1243,9 @@ function fn_ConfirmBarcodeGrade() {
               let _strMessageUpdate = "";
               let _strScanResultUpdate = "";
               if (_strSerial != CONNECT_SERIAL_ERROR) {
-                console.log();
+              
                 let isDuplicate = dtSerial.some((item, index) => {
-                  console.log(
-                    `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
-                  );
+                 
                   return (
                     index !== _intRowSerial &&
                     _strSerial.toUpperCase() === item.SERIAL.toUpperCase()
@@ -1274,7 +1266,7 @@ function fn_ConfirmBarcodeGrade() {
                   const end = parseInt(hfSerialEndDigit);
                   _strFixDigit = _strSerial.substring(start - 1, end);
                   if (_strFixDigit != hfSerialDigit) {
-                    console.log("ปน1", hfSerialDigit, _strFixDigit);
+                   
                     _strScanResultUpdate = "NG";
                     _strMessageUpdate =
                       "Serial barcode mix product/หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1289,7 +1281,7 @@ function fn_ConfirmBarcodeGrade() {
                       EndhfConfig
                     );
                     if (_strConfigDigit != hfConfigCode) {
-                      console.log("ปน2", _strConfigDigit, hfConfigCode);
+                    
                       _strScanResultUpdate = "NG";
                       _strMessageUpdate =
                         "Serial barcode mix product/หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1303,11 +1295,7 @@ function fn_ConfirmBarcodeGrade() {
                       _strSerial.substring(0, hfSerialStartCode.length) !==
                       hfSerialStartCode
                     ) {
-                      console.log(
-                        "ปน3",
-                        _strSerial.substring(0, hfSerialStartCode.length),
-                        hfSerialStartCode
-                      );
+                     
                       _strScanResultUpdate = "NG";
                       _strMessageUpdate =
                         "Serial barcode mix product/หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1321,7 +1309,7 @@ function fn_ConfirmBarcodeGrade() {
                     const end = parseInt(hfCheckStartSeqEnd);
                     _strStartSeq = _strSerial.substring(start - 1, end);
                     if (_strStartSeq != hfCheckStartSeqCode) {
-                      console.log("ปน4", _strStartSeq, hfCheckStartSeqCode);
+                   
                       _strScanResultUpdate = "NG";
                       _strMessageUpdate =
                         "Serial barcode mix product/หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1357,12 +1345,7 @@ function fn_ConfirmBarcodeGrade() {
                   let start = parseInt(hfDuplicateStart) - 1;
                   let end = parseInt(hfDuplicateEnd);
                   let serialSubString = _strSerial.substring(start, end);
-                  console.log(
-                    start - 1,
-                    end,
-                    _strSerial,
-                    "ก่อนGetSerialDuplicateConnectSht"
-                  );
+                 
                   await axios
                     .post("/api/Common/GetSerialDuplicateConnectSht", {
                       dataList: {
@@ -1371,7 +1354,7 @@ function fn_ConfirmBarcodeGrade() {
                       },
                     })
                     .then((res) => {
-                      console.log("GetSerialDuplicateConnectSht", res.data);
+                     
                       _inCountSeq = res.data;
                       if (_inCountSeq > 0) {
                         _strScanResultUpdate = "NG";
@@ -1391,7 +1374,7 @@ function fn_ConfirmBarcodeGrade() {
               }
 
               if (_strMessageUpdate == "") {
-                console.log("ได้จากตรงนี้3");
+             
                 dtSerial[i].UPDATE_FLG = "Y";
               } else {
                 dtSerial[i].UPDATE_FLG = "N";
@@ -1414,7 +1397,7 @@ function fn_ConfirmBarcodeGrade() {
               strWeekType: hfWeekCodeType,
             })
             .then((res) => {
-              console.log("GetShippingSerialNo", res.data);
+            
               _strReturn = res.data;
             });
           if (_strReturn != "") {
@@ -1441,7 +1424,7 @@ function fn_ConfirmBarcodeGrade() {
           // .post("/api/Common/SetSerialRecordTimeTrayTableTest", {
           //   dataList: dtSerial})
           //   .then((res) => {
-          //     console.log('test2222',res.data)
+          
           //   })
           for (let i = 0; i < dtSerial.length; i++) {
             await axios
@@ -1459,11 +1442,7 @@ function fn_ConfirmBarcodeGrade() {
               })
               .then((res) => {
                 _strReturn = res.data[0].p_error;
-                console.log(
-                  dtSerial[i].SERIAL,
-                  "setseriallotshtelttable",
-                  _strReturn
-                );
+              
                 if (_strReturn != "") {
                   dtSerial[i].SCAN_RESULT = "NG";
                   dtSerial[i].REMARK =
@@ -1483,12 +1462,7 @@ function fn_ConfirmBarcodeGrade() {
         }
         for (let i = 0; i < dtSerial.length; i++) {
           if (!Check_Master) {
-            console.log(
-              "เข้าจ้า",
-              dtSerial[i].SCAN_RESULT,
-              Check_Master,
-              dtSerial[i].SERIAL
-            );
+           
             if (dtSerial[i].SERIAL != "" && dtSerial[i].SCAN_RESULT != "NG") {
               let _intCount = 0;
               let _intCountOK = 0;
@@ -1538,7 +1512,7 @@ function fn_ConfirmBarcodeGrade() {
                     },
                   })
                   .then((res) => {
-                    console.log("Get_Spi_aoi_result", res.data);
+     
                     _Result = res.data;
                   });
 
@@ -1551,7 +1525,7 @@ function fn_ConfirmBarcodeGrade() {
                   _strScanResultUpdate = "NG";
                   _bolError = true;
                 } else {
-                  console.log("ได้จากตรงนี้2");
+         
                   dtSerial[i].UPDATE_FLG = "Y";
                 }
               }
@@ -1570,9 +1544,9 @@ function fn_ConfirmBarcodeGrade() {
               dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
               dtSerial[i].REMARK = _strMessageUpdate;
             } else {
-              console.log("dtSerial[i].SERIAL_GRADE", dtSerial[i].SERIAL_GRADE);
+            
               if (dtSerial[i].SERIAL_GRADE != "") {
-                console.log("ได้จากตรงนี้1");
+             
                 dtSerial[i].UPDATE_FLG = "Y";
               }
             }
@@ -1602,7 +1576,7 @@ function fn_ConfirmBarcodeGrade() {
                 })
                 .then((res) => {
                   dataRBMP = res.data.SCRAP_FLG;
-                  console.log("GetRollLeafScrapRBMP", res.data);
+               
                 });
               if (dataRBMP == "Y") {
                 _bolError = true;
@@ -1610,13 +1584,13 @@ function fn_ConfirmBarcodeGrade() {
                 _strUpdateError = "Problem sheet from RBMP";
                 _strErrorAll = "Problem sheet from RBMP";
               } else {
-                console.log(dtSerial, "dtRowLeaf1");
+              
                 let dtRowLeaf = await getConnectRollSheetData(
                   dtSerial,
                   SlProduct.value,
                   txtRollLeaf.value
                 );
-                console.log("dtRowLeaf0", dtRowLeaf);
+              
                 let _intCount = 0;
                 let _strRollLeaf = txtRollLeaf.value;
                 await axios
@@ -1626,7 +1600,7 @@ function fn_ConfirmBarcodeGrade() {
                   })
                   .then((res) => {
                     _intCount = res.data;
-                    console.log("GetRollLeafDuplicate", res.data);
+                   
                   });
                 if ((_intCount = 1)) {
                   _bolError = true;
@@ -1678,7 +1652,7 @@ function fn_ConfirmBarcodeGrade() {
                       dataList: dtRowLeaf,
                     })
                     .then((res) => {
-                      console.log("SetRollSheetTrayTable", res.data);
+                     
                       _strUpdateError = res.data;
                     });
                 }
@@ -1708,13 +1682,13 @@ function fn_ConfirmBarcodeGrade() {
             dtSerial[i].ddlPD = SlProduct.value;
             dtSerial[i]._strStation = hfUserStation;
           }
-          console.log("ก่อนSetSerialLotShtGradeTable", dtSerial);
+        
           await axios
             .post("/api/Common/SetSerialLotShtGradeTable", {
               dataList: dtSerial,
             })
             .then((res) => {
-              console.log("SetSerialLotShtGradeTable", res.data);
+             
               _strUpdateError = res.data.strError;
               if (_strUpdateError != "") {
                 _strScanResultAll = "NG";

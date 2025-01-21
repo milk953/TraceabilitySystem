@@ -972,7 +972,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   })
                   .then((res) => {
                     _intCountDup = res.data.row_count;
-                    console.log("GetSerialDuplicate", _intCountDup);
+                  
                   });
                 dtSerial[drRow].ROW_COUNT = _intCountDup;
               } else {
@@ -1012,7 +1012,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   parseInt(startDigit) - 1,
                   parseInt(endDigit)
                 );
-                console.log("ตรงนี่1", _strFixDigit, hfSerialDigit);
+             
                 if (_strFixDigit != hfSerialDigit) {
                   _strMessageUpdate =
                     "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1032,7 +1032,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     parseInt(configStart) - 1,
                     parseInt(configEnd)
                   );
-                  console.log("ตรงนี่2", _strStartSeq, hfCheckStartSeqCode);
+                 
                   if (_strStartSeq != hfCheckStartSeqCode) {
                     _strMessageUpdate =
                       "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -1071,16 +1071,14 @@ function fn_ScanSMTSerialPcsChrome() {
                   _intRow++
                 ) {
                   let isDuplicate = dtSerial.some((item, index) => {
-                    console.log(
-                      `Checking duplicate ${index}: ${item.SERIAL} -----  ${_strSerial}`
-                    );
+                  
                     return (
                       index !== _intRowSerial &&
                       _strSerial.toUpperCase() === item.SERIAL.toUpperCase()
                     );
                   });
                   if (isDuplicate) {
-                    console.log("ซ้ำ1", _strSerial);
+                 
                     _strMessageUpdate =
                       "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                     _strRemark = "Serial duplicate in tray  ";
@@ -1106,7 +1104,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   })
                   .then((res) => {
                     _strShtNo = res.data._strsheet;
-                    console.log("GetSheetNoBySerialNo", res.data);
+                   
                   });
                 if (
                   _strShtNo !== "" &&
@@ -1171,7 +1169,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     })
                     .then((res) => {
                       _Result = res.data;
-                      console.log("Get_Spi_aoi_result", res.data);
+                    
                     });
 
                   if (_Result == "NG") {
@@ -1317,7 +1315,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     })
                     .then((res) => {
                       _dblPlasmaTime = res.data.plasma_time;
-                      console.log("GetPlasmaTimeBySerialNo", res.data);
+                 
                     });
 
                   if (_dblPlasmaTime == 0) {
@@ -1384,7 +1382,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   })
                   .then((res) => {
                     _intCheckPass = res.data;
-                    console.log("GetCheckChipDuplicate", res.data);
+                   
                   });
 
                 if (_intCheckPass == 0) {
@@ -1421,7 +1419,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   })
                   .then((res) => {
                     _strEFPCRemark = res.data;
-                    console.log("GetEFPCSheetInspectionResult", res.data);
+                  
                   });
                 if (_strEFPCResult == "NG") {
                   _strMessageUpdate = _strEFPCRemark;
@@ -1473,7 +1471,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   })
                   .then((res) => {
                     _intCheckPass = res.data.result;
-                    console.log("getcheckspecialbyserial", res.data);
+         
                   });
                 if (_intCheckPass == 0) {
                   _strMessageUpdate = FINAL_GATE_SPECIAL_MESSAGE;
@@ -1603,8 +1601,8 @@ function fn_ScanSMTSerialPcsChrome() {
 
               .then((res) => {
                 _strErrorUpdate = res.data.p_error;
-                console.log(_strErrorUpdate, "_strErrorUpdate");
-                // console.log(dtSerial, "Test3");
+           
+         
               });
 
             if (_strErrorUpdate != "") {
@@ -1629,7 +1627,7 @@ function fn_ScanSMTSerialPcsChrome() {
             strPlantCode: Fac,
           })
           .then((res) => {
-            console.log(res.data, "getSerialPassByLot");
+        
             dtLotPassCount = res.data.lotcount;
           });
 
@@ -1640,7 +1638,7 @@ function fn_ScanSMTSerialPcsChrome() {
             strPlantCode: Fac,
           })
           .then((res) => {
-            console.log(res.data, "dtPackPassCountxx");
+ 
             dtPackPassCount = res.data.lot_count;
           });
         if (dtLotPassCount > 0) {
@@ -1680,7 +1678,7 @@ function fn_ScanSMTSerialPcsChrome() {
           value: {},
         }));
       }
-      console.log("EXPORT_CSV_FLG", EXPORT_CSV_FLG);
+
       if (EXPORT_CSV_FLG == "Y") {
         ExportCSV(dtSerial, columns);
       }
@@ -1779,7 +1777,7 @@ function fn_ScanSMTSerialPcsChrome() {
       dataIndex: "TEST_RESULT",
 
       render: (text, record, index) => {
-        console.log("record.Serial", record.SERIAL);
+
         if (record.SERIAL == "") {
           return "";
         } else {

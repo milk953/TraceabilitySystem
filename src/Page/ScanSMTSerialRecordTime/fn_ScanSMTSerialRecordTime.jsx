@@ -204,7 +204,7 @@ function fn_ScanSMTSerialRecordTime() {
                 const strOPData = lblOP.trim().toUpperCase().split(",");
                 let bolError = false;
                 for (let intRow = 0; intRow < strOPData.length; intRow++) {
-                    console.log(strOPData[intRow])
+                  
                     if (strOPData[intRow] === Operator) {
                         bolError = true;
                         break;
@@ -215,8 +215,8 @@ function fn_ScanSMTSerialRecordTime() {
                         const updatedLblOP = lblOP + Operator;
                         setlblOP(updatedLblOP);
                         settxtOperator(updatedLblOP);
-                        console.log("lblOP:", lblOP);
-                        console.log("txtOperator:", txtOperator);
+                     
+                      
 
                         if (hfOPRejudge !== "") {
                             SetMode("OP-REJUDGE");
@@ -283,12 +283,12 @@ function fn_ScanSMTSerialRecordTime() {
                 }
 
                 if (!bolError) {
-                    console.log(strOPData.length)
+                  
                     if (strOPData.length === parseInt(hfOPRejudge)) {
                         const updatedlblOP = lblOP + OPRejudge;
                         setlblOP(updatedlblOP);
                         settxtOPRejudge(updatedlblOP);
-                        console.log(lblOP, txtOPRejudge)
+                     
                         if (hfAreaRejudge !== "") {
                             SetMode("AREA-REJUDGE");
                         } else {
@@ -418,7 +418,7 @@ function fn_ScanSMTSerialRecordTime() {
             .then((res) => {
                 strPrdName = res.data.prdName[0];
             });
-        console.log("PrdName:", strPrdName);
+      
         if (strPrdName !== undefined) {
             setlblLog("");
             setvisiblelog(false);
@@ -622,7 +622,7 @@ function fn_ScanSMTSerialRecordTime() {
             const nextIndex = index + 1;
             if (nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick', nextIndex);
+              
             } else if (nextIndex === gvSerialData.length) {
 
                 btnSaveClick();
@@ -908,7 +908,7 @@ function fn_ScanSMTSerialRecordTime() {
                 }, 200);
             }
         }
-        console.log("gvserialdata:", dtData)
+     
         return dtData;
     };
 
@@ -1016,7 +1016,7 @@ function fn_ScanSMTSerialRecordTime() {
             })
                 .then((res) => {
                     dtSerial = res.data;
-                    console.log(res.data);
+           
                 })
 
 
@@ -1028,7 +1028,7 @@ function fn_ScanSMTSerialRecordTime() {
                     _strSerialInfo: hfSerialInfo
                 })
                     .then((res) => {
-                        console.log(res.data);
+                     
                         sethfWeekCode(res.data);
                     });
             }
@@ -1101,7 +1101,7 @@ function fn_ScanSMTSerialRecordTime() {
                             }
                         } else {
                             // Check format serial no
-                            console.log("มาาา", hfSerialLength, _strSerial)
+                         
                             if (_strSerial.length === hfSerialLength) {
                                 let _strFixDigit = "";
                                 if (hfSerialFixFlag === "Y") {
@@ -1206,7 +1206,7 @@ function fn_ScanSMTSerialRecordTime() {
                                     //     }
                                     // }
                                     let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
-                                    console.log(isDuplicate)
+                                 
                                     if (isDuplicate) {
                                         _strMessageUpdate = "Serial duplicate in tray" + _strTagNewLine + "หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
                                         _strRemark = "Serial duplicate in tray  ";

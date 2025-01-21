@@ -328,7 +328,7 @@ function fn_ReJudgement() {
     let i;
     let _strLotno = "";
     if (flg == "submit") {
-      console.log(strSerialAll);
+
       for (let i = 0; i < strSerialAll.length; i++) {
         if (strSerialAll[i].length > 0) {
           await getData("getSearch", {
@@ -381,7 +381,7 @@ function fn_ReJudgement() {
       }
     } else if (rdSelect == "rdLotNo") {
       setDtDataSearch([]);
-      console.log(lot,'lot');
+
       if (lot.length > 9){
         setLot(lot.trim().substring(0,9));
         await getData("getSearch", { Serialno: lot.trim().substring(0,9), rdFlg: "lot" });

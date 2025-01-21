@@ -37,7 +37,7 @@ function fn_AOIResult() {
                 .then((res) => {
                     dt = res.data;
                 });
-            console.log(dt)
+
             setgvViewAOI(dt);
         } catch (error) {
             console.log(error.message);
@@ -234,7 +234,7 @@ const BtnExport = async (nameFile) => {
       setlblMessageColor("#BA0900");
 
     } else {
-      console.log(nameFile, "nameFile");
+    
       exportExcelFile(gvViewAOI, nameFile);
       setlbl_Message("CSV export Complete.");
       setlblMessageColor("#059212");

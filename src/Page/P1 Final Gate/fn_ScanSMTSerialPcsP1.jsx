@@ -201,10 +201,10 @@ function fn_ScanSMTSerialPcsP1() {
         _strLot = _strLotAll[0];
         _strPrdName = productSelected;
         hiddenParams.hfTestResultFlag = "Y";
-        console.log(_strLot.length,'_strLot.length',parseInt(hiddenParams.hfLotLength));
+       
         if (_strLot.length == parseInt(hiddenParams.hfLotLength)) {
           _strPrdName = await getData("GetProductNameByLot", _strLot);
-          console.log(_strPrdName,'_strPrdName');
+        
           if(_strPrdName == "" || _strPrdName == undefined) {
             setlblError(_strLot +" invalid lot no.!" +_strTagNewLine +' '+_strLot +" หมายเลขล็อตไม่ถูกต้อง");
             // setlblErrorState(true);
@@ -854,7 +854,7 @@ function fn_ScanSMTSerialPcsP1() {
                 _bolError = true;
               }
             }
-            console.log('hfCheckSPIAOI',hiddenParams.hfCheckSPIAOI);
+          
             if(!_bolError && hiddenParams.hfCheckSPIAOI == 'Y'){
               const { result1: _Result, result2: _strMessage } = await getData("Get_SPI_AOI_RESULT_P1", {
                 strSerialNo: _strSerial,
@@ -866,7 +866,7 @@ function fn_ScanSMTSerialPcsP1() {
                 strSPIF: hiddenParams.hfCheckSPIF,
                 strSPIB: hiddenParams.hfCheckSPIB,
               });
-              console.log(_Result,_strMessage);
+             
               if(_Result == 'NG'){
                 _strScanResultUpdate = _Result;
                 _strMessageUpdate = _strMessage;

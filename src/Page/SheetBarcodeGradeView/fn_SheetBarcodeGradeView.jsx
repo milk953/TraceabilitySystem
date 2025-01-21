@@ -68,12 +68,12 @@ function fn_SheetBarcodeGradeView() {
       await axios
         .post("/api/common/fnGetLotData", { strLOTNO: lotNotextField })
         .then((res) => {
-          console.log(res.data);
+
           if (res.data != "") {
             setProduct_result(res.data[0].LOT_PRD_NAME);
             setLotNo_result(res.data[0].LOT);
           }
-          console.log(res.data, "lot");
+      
         });
     }
 

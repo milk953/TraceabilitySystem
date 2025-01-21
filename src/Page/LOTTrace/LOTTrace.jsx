@@ -28,7 +28,7 @@ function LotTrace() {
     reset,
     settxtLotNo
   } = fn_LOTTrace();
-  console.log(dataMaterial, "dataMaterial");
+
   return (
     <>
       <Hearder />

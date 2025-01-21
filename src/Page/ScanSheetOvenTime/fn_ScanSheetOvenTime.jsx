@@ -102,7 +102,7 @@ function fn_ScanSheetOvenTime() {
             strPlantCode: Fac,
           })
           .then((res) => {
-            console.log(res, "res");
+         
             strError = res.data.P_ERROR;
           });
       }

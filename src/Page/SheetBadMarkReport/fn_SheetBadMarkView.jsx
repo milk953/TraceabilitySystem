@@ -52,12 +52,12 @@ function fn_SheetBadMarkView() {
       await axios
         .post("/api/common/fnGetLotData", { strLOTNO: params })
         .then((response) => {
-          console.log(response.data);
+ 
           if (response.data !=''){
             setProduct_result(response.data[0].LOT_PRD_NAME);
             setLotNo_result(response.data[0].LOT);
           }
-          console.log(response.data,'lot');
+ 
         })
         .catch((error) => {
           console.log(error);

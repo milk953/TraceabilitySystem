@@ -17,14 +17,14 @@ function SerialMasterPage() {
     const [TEXT_Code, setTEXT_Code] = useState("");
   
     const Search = async () => {
-      console.log(code, name, "......")
+
       try {
         const response = await axios.post("/api/SearchSerial", {
           Code: code,
           Name: name
         });
         const data = response.data;
-        console.log("/////", data)
+
         setShowData(data);
         if (data.length > 0) {
           setCheckEmpty("hidden");
@@ -83,12 +83,12 @@ function SerialMasterPage() {
       }).then(async (willDelete) => {
         if (willDelete) {
           const snCodeToDelete = item.p_tssm_sn_struc_code;
-          console.log("item--//",item.p_tssm_sn_struc_code)
+        
           try {
             const response = await axios.post("/api/delSerial_Master", {
                sn_code: snCodeToDelete
             });
-            console.log("ลบข้อมูลสำเร็จ:", response.data);
+         
             swal("Your data has been deleted successfully", {
               icon: "success",
             });

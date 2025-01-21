@@ -444,7 +444,7 @@ function fn_ScanSMTConnectShtConfirm() {
     },
   ];
   const getRowClassName = (record) => {
-    console.log(record,'ScanResult record');
+
     if (record.scan_result === "NG") {
       return 'row-red';
     } else if (record.scan_result === "OK") {

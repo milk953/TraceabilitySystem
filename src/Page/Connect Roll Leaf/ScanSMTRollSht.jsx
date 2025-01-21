@@ -154,7 +154,7 @@ function ScanSMTRoollSht() {
                     <TableCell align="right">
                       <Typography>Check Roll :</Typography>
                     </TableCell>
-                    {console.log(lblCheckRoll)}
+                  
                     <TableCell colSpan={1}>
                       {" "}
                       <div style={lblCheckRoll.style}>
@@ -275,7 +275,7 @@ function ScanSMTRoollSht() {
                   </TableRow>
                 </TableBody>
               </Table>
-              {console.log(lbllog, "lbllog")}
+          
               {lbllog.visible == true && (
                 <Paper elevation={3} className="Card-lblLog">
                   {lbllog.value}
@@ -298,7 +298,7 @@ function ScanSMTRoollSht() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
-                {console.log(txtLeafNo,'GvSerial')}
+              
                   {Array.from({ length: GvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell
@@ -308,7 +308,7 @@ function ScanSMTRoollSht() {
                         {index + 1}
                       </TableCell>
                       <TableCell>
-                        {console.log('txtLeafNotxtLeafNo',txtLeafNo)}
+                     
                         <TextField
                           size="small"
                           fullWidth

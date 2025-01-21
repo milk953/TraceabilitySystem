@@ -33,7 +33,7 @@ function fn_LotRollLeafNo() {
 
   //เข้ามาแล้วSearch
   useEffect(() => {
-    console.log("Roll");
+
     if (ROLL != null) {
       if (ROLL != "") {
         settxtRollNo((prevState) => ({
@@ -66,7 +66,7 @@ function fn_LotRollLeafNo() {
   };
 
   const setGrid = async (strRollNO) => {
-    console.log("setGrid", strRollNO);
+
     let dtRollLeaf = [];
     await axios
       .post("/api/ViewTraceLot/fnLotRollLeafNo", {
@@ -87,7 +87,7 @@ function fn_LotRollLeafNo() {
             LEAF5: group[4] ? group[4].roll_leaf_no : "",
           };
         });
-        console.log("dtRollLeaf", dtRollLeaf);
+       
         settblLeafNo((prevState) => ({
           ...prevState,
           value: dtRollLeaf,
@@ -103,7 +103,7 @@ function fn_LotRollLeafNo() {
     } else {
       strType = "ROLL";
     }
-    console.log(txtRollNo.label, "btnExport_Click", strType);
+  
     await axios
       .post("/api/ViewTraceLot/fnLotRollLeafByLotData", {
         dataList:{        
@@ -259,7 +259,7 @@ function fn_LotRollLeafNo() {
     );
   };
   const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
-    console.log(data, "---", ColumnsHeader, "---", namefile);
+  
   
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.key && col.key !== null && col.key !== undefined

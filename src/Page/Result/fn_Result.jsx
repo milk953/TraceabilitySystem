@@ -77,7 +77,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data,'GetAoi_Coa_Result2');
+
         settblData1(res.data);
       });
 
@@ -91,7 +91,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data,'GetAoi_Coa_Result2_Export');
+
         setDatatblData1(res.data);
       });
 
@@ -109,7 +109,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data,'getAOI');
+
         settblData1(res.data);
       });
 
@@ -123,7 +123,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data,'GetAoi_Coa_Result2_Export');
+
         setDatatblData1(res.data);
       });
 
@@ -511,7 +511,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data, "position_v");
+
         if (res.data.length > 0) {
           dtCheck = res.data[0].position_v;
         }
@@ -544,7 +544,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data, "SPIResult_GetfinaldataExport");
+   
         setDatatblData1(res.data);
       });
   };
@@ -840,7 +840,7 @@ function fn_Result() {
         }
       });
     if (dt2.length > 0) {
-      console.log(dt2,"dt2dt2")
+
       await axios
         .post("/api/Result/PreResult_GetDataFound", {
           dataList: {
@@ -851,7 +851,7 @@ function fn_Result() {
           },
         })
         .then((res) => {
-  console.log(res.data,"res.data.1")
+
           if (res.data.length> 0) {
             
             settblData1(res.data);
@@ -869,7 +869,7 @@ function fn_Result() {
           },
         })
         .then((res) => {
-          console.log(res.data, "SPIResult_Getfinaldata1");
+
           if (res.data.length > 0) {
             settblData1(res.data);
             dt = res.data;
@@ -886,7 +886,7 @@ function fn_Result() {
             },
           })
           .then((res) => {
-            console.log(res.data, "SPIResult_Getfinaldata1");
+
             if (res.data.length > 0) {
               settblData1(res.data);
               dt = res.data;
@@ -1221,7 +1221,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data,'OST111');
+
         OST=res.data
       });
       if(OST.length>0){
@@ -1236,7 +1236,7 @@ function fn_Result() {
             }
           }
         }
-        console.log(strArr,strArrResult,'strArr')
+
         for (let i = 0; i <= strArr.length - 1; i++) {
           if (strArr[i].toUpperCase().includes("PIECE")) {
             const drRow = {
@@ -1259,7 +1259,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data,'OST222');
+
         OST_BAD=res.data
       });
       if(OST_BAD.length>0){
@@ -1287,7 +1287,7 @@ function fn_Result() {
         drNews=dtB
       }
       
-      console.log(dt,dtB,'bbbbbbb')
+
       settblData1(drNews);
       setDatatblData1(drNews);
   };
@@ -1336,7 +1336,7 @@ function fn_Result() {
         },
       })
       .then((res) => {
-        console.log(res.data,'GetDataXrayResult');
+
         settblData1(res.data);
         setDatatblData1(res.data);
       });
@@ -1465,7 +1465,7 @@ function fn_Result() {
         title: "No Data Export!",
       });
     } else {
-      console.log(nameFile, "nameFile");
+
       let formattedNow = Now.getFullYear().toString() + 
       (
       Now.getMonth() + 1).toString().padStart(2, '0') +  // เดือนเริ่มต้นที่ 0 ต้องบวก 1

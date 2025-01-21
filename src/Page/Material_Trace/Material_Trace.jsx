@@ -28,7 +28,7 @@ function LotTraceView() {
     settxtInviceNo,
     ExportGridToCSV
   } = fn_Material_Trace();
-  // console.log(loading, "loaddd");
+
   return (
     <>
       <Hearder />

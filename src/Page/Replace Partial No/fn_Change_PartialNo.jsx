@@ -6,7 +6,7 @@ import { DataConfig } from "../Common/function_Common";
 import { useLoading } from "../../loading/fn_loading";
 function fn_Change_PartialNo() {
   const { ConfigData } = DataConfig();
-  console.log(ConfigData, "ConfigData");
+
   const { showLoading, hideLoading } = useLoading();
   const [txtTotalPcs, settxtTotalPcs] = useState(1);
   const [hfSerialCount, sethfSerialCount] = useState("");
@@ -101,7 +101,7 @@ function fn_Change_PartialNo() {
   };
 
   const getInitialSerial = async () => {
-    console.log();
+
     let dtData = [];
     // settxtTotalPcs(1)
     for (let intRow = 0; intRow < txtTotalPcs; intRow++) {
@@ -136,21 +136,21 @@ function fn_Change_PartialNo() {
         FINALGATE_FLG: "N",
         FINALGATE_ROW: 0,
       });
-      console.log(txtSerialNo[intSeq], "txtSerialNo");
+
       if (txtSerialNo[intSeq] == "" || txtSerialNo[intSeq] == undefined) {
-        console.log("11111");
+
         strError = "Please input Old Serial Number.";
         break;
       } else if (
         txtSerialNoNew[intSeq] == "" ||
         txtSerialNoNew[intSeq] == undefined
       ) {
-        console.log("2222");
+
         strError = "Please input New Serial Number.";
         break;
       }
     }
-    console.log("dtData", strError);
+
     return [dtData, strError];
   };
 
@@ -211,7 +211,7 @@ function fn_Change_PartialNo() {
         for (let intRow = 0; intRow < dtData.length; intRow++) {
           strOldSerial = dtData[intRow].SERIAL_OLD;
           strNewSerial = dtData[intRow].SERIAL_NEW;
-          console.log(strOldSerial, "----", strNewSerial);
+
           await axios
             .post("/api/ChangPatial/GetFgh_inspect_count", {
               Plant_Code: Fac,

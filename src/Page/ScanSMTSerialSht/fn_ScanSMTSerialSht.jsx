@@ -188,7 +188,7 @@ function fn_ScanSMTSerialSht() {
         strPrdName = dtLotData[0][0];
         sethfRollNo(dtLotData[0][1]);
       }
-      console.log("strPrdName", strPrdName);
+ 
 
       if (strPrdName !== "") {
         setlblLog("");
@@ -205,7 +205,7 @@ function fn_ScanSMTSerialSht() {
             .then((res) => {
               dt = res.data.prd_name;
             });
-          console.log("dt", dt);
+        
           if (dt === "OK") {
             const datagetPd = await getProductSerialMaster(strPrdName);
             await getInitialSheet(datagetPd.slm_sht_scan);
@@ -378,7 +378,7 @@ function fn_ScanSMTSerialSht() {
   const handleChangeRollLeaf = async () => {
     setpnlLog(false);
     setlblLog("");
-    console.log(hfConnRollLength, "hfConnRollLength")
+   
     if (txtRollLeaf !== "" && txtRollLeaf.length === parseInt(hfConnRollLength)) {
       let strRollProduct = hfRollNo + hfCheckRollPrd;
       if (hfCheckRollPrdFlg === "Y") {
@@ -523,7 +523,7 @@ function fn_ScanSMTSerialSht() {
       setpnlBoard(false);
     }
 
-    console.log("hfShtScan", hfShtScan)
+  
     for (let intSht = 1; intSht <= hfShtScan; intSht++) {
       let drRowSht = {
         SHEET: "",
@@ -555,7 +555,7 @@ function fn_ScanSMTSerialSht() {
     settxtSideBack("");
     settxtgvSerial("");
     setgvSerialData(dtData);
-    console.log("gvserialdata:", dtData)
+  
     return dtData;
   };
 
@@ -632,7 +632,7 @@ function fn_ScanSMTSerialSht() {
         })
           .then((res) => {
             sethfWeekCode(res.data);
-            console.log("hfWeekCode", res.data);
+       
           });
       }
 
@@ -776,7 +776,7 @@ function fn_ScanSMTSerialSht() {
           if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
 
             for (let _intRow = _intRowSerial + 1; _intRow < dtSerial.length; _intRow++) {
-              console.log("////", dtSerial[_intRow].SERIAL)
+           
               if (_strSerial === dtSerial[_intRow].SERIAL) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
@@ -786,7 +786,7 @@ function fn_ScanSMTSerialSht() {
             }
 
             let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
-            console.log(isDuplicate)
+      
             if (isDuplicate) {
               _strScanResultUpdate = "NG";
               _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
@@ -800,7 +800,7 @@ function fn_ScanSMTSerialSht() {
               const end = parseInt(hfSerialEndDigit);
               _strFixDigit = _strSerial.substring(start - 1, end);
 
-              console.log(_strFixDigit, hfSerialDigit);
+         
               if (_strFixDigit !== hfSerialDigit) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -938,7 +938,7 @@ function fn_ScanSMTSerialSht() {
           })
             .then((res) => {
               _strReturn = res.data[0].p_error;
-              console.log(_strReturn, "setseriallotshtelttable");
+           
               if (_strReturn !== "") {
                 dtSerial[i].SCAN_RESULT = "NG";
                 dtSerial[i].REMARK = " No sheet ELT result / ไม่พบผลการทดสอบ ELT";
@@ -978,7 +978,7 @@ function fn_ScanSMTSerialSht() {
             if (CONNECT_SERIAL_ERROR.includes(_strSerial)) {
               _strMessageUpdate = "Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว";
               _strScanResultUpdate = "OK";
-              console.log("มาหรือเปล่า")
+           
             }
 
             if (AUTO_SCAN_CHECK_FLG === "1" &&
@@ -1057,9 +1057,9 @@ function fn_ScanSMTSerialSht() {
                   _intCount = res.data.intCount;
                 });
 
-              console.log(_intCount, "_intCount")
+          
               if (_intCount === 1) {
-                console.log(_intCount, "_intCount")
+            
                 _bolError = true;
                 _strScanResultAll = "NG";
                 for (let i = 0; i < dtRowLeaf.length; i++) {
@@ -1125,7 +1125,7 @@ function fn_ScanSMTSerialSht() {
                   })
                     .then((res) => {
                       _strUpdateError = res.data.p_error;
-                      console.log(_strUpdateError, "SetRollLeafTrayTable")
+                    
                     });
                 }
               }
@@ -1157,7 +1157,7 @@ function fn_ScanSMTSerialSht() {
             })
               .then((res) => {
                 _strUpdateError = res.data.p_error;
-                console.log(_strUpdateError, "SetSerialLotShtTable")
+           
               });
 
             if (_strUpdateError !== "") {
@@ -1184,7 +1184,7 @@ function fn_ScanSMTSerialSht() {
               })
                 .then((res) => {
                   _strUpdateError = res.data.p_error;
-                  console.log(_strUpdateError, "setSerialRecordTimeTrayTable")
+              
                 });
               if (_strUpdateError !== "") {
                 _strScanResultAll = "NG";
@@ -1255,13 +1255,12 @@ function fn_ScanSMTSerialSht() {
 
       if (gvSerialData[intSeq].TYPE === "SHT") {
         strFrontSide = txtgvSerial[intSeq];
-        console.log(strFrontSide, "////////////")
+     
       } else {
         const backSideIndex = txtSideBack[0];
         const backSideText = backSideIndex;
 
-        console.log(backSideText, "bbbbbb")
-        console.log(strFrontSide, "sssss")
+     
         if (backSideText !== "" && strFrontSide !== "") {
           if (txtgvSerial[intSeq] == undefined) {
             txtgvSerial[intSeq] = "";
@@ -1311,7 +1310,7 @@ function fn_ScanSMTSerialSht() {
         }
       }
     }
-    console.log("dtData", dtData);
+  
     return dtData;
   };
 
@@ -1392,7 +1391,7 @@ function fn_ScanSMTSerialSht() {
       })
       .then((res) => {
         dtProductSerial = res.data[0];
-        console.log(res.data[0], "////////")
+      
         if (dtProductSerial !== null) {
           sethfSerialLength(dtProductSerial.slm_serial_length);
           sethfSerialFixFlag(dtProductSerial.slm_fix_flag);
@@ -1493,7 +1492,7 @@ function fn_ScanSMTSerialSht() {
       .then((res) => {
         dtSerailCount = res.data[0];
       });
-    console.log("dtSerailCount", dtSerailCount);
+   
     if (dtSerailCount.length !== "") {
       setlblTotalSht(dtSerailCount.count_sht.toLocaleString('en-US'));
       setlblTotalPcs(dtSerailCount.count_pcs.toLocaleString('en-US'));
@@ -1551,7 +1550,7 @@ function fn_ScanSMTSerialSht() {
       }
       _strShtNoOld = dtSerial[i].FRONT_SIDE;
     }
-    console.log("_dtData", _dtData);
+
     return _dtData;
   };
 
@@ -1561,7 +1560,7 @@ function fn_ScanSMTSerialSht() {
       const nextIndex = index + 1;
       if (nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]) {
         inputgvSerial.current[nextIndex].focus();
-        console.log('Calling btnSaveClick', nextIndex);
+      
       } else if (nextIndex === gvSerialData.length) {
         btnSaveClick();
         e.target.blur();

@@ -11,7 +11,7 @@ import { fn_Homepage } from "../Homepage/fn_Homepage";
 function fn_ScanConfirmMagazineP1() {
   const plantCode = import.meta.env.VITE_FAC;
   const { menuName } = fn_Homepage();
-  console.log("แสดงชื่อของ Menu Name : ",menuName);
+
   const [hfUserID, setHfUserID] = useState("");
   const [hfUserStation, setHfUserStation] = useState("");
   const [txtLotNo, setTxtLotNo] = useState({

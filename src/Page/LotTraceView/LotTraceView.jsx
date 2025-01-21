@@ -345,7 +345,7 @@ function LotTraceView() {
           >
            
           </div>
-          {console.log(gvMaterial.value,columnsgvMaterial,'เทสสสสสส')}
+
           <div style={{ display: "flex", width: "100%" }}>
             {/*----------------------------- Table1.1--------------------- */}
             <Table

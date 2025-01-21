@@ -241,7 +241,7 @@ function fn_ScanSheetBakeTime() {
           txtSheetNo: txtSheetNo,
           txtProcess: txtProcess,
         });
-        console.log(rowCout, "rowCout");
+
         if (rowCout == 0) {
           strError = await getData("CallSMTBakingRecordTimeResult", {
             strSheetNo: txtSheetNo,

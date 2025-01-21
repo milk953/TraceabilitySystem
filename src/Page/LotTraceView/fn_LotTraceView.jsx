@@ -126,10 +126,10 @@ function fn_LotTraceView() {
 
   useEffect(() => {
     if (lot == "" || lot == null || lot == undefined) {
-      console.log("lot1", lot);
+  
       reset();
     } else {
-      console.log("lot2", lot);
+   
       settxtLotNo(lot);
       setLotNoSearch(lot);
     }
@@ -146,7 +146,7 @@ function fn_LotTraceView() {
   const btnSearch_Click = async () => {
     showLoading("กำลังค้นหา กรุณารอสักครู่...");
     if (txtLotNo != "" || txtSheetNo != "" || txtSerialNo != "") {
-      console.log(txtLotNo, txtSheetNo, txtSerialNo, "เข้าจ้าาาาาาาาาาาาๅ");
+
       const datalblLot = await setHead();
       await setGrid(datalblLot);
       hideLoading();
@@ -322,14 +322,14 @@ function fn_LotTraceView() {
         }
       }
     } else if (txtSheetNo != "") {
-      console.log(txtSheetNo, "เข้าtxtsheetno");
+
       let dtLot;
       await axios
         .post("/api/ViewTraceLot/GetDataViewLot3", {
           dataList: { txtSheetNo: txtSheetNo, PLANT_CODE: Fac },
         })
         .then((res) => {
-          console.log(res.data, "GetDataViewLot3");
+
           dtLot = res.data;
         });
       if (dtLot.length > 0) {
@@ -371,7 +371,7 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         dt = res.data;
-        console.log(res.data, "resssss");
+
       });
 
     settxtPreviousLotNo((prevState) => ({
@@ -392,7 +392,7 @@ function fn_LotTraceView() {
           settxtProd("");
         }
         if (dt[dr].LOT_ROLL_NO !== null) {
-          console.log(dt, "dtdtdtdtdtdt3");
+  
           settxtRollNo((prevState) => ({
             ...prevState,
             value: dt[dr].LOT_ROLL_NO,
@@ -425,7 +425,7 @@ function fn_LotTraceView() {
             })
             .then((res) => {
               dataGvLot = res.data;
-              console.log(dataGvLot, "dataGvLot");
+
             });
 
           setgvLot((prevState) => ({
@@ -484,7 +484,7 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         dtSerailCount = res.data;
-        console.log(dtSerailCount.length, "dtSerailCount");
+
       });
     let dataConnectSht = 0;
     if (dtSerailCount.length > 0) {
@@ -510,7 +510,7 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         dtFinalGate = res.data;
-        console.log(dtFinalGate, "dtFinalGate");
+
       });
     if (dtFinalGate.length > 0) {
       dataOK = dtFinalGate[0]?.final_ok.toLocaleString("en-US", {
@@ -525,7 +525,7 @@ function fn_LotTraceView() {
       dataOK = "0";
       dataNG = "0";
     }
-    console.log(dataOK, dataNG, "dtFinalGate2");
+
     setlbtFinalGate((prevState) => ({
       ...prevState,
       valueOK: dataOK,
@@ -542,7 +542,7 @@ function fn_LotTraceView() {
         strLOTNO: datalblLot,
       })
       .then((res) => {
-        console.log(res.data, "fnGetLotProcessDetailData");
+   
         setgvRouting((prevState) => ({
           ...prevState,
           value: res.data,
@@ -552,8 +552,8 @@ function fn_LotTraceView() {
       });
 
     await axios.post("/api/ViewTraceLot/fnGetProcessLinkData").then((res) => {
-      904084627;
-      console.log("gvProcessLinkgvProcessLink", res.data);
+
+
       setgvProcessLink((prevState) => ({
         ...prevState,
         value: res.data,
@@ -570,7 +570,7 @@ function fn_LotTraceView() {
         dataList: { strLotNo: strLot, strPlantCode: Fac },
       })
       .then((res) => {
-        console.log("FinalExport", res.data);
+
         FinalExport = res.data;
       });
     if (FinalExport.length > 0) {
@@ -826,7 +826,7 @@ function fn_LotTraceView() {
             )
             .trim(); //ตัวสุดท้ายหลัง_
         }
-        // console.log(strEMCSNo, "strEMCSNo");
+
         return (
           <>
             {strEMCSNo.map((item, idx) => (
@@ -998,7 +998,7 @@ function fn_LotTraceView() {
   ];
 
   const handleExport = async () => {
-    console.log(gvLot.value,"setLOT")
+
     let data=[{
       LOT_NO: lblLotNo,
       PRODUCT_NAME: txtProd,
@@ -1079,7 +1079,7 @@ function fn_LotTraceView() {
   ];
 
   const ExportTableToCSV = (sheets, namefile) => {
-    console.log(sheets, "exportcsv", namefile);
+
     const wb = XLSX.utils.book_new();
   
     sheets.forEach((sheet) => {
@@ -1108,7 +1108,7 @@ function fn_LotTraceView() {
   };
 
   const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
-    console.log(data, "---", ColumnsHeader, "---", namefile);
+
 
     const filteredColumns = ColumnsHeader.filter(
       (col) => col.key && col.key !== null && col.key !== undefined
@@ -1153,7 +1153,7 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         FinalExport = res.data;
-        console.log("FinalExport2", FinalExport.length, FinalExport);
+
       });
     if (FinalExport.length > 0) {
       namefile = "FinalGate" + strLot + ".xls";
@@ -1166,7 +1166,7 @@ function fn_LotTraceView() {
     let linkEmcNo = "";
     let linkEmcNo2 = "";
     let linkEmcNo3 = "";
-    console.log(`${strEMCS}หมายเลข: ${strEMCSNo}, รุ่น: ${strEMCSRev}`);
+
     let dt1 = [];
     let dt2 = [];
     await axios
@@ -1176,7 +1176,7 @@ function fn_LotTraceView() {
       })
       .then((res) => {
         dt1 = res.data;
-        console.log(dt1, "fdsfksdhf");
+
       });
 
     for (let intSeq = 0; intSeq < strEMCS.length; intSeq++) {
@@ -1185,35 +1185,35 @@ function fn_LotTraceView() {
         if (intSeq == 0) {
           if (dt1.EMCS_TYPE == "EMCS") {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
-            console.log("เข้าจ้า1.1", linkEmcNo);
+
           } else if (dt1.EMCS_TYPE == "EPS") {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormePS.aspx?EPS_NO=${dt1.EMCS_NO}&EPS_REV=${dt1.EMCS_REV}&EPS_LANGUAGE=EN&EPS_TYPE=FORM`;
-            console.log("เข้าจ้า1.2", linkEmcNo);
+      
           } else {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
-            console.log("เข้าจ้า1.3", linkEmcNo);
+        
           }
         } else if (intSeq == 1) {
           if (dt1.EMCS_TYPE == "EMCS") {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
-            console.log("เข้าจ้า1.1", linkEmcNo);
+        
           } else if (dt1.EMCS_TYPE == "EPS") {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormePS.aspx?EPS_NO=${dt1.EMCS_NO}&EPS_REV=${dt1.EMCS_REV}&EPS_LANGUAGE=EN&EPS_TYPE=FORM`;
-            console.log("เข้าจ้า1.2", linkEmcNo);
+      
           } else {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
-            console.log("เข้าจ้า1.3", linkEmcNo);
+        
           }
         } else if (intSeq == 2) {
           if (dt1.EMCS_TYPE == "EMCS") {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
-            console.log("เข้าจ้า1.1", linkEmcNo);
+        
           } else if (dt1.EMCS_TYPE == "EPS") {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormePS.aspx?EPS_NO=${dt1.EMCS_NO}&EPS_REV=${dt1.EMCS_REV}&EPS_LANGUAGE=EN&EPS_TYPE=FORM`;
-            console.log("เข้าจ้า1.2", linkEmcNo);
+        
           } else {
             linkEmcNo = `http://10.17.100.112/ConditionSystem/View/master/EMCS/E-DOC/rpt_LoadFormEdoc.aspx?FT_NO=${dt1.EMCS_NO}&FT_REV=${dt1.EMCS_REV}&ISSUETYPE=${dt1.EMCS_TYPE}&E_D=E`;
-            console.log("เข้าจ้า1.3", linkEmcNo);
+        
           }
         }
       }
@@ -1225,7 +1225,7 @@ function fn_LotTraceView() {
         })
         .then((res) => {
           dt2 = res.data;
-          console.log(dt2, "tdtdtdtdtddt");
+      
         });
 
       
@@ -1234,16 +1234,16 @@ function fn_LotTraceView() {
         dt2 = dt2[0];
         if (intSeq == 0) {
           linkEmcNo = dt2.filepdf;
-          console.log(linkEmcNo, "dt1.1");
+   
         } else if (intSeq == 1) {
           linkEmcNo2 = dt2.filepdf;
-          console.log(linkEmcNo2, "dt1.2");
+
         } else if (intSeq == 2) {
           linkEmcNo3 = dt2.filepdf;
-          console.log(linkEmcNo3, "dt1.3");
+        
         }
       }
-      console.log("linkEmcNo", linkEmcNo, linkEmcNo2, linkEmcNo3);
+ 
       if (linkEmcNo != "" || linkEmcNo2 != "" || linkEmcNo3 != "") {
         if (intSeq == 0) {
           window.open(linkEmcNo, "_blank");

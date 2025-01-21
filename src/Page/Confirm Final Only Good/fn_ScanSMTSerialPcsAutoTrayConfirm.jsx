@@ -221,7 +221,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       .then(async (res) => {
         let data = res.data;
         setProduct(data);
-        console.log(data);
+       
         setSl_Product((prevState) => ({
           ...prevState,
           value: data[0].prd_name,
@@ -249,14 +249,14 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
               _strPrdName = res.data.prdName[0];
             });
           let dtLotPassCount;
-          console.log(_strLot,Fac, "_strLot");
+        
           await axios
             .post("/api/Common/getSerialPassByLot", {
               strLotNo: _strLot,
               strPlantCode: Fac,
             })
             .then((res) => {
-              console.log(res.data, "lot_count");
+             
               dtLotPassCount = res.data.lotcount;
             });
           setlblLotTotal("0");
@@ -271,14 +271,14 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
             })
             .then((res) => {
               dtLotProduct = res.data.flat().flat();
-              console.log(dtLotProduct, "dtLotProduct");
+            
             });
           if (dtLotProduct.length > 0) {
             if (dtLotProduct[0][2] == "Y") {
               setHfTestResultFlag("N");
             }
             setHfLotAll(dtLotProduct[0][3]);
-            console.log("setHfLotAll", dtLotProduct[0][3]);
+           
           }
           setlblLot(_strLot);
           try {
@@ -458,7 +458,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       })
       .then((res) => {
         data = res.data[0];
-        console.log("data.slm_tray_flag", data.slm_tray_flag);
+     
         if (data != null) {
           setHfSerialLength(data.slm_serial_length);
           setHfSerialFixFlag(data.slm_fix_flag);
@@ -645,14 +645,14 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   };
 
   const getInitialSerial = async () => {
-    console.log(hfserialcount, "hfserialcount00000");
+  
     let dtData = [];
     for (let intRow = 0; intRow < hfserialcount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
       });
     }
-    console.log(dtData.length, "dtdata", hfTrayFlag);
+   
     setgvSerial((prevState) => ({ ...prevState, value: dtData }));
     settxtSerial(Array(gvSerial.value.length).fill(""));
     if (gvSerial.value.length > 0 && hfTrayFlag == "N") {
@@ -769,7 +769,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     let intRow;
     for (let intSht = 0; intSht < gvSerial.value.length; intSht++) {
       intRow++;
-      console.log(txtSerial[intSht], "mmmm");
+    
       dtData.push({
         SEQ: intSht + 1,
         SERIAL: txtSerial[intSht],
@@ -861,7 +861,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
             dtSerial: dtSerial,
           })
           .then((res) => {
-            console.log("datazzzz2", res.data);
+           
             dtSerial = res.data;
           });
         if (hfCheckWeekCode == "Y") {
@@ -881,7 +881,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
 
           
           if (dtSerial[i].SERIAL != "") {
-            console.log(dtSerial[i].ROW_COUNT, "test1");
+          
             let _intCount = 0;
             let _intCountOK = 0;
             let _intCountNG = 0;
@@ -918,10 +918,10 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
               _strTouchUp = dtSerial[i].TOUCH_UP;
               _strRejectGroup = dtSerial[i].REMARK;
             }
-            console.log("_strReject1",_strReject1);
+          
             if (DUPLICATE_CHECK_FLG == "1") {
               if (dtSerial[i].ROW_COUNT == 0) {
-                console.log("g-hk", dtSerial[i].ROW_COUNT);
+              
                 await axios
                   .post("/api/Common/GetSerialDuplicate", {
                     dataList: {
@@ -933,7 +933,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                     },
                   })
                   .then((res) => {
-                    console.log(res.data, "maaaa");
+                  
                     _intCountDup = res.data.row_count;
                     dtSerial[i].ROW_COUNT = _intCountDup;
                   });
@@ -951,7 +951,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   _intEngRevEndDigit: Number(hfSerialEndDigit),
                 })
                 .then((res) => {
-                  console.log("GetCheckSumSerial", res.data);
+                
                   GetCheckSumSerial = res.data;
                 });
               if (!GetCheckSumSerial) {
@@ -1055,7 +1055,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
 
               if (!_bolError) {
                 let isDuplicate = dtSerial.some((item, index) => {
-                  console.log(`Checking duplicate ${index+1}: ${item.SERIAL} -----  ${_strSerial}`);
+               
                   return (
                     index !== _intRowSerial &&
                     _strSerial ===
@@ -1118,12 +1118,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   _intCountNG = 1;
                   _bolError = true;
                 } else if (hfLotAll.indexOf(strSheetLot) === -1) {
-                  console.log(
-                    "ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส",
-                    hfLotAll,
-                    "---------",
-                    strSheetLot
-                  );
+                
                   _strMessageUpdate =
                     "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                   _strRemark = "Lot not same connect sheet  ";
@@ -1203,7 +1198,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   }
                 }
               }
-              console.log("_intCountDup0", hfCheckSPIAOI, _bolError);
+             
               if (!_bolError && hfCheckSPIAOI == "Y") {
                 let _Result = "";
                 let _FrontSheetBarcode;
@@ -1218,7 +1213,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   })
                   .then((res) => {
                     _dtShtData = res.data;
-                    console.log("GetSheetDataBySerialNo", res.data);
+                 
                   });
                 if (_dtShtData != "") {
                   _FrontSheetBarcode = _dtShtData.sheet_no_front;
@@ -1237,7 +1232,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                       },
                     })
                     .then((res) => {
-                      console.log("Get_Spi_aoi_result", res.data);
+                    
                       _Result = res.data._strresult;
                       _strMessage = res.data._strmessage;
                     });
@@ -1264,7 +1259,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   _bolError = true;
                 }
               }
-              console.log("_intCountDup1", _bolError,hfTestResultFlag,_strTouchUp);
+             
               if (!_bolError) {
                 if (hfTestResultFlag == "Y") {
                   if (_strTouchUp == "NG" && _strRejectGroup != "MASTER") {
@@ -1306,7 +1301,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                     dtSerial[i].ROW_UPDATE = "Y";
                     _bolError = true;
                   } else if (_strTestResult == "OK") {
-                    console.log("_intCountDup2", _intCountDup);
+                   
                     if (_intCountDup == 0) {
                       _strScanResultUpdate = "OK";
                       _strTestResultUpdate = _strTestResult;
@@ -1420,7 +1415,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   })
                   .then((res) => {
                     _strEFPCRemark = res.data;
-                    console.log("GetEFPCSheetInspectionResult", res.data);
+                 
                   });
                 if (_strEFPCResult == "NG") {
                   _strMessageUpdate = _strEFPCRemark;
@@ -1445,7 +1440,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   })
                   .then((res) => {
                     _strInspResult = res.data;
-                    console.log(res.data, "GetSerialFinInspectResult");
+                  
                   });
                 if (_strInspResult == "OK") {
                   _strMessageUpdate = _strMessageUpdate + _strInspResult;
@@ -1473,7 +1468,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
                   })
                   .then((res) => {
                     _intCheckPass = res.data.result;
-                    console.log("getcheckspecialbyserial", res.data);
+                  
                   });
                 if (_intCheckPass == 0) {
                   _strMessageUpdate = FINAL_GATE_SPECIAL_MESSAGE;
@@ -1511,18 +1506,18 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
             dtSerial[i].TOUCH_UP = _strTouchUp;
             dtSerial[i].REJECT2 = _strReject2;
             dtSerial[i].SCAN_RESULT = _strScanResultUpdate;
-            console.log("ได้  _strScanResultUpdate 1", _strScanResultUpdate);
+          
             dtSerial[i].TEST_RESULT = _strTestResultUpdate;
             dtSerial[i].REMARK = _strMessageUpdate;
             if (_strScanResultUpdate == "NG") {
               _strScanResultAll = "NG";
-              console.log("ได้ จากตรงนี้ NG1", _strScanResultAll);
+           
             }
           } else {
             dtSerial[i].SCAN_RESULT = "NG";
             dtSerial[i].ROW_UPDATE = "N";
             _strScanResultAll = "NG";
-            console.log("ได้ จากตรงนี้ NG2", _strScanResultAll);
+           
           }
           _intRowSerial = _intRowSerial + 1;
         }
@@ -1568,7 +1563,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         if (_strScanResultAll === "OK") {
           _strErrorUpdate= await SaveSetSerialLotTrayTableGood(dtSerial);
         }
-        console.log("SAVE1 ออก จบ ไปต่อ");
+      
         if (_strErrorUpdate != "") {
           setlblResult((prevState) => ({
             ...prevState,
@@ -1627,7 +1622,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
         }
       }
       if (!_bolTrayError) {
-        console.log("แว่ยู่", dtSerial);
+      
         setgvScanResult((prevState) => ({
           ...prevState,
           visble: true,
@@ -1660,7 +1655,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
   const SaveSetSerialLotTrayTableGood = async (dtSerial) => {
     let _strErrorUpdate=''
     for (let i = 0; i < dtSerial.length; i++) {
-      console.log("SAVE1", dtSerial[i].SCAN_RESULT);
+   
       await axios
         .post("/api/Common/SetSerialLotTrayTableGood2", {
           dataList: {

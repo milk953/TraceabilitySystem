@@ -239,7 +239,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     var dtSerial = [];
     dtSerial = await getInputSerial();
-    console.log(dtSerial, "dtSerial");
+
 
     const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
     if (allSerialEmpty) {
@@ -274,7 +274,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       for (let i = 0; i < dtSerial.length; i++) {
         _strShtNoBack = dtSerial[i].BACK_SIDE;
         _strShtNoFront = dtSerial[i].FRONT_SIDE;
-        console.log(dtSerial, "dtSerial");
+
         
         if (hfSheetType == "D" && _strShtNoBack == _strShtNoFront) {
           _strScanResultAll = "NG";
@@ -332,7 +332,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             strSheetnoB: _strShtNoBack,
             strSheetType: hfSheetType,
           });
-          console.log(_inCountSeq, "inCountSeq");
+
           if (parseInt(_inCountSeq) > 1) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet no. duplicate";
@@ -478,7 +478,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
       
       for(let x =0 ;x<dtSerial.length;x++){
-        console.log(hfCheckSheetELT, "hfCheckSheetELT",_bolError);
+
         if (hfCheckSheetELT == "Y" && _bolError == false) { 
           let _strReturn = "";
           _strReturn = await getData("SetSerialLotShtELTTable", {
@@ -491,7 +491,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             strSerial: dtSerial[x].SERIAL,
             hfSerialLength: hfSerialLength,
           });
-          console.log(_strReturn, "strReturn");
+
           if (_strReturn != "") {
             dtSerial[x].SCAN_RESULT = "NG";
             dtSerial[x].REMARK =" No sheet ELT result " + '/' + "ไม่พบผลการทดสอบ ELT"
@@ -658,7 +658,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         }
         
         if (!_bolError  && _strUpdateError == "") {
-          console.log(dtSerial, "dtSerial",'inlast');
+
           for (let drRow = 0; drRow < dtSerial.length; drRow++) {
             if (dtSerial[drRow].SERIAL != ''){
               _strUpdateError = await getData("SetSerialLotShtTable", {
@@ -979,7 +979,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const handleBackSideChange = (index, event) => {
     const newValues = [...txtSideBack];
     newValues[index] = event.target.value.trim().toUpperCase();
-    console.log(index, "index");
+
     setTxtSideBack(newValues);
     if (event.key === "Enter") {
       try {
@@ -993,7 +993,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     const newValues = [...txtSideFront];
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSideFront(newValues);
-    console.log(index, "index");
+
     if (event.key === "Enter") {
       if(newValues[index] != ''){
         try {
@@ -1011,7 +1011,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   async function getInputSerial() {
     await getData("getProductSerialMaster", productSelect);
-    // console.log(txtSideBack[0], "txtSideBack0",txtSideFront[1], "txtSideFront0", txtSideFront[0], "txtSideFront1", txtSideBack[1], "txtSideBack1");
+
     var dtData = [];
     var updatedt = [];
     var intRow = 0;
@@ -1255,7 +1255,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       return result;
     } else if (type == "SetSerialLotShtELTTable") {
       let result = "";
-      console.log("SetSerialLotShtELTTable Insert");
+
       await axios
         .post("/api/Common/SetSerialLotShtELTTable", {
           dataList: {
@@ -1292,7 +1292,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       return result;
     } else if (type == "SetSerialRecordTimeTrayTable") {
       let result = "";
-      console.log("SetSerialRecordTimeTrayTable Insert",param);
+
       await axios
         .post("/api/Common/SetSerialRecordTimeTrayTable", {
           dataList: {

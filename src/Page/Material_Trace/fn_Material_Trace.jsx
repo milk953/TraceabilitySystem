@@ -7,7 +7,7 @@ import { useLoading } from "../../loading/fn_loading";
 import {DataConfig} from "../Common/function_Common"; 
 function fn_Material_Trace() {
   const{ConfigData} = DataConfig();
-  console.log(ConfigData,'ConfigData');
+
   const { showLoading, hideLoading } = useLoading();
   const [txtLotNo, settxtLotNo] = useState("");
   const [txtInviceNo, settxtInviceNo] = useState("");
@@ -23,14 +23,14 @@ function fn_Material_Trace() {
 
   //เข้ามาแล้วSearch
   useEffect(() => {
-    console.log(Vender_lot, InvoiceNo, "Useeffect");
+
     settxtLotNo(Vender_lot);
     settxtInviceNo(InvoiceNo);
     if (
       (Vender_lot != null && Vender_lot != "") ||
       (InvoiceNo != null && InvoiceNo != "")
     ) {
-      console.log("เข้ามาแล้วSearch", Vender_lot, InvoiceNo);
+
       ViewData(Vender_lot, InvoiceNo);
     }
   }, []);
@@ -45,7 +45,7 @@ function fn_Material_Trace() {
         title: "กรุณากรอกข้อมูล",
       });
       hideLoading();
-    }else{    console.log("ViewData", strlot,Invoice);
+    }else{   
       let Meterial = [];
   
       await axios
@@ -54,7 +54,7 @@ function fn_Material_Trace() {
           Invoice: Invoice||'',
         })
         .then((res) => {
-          console.log(res.data, "MaterialDataSearch");
+       
           setgvMaterial(res.data);
         });
   
@@ -64,7 +64,7 @@ function fn_Material_Trace() {
           Invoice: Invoice||'',
         })
         .then((res) => {
-          console.log(res.data, "GetMeterial");
+     
           for (let i = 0; i < res.data.length; i += 5) {
             Meterial.push(res.data.slice(i, i + 5));
           }

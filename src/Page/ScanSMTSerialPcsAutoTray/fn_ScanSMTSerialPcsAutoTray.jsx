@@ -190,7 +190,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         .then((res) => {
                             _strPrdName = res.data.prdName[0];
                         });
-                    console.log("PrdName:", _strPrdName);
+                  
 
                     let dtLotPassCount = [];
                     await axios.post("/api/Common/getSerialPassByLot", {
@@ -200,7 +200,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         .then((res) => {
                             dtLotPassCount = res.data.lotcount;
                         });
-                    console.log("Count:", dtLotPassCount);
+                 
                     setlblLotTotal("0");
                     setlblSerialNG("0");
                     if (dtLotPassCount.length > 0) {
@@ -214,7 +214,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         })
                         .then((res) => {
                             dtLotProduct = res.data.flat().flat();
-                            console.log("dtLotProductres", dtLotProduct);
+                           
                         });
                     if (dtLotProduct.length > 0) {
                         if (dtLotProduct[0][2] === "Y") {
@@ -231,7 +231,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         })
                             .then(async (res) => {
                                 let dtgetfinal = res.data;
-                                console.log("เข้าไหม", dtgetfinal);
+                               
                                 if (dtgetfinal === "OK") {
                                     const datagetPd = await getProductSerialMaster(_strPrdName);
                                     if (datagetPd.prm_final_packing_group_flg === "Y") {
@@ -259,7 +259,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 })
                                     .then(async (res) => {
                                         let dtgetfinal = res.data;
-                                        console.log("เข้าไหม", dtgetfinal);
+                                       
                                         if (dtgetfinal === "OK") {
                                             const datagetPd = await getProductSerialMaster(_strPrdName);
                                             if (datagetPd.prm_final_packing_group_flg === "Y") {
@@ -323,7 +323,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
     const handleChangeProduct = async (value) => {
         setselProduct(value);
-        console.log("Selected value:", value);
+       
         if (lblLot !== "") {
             await getProductSerialMaster(value);
             if (hfCheckPackingNo === "Y") {
@@ -350,7 +350,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 .then((res) => {
                     dtLotPassCount = res.data.lotcount;
                 });
-            console.log("Count:", dtLotPassCount);
+           
 
             await axios.post("/api/Common/GetSerialPassByLotPacking", {
                 strlotNo: lblLot,
@@ -360,7 +360,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 .then((res) => {
                     dtPackPassCount = res.data.lot_count;
                 });
-            console.log("dtPackPassCount:", dtPackPassCount);
+           
 
 
             if (dtLotPassCount > 0) {
@@ -497,7 +497,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             dtData.push({ SEQ: intRow + 1 });
         }
         setgvSerialData(dtData);
-        console.log("gvserialdata:", dtData)
+       
         return dtData;
     };
 
@@ -529,7 +529,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             setlblLog("");
         }
 
-        console.log(dtSerial, "dtSerial");
+       
 
         if (!_bolTrayError) {
 
@@ -544,7 +544,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             })
                 .then((res) => {
                     dtSerial = res.data;
-                    console.log(res.data);
+                   
                 });
 
             if (hfCheckWeekCode === "Y") {
@@ -591,7 +591,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                     let _strTestResult = "NO";
                     if (hfTestResultFlag === "Y") {
-                        console.log(dtSerial[i].TEST_RESULT, "dtSerial[i].TEST_RESULT")
+                        
                         _strTestResult = dtSerial[i].TEST_RESULT;
                         _strTypeTestResult = dtSerial[i].TYPE_TEST_RESULT;
                         _strReject1 = dtSerial[i].REJECT;
@@ -600,7 +600,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         _strTouchUp = dtSerial[i].TOUCH_UP;
                         _strRejectGroup = dtSerial[i].REMARK;
                     }
-                    //console.log(_strRejectGroup)
+                  
 
                     if (DUPLICATE_CHECK_FLG === "1") {
                         let _strSerialSegment = "";
@@ -623,7 +623,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         }
                     }
 
-                    console.log(_strSerial, "_strSerial")
+                   
                     if (_strSerial.length === hfSerialLength) {
                         let _strFixDigit = "";
                         let dtchecksumserial = true;
@@ -635,7 +635,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             .then((res) => {
                                 dtchecksumserial = res.data;
                             });
-                        console.log("dtchecksumserial:", dtchecksumserial)
+                       
 
                         if (!dtchecksumserial) {
                             _strMessageUpdate = "Serial invalid check sum / หมายเลขบาร์โค้ดมีค่าตรวจสอบไม่ถูกค้อง";
@@ -654,7 +654,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const end = parseInt(hfSerialEndDigit);
                             _strFixDigit = _strSerial.substring(start - 1, end);
 
-                            console.log("1", _strFixDigit, hfSerialDigit);
+                          
                             if (_strFixDigit !== hfSerialDigit) {
                                 _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
@@ -672,7 +672,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 const start = parseInt(hfConfigStart);
                                 const end = parseInt(hfConfigEnd);
                                 _strConfigDigit = _strSerial.substring(start - 1, end);
-                                console.log("2", _strConfigDigit, hfConfigCode);
+                               
                                 if (_strConfigDigit !== hfConfigCode) {
                                     _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                     _strRemark = "Serial barcode mix product";
@@ -689,7 +689,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                         if (hfSerialStartCode !== "" && _strScanResultUpdate !== "NG") {
                             if (_strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
-                                console.log("3", hfSerialStartCode.length, hfSerialStartCode);
+                                
                                 _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
                                 _strScanResultUpdate = "NG";
@@ -707,7 +707,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const start = parseInt(hfCheckStartSeqStart);
                             const end = parseInt(hfCheckStartSeqEnd);
                             _strStartSeq = _strSerial.substring(start - 1, end);
-                            console.log("4", _strStartSeq, hfCheckStartSeqCode);
+                           
                             if (_strStartSeq !== hfCheckStartSeqCode) {
                                 _strMessageUpdate = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Serial barcode mix product";
@@ -772,7 +772,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             const start = parseInt(hfCheckPrdShtStart);
                             const end = parseInt(hfCheckPrdShtEnd);
                             _strPrdSht = _strShtNo.substring(start - 1, end);
-                            console.log(_strShtNo, hfCheckPrdAbbr)
+                         
                             if (_strShtNo !== "" && hfCheckPrdAbbr !== _strPrdSht) {
                                 _strMessageUpdate = "Change serial barcode mix product / เปลี่ยนหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                 _strRemark = "Change serial barcode mix product  ";
@@ -820,7 +820,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 .then((res) => {
                                     _dblPlasmaTime = res.data.plasma_time;
                                 });
-                            console.log(_dblPlasmaTime);
+                           
                             if (_dblPlasmaTime === 0) {
                                 _strMessageUpdate = _strMessageUpdate + " Skip Plasma / งานไม่ผ่านพลาสม่า";
                                 _strRemark = "Skip Plasma";
@@ -841,7 +841,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                                 _intCountNG = 1;
                                 _bolError = true;
-                                console.log(parseFloat(hfPlasmaTime), "hfplasmatime")
+                               
                             } else if (parseFloat(hfPlasmaTime) < _dblPlasmaTime && hfPlasmaHideTime === "N") {
                                 _strMessageUpdate = "Plasma time over " + hfPlasmaTime + " hr. / เวลาพลาสม่าเกิน " + hfPlasmaTime + " ชม.";
                                 _strRemark = "Plasma time over " + hfPlasmaTime + " hr.";
@@ -923,7 +923,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                         if (!_bolError) {
                             if (hfTestResultFlag === "Y") {
-                                console.log(_strTestResult, "mmmmmf")
+                               
                                 if (_strTouchUp === "NG" && _strRejectGroup !== "MASTER") {
                                     if (_strTestResult === "OK") {
                                         _strMessageUpdate = "Touch up result was fail / ผล Touch up ชิ้นงานแสดงไม่ผ่าน";
@@ -1157,7 +1157,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 setlblResultcolor("green");
             }
 
-            console.log(hfPlasmaCheck, hfPlasmaHideTime, "_dblPlasmaRemain")
+         
             if (hfPlasmaCheck === "Y" && hfPlasmaHideTime === "N") {
                 if (_dblPlasmaRemain > 0) {
                     //setlblTime("Remain ");
@@ -1207,7 +1207,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 // })
                 //     .then((res) => {
                 //         _strErrorUpdate = res.data.p_error;
-                //         console.log(res.data,'mmmmv');
+            
                 //     });
                 await axios
                     .post("/api/Common/SetSerialLotTrayTableGood2", {
@@ -1339,7 +1339,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             }
             dtData.push(drRow);
         }
-        console.log(dtData)
+      
         return dtData;
     };
 
@@ -1592,7 +1592,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             const nextIndex = index + 1;
             if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick', nextIndex);
+             
             } else if (nextIndex === nextIndex) {
                 btnSaveClick();
             }

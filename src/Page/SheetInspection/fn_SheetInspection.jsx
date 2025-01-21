@@ -40,7 +40,7 @@ function fn_SheetInspection() {
             setgvDataXOut(prevState => ({ ...prevState, visible: true }));
             setgvDataSheet(prevState => ({ ...prevState, visible: false }));
             await getDataXOutResult();
-            console.log()
+       
         } else {
             setpnlGridWidth("1020px");
             setgvDataSheet(prevState => ({ ...prevState, visible: true }));
@@ -171,7 +171,7 @@ function fn_SheetInspection() {
                 .then((res) => {
                     dtData = res.data;
                 });
-                console.log(dtData)
+            
             setgvDataSheet(prevState => ({ ...prevState, value: dtData }));
         }
     };

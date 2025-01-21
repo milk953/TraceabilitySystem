@@ -193,7 +193,7 @@ function fn_ScanSMTSerialControlTime() {
             .then((res) => {
                 strPrdName = res.data.prdName[0];
             });
-        console.log("PrdName2:", strPrdName);
+      
         if (strPrdName !== undefined) {
             setlblLog("");
             setvisiblelog(false);
@@ -202,7 +202,7 @@ function fn_ScanSMTSerialControlTime() {
             const datagetPd = await getProductSerialMaster(strPrdName);
             try {
                 setselProduct(strPrdName);
-                console.log("datagetpd", datagetPd.prm_proc_control_time_flg);
+               
 
                 if (datagetPd.prm_proc_control_time_flg === "Y") {
                     SetMode("SERIAL");
@@ -349,10 +349,10 @@ function fn_ScanSMTSerialControlTime() {
                                 }
                             ]
                         });
-                        console.log("SSSS", res.data.strresult);
+                     
                     } catch (error) {
                         alert(error);
-                        console.log(error);
+                  
                     }
                 }
             }
@@ -401,7 +401,7 @@ function fn_ScanSMTSerialControlTime() {
                                     const end = parseInt(hfSerialEndDigit);
                                     _strFixDigit = _strSerial.substring(start - 1, end);
 
-                                    console.log("lll", _strFixDigit, hfSerialDigit);
+                                
 
                                     if (_strFixDigit !== hfSerialDigit) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -416,7 +416,7 @@ function fn_ScanSMTSerialControlTime() {
                                         const start = parseInt(hfConfigStart);
                                         const end = parseInt(hfConfigEnd);
                                         _strConfigDigit = _strSerial.substring(start - 1, end);
-                                        console.log(_strConfigDigit, hfConfigCode, "hfConfigCode")
+                                      
                                         if (_strConfigDigit !== hfConfigCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
@@ -536,7 +536,7 @@ function fn_ScanSMTSerialControlTime() {
                     })
                         .then((res) => {
                             _strErrorUpdate = res.data.p_error;
-                            console.log("มาไหมม", _strErrorUpdate)
+                       
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
@@ -658,7 +658,7 @@ function fn_ScanSMTSerialControlTime() {
                     sethfProcControlTime(dtProductSerial.prm_proc_control_time);
                     sethfConnShtPcsTime(dtProductSerial.prm_conn_sht_control_time_flg);
                     sethfSerialStartCode(dtProductSerial.prm_serial_start_code);
-                    console.log("hfProcControlTimeCheck:", dtProductSerial.prm_proc_control_time_flg);
+                 
 
                 }
             });
@@ -697,7 +697,7 @@ function fn_ScanSMTSerialControlTime() {
             dtData.push(drRow);
         }
         setgvSerialData(dtData);
-        console.log("gvserialdata:", dtData)
+       
         return dtData;
     };
 
@@ -730,7 +730,7 @@ function fn_ScanSMTSerialControlTime() {
             const nextIndex = index + 1;
             if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick', nextIndex);
+          
             } else if (nextIndex === nextIndex) {
 
                 btnSaveClick();
@@ -850,7 +850,7 @@ function fn_ScanSMTSerialControlTime() {
     };
 
     const btnSaveClick = () => {
-        console.log(hfMode)
+       
         if (hfMode === "SERIAL") {
             setSerialDataTray();
             settxtgvSerial("");

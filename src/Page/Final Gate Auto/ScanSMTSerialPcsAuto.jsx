@@ -218,7 +218,7 @@ function ScanSMTRoollSht() {
                 {lblLog.value}
               </Paper>
               {/* )} */}
-              {/* {console.log('gvSerial.visble ',gvSerial.visble )} */}
+   
             
               <Table
                 className="CSS-GvSerial"
@@ -263,11 +263,7 @@ function ScanSMTRoollSht() {
                               event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
                               if (index < gvSerial.value.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
-                                console.log(
-                                  index,
-                                  "---",
-                                  gvSerial.value.length - 1
-                                );
+                          
                               } else {
                                 btnSave_Click();
                                 event.target.blur();
@@ -349,7 +345,7 @@ function ScanSMTRoollSht() {
                       </Typography>
                     </Paper>
                   </div>
-                {console.log('gvScanResult.value',gvScanResult.value)}
+    
                   <AntTable 
                 columns={columns}
                 dataSource={gvScanResult.value}

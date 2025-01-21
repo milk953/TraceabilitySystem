@@ -39,7 +39,7 @@ function fn_LotSheetNo() {
   };
 
   const setGrid = async (strlot) => {
-    console.log("setGrid", strlot);
+   
     // let dtFront = [];
     // await axios
     //   .post("/api/ViewTraceLot/fnLotSheetFrontData", {
@@ -60,7 +60,7 @@ function fn_LotSheetNo() {
     //         FRONTSHEET5: group[4] ? group[4].FRONT_SHEET_NO  : "",
     //       };
     //     });
-    //     console.log("dtFront", dtFront);
+
     //     settblFrontSheet(dtFront);
     //   });
       let dtBack = [];
@@ -88,7 +88,7 @@ function fn_LotSheetNo() {
             FRONTSHEET5: group[4] ? group[4].FRONT_SHEET_NO  : "",
           };
         });
-        console.log("dtBack", dtBack);
+
         settblBackSheet(dtBack);
       });
   };
@@ -388,7 +388,7 @@ function fn_LotSheetNo() {
   // ];
 
   // const ExportGridToCSV = (data, ColumnsHeader, namefile) => {
-  //   console.log(data, "---", ColumnsHeader, "---", namefile);
+
 
   //   const filteredColumns = ColumnsHeader.filter(
   //     (col) => col.key && col.key !== null && col.key !== undefined

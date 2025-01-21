@@ -1200,7 +1200,7 @@ function fn_ProductMaster() {
         strprdname: txtProduct
       });
       const Data = res.data;
-      console.log("/////", Data)
+
 
       settxtUpdateCount("");
       settxtShtLot("");
@@ -2807,7 +2807,7 @@ function fn_ProductMaster() {
           strprdname: txtProduct
         });
         const dt = res.data.p_prm_update_count;
-        console.log("kkkk", dt);
+
 
         if (dt > 0) {
           BeginTransFlg = true;
@@ -2928,7 +2928,7 @@ function fn_ProductMaster() {
             cbxConnshtpcs: ConnShtReqProductFlg
           })
             .then((res) => {
-              console.log("แก้ไขข้อมูลสำเร็จ =", res.data);
+
               Swal.fire("Success", "Update Data Success", "success").then(
                 (result) => {
                   if (result.isConfirmed) {
@@ -3063,7 +3063,7 @@ function fn_ProductMaster() {
             cbxConnshtpcs: ConnShtReqProductFlg
           })
             .then((res2) => {
-              console.log("บันทึกข้อมูลสำเร็จ =", res2);
+ 
               Swal.fire("Success", "Summit Data Success", "success").then(
                 (result) => {
                   if (result.isConfirmed) {
@@ -3087,7 +3087,7 @@ function fn_ProductMaster() {
 
     } else {
       // User clicked 'No'
-      console.log('Form not submitted');
+
     }
   };
 

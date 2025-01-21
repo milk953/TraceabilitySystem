@@ -1361,13 +1361,13 @@ function fn_ScanSMTSerialPcsNG() {
           });
         }
         let _strErrorUpdate = "";
-        console.log(dtSerial, "dtSerialFinal answwer");
+
         for (let insertDt = 0; insertDt < dtSerial.length; insertDt++) {
           if (
             dtSerial[insertDt].SERIAL != "" ||
             dtSerial[insertDt].SERIAL != null
           ) {
-            console.log("insertDt");
+     
             _strErrorUpdate = await getData("SetSerialLotTrayTable", {
               strPlantCode: Fac,
               strPrdName: _strPrdName,

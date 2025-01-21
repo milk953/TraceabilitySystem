@@ -5,7 +5,7 @@ import swal from "sweetalert";
 
 function PopupSerialMaster(onClose, item, searchFunction) {
     const STATUS_P = localStorage.getItem("STATUS");
-    //console.log("สถานะ", STATUS_P);v
+  
 
     const UserLogin = localStorage.getItem("IDCode");
     const [user_id, setuser_id] = useState("");
@@ -164,7 +164,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
             setuser_id(UserLogin);
             setipaddress(ipaddress);
         } else {
-            console.log("CASE EDIT", item);
+          
             setTXT_SN_Code(item.p_tssm_sn_struc_code);
             setTXT_SN_Name(item.p_tssm_sn_struc_name);
             setTXT_SN_UpCount(item.p_tssm_sn_struc_upcount);
@@ -205,7 +205,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
 
     const handleKEY_SN_Code = (event) => {
         const TXT_SN_Code = event.target.value;
-        // console.log(TXT_SN_Code, "ดูค่า");
+    
         setTXT_SN_Code(TXT_SN_Code);
         setERROR_SN_Code(false);
     };
@@ -464,7 +464,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
 
 
         if (STATUS_P === "NEW") {
-            console.log("NEW")
+        
 
             if (
                 TXT_SN_Code &&
@@ -540,7 +540,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                         ip_address: ipaddress
 
                     });
-                    console.log("บันทึกข้อมูลสำเร็จ =", response);
+                  
                     swal("success", "You save data success", "success");
                     searchFunction();
                     onClose();
@@ -556,7 +556,7 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                 );
             }
         } else {
-            console.log("EDIT")
+        
             if (
                 TXT_SN_Code &&
                 TXT_SN_Name &&
@@ -631,8 +631,8 @@ function PopupSerialMaster(onClose, item, searchFunction) {
                         ip_address: ipaddress
 
                     });
-                    console.log("/////", Check_Plant_Flag)
-                    console.log("แก้ไขข้อมูลสำเร็จ =", response);
+                   
+                  
                     swal("success", "You edit data success", "success");
                     searchFunction();
                     onClose();

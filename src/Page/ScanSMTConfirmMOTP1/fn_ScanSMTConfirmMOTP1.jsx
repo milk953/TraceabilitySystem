@@ -138,7 +138,7 @@ function fn_ScanSMTConfirmMOTP1() {
             .then((res) => {
               _strPrdName = res.data.prdName[0];
             });
-          console.log("PrdName:", _strPrdName);
+       
 
           let dtLotProduct = [];
           await axios
@@ -256,7 +256,7 @@ function fn_ScanSMTConfirmMOTP1() {
       const nextIndex = index + 1;
       if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
         inputgvSerial.current[nextIndex].focus();
-        console.log("Calling btnSaveClick", nextIndex);
+       
       } else if (nextIndex === nextIndex) {
         btnSaveClick();
       }
@@ -362,7 +362,7 @@ function fn_ScanSMTConfirmMOTP1() {
       });
     }
     setgvSerialData(dtData);
-    console.log("gvserialdata:", dtData);
+ 
 
     // if (gvSerialData.length > 0 && hfTrayFlag === "N") {
     //    // inputgvSerial.current[0].focus();
@@ -389,7 +389,7 @@ function fn_ScanSMTConfirmMOTP1() {
             _strSerialInfo: hfSerialInfo,
           })
           .then((res) => {
-            console.log(res.data);
+          
             sethfWeekCode(res.data);
           });
       }
@@ -457,7 +457,7 @@ function fn_ScanSMTConfirmMOTP1() {
             .then((res) => {
               dtCarrierboard = res.data;
             });
-          console.log("dtCarrierboard", dtCarrierboard);
+        
           if (dtCarrierboard === "") {
             _strMessageUpdate =
               "Serial not connect board / หมายเลขบาร์โค้ดยังไม่สแกนประกบบอร์ด";
@@ -614,7 +614,7 @@ function fn_ScanSMTConfirmMOTP1() {
                 _intCountNG = 1;
                 _bolError = true;
               } else if (hfLotAll.indexOf(strSheetLot) === -1) {
-                console.log(hfLotAll, "hfLotAll");
+           
                 _strMessageUpdate =
                   "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                 _strRemark = "Lot not same connect sheet  ";
@@ -978,7 +978,7 @@ function fn_ScanSMTConfirmMOTP1() {
   //     if (userAction) {
   //         ExportGridToCSV(gvScanData, nameFile);
   //     } else {
-  //         console.log('User canceled the export.');
+
   //     }
   // };
 

@@ -15,14 +15,14 @@ function SheetMasterT() {
     const [TEXT_SHT_Code, setTEXT_SHT_Code] = useState("");
   
     const Search = async () => {
-      console.log(code, name, "......")
+    
       try {
         const response = await axios.post("/api/searchCodeName", {
           Code: code,
           Name: name
         });
         const data = response.data;
-        console.log("/////", data)
+      
         setShowData(data);
         if (data.length > 0) {
           setCheckEmpty("hidden");
@@ -85,7 +85,7 @@ function SheetMasterT() {
             const response = await axios.post("/api/delSheet_Master", {
                sht_code: shtCodeToDelete
             });
-            console.log("ลบข้อมูลสำเร็จ:", response.data);
+           
             swal("Your data has been deleted successfully", {
               icon: "success",
             });

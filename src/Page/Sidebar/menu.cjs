@@ -63,7 +63,7 @@ module.exports.postMenuname = async function (req, res) {
       const result = await client.query(searchQuery, [MenuName]);
       const foundDataArray = result.rows;
       res.json(foundDataArray);
-      //console.log("Path",foundDataArray)
+   
     } catch (error) {
       console.error("Error searching data:", error);
       res

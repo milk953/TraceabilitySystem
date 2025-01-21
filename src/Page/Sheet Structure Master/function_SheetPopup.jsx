@@ -5,7 +5,7 @@ import swal from "sweetalert";
 
 function PopupT(onClose, item, searchFunction) {
     const STATUS_P = localStorage.getItem("STATUS");
-    //console.log("สถานะ", STATUS_P);v
+  
 
     const UserLogin = localStorage.getItem("IDCode");
     const [user_id, setuser_id] = useState("");
@@ -104,7 +104,7 @@ function PopupT(onClose, item, searchFunction) {
             setuser_id(UserLogin);
             setipaddress(ipaddress);
         } else {
-            console.log("CASE EDIT", item);
+        
             setTXT_SHT_Code(item.sht_code);
             setTXT_SHT_Name(item.sht_name);
             setCheck_Plant_Flag(item.plant_flag);
@@ -129,7 +129,7 @@ function PopupT(onClose, item, searchFunction) {
 
     const handleKEY_SHT_Code = (event) => {
         const TXT_SHT_Code = event.target.value;
-        // console.log(TXT_SHT_Code, "ดูค่า");
+      
         setTXT_SHT_Code(TXT_SHT_Code);
         setERROR_SHT_Code(false);
     };
@@ -263,7 +263,7 @@ function PopupT(onClose, item, searchFunction) {
         let Check_Seq_Flag = isSeqChecked ? 'Y' : 'N';
 
         if (STATUS_P === "NEW") {
-            console.log("NEW")
+
 
             if (
                 TXT_SHT_Code &&
@@ -307,7 +307,7 @@ function PopupT(onClose, item, searchFunction) {
                         ip_address: ipaddress
 
                     });
-                    console.log("บันทึกข้อมูลสำเร็จ =", response);
+                  
                     swal("success", "You save data success", "success");
                     searchFunction();
                     onClose();
@@ -323,7 +323,7 @@ function PopupT(onClose, item, searchFunction) {
                 );
             }
         } else {
-            console.log("EDIT")
+
             if (
                 TXT_SHT_Code &&
                 TXT_SHT_Name &&
@@ -366,8 +366,8 @@ function PopupT(onClose, item, searchFunction) {
                         ip_address: ipaddress
 
                     });
-                    console.log("/////", Check_Plant_Flag)
-                    console.log("แก้ไขข้อมูลสำเร็จ =", response);
+          
+               
                     swal("success", "You edit data success", "success");
                     searchFunction();
                     onClose();

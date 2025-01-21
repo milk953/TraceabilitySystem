@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { DataConfig } from "../Common/function_Common";
 function fn_ScanSheetAOIXrayConfirm() {
   const { ConfigData } = DataConfig();
-  console.log(ConfigData, "ConfigData");
+
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [lblResult, setlblResult] = useState("");
   const [lblSheet, setlblSheet] = useState("");
@@ -36,7 +36,7 @@ function fn_ScanSheetAOIXrayConfirm() {
         })
         .then((res) => {
           let data = res.data[0];
-          console.log(data, "data");
+
           if (res.data.length > 0) {
             strAOI = data.aoi_result;
             strXray = data.xray_result;

@@ -433,7 +433,7 @@ function P1ConnectBoard() {
                   />
                 </>
               )}
-              {console.log(txtSerial)}
+            
               {gvScanResult.visble == true && (
                 <>
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>

@@ -244,7 +244,7 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                   </TableRow>
-                  {console.log('lblRemark2',lblRemark,lblResult.value)}
+                
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
                     <TableCell colSpan={3} align="center" style={{fontSize:'16px'}}>
                        {lblSheet}

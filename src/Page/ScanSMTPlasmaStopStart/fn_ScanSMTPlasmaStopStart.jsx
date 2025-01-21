@@ -110,14 +110,14 @@ function fn_ScanSMTPlasmaStopStart() {
     })
       .then((res) => {
         strPrdName = res.data.prdName[0];
-        console.log("PrdName:", strPrdName);
+     
         
         if (strPrdName !== undefined) {
           setlblLog("");
           setvisiblelog(false);
           settxtLotNo(strLot);
           setlblPatialNo(strLot);
-          console.log("yyy", lblPatialNo)
+        
           try {
             setselProduct(strPrdName);
             SetMode("PARTIAL");
@@ -298,7 +298,7 @@ function fn_ScanSMTPlasmaStopStart() {
     })
       .then((res) => {
         intSerialCount = res.data.row_count;
-        console.log("มาเปล่า", intSerialCount);
+      
       });
 
     if (intSerialCount === 0) {
@@ -309,7 +309,7 @@ function fn_ScanSMTPlasmaStopStart() {
       })
         .then((res) => {
           intSerialCount = res.data.row_count;
-          console.log("มาดิ", intSerialCount);
+      
         });
       _strScanType = "PARTIAL";
 
@@ -318,7 +318,7 @@ function fn_ScanSMTPlasmaStopStart() {
     }
 
     if (intSerialCount > 0) {
-      console.log(intSerialCount)
+     
       axios.post("/api/setStartStopRecordTimeByPartialNo", {
         strPlantCode: plantCode,
         strPartialNo: _strPartialNo,
@@ -329,7 +329,7 @@ function fn_ScanSMTPlasmaStopStart() {
       })
         .then((res) => {
           _strErrorUpdate = res.data.p_error;
-          console.log("มาไหม", _strErrorUpdate)
+       
           if (_strErrorUpdate !== "") {
             setlblLog(_strErrorUpdate);
             setvisiblelog(true);

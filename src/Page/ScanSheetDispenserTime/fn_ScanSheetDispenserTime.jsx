@@ -137,7 +137,7 @@ function fn_ScanSheetDispenserTime() {
             P_USER: "frm_ScanSheetDispenserTime",
             P_STATION: txtmcNo,
           });
-          console.log(strError)
+
           if (strError == "") {
             
             setTxtCBnoState({
@@ -216,7 +216,7 @@ function fn_ScanSheetDispenserTime() {
           .catch((error) => {
             setLblRemark({text:error,color:'white',backgroundColor:'red'});
           });
-        console.log(rowCount,'rowCount')
+ 
         if (rowCount == 0) {
           const currentTime = new Date().toLocaleTimeString("en-US", {
             hour12: false,
@@ -229,7 +229,7 @@ function fn_ScanSheetDispenserTime() {
             P_USER: "frm_ScanSheetDispenserTime",
             P_STATION: txtmcNo,
           });
-          console.log(strError)
+     
           if (strError == "") {
             
             setTxtCBnoState({
@@ -284,7 +284,7 @@ function fn_ScanSheetDispenserTime() {
   };
   //Btn
   const btnReturn_Click = () => {
-    console.log("btnReturn_Click");
+ 
   };
 
   const btnReplace_Click = async () => {
@@ -325,7 +325,7 @@ function fn_ScanSheetDispenserTime() {
     let strStatus = "";
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     strError = await getData("DeleteDispenserRecordTimeData", lblSheet); 
-    console.log(strError)
+
     setLblRemark({text:strError,color:'white',backgroundColor:'red'});
     if (strError == "") {
       setLblSheet(`${lblSheet} Delete Success`);

@@ -6,7 +6,6 @@ import { useLoading } from "../../loading/fn_loading";
 import {DataConfig} from "../Common/function_Common"; 
 function fn_ScanSMTSerialPcsChrome() {
   const{ConfigData} = DataConfig();
-  console.log(ConfigData,'ConfigData');
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
   const [Sl_Product, setSl_Product] = useState({
@@ -204,7 +203,7 @@ function fn_ScanSMTSerialPcsChrome() {
       setHfLotAll("");
       await GetProductData();
       SetMode("LOT");
-      console.log("FQC", FQC);
+
       if (FQC !== null) {
         setHfFQC(FQC);
       } else {
@@ -283,17 +282,13 @@ function fn_ScanSMTSerialPcsChrome() {
             })
             .then((res) => {
               dtLotProduct = res.data.flat().flat();
-              console.log("dtLotProductres", dtLotProduct);
+
             });
           if (dtLotProduct[0].length > 0) {
             if (dtLotProduct[0][2] == "Y") {
               setHfTestResultFlag("N");
             }
-            console.log(
-              dtLotProduct[0][3],
-              "dtLotProductdtLotProduct",
-              dtLotProduct[0].length
-            );
+
             setHfLotAll(dtLotProduct[0][3]);
           }
           setlblLot(_strLot);
@@ -1043,7 +1038,7 @@ function fn_ScanSMTSerialPcsChrome() {
           strPlantCode: Fac,
         })
         .then((res) => {
-          console.log(res.data, "getSerialPassByLot");
+
           dtLotPassCount = res.data.lotcount;
         });
 
@@ -1055,7 +1050,7 @@ function fn_ScanSMTSerialPcsChrome() {
         })
         .then((res) => {
           dtPackPassCount = res.data.lot_count;
-          console.log("getserialpassbylotpacking", dtPackPassCount);
+      
         });
 
       if (dtLotPassCount > 0) {
@@ -1179,10 +1174,10 @@ function fn_ScanSMTSerialPcsChrome() {
             dtSerial: dtSerial,
           })
           .then((res) => {
-            console.log("GetSerialTestResultManyTable", res.data);
+         
             dtSerial = res.data;
           });
-          console.log("hfCheckWeekCode", hfCheckWeekCode);
+        
         if (hfCheckWeekCode == "Y") {
           await axios
             .post("/api/common/GetWeekCodebyLot", {
@@ -1192,13 +1187,13 @@ function fn_ScanSMTSerialPcsChrome() {
               _strSerialInfo: hfSerialInfo,
             })
             .then((res) => {
-              console.log("GetWeekCodebyLot", res.data);
+             
               datHfWeekCode = res.data;
               setHfWeekCode(res.data);
             });
         }
         for (let drRow = 0; drRow < dtSerial.length; drRow++) {
-          // console.log("dtSerial[drRow]", dtSerial[drRow]);
+         
           if (dtSerial[drRow].SERIAL != "") {
             let _intCount = 0;
             let _intCountOK = 0;
@@ -1252,7 +1247,7 @@ function fn_ScanSMTSerialPcsChrome() {
                       },
                     })
                     .then((res) => {
-                      console.log("GetSerialDuplicate", res.data);
+                     
                       _intCountDup = res.data.row_count;
                       dtSerial[drRow].ROW_COUNT = _intCountDup;
                     });
@@ -1260,12 +1255,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   _intCountDup = dtSerial[drRow].ROW_COUNT;
                 }
               }
-              console.log(
-                "Consolelog1",
-                _strSerial.length,
-                hfSerialLength,
-                _strScanResultUpdate
-              );
+             
               if (
                 _strSerial.length == parseInt(hfSerialLength) &&
                 _strScanResultUpdate != "NG"
@@ -1280,7 +1270,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   })
                   .then((res) => {
                     GetCheckSumSerial = res.data;
-                    console.log("GetCheckSumSerial", res.data);
+                 
                   });
                 if (!GetCheckSumSerial) {
                   _strMessageUpdate =
@@ -1298,7 +1288,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   var endDigit = parseInt(hfSerialEndDigit, 10);
                   _strFixDigit = _strSerial.substring(startDigit - 1, endDigit);
                   if (_strFixDigit != hfSerialDigit) {
-                    console.log("Consolelog1", _strFixDigit, hfSerialDigit);
+                 
                     _strMessageUpdate =
                       "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                     _strRemark = "Serial barcode mix product";
@@ -1414,7 +1404,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     .then((res) => {
                       _strShtNo = res.data._strsheet;
                       strSheetLot = res.data.lot_no;
-                      console.log("GetSheetNoBySerialNo", res.data);
+                    
                     });
                   if (
                     _strShtNo != "" &&
@@ -1444,7 +1434,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     _intCountNG = 1;
                     _bolError = true;
                   } else if (hfLotAll.indexOf(strSheetLot) === -1) {
-                    console.log("hfLotAll", hfLotAll, strSheetLot);
+                   
                     _strMessageUpdate =
                       "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                     _strRemark = "Lot not same connect sheet";
@@ -1478,7 +1468,7 @@ function fn_ScanSMTSerialPcsChrome() {
                         },
                       })
                       .then((res) => {
-                        console.log("Get_Spi_aoi_result", res.data);
+                     
                         _Result = res.data._strresult;
                         _strMessage = res.data._strmessage;
                       });
@@ -1544,7 +1534,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     }
                     
                     else if (_strTestResult == "OK") {
-                      console.log("แสกนบาร์โค้ดของชิ้นงานซ้ำ", _intCountDup);
+                   
                       if (_intCountDup == 0) {
                         _strScanResultUpdate = "OK";
                         _strTestResultUpdate = _strTestResult;
@@ -1607,8 +1597,8 @@ function fn_ScanSMTSerialPcsChrome() {
                       })
                       .then((res) => {
                         _dblPlasmaTime = res.data.plasma_time;
-                        console.log("GetPlasmaTimeBySerialNo", res.data);
-                        console.log(hfPlasmaTime, _dblPlasmaTime,'check');
+                      
+                      
                       });
                     if (_dblPlasmaTime == 0) {
                       _strMessageUpdate =
@@ -1638,7 +1628,7 @@ function fn_ScanSMTSerialPcsChrome() {
                       parseFloat(hfPlasmaTime) < _dblPlasmaTime &&
                       hfPlasmaHideTime === "N"
                     ) {
-                      console.log(hfPlasmaTime, _dblPlasmaTime,'check');
+                  
                       _strMessageUpdate =
                         _strMessageUpdate +
                         " Plasma time over " +
@@ -1677,7 +1667,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     })
                     .then((res) => {
                       _intCheckPass = res.data;
-                      console.log("GetCheckChipDuplicate", res.data);
+                    
                     });
                   if (_intCheckPass == 0) {
                     _strMessageUpdate = "USER SKIP TEST ELT2";
@@ -1713,7 +1703,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     })
                     .then((res) => {
                       _strEFPCRemark = res.data;
-                      console.log("GetEFPCSheetInspectionResult", res.data);
+                    
                     });
                   if (_strEFPCResult === "NG") {
                     _strMessageUpdate = _strEFPCRemark;
@@ -1738,7 +1728,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     })
                     .then((res) => {
                       _strInspResult = res.data;
-                      console.log("GetSerialFinInspectResult", res.data);
+                    
                     });
 
                   if (_strInspResult !== "OK") {
@@ -1767,7 +1757,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     })
                     .then((res) => {
                       _intCheckPass = res.data.result;
-                      console.log("getcheckspecialbyserial", res.data);
+                    
                     });
 
                   if (_intCheckPass === 0) {
@@ -1907,8 +1897,7 @@ function fn_ScanSMTSerialPcsChrome() {
 
               .then((res) => {
                 _strErrorUpdate = res.data.p_error;
-                console.log(_strErrorUpdate, "_strErrorUpdate");
-                console.log(dtSerial, "Test3");
+             
               });
           }
           if (_strErrorUpdate != "") {
@@ -1925,7 +1914,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   dtSerial: dtSerial,
                 })
                 .then((res) => {
-                  console.log(res.data, "getSerialRecordTimeTrayTable");
+                
                   dtSerial = res.data;
                 });
               for (let drRow = 0; drRow < dtSerial.length; drRow++) {
@@ -1975,7 +1964,7 @@ function fn_ScanSMTSerialPcsChrome() {
           })
           .then((res) => {
             dtLotPassCount = res.data.lotcount;
-            console.log("getSerialPassByLot2", res.data);
+         
           });
 
         await axios

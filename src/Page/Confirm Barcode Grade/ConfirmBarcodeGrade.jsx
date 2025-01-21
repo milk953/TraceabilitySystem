@@ -111,7 +111,7 @@ function ConfirmBarcodeGrade() {
                         size="small"
                         id="checkboxMaster"
                         style={{ padding: "0" }}
-                        onChange={(e) => setCheck_Master(e.target.checked)} //trueเลือก false ไม่ได้เลือก console.log(, 'checked');
+                        onChange={(e) => setCheck_Master(e.target.checked)} //trueเลือก false ไม่ได้เลือก 
                       />
                     </TableCell>
                   </TableRow>
@@ -347,7 +347,7 @@ function ConfirmBarcodeGrade() {
                             />
                           </TableCell>
                         </TableRow>
-                    {          console.log(txtSideFront,'nnnnnn')}
+             
                         <TableRow style={{ backgroundColor: "White" }}>
                           <TableCell>
                             <TextField
@@ -390,7 +390,7 @@ function ConfirmBarcodeGrade() {
                 </Card>
               )}
             
-              {console.log("dataGvSerial", dataGvSerial.value)}
+  
               {dataGvSerial.visble == true && (
                 <Table className="CSS-GvSerialBarcode" component={Card} style={{marginTop:'10px'}}>
                   <TableHead>

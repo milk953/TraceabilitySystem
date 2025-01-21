@@ -104,7 +104,7 @@ function fn_SMTDeleteData() {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -234,7 +234,7 @@ function fn_SMTDeleteData() {
   const [selectRowrollleaf, setselectRowrollleaf] = useState([]);
 
   const SelectChange = (newselectRowrollleaf) => {
-    console.log('selectedRowKeys changed: ', newselectRowrollleaf);
+
     setselectRowrollleaf(newselectRowrollleaf);
   };
 
@@ -325,7 +325,7 @@ function fn_SMTDeleteData() {
     try {
 
       const parsedRows = selectedRowKeys.map((rowKey) => JSON.parse(rowKey));
-      console.log(parsedRows)
+
 
       if (strType === "SHEET") {
         const deletionPromises = parsedRows.map((record) =>
@@ -358,7 +358,7 @@ function fn_SMTDeleteData() {
 
         try {
           await Promise.all(deletionPromises);
-          console.log('All deletions are complete');
+  
         } catch (error) {
           console.error("Error during deletion process", error);
           Swal.fire('Error', 'One or more deletions failed', 'error');
@@ -366,7 +366,7 @@ function fn_SMTDeleteData() {
       } else {
 
         const parsedRow = selectRowrollleaf.map((rowKey) => JSON.parse(rowKey));
-        console.log(parsedRow)
+   
 
         const deleteRes = parsedRow.map((record) =>
           axios.post("/api/SMTDeleteData/DeleteDataRollleaf", {
@@ -400,7 +400,7 @@ function fn_SMTDeleteData() {
         )
         try {
           await Promise.all(deleteRes);
-          console.log('All deletions are complete');
+       
         } catch (error) {
           console.error("Error during deletion process", error);
           Swal.fire('Error', error.message, 'error');
@@ -437,7 +437,7 @@ function fn_SMTDeleteData() {
 
       for (let i = 0; i < dt.length; i++) {
         let row = dt[i];
-        console.log("dt", row)
+
         intRow++;
 
         dtData.push({
@@ -448,7 +448,7 @@ function fn_SMTDeleteData() {
           ELT_RESULT: row.elt_result,
           ELT_DATE: row.elt_date
         });
-        console.log(dtData)
+
       }
 
       if (dtData.length > 0) {
@@ -465,7 +465,7 @@ function fn_SMTDeleteData() {
         });
       }
       setgvELTData(dtData);
-      console.log("gvELTData", dtData)
+ 
 
     } else {
       Swal.fire({
@@ -508,7 +508,7 @@ function fn_SMTDeleteData() {
 
     for (let i = 0; i < dt.length; i++) {
       let row = dt[i];
-      console.log("dt", row)
+
       intRow++;
 
       dtData.push({
@@ -519,7 +519,7 @@ function fn_SMTDeleteData() {
         ELT_RESULT: row.elt_result,
         ELT_DATE: row.elt_date
       });
-      console.log(dtData)
+
     }
 
     // if (dtData.length > 0) {
@@ -529,13 +529,13 @@ function fn_SMTDeleteData() {
     //   Swal.fire("Error", "Not found data", "error");
     // }
     setgvELTData(dtData);
-    console.log("gvELTData", dtData)
+
   };
 
   const [selectedRows, setSelectedRows] = useState([]);
 
   const eltSelectChange = (newSelectedRows) => {
-    console.log('selectedRows changed: ', newSelectedRows);
+ 
     setSelectedRows(newSelectedRows);
   };
 
@@ -600,7 +600,7 @@ function fn_SMTDeleteData() {
     if (result.isConfirmed) {
       let dtDelELT = "";
       const parsedRows = selectedRows.map((rowKey) => JSON.parse(rowKey));
-      console.log(parsedRows)
+   
       const deletionPromises = parsedRows.map((record) =>
         axios.post("/api/SMTDeleteData/DeleteELT", {
           strplantcode: plantCode,
@@ -621,13 +621,13 @@ function fn_SMTDeleteData() {
       )
       try {
         await Promise.all(deletionPromises);
-        console.log('All deletions are complete');
+
       } catch (error) {
         Swal.fire('Error', error.message, 'error');
       }
       FNGetELTResult();
     } else {
-      console.log('Form not Delete');
+     
     }
   };
 
@@ -681,7 +681,7 @@ function fn_SMTDeleteData() {
         });
       }
       setgvFinalData(dtData);
-      console.log("gvFinalData", dtData)
+
     } else {
       Swal.fire({
         icon: "error",
@@ -736,7 +736,7 @@ function fn_SMTDeleteData() {
     //   Swal.fire("Error", "Not found data", "error");
     // }
     setgvFinalData(dtData);
-    console.log("gvFinalData", dtData)
+
 
   };
 
@@ -744,7 +744,7 @@ function fn_SMTDeleteData() {
   const [selectedRow, setSelectedRow] = useState([]);
 
   const FinalSelectChange = (newSelectedRows) => {
-    console.log('selectedRows changed: ', newSelectedRows);
+
     setSelectedRow(newSelectedRows);
   };
 
@@ -818,13 +818,13 @@ function fn_SMTDeleteData() {
       )
       try {
         await Promise.all(deletionPromises);
-        console.log('All deletions are complete');
+
       } catch (error) {
         Swal.fire('Error', error.message, 'error');
       }
       FNGetFinalGateResult();
     } else {
-      console.log('Form not Delete');
+
     }
   };
 

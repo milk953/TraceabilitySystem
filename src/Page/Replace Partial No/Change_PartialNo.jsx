@@ -131,7 +131,7 @@ function ScanSheetMOTTime() {
 </TableRow>
                 </TableBody>
               </Table>
-              {console.log("gvSerial", gvSerial.value)}
+    
               <Table
                 className="CSS-GvSerial"
                 style={{
@@ -188,10 +188,10 @@ function ScanSheetMOTTime() {
                             if (event.key === "Enter") {
                               event.preventDefault();
                               if (index < gvSerial.value.length-1) {
-                                console.log("index1", index);
+                            
                                 fc_txtSerialOld.current[index+1].focus();
                               } else {
-                                console.log("index2", index);
+           
                                 fc_txtSerialNew.current[0].focus();
                                 // event.target.blur();
                               }

@@ -98,7 +98,7 @@ function fn_ScanSerialNo() {
       setLotNo(strLotAll[0]);
       if (strLotAll[0].length >= 9) {
         dtDataLot = await getData("GetProductDataByLot", strLotAll[0]);
-        console.log(dtDataLot, "dtDataLot");
+       
         if (dtDataLot.PRD_NAME !== "") {
           setProduct(dtDataLot.PRD_NAME);
           await getData("getProductSerialMaster", dtDataLot.PRD_NAME);
@@ -141,7 +141,7 @@ function fn_ScanSerialNo() {
   
   //btnHandle  
   const handle_Save_Click = () => {
-    console.log(txtSerial, "txtSerial");
+  
     setLblErrorState(false);
     setSerialDataTray();
   };
@@ -510,7 +510,7 @@ function fn_ScanSerialNo() {
         SetFocus(`txtSerial_${index + 1}`);
       } catch (error) {
         handle_Save_Click();
-        console.log(txtSerial, "txtSerial");
+       
       }
     }
   };
@@ -522,7 +522,7 @@ function fn_ScanSerialNo() {
     let _bolError = false;
     let _strScanResultAll = "OK";
     let _intRowSerial = 0;
-    console.log('item',dtSerial)
+   
     const allSerialEmpty = dtSerial.every(item => item.SERIAL === "" || item.SERIAL === undefined);
     if (allSerialEmpty) {
       hideLoading();

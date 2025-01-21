@@ -130,7 +130,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 .then((res) => {
                     strPrdName = res.data.prdName[0];
                 });
-            console.log("PrdName:", strPrdName);
+          
             if (strPrdName !== undefined) {
                 setlblLog("");
                 setvisiblelog(false);
@@ -303,7 +303,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             dtData.push({ SEQ: intRow });
         }
         setgvSerialData(dtData);
-        console.log("gvserialdata:", dtData)
+     
         return dtData;
     };
 
@@ -346,7 +346,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 })
                     .then((res) => {
                         _strReturn = res.data;
-                        console.log("มาไหม", _strReturn)
+                      
                     });
                 dtSerial[i].FRONT_SHEET_NO = _strReturn.FRONT_SHEET_NO;
                 dtSerial[i].BACK_SHEET_NO = _strReturn.BACK_SHEET_NO;
@@ -391,7 +391,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                                 _strSerialResult = res.data.backen_result;
                                 _strMessage = res.data.message;
                             });
-                        console.log(_strSerialResult);
+                      
 
                         if (_strSerialResult !== "OK") {
                             _strScanResultUpdate = _strSerialResult;
@@ -461,7 +461,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 ROLL_LEAF_NO: ""
             });
         }
-        console.log(dtData);
+     
         return dtData;
     };
 
@@ -588,7 +588,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             const nextIndex = index + 1;
             if (nextIndex < txtTotalPCS && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick', nextIndex);
+              
             } else if (nextIndex === nextIndex) {
 
                 btnSaveClick();

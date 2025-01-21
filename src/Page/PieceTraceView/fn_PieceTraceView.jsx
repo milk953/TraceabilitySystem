@@ -502,7 +502,7 @@ function fn_PieceTraceView() {
       })
         .then((res) => {
           dtSerial = res.data;
-          console.log("dtSerial", dtSerial);
+        
         });
 
       if (SERIAL_DATABASE_SWITCH === 1) {
@@ -518,7 +518,7 @@ function fn_PieceTraceView() {
         .then((res) => {
           dtPrd = res.data;
         });
-      console.log("dtPrd", dtPrd);
+    
       if (dtPrd.length > 0) {
         dtPrd = dtPrd[0];
         ProductName = dtPrd.product_name;
@@ -551,7 +551,7 @@ function fn_PieceTraceView() {
             dt = res.data;
           });
 
-        console.log("dtProduct", dt);
+
         if (dt.length <= 0) {
           if (dtSerial.length > 0) {
             dtSerial = dtSerial[0];
@@ -575,13 +575,13 @@ function fn_PieceTraceView() {
       }
 
       //Get SMT_PRODUCT_MST
-      console.log(ProductName, "Produckj");
+
       await axios.post("/api/ViewTracePiece/getproductmst", {
         strprdname: ProductName
       })
         .then((res) => {
           dt1 = res.data;
-          console.log("dt1", dt1)
+
         });
 
 
@@ -645,7 +645,7 @@ function fn_PieceTraceView() {
       })
         .then((res) => {
           dt2 = res.data;
-          console.log("dt2", dt2)
+
         });
 
       sethypMaterialF("");
@@ -718,7 +718,7 @@ function fn_PieceTraceView() {
         settxtPcsNo("");
       }
 
-      console.log(dt2.front_sheet_no, "////////////")
+
       if (dt2.front_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getspifront", {
           strplantcode: plantCode,
@@ -728,7 +728,7 @@ function fn_PieceTraceView() {
         })
           .then((res) => {
             dt3 = res.data;
-            console.log("dt3", dt3)
+
           });
 
         if (dt3.length === 0) {
@@ -746,7 +746,7 @@ function fn_PieceTraceView() {
             .then((res) => {
               dt4 = res.data;
             });
-          console.log("dt4", dt4)
+
         }
 
         if (dt4.length > 0) {
@@ -808,7 +808,7 @@ function fn_PieceTraceView() {
               dt5 = res.data;
             });
 
-          console.log("dt5", dt5)
+   
           if (dt5.length > 0) {
             dt5 = dt5[0];
             StrResult = "BADMARK"
@@ -825,7 +825,7 @@ function fn_PieceTraceView() {
       }
 
       //SPI Back
-      console.log(dt2.back_sheet_no, "hypSheetNoB")
+
       if (dt2.back_sheet_no !== "") {
         await axios.post("/api/ViewTracePiece/getspiback", {
           strplantcode: plantCode,
@@ -837,8 +837,7 @@ function fn_PieceTraceView() {
             dt6 = res.data;
           });
 
-        console.log("dt6", dt6)
-
+ 
         if (dt6.length === 0) {
           if (SPI_Maker === "CKD") {
             PanelNo = String(Math.max(0, parseInt(dt2.pcs_no, 10) - 1)).trim();
@@ -854,7 +853,7 @@ function fn_PieceTraceView() {
             .then((res) => {
               dt7 = res.data;
             });
-          console.log("dt7", dt7)
+   
         }
 
         if (dt7.length > 0) {
@@ -1116,7 +1115,7 @@ function fn_PieceTraceView() {
           .then((res) => {
             dt14 = res.data;
           });
-        console.log(dt14, "dt14")
+   
 
         if (dt14.length > 0) {
           dt14 = dt14[0];
@@ -1133,7 +1132,7 @@ function fn_PieceTraceView() {
             .then((res) => {
               dt15 = res.data;
             });
-          console.log(dt15, "dt15")
+ 
 
           if (dt15.length > 0) {
             dt15 = dt15[0];
@@ -1148,7 +1147,7 @@ function fn_PieceTraceView() {
               .then((res) => {
                 dt16 = res.data;
               });
-            console.log(dt16, "dt16")
+   
 
             if (dt16.length > 0) {
               dt16 = dt16[0];
@@ -1238,7 +1237,7 @@ function fn_PieceTraceView() {
           }
         }
       }
-      console.log("bbbbbbbb", btnAOIF.value);
+    
 
       if (btnAOIF.value === "" && btnAOIB.value === "") {
         await axios.post("/api/ViewTracePiece/getaoi2", {
@@ -1615,7 +1614,7 @@ function fn_PieceTraceView() {
         .then((res) => {
           dt34 = res.data;
         });
-      console.log(dt34, "dt34")
+
       if (dt34.length > 0) {
         //CHECK CHIP NO
         // for (i = 1; i < dt34.length; i++) {
@@ -1626,7 +1625,7 @@ function fn_PieceTraceView() {
 
         //VIEW CHECKER DATA
         for (let i = 0; i < dt34.length; i++) {
-          console.log(i, "iiiiiiii")
+
           switch (i + 1) {
             case 1:
               setlblELT1(prevState => ({ ...prevState, visible: true, value: dt34[i].stt_type }));
@@ -1634,7 +1633,7 @@ function fn_PieceTraceView() {
               settxtELTTime1(prevState => ({ ...prevState, visible: true }));
               let sbaql = await Get_Select(dt34[i].stt_key_type, SerialNo, dt34[i].stt_type, txtSerialChip, plantCode);
               let dt1 = sbaql;
-              console.log("ELT1", dt1)
+    
               if (dt1.length > 0) {
                 dt1 = dt1[0];
                 setbtnELT1(prevState => ({ ...prevState, value: dt1.prod_result }));
@@ -2191,7 +2190,7 @@ function fn_PieceTraceView() {
           .then((res) => {
             dtData = res.data;
           });
-        console.log("AOIF", dtData)
+
         if (dtData.length > 0) {
           dtData = dtData[0];
           StrResult = dtData.AOI_RESULT;
@@ -2740,7 +2739,6 @@ function fn_PieceTraceView() {
         _dtData = res.data;
       });
 
-    console.log("strMCNo", _dtData)
     if (_dtData !== "") {
       strMCNo = _dtData.MC_NO;
     }

@@ -34,7 +34,7 @@ function fn_FinalGate_History() {
                 .then((res) => {
                     dt = res.data;
                 });
-            console.log(dt)
+
             setgvViewFinal(dt);
         } catch (error) {
             console.log(error.message);
@@ -161,7 +161,7 @@ const BtnExport = async (nameFile) => {
         title: "No Data Export!",
       });
     } else {
-      console.log(nameFile, "nameFile");
+
       exportExcelFile(gvViewFinal, nameFile);
     }
   };

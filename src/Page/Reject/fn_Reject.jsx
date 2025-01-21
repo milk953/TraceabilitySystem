@@ -95,7 +95,7 @@ function fn_Reject() {
             getData("GetSearchbySerialno", { Serialno: strSerialAll[i] });
           }
         }, 500);
-        console.log(dtDataSearch, "searchafterSubmit");
+
         return;
       } else {
         setSearchafterSubmit(lot);
@@ -189,7 +189,7 @@ function fn_Reject() {
     }
   };
   const handleExport = async () => {
-    console.log(selectedRows);
+
     const filteredData = dtDataSearch.filter((item) =>
       selectedRows.includes(item.rem_serial_no)
     );
@@ -320,7 +320,7 @@ function fn_Reject() {
       selectedRows.includes(item.rem_serial_no)
     );
     for (let i = 0; i < filteredData.length; i++) {
-      console.log(i, "i");
+
       getData("SetSubmitData", {
         strSerialNo: filteredData[i].rem_serial_no,
         strTxtoperator: txtOperator,
@@ -448,7 +448,7 @@ function fn_Reject() {
           }
         )
         .then((res) => {
-          console.log(res, "res");
+
           if (res.status === 200) {
             if (cbSelected == "DELETE") {
               setLblResult({

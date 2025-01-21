@@ -269,7 +269,7 @@ function fn_P1ConnectBoard() {
   };
 
   const btnSave_Click = async () => {
-    console.log(hfMode, "hfMode");
+   
     if (hfMode == "SERIAL") {
       setSerialData();
     }
@@ -277,12 +277,12 @@ function fn_P1ConnectBoard() {
 
   const ddlProduct_SelectedIndexChanged = async (Sl_Product) => {
     let data = await getProductSerialMaster(Sl_Product);
-    console.log(data, "data.prm_conn_roll_sht_length0");
+
     if (txtLot.value != "") {
       setlblLog((prevState) => ({ ...prevState, value: "", visble: false }));
       getCountDataBylot(txtLot.value);
       getInitialSheet();
-      console.log(data.prm_conn_roll_sht_flg, "data.prm_conn_roll_sht_length");
+
       if (data.prm_conn_roll_sht_flg == "Y") {
         settxtRollLeaf((prevState) => ({
           ...prevState,
@@ -325,7 +325,7 @@ function fn_P1ConnectBoard() {
     let strError = "";
     if (txtLot.value != "") {
       strLotData = txtLot.value.toUpperCase().split(";");
-      console.log(strLotData, "strLotData");
+
       if (strLotData.length >= 2) {
         strLot = strLotData[0];
         await axios
@@ -334,7 +334,7 @@ function fn_P1ConnectBoard() {
           })
           .then((res) => {
             strPrdName = res.data.prdName[0];
-            console.log(res.data, "strPrdName");
+     
           });
         settxtRollLeaf((prevState) => ({ ...prevState, visble: "none" }));
         if (strPrdName != "") {
@@ -345,7 +345,7 @@ function fn_P1ConnectBoard() {
             })
             .then((res) => {
               strError = res.data;
-              console.log(res.data, "strPrdName");
+
             });
           if (strError == "") {
             setlblLog((prevState) => ({
@@ -535,7 +535,7 @@ function fn_P1ConnectBoard() {
   const getCountDataBylot = async (strLot) => {
     let TotalSht = 0;
     let TotalPcs = 0;
-    console.log(strLot, Fac, "strLot");
+
     await axios
       .post("/api/Common/getlotserialcountdata", {
         dataList: {
@@ -555,7 +555,7 @@ function fn_P1ConnectBoard() {
   };
 
   const SetMode = async (strMode) => {
-    console.log(strMode, "Modeee1");
+
     if (strMode == "LOT") {
       setddlProduct((prevState) => ({
         ...prevState,
@@ -638,7 +638,7 @@ function fn_P1ConnectBoard() {
   };
 
   const txtRollLeaf_TextChanged = async () => {
-    console.log(txtRollLeaf.value.length, hfCheckRollShtDigit, "txtRollLeaf");
+
     if (
       txtRollLeaf.value != "" &&
       txtRollLeaf.value.length === parseInt(hfCheckRollShtDigit)
@@ -695,7 +695,7 @@ function fn_P1ConnectBoard() {
 
   const getInitialSheet = async () => {
     const dtData1 = [];
-    console.log(hfShtScan, hfBarcodeSide, "hfShtScanhfShtScan");
+
     for (let intRow = 1; intRow <= parseInt(hfShtScan); intRow++) {
       const drRow = {
         SEQ:
@@ -719,7 +719,7 @@ function fn_P1ConnectBoard() {
     const dtData = [];
     let intRow = 0;
     let strFrontSide = "";
-    console.log(txtSideBack, GvSerial.value, "txtSideBack");
+
     for (let intSeq = 0; intSeq < GvSerial.value.length; intSeq++) {
       intRow++;
       const hfType = GvSerial.value[intSeq].TYPE;
@@ -745,17 +745,12 @@ function fn_P1ConnectBoard() {
         dtData.push(drRow);
       }
     }
-    console.log(dtData, "getInputSerial");
+
     return dtData;
   };
 
   const getInitialSerial = async () => {
-    console.log(
-      hfShtScan,
-      hfSerialCount,
-      hfBarcodeSide,
-      "hfSerialCounthfSerialCount"
-    );
+ 
     const dtData = [];
     for (let intSht = 1; intSht <= parseInt(hfShtScan); intSht++) {
       const drRowSht = {
@@ -767,7 +762,7 @@ function fn_P1ConnectBoard() {
         TYPE: "SHT",
       };
       dtData.push(drRowSht);
-      console.log(drRowSht, "drRowSht");
+    
       for (let intRow = 1; intRow <= parseInt(hfSerialCount); intRow++) {
         const drRow = {
           SHEET: intSht,
@@ -783,7 +778,7 @@ function fn_P1ConnectBoard() {
       value: dtData,
       visble: "",
     }));
-    console.log(dtData, "getInitialSerial");
+
     return dtData;
   };
 
@@ -801,7 +796,7 @@ function fn_P1ConnectBoard() {
       ROLL_SHT_ROLL_START_DIGIT - 1,
       ROLL_SHT_ROLL_LENGTH
     );
-    console.log("getConnectRollSheetData", _strRollNo);
+  
     for (let _drRow = 0; _drRow < _dtSerial.length; _drRow++) {
       if (
         _dtSerial[_drRow].FRONT_SIDE != _strShtNoOld &&
@@ -830,7 +825,7 @@ function fn_P1ConnectBoard() {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     try {
       let dtSerial = await getInputSerial();
-      console.log(dtSerial, "dtSerialxxxxxxx");
+   
       let _strLotData;
       let _strLotRefData;
       let _strLot = "";
@@ -866,7 +861,7 @@ function fn_P1ConnectBoard() {
         return;        
       }
       const allSerialEmpty = dtSerial.every(item => item.SERIAL === ""||item.SERIAL === undefined);
-      console.log(allSerialEmpty, "allSerialEmpty");
+     
       if(allSerialEmpty){
         hideLoading();
         setlblLog((prevState) => ({
@@ -900,7 +895,7 @@ function fn_P1ConnectBoard() {
               _strSerialInfo: hfSerialInfo,
             })
             .then((res) => {
-              console.log("GetWeekCodebyLot", res.data);
+            
               dataHfWeekCode = res.data;
               setHfWeekCode(res.data);
             });
@@ -937,14 +932,7 @@ function fn_P1ConnectBoard() {
           if (hfCheckLotSht == "Y" && parseInt(dtSerial[drRow].SEQ, 10) == 1) {
             _strShtNoBack = dtSerial[drRow].BACK_SIDE;
             _strShtNoFront = dtSerial[drRow].FRONT_SIDE;
-            console.log(
-              "if นี้ค้าบ1",
-              _strLotRef,
-              _strShtNoBack.substring(
-                parseInt(hfCheckLotShtStart, 10) - 1,
-                parseInt(hfCheckLotShtEnd, 10)
-              )
-            );
+       
             if (
               _strLotRef !==
               _strShtNoBack.substring(
@@ -955,16 +943,9 @@ function fn_P1ConnectBoard() {
               _strScanResultAll = "NG";
               _strErrorAll = "Sheet lot mix";
               _bolError = true;
-              console.log("ตรวนี้1", _strErrorAll);
+           
             }
-            console.log(
-              "if นี้ค้าบ2",
-              _strLotRef,
-              _strShtNoBack.substring(
-                parseInt(hfCheckLotShtStart, 10) - 1,
-                parseInt(hfCheckLotShtEnd, 10)
-              )
-            );
+          
             if (
               _strLotRef !==
               _strShtNoFront.substring(
@@ -975,7 +956,7 @@ function fn_P1ConnectBoard() {
               _strScanResultAll = "NG";
               _strErrorAll = "Sheet lot mix";
               _bolError = true;
-              console.log("ตรวนี้2", _strErrorAll);
+             
             }
           }
           if (hfReqMachine == "Y") {
@@ -1000,18 +981,14 @@ function fn_P1ConnectBoard() {
 
             if (_strSerial != CONNECT_SERIAL_ERROR) {
               let isDuplicate = dtSerial.some((item, index) => {
-                console.log(
-                  `Checking duplicate ${index + 1}: ${
-                    item.SERIAL
-                  } -----  ${_strSerial}`
-                );
+              
                 return index !== _intRowSerial && _strSerial === item.SERIAL;
               });
 
               if (isDuplicate) {
                 _strScanResultUpdate = "NG";
                 _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
-                console.log("ซ้ำตรงนี้1", _strMessageUpdate);
+             
                 _strScanResultAll = "NG";
                 _bolError = true;
               }
@@ -1101,7 +1078,7 @@ function fn_P1ConnectBoard() {
                     },
                   })
                   .then((res) => {
-                    console.log("GetCheckConfirmMagazineBySerial", res.data);
+                   
 
                     let data = res.data[0];
                     _strSerialLot = data.LOT_NO;
@@ -1117,7 +1094,7 @@ function fn_P1ConnectBoard() {
                 } else if (_strSerialLot != _strLot) {
                   _strScanResultUpdate = "NG";
                   _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
-                  console.log("ซ้ำตรงนี้2", _strMessageUpdate);
+               
                   _strScanResultAll = "NG";
                   _bolError = true;
                 }
@@ -1135,13 +1112,13 @@ function fn_P1ConnectBoard() {
                     },
                   })
                   .then((res) => {
-                    console.log("GetSerialDuplicateConnectSht", res.data);
+                   
                     _intCountSeq = res.data;
                   });
                 if (_intCountSeq > 0) {
                   _strScanResultUpdate = "NG";
                   _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
-                  console.log("ซ้ำตรงนี้3", _strMessageUpdate);
+                
                   _strScanResultAll = "NG";
                   _bolError = true;
                 }
@@ -1150,7 +1127,7 @@ function fn_P1ConnectBoard() {
               _strMessageUpdate =
                 "Bad mark piece / ชิ้นงานเสียทำเครื่องหมายไว้แล้ว";
             }
-            console.log("ว่างตรงนี้แหละค้าบบบ1", _strScanResultUpdate);
+          
             dtSerial[drRow].SCAN_RESULT = _strScanResultUpdate;
             dtSerial[drRow].REMARK = _strMessageUpdate;
           }
@@ -1165,7 +1142,7 @@ function fn_P1ConnectBoard() {
               strWeekType: hfWeekCodeType,
             })
             .then((res) => {
-              console.log("GetShippingSerialNo", res.data);
+             
               _strReturn = res.data;
             });
           if (_strReturn != "") {
@@ -1180,7 +1157,7 @@ function fn_P1ConnectBoard() {
             }
           }
         }
-        console.log("ถึงตรงนี้แล้วค้าบ96", hfCheckSheetELT, _bolError);
+     
         if (hfCheckSheetELT == "Y" && _bolError == false) {
           let _strReturn = "";
           for (let i = 0; i < dtSerial.length; i++) {
@@ -1198,11 +1175,7 @@ function fn_P1ConnectBoard() {
               })
               .then((res) => {
                 _strReturn = res.data.p_error;
-                console.log(
-                  _strReturn,
-                  "setseriallotshtelttable",
-                  dtSerial[i].SERIAL
-                );
+            
               });
             if (_strReturn != "") {
               _strScanResultAll = "NG";
@@ -1271,7 +1244,7 @@ function fn_P1ConnectBoard() {
                     },
                   })
                   .then((res) => {
-                    console.log("Get_Spi_aoi_result", res.data);
+                
                     _Result = res.data._strresult;
                     _Message = res.data._strmessage;
                   });
@@ -1285,7 +1258,7 @@ function fn_P1ConnectBoard() {
                 _strScanResultUpdate = "NG";
                 _bolError = true;
               }
-              console.log("ว่างตรงนี้แหละค้าบบบ2", _strScanResultUpdate);
+             
               dtSerial[drRow].SCAN_RESULT = _strScanResultUpdate;
               dtSerial[drRow].REMARK = _strMessageUpdate;
               if (_strScanResultUpdate == "NG") {
@@ -1302,7 +1275,7 @@ function fn_P1ConnectBoard() {
                   strRollNo: txtRollLeaf.value,
                 })
                 .then((res) => {
-                  console.log("GetRollLeafScrapRBMP", res.data);
+                 
                   dataRBMP = res.data.SCRAP_FLG;
                 });
               if (dataRBMP == "Y") {
@@ -1316,7 +1289,7 @@ function fn_P1ConnectBoard() {
                   ddlProduct.value,
                   txtRollLeaf.value
                 );
-                console.log("ถึงตรงนี้แล้วค้าบ97", dtRowLeaf);
+              
                 if (dtRowLeaf.length > 0) {
                   await axios
                     .post("/api/Common/SetRollSheetTrayTable", {
@@ -1326,7 +1299,7 @@ function fn_P1ConnectBoard() {
                       _strUpdateError = res.data;
                     });
                 }
-                console.log("ถึงตรงนี้แล้วค้าบ", dtSerial);
+              
               }
             } else {
               _strScanResultAll = "NG";
@@ -1335,7 +1308,7 @@ function fn_P1ConnectBoard() {
             }
           }
 
-          console.log("ถึงตรงนี้แล้วค้าบ99", _bolError, _strUpdateError);
+         
           if (!_bolError && _strUpdateError == "") {
             for (let i = 0; i < dtSerial.length; i++) {
               await axios
@@ -1356,7 +1329,7 @@ function fn_P1ConnectBoard() {
                 })
                 .then((res) => {
                   _strUpdateError = res.data.p_error;
-                  console.log(_strUpdateError, "SetSerialLotShtTable");
+               
                 });
 
               if (_strUpdateError !== "") {
@@ -1475,7 +1448,7 @@ function fn_P1ConnectBoard() {
         prdName: strPrdName,
       })
       .then((res) => {
-        console.log("GetSerialProductByProduct", res.data);
+       
         data = res.data[0];
         if (data != null) {
           setHfSerialLength(data.slm_serial_length);
@@ -1548,14 +1521,14 @@ function fn_P1ConnectBoard() {
   const handleBackSideChange = (index, event) => {
     const newData = [...txtSideBack];
     newData[index] = event.target.value.trim().toUpperCase();
-    console.log(newData, "newData1");
+   
     settxtSideBack(newData);
   };
 
   const handleSerialChange = (index, event) => {
     const newData = [...txtSerial];
     newData[index] = event.target.value.trim().toUpperCase();;
-    console.log(newData, "newData2");
+  
     settxtSerial(newData);
   };
 

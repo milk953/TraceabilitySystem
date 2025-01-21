@@ -64,7 +64,7 @@ function fn_SerialTestType() {
     } else {
       elt = ELTTypeSelect;
     }
-    console.log(productSelect, elt,'productSelect, elt');
+
     await getData("submit", {
       prdname: productSelect,
       testtype: elt,

@@ -126,9 +126,9 @@ function fn_ScanSMTSerialShtConfirm() {
             })
                 .then((res) => {
                     strPrdName = res.data.prdName[0];
-                    console.log(res.data);
+               
                 });
-            console.log("PrdName:", strPrdName);
+          
             if (strPrdName !== undefined) {
                 setlblLog("");
                 setvisiblelog(false);
@@ -222,7 +222,7 @@ function fn_ScanSMTSerialShtConfirm() {
             .then((res) => {
                 dtSerailCount = res.data.lotcount;
             });
-        console.log("Count:", dtSerailCount);
+      
         if (dtSerailCount.length > 0) {
             setlblTotalSht(dtSerailCount.toLocaleString('en-US'));
         }
@@ -403,7 +403,7 @@ function fn_ScanSMTSerialShtConfirm() {
         }
 
         setgvSerialData(dtData);
-        console.log("gvserialdata:", dtData)
+       
         return dtData;
     };
 
@@ -459,7 +459,7 @@ function fn_ScanSMTSerialShtConfirm() {
                             .then((res) => {
                                 _strSerialDup = res.data.strresult
                             });
-                        console.log("_strSerialDup:", _strSerialDup);
+                      
 
                         if (_strSerialDup === "Y") {
                             _strScanResultUpdate = "NG";
@@ -483,7 +483,7 @@ function fn_ScanSMTSerialShtConfirm() {
                             const end = parseInt(hfSerialEndDigit);
                             _strFixDigit = _strSerial.substring(start - 1, end);
 
-                            console.log(_strFixDigit, hfSerialDigit, "1")
+                           
                             if (_strFixDigit !== hfSerialDigit) {
                                 _strScanResultUpdate = "NG";
                                 _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -494,7 +494,7 @@ function fn_ScanSMTSerialShtConfirm() {
                                 const start = parseInt(hfConfigStart);
                                 const end = parseInt(hfConfigEnd);
                                 _strConfigDigit = _strSerial.substring(start - 1, end);
-                                console.log(_strConfigDigit, hfConfigCode, "2")
+                              
                                 if (_strConfigDigit !== hfConfigCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -504,7 +504,7 @@ function fn_ScanSMTSerialShtConfirm() {
                             }
 
                             if (hfSerialStartCode !== "" && !_bolError) {
-                                console.log(hfSerialStartCode.length, hfSerialStartCode, "3")
+                               
                                 if (_strSerial.substring(0, hfSerialStartCode.length) !== hfSerialStartCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -518,7 +518,7 @@ function fn_ScanSMTSerialShtConfirm() {
                                 const start = parseInt(hfCheckStartSeqStart);
                                 const end = parseInt(hfCheckStartSeqEnd);
                                 _strStartSeq = _strSerial.substring(start - 1, end);
-                                console.log(_strStartSeq.length, hfCheckStartSeqCode, "4")
+                          
                                 if (_strStartSeq !== hfCheckStartSeqCode) {
                                     _strScanResultUpdate = "NG";
                                     _strMessageUpdate = "Sheet barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -631,7 +631,7 @@ function fn_ScanSMTSerialShtConfirm() {
                 UPDATE_FLG: "N"
             });
         }
-        console.log(dtData);
+      
         return dtData;
     };
 
@@ -653,7 +653,7 @@ function fn_ScanSMTSerialShtConfirm() {
             const nextIndex = index + 1;
             if (nextIndex < hfShtScan && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-                console.log('Calling btnSaveClick', nextIndex);
+               
             } else if (nextIndex === nextIndex) {
 
                 btnSaveClick();

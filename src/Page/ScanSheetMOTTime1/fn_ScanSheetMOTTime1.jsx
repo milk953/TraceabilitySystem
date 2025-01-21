@@ -76,7 +76,7 @@ function fn_ScanSheetMOTTime() {
   const params = new URLSearchParams(window.location.search);
   const url = window.location.href;
   const partweb = url.split("/")[4].split("?")[0];
-  console.log(partweb, "webbbb");
+
   const CB = params.get("CB");
   const SUS = params.get("SUS");
   let hfZPRNProcID = "";
@@ -200,7 +200,7 @@ function fn_ScanSheetMOTTime() {
           strLot: _strLot,
         })
         .then((res) => {
-          console.log("srttt", res.data);
+
           _strPrdName = res.data.prdName;
         });
 
@@ -212,10 +212,10 @@ function fn_ScanSheetMOTTime() {
           })
           .then((res) => {
             dtProductSerial = res.data[0];
-            console.log(dtProductSerial, "dtProductSerial1", _strPrdName[0]);
+      
           });
         if (dtProductSerial != null) {
-          console.log(dtProductSerial, "dtProductSerial2");
+
           sethfCheckPrdSht(dtProductSerial.prm_req_check_prd_sht);
           sethfCheckPrdShtStart(dtProductSerial.prm_check_prd_sht_start);
           sethfCheckPrdShtEnd(dtProductSerial.prm_check_prd_sht_end);
@@ -301,7 +301,7 @@ function fn_ScanSheetMOTTime() {
 
       const connLeafLength = parseInt(hfConnLeafLength);
       const sheetLength = txtSheet.value.trim().toUpperCase().length;
-      console.log("connLeafLength", connLeafLength, sheetLength);
+  
       if (
         connLeafLength > 0 &&
         connLeafLength !== sheetLength &&
@@ -311,7 +311,7 @@ function fn_ScanSheetMOTTime() {
         strError = "Invalid sheet length";
       }
       if (strStatus != "F") {
-        console.log('strStatus != "F"', strStatus);
+
         if (txtCBNo.visble == "") {
           settxtCBNo((prevState) => ({
             ...prevState,
@@ -335,7 +335,7 @@ function fn_ScanSheetMOTTime() {
 
           fctxtSUSNo.current.focus();
         } else {
-          console.log("else");
+
           await axios
             .post("/api/GetMOTRecordTimeData", {
               dataList: {
@@ -346,7 +346,7 @@ function fn_ScanSheetMOTTime() {
             })
             .then((res) => {
               rowCount = res.data;
-              console.log("rowCountSheet", rowCount);
+    
             });
 
           if (rowCount == 0) {
@@ -366,13 +366,7 @@ function fn_ScanSheetMOTTime() {
                 strStatus: strStatus,
               })
               .then((res) => {
-                console.log(
-                  res.data,
-                  "CallFPCSheetLeadTimeResult",
-                  res.data.strReturn,
-                  "----------",
-                  res.data.strStatus
-                );
+              
                 strError = res.data.strReturn;
                 strStatus = res.data.strStatus;
               });
@@ -392,7 +386,7 @@ function fn_ScanSheetMOTTime() {
               }));
             }
           } else {
-            console.log("data2222");
+           
             setlblSheet(txtSheet.value);
             setpnlSave("");
             setlblResult("");
@@ -445,7 +439,7 @@ function fn_ScanSheetMOTTime() {
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-      console.log("เข้าtxtCBNo", hfCheckPrdSht);
+    
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
@@ -457,7 +451,7 @@ function fn_ScanSheetMOTTime() {
         const end = parseInt(hfCheckPrdShtEnd, 10);
 
         const extractedValue = sheetNo.substring(start - 1, end);
-        console.log(hfCheckPrdAbbr, "000000", extractedValue);
+       
         if (hfCheckPrdAbbr !== extractedValue) {
           strStatus = "F";
           strError = "Sheet product mix";
@@ -496,7 +490,7 @@ function fn_ScanSheetMOTTime() {
             })
             .then((res) => {
               rowCount = res.data;
-              console.log(res.data, "rowCountCB");
+            
             });
 
           if (rowCount == 0) {
@@ -606,7 +600,7 @@ function fn_ScanSheetMOTTime() {
         const end = parseInt(hfCheckPrdShtEnd, 10);
 
         const extractedValue = sheetNo.substring(start - 1, end);
-        console.log(hfCheckPrdAbbr, "999999", extractedValue);
+    
         if (hfCheckPrdAbbr !== extractedValue) {
           strStatus = "F";
           strError = "Sheet product mix";
@@ -635,7 +629,7 @@ function fn_ScanSheetMOTTime() {
           })
           .then((res) => {
             rowCount = res.data;
-            console.log(res.data, "rowCountSus");
+          
           });
 
         if (rowCount == 0) {
@@ -843,7 +837,7 @@ function fn_ScanSheetMOTTime() {
     }, 300);
     let strError = "";
     let strStatus = "";
-    console.log("lblSheet", lblSheet);
+  
     await axios
       .post("/api/CallFPCSheetLeadTimeResult", {
         LotNo: txtlot.value,

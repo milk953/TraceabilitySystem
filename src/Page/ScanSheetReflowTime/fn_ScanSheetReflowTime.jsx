@@ -106,15 +106,15 @@ function fn_ScanSheetReflowTime() {
               ],
             })
             .then((res) => {
-              console.log(res.data.p_error,'error')
+           
               strError = res.data.p_error;
-              console.log(strError,'strError')
+          
             })
             .catch((error) => {
               setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
             setPnlShowresult(true);
             });
-            console.log(strError,'strError2')
+          
           if (strError == "") {
             const currentTime = new Date().toLocaleTimeString("en-US", {
               hour12: false,
@@ -123,7 +123,7 @@ function fn_ScanSheetReflowTime() {
             setLblResult({ text: "OK", styled:{color: "white",background:'green'} });
             setPnlShowresult(true);
           } else if (strError != '') {
-            console.log(strError,'strError3')
+           
             setLblResult({ text: "NG", styled:{color: "white",background:'red'} });
             setLblRemark({text:strError,styled:{color: "white",background:'red',border:'1px solid red'}});
             setPnlSaveState(false);
@@ -206,7 +206,7 @@ function fn_ScanSheetReflowTime() {
       })
       .then((res) => {
         strError = res.data.p_error;
-        console.log(strError,'strError')
+      
       })
       .catch((error) => {
         setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});

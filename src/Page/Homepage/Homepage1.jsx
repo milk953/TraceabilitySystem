@@ -66,7 +66,7 @@ function ScanSheetMOTTime() {
     <div>
       <Hearder />
       <Card component={Paper} className="Card-Common">
-        {console.log(options)}
+     
         <AutoComplete
           options={options}
           onSearch={handleSearch}
