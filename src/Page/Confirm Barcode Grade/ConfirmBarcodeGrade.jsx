@@ -447,7 +447,7 @@ function ConfirmBarcodeGrade() {
                               onKeyDown={(event) => {
                                 if (event.key === "Enter") {
                                   event.preventDefault();
-                                  if (index < hfSerialCount - 1) {
+                                  if (index < txtSerial.length - 1) {
                                     fcGvSerial_txtSerial_0.current[
                                       index + 1
                                     ].focus();

@@ -443,6 +443,7 @@ function Fn_ScanSMTRollSht() {
       setlbltotalSht('')
       setgvScanResult((prevState) => ({ ...prevState, visible: false,value:'' }));
       settxtOperator('')
+      SettxtLeafNo(Array(GvSerial.value.length).fill(""))
       setlblCheckRoll((prevState) => ({ ...prevState ,value:'',style:{}}));
       setHfMode("LOT");
       setTimeout(() => {
@@ -513,7 +514,9 @@ function Fn_ScanSMTRollSht() {
       }));
       setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
+
       setHfMode("SHEET");
+
     }
     if (_strType == "SHEET") {
       settxt_lotNo((prevState) => ({
@@ -543,9 +546,9 @@ function Fn_ScanSMTRollSht() {
       setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "none" }));
       await getInitialSheet();
-      setTimeout(() => {
+      // setTimeout(() => {
         fc_GvSerial.current[0].focus();
-      }, 300);
+      // }, 300);
     }
     if (_strType == "SHEET_NG") {
       settxt_lotNo((prevState) => ({
@@ -630,9 +633,9 @@ function Fn_ScanSMTRollSht() {
         ...prevState,
         value: '',
       }));
-      setTimeout(() => {
+      // setTimeout(() => {
       fc_GvSerial.current[0].focus();
-    }, 300);
+    // }, 300);
       return;        
     }
     let _strRollLeaf = txtRollLeaf.value;
@@ -1059,7 +1062,7 @@ function Fn_ScanSMTRollSht() {
         fc_txtRollleaf.current.focus();
       }, 300);
       ExportGridToCSV(dtSheet, columns);
-     
+      SettxtLeafNo(Array(txtTotalLeaf).fill(""))
     }
     scrollToTop();
     hideLoading();
@@ -1097,7 +1100,7 @@ function Fn_ScanSMTRollSht() {
       visible: false,
       value: "",
     }));
-    SettxtLeafNo(Array(txtTotalLeaf).fill(""))
+    SettxtLeafNo(Array(GvSerial.value.length).fill(""))
     if(txtOperator==''){
       setTimeout(() => {
         fc_txtOperator.current.focus();
@@ -1192,9 +1195,9 @@ function Fn_ScanSMTRollSht() {
           value: "",
         }));
      
-        setTimeout(() => {
+        // setTimeout(() => {
           fc_GvSerial.current[0].focus();
-        }, 300);
+        // }, 300);
         
       }
       else{

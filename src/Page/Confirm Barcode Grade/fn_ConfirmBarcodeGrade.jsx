@@ -251,7 +251,7 @@ function fn_ConfirmBarcodeGrade() {
                 ...prevState,
                 value: strPrdName,
               }));
-              getInitialSheet();
+              await getInitialSheet();
               setTimeout(() => {
                 fcOperator.current.focus();
               }, 300);
@@ -895,6 +895,7 @@ function fn_ConfirmBarcodeGrade() {
 
   const getInputSerial = async () => {
     let dtData = [];
+   let i=0
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
       for (let intRow = 0; intRow < hfSerialCount; intRow++) {
         dtData.push({
@@ -905,10 +906,8 @@ function fn_ConfirmBarcodeGrade() {
           SERIAL_GRADE:
             hfBarcodeErrorValue.includes(txtSerial[intRow]) && txtSerial[intRow]
               ? "X"
-              : txtSerial[intRow]
-              ? txtSerial[intRow].slice(-1)
-              : "",
-          SERIAL: txtSerial[intRow] || "",
+              : txtSerial[i].slice(-1),
+          SERIAL: txtSerial[i] || "",
           GRADE_RESULT: "",
           SCAN_RESULT: "",
           REMARK: "",
@@ -917,6 +916,7 @@ function fn_ConfirmBarcodeGrade() {
           PRODUCT: SlProduct.value,
           PLANT_CODE: Fac,
         });
+        i+=1
       }
     }
     return dtData;
@@ -1785,7 +1785,7 @@ function fn_ConfirmBarcodeGrade() {
       dataIndex: "SHEET",
       key: "Sheet",
       render: (text, record, index) => {
-        return index + 1;
+        return text;
       },
       align: "center",
     },
