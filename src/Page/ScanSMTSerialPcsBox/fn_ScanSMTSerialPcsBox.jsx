@@ -611,7 +611,7 @@ function fn_ScanSMTSerialPcsBox() {
     SetMode("LOT");
     setTimeout(() => {
       fntxtLot.current.focus();
-    }, 300);
+    }, 0);
   };
 
   const btnCancel_Click = async () => {
@@ -639,7 +639,7 @@ function fn_ScanSMTSerialPcsBox() {
   //     scrollToTop();
   //     setTimeout(() => {
   //       fc_txtSerial.current[0].focus();
-  //     }, 300);
+  //     }, 0);
   //   }
   // };
 
@@ -681,7 +681,7 @@ function fn_ScanSMTSerialPcsBox() {
           fc_txtSerial.current[0].focus();
         } else {
         }
-      }, 300);
+      }, 0);
     }
   };
   
@@ -817,7 +817,7 @@ function fn_ScanSMTSerialPcsBox() {
       setlblBox((prevState) => ({ ...prevState, value: "" }));
       setTimeout(() => {
         fntxtBox.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
@@ -970,7 +970,7 @@ function fn_ScanSMTSerialPcsBox() {
         }
         setTimeout(() => {
           fntxtLot.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "LOT_ERROR":
         settxtLot((prevState) => ({ ...prevState, value: "", disbled: false }));
@@ -1006,7 +1006,7 @@ function fn_ScanSMTSerialPcsBox() {
         }
         setTimeout(() => {
           fntxtLot.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "MACHINE":
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
@@ -1036,7 +1036,7 @@ function fn_ScanSMTSerialPcsBox() {
         setHfMode("MACHINE");
         setTimeout(() => {
           fntxtMachine.current.focus();
-        }, 300);
+        }, 0);
 
         break;
       case "OP":
@@ -1064,7 +1064,7 @@ function fn_ScanSMTSerialPcsBox() {
         setHfMode("OP");
         setTimeout(() => {
           fntxtOP.current.focus();
-        }, 300);
+        }, 0);
 
         break;
       case "TRAY":
@@ -1076,7 +1076,7 @@ function fn_ScanSMTSerialPcsBox() {
         setHfMode("TRAY");
         setTimeout(() => {
           fntxtTray.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "TRAY_ERROR":
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
@@ -1086,7 +1086,7 @@ function fn_ScanSMTSerialPcsBox() {
         setHfMode("TRAY");
         setTimeout(() => {
           fntxtTray.current.focus();
-        }, 300);
+        }, 0);
 
         break;
       case "BOX":
@@ -1121,7 +1121,7 @@ function fn_ScanSMTSerialPcsBox() {
         setHfMode("BOX");
         setTimeout(() => {
           fntxtBox.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "BOX_ERROR":
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
@@ -1154,7 +1154,7 @@ function fn_ScanSMTSerialPcsBox() {
         setHfMode("BOX");
         setTimeout(() => {
           fntxtBox.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "PACKING":
         setdis_ddlProduct(true);
@@ -1184,7 +1184,7 @@ function fn_ScanSMTSerialPcsBox() {
         setHfMode("PACK");
         setTimeout(() => {
           fntxtPack.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "SERIAL":
         setdis_ddlProduct(true);
@@ -1242,7 +1242,7 @@ function fn_ScanSMTSerialPcsBox() {
     if (gvSerial.length > 0) {
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
-      }, 300);
+      }, 0);
     }
     return 0;
   };
