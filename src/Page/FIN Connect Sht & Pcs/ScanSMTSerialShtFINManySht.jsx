@@ -218,7 +218,6 @@ function ScanSMTSerialShtFINManySht() {
                             onChange={(e) => {
                               setTxtRollLeaf(e.target.value);
                             }}
-                            // onBlur={txtRollLeaf_Change}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
                                 txtRollLeaf_Change();
