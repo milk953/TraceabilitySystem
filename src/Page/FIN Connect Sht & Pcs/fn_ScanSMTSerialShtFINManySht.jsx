@@ -194,6 +194,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setLotState(enableState);
     setProductSelect(productCombo[0].prd_name);
     setTimeOut(Fctxtlot)
+    
     sethfMode("lot");
     setHideImg(true);
   };
@@ -224,16 +225,21 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     if(txtSideFront == '' || txtSideBack  == '' ){
       setlblLog("Please input Sheet Side No. !!!");
       setlblLogState(true);
-      if (txtSideBack == "") {
-        setTimeout(() => {
-          SetFocus("gvBackside_0");          
-        }, 100);
+      if(txtSideBack == ""){
+        SetFocus("gvBackside_0");
       }else{
-        setTimeout(() => {
-          SetFocus("gvFrontside_0");            
-          }, 100);
-        
+        SetFocus("gvFrontside_0");
       }
+      // if (txtSideBack == "") {
+      //   setTimeout(() => {
+      //     SetFocus("gvBackside_0");          
+      //   }, 100);
+      // }else{
+      //   setTimeout(() => {
+      //     SetFocus("gvFrontside_0");            
+      //     }, 100);
+        
+      // }
       return;
     }
     showLoading('กำลังบันทึก กรุณารอสักครู่')
@@ -747,13 +753,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       setPnlMachineState(true);
       Fctxtmcno.current.focus();
     } else {
-      setTimeout(() => {
-        hideLoading();
-        SetFocus("gvBackside_0");
-      }, 200);
+      // setTimeout(() => {
+      //   hideLoading();
+      //   SetFocus("gvBackside_0");
+      // }, 200);
+      
+      SetFocus("gvBackside_0");
       scrollToTop();
     }
-    
+    hideLoading();
   }
   const ProductSelect_Change = async (e) => {
     setProductSelect(e);
@@ -832,7 +840,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             setGvSerial(getInitialSerial());
             setGvBackSideState(true);
             // setTimeOut(FcgvBackside)
-            if(txtOperator == ""){setTimeOut(FctxtOperator);}else{setTimeOut(FcgvBackside);}            
+            // if(txtOperator == ""){setTimeOut(FctxtOperator);}else{setTimeOut(FcgvBackside);}        
+            if(txtOperator == ""){
+              SetFocus(`txtOperatorFin`);
+            }else{
+              SetFocus(`gvBackside_0`);
+            }
             if (hfCheckRollSht == "Y") {
               setPnlRollLeafState(true);
               setTxtRollLeaf("");
@@ -910,14 +923,17 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       Fctxtlot.current.focus();
     }
   };
-  const txtRollLeaf_Change = () => {
+  const txtRollLeaf_Change = async () => {
     setlblLogState(false);
     setlblLog("");
+    await getData("getProductSerialMaster", productSelect);
+    console.log(hfConnRollLength)
     if (txtRollLeaf != "" && txtRollLeaf.length == parseInt(hfConnRollLength)) {
+      
       let strRollProduct = hfRollNo + hfCheckRollPrd;
       let start = parseInt(hfCheckRollPrdStart);
       let end = parseInt(hfCheckRollPrdEnd);
-      let result = text.substring(start - 1, end);
+      let result = strRollProduct.substring(start - 1, end);
       if (strRollProduct != result) {
         setlblLog("Roll/Leaf No. mix product");
         setlblLogState(true);
@@ -933,7 +949,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           Fctxtmcno.current.focus();
         } else {
           setPnlMachineState(false);
-          FcgvBackside.current.focus();
+          SetFocus(`gvBackside_0`);
         }
       }
     } else {
@@ -953,7 +969,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       FctxtOperator.current.focus();
     }
   };
-  const txtOperator_Change = () => {
+  const txtOperator_Change = async () => {
+    await getData("getProductSerialMaster", productSelect);
     if (txtOperator != "") {
       if (hfCheckRollSht == "Y") {
         setPnlRollLeafState(true);
@@ -966,9 +983,13 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           setPnlMachineState(true);
           Fctxtmcno.current.focus();
         } else {
-          setPnlMachineState(false);
+          if(hfCheckRollSht == "Y"){
+            FCtxtRollleaf.current.focus();
+          }else{
+            setPnlMachineState(false);          
+            SetFocus(`gvBackside_0`);
+          }
           
-          SetFocus(`gvBackside_0`);
         }
       }
     } else {

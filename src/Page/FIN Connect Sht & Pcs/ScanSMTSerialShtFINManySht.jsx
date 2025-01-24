@@ -180,6 +180,7 @@ function ScanSMTSerialShtFINManySht() {
                       <input
                         size="small"
                         className="txtField"
+                        id="txtOperatorFin"
                         ref={FctxtOperator}
                         value={txtOperator}
                         onChange={(e) => {
@@ -217,7 +218,12 @@ function ScanSMTSerialShtFINManySht() {
                             onChange={(e) => {
                               setTxtRollLeaf(e.target.value);
                             }}
-                            onBlur={txtRollLeaf_Change}
+                            // onBlur={txtRollLeaf_Change}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                txtRollLeaf_Change();
+                              }
+                            }}
                           ></input>
                         </TableCell>
                         <TableCell></TableCell>
