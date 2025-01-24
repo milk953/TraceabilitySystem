@@ -380,7 +380,7 @@ function fn_ScanAVIConfirmResult() {
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    }, 300);
+    }, 0);
   }
 
   //----------------------------------------  เนื้อหาของ const DataTable ส่วนนี้เก็บไว้ก่อนอาจต้องใช้  {

@@ -316,7 +316,7 @@ function fn_AOIManualConfirmP1() {
   function fnSetFocus(txtField) {
     setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    }, 300);
+    }, 0);
   }
 
   return {
