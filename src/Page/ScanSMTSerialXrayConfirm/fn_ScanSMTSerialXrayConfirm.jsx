@@ -897,9 +897,9 @@ function fn_ScanSMTSerialXrayConfirm() {
   ];
 
   function fnSetFocus(txtField) {
-    // setTimeout(() => {
+    setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    // }, 0);
+    }, 0);
   }
   // function fnSetFocus(txtField) {
   //   const element = document.getElementById(txtField);

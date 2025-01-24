@@ -424,9 +424,9 @@ function fn_Change_Serial() {
   };
 
   function fnSetFocus(txtField) {
-    // setTimeout(() => {
+    setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    // }, 0);
+    }, 0);
   }
 
   return {
