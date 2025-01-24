@@ -916,9 +916,9 @@ function fn_ScanSMTConnectRollConfirm() {
   ];
 
   function fnSetFocus(txtField) {
-    setTimeout(() => {
+    // setTimeout(() => {
       document.getElementById(`${txtField}`).focus();
-    }, 0);
+    // }, 0);
   }
   return {
     txtLot,
