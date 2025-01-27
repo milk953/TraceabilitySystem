@@ -141,7 +141,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     sethfMaxSeq("0");
     setTimeout(() => {
       fntxtSerialRefer.current.focus();
-    }, 300);
+    }, 0);
   }, []);
 
   const GetProductData = async () => {
@@ -294,7 +294,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       settxtSerialReplace((prevState) => ({ ...prevState, disbled: true }));
       setTimeout(() => {
         fntxtSerialRefer.current.focus();
-      }, 300);
+      }, 0);
     } else {
       settxtSerialReplace((prevState) => ({
         ...prevState,
@@ -303,7 +303,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
       }));
       setTimeout(() => {
         fntxtSerialReplace.current.focus();
-      }, 300);
+      }, 0);
     }
     setpnlsubmit(false)
   };
@@ -423,14 +423,14 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     }
     setTimeout(() => {
       fntxtSerialReplace.current.focus();
-    }, 300);
+    }, 0);
   };
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     await getProductSerialMaster(selectvalue);
     setTimeout(() => {
       fntxtSerialRefer.current.focus();
-    }, 300);
+    }, 0);
   };
   const getInputSerial = async () => {
     let dtData = [];
@@ -522,7 +522,7 @@ function fn_ScanSMTSerialRecordTimeReplace() {
     }
     setTimeout(() => {
       fntxtSerialRefer.current.focus();
-    }, 300);
+    }, 0);
   };
   const BtnSubmit1_Cancel = () =>{
 setpnlgvSerialReplace(false)
@@ -532,7 +532,7 @@ setlblGroup((prevState) => ({ ...prevState, value: "" }));
 setlblStartTime((prevState) => ({ ...prevState, value: "" }));
 setTimeout(() => {
   fntxtSerialRefer.current.focus();
-}, 300);
+}, 0);
 
   }
 

@@ -65,7 +65,7 @@ const txtSheetNo_TextChanged = async () => {
 useEffect(() => {
   setTimeout(() => {
     FctxtSht.current.focus();
-  }, 300);
+  }, 0);
 }, []);
 
   return {

@@ -144,7 +144,7 @@ function fn_rpt_SheetTraceView() {
     }
     setTimeout(() => {
       fntxtSheetNo.current.focus();
-    }, 300);
+    }, 0);
   }, []);
 
   useEffect(() => {

@@ -576,7 +576,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
 
       setTimeout(() => {
         fntxtBox.current.focus();
-      }, 300);
+      }, 0);
     }
   };
   const GetProductData = async () => {
@@ -842,7 +842,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         }
         setTimeout(() => {
           fntxtLot.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "LOT_ERROR":
         settxtLot((prevState) => ({
@@ -887,7 +887,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         }
         setTimeout(() => {
           fntxtLot.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "MACHINE":
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
@@ -925,7 +925,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setHfMode("MACHINE");
         setTimeout(() => {
           fntxtMachine.current.focus();
-        }, 300);
+        }, 0);
 
         break;
       case "OP":
@@ -966,7 +966,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setHfMode("OP");
         setTimeout(() => {
           fntxtOP.current.focus();
-        }, 300);
+        }, 0);
 
         break;
       case "TRAY":
@@ -978,7 +978,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setHfMode("TRAY");
         setTimeout(() => {
           fntxtTray.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "TRAY_ERROR":
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
@@ -988,7 +988,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setHfMode("TRAY");
         setTimeout(() => {
           fntxtTray.current.focus();
-        }, 300);
+        }, 0);
 
         break;
       case "BOX":
@@ -1027,7 +1027,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setHfMode("BOX");
         setTimeout(() => {
           fntxtBox.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "BOX_ERROR":
         settxtLot((prevState) => ({ ...prevState, disbled: true }));
@@ -1067,7 +1067,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setHfMode("BOX");
         setTimeout(() => {
           fntxtBox.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "PACKING":
         setdis_ddlProduct(true);
@@ -1097,7 +1097,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
         setHfMode("PACK");
         setTimeout(() => {
           fntxtPack.current.focus();
-        }, 300);
+        }, 0);
         break;
       case "SERIAL":
         setdis_ddlProduct(true);
@@ -1157,7 +1157,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     if (gvSerial.length > 0) {
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
-      }, 300);
+      }, 0);
     }
     return 0;
   };
@@ -1187,7 +1187,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     SetMode("LOT");
     setTimeout(() => {
       fntxtLot.current.focus();
-    }, 300);
+    }, 0);
     settxtPcsTray((prevState) => ({
       ...prevState,
       value: "",
@@ -1347,7 +1347,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       setlblBox((prevState) => ({ ...prevState, value: "" }));
       setTimeout(() => {
         fntxtBox.current.focus();
-      }, 300);
+      }, 0);
     }
   };
   const txtPack_TextChanged = async () => {
@@ -1392,7 +1392,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       }));
       setTimeout(() => {
         fntxtPack.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
@@ -1431,7 +1431,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   //     setpnlgvScanResult(false)
   //     setTimeout(() => {
   //       fc_txtSerial.current[0].focus();
-  //     }, 300);
+  //     }, 0);
   //     scrollToTop();
   //   }
   // };
@@ -1468,13 +1468,13 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       setpnlgvScanResult(false);
       scrollToTop();
   
-      // รอ 300ms และโฟกัสที่ input แรก
+      // รอ 0ms และโฟกัสที่ input แรก
       setTimeout(() => {
         if (fc_txtSerial.current[0]) {
           fc_txtSerial.current[0].focus();
         } else {
         }
-      }, 300);
+      }, 0);
     }
   };
   const handleSerialChange = async (index, event) => {
