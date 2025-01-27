@@ -311,7 +311,7 @@ function fn_ScanSMTSerialControlTime() {
             setvisiblelog(true);
             setTimeout(() => {
                 inputgvSerial.current[0].focus();
-            }, 100);
+            }, 0);
             setgvScanResult(false);
             setgvScanData([]);
             return;

@@ -318,7 +318,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
         SetMode("LOT");
         setTimeout(() => {
             inputLot.current.focus();
-        }, 200);
+        }, 0);
     };
 
     const handleChangeProduct = async (value) => {
@@ -462,7 +462,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             setgvSerialData([]);
             setTimeout(() => {
                 inputPackingNo.current.focus();
-            }, 200);
+            }, 0);
         } else if (strType === "SERIAL") {
             settxtLotDisabled(true);
             setvisiblelog(false);
@@ -475,7 +475,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             await getInitialSerial();
             setTimeout(() => {
                 inputgvSerial.current[0].focus();
-            }, 200);
+            }, 0);
         } else if (strType === "SERIAL_ERROR") {
             settxtLotDisabled(true);
             setvisiblelog(true);
@@ -520,7 +520,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
             setvisiblelog(true);
             setTimeout(() => {
                 inputgvSerial.current[0].focus();
-            }, 100);
+            }, 0);
             setgvScanResult(false);
             setgvScanData([]);
             return;

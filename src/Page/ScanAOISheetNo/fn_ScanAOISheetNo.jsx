@@ -245,7 +245,7 @@ function fn_ScanAOISheetNo() {
         //SetMode("SERIAL");
         // setTimeout(() => {
         //     inputSerial.current[0].focus();
-        // }, 300);
+        // }, 0);
         //settxtLotNo("");
       } else {
         SetMode("LOT");
@@ -274,7 +274,7 @@ function fn_ScanAOISheetNo() {
       settxtgvSerial("");
       setTimeout(() => {
         inputSerial.current[0].focus();
-      }, 300);
+      }, 0);
       // if (Array.isArray(txtgvSerial)) {
       //   const Value = txtgvSerial.some((item) => item !== "");
       //   CheckValue = Value;
@@ -290,7 +290,7 @@ function fn_ScanAOISheetNo() {
       //   setpnlLog(true);
       //   setTimeout(() => {
       //     inputSerial.current[0].focus();
-      //   }, 300);
+      //   }, 0);
       //   settxtgvSerial("");
       // }
     }
@@ -335,7 +335,7 @@ function fn_ScanAOISheetNo() {
       sethfMode("OP");
       setTimeout(() => {
         inputOperator.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "PCS") {
       settxtLotNoDisabled(true);
       settxtLotNo("");
@@ -364,7 +364,7 @@ function fn_ScanAOISheetNo() {
       sethfMode("PCS");
       setTimeout(() => {
         inputTotalPcs.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "LEAF") {
       settxtOperatorDisabled(true);
       setibtOperator((prevState) => ({ ...prevState, disabled: false }));
@@ -391,7 +391,7 @@ function fn_ScanAOISheetNo() {
       sethfMode("LEAF");
       setTimeout(() => {
         inputLeaf.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "LAYER") {
       settxtOperatorDisabled(true);
       setibtOperator((prevState) => ({ ...prevState, disabled: false }));
@@ -417,7 +417,7 @@ function fn_ScanAOISheetNo() {
       sethfMode("LAYER");
       setTimeout(() => {
         inputLayer.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "LOT") {
       settxtOperatorDisabled(true);
       setibtOperator((prevState) => ({ ...prevState, disabled: false }));
@@ -444,18 +444,18 @@ function fn_ScanAOISheetNo() {
       sethfMode("LOT");
       setTimeout(() => {
         inputLot.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "SERIAL") {
       settxtTotalPcsDisabled(true);
       setpnlSerial(true);
       setTimeout(() => {
         setpnlResult(false);
-      }, 300);
+      }, 0);
       setibtLayerBack((prevState) => ({ ...prevState, disabled: false }));
       sethfMode("SERIAL");
       setTimeout(() => {
         inputSerial.current[0].focus();
-      }, 300);
+      }, 0);
       //await getInitialSerial();
     }
   };
@@ -475,7 +475,7 @@ function fn_ScanAOISheetNo() {
       if (dtData.length > 0) {
         setTimeout(() => {
           inputSerial.current[0].focus();
-        }, 300);
+        }, 0);
       }
       return dtData;
     } else {
@@ -501,7 +501,7 @@ function fn_ScanAOISheetNo() {
       setpnlLog(true);
       setTimeout(() => {
         inputSerial.current[0].focus();
-      }, 100);
+      }, 0);
       return;
     } else {
       setpnlLog(false);
@@ -709,7 +709,7 @@ function fn_ScanAOISheetNo() {
             setpnlSerial(false);
             setpnlResult(false);
             setlblResult("");
-          }, 500);
+          }, 0);
         }
       });
 
@@ -807,7 +807,7 @@ function fn_ScanAOISheetNo() {
 
         setTimeout(() => {
           inputSerial.current[0].focus();
-        }, 300);
+        }, 0);
       } catch (error) {
         console.error("เกิดข้อผิดพลาด =", error);
 
@@ -815,7 +815,7 @@ function fn_ScanAOISheetNo() {
 
         setTimeout(() => {
           inputSerial.current[0].focus();
-        }, 300);
+        }, 0);
       }
     }
   };

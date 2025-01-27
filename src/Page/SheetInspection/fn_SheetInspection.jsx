@@ -27,7 +27,7 @@ function fn_SheetInspection() {
         setselectcbx("cbxXOut");
         setTimeout(() => {
             inputProduct.current.focus();
-        }, 200);
+        }, 0);
     }, []);
 
     const handleChangecbx = (event) => {

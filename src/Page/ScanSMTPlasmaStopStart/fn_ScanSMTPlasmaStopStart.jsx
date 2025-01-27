@@ -385,7 +385,7 @@ function fn_ScanSMTPlasmaStopStart() {
       setpnlStatus(false);
       setTimeout(() => {
         inputPartial.current.focus();
-    }, 200);
+    }, 0);
     } else if (strType === "PARTIAL_OK") {
       settxtPartialDisabled(false);
       settxtPartialNo("");

@@ -214,7 +214,7 @@ function fn_ScanSMTSerialSht() {
               settxtRollLeaf("");
               setTimeout(() => {
                 inputRollLeaf.current.focus();
-              }, 200);
+              }, 0);
             } else {
               SetMode("SERIAL");
               settxtMachineNo("");
@@ -225,7 +225,7 @@ function fn_ScanSMTSerialSht() {
                 setpnlMachine(false);
                 setTimeout(() => {
                   inputSideBack.current[0].focus();
-                }, 200);
+                }, 0);
               }
             }
           } else {
@@ -300,7 +300,7 @@ function fn_ScanSMTSerialSht() {
     SetMode("LOT");
     setTimeout(() => {
       inputLot.current.focus();
-    }, 200);
+    }, 0);
     settxtLotRef("");
     setlblTotalSht("");
     setlblTotalPcs("");
@@ -646,7 +646,7 @@ function fn_ScanSMTSerialSht() {
         //   setlblLog("Please input Sheet Side");
         //   setTimeout(() => {
         //     inputSideBack.current[0].focus();
-        //   }, 200);
+        //   }, 0);
         // }
 
         if (hfSheetType === "D" && _strShtNoBack === _strShtNoFront) {
@@ -1577,7 +1577,7 @@ function fn_ScanSMTSerialSht() {
       } else if (nextIndex === hfShtScan) {
         setTimeout(() => {
           inputgvSerial.current[0].focus();
-        }, 200);
+        }, 0);
       }
     }
   };

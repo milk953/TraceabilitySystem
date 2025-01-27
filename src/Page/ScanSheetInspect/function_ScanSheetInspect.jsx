@@ -90,7 +90,7 @@ function fn_ScanSheetInspect() {
         fetchData();
         setTimeout(() => {
             inputLot.current.focus();
-        }, 200);
+        }, 0);
     }
 
     const handleLotNo = async () => {
@@ -340,7 +340,7 @@ function fn_ScanSheetInspect() {
         setselBinNo(value);
         setTimeout(() => {
             inputShtNo.current.focus();  
-        }, 200);
+        }, 0);
         selShtXOut.current?.focus();
 
     };

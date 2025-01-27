@@ -182,7 +182,7 @@ function fn_ScanSMTConfirmMOTP1() {
                 await getProductSerialMaster(_strPrdName);
                 setTimeout(() => {
                   ddlProduct.current.focus();
-                }, 300);
+                }, 0);
               }
             } else {
               setlblLog(`Product ${_strPrdName} not found.`);
@@ -190,7 +190,7 @@ function fn_ScanSMTConfirmMOTP1() {
               await getProductSerialMaster(_strPrdName);
               setTimeout(() => {
                 ddlProduct.current.focus();
-              }, 300);
+              }, 0);
             }
           }
         } else {
@@ -209,7 +209,7 @@ function fn_ScanSMTConfirmMOTP1() {
       setlblLot("");
       setTimeout(() => {
         inputLot.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
@@ -224,7 +224,7 @@ function fn_ScanSMTConfirmMOTP1() {
     SetMode("LOT");
     setTimeout(() => {
       inputLot.current.focus();
-    }, 300);
+    }, 0);
   };
 
   const handleChangeProduct = async (value) => {
@@ -275,7 +275,7 @@ function fn_ScanSMTConfirmMOTP1() {
         await setSerialDataTray();
         const newValues = [];
         settxtgvSerial(newValues);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 0));
       } else {
         setlblLog(`Please Input Serial No.`);
         setpnlLog(true);
@@ -301,7 +301,7 @@ function fn_ScanSMTConfirmMOTP1() {
       setgvScanData([]);
       setTimeout(() => {
         inputLot.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "LOT_ERROR") {
       settxtLot((prevState) => ({ ...prevState, disabled: false, value: "" }));
       setlblLot("");
@@ -310,7 +310,7 @@ function fn_ScanSMTConfirmMOTP1() {
       sethfMode("LOT");
       setTimeout(() => {
         inputLot.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "TRAY") {
       settxtLot((prevState) => ({ ...prevState, disabled: true }));
       setpnlLog(false);
@@ -319,7 +319,7 @@ function fn_ScanSMTConfirmMOTP1() {
       sethfMode("TRAY");
       setTimeout(() => {
         inputTray.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "TRAY_ERROR") {
       settxtLot((prevState) => ({ ...prevState, disabled: true }));
       setpnlLog(true);
@@ -327,7 +327,7 @@ function fn_ScanSMTConfirmMOTP1() {
       sethfMode("TRAY");
       setTimeout(() => {
         inputTray.current.focus();
-      }, 300);
+      }, 0);
     } else if (strType === "SERIAL") {
       setselProduct((prevState) => ({ ...prevState, disabled: true }));
       settxtLot((prevState) => ({ ...prevState, disabled: true }));

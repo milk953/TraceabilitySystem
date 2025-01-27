@@ -301,7 +301,7 @@ function fn_ScanSMTSerialRecordTime() {
                             if (inputOPRejudge.current) {
                                 inputOPRejudge.current.focus();
                             }
-                        }, 200);
+                        }, 0);
                     }
                 } else {
                     settxtOPRejudge("");
@@ -309,7 +309,7 @@ function fn_ScanSMTSerialRecordTime() {
                         if (inputOPRejudge.current) {
                             inputOPRejudge.current.focus();
                         }
-                    }, 200);
+                    }, 0);
                 }
             } else {
                 if (hfAreaRejudge !== "") {
@@ -344,7 +344,7 @@ function fn_ScanSMTSerialRecordTime() {
                         settxtAreaRejudge("");
                         setTimeout(() => {
                             inputAreaRejudge.current.focus();
-                        }, 200);
+                        }, 0);
                     }
                 } else {
                     settxtAreaRejudge("");
@@ -352,7 +352,7 @@ function fn_ScanSMTSerialRecordTime() {
                         if (inputAreaRejudge.current) {
                             inputAreaRejudge.current.focus();
                         }
-                    }, 200);
+                    }, 0);
                 }
             } else {
                 SetMode("PCS");
@@ -380,7 +380,7 @@ function fn_ScanSMTSerialRecordTime() {
                 if (inputAreaRejudge.current) {
                     inputAreaRejudge.current.focus();
                 }
-            }, 200);
+            }, 0);
         }
     };
 
@@ -670,7 +670,7 @@ function fn_ScanSMTSerialRecordTime() {
             sethfMode("MC");
             setTimeout(() => {
                 inputMachine.current.focus();
-            }, 200);
+            }, 0);
         } else if (strType === "OP") {
             setistxtMachineDisabled(true);
             setisibtMCBackDisabled(false);
@@ -751,7 +751,7 @@ function fn_ScanSMTSerialRecordTime() {
                 if (inputOPRejudge.current) {
                     inputOPRejudge.current.focus();
                 }
-            }, 200);
+            }, 0);
 
         } else if (strType === "AREA-REJUDGE") {
             setistxtMachineDisabled(true);
@@ -793,7 +793,7 @@ function fn_ScanSMTSerialRecordTime() {
                 if (inputAreaRejudge.current) {
                     inputAreaRejudge.current.focus();
                 }
-            }, 200);
+            }, 0);
         } else if (strType === "PCS") {
             setistxtMachineDisabled(true);
             setisibtMCBackDisabled(false);
@@ -899,13 +899,13 @@ function fn_ScanSMTSerialRecordTime() {
             if (selectedrbt === "rbtRecordTime") {
                 setTimeout(() => {
                     inputgvSerial.current[0].focus();
-                }, 200);
+                }, 0);
             } else {
                 settxtRackNo("");
                 setistxtRackDisabled(false);
                 setTimeout(() => {
                     inputRackNo.current.focus();
-                }, 200);
+                }, 0);
             }
         }
      
@@ -987,7 +987,7 @@ function fn_ScanSMTSerialRecordTime() {
             setvisiblelog(true);
             setTimeout(() => {
                 inputgvSerial.current[0].focus();
-            }, 100);
+            }, 0);
             setgvScanResult(false);
             setgvScanData([]);
             return;
@@ -1349,11 +1349,11 @@ function fn_ScanSMTSerialRecordTime() {
         if (selectedrbt === "rbtRecordTime") {
             setTimeout(() => {
                 inputgvSerial.current[0].focus();
-            }, 200);
+            }, 0);
         } else {
             setTimeout(() => {
                 inputRackNo.current.focus();
-            }, 200);
+            }, 0);
         }
     };
 

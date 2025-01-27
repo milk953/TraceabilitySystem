@@ -184,7 +184,7 @@ function fn_ScanSMTSerialShtMaster() {
                     settxtMasterCode("");
                     setTimeout(() => {
                         inputMasterCode.current?.focus();
-                    }, 300);
+                    }, 0);
                 } catch (error) {
                     const intProduct = strPrdName.indexOf('-', 12);
                     if (intProduct > -1) {
@@ -196,20 +196,20 @@ function fn_ScanSMTSerialShtMaster() {
                             settxtMasterCode("");
                             setTimeout(() => {
                                 inputMasterCode.current?.focus();
-                            }, 300);
+                            }, 0);
                         } catch (error) {
                             setlblLog(`Product ${strPrdName} not found.`);
                             setpnlLog(true);
                             setTimeout(() => {
                                 ddlProduct.current.focus();
-                            }, 300);
+                            }, 0);
                         }
                     } else {
                         setlblLog(`Product ${strPrdName} not found.`);
                         setpnlLog(true);
                         setTimeout(() => {
                             ddlProduct.current.focus();
-                        }, 300);
+                        }, 0);
                     }
                 }
             } else {
@@ -221,7 +221,7 @@ function fn_ScanSMTSerialShtMaster() {
                 sethfMode("LOT");
                 setTimeout(() => {
                     inputLot.current.focus();
-                }, 300);
+                }, 0);
             }
         } else {
             setselProduct(Productdata[0].prd_name);
@@ -232,7 +232,7 @@ function fn_ScanSMTSerialShtMaster() {
             sethfMode("LOT");
             setTimeout(() => {
                 inputLot.current.focus();
-            }, 300);
+            }, 0);
         }
     };
 
@@ -244,7 +244,7 @@ function fn_ScanSMTSerialShtMaster() {
         SetMode("LOT");
         setTimeout(() => {
             inputLot.current.focus();
-        }, 300);
+        }, 0);
         settxtLotRef("");
         settxtMasterCode("");
         setlblTotalSht("");
@@ -266,7 +266,7 @@ function fn_ScanSMTSerialShtMaster() {
                 settxtRollLeaf("");
                 setTimeout(() => {
                     inputRollLeaf.current.focus();
-                }, 300);
+                }, 0);
             } else {
                 SetMode("SERIAL");
                 settxtMachineNo("");
@@ -274,7 +274,7 @@ function fn_ScanSMTSerialShtMaster() {
                     setpnlMachine(true);
                     setTimeout(() => {
                         inputMachineNo.current.focus();
-                    }, 300);
+                    }, 0);
                 } else {
                     inputSideBack.current[0].focus();
                 }
@@ -291,7 +291,7 @@ function fn_ScanSMTSerialShtMaster() {
             settxtLotRef(strLotData[0]);
             setTimeout(() => {
                 inputMasterCode.current.focus();
-            }, 300);
+            }, 0);
         }
     };
 
@@ -309,7 +309,7 @@ function fn_ScanSMTSerialShtMaster() {
                     settxtRollLeaf("");
                     setTimeout(() => {
                         inputRollLeaf.current.focus();
-                    }, 300);
+                    }, 0);
                 } else {
                     SetMode("SERIAL");
                     settxtMachineNo("");
@@ -320,7 +320,7 @@ function fn_ScanSMTSerialShtMaster() {
                         setpnlMachine(false);
                         setTimeout(() => {
                             inputSideBack.current[0].focus();
-                        }, 300);
+                        }, 0);
                     }
 
                 }
@@ -331,12 +331,12 @@ function fn_ScanSMTSerialShtMaster() {
                 setlblLog("Scan master code incorrect / สแกน master code ไม่ถูกต้อง");
                 setTimeout(() => {
                     inputMasterCode.current.focus();
-                }, 300);
+                }, 0);
             }
         } else {
             setTimeout(() => {
                 inputMasterCode.current.focus();
-            }, 300);
+            }, 0);
         }
     };
 
@@ -360,7 +360,7 @@ function fn_ScanSMTSerialShtMaster() {
                 settxtRollLeaf("");
                 setTimeout(() => {
                     inputRollLeaf.current.focus();
-                }, 300);
+                }, 0);
             } else {
                 SetMode("SERIAL");
                 settxtMachineNo("");
@@ -381,7 +381,7 @@ function fn_ScanSMTSerialShtMaster() {
             settxtRollLeaf("");
             setTimeout(() => {
                 inputRollLeaf.current.focus();
-            }, 300);
+            }, 0);
         }
     };
 
@@ -437,7 +437,7 @@ function fn_ScanSMTSerialShtMaster() {
             sethfMode("LOT");
             setTimeout(() => {
                 inputLot.current.focus();
-            }, 300);
+            }, 0);
         } else if (strType === "LOT_ERROR") {
             settxtLotNo("");
             settxtLotDisabled(false);
@@ -446,7 +446,7 @@ function fn_ScanSMTSerialShtMaster() {
             sethfMode("LOT");
             setTimeout(() => {
                 inputLot.current.focus();
-            }, 300);
+            }, 0);
         } else if (strType === "SERIAL") {
             settxtLotDisabled(true);
             setpnlLog(false);
@@ -554,7 +554,7 @@ function fn_ScanSMTSerialShtMaster() {
                 setgvScanData([]);
                 setTimeout(() => {
                     inputSideBack.current[0].focus();
-                }, 300);
+                }, 0);
                 return;
             }
 
@@ -567,7 +567,7 @@ function fn_ScanSMTSerialShtMaster() {
                 setgvScanData([]);
                 setTimeout(() => {
                     inputgvSerial.current[1].focus();
-                }, 300);
+                }, 0);
             }
 
             let _bolError = false;
@@ -604,7 +604,7 @@ function fn_ScanSMTSerialShtMaster() {
                         setlblLog("Please input Sheet Side");
                         setTimeout(() => {
                             inputSideBack.current[0].focus();
-                        }, 200);
+                        }, 0);
                         settxtSideBack("");
                         settxtgvSerial("");
                         hideLoading();
@@ -615,7 +615,7 @@ function fn_ScanSMTSerialShtMaster() {
                         setlblLog("Please input Sheet Side");
                         setTimeout(() => {
                             inputSideBack.current[0].focus();
-                        }, 200);
+                        }, 0);
                         settxtSideBack("");
                         settxtgvSerial("");
                         hideLoading();
@@ -1152,14 +1152,14 @@ function fn_ScanSMTSerialShtMaster() {
                 sethfMode("ROLL");
                 setTimeout(() => {
                     inputRollLeaf.current.focus();
-                }, 300);
+                }, 0);
             } else if (hfReqMachine === "Y") {
                 setpnlMachine(true);
                 inputMachineNo.current.focus();
             } else {
                 setTimeout(() => {
                     inputSideBack.current[0].focus();
-                }, 200);
+                }, 0);
             }
         } else {
             settxtMasterCode("");
@@ -1168,7 +1168,7 @@ function fn_ScanSMTSerialShtMaster() {
             setlblLog("Scan master code incorrect / สแกน master code ไม่ถูกต้อง");
             setTimeout(() => {
                 inputMasterCode.current.focus();
-            }, 300);
+            }, 0);
         }
         hideLoading();
     };
@@ -1462,7 +1462,7 @@ function fn_ScanSMTSerialShtMaster() {
             } else if (nextIndex === hfShtScan) {
                 setTimeout(() => {
                     inputgvSerial.current[0].focus();
-                }, 200);
+                }, 0);
             }
         }
     };
