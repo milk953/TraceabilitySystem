@@ -183,7 +183,7 @@ function fn_ScanSMTSerialSpotHeat() {
                 SetMode("SERIAL");
                 setTimeout(() => {
                 fcGvSerial_txtSerial_0.current[0].focus();
-              }, 300);
+              }, 0);
               //}
             } catch (error) {
               setlblLog(`Product ${strPrdName} not found.`);
@@ -194,7 +194,7 @@ function fn_ScanSMTSerialSpotHeat() {
             setpnlLog(true);
             setTimeout(() => {
             fcProduct.current.focus();
-          }, 300);
+          }, 0);
           }
         }
       } else {
@@ -206,7 +206,7 @@ function fn_ScanSMTSerialSpotHeat() {
         setHfMode("LOT");
         setTimeout(() => {
         fcLotNo.current.focus();
-      }, 300);
+      }, 0);
       }
     } else {
       setSlProduct(Product[0].prd_name);
@@ -391,7 +391,7 @@ function fn_ScanSMTSerialSpotHeat() {
     //     setpnlLog(true);
     //     setTimeout(() => {
     //       fcGvSerial_txtSerial_0.current[0].focus();
-    //     }, 300);
+    //     }, 0);
     //     setvisiblegvScanResult(false)
     //     scrollToTop();
     //    }
@@ -460,7 +460,7 @@ function fn_ScanSMTSerialSpotHeat() {
         setHfMode("SERIAL");
         setTimeout(() => {
           fcGvSerial_txtSerial_0.current[0].focus();
-        }, 300);
+        }, 0);
         getInitialSerial();
         break;
 
@@ -519,7 +519,7 @@ function fn_ScanSMTSerialSpotHeat() {
         setpnlLog(true);
         setTimeout(() => {
           fcGvSerial_txtSerial_0.current[0].focus();
-        }, 300);
+        }, 0);
         setvisiblegvScanResult(false)
         scrollToTop();
         hideLoading();
@@ -612,7 +612,7 @@ function fn_ScanSMTSerialSpotHeat() {
     // if (dataGvSerial.length > 0) {
     //   setTimeout(() => {
     //     fcGvSerial_txtSerial_0.current[0].focus();
-    //     }, 300);
+    //     }, 0);
     
     // }
     return 0;
