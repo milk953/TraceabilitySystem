@@ -94,7 +94,7 @@ function fn_Reject() {
           for (let i = 0; i < strSerialAll.length; i++) {
             getData("GetSearchbySerialno", { Serialno: strSerialAll[i] });
           }
-        }, 500);
+        }, 0);
 
         return;
       } else {
@@ -459,7 +459,7 @@ function fn_Reject() {
               setTimeout(() => {                
                 SearchData("submit", lot);
                 hideLoading();
-              }, 500);
+              }, 0);
               
             } else {
               
@@ -471,7 +471,7 @@ function fn_Reject() {
               setTimeout(() => {                
                 SearchData("submit", lot);
                 hideLoading();
-              }, 500);
+              }, 0);
               
             }
           }

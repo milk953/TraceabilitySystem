@@ -127,7 +127,7 @@ function fn_ScanSerialNo() {
     
       setTimeout(() => {
         SetFocus("txtSerial_0");
-      }, 200);
+      }, 0);
     }else{
       setMode("MAGAZINE");
     }

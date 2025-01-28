@@ -184,7 +184,7 @@ function fn_ScanSheetReflowTime() {
   function setTimeOut(txtField) {
     setTimeout(() => {
       txtField.current.focus();
-    }, 200);
+    }, 0);
   }
 
   const btnReplace_Click = async (e) => {

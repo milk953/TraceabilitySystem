@@ -805,7 +805,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   function setTimeOut(txtField) {
     setTimeout(() => {
       txtField.current.focus();
-    }, 200);
+    }, 0);
 
   }
   const txtLot_Change = async () => {

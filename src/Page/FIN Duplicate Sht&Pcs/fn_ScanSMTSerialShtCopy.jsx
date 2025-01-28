@@ -270,7 +270,7 @@ function fn_ScanSMTSerialShtCopy() {
       }
       setTimeout(() => {
         document.getElementById("txtbackSide_0").focus();        
-      }, 200);
+      }, 0);
     }else{
       setLblError("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด");
       setLblErrorState(true);

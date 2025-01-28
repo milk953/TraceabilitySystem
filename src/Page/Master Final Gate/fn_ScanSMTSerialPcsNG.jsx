@@ -1428,7 +1428,7 @@ function fn_ScanSMTSerialPcsNG() {
     scrollToTop();
     setTimeout(() => {
       SetFocus("txtSerial_0");
-    },100)  
+    },0)  
   }
   const scrollToTop = () => {
     window.scrollTo({

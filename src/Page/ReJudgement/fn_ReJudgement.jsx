@@ -305,7 +305,7 @@ function fn_ReJudgement() {
           styled: { color: "black" },
         });
         setIsShowlblResult(true);
-      }, 500);
+      }, 0);
      
     } else if (rdSelect == "rdLotNo") {
       setTimeout(() => {
@@ -316,7 +316,7 @@ function fn_ReJudgement() {
           styled: { color: "black" },
         });
         setIsShowlblResult(true);
-      }, 500);
+      }, 0);
      
     }
   }
