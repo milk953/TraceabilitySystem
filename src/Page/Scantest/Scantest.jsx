@@ -152,7 +152,7 @@ const BarcodeInputForm = () => {
               onChange={(event) => handleChange(index, event)}
               onKeyDown={(event) => handleKeyPress(index, event)} // เพิ่มการตรวจจับการกด Enter
               ref={(el) => (inputRefs.current[index] = el)} // เก็บอ้างอิงของ input แต่ละช่อง
-              maxLength={20} // กำหนดความยาวสูงสุดของตัวอักษรในแต่ละช่อง (สามารถปรับเปลี่ยนได้)
+              // maxLength={0} // กำหนดความยาวสูงสุดของตัวอักษรในแต่ละช่อง (สามารถปรับเปลี่ยนได้)
             />
           </div>
         ))}
