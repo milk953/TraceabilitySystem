@@ -87,6 +87,7 @@ import P1ConnectBoard from "./Page/P1 Connect Board/P1ConnectBoard";
 import AOIManualConfirmP1 from "./Page/AOIManualConfirmP1/AOIManualConfirmP1";
 import ScanSMTConfirmMOTP1 from "./Page/ScanSMTConfirmMOTP1/ScanSMTConfirmMOTP1";
 import {LoadingProvider} from "./loading/fn_loading";
+import Scantest from "./Page/Scantest/Scantest";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 // const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -224,6 +225,8 @@ const App = () => {
             <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
             <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />  
             <Route path="/TraceabilitySystem/AOIManualConfirmP1" element={<AOIManualConfirmP1 />} />
+            <Route path="/TraceabilitySystem/Scantest" element={<Scantest />} />
+
             {/* <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} /> */}
             {/* P1 */}
           </Route>
