@@ -84,8 +84,7 @@ function fn_ConfirmBarcodeGrade() {
     style: "",
   });
 
-  const [txtSerial, settxtSerial] = useState(
-    Array(dataGvSerial.value.length).fill("")
+  const [txtSerial, settxtSerial] = useState(Array(dataGvSerial.value.length).fill("")
   );
   // Array(dataGvSerial.value.length).fill("")
 
@@ -581,7 +580,6 @@ function fn_ConfirmBarcodeGrade() {
         }
       }
     }
-
     if (dtData.length > 0) {
 
       setdataGvSerial((prevState) => ({
@@ -589,6 +587,7 @@ function fn_ConfirmBarcodeGrade() {
         visble: true,
         value: dtData,
       }));
+      settxtSerial(Array(dtData.length).fill(""));
     } else {
 
 
@@ -598,14 +597,13 @@ function fn_ConfirmBarcodeGrade() {
         value: [{ SHEET: "", SEQ: "" }],
       }));
     }
-    settxtSerial(Array(dataGvSerial.value.length).fill(""));
+   
     // lblConfirm.Visible = False
     // return dtData;
   };
 
   useEffect(() => {
     if (hfShtScan != "" && hfSerialCount != "") {
-
       getInitialSerial();
     }
   }, [hfSerialCount, hfShtScan]);
@@ -857,7 +855,7 @@ function fn_ConfirmBarcodeGrade() {
         style: "#e0e0e0",
       }));
       setlblLog((prevState) => ({ ...prevState, visble: false }));
-      setdataGvSerial((prevState) => ({ ...prevState, visble: true }));
+      // setdataGvSerial((prevState) => ({ ...prevState, visble: true }));
       setHfMode("SERIAL");
       await getInitialSerial();
     }
