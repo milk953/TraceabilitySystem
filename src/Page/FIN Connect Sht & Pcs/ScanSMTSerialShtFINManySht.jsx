@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useMemo  } from "react";
 import {
   TextField,
   Table,
@@ -93,7 +93,48 @@ function ScanSMTSerialShtFINManySht() {
     columns,
     getRowClassName
   } = fn_ScanSMTSerialShtFINManySht();
-
+  const memoizedSerials = useMemo(() => {
+    return gvSerial.map((row, index) => (
+      <tr key={index} style={{ padding: "4px 4px 4px 4px" }}>
+        <td
+          className="gvSerialCell"
+          style={{ width: "10px", textAlign: "right" }}
+        >
+          {row.SHEET}
+        </td>
+        <td
+          className="gvSerialCell"
+          style={{ width: "10px", textAlign: "right" }}
+        >
+          {row.SEQ}
+        </td>
+        <td
+          className="gvSerialCell"
+          style={{ width: "300px", paddingRight: "10px" }}
+        >
+          <input
+            id={`txtSerial_${index}`}
+            type="text"
+            style={{
+              width: "98%",
+              textTransform: "uppercase",
+              padding: '0px',
+              margin: '0px',
+            }}
+            maxLength="30"
+            className="styleEnable"
+            value={txtSerial[index]}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handletxtSerialChange(index, e);
+              }
+            }}
+            onChange={(e) => handletxtSerialChange(index, e)}
+          />
+        </td>
+      </tr>
+    ));
+  }, [gvSerial, txtSerial]);
   return (
     <div>
       <Hearder />
@@ -389,7 +430,7 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {gvSerial.map((row, index) => (
+                      {/* {gvSerial.map((row, index) => (
                         <TableRow
                           key={index}
                           style={{ padding: "4px 4px 4px 4px" }}
@@ -434,7 +475,8 @@ function ScanSMTSerialShtFINManySht() {
                             />
                           </TableCell>
                         </TableRow>
-                      ))}
+                      ))} */}
+                      {memoizedSerials}
                       <TableRow>
                         <TableCell
                           colSpan={3}
