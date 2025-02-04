@@ -26,7 +26,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
 import Hearder from "../Header/Header";
 import "../Common/StyleCommon.css";
-import { Table as AntTable,Button as AntButton } from "antd";
+import { Table as AntTable, Button as AntButton } from "antd";
 import { fn_ConfirmBarcodeGrade } from "./fn_ConfirmBarcodeGrade";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ConfirmBarcodeGrade() {
@@ -111,7 +111,7 @@ function ConfirmBarcodeGrade() {
                         size="small"
                         id="checkboxMaster"
                         style={{ padding: "0" }}
-                        onChange={(e) => setCheck_Master(e.target.checked)} //trueเลือก false ไม่ได้เลือก 
+                        onChange={(e) => setCheck_Master(e.target.checked)} //trueเลือก false ไม่ได้เลือก
                       />
                     </TableCell>
                   </TableRow>
@@ -144,7 +144,7 @@ function ConfirmBarcodeGrade() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button className='Bt_ibtBack'onClick={ibtBack_Click}>
+                      <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -161,7 +161,7 @@ function ConfirmBarcodeGrade() {
                           className="Select_dropDown"
                           disabled={SlProduct.disbled}
                           value={SlProduct.value}
-                          style={{background:SlProduct.style}}
+                          style={{ background: SlProduct.style }}
                           onChange={(e, value) => handleSL_Product(value)}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
@@ -210,7 +210,7 @@ function ConfirmBarcodeGrade() {
                         className="input_txt"
                         value={txtOperator.value}
                         disabled={txtOperator.disbled}
-                        style={{background:txtOperator.style}}
+                        style={{ background: txtOperator.style }}
                         onChange={(e) =>
                           settxtOperator((prevState) => ({
                             ...prevState,
@@ -219,9 +219,7 @@ function ConfirmBarcodeGrade() {
                         }
                         size="small"
                         fullWidth
-                       
                         inputRef={(el) => (fcOperator.current = el)}
-                       
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             handleTxt_Opreator();
@@ -289,10 +287,6 @@ function ConfirmBarcodeGrade() {
                             value: e.target.value.trim(),
                           }))
                         }
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     handle();
-                        //   }}}
                         fullWidth
                         inputRef={(el) => (fctMachchine.current = el)}
                       />
@@ -324,7 +318,7 @@ function ConfirmBarcodeGrade() {
                               ? "Back/Front :"
                               : "Front/Back :"}
                           </TableCell>
-                          <TableCell >
+                          <TableCell>
                             <TextField
                               className="input_txt"
                               size="small"
@@ -347,14 +341,14 @@ function ConfirmBarcodeGrade() {
                             />
                           </TableCell>
                         </TableRow>
-             
+
                         <TableRow style={{ backgroundColor: "White" }}>
                           <TableCell>
                             <TextField
                               className="input_txt"
                               size="small"
                               fullWidth
-                              style={{ width: '100%' }} 
+                              style={{ width: "100%" }}
                               value={txtSideFront[index]}
                               onChange={(event) =>
                                 handleFrontSideChange(index, event)
@@ -382,20 +376,26 @@ function ConfirmBarcodeGrade() {
                   </TableBody>
                 </Table>
               )}
-                  
+
               {lblLog.visble == true && (
-              
-                <Card component={Paper} className="Card-lblLog" style={{marginTop:'10px'}}>
+                <Card
+                  component={Paper}
+                  className="Card-lblLog"
+                  style={{ marginTop: "10px" }}
+                >
                   {lblLog.value}
                 </Card>
               )}
-            
-  
+
               {dataGvSerial.visble == true && (
-                <Table className="CSS-GvSerialBarcode" component={Card} style={{marginTop:'10px'}}>
+                <Table
+                  className="CSS-GvSerialBarcode"
+                  component={Card}
+                  style={{ marginTop: "10px" }}
+                >
                   <TableHead>
                     <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      sx={{ borderRight: "1px solid #d9d9d9", width: "10PX" }}
                       align="center"
                     >
                       Sheet
@@ -405,63 +405,57 @@ function ConfirmBarcodeGrade() {
                       sx={{ borderRight: "1px solid #d9d9d9" }}
                       align="center"
                     >
-                      No.
+                      No...
                     </TableCell>
                     <TableCell align="center">Serial No.</TableCell>
                     <TableRow></TableRow>
                   </TableHead>
                   <TableBody>
-                    {Array.from(
-                      { length: dataGvSerial.value.length },
-                      (_, index) => (
-                        <TableRow key={index}>
-                          <TableCell
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                            align="center"
-                          >
-                            {dataGvSerial.value[index].SHEET}
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ borderRight: "1px solid #d9d9d9" }}
-                          >
-                            {dataGvSerial.value[index].SEQ}
-                          </TableCell>
-
-                          <TableCell>
-                            {" "}
-                            <TextField
-                              className="input_txt"
-                              size="small"
-                              fullWidth
-                              value={txtSerial[index]}
-                              onChange={(event) =>
-                                handleSerialChange(index, event)
-                              }
-                              inputRef={(el) =>
-                                (fcGvSerial_txtSerial_0.current[index] = el)
-                              }
-                              onBlur={(event) => {
-                                handleSerialChange(index, event);
-                              }}
-                              onKeyDown={(event) => {
-                                if (event.key === "Enter") {
-                                  event.preventDefault();
-                                  if (index < txtSerial.length - 1) {
-                                    fcGvSerial_txtSerial_0.current[
-                                      index + 1
-                                    ].focus();
-                                  } else {
-                                    btnSave_Click();
-                                    event.target.blur();
-                                  }
+                    {txtSerial.map((serial, index) => (
+                      <tr
+                        key={index}
+                        style={{ borderBottom: "1px solid  #d9d9d9" }}
+                      >
+                        <td
+                          style={{ borderRight: "1px solid  #d9d9d9" }}
+                          align="center"
+                        >
+                          {dataGvSerial.value[index].SHEET}
+                        </td>
+                        <td
+                          align="center"
+                          style={{ borderRight: "1px solid  #d9d9d9" }}
+                        >
+                          {dataGvSerial.value[index].SEQ}
+                        </td>
+                        <td>
+                          <input
+                            className="txtinput"
+                            type="text"
+                            value={serial}
+                            onChange={(event) =>
+                              handleSerialChange(index, event)
+                            }
+                            ref={(el) =>
+                              (fcGvSerial_txtSerial_0.current[index] = el)
+                            }
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                                if (index < txtSerial.length - 1) {
+                                  fcGvSerial_txtSerial_0.current[
+                                    index + 1
+                                  ].focus();
+                                } else {
+                                  btnSave_Click();
+                                  event.target.blur();
                                 }
-                              }}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      )
-                    )}
+                              }
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    ))}
                     <TableRow style={{ display: lblConfirm.visble }}>
                       <TableCell align="center" colSpan={3}>
                         Please be confirm to save?
@@ -470,15 +464,16 @@ function ConfirmBarcodeGrade() {
                     <TableRow>
                       <TableCell colSpan={3} align="center">
                         <AntButton
-                         type="primary" className="ButtonReplace"
+                          type="primary"
+                          className="ButtonReplace"
                           onClick={btnSave_Click}
                         >
                           Yes
                         </AntButton>{" "}
                         &nbsp;&nbsp;
                         <AntButton
-                          
-                         type="primary" className="BtCancel"
+                          type="primary"
+                          className="BtCancel"
                           onClick={btnCancel_Click}
                         >
                           Cancel
@@ -515,21 +510,21 @@ function ConfirmBarcodeGrade() {
               {gvScanResult.visble == true && (
                 <>
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>
-                  <Paper
-                    className="Card-lblResult"
-                    elevation={3}
-                    style={{
-                      background: lblResult !== "OK" ? "red" : "green",
-                      // display: gvScanResult,
-                    }}
-                  >
-                    <Typography
-                      variant="h4"
-                      style={{ paddingTop: "3px", color: "#fff" }}
+                    <Paper
+                      className="Card-lblResult"
+                      elevation={3}
+                      style={{
+                        background: lblResult !== "OK" ? "red" : "green",
+                        // display: gvScanResult,
+                      }}
                     >
-                      {lblResult}
-                    </Typography>
-                  </Paper>
+                      <Typography
+                        variant="h4"
+                        style={{ paddingTop: "3px", color: "#fff" }}
+                      >
+                        {lblResult}
+                      </Typography>
+                    </Paper>
                   </div>
                   <AntTable
                     columns={columns}
@@ -542,7 +537,13 @@ function ConfirmBarcodeGrade() {
                     size="small"
                     bordered
                     className="tableGvResult"
-                    rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                    rowClassName={(record) =>
+                      record.SCAN_RESULT === "NG"
+                        ? "row-red"
+                        : record.SCAN_RESULT === "OK"
+                        ? "row-green"
+                        : ""
+                    }
                   />
                 </>
               )}
