@@ -89,6 +89,7 @@ import ScanSMTConfirmMOTP1 from "./Page/ScanSMTConfirmMOTP1/ScanSMTConfirmMOTP1"
 import {LoadingProvider} from "./loading/fn_loading";
 import Scantest from "./Page/Scantest/Scantest";
 import TestFin from "./Page/TEST FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht";
+import Test_data from "./Page/testfin/ScanSMTSerialShtFINManySht";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 // const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -132,6 +133,8 @@ const App = () => {
         <Route path="/TraceabilitySystem" element={<Homepage />} />
         <Route path="/TraceabilitySystem/TestFin" element={<TestFin />} />
         <Route path="/TraceabilitySystem/Scantest" element={<Scantest />} />
+        <Route path="/TraceabilitySystem/Test_data" element={<Test_data />} />
+        
         {/* No Login */}
         {/* Work */}
         <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
