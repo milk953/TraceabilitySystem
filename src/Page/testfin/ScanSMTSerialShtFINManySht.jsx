@@ -91,8 +91,14 @@ function ScanSMTSerialShtFINManySht() {
     gvScanResult,
     hideImg,
     columns,
-    getRowClassName
+    getRowClassName,
+    setTxtSerial,
+    newValues
   } = fn_ScanSMTSerialShtFINManySht();
+
+  // const setTxtSerialja = () => {
+
+  // }
   const memoizedSerials = useMemo(() => {
     return gvSerial.map((row, index) => (
       <tr key={index} style={{ padding: "4px 4px 4px 4px" }}>
@@ -123,17 +129,27 @@ function ScanSMTSerialShtFINManySht() {
             }}
             maxLength="30"
             className="styleEnable"
-            // value={txtSerial[index]}
+            value={txtSerial[index]}
+            
             onKeyDown={(e) => {
+              let data
               if (e.key === "Enter") {
-                document.getElementById(`txtSerial_${index + 1}`).focus();
-                handletxtSerialChange(index, e);
+                data= handletxtSerialChange(index, e);
+                if(index<gvSerial.length-1){
+                  document.getElementById(`txtSerial_${index + 1}`).focus();
+                }
+                else{
+                  console.log('สุดท้าย',data)
+                  setTxtSerial(data)
+                  //save เพิ่งset ข้อมูลจะไปไม่ทัน
+                }
 
               }
             }}
-            
+          
             // onChange={(e) => handletxtSerialChange(index, e)}
           />
+            {console.log(txtSerial,'นี่จ้าาาา')}
         </td>
       </tr>
     ));

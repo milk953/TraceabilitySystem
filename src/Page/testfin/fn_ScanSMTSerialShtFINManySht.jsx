@@ -1129,20 +1129,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
 
     return dtData;
   }
-
+  let newValues = [];
+  
   const handletxtSerialChange = (index, event) => {
-    const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
-    // setTxtSerial(newValues);
-    // if (event.key === "Enter") {
-    //   try {
-    //     SetFocus(`txtSerial_${index + 1}`);
-    //   } catch (error) {
-    //     btnSave_Click();
-    //     event.target.blur();
-    //   }
-    // }
+    console.log(newValues, "newValues");
+    return newValues
   };
+
   async function getData(type, param) {
     if (type == "getProductCombo") {
       await axios
@@ -1852,7 +1846,9 @@ const getRowClassName = (record) => {
     gvScanResult,
     hideImg,
     columns,
-    getRowClassName
+    getRowClassName,
+    setTxtSerial,
+    
   };
 };
 
