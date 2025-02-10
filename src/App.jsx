@@ -88,6 +88,8 @@ import AOIManualConfirmP1 from "./Page/AOIManualConfirmP1/AOIManualConfirmP1";
 import ScanSMTConfirmMOTP1 from "./Page/ScanSMTConfirmMOTP1/ScanSMTConfirmMOTP1";
 import {LoadingProvider} from "./loading/fn_loading";
 import Scantest from "./Page/Scantest/Scantest";
+import TestFin from "./Page/TEST FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht";
+import Test_data from "./Page/testfin/ScanSMTSerialShtFINManySht";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 // const backendUrl = import.meta.env.VITE_SERVICE_URL;
@@ -129,6 +131,10 @@ const App = () => {
       <BrowserRouter>
         <Routes>
         <Route path="/TraceabilitySystem" element={<Homepage />} />
+        <Route path="/TraceabilitySystem/TestFin" element={<TestFin />} />
+        <Route path="/TraceabilitySystem/Scantest" element={<Scantest />} />
+        <Route path="/TraceabilitySystem/Test_data" element={<Test_data />} />
+        
         {/* No Login */}
         {/* Work */}
         <Route path='/TraceabilitySystem/ScanSMTSerialSht' element = {<ScanSMTSerialSht />} />
@@ -190,47 +196,47 @@ const App = () => {
 
                
         {/* Result Page */}
-            <Route path="/TraceabilitySystem/AOICOAResult2" element={<AOICOAResult2 />} />
-            <Route path="/TraceabilitySystem/SPIResult" element={<SPIResult />} />
-            <Route path="/TraceabilitySystem/AOIResult2" element={<AOIResult2 />} />
-            <Route path="/TraceabilitySystem/OSTResult" element={<OSTResult />} />
-            <Route path="/TraceabilitySystem/PREResult2" element={<PREResult2 />} />
-            <Route path="/TraceabilitySystem/XRayResultN1" element={<XRayResultN1 />} />
-            <Route path="/TraceabilitySystem/XRayResult" element={<XRayResult />} />
-            <Route path="/TraceabilitySystem/AOIResult" element={<AOIResult />} />
-            <Route path="/TraceabilitySystem/OSTResultPiece" element={<OSTResultPiece />} />
-            <Route path="/TraceabilitySystem/PREResult" element={<PREResult />} />
-            <Route path="/TraceabilitySystem/RejectResult" element={<RejectResult />} />
-            <Route path="/TraceabilitySystem/TouchUpResult" element={<TouchUpResult />} />
-            <Route path="/TraceabilitySystem/CheckerResult" element={<CheckerResult />} />
-            <Route path="/TraceabilitySystem/AOICOAResult" element={<AOICOAResult />} />
-            {/* ไม่รู้ */}
-            <Route path="/TraceabilitySystem/SheetMaster" element={<Sheet_Master />} />
-            <Route path="/TraceabilitySystem/SerialMaster" element={<Serial_Master />} />
-            <Route path='/TraceabilitySystem/LOT_Trace' element = {<LOT_Trace />} />
-            <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
-            <Route path='/TraceabilitySystem/FinalGate_History' element={<FinalGate_History />} />  
-            <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />  
-            <Route path="/TraceabilitySystem/P1ConnectBoard" element={<P1ConnectBoard />} />
+        <Route path="/TraceabilitySystem/AOICOAResult2" element={<AOICOAResult2 />} />
+        <Route path="/TraceabilitySystem/SPIResult" element={<SPIResult />} />
+        <Route path="/TraceabilitySystem/AOIResult2" element={<AOIResult2 />} />
+        <Route path="/TraceabilitySystem/OSTResult" element={<OSTResult />} />
+        <Route path="/TraceabilitySystem/PREResult2" element={<PREResult2 />} />
+        <Route path="/TraceabilitySystem/XRayResultN1" element={<XRayResultN1 />} />
+        <Route path="/TraceabilitySystem/XRayResult" element={<XRayResult />} />
+        <Route path="/TraceabilitySystem/AOIResult" element={<AOIResult />} />
+        <Route path="/TraceabilitySystem/OSTResultPiece" element={<OSTResultPiece />} />
+        <Route path="/TraceabilitySystem/PREResult" element={<PREResult />} />
+        <Route path="/TraceabilitySystem/RejectResult" element={<RejectResult />} />
+        <Route path="/TraceabilitySystem/TouchUpResult" element={<TouchUpResult />} />
+        <Route path="/TraceabilitySystem/CheckerResult" element={<CheckerResult />} />
+        <Route path="/TraceabilitySystem/AOICOAResult" element={<AOICOAResult />} />
+        {/* ไม่รู้ */}
+        <Route path="/TraceabilitySystem/SheetMaster" element={<Sheet_Master />} />
+        <Route path="/TraceabilitySystem/SerialMaster" element={<Serial_Master />} />
+        <Route path='/TraceabilitySystem/LOT_Trace' element = {<LOT_Trace />} />
+        <Route path="/TraceabilitySystem/SPIAOITimeView" element={<SPIAOITimeView />} />
+        <Route path='/TraceabilitySystem/FinalGate_History' element={<FinalGate_History />} />  
+        <Route path="/TraceabilitySystem/LotSheetNo" element={<LotSheetNo />} />  
+        <Route path="/TraceabilitySystem/P1ConnectBoard" element={<P1ConnectBoard />} />
 
-          <Route element={<PrivateRoute />}>
-          {/* work */}
-            <Route path='/TraceabilitySystem/AVIConfirm' element = {<AVIManualConfirm />} />
-            <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
-            {/* Maintenance */}
-            <Route path="/TraceabilitySystem/ProductMaster" element={<Product_master />} />
-            <Route path="/TraceabilitySystem/ELTType" element={<SerialTestType />} />
-            {/* View Data */}
-            <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
-            <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
-            <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />  
-            <Route path="/TraceabilitySystem/AOIManualConfirmP1" element={<AOIManualConfirmP1 />} />
-            <Route path="/TraceabilitySystem/Scantest" element={<Scantest />} />
+        <Route element={<PrivateRoute />}>
+        {/* work */}
+        <Route path='/TraceabilitySystem/AVIConfirm' element = {<AVIManualConfirm />} />
+        <Route path='/TraceabilitySystem/ScanSMTPlasmaStopStart' element={<ScanSMTPlasmaStopStart />} />          
+        {/* Maintenance */}
+        <Route path="/TraceabilitySystem/ProductMaster" element={<Product_master />} />
+        <Route path="/TraceabilitySystem/ELTType" element={<SerialTestType />} />
+        {/* View Data */}
+        <Route path='/TraceabilitySystem/ELTmaster' element={<ELTmaster />} />
+        <Route path="/TraceabilitySystem/SMTDeleteData" element={<SMTDeleteData />} />
+        <Route path="/TraceabilitySystem/LotRollLeafNo" element={<LotRollLeafNo />} />  
+        <Route path="/TraceabilitySystem/AOIManualConfirmP1" element={<AOIManualConfirmP1 />} />
+       
+        
 
-            {/* <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} /> */}
-            {/* P1 */}
-          </Route>
-          
+        {/* <Route path="/TraceabilitySystem/LotTraceView" element={<LotTraceView />} /> */}
+        {/* P1 */}
+        </Route>
         </Routes>
       </BrowserRouter>
       </LoadingProvider>

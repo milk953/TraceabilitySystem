@@ -395,17 +395,17 @@ function ConfirmBarcodeGrade() {
                 >
                   <TableHead>
                     <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9", width: "10PX" }}
+                      sx={{ borderRight: "1px solid #d9d9d9", width: "1px" }}
                       align="center"
                     >
                       Sheet
                     </TableCell>
 
                     <TableCell
-                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      sx={{ borderRight: "1px solid #d9d9d9", width: "1px" }}
                       align="center"
                     >
-                      No...
+                      No.
                     </TableCell>
                     <TableCell align="center">Serial No.</TableCell>
                     <TableRow></TableRow>
