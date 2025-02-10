@@ -60,6 +60,8 @@ function ScanSMTSerialXrayConfirm() {
     columns,
     lblResult,
     fc_txtSerial,
+    handletxtSerialChange,
+    setTxtSerial,
   } = fn_ScanSMTSerialXrayConfirm();
   const { menuName } = fn_Homepage();
   return (
@@ -98,11 +100,6 @@ function ScanSMTSerialXrayConfirm() {
                             value: e.target.value.trim(),
                           }));
                         }}
-                        // onKeyDown={(e) => {
-                        //   if (e.key === "Enter") {
-                        //     txtLot_TextChanged();
-                        //   }
-                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             e.preventDefault();
@@ -232,10 +229,11 @@ function ScanSMTSerialXrayConfirm() {
                               size="small"
                               fullWidth
                               autoComplete="off"
-                              // id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
-                              inputRef={(el) => (fc_txtSerial.current[index] = el)}
+                              id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
+                              // inputRef={(el) => (fc_txtSerial.current[index] = el)}
                               className="input_txt"
-                              value={txtSerial[index] || ""}
+                              // value={txtSerial[index] || ""}
+                              value={txtSerial[index]}
                               // onKeyDown={(event) => {
                               //   if (event.key === "Enter") {
                               //     event.preventDefault();
@@ -247,20 +245,38 @@ function ScanSMTSerialXrayConfirm() {
                               //     }
                               //   }
                               // }}
-                              onKeyDown={(event) => {
-                                if (event.key === "Enter") {
-                                  event.preventDefault();
-                                  if (index < gvSerial.value.length - 1) {
-                                    fc_txtSerial.current[index + 1].focus();
-                                  } else {
-                                    btnSave_Click();
-                                    event.target.blur();
+                              // onKeyDown={(event) => {
+                              //   if (event.key === "Enter") {
+                              //     event.preventDefault();
+                              //     if (index < gvSerial.value.length - 1) {
+                              //       fc_txtSerial.current[index + 1].focus();
+                              //     } else {
+                              //       btnSave_Click();
+                              //       event.target.blur();
+                              //     }
+                              //   }
+                              // }}
+                              // onChange={(event) =>
+                              //   handleSerialChange(index, event)
+                              // }
+                              onKeyDown={(e) => {
+                                let data
+                                if (e.key === "Enter") {
+                                  data= handletxtSerialChange(index, e);
+                                  console.log('index',index,"gvSerial.length-1",gvSerial.value.length-1 )
+                                  if(index<gvSerial.value.length-1){
+                                    document.getElementById(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`).focus();
+                                    // fc_txtSerial.current[index + 1].focus();
                                   }
+                                  else{
+                                    console.log('สุดท้าย',data);
+                                    setTxtSerial(data);
+                                    btnSave_Click();
+                                    //save เพิ่งset ข้อมูลจะไปไม่ทัน
+                                  }
+                  
                                 }
                               }}
-                              onChange={(event) =>
-                                handleSerialChange(index, event)
-                              }
                             />
                           </TableCell>
                         </TableRow>

@@ -20,7 +20,7 @@ function fn_ScanSMTSerialXrayConfirm() {
   const hfUserFactory = "";
   const _strTagNewLine = "/";
   const _strEventArgument = "";
-  const [txtSerial, setTxtSerial] = useState("");
+  // const [txtSerial, setTxtSerial] = useState("");
   const [hfSerialLength, setHfSerialLength] = useState("0");
   const [hfSerialFixFlag, setHfSerialFixFlag] = useState("N");
   const [hfSerialDigit, setHfSerialDigit] = useState("");
@@ -128,6 +128,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     style: {},
   });
   const fc_txtSerial = useRef([]);
+  const [txtSerial, setTxtSerial] = useState(gvSerial.value.map(() => ""));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -146,6 +147,14 @@ function fn_ScanSMTSerialXrayConfirm() {
     //   fnSetFocus(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`);
     // }
   };
+  let Valuesnew = [];
+  const handletxtSerialChange = (index, event) => {
+    Valuesnew[index] = event.target.value.trim().toUpperCase();
+    console.log(Valuesnew, "Valuesnew");
+    return Valuesnew
+  };
+
+  
 
   const getProduct = async () => {
     await axios.get("/api/Common/GetProductData").then((res) => {
@@ -195,10 +204,10 @@ function fn_ScanSMTSerialXrayConfirm() {
       visble: false,
     }));
     SetMode("SERIAL");
-    // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-    setTimeout(() => {
-      fc_txtSerial.current[0].focus();
-    }, 300);
+    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    // setTimeout(() => {
+    //   fc_txtSerial.current[0].focus();
+    // }, 300);
   };
 
   const btnSave_Click = async () => {
@@ -242,12 +251,12 @@ function fn_ScanSMTSerialXrayConfirm() {
           visble: false,
           value: "",
         }));
-        // setTimeout(() => {
-        //   fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-        // }, 300);
         setTimeout(() => {
-          fc_txtSerial.current[0].focus();
-        }, 300);
+          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+        }, 0);
+        // setTimeout(() => {
+        //   fc_txtSerial.current[0].focus();
+        // }, 300);
       }
       hideLoading();
     }
@@ -453,10 +462,10 @@ function fn_ScanSMTSerialXrayConfirm() {
             }));
           }
           SetMode("SERIAL");
-          // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-          setTimeout(() => {
-            fc_txtSerial.current[0].focus();
-          }, 300);
+          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+          // setTimeout(() => {
+          //   fc_txtSerial.current[0].focus();
+          // }, 300);
         } catch (ex) {
           console.error(ex);
           let intProduct = strPrdName.slice(13).indexOf("-") + 13;
@@ -479,10 +488,10 @@ function fn_ScanSMTSerialXrayConfirm() {
                 }));
               }
               SetMode("SERIAL");
-              // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-              setTimeout(() => {
-                fc_txtSerial.current[0].focus();
-              }, 300);
+               fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+              // setTimeout(() => {
+              //   fc_txtSerial.current[0].focus();
+              // }, 300);
             } catch (ex2) {
               setLblPnlLog((prevState) => ({
                 ...prevState,
@@ -540,10 +549,10 @@ function fn_ScanSMTSerialXrayConfirm() {
       SetMode("SERIAL");
       const newValues = [];
       setTxtSerial(newValues);
-      // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-      setTimeout(() => {
-        fc_txtSerial.current[0].focus();
-      }, 300);
+       fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+      // setTimeout(() => {
+      //   fc_txtSerial.current[0].focus();
+      // }, 300);
     } else {
       setTxtTotalPCS((prevState) => ({
         ...prevState,
@@ -715,10 +724,10 @@ function fn_ScanSMTSerialXrayConfirm() {
       }));
       SetMode("SERIAL_ERROR");
     }
-    // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-    setTimeout(() => {
-      fc_txtSerial.current[0].focus();
-    }, 300);
+    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    // setTimeout(() => {
+    //   fc_txtSerial.current[0].focus();
+    // }, 300);
     return 0;
   };
 
@@ -930,6 +939,8 @@ function fn_ScanSMTSerialXrayConfirm() {
     columns,
     lblResult,
     fc_txtSerial,
+    handletxtSerialChange,
+    setTxtSerial,
   };
 }
 
