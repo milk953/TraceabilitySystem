@@ -200,6 +200,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");
+    setTxtSideBack(gvBackSide.map(() => ""));
+    setTxtSideFront(gvBackSide.map(() => ""));
     setTxtSerial(gvSerial.map(() => ""))
     setlblLogState(false);
     setHideImg(true);
@@ -230,16 +232,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }else{
         SetFocus("gvFrontside_0");
       }
-      // if (txtSideBack == "") {
-      //   setTimeout(() => {
-      //     SetFocus("gvBackside_0");          
-      //   }, 100);
-      // }else{
-      //   setTimeout(() => {
-      //     SetFocus("gvFrontside_0");            
-      //     }, 100);
-        
-      // }
       return;
     }
     showLoading('กำลังบันทึก กรุณารอสักครู่')
@@ -595,11 +587,9 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               let dtRowLeaf = await getConnectRollSheetData(dtSerial);
               let _intCount = 0;
               let _strrollLeaf = txtRollLeaf;
-              _intCount = await getData("GetRollLeafDuplicate", {
-                strRollLeaf: txtRollLeaf,
-                dtRowLeaf: dtRowLeaf,
-              });
-              if ((_intCount = 1)) {
+              _intCount  = await getData("GetRollLeafDuplicate", {strRollLeaf: txtRollLeaf,dtRowLeaf: dtRowLeaf});
+              console.log(_intCount);
+              if ((parseInt(_intCount) == 1)) {
                 _bolError = true;
                 _strScanResultAll = "NG";
                 for (let drRow = 0; drRow < dtRowLeaf.length; drRow++) {
@@ -724,12 +714,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           styled: { backgroundColor: "green", color: "white" },
         });
       }
-      // if (_strErrorAll != "") {
-      //   setlblResult({
-      //     text: _strScanResultAll + _strErrorAll,
-      //     styled: { backgroundColor: "red", color: "white" },
-      //   });
-      // }
+      if (_strErrorAll != "") {
+        setlblResult({
+          text: _strScanResultAll + _strErrorAll,
+          styled: { backgroundColor: "red", color: "white" },
+        });
+      }
       setGvScanResult(dtSerial);
       setTxtSideBack(gvBackSide.map(() => ""));
       setTxtSideFront(gvBackSide.map(() => ""));
@@ -1130,18 +1120,22 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     return dtData;
   }
 
-  const handletxtSerialChange = (index, event) => {
+  const handletxtSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
-    if (event.key === "Enter") {
-      try {
-        SetFocus(`txtSerial_${index + 1}`);
-      } catch (error) {
-        btnSave_Click();
-        event.target.blur();
-      }
+    // console.log(hfSerialCount,'hfSerialCount',index)
+    if(event.key == 'Enter'){
+      document.getElementById(`txtSerial_${index + 1}`).focus();
     }
+    // if (event.key === "Enter") {
+    //   try {
+    //     SetFocus(`txtSerial_${index + 1}`);
+    //   } catch (error) {
+    //     btnSave_Click();
+    //     event.target.blur();
+    //   }
+    // }
   };
   async function getData(type, param) {
     if (type == "getProductCombo") {
@@ -1207,10 +1201,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetWeekCodebyLot") {
       let result = "";
       await axios
-        // .post("/api/ScanFin/GetWeekCodebyLot", {
-        //   strLot: param.lotValue,
-        //   strProc: param.hfDateInProc,
-        // })
         .post('/api/common/GetWeekCodebyLot', {
           _strLot: param.lotValue,
           _strProc: param.hfDateInProc,
@@ -1372,18 +1362,20 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetRollLeafDuplicate") {
       let result;
       await axios
-        .post("/api/ScanFin/GetRollLeafDuplicate", {
-          strRollLeaf: param.strRollLeaf,
-          _dtRowLeaf: param.dtRowLeaf,
+        .post("/api/Common/GetRollLeafDuplicate", {
+          dataList: { strRollLeaf: param.strRollLeaf, strPlantCode: plantCode },
+          _dtRollLeaf: param.dtRowLeaf,
         })
         .then((res) => {
-          result = res.data.intCount;
+          console.log(res.data);
+          result =  res.data.intCount;
+          console.log(result);
         })
         .catch((error) => {
           setlblLog(`Error ${error.message}`);
           setlblLogState(true);
         });
-        return
+        return result
     } else if (type == "Get_SPI_AOI_RESULT") {
       let result;
       await axios
