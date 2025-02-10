@@ -200,6 +200,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");
+    setTxtSideBack(gvBackSide.map(() => ""));
+    setTxtSideFront(gvBackSide.map(() => ""));
     setTxtSerial(gvSerial.map(() => ""))
     setlblLogState(false);
     setHideImg(true);
@@ -230,16 +232,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }else{
         SetFocus("gvFrontside_0");
       }
-      // if (txtSideBack == "") {
-      //   setTimeout(() => {
-      //     SetFocus("gvBackside_0");          
-      //   }, 100);
-      // }else{
-      //   setTimeout(() => {
-      //     SetFocus("gvFrontside_0");            
-      //     }, 100);
-        
-      // }
       return;
     }
     showLoading('กำลังบันทึก กรุณารอสักครู่')
@@ -1209,10 +1201,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetWeekCodebyLot") {
       let result = "";
       await axios
-        // .post("/api/ScanFin/GetWeekCodebyLot", {
-        //   strLot: param.lotValue,
-        //   strProc: param.hfDateInProc,
-        // })
         .post('/api/common/GetWeekCodebyLot', {
           _strLot: param.lotValue,
           _strProc: param.hfDateInProc,
