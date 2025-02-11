@@ -91,7 +91,8 @@ function ScanSMTSerialShtFINManySht() {
     gvScanResult,
     hideImg,
     columns,
-    getRowClassName
+    getRowClassName,
+    setTxtSerial
   } = fn_ScanSMTSerialShtFINManySht();
   const memoizedSerials = useMemo(() => {
     return gvSerial.map((row, index) => (
@@ -126,10 +127,18 @@ function ScanSMTSerialShtFINManySht() {
             value={txtSerial[index]}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handletxtSerialChange(index, e);
+                if(index < gvSerial.length-1){
+                  document.getElementById(`txtSerial_${index + 1}`).focus();
+                }else{
+                  btnSave_Click();
+                }
               }
             }}
-            onChange={(e) => handletxtSerialChange(index, e)}
+            onChange={(e) => setTxtSerial((prev) => {
+              const newSerial = [...prev];
+              newSerial[index] = e.target.value;
+              return newSerial;
+            })}
           />
         </td>
       </tr>

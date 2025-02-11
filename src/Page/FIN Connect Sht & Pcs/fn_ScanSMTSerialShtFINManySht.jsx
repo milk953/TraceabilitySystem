@@ -194,15 +194,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setLotState(enableState);
     setProductSelect(productCombo[0].prd_name);
     setTimeOut(Fctxtlot)
-    
+    setPnlRollLeafState(false);
     sethfMode("lot");
     setHideImg(true);
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");
-    setTxtSideBack(gvBackSide.map(() => ""));
-    setTxtSideFront(gvBackSide.map(() => ""));
     setTxtSerial(gvSerial.map(() => ""))
+    setTxtSideFront(gvBackSide.map(() => ""))
+    setTxtSideBack(gvBackSide.map(() => ""))
     setlblLogState(false);
     setHideImg(true);
     if(txtOperator == ""){
@@ -363,15 +363,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           let _strScanResultUpdate = "";
           // let _intRow = 0;
           if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
-            // for (let _intRow = _intRowSerial + 1;_intRow < dtSerial.length ;_intRow++) {
-            //   if (_strSerial === dtSerial[_intRow].SERIAL.toString()) {
-            //     _strScanResultUpdate = "NG";
-            //     _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
-            //     _strScanResultAll = "NG";
-            //     _bolError = true;
-            //   }
-            // }
-            
             let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
             if (isDuplicate) {
               _strScanResultUpdate = "NG";
@@ -1124,9 +1115,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
-    // console.log(hfSerialCount,'hfSerialCount',index)
     if(event.key == 'Enter'){
-      document.getElementById(`txtSerial_${index + 1}`).focus();
+      if(index < gvSerial.length-1){
+        document.getElementById(`txtSerial_${index + 1}`).focus();
+      }else{
+        btnSave_Click();
+      }
     }
     // if (event.key === "Enter") {
     //   try {
@@ -1413,6 +1407,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         USER_ID: param.USER_ID,
         REMARK: param.REMARK,
         LOT: param.LOT,
+        strProgram: "FIN Connect Sht&Pcs",
       }).then((res) => {
         result = res.data.p_error;
       }).catch((error) => {
@@ -1844,7 +1839,8 @@ const getRowClassName = (record) => {
     gvScanResult,
     hideImg,
     columns,
-    getRowClassName
+    getRowClassName,
+    setTxtSerial
   };
 };
 
