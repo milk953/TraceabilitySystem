@@ -81,7 +81,8 @@ function ProductMaster() {
         ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
         ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
         ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg
+        ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg, ConnShtDuplicateFlg, 
+        setConnShtDuplicateFlg
 
     } = fn_ProductMaster();
 
@@ -3441,6 +3442,23 @@ function ProductMaster() {
                                             style={{ padding: "0" }}
                                             checked={ConnShtReqProductFlg}
                                             onChange={(e) => setConnShtReqProductFlg(e.target.checked)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    document.getElementById("cbxConnShtpcsduplicateflg").focus();
+                                                }
+                                            }}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>Connect Sht&PCS Req. Duplicate S/N :</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Checkbox
+                                            size="small"
+                                            id="cbxConnShtpcsduplicateflg"
+                                            style={{ padding: "0" }}
+                                            checked={ConnShtDuplicateFlg}
+                                            onChange={(e) => setConnShtDuplicateFlg(e.target.checked)}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     e.preventDefault();
