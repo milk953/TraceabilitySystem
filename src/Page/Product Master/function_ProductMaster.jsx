@@ -180,6 +180,7 @@ function fn_ProductMaster() {
   const [ReqReflowFCheck, setReqReflowFCheck] = useState(false);
   const [ReqReflowBCheck, setReqReflowBCheck] = useState(false);
   const [ConnShtReqProductFlg, setConnShtReqProductFlg] = useState(false);
+  const [ConnShtDuplicateFlg, setConnShtDuplicateFlg] = useState(false);
 
   //Disabled
   const [txtCheckPrdShtDisabled, settxtCheckPrdShtFromDisabled] = useState(false);
@@ -388,6 +389,7 @@ function fn_ProductMaster() {
       setAutoPressFCheck(false);
       setAutoPressBCheck(false);
       setConnShtReqProductFlg(false);
+      setConnShtDuplicateFlg(false);
 
       settxtConfigWordDisabled(true);
       settxtConfigStartDisabled(true);
@@ -1379,6 +1381,7 @@ function fn_ProductMaster() {
       setAutoPressFCheck(false);
       setAutoPressBCheck(false);
       setConnShtReqProductFlg(false);
+      setConnShtDuplicateFlg(false);
 
       settxtConfigWord("");
       settxtConfigStart("");
@@ -1969,6 +1972,12 @@ function fn_ProductMaster() {
           setConnShtReqProductFlg(true);
         } else {
           setConnShtReqProductFlg(false);
+        }
+
+        if (Data.p_prm_conn_sht_duplicate_flg === "Y") {
+          setConnShtDuplicateFlg(true);
+        } else {
+          setConnShtDuplicateFlg(false);
         }
 
         setpnlMessage(true);
@@ -2925,7 +2934,8 @@ function fn_ProductMaster() {
             cbxAutoPressB: AutoPressBCheck,
             strplantcode: plantCode,
             strprdname: txtProduct,
-            cbxConnshtpcs: ConnShtReqProductFlg
+            cbxConnshtpcs: ConnShtReqProductFlg,
+            cbxConnshtpcsduplicate: ConnShtDuplicateFlg
           })
             .then((res) => {
 
@@ -3060,7 +3070,8 @@ function fn_ProductMaster() {
             cbxConnShtReqBoardFlg: ConnShtReqBoardFlg,
             cbxAutoPressF: AutoPressFCheck,
             cbxAutoPressB: AutoPressBCheck,
-            cbxConnshtpcs: ConnShtReqProductFlg
+            cbxConnshtpcs: ConnShtReqProductFlg,
+            cbxConnshtpcsduplicate: ConnShtDuplicateFlg
           })
             .then((res2) => {
  
@@ -3124,7 +3135,8 @@ function fn_ProductMaster() {
     ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
     ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
     ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg
+    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg, ConnShtDuplicateFlg, 
+    setConnShtDuplicateFlg
   }
 };
 
