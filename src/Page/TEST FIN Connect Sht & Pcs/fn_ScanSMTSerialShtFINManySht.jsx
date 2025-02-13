@@ -200,11 +200,11 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");
-    // setTxtSerial(gvSerial.map(() => ""))
      Object.values(txtSerialClear.current).forEach((input) => {
       if (input) input.value = "";
     });
     setTxtSerial([])
+    txtSerialref.current = {};
     getInitialSerial();
     setTxtSideFront(gvBackSide.map(() => ""))
     setTxtSideBack(gvBackSide.map(() => ""))
@@ -217,7 +217,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     }
   };
   const btnSave_Click = async (SerialArray) => {
-    console.log(txtOperator,' txtOperator')
     if (_strEventArgument != "Save" && hfMode == "SERIAL") {
       if (txtOperator == "") {
         setlblLog("Please input Operator !!!");
@@ -227,9 +226,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
       setSerialData(SerialArray);      
     }
-    //  Object.values(txtSerialClear.current).forEach((input) => {
-    //   if (input) input.value = "";
-    // });
   };
   async function setSerialData(SerialArray) {
     await getData("getProductSerialMaster", productSelect);
@@ -727,6 +723,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       Object.values(txtSerialClear.current).forEach((input) => {
         if (input) input.value = "";
       });
+      txtSerialref.current = {};
+      setTxtSerial([])
       getIntitiaSheet();
       getInitialSerial();
     } else {
@@ -1858,7 +1856,7 @@ const getRowClassName = (record) => {
     hideImg,
     columns,
     getRowClassName,
-    setTxtSerial
+    setTxtSerial,
   };
 };
 

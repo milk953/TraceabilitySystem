@@ -471,7 +471,7 @@ function ScanSMTSerialShtFINManySht() {
                             gap: "10px",
                           }}
                         >
-                          <AntButton className="BtSave" onClick={btnSave_Click}>
+                          <AntButton className="BtSave" onClick={handleSaveRef}>
                             Save
                           </AntButton>
                           &nbsp;&nbsp;
