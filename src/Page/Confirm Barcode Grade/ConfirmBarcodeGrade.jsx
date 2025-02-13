@@ -83,7 +83,7 @@ function ConfirmBarcodeGrade() {
     columns,
     settxtSerial
   } = fn_ConfirmBarcodeGrade();
-
+  let data  
   return (
     <div>
       <Hearder />
@@ -431,7 +431,7 @@ function ConfirmBarcodeGrade() {
                           {dataGvSerial.value[index].SEQ}
                         </td>
                         <td>
-                          <input
+                        <input
                             className="txtinput"
                             type="text"
                             defaultValue={serial}
@@ -442,7 +442,7 @@ function ConfirmBarcodeGrade() {
                               (fcGvSerial_txtSerial_0.current[index] = el)
                             }
                             onKeyDown={async(event) => {
-                              let data
+                            
                               if (event.key === "Enter") {
                                 event.preventDefault();
                                 data= await handleSerialChange(index, event)
@@ -474,7 +474,10 @@ function ConfirmBarcodeGrade() {
                         <AntButton
                           type="primary"
                           className="ButtonReplace"
-                          onClick={btnSave_Click}
+                          onClick={() => {
+                            settxtSerial(data);
+                            btnSave_Click(data);
+                          }}
                         >
                           Yes
                         </AntButton>{" "}
