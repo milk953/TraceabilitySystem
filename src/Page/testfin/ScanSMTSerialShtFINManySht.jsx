@@ -95,64 +95,13 @@ function ScanSMTSerialShtFINManySht() {
     setTxtSerial,
     newValues
   } = fn_ScanSMTSerialShtFINManySht();
-
+  // console.log(txtSerial,'mmmmmmmm')
   // const setTxtSerialja = () => {
 
   // }
   const memoizedSerials = useMemo(() => {
-    return gvSerial.map((row, index) => (
-      <tr key={index} style={{ padding: "4px 4px 4px 4px" }}>
-        <td
-          className="gvSerialCell"
-          style={{ width: "10px", textAlign: "right" }}
-        >
-          {row.SHEET}
-        </td>
-        <td
-          className="gvSerialCell"
-          style={{ width: "10px", textAlign: "right" }}
-        >
-          {row.SEQ}
-        </td>
-        <td
-          className="gvSerialCell"
-          style={{ width: "300px", paddingRight: "10px" }}
-        >
-          <input
-            id={`txtSerial_${index}`}
-            type="text"
-            style={{
-              width: "98%",
-              textTransform: "uppercase",
-              padding: '0px',
-              margin: '0px',
-            }}
-            maxLength="30"
-            className="styleEnable"
-            value={txtSerial[index]}
-            
-            onKeyDown={(e) => {
-              let data
-              if (e.key === "Enter") {
-                data= handletxtSerialChange(index, e);
-                if(index<gvSerial.length-1){
-                  document.getElementById(`txtSerial_${index + 1}`).focus();
-                }
-                else{
-                  console.log('สุดท้าย',data)
-                  setTxtSerial(data)
-                  //save เพิ่งset ข้อมูลจะไปไม่ทัน
-                }
-
-              }
-            }}
-          
-            // onChange={(e) => handletxtSerialChange(index, e)}
-          />
-            {console.log(txtSerial,'นี่จ้าาาา')}
-        </td>
-      </tr>
-    ));
+    return
+    // {console.log(txtSerial,'นี่จ้าาาา')}
   }, [gvSerial, txtSerial]);
   return (
     <div>
@@ -495,7 +444,76 @@ function ScanSMTSerialShtFINManySht() {
                           </TableCell>
                         </TableRow>
                       ))} */}
-                      {memoizedSerials}
+                    {gvSerial.map((row, index) => (
+  <tr key={index} style={{ padding: "4px 4px 4px 4px" }}>
+    <td
+      className="gvSerialCell"
+      style={{ width: "10px", textAlign: "right" }}
+    >
+      {row.SHEET}
+    </td>
+    <td
+      className="gvSerialCell"
+      style={{ width: "10px", textAlign: "right" }}
+    >
+      {row.SEQ}
+    </td>
+    <td
+      className="gvSerialCell"
+      style={{ width: "300px", paddingRight: "10px" }}
+    >
+      <input
+        id={`txtSerial_${index}`}
+        type="text"
+        style={{
+          width: "98%",
+          textTransform: "uppercase",
+          padding: "0px",
+          margin: "0px",
+        }}
+        maxLength="30"
+        className="styleEnable"
+        defaultValue={txtSerial[index] || ""}
+        onChange={(e) => {
+          const newTxtSerial = [...txtSerial];
+          newTxtSerial[index] = e.target.value.toUpperCase(); // บังคับให้เป็นตัวพิมพ์ใหญ่
+        
+        }}
+        onKeyDown={(e) => {
+          let data
+          if (e.key === "Enter") {
+            data= handletxtSerialChange(index, e);
+            if (index < gvSerial.length - 1) {
+              console.log(data,',<<<<<<')
+              document.getElementById(`txtSerial_${index + 1}`).focus();
+            } else {
+              console.log("สุดท้าย", data);
+              setTxtSerial(data);
+              btnSave_Click(data); 
+            }
+          }
+        }}
+        // onKeyDown={async(e) => {
+        //   let data
+        //   if (e.key === "Enter") {
+        //     data= handletxtSerialChange(index, e);
+        //     if(index<gvSerial.length-1){
+        //       document.getElementById(`txtSerial_${index + 1}`).focus();
+        //     }
+        //     else{
+        //       console.log('สุดท้าย',data)
+        //       setTxtSerial(data)
+        //       await btnSave_Click(data);
+        //       // setTxtSerial(new Array(gvSerial.length).fill(""));
+        //       //save เพิ่งset ข้อมูลจะไปไม่ทัน
+        //     }
+        //   }
+        // }}
+      />
+    </td>
+  </tr>
+))}
+
                       <TableRow>
                         <TableCell
                           colSpan={3}
@@ -505,13 +523,24 @@ function ScanSMTSerialShtFINManySht() {
                             gap: "10px",
                           }}
                         >
-                          <AntButton className="BtSave" onClick={btnSave_Click}>
+                          <AntButton 
+                          className="BtSave" 
+                           onClick={async () => {
+                            await btnSave_Click(); 
+                            // setTxtSerial([]); 
+                          }}
+                          >
                             Save
                           </AntButton>
                           &nbsp;&nbsp;
                           <AntButton
                             className="BtCancel"
-                            onClick={btnCancel_Click}
+                            // onClick={btnCancel_Click}
+                            onClick={async () => {
+                              await btnCancel_Click(); 
+                              // setTxtSerial([]); 
+                            }}
+                            
                           >
                             {" "}
                             Cancel
