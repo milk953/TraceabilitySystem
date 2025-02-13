@@ -194,13 +194,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setLotState(enableState);
     setProductSelect(productCombo[0].prd_name);
     setTimeOut(Fctxtlot)
-    
+    setPnlRollLeafState(false);
     sethfMode("lot");
     setHideImg(true);
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");
     setTxtSerial(gvSerial.map(() => ""))
+    setTxtSideFront(gvBackSide.map(() => ""))
+    setTxtSideBack(gvBackSide.map(() => ""))
     setlblLogState(false);
     setHideImg(true);
     if(txtOperator == ""){
@@ -230,16 +232,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }else{
         SetFocus("gvFrontside_0");
       }
-      // if (txtSideBack == "") {
-      //   setTimeout(() => {
-      //     SetFocus("gvBackside_0");          
-      //   }, 100);
-      // }else{
-      //   setTimeout(() => {
-      //     SetFocus("gvFrontside_0");            
-      //     }, 100);
-        
-      // }
       return;
     }
     showLoading('กำลังบันทึก กรุณารอสักครู่')
@@ -371,15 +363,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           let _strScanResultUpdate = "";
           // let _intRow = 0;
           if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
-            // for (let _intRow = _intRowSerial + 1;_intRow < dtSerial.length ;_intRow++) {
-            //   if (_strSerial === dtSerial[_intRow].SERIAL.toString()) {
-            //     _strScanResultUpdate = "NG";
-            //     _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
-            //     _strScanResultAll = "NG";
-            //     _bolError = true;
-            //   }
-            // }
-            
             let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
             if (isDuplicate) {
               _strScanResultUpdate = "NG";
@@ -595,11 +578,9 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               let dtRowLeaf = await getConnectRollSheetData(dtSerial);
               let _intCount = 0;
               let _strrollLeaf = txtRollLeaf;
-              _intCount = await getData("GetRollLeafDuplicate", {
-                strRollLeaf: txtRollLeaf,
-                dtRowLeaf: dtRowLeaf,
-              });
-              if ((_intCount = 1)) {
+              _intCount  = await getData("GetRollLeafDuplicate", {strRollLeaf: txtRollLeaf,dtRowLeaf: dtRowLeaf});
+              console.log(_intCount);
+              if ((parseInt(_intCount) == 1)) {
                 _bolError = true;
                 _strScanResultAll = "NG";
                 for (let drRow = 0; drRow < dtRowLeaf.length; drRow++) {
@@ -724,12 +705,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           styled: { backgroundColor: "green", color: "white" },
         });
       }
-      // if (_strErrorAll != "") {
-      //   setlblResult({
-      //     text: _strScanResultAll + _strErrorAll,
-      //     styled: { backgroundColor: "red", color: "white" },
-      //   });
-      // }
+      if (_strErrorAll != "") {
+        setlblResult({
+          text: _strScanResultAll + _strErrorAll,
+          styled: { backgroundColor: "red", color: "white" },
+        });
+      }
       setGvScanResult(dtSerial);
       setTxtSideBack(gvBackSide.map(() => ""));
       setTxtSideFront(gvBackSide.map(() => ""));
@@ -1130,16 +1111,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     return dtData;
   }
 
-  const handletxtSerialChange = (index, event) => {
+  const handletxtSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
-    if (event.key === "Enter") {
-      try {
-        SetFocus(`txtSerial_${index + 1}`);
-      } catch (error) {
+    if(event.key == 'Enter'){
+      if(index < gvSerial.length-1){
+        document.getElementById(`txtSerial_${index + 1}`).focus();
+      }else{
         btnSave_Click();
-        event.target.blur();
       }
     }
   };
@@ -1207,10 +1187,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetWeekCodebyLot") {
       let result = "";
       await axios
-        // .post("/api/ScanFin/GetWeekCodebyLot", {
-        //   strLot: param.lotValue,
-        //   strProc: param.hfDateInProc,
-        // })
         .post('/api/common/GetWeekCodebyLot', {
           _strLot: param.lotValue,
           _strProc: param.hfDateInProc,
@@ -1372,18 +1348,20 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetRollLeafDuplicate") {
       let result;
       await axios
-        .post("/api/ScanFin/GetRollLeafDuplicate", {
-          strRollLeaf: param.strRollLeaf,
-          _dtRowLeaf: param.dtRowLeaf,
+        .post("/api/Common/GetRollLeafDuplicate", {
+          dataList: { strRollLeaf: param.strRollLeaf, strPlantCode: plantCode },
+          _dtRollLeaf: param.dtRowLeaf,
         })
         .then((res) => {
-          result = res.data.intCount;
+          console.log(res.data);
+          result =  res.data.intCount;
+          console.log(result);
         })
         .catch((error) => {
           setlblLog(`Error ${error.message}`);
           setlblLogState(true);
         });
-        return
+        return result
     } else if (type == "Get_SPI_AOI_RESULT") {
       let result;
       await axios
@@ -1421,6 +1399,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         USER_ID: param.USER_ID,
         REMARK: param.REMARK,
         LOT: param.LOT,
+        strProgram: "FIN Connect Sht&Pcs",
       }).then((res) => {
         result = res.data.p_error;
       }).catch((error) => {
@@ -1852,7 +1831,8 @@ const getRowClassName = (record) => {
     gvScanResult,
     hideImg,
     columns,
-    getRowClassName
+    getRowClassName,
+    setTxtSerial
   };
 };
 
