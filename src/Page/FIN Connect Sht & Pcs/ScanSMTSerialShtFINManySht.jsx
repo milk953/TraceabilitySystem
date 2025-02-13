@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useMemo  } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   TextField,
   Table,
@@ -20,7 +20,7 @@ import {
   Card,
   Typography,
 } from "@mui/material";
-import {Button as AntButton} from "antd";
+import { Button as AntButton } from "antd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import "./ScanSMTSerialShtFINManySht.css";
 import "../Common/StyleCommon.css";
@@ -92,65 +92,16 @@ function ScanSMTSerialShtFINManySht() {
     hideImg,
     columns,
     getRowClassName,
-    setTxtSerial
+    setTxtSerial,
+    txtSerialref, //newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   } = fn_ScanSMTSerialShtFINManySht();
-  const memoizedSerials = useMemo(() => {
-    return gvSerial.map((row, index) => (
-      <tr key={index} style={{ padding: "4px 4px 4px 4px" }}>
-        <td
-          className="gvSerialCell"
-          style={{ width: "10px", textAlign: "right" }}
-        >
-          {row.SHEET}
-        </td>
-        <td
-          className="gvSerialCell"
-          style={{ width: "10px", textAlign: "right" }}
-        >
-          {row.SEQ}
-        </td>
-        <td
-          className="gvSerialCell"
-          style={{ width: "300px", paddingRight: "10px" }}
-        >
-          <input
-            id={`txtSerial_${index}`}
-            type="text"
-            style={{
-              width: "98%",
-              textTransform: "uppercase",
-              padding: '0px',
-              margin: '0px',
-            }}
-            maxLength="30"
-            className="styleEnable"
-            value={txtSerial[index]}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                if(index < gvSerial.length-1){
-                  document.getElementById(`txtSerial_${index + 1}`).focus();
-                }else{
-                  btnSave_Click();
-                }
-              }
-            }}
-            onChange={(e) => setTxtSerial((prev) => {
-              const newSerial = [...prev];
-              newSerial[index] = e.target.value;
-              return newSerial;
-            })}
-          />
-        </td>
-      </tr>
-    ));
-  }, [gvSerial, txtSerial]);
   return (
     <div>
       <Hearder />
-      <Card
-        component={Card}
-        className="Card-Common"
-      >
+      <Card component={Card} className="Card-Common">
         <table>
           <tr>
             <td className="maintd">
@@ -158,13 +109,15 @@ function ScanSMTSerialShtFINManySht() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                    {menuName} 
+                      {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell style={{textAlign:'right'}} >Lot No.:</TableCell>
+                    <TableCell style={{ textAlign: "right" }}>
+                      Lot No.:
+                    </TableCell>
                     <TableCell>
                       <input
                         className="txtField"
@@ -188,7 +141,9 @@ function ScanSMTSerialShtFINManySht() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell style={{textAlign:'right'}}>Product:</TableCell>
+                    <TableCell style={{ textAlign: "right" }}>
+                      Product:
+                    </TableCell>
                     <TableCell colSpan={2}>
                       <FormControl style={{ width: "94%" }}>
                         <select
@@ -210,7 +165,9 @@ function ScanSMTSerialShtFINManySht() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell style={{textAlign:'right'}} >Lot Ref. No.:</TableCell>
+                    <TableCell style={{ textAlign: "right" }}>
+                      Lot Ref. No.:
+                    </TableCell>
                     <TableCell>
                       <input
                         size="small"
@@ -225,7 +182,9 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell style={{textAlign:'right'}}>Operator:</TableCell>
+                    <TableCell style={{ textAlign: "right" }}>
+                      Operator:
+                    </TableCell>
                     <TableCell>
                       <input
                         size="small"
@@ -234,7 +193,7 @@ function ScanSMTSerialShtFINManySht() {
                         ref={FctxtOperator}
                         value={txtOperator}
                         onChange={(e) => {
-                          setTxtOperator(e.target.value)
+                          setTxtOperator(e.target.value);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -246,12 +205,16 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell style={{textAlign:'right'}}>Total Sht:</TableCell>
-                    <TableCell >{lblTotalSht}</TableCell>
+                    <TableCell style={{ textAlign: "right" }}>
+                      Total Sht:
+                    </TableCell>
+                    <TableCell>{lblTotalSht}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell style={{textAlign:'right'}}>Total Pcs:</TableCell>
+                    <TableCell style={{ textAlign: "right" }}>
+                      Total Pcs:
+                    </TableCell>
                     <TableCell>{lblTotalPcs}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
@@ -317,8 +280,24 @@ function ScanSMTSerialShtFINManySht() {
                           key={index}
                           style={{ backgroundColor: "White" }}
                         >
-                          <TableCell style={{textAlign:'center',borderRight: "1px solid #d9d9d9",width:'10%'}}>{row.SEQ}</TableCell>
-                          <TableCell style={{textAlign:'center',borderRight: "1px solid #d9d9d9",width:'70%'}}>{row.TITLE}</TableCell>
+                          <TableCell
+                            style={{
+                              textAlign: "center",
+                              borderRight: "1px solid #d9d9d9",
+                              width: "10%",
+                            }}
+                          >
+                            {row.SEQ}
+                          </TableCell>
+                          <TableCell
+                            style={{
+                              textAlign: "center",
+                              borderRight: "1px solid #d9d9d9",
+                              width: "70%",
+                            }}
+                          >
+                            {row.TITLE}
+                          </TableCell>
                           <TableCell>
                             <input
                               type="text"
@@ -352,7 +331,7 @@ function ScanSMTSerialShtFINManySht() {
                               maxLength="30"
                               ref={FcgvFrontside}
                               onKeyDown={(e) => {
-                                if (e.key === "Enter") {                                  
+                                if (e.key === "Enter") {
                                   handleFrontSideChange(index, e);
                                 }
                               }}
@@ -405,9 +384,7 @@ function ScanSMTSerialShtFINManySht() {
               )}
               {lblLogState && (
                 <div className="lblLog">
-                  <Card className="Card-lblLog">
-                  {lblLog}
-                  </Card>
+                  <Card className="Card-lblLog">{lblLog}</Card>
                 </div>
               )}
               <div className="panelgvSerial">
@@ -439,24 +416,21 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {/* {gvSerial.map((row, index) => (
-                        <TableRow
-                          key={index}
-                          style={{ padding: "4px 4px 4px 4px" }}
-                        >
-                          <TableCell
+                      {gvSerial.map((row, index) => (
+                        <tr key={index} style={{ padding: "4px 4px 4px 4px" }}>
+                          <td
                             className="gvSerialCell"
                             style={{ width: "10px", textAlign: "right" }}
                           >
                             {row.SHEET}
-                          </TableCell>
-                          <TableCell
+                          </td>
+                          <td
                             className="gvSerialCell"
                             style={{ width: "10px", textAlign: "right" }}
                           >
                             {row.SEQ}
-                          </TableCell>
-                          <TableCell
+                          </td>
+                          <td
                             className="gvSerialCell"
                             style={{ width: "300px", paddingRight: "10px" }}
                           >
@@ -466,26 +440,31 @@ function ScanSMTSerialShtFINManySht() {
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
-                                padding:'0px',
-                                margin:'0px',
+                                padding: "0px",
+                                margin: "0px",
                               }}
                               maxLength="30"
                               className="styleEnable"
-                              value={txtSerial[index]}
+                              ref={(el) => (txtSerialClear.current[index] = el)}
+                              // value={txtSerial[index]}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                  // document
-                                  //   .getElementById(`txtSerial_0`)
-                                  //   .focus();
-                                  handletxtSerialChange(index, e);
+                                  if (index < gvSerial.length - 1) {
+                                    document
+                                      .getElementById(`txtSerial_${index + 1}`)
+                                      .focus();
+                                  } else {
+                                    handleSaveRef();
+                                  }
                                 }
                               }}
-                              onChange={(e) => handletxtSerialChange(index, e)}
+                              onChange={(e) =>
+                                txtSerialChangeRef(index, e.target.value)
+                              }
                             />
-                          </TableCell>
-                        </TableRow>
-                      ))} */}
-                      {memoizedSerials}
+                          </td>
+                        </tr>
+                      ))}
                       <TableRow>
                         <TableCell
                           colSpan={3}
@@ -495,7 +474,7 @@ function ScanSMTSerialShtFINManySht() {
                             gap: "10px",
                           }}
                         >
-                          <AntButton className="BtSave" onClick={btnSave_Click}>
+                          <AntButton className="BtSave" onClick={handleSaveRef}>
                             Save
                           </AntButton>
                           &nbsp;&nbsp;
@@ -519,9 +498,8 @@ function ScanSMTSerialShtFINManySht() {
                 textAlign: "center",
                 width: "900px",
                 padding: "0",
-                margin: '0',
+                margin: "0",
                 verticalAlign: "top",
-                
               }}
             >
               {hideImg && (
@@ -539,48 +517,47 @@ function ScanSMTSerialShtFINManySht() {
                 />
               )}
               <td>
-              {lblResultState && (
-                <div className="lblResultFin">
-                  <Paper
-                    className="lblResultCard"
-                    elevation={3}
-                    style={{
-                      alignItems: "center",
-                      background:
-                        lblResult.text === "OK"
-                          ? "green"
-                          : lblResult.text === "NG"
-                          ? "red"
-                          : "red",
-                    }}
-                  >
-                    <Typography
-                      variant="h4"
+                {lblResultState && (
+                  <div className="lblResultFin">
+                    <Paper
+                      className="lblResultCard"
+                      elevation={3}
                       style={{
-                        paddingTop: "5px",
-                        color: lblResult.styled.color
+                        alignItems: "center",
+                        background:
+                          lblResult.text === "OK"
+                            ? "green"
+                            : lblResult.text === "NG"
+                            ? "red"
+                            : "red",
                       }}
                     >
-                      {lblResult.text}
-                    </Typography>
-                  </Paper>
-                <AntTable
-                  className="tableGvResult"
-                  columns={columns}
-                  bordered
-                  dataSource={gvScanResult}
-                  style={{ width: "1000px",
-                    marginTop:"10px",
-                    boxShadow: "rgba(0, 0, 0, 0.10) 0px 3px 8px",
-                  }}
-                  pagination={false}
-                  rowClassName={getRowClassName}
-                  size="small"
-                />
-
-                </div>                
-              )}
-              
+                      <Typography
+                        variant="h4"
+                        style={{
+                          paddingTop: "5px",
+                          color: lblResult.styled.color,
+                        }}
+                      >
+                        {lblResult.text}
+                      </Typography>
+                    </Paper>
+                    <AntTable
+                      className="tableGvResult"
+                      columns={columns}
+                      bordered
+                      dataSource={gvScanResult}
+                      style={{
+                        width: "1000px",
+                        marginTop: "10px",
+                        boxShadow: "rgba(0, 0, 0, 0.10) 0px 3px 8px",
+                      }}
+                      pagination={false}
+                      rowClassName={getRowClassName}
+                      size="small"
+                    />
+                  </div>
+                )}
               </td>
             </td>
           </tr>
