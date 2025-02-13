@@ -122,13 +122,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const Fctxtlot = useRef(null);
   const FCtxtRollleaf = useRef(null);
   const Fctxtmcno = useRef(null);
-  const FcgvBackside = useRef([]);
-  const FcgvFrontside = useRef([]);
+  const FcgvBackside = useRef(null);
+  const FcgvFrontside = useRef(null);
   const FcSelectproduct = useRef(null);
   const FctxtOperator = useRef(null);
   const FctxtBoardnoF = useRef(null);
   const FctxtBoardnoB = useRef(null);
-  const FctxtSerial = useRef([]);
   // disabled State
   const [disabledState, setDisabledState] = useState({
     styled: { disabled: true, backgroundColor: "#e0e0e0" },
@@ -156,6 +155,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   useEffect(() => {
     Pageload();
   }, []);
+
   function SetFocus(txtField) {
     document.getElementById(`${txtField}`).focus();
     
@@ -173,6 +173,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     sethfMode("");
     getData("getProductCombo", "");
     Setmode("Lot");
+  
     Fctxtlot.current.focus();
   };
   const btnBack_Click = () => {
@@ -193,13 +194,20 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setLotState(enableState);
     setProductSelect(productCombo[0].prd_name);
     setTimeOut(Fctxtlot)
-    
+    setPnlRollLeafState(false);
     sethfMode("lot");
     setHideImg(true);
   };
   const btnCancel_Click = () => {
     Setmode("SERIAL");
-    setTxtSerial(gvSerial.map(() => ""))
+    // setTxtSerial(gvSerial.map(() => ""))
+     Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    getInitialSerial();
+    setTxtSideFront(gvBackSide.map(() => ""))
+    setTxtSideBack(gvBackSide.map(() => ""))
     setlblLogState(false);
     setHideImg(true);
     if(txtOperator == ""){
@@ -208,7 +216,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       document.getElementById(`gvBackside_0`).focus();
     }
   };
-  const btnSave_Click = async () => {
+  const btnSave_Click = async (SerialArray) => {
+    console.log(txtOperator,' txtOperator')
     if (_strEventArgument != "Save" && hfMode == "SERIAL") {
       if (txtOperator == "") {
         setlblLog("Please input Operator !!!");
@@ -216,10 +225,13 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         FctxtOperator.current.focus();
         return;
       }
-      setSerialData();      
+      setSerialData(SerialArray);      
     }
+    //  Object.values(txtSerialClear.current).forEach((input) => {
+    //   if (input) input.value = "";
+    // });
   };
-  async function setSerialData() {
+  async function setSerialData(SerialArray) {
     await getData("getProductSerialMaster", productSelect);
     if(txtSideFront == '' || txtSideBack  == '' ){
       setlblLog("Please input Sheet Side No. !!!");
@@ -229,21 +241,11 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }else{
         SetFocus("gvFrontside_0");
       }
-      // if (txtSideBack == "") {
-      //   setTimeout(() => {
-      //     SetFocus("gvBackside_0");          
-      //   }, 100);
-      // }else{
-      //   setTimeout(() => {
-      //     SetFocus("gvFrontside_0");            
-      //     }, 100);
-        
-      // }
       return;
     }
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     var dtSerial = [];
-    dtSerial = await getInputSerial();
+    dtSerial = await getInputSerial(SerialArray);
 
 
     const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
@@ -251,8 +253,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       hideLoading();
       setlblLog("Please Input Serial No.");
       setlblLogState(true);
-      // SetFocus("txtSerial_0");
-      FctxtSerial.current[0].focus(); 
+      SetFocus("txtSerial_0");
       setLblResultState(false);
       setGvScanResult([]);
       return;        
@@ -371,15 +372,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           let _strScanResultUpdate = "";
           // let _intRow = 0;
           if (!CONNECT_SERIAL_ERROR.includes(_strSerial)) {
-            // for (let _intRow = _intRowSerial + 1;_intRow < dtSerial.length ;_intRow++) {
-            //   if (_strSerial === dtSerial[_intRow].SERIAL.toString()) {
-            //     _strScanResultUpdate = "NG";
-            //     _strMessageUpdate = "Serial duplicate / หมายเลขบาร์โค้ดซ้ำ";
-            //     _strScanResultAll = "NG";
-            //     _bolError = true;
-            //   }
-            // }
-            
             let isDuplicate = dtSerial.some((item, index) => index !== i && _strSerial.toUpperCase() === item.SERIAL.toString().trim().toUpperCase());
             if (isDuplicate) {
               _strScanResultUpdate = "NG";
@@ -595,11 +587,9 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               let dtRowLeaf = await getConnectRollSheetData(dtSerial);
               let _intCount = 0;
               let _strrollLeaf = txtRollLeaf;
-              _intCount = await getData("GetRollLeafDuplicate", {
-                strRollLeaf: txtRollLeaf,
-                dtRowLeaf: dtRowLeaf,
-              });
-              if ((_intCount = 1)) {
+              _intCount  = await getData("GetRollLeafDuplicate", {strRollLeaf: txtRollLeaf,dtRowLeaf: dtRowLeaf});
+              console.log(_intCount);
+              if ((parseInt(_intCount) == 1)) {
                 _bolError = true;
                 _strScanResultAll = "NG";
                 for (let drRow = 0; drRow < dtRowLeaf.length; drRow++) {
@@ -724,16 +714,19 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           styled: { backgroundColor: "green", color: "white" },
         });
       }
-      // if (_strErrorAll != "") {
-      //   setlblResult({
-      //     text: _strScanResultAll + _strErrorAll,
-      //     styled: { backgroundColor: "red", color: "white" },
-      //   });
-      // }
+      if (_strErrorAll != "") {
+        setlblResult({
+          text: _strScanResultAll + _strErrorAll,
+          styled: { backgroundColor: "red", color: "white" },
+        });
+      }
       setGvScanResult(dtSerial);
       setTxtSideBack(gvBackSide.map(() => ""));
       setTxtSideFront(gvBackSide.map(() => ""));
-      setTxtSerial(gvSerial.map(() => ""));
+      // setTxtSerial(gvSerial.map(() => ""));
+      Object.values(txtSerialClear.current).forEach((input) => {
+        if (input) input.value = "";
+      });
       getIntitiaSheet();
       getInitialSerial();
     } else {
@@ -800,6 +793,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
     }
   };
+
+  
   function setTimeOut(txtField) {
     setTimeout(() => {
       txtField.current.focus();
@@ -836,9 +831,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             setGvBackSide(getIntitiaSheet());
             Setmode("SERIAL");
             setGvSerial(getInitialSerial());
-            setGvBackSideState(true);
-            // setTimeOut(FcgvBackside)
-            // if(txtOperator == ""){setTimeOut(FctxtOperator);}else{setTimeOut(FcgvBackside);}        
+            setGvBackSideState(true);  
             if(txtOperator == ""){
               SetFocus(`txtOperatorFin`);
             }else{
@@ -1004,8 +997,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       try {
         document.getElementById(`gvFrontside_${index}`).focus();
       } catch (e) {
-        // document.getElementById(`txtSerial_0`).focus();
-        FctxtSerial.current[0].focus(); 
+        document.getElementById(`txtSerial_0`).focus();
       }
     } 
   };
@@ -1021,8 +1013,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           document.getElementById(`gvBackside_${index+1}`).focus();
 
         } catch (e) {
-          // document.getElementById(`txtSerial_0`).focus();
-          FctxtSerial.current[0].focus(); 
+          document.getElementById(`txtSerial_0`).focus();
         }
       }else{
         setlblLog("Please input Sheet Side No. !!!");
@@ -1030,7 +1021,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
     }    
   };
-  async function getInputSerial() {
+  async function getInputSerial(txtSerial) {
     await getData("getProductSerialMaster", productSelect);
 
     var dtData = [];
@@ -1040,17 +1031,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     let _strlotno = lotValue.split(";");
     
     for (let i = 0; i < gvSerial.length; i++) {
-      // if (hfShtScan <= 1){
         if (txtSerial[i] == undefined) {
           txtSerial[i] = "";
         }
         intRow += 1;
         let dataitem = {
           SHEET: gvSerial[i].SHEET,
-          // BACK_SIDE: txtSideBack.toString(),
           BACK_SIDE:txtSideBack[gvSerial[i].SHEET -1],
           FRONT_SIDE: txtSideFront[gvSerial[i].SHEET-1],
-          // FRONT_SIDE: txtSideFront.toString(),
           SEQ: gvSerial[i].SEQ,
           SERIAL: txtSerial[i],
           SCAN_RESULT: "",
@@ -1067,7 +1055,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           updatedt = {
             ...dataitem,
             BOARD_NO_F: txtBoardNoF,
-
+            BOARD_NO_B: txtBoardNoB,
           };
           dtData.push(updatedt);
         } else {
@@ -1129,19 +1117,32 @@ const fn_ScanSMTSerialShtFINManySht = () => {
 
     return dtData;
   }
-  const handletxtSerialChange = (index, event) => {
+  const txtSerialref = useRef({});
+  const txtSerialClear = useRef([]);
+  const txtSerialChangeRef = (index, value) => {
+    txtSerialref.current[index] = value;
+  }
+  const handleSaveRef =  ()  => {
+    const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
+    const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
+    setTxtSerial(SerialArray);
+    console.log(SerialArray);
+    requestAnimationFrame(() => {
+      btnSave_Click(SerialArray);
+    });
+  }
+
+  const handletxtSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
-    newValues[index] = event.target.value//.trim().toUpperCase();
+    newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
-    // if (event.key === "Enter") {
-    //   // try {
-    //   //   // SetFocus(`txtSerial_${index + 1}`);
-    //   //   FctxtSerial.current[index + 1].focus(); 
-    //   // } catch (error) {
-    //   //   btnSave_Click();
-    //   //   event.target.blur();
-    //   // }
-    // }
+    if(event.key == 'Enter'){
+      if(index < gvSerial.length-1){
+        document.getElementById(`txtSerial_${index + 1}`).focus();
+      }else{
+        btnSave_Click();
+      }
+    }
   };
   async function getData(type, param) {
     if (type == "getProductCombo") {
@@ -1207,10 +1208,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetWeekCodebyLot") {
       let result = "";
       await axios
-        // .post("/api/ScanFin/GetWeekCodebyLot", {
-        //   strLot: param.lotValue,
-        //   strProc: param.hfDateInProc,
-        // })
         .post('/api/common/GetWeekCodebyLot', {
           _strLot: param.lotValue,
           _strProc: param.hfDateInProc,
@@ -1372,18 +1369,20 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     } else if (type == "GetRollLeafDuplicate") {
       let result;
       await axios
-        .post("/api/ScanFin/GetRollLeafDuplicate", {
-          strRollLeaf: param.strRollLeaf,
-          _dtRowLeaf: param.dtRowLeaf,
+        .post("/api/Common/GetRollLeafDuplicate", {
+          dataList: { strRollLeaf: param.strRollLeaf, strPlantCode: plantCode },
+          _dtRollLeaf: param.dtRowLeaf,
         })
         .then((res) => {
-          result = res.data.intCount;
+          console.log(res.data);
+          result =  res.data.intCount;
+          console.log(result);
         })
         .catch((error) => {
           setlblLog(`Error ${error.message}`);
           setlblLogState(true);
         });
-        return
+        return result
     } else if (type == "Get_SPI_AOI_RESULT") {
       let result;
       await axios
@@ -1421,6 +1420,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         USER_ID: param.USER_ID,
         REMARK: param.REMARK,
         LOT: param.LOT,
+        strProgram: "FIN Connect Sht&Pcs",
       }).then((res) => {
         result = res.data.p_error;
       }).catch((error) => {
@@ -1780,17 +1780,21 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       return text;
     },
   },
-  ];
-  const getRowClassName = (record) => {
+];
+const getRowClassName = (record) => {
   if (record.SCAN_RESULT === "NG") {
     return 'row-red';
   } else if (record.SCAN_RESULT === "OK") {
     return 'row-green';
   }
   return '';
-  };
+};
 
   return {
+    txtSerialref,//newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
     productCombo,
     setProductcombo,
     productSelect,
@@ -1854,7 +1858,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     hideImg,
     columns,
     getRowClassName,
-    FctxtSerial
+    setTxtSerial
   };
 };
 

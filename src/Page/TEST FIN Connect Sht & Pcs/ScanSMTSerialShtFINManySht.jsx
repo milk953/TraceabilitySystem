@@ -31,10 +31,6 @@ import Pageimg from "/src/assets/1.jpg";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTSerialShtFINManySht() {
   const { menuName } = fn_Homepage();
-  console.log(menuName,'mmmm')
-  const [barcodes, setBarcodes] = useState(Array(2).fill(''));
-  const [SerialTest, setSerialTest] = useState(Array(200).fill(''));
-  const [pnlMachineState, setPnlMachineState] = useState(false);
   const {
     productCombo,
     productSelect,
@@ -62,7 +58,7 @@ function ScanSMTSerialShtFINManySht() {
     txtmcno,
     setTxtmcno,
     Fctxtmcno,
-    // pnlMachineState,
+    pnlMachineState,
     FcgvBackside,
     FcgvFrontside,
     FcSelectproduct,
@@ -96,59 +92,12 @@ function ScanSMTSerialShtFINManySht() {
     hideImg,
     columns,
     getRowClassName,
-    FctxtSerial,
+    setTxtSerial,
+    txtSerialref, //newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   } = fn_ScanSMTSerialShtFINManySht();
-  
-  const handleKeyPress = (index, event) => {
-    if (event.key === "Enter") {
-      event.preventDefault(); // ป้องกันการส่งฟอร์มเมื่อกด Enter
-      if (index < gvSerial.length - 1) {
-        FctxtSerial.current[index + 1].focus(); // โฟกัสไปที่ช่องถัดไป
-      }
-    }
-  };
-
-
-  const FocusOperator = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault(); // ป้องกันการส่งฟอร์มเมื่อกด Enter
-      if(pnlMachineState){
-          Fctxtmcno.current.focus()
-      }
-      else{
-        // Fctxtmcno.current.focus
-        FcgvBackside.current[0].focus()
-      }
-    }
-  };
-
-  const FocusGvbackSide = (index, event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // ป้องกันการส่งฟอร์มเมื่อกด Enter
-      if (index < barcodes.length - 1) {
-        FcgvFrontside.current[index].focus(); // โฟกัสไปที่ช่องถัดไป
-      }
-      else{
-        FcgvFrontside.current[index+1].focus(); 
-      }
-    }
-  };
-
-  const FocusGvFont = (index, event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // ป้องกันการส่งฟอร์มเมื่อกด Enter
-      if (index < barcodes.length - 1) {
-        FcgvBackside.current[index+1].focus(); // โฟกัสไปที่ช่องถัดไป
-      }
-      else{
-        // FcgvFrontside.current[0].focus(); 
-      }
-    }
-  };
-
-  
-
-  
   return (
     <div>
       <Hearder />
@@ -160,7 +109,7 @@ function ScanSMTSerialShtFINManySht() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                      {/* {menuName} */}
+                      {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -173,22 +122,20 @@ function ScanSMTSerialShtFINManySht() {
                       <input
                         className="txtField"
                         id="txtlot"
-                        type="text"
                         value={lotValue}
                         onChange={(e) => setLotValue(e.target.value.trim())}
-                        // disabled={lotState.styled.disabled}
-                        // style={lotState.styled}
+                        disabled={lotState.styled.disabled}
+                        style={lotState.styled}
                         ref={Fctxtlot}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            FctxtOperator.current.focus()
+                            txtLot_Change();
                           }
                         }}
                       ></input>
                     </TableCell>
                     <TableCell>
-                      <Button   >
-                        {/*onClick={btnBack_Click} */}
+                      <Button onClick={btnBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -203,9 +150,9 @@ function ScanSMTSerialShtFINManySht() {
                           onInputChange={(e) =>
                             ProductSelect_Change(e.target.value)
                           }
-                          // onChange={(e) => ProductSelect_Change(e.target.value)}
+                          onChange={(e) => ProductSelect_Change(e.target.value)}
                           value={productSelect}
-                          // disabled={selectproductState}
+                          disabled={selectproductState}
                           ref={FcSelectproduct}
                         >
                           {productCombo.map((option, index) => (
@@ -227,9 +174,8 @@ function ScanSMTSerialShtFINManySht() {
                         className="txtField"
                         value={txtLotRef}
                         onChange={
-                          ((e) => setTxtLotRef(e.target.value.trim())
-                          // , txtLotRef_Change }
-                          )
+                          ((e) => setTxtLotRef(e.target.value.trim()),
+                          { txtLotRef_Change })
                         }
                       ></input>
                     </TableCell>
@@ -249,10 +195,11 @@ function ScanSMTSerialShtFINManySht() {
                         onChange={(e) => {
                           setTxtOperator(e.target.value);
                         }}
-                        // onKeyDown={(e) => {
-                        //   FocusOperator(index, e)
-                        // }}
-                        onKeyDown={(event) => FocusOperator(event)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            txtOperator_Change();
+                          }
+                        }}
                       ></input>
                     </TableCell>
                     <TableCell></TableCell>
@@ -261,14 +208,14 @@ function ScanSMTSerialShtFINManySht() {
                     <TableCell style={{ textAlign: "right" }}>
                       Total Sht:
                     </TableCell>
-                    <TableCell>lblTotalSht</TableCell>
+                    <TableCell>{lblTotalSht}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell style={{ textAlign: "right" }}>
                       Total Pcs:
                     </TableCell>
-                    <TableCell>lblTotalPcs</TableCell>
+                    <TableCell>{lblTotalPcs}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                   {pnlRollLeafState && (
@@ -284,11 +231,11 @@ function ScanSMTSerialShtFINManySht() {
                             onChange={(e) => {
                               setTxtRollLeaf(e.target.value);
                             }}
-                            // onKeyDown={(e) => {
-                            //   if (e.key === "Enter") {
-                            //     txtRollLeaf_Change();
-                            //   }
-                            // }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                txtRollLeaf_Change();
+                              }
+                            }}
                           ></input>
                         </TableCell>
                         <TableCell></TableCell>
@@ -324,12 +271,11 @@ function ScanSMTSerialShtFINManySht() {
                 </TableBody>
               </Table>
               {/* <td> */}
-              {/* {gvBackSideState && ( */}
-              {barcodes.map((barcode, index) => (
+              {gvBackSideState && (
                 <div className="pnlBackside">
                   <Table component={Card} className="gvBackSide">
                     <TableBody>
-                      {/* {gvBackSide.map((row, index) => ( */}
+                      {gvBackSide.map((row, index) => (
                         <TableRow
                           key={index}
                           style={{ backgroundColor: "White" }}
@@ -341,7 +287,7 @@ function ScanSMTSerialShtFINManySht() {
                               width: "10%",
                             }}
                           >
-                            row.SEQ
+                            {row.SEQ}
                           </TableCell>
                           <TableCell
                             style={{
@@ -350,13 +296,13 @@ function ScanSMTSerialShtFINManySht() {
                               width: "70%",
                             }}
                           >
-                            row.TITLE
+                            {row.TITLE}
                           </TableCell>
                           <TableCell>
                             <input
                               type="text"
                               // id="gvBackside_1"
-                              // id={`gvBackside_${index}`}
+                              id={`gvBackside_${index}`}
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
@@ -365,50 +311,42 @@ function ScanSMTSerialShtFINManySht() {
                               maxLength="30"
                               className="styleEnable"
                               // ref={FcgvBackside}
-                              ref={(el) => (FcgvBackside.current[index] = el)}
-                              // onChange={(e) => FocusGvbackSide(index, e)}
                               onKeyDown={(e) => {
-                                // if (e.key === "Enter") {
-                                  FocusGvbackSide(index, e);
-                                // }
+                                if (e.key === "Enter") {
+                                  handleBackSideChange(index, e);
+                                }
                               }}
-                              // value={txtSideBack}
-                              // onChange={(e) => handleBackSideChange(index, e)}
+                              value={txtSideBack[index]}
+                              onChange={(e) => handleBackSideChange(index, e)}
                             />
                             <input
                               type="text"
                               // id="gvBackside_2"
-                              // id={`gvFrontside_${index}`}
+                              id={`gvFrontside_${index}`}
                               style={{
                                 width: "98%",
                                 textTransform: "uppercase",
                                 padding: "0px 0px 0px 0px",
                               }}
                               maxLength="30"
-                              // ref={FcgvFrontside}
-                              ref={(el) => (FcgvFrontside.current[index] = el)}
-                              // onKeyDown={(e) => {
-                              //   if (e.key === "Enter") {
-                              //     handleFrontSideChange(index, e);
-                              //   }
-                              // }}
+                              ref={FcgvFrontside}
                               onKeyDown={(e) => {
-                                // if (e.key === "Enter") {
-                                  FocusGvFont(index, e);
-                                // }
+                                if (e.key === "Enter") {
+                                  handleFrontSideChange(index, e);
+                                }
                               }}
                               className="styleEnable"
-                              // value={txtSideFront}
-                              // onChange={(e) => FocusGvbackSide(index, e)}
+                              value={txtSideFront[index]}
+                              onChange={(e) => handleFrontSideChange(index, e)}
                             />
                           </TableCell>
                         </TableRow>
-                      {/* ))} */}
+                      ))}
                     </TableBody>
                   </Table>
-                  {/* {pnlBoardState && ( */}
+                  {pnlBoardState && (
                     <>
-                      {/* <Table component={Paper} sx={{ marginTop: 2 }}>
+                      <Table component={Paper} sx={{ marginTop: 2 }}>
                         <TableRow>
                           <TableCell>Bottom Fixture</TableCell>
                           <TableCell>
@@ -439,16 +377,18 @@ function ScanSMTSerialShtFINManySht() {
                           </TableCell>
                           <TableCell></TableCell>
                         </TableRow>
-                      </Table> */}
+                      </Table>
                     </>
-                  {/* )} */}
+                  )}
                 </div>
-              ))}
-              {/* )} */}
-              {/* {lblLogState && ( */}
-
+              )}
+              {lblLogState && (
+                <div className="lblLog">
+                  <Card className="Card-lblLog">{lblLog}</Card>
+                </div>
+              )}
               <div className="panelgvSerial">
-                {/* {panalSerialState && ( */}
+                {panalSerialState && (
                   <Table className="gvSerial" component={Card}>
                     <TableHead
                       sx={{
@@ -476,50 +416,52 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {/* {gvSerial.map((row, index) => ( */}
-                      {SerialTest.map((barcode, index) => (
-                        <tr style={{ padding: "4px 4px 4px 4px" }}>
+                      {/* {memoizedSerials} */}
+                      {gvSerial.map((row, index) => (
+                          <tr key={index} style={{ padding: "4px 4px 4px 4px" }}>
                           <td
                             className="gvSerialCell"
                             style={{ width: "10px", textAlign: "right" }}
                           >
-                            row.SHEET
+                            {row.SHEET}
                           </td>
                           <td
                             className="gvSerialCell"
                             style={{ width: "10px", textAlign: "right" }}
                           >
-                            row.SEQ
+                            {row.SEQ}
                           </td>
                           <td
                             className="gvSerialCell"
                             style={{ width: "300px", paddingRight: "10px" }}
                           >
                             <input
-                              // id={`txtSerial_${index}`}
-                              // ref={(el) => (FctxtSerial.current[index] = el)}
+                              id={`txtSerial_${index}`}
                               type="text"
                               style={{
                                 width: "98%",
-                                // textTransform: "uppercase",
+                                textTransform: "uppercase",
                                 padding: "0px",
                                 margin: "0px",
                               }}
                               maxLength="30"
                               className="styleEnable"
-                              value={txtSerial}
-                              // onKeyDown={(e) => {
-                              //   if (e.key === "Enter") {
-                              //     handleKeyPress(index, e);
-                              //   }
-                              // }}
-                              // onChange={(e) => handletxtSerialChange(index, e)}
+                              ref={(el) => (txtSerialClear.current[index] = el)}
+                              // value={txtSerial[index]}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  if (index < gvSerial.length - 1) {
+                                    document.getElementById(`txtSerial_${index + 1}`).focus();
+                                  } else {
+                                    handleSaveRef();
+                                  }
+                                }
+                              }}
+                              onChange={(e) => txtSerialChangeRef(index, e.target.value)}
                             />
                           </td>
                         </tr>
-                      // {/* ))} */}
                       ))}
-
                       <TableRow>
                         <TableCell
                           colSpan={3}
@@ -529,13 +471,13 @@ function ScanSMTSerialShtFINManySht() {
                             gap: "10px",
                           }}
                         >
-                          <AntButton className="BtSave" >
+                          <AntButton className="BtSave" onClick={btnSave_Click}>
                             Save
                           </AntButton>
                           &nbsp;&nbsp;
                           <AntButton
                             className="BtCancel"
-                          
+                            onClick={btnCancel_Click}
                           >
                             {" "}
                             Cancel
@@ -544,11 +486,77 @@ function ScanSMTSerialShtFINManySht() {
                       </TableRow>
                     </TableBody>
                   </Table>
-                {/* )} */}
+                )}
               </div>
             </td>
             {/* </td> */}
-
+            <td
+              style={{
+                textAlign: "center",
+                width: "900px",
+                padding: "0",
+                margin: "0",
+                verticalAlign: "top",
+              }}
+            >
+              {hideImg && (
+                <img
+                  style={{
+                    // width: "320px",
+                    // height: "250px",
+                    padding: "0",
+                    align: "center",
+                    margin: "auto",
+                  }}
+                  className="Img_GvResult"
+                  src={Pageimg}
+                  alt="Description of the image"
+                />
+              )}
+              <td>
+                {lblResultState && (
+                  <div className="lblResultFin">
+                    <Paper
+                      className="lblResultCard"
+                      elevation={3}
+                      style={{
+                        alignItems: "center",
+                        background:
+                          lblResult.text === "OK"
+                            ? "green"
+                            : lblResult.text === "NG"
+                            ? "red"
+                            : "red",
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        style={{
+                          paddingTop: "5px",
+                          color: lblResult.styled.color,
+                        }}
+                      >
+                        {lblResult.text}
+                      </Typography>
+                    </Paper>
+                    <AntTable
+                      className="tableGvResult"
+                      columns={columns}
+                      bordered
+                      dataSource={gvScanResult}
+                      style={{
+                        width: "1000px",
+                        marginTop: "10px",
+                        boxShadow: "rgba(0, 0, 0, 0.10) 0px 3px 8px",
+                      }}
+                      pagination={false}
+                      rowClassName={getRowClassName}
+                      size="small"
+                    />
+                  </div>
+                )}
+              </td>
+            </td>
           </tr>
         </table>
       </Card>
