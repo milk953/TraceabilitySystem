@@ -1122,14 +1122,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         btnSave_Click();
       }
     }
-    // if (event.key === "Enter") {
-    //   try {
-    //     SetFocus(`txtSerial_${index + 1}`);
-    //   } catch (error) {
-    //     btnSave_Click();
-    //     event.target.blur();
-    //   }
-    // }
   };
   async function getData(type, param) {
     if (type == "getProductCombo") {
