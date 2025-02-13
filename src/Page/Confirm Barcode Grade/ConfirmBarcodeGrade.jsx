@@ -432,7 +432,7 @@ function ConfirmBarcodeGrade() {
                         </td>
                         <td>
                         <input
-                            className="txtinput"
+                            className="styleSeraial"
                             type="text"
                             defaultValue={serial}
                             onChange={(event) =>

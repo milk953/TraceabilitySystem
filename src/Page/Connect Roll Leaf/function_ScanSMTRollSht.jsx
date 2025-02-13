@@ -216,7 +216,7 @@ function Fn_ScanSMTRollSht() {
             SetMode("ROLL");
             setTimeout(() => {
               fc_txtOperator.current.focus();
-            }, 300);
+            }, 0);
           } else {
             setlbllog((prevState) => ({
               ...prevState,
@@ -225,7 +225,7 @@ function Fn_ScanSMTRollSht() {
             }));
             setTimeout(() => {
               fc_SlProduct.current.focus();
-            }, 300);
+            }, 0);
             return;
           }
         } catch (error) {
@@ -237,7 +237,7 @@ function Fn_ScanSMTRollSht() {
           }));
           setTimeout(() => {
             fc_SlProduct.current.focus();
-          }, 300);
+          }, 0);
         }
         await axios
           .post("/api/SMTRoollSht//GetRollLeafTotalByLot", {
@@ -267,7 +267,7 @@ function Fn_ScanSMTRollSht() {
         setHfMode("LOT");
         setTimeout(() => {
           fc_txtLotNo.current.focus();
-        }, 300);
+        }, 0);
       }
     }
   };
@@ -291,6 +291,9 @@ function Fn_ScanSMTRollSht() {
    
     SetGvSerial((prevState) => ({ ...prevState, value: dtData }));
     SettxtLeafNo(Array(dtData.length).fill(""))
+    fc_GvSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     return dtData;
   };                                                                                                                                                                                                                                                                                                                                                                                                                      
 
@@ -444,11 +447,14 @@ function Fn_ScanSMTRollSht() {
       setgvScanResult((prevState) => ({ ...prevState, visible: false,value:'' }));
       settxtOperator('')
       SettxtLeafNo(Array(GvSerial.value.length).fill(""))
+      fc_GvSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
       setlblCheckRoll((prevState) => ({ ...prevState ,value:'',style:{}}));
       setHfMode("LOT");
       setTimeout(() => {
         fc_txtLotNo.current.focus();
-      }, 300);
+      }, 0);
     }
     if (_strType == "LOT_ERROR") {
       settxt_lotNo((prevState) => ({
@@ -473,7 +479,7 @@ function Fn_ScanSMTRollSht() {
       setHfMode("LOT");
       setTimeout(() => {
         fc_txtLotNo.current.focus();
-      }, 300);
+      }, 0);
     }
     if (_strType == "OP") {
       settxt_lotNo((prevState) => ({
@@ -493,7 +499,7 @@ function Fn_ScanSMTRollSht() {
       setHfMode("OP");
       setTimeout(() => {
         fc_txtOperator.current.focus();
-      }, 300);
+      }, 0);
     }
     if (_strType == "ROLL") {
       settxt_lotNo((prevState) => ({
@@ -548,7 +554,7 @@ function Fn_ScanSMTRollSht() {
       await getInitialSheet();
       // setTimeout(() => {
         fc_GvSerial.current[0].focus();
-      // }, 300);
+      // }, 0);
     }
     if (_strType == "SHEET_NG") {
       settxt_lotNo((prevState) => ({
@@ -566,7 +572,7 @@ function Fn_ScanSMTRollSht() {
       SetMode("ROLL");
       setTimeout(() => {
         fc_txtRollleaf.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
@@ -579,17 +585,17 @@ function Fn_ScanSMTRollSht() {
       SetMode("ROLL");
       setTimeout(() => {
         fc_txtOperator.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
   const Bt_Save = async () => {
     if (hfMode == "SHEET") {
-      await setRollSheetData();
+      await setRollSheetData(txtLeafNo);
     }
   };
 
-  const getInputSheet = () => {
+  const getInputSheet = (txtLeafNo) => {
     let dtData = [];
     for (let i = 0; i < txtTotalLeaf; i++) {
       dtData.push({
@@ -609,12 +615,12 @@ function Fn_ScanSMTRollSht() {
     return dtData;
   };
 
-  const setRollSheetData = async () => {
+  const setRollSheetData = async (txtLeafNo) => {
     setlbllog((prevState) => ({ ...prevState, visible: false }));
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     try{
     let _strFileError = "";
-    let dtSheet = getInputSheet();
+    let dtSheet = getInputSheet(txtLeafNo);
     let _bolPrdError = false;
     let _bolError = false;
     let _strScanResultAll = "OK";
@@ -635,7 +641,7 @@ function Fn_ScanSMTRollSht() {
       }));
       // setTimeout(() => {
       fc_GvSerial.current[0].focus();
-    // }, 300);
+    // }, 0);
       return;        
     }
     let _strRollLeaf = txtRollLeaf.value;
@@ -1042,7 +1048,7 @@ function Fn_ScanSMTRollSht() {
       }
       setTimeout(() => {
         fc_txtRollleaf.current.focus();
-      }, 300);
+      }, 0);
     } else {
     
       if (lbllog.value != "") {
@@ -1060,9 +1066,12 @@ function Fn_ScanSMTRollSht() {
       }
       setTimeout(() => {
         fc_txtRollleaf.current.focus();
-      }, 300);
+      }, 0);
       ExportGridToCSV(dtSheet, columns);
       SettxtLeafNo(Array(txtTotalLeaf).fill(""))
+      fc_GvSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
     }
     scrollToTop();
     hideLoading();
@@ -1077,12 +1086,16 @@ function Fn_ScanSMTRollSht() {
   }
   };
 
-  const handleTextFieldChange = (index, event) => {
-    const newData = [...txtLeafNo];
-    newData[index] = event.target.value.trim().toUpperCase();
-    SettxtLeafNo(newData);
+  // const handleTextFieldChange = (index, event) => {
+  //   const newData = [...txtLeafNo];
+  //   newData[index] = event.target.value.trim().toUpperCase();
+  //   SettxtLeafNo(newData);
+  // };
+  let newValues = [];
+  const handleTextFieldChange = async (index, event) => {
+    newValues[index] = event.target.value.trim().toUpperCase();
+    return newValues;
   };
-
   const ibtback_Click = () => {
     settxtTotalLeaf(0);
     SetMode("LOT");
@@ -1101,14 +1114,17 @@ function Fn_ScanSMTRollSht() {
       value: "",
     }));
     SettxtLeafNo(Array(GvSerial.value.length).fill(""))
+    fc_GvSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     if(txtOperator==''){
       setTimeout(() => {
         fc_txtOperator.current.focus();
-      }, 300);
+      }, 0);
     }else{
       setTimeout(() => {
         fc_txtRollleaf.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
@@ -1195,9 +1211,9 @@ function Fn_ScanSMTRollSht() {
           value: "",
         }));
      
-        // setTimeout(() => {
+        setTimeout(() => {
           fc_GvSerial.current[0].focus();
-        // }, 300);
+        }, 0);
         
       }
       else{
@@ -1208,7 +1224,7 @@ function Fn_ScanSMTRollSht() {
         }));
         setTimeout(() => {
           fc_txtRollleaf.current.focus();
-        }, 300);
+        }, 0);
       }
 
     }
