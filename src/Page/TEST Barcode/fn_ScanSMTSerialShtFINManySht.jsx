@@ -394,8 +394,8 @@ function fn_ConfirmBarcodeGrade() {
   };
 
   const getCountDataBylot = async (strLot) => {
-    setlblTotalSht((prevState) => ({ ...prevState, value: "0" }));
-    setlblTotalPcs((prevState) => ({ ...prevState, value: "0" }));
+    setlblTotalSht((prevState) => ({...prevState, value: "0" }));
+    setlblTotalPcs((prevState) => ({...prevState, value: "0" }));
     axios
       .post("/api/Common/getlotserialcountdata", {
         dataList: {
