@@ -27,7 +27,7 @@ import "../Confirm Barcode Grade/BarcodeGrade.css";
 import Hearder from "../Header/Header";
 import "../Common/StyleCommon.css";
 import { Table as AntTable, Button as AntButton } from "antd";
-import { fn_ConfirmBarcodeGrade } from "./fn_ConfirmBarcodeGrade";
+import { fn_ConfirmBarcodeGrade } from "./fn_ScanSMTSerialShtFINManySht";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ConfirmBarcodeGrade() {
   const { menuName } = fn_Homepage();

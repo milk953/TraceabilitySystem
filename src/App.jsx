@@ -88,7 +88,7 @@ import AOIManualConfirmP1 from "./Page/AOIManualConfirmP1/AOIManualConfirmP1";
 import ScanSMTConfirmMOTP1 from "./Page/ScanSMTConfirmMOTP1/ScanSMTConfirmMOTP1";
 import {LoadingProvider} from "./loading/fn_loading";
 import Scantest from "./Page/Scantest/Scantest";
-import TestFin from "./Page/TEST FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht";
+import TestFin from "./Page/TEST Barcode/ScanSMTSerialShtFINManySht";
 import Test_data from "./Page/testfin/ScanSMTSerialShtFINManySht";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
