@@ -57,6 +57,10 @@ function ScanSerialNo() {
     getRowClassName,
     lblErrorState,
     lblError,
+    txtSerialref, //newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   } = fn_ScanSerialNo();
   return (
     <>
@@ -229,22 +233,37 @@ function ScanSerialNo() {
                           id={`txtSerial_${index}`}
                           type="text"
                           maxLength="30"
-                          value={txtSerial[index]}
+                          // value={txtSerial[index]}
+                          // onKeyDown={(e) => {
+                          //   if (
+                          //     e.key === "Enter" &&
+                          //     index < gvSerial.length - 1
+                          //   ) {
+                          //     handletxtSerialChange(index, e);
+                          //   } else if (
+                          //     e.key === "Enter" &&
+                          //     index === gvSerial.length - 1
+                          //   ) {
+                          //     handle_Save_Click();
+                          //     e.target.blur();
+                          //   }
+                          // }}
+                          // onChange={(e) => handletxtSerialChange(index, e)}
+                          ref={(el) => (txtSerialClear.current[index] = el)}
                           onKeyDown={(e) => {
-                            if (
-                              e.key === "Enter" &&
-                              index < gvSerial.length - 1
-                            ) {
-                              handletxtSerialChange(index, e);
-                            } else if (
-                              e.key === "Enter" &&
-                              index === gvSerial.length - 1
-                            ) {
-                              handle_Save_Click();
-                              e.target.blur();
+                            if (e.key === "Enter") {
+                              if (index < gvSerial.length - 1) {
+                                document
+                                  .getElementById(`txtSerial_${index + 1}`)
+                                  .focus();
+                              } else {
+                                handleSaveRef();
+                              }
                             }
                           }}
-                          onChange={(e) => handletxtSerialChange(index, e)}
+                          onChange={(e) =>
+                            txtSerialChangeRef(index, e.target.value)
+                          }
                         />
                       </TableCell>
                     </TableRow>

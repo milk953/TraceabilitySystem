@@ -39,9 +39,9 @@ function ScanSMTSerialControlTime() {
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
-        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns,settxtgvSerial
     } = fn_ScanSMTSerialControlTime();
-
+let data=[]
     return (
         <div>
             <Hearder />
@@ -316,27 +316,38 @@ function ScanSMTSerialControlTime() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {gvSerialData.map((item, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell
-                                                    style={{ textAlign: "center" }}
-                                                >
-                                                    {item.SEQ}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <TextField
-                                                        className="input_txt"
+                                        {txtgvSerial.map((serial, index) => (
+                                            <tr key={index} style={{ borderBottom: "1px solid #d9d9d9" }}>
+                                                <td style={{ textAlign: "center" , borderRight: "1px solid #d9d9d9"}} >
+                                                    {index+1}
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        className="styleSeraial"
                                                         size="small"
                                                         fullWidth
-                                                        value={txtgvSerial[index] || ""}
-                                                        inputRef={(el) => (inputgvSerial.current[index] = el)}
+                                                        defaultValue={serial}
+                                                        ref={(el) => (inputgvSerial.current[index] = el)}
                                                         onChange={(e) => {
                                                             handleChangeSerial(index, e);
                                                         }}
-                                                        onKeyDown={(e) => handleKeygvSerial(e, index)}
+                                                        onKeyDown={async (event) => {
+                                                            if (event.key === "Enter") {
+                                                              event.preventDefault();
+                                                              data = await handleChangeSerial(index, event);
+                                                              if (index < txtgvSerial.length - 1) {
+                                                                inputgvSerial.current[index + 1].focus();
+                                                              } else {
+                                                                settxtgvSerial(data);
+                                                                btnSaveClick(data);
+                                                                event.target.blur();
+                                                              }
+                                                            }
+                                                        }}
+                                                        // onKeyDown={(e) => handleKeygvSerial(e, index)}
                                                     />
-                                                </TableCell>
-                                            </TableRow>
+                                                </td>
+                                            </tr>
                                         ))}
                                     </TableBody>
                                 </Table>
@@ -350,7 +361,11 @@ function ScanSMTSerialControlTime() {
                                 >
                                     <AntButton className="BtSave"
                                         type="primary"
-                                        onClick={btnSaveClick}
+                                        // onClick={btnSaveClick}
+                                        onClick={() => {
+                                            settxtgvSerial(data);
+                                            btnSaveClick(data);
+                                          }}
                                     >
                                         Save
                                     </AntButton>

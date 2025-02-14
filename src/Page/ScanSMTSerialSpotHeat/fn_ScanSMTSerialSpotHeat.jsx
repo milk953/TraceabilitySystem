@@ -15,7 +15,7 @@ function fn_ScanSMTSerialSpotHeat() {
   const [lblLog, setlblLog] = useState("");
   const [dataGvSerial, setdataGvSerial] = useState([]);
   const [gvScanResult, setgvScanResult] = useState("");
-  const [txtSerial, settxtSerial] = useState(Array(dataGvSerial.length).fill(""));
+  const [txtSerial, settxtSerial] = useState([]);
   const [lblResult, setlblResult] = useState({ text: "", styled: {} });
   //ซ่อน
   const [pnlLog, setpnlLog] = useState(false);
@@ -183,7 +183,7 @@ function fn_ScanSMTSerialSpotHeat() {
                 SetMode("SERIAL");
                 setTimeout(() => {
                 fcGvSerial_txtSerial_0.current[0].focus();
-              }, 0);
+              }, 50);
               //}
             } catch (error) {
               setlblLog(`Product ${strPrdName} not found.`);
@@ -364,7 +364,9 @@ function fn_ScanSMTSerialSpotHeat() {
   const btnCancel_Click = async () => {
     await SetMode("SERIAL");
     setvisiblegvScanResult(false)
-    fcGvSerial_txtSerial_0.current[0].focus();
+    setTimeout(() => {
+      fcGvSerial_txtSerial_0.current[0].focus();
+    }, 50);
   };
 
   const scrollToTop = () => {
@@ -374,7 +376,7 @@ function fn_ScanSMTSerialSpotHeat() {
     });
   };
 
-  const btnSave_Click = () => { 
+  const btnSave_Click = (txtSerial) => { 
     
     // const hasAnyInput = Array.from(fcGvSerial_txtSerial_0.current).some(
     //     (input) => input.value.trim() !== ""
@@ -382,7 +384,7 @@ function fn_ScanSMTSerialSpotHeat() {
 
     // if (hasAnyInput == true) {
         if (hfMode === "SERIAL") {
-            setSerialData();
+            setSerialData(txtSerial);
             scrollToTop();
            
         }
@@ -460,7 +462,7 @@ function fn_ScanSMTSerialSpotHeat() {
         setHfMode("SERIAL");
         setTimeout(() => {
           fcGvSerial_txtSerial_0.current[0].focus();
-        }, 0);
+        }, 50);
         getInitialSerial();
         break;
 
@@ -485,7 +487,7 @@ function fn_ScanSMTSerialSpotHeat() {
     }
   };
 
-  const getInputSerial = async () => {
+  const getInputSerial = async (txtSerial) => {
     let dtData = [];
     for (let intSht = 0; intSht < txtTotalPCS.value; intSht++) {
       dtData.push({
@@ -495,13 +497,12 @@ function fn_ScanSMTSerialSpotHeat() {
         REMARK: "",
       });
     }
-
     return dtData;
   };
 
-  const setSerialData = async () => {
+  const setSerialData = async (txtSerial) => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
-    let dtSerial = await getInputSerial();
+    let dtSerial = await getInputSerial(txtSerial);
     let strLotData = [];
     let _strLot = "";
     let _strPrdName = SlProduct;
@@ -519,7 +520,7 @@ function fn_ScanSMTSerialSpotHeat() {
         setpnlLog(true);
         setTimeout(() => {
           fcGvSerial_txtSerial_0.current[0].focus();
-        }, 0);
+        }, 50);
         setvisiblegvScanResult(false)
         scrollToTop();
         hideLoading();
@@ -594,13 +595,15 @@ function fn_ScanSMTSerialSpotHeat() {
       SetMode("SERIAL_ERROR");
     }
     setpnlLog(false)
-    fcGvSerial_txtSerial_0.current[0].focus();
+    setTimeout(() => {
+      fcGvSerial_txtSerial_0.current[0].focus();
+    }, 50);
     hideLoading();
   };
 
   const getInitialSerial = async () => {
     let dtData = [];
-
+console.log(hfSerialCount,"hfSerialCount")
     for (let intRow = 0; intRow < hfSerialCount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
@@ -608,7 +611,11 @@ function fn_ScanSMTSerialSpotHeat() {
     }
     setvisiblgvSerial(true);
     setdataGvSerial(dtData);
-    settxtSerial(Array(dataGvSerial.length).fill(""))
+    console.log(dataGvSerial,"dataGvSerial")
+    settxtSerial(Array(dtData.length).fill(""))
+    fcGvSerial_txtSerial_0.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     // if (dataGvSerial.length > 0) {
     //   setTimeout(() => {
     //     fcGvSerial_txtSerial_0.current[0].focus();
@@ -618,10 +625,17 @@ function fn_ScanSMTSerialSpotHeat() {
     return 0;
   };
 
-  const handleSerialChange = (index, event) => {
-    const newValues = [...txtSerial];
+  // const handleSerialChange = (index, event) => {
+  //   const newValues = [...txtSerial];
+  //   newValues[index] = event.target.value.trim().toUpperCase();
+  //   settxtSerial(newValues);
+  // };
+  
+  let newValues = [];
+  const handleSerialChange = async (index, event) => {
     newValues[index] = event.target.value.trim().toUpperCase();
-    settxtSerial(newValues);
+    // event.target.value = '';
+    return newValues;
   };
 
   const columns = [
@@ -727,7 +741,8 @@ function fn_ScanSMTSerialSpotHeat() {
     visibledll_product,
     dataGvSerial,
     columns,
-    getRowClassName
+    getRowClassName,
+    settxtSerial
   };
 }
 

@@ -71,7 +71,7 @@ function fn_ScanSMTSerialControlTime() {
     const [gvSerialData, setgvSerialData] = useState([]);
     const [gvScanResult, setgvScanResult] = useState(false);
     const [gvScanData, setgvScanData] = useState([]);
-    const [txtgvSerial, settxtgvSerial] = useState("");
+    const [txtgvSerial, settxtgvSerial] = useState([]);
 
     //Disabled
     const [txtMachineDisabled, settxtMachineDisabled] = useState(false);
@@ -288,9 +288,9 @@ function fn_ScanSMTSerialControlTime() {
     const [bolTrayError, setbolTrayError] = useState(false);
     const [bolError, setbolError] = useState(false);
 
-    const setSerialDataTray = async () => {
+    const setSerialDataTray = async (txtgvSerial) => {
         let _strFileError = "";
-        const dtSerial = await getInputSerial();
+        const dtSerial = await getInputSerial(txtgvSerial);
         let _strLot = lblLot.toUpperCase().trim();
         let _strPrdName = selProduct;
         let _strTray = " ";
@@ -665,7 +665,7 @@ function fn_ScanSMTSerialControlTime() {
         return dtProductSerial;
     };
 
-    const getInputSerial = () => {
+    const getInputSerial =async (txtgvSerial) => {
         let dtData = [];
         let intRow = 0;
 
@@ -696,8 +696,11 @@ function fn_ScanSMTSerialControlTime() {
             };
             dtData.push(drRow);
         }
+        settxtgvSerial(Array(dtData.length).fill(""));
         setgvSerialData(dtData);
-       
+        inputgvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+            });
         return dtData;
     };
 
@@ -842,18 +845,27 @@ function fn_ScanSMTSerialControlTime() {
         }
     };
 
-    const handleChangeSerial = (index, e) => {
-        const trimmedValue = e.target.value.trim().toUpperCase();
-        const newValue = [...txtgvSerial];
-        newValue[index] = trimmedValue;
-        settxtgvSerial(newValue);
+    // const handleChangeSerial = (index, e) => {
+    //     const trimmedValue = e.target.value.trim().toUpperCase();
+    //     const newValue = [...txtgvSerial];
+    //     newValue[index] = trimmedValue;
+    //     settxtgvSerial(newValue);
+    // };
+    let newValues = [];
+    const handleChangeSerial = async (index, event) => {
+      newValues[index] = event.target.value.trim().toUpperCase();
+      // event.target.value = '';
+      return newValues;
     };
 
-    const btnSaveClick = () => {
+    const btnSaveClick = (txtgvSerial) => {
        
         if (hfMode === "SERIAL") {
-            setSerialDataTray();
-            settxtgvSerial("");
+            setSerialDataTray(txtgvSerial);
+            settxtgvSerial(Array(gvSerialData.length).fill(""));
+            inputgvSerial.current.forEach((input) => {
+                if (input) input.value = '';
+                });
             inputgvSerial.current[0].focus();
         }
     };
@@ -863,7 +875,10 @@ function fn_ScanSMTSerialControlTime() {
         inputgvSerial.current[0].focus();
         setgvScanData([]);
         setgvScanResult(false);
-        settxtgvSerial("");
+        settxtgvSerial(Array(gvSerialData.length).fill(""));
+        inputgvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+            });
     };
 
     const columns = [
@@ -916,7 +931,7 @@ function fn_ScanSMTSerialControlTime() {
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
-        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns,settxtgvSerial
     }
 };
 

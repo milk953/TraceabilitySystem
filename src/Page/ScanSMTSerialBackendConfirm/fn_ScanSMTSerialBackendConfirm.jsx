@@ -75,7 +75,7 @@ function fn_ScanSMTSerialBackendConfirm() {
     const [gvSerialData, setgvSerialData] = useState([]);
     const [gvScanResult, setgvScanResult] = useState(false);
     const [gvScanData, setgvScanData] = useState([]);
-    const [txtgvSerial, settxtgvSerial] = useState("");
+    const [txtgvSerial, settxtgvSerial] = useState([]);
 
     //Disabled
     const [txtLotDisabled, settxtLotDisabled] = useState(false);
@@ -144,7 +144,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                         settxtTotalPCS(datagetPd.slm_serial_sht);
                     }
                     SetMode("SERIAL");
-                    inputgvSerial.current[0]?.focus();
+                   
                 } catch (error) {
                     const intProduct = strPrdName.indexOf('-', 12);
                     if (intProduct > -1) {
@@ -188,13 +188,16 @@ function fn_ScanSMTSerialBackendConfirm() {
             inputLot.current.focus();
         }
     };
-
+3
     const ibtBackClick = () => {
         settxtLotNo("");
         settxtLotDisabled(false);
         setpnlSerial(false);
         setselProduct(Productdata[0].prd_name);
-        settxtgvSerial("");
+        settxtgvSerial(Array(gvSerialData.length).fill(""))
+        inputgvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+            });
         setgvSerialData([]);
         setgvScanResult(false);
         setgvScanData([]);
@@ -218,7 +221,10 @@ function fn_ScanSMTSerialBackendConfirm() {
     const handleChangeTotalPCS = () => {
         if (!isNaN(txtTotalPCS)) {
             SetMode("SERIAL");
-            settxtgvSerial("");
+            settxtgvSerial(Array(gvSerialData.length).fill(""))
+            inputgvSerial.current.forEach((input) => {
+                if (input) input.value = '';
+                });
             inputgvSerial.current[0].focus();
         } else {
             settxtTotalPCS("");
@@ -226,22 +232,30 @@ function fn_ScanSMTSerialBackendConfirm() {
         }
     };
 
-    const handleChangeSerial = (index, e) => {
-        const trimmedValue = e.target.value.trim().toUpperCase();
-        const newValue = [...txtgvSerial];
-        newValue[index] = trimmedValue;
-        settxtgvSerial(newValue);
+    // const handleChangeSerial = (index, e) => {
+    //     const trimmedValue = e.target.value.trim().toUpperCase();
+    //     const newValue = [...txtgvSerial];
+    //     newValue[index] = trimmedValue;
+    //     settxtgvSerial(newValue);
+    // };
+    let newValues = [];
+    const handleChangeSerial = async (index, event) => {
+      newValues[index] = event.target.value.trim().toUpperCase();
+      // event.target.value = '';
+      return newValues;
     };
-
-    const btnSaveClick = async () => {
+    const btnSaveClick = async (txtgvSerial) => {
         if (hfMode === "SERIAL") {
-            setSerialData();
+            setSerialData(txtgvSerial);
         }
     };
 
     const btnCancelClick = async () => {
         SetMode("SERIAL");
-        settxtgvSerial("");
+        settxtgvSerial(Array(gvSerialData.length).fill(""));
+        inputgvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+            });
         inputgvSerial.current[0].focus();
     };
 
@@ -254,7 +268,10 @@ function fn_ScanSMTSerialBackendConfirm() {
             settxtTotalDisabled(false);
             setvisiblelog(false);
             setpnlSerial(false);
-            settxtgvSerial("");
+            settxtgvSerial(Array(gvSerialData.length).fill(""));
+            inputgvSerial.current.forEach((input) => {
+                if (input) input.value = '';
+                });
             sethfMode("LOT");
             inputLot.current.focus();
         } else if (strType === "LOT_ERROR") {
@@ -279,7 +296,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             setvisiblelog(false);
             setpnlSerial(true);
             setgvScanResult(false);
-            setgvScanData([]);
+            // setgvScanData([]);
             sethfMode("SERIAL");
             await getInitialSerial();
         } else if (strType === "SERIAL_ERROR") {
@@ -303,12 +320,19 @@ function fn_ScanSMTSerialBackendConfirm() {
             dtData.push({ SEQ: intRow });
         }
         setgvSerialData(dtData);
-     
+        settxtgvSerial(Array(dtData.length).fill(""))
+        inputgvSerial.current.forEach((input) => {
+        if (input) input.value = '';
+        });
+        setTimeout(() => {
+            inputgvSerial.current[0].focus();
+        }, 50);
         return dtData;
+        
     };
 
-    const setSerialData = async () => {
-        const dtSerial = await getInputSerial();
+    const setSerialData = async (txtgvSerial) => {
+        const dtSerial = await getInputSerial(txtgvSerial);
         let _strLot = "";
         let _strPrdName = selProduct;
         let _strShtNoBack = "";
@@ -438,11 +462,14 @@ function fn_ScanSMTSerialBackendConfirm() {
         }
 
         inputgvSerial.current[0]?.focus();
-        settxtgvSerial("");
+        settxtgvSerial(Array(gvSerialData.length).fill(""));
+        inputgvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+            });
         hideLoading();
     };
 
-    const getInputSerial = async () => {
+    const getInputSerial = async (txtgvSerial) => {
         let dtData = [];
         let intRow = 0;
         let strFrontSide = "";
@@ -645,7 +672,7 @@ function fn_ScanSMTSerialBackendConfirm() {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtTotalPCS, settxtTotalPCS, lblLog, visiblelog, lblResultcolor, lblResult,
         pnlSerial, gvScanResult, txtgvSerial, txtLotDisabled, selProDisabled, txtTotalDisabled, gvScanData, handleChangeLot,
         handleChangeProduct, handleChangeTotalPCS, hfSerialCount, ibtBackClick, btnSaveClick, btnCancelClick, handleChangeSerial, inputLot,
-        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial, columns
+        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial, columns,settxtgvSerial
     }
 
 };

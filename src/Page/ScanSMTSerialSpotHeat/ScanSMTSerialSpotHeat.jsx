@@ -21,7 +21,7 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../Confirm Barcode Grade/BarcodeGrade.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
-import { Table as AntTable ,Button as AntButton } from 'antd';
+import { Table as AntTable, Button as AntButton } from "antd";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 import { fn_ScanSMTSerialSpotHeat } from "./fn_ScanSMTSerialSpotHeat";
 function ScanSMTSerialSpotHeat() {
@@ -34,15 +34,38 @@ function ScanSMTSerialSpotHeat() {
     SlProduct,
     txtTotalPCS,
     settxtTotalPCS,
-    fcGvSerial_txtSerial_0,handleTotal_Sht,fcTotalSht,
-    fcProduct,fcLotNo,lblLog,pnlLog,ibtBack_Click,btnSave_Click,setSlProduct,hfMode,txtSerial,handleSerialChange,
-    gvScanResult,lblResult,visiblgvSerial,btnCancel_Click,fcGvSerial,visiblegvScanResult,visibledll_product,dataGvSerial,columns,getRowClassName
+    fcGvSerial_txtSerial_0,
+    handleTotal_Sht,
+    fcTotalSht,
+    fcProduct,
+    fcLotNo,
+    lblLog,
+    pnlLog,
+    ibtBack_Click,
+    btnSave_Click,
+    setSlProduct,
+    hfMode,
+    txtSerial,
+    handleSerialChange,
+    gvScanResult,
+    lblResult,
+    visiblgvSerial,
+    btnCancel_Click,
+    fcGvSerial,
+    visiblegvScanResult,
+    visibledll_product,
+    dataGvSerial,
+    columns,
+    getRowClassName,
+    settxtSerial,
   } = fn_ScanSMTSerialSpotHeat();
-      const { menuName } = fn_Homepage();
+  const { menuName } = fn_Homepage();
+  let data=[];
+
   return (
     <div>
       <Hearder />
-     
+
       <Card component={Paper} className="Card-Common">
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
@@ -56,7 +79,7 @@ function ScanSMTSerialSpotHeat() {
                   <TableRow>
                     <TableCell colSpan={3} align="center">
                       <Typography variant="h5">
-                      {menuName ? menuName : 'Spot Heat Result Checking'}
+                        {menuName ? menuName : "Spot Heat Result Checking"}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -66,19 +89,26 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell align="right">
                       <Typography>Lot No. :</Typography>
                     </TableCell>
-                  
+
                     <TableCell>
                       <TextField
                         className="input_txt"
                         size="small"
                         fullWidth
-                        disabled={txtLot.disbled} 
+                        disabled={txtLot.disbled}
                         value={txtLot.value.trim()}
                         // inputRef={fcLotNo}
                         inputRef={(el) => (fcLotNo.current = el)}
-                        style={{ backgroundColor: txtLot.disbled ? '#e0e0e0' : 'inherit'}}
+                        style={{
+                          backgroundColor: txtLot.disbled
+                            ? "#e0e0e0"
+                            : "inherit",
+                        }}
                         onChange={(e) => {
-                          settxtLot((prevState)=>({...prevState,value:e.target.value}));
+                          settxtLot((prevState) => ({
+                            ...prevState,
+                            value: e.target.value,
+                          }));
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -88,9 +118,7 @@ function ScanSMTSerialSpotHeat() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button className="Bt_ibtBack"
-                        onClick={ibtBack_Click}
-                      >
+                      <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -102,8 +130,8 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
                         <Autocomplete
-                            // inputRef={fcProduct}
-                            inputRef={(el) => (fcProduct.current = el)}
+                          // inputRef={fcProduct}
+                          inputRef={(el) => (fcProduct.current = el)}
                           className="Select_dropDown"
                           value={SlProduct}
                           disabled={visibledll_product}
@@ -111,7 +139,6 @@ function ScanSMTSerialSpotHeat() {
                             // setSlProduct(e.target.value);
                             handleddlProduct(value);
                           }}
-                       
                           // onInputChange={handleddlProduct}
                           options={Product.map((item) => item.prd_name)}
                           renderInput={(params) => (
@@ -130,102 +157,105 @@ function ScanSMTSerialSpotHeat() {
                       <Typography>Total Sht :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                    <TextField
-  size="small"
-  className="input_txt"
-  value={txtTotalPCS.value}
-  inputRef={fcTotalSht}
-  onChange={(e) => {
-    const value = e.target.value.replace(/[^0-9]/g, ''); // กรองอักขระที่ไม่ใช่ตัวเลขออก
-    settxtTotalPCS((prevState) => ({
-      ...prevState,
-      value: value,
-    }));
-  }}
-  onKeyDown={(e) => {
-    if (e.key === "Enter") {
-      handleTotal_Sht();
-    }
-  }}
-/>
+                      <TextField
+                        size="small"
+                        className="input_txt"
+                        value={txtTotalPCS.value}
+                        inputRef={fcTotalSht}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/[^0-9]/g, ""); // กรองอักขระที่ไม่ใช่ตัวเลขออก
+                          settxtTotalPCS((prevState) => ({
+                            ...prevState,
+                            value: value,
+                          }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handleTotal_Sht();
+                          }
+                        }}
+                      />
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
 
               {pnlLog == true && (
-                <Card
-                  component={Paper}
-                  className="Card-lblLog"
-                >
+                <Card component={Paper} className="Card-lblLog">
                   {lblLog}
-                </Card>  
-               )}
-                {visiblgvSerial == true && (
-              <Table className="CSS-GvSerial" component={Card}
-            
-                  inputRef={fcGvSerial}>
-                <TableHead>
-
-                  <TableCell
-                    sx={{ borderRight: "1px solid #d9d9d9" }}
-                    align="center"
-                  >
-                    No.
-                  </TableCell>
-                  <TableCell align="center">Serial No.</TableCell>
-                  <TableRow></TableRow>
-                </TableHead>
-                <TableBody>
-                
-                {Array.from({ length: dataGvSerial.length }, (_, index) => (
-                      <TableRow key={index}>
-                      
-                        <TableCell
+                </Card>
+              )}
+              {visiblgvSerial == true && (
+                <Table
+                  className="CSS-GvSerial"
+                  component={Card}
+                  inputRef={fcGvSerial}
+                >
+                  <TableHead>
+                    <TableCell
+                      sx={{ borderRight: "1px solid #d9d9d9" }}
+                      align="center"
+                    >
+                      No.
+                    </TableCell>
+                    <TableCell align="center">Serial No.</TableCell>
+                    <TableRow></TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {/* {console.log(dataGvSerial, "Data")}
+                    {Array.from({ length: dataGvSerial.length }, (_, index) => ( */}
+                    {txtSerial.map((serial, index) => (
+                      <tr key={index} style={{ borderBottom: "1px solid  #d9d9d9" }}>
+                        <td
                           align="center"
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                          style={{ borderRight: "1px solid #d9d9d9" }}
                         >
                           {index + 1}
-                        </TableCell>
-                        <TableCell>
-                    
-                          <TextField
-                            className="input_txt"
-                            size="small"
+                        </td>
+                        <td>
+                          <input
+                            // className="input_txt"
+                            // size="small"
+                            className="txtinput"
+                            type="text"
                             fullWidth
-                          //  inputRef={fcGvSerial_txtSerial_0}
-                           inputRef={(el) => (fcGvSerial_txtSerial_0.current[index] = el)}
-                            value={txtSerial[index]}
+                            //  inputRef={fcGvSerial_txtSerial_0}
+                            // inputRef={(el) =>
+                            //   (fcGvSerial_txtSerial_0.current[index] = el)
+                            // }
+                            ref={(el) =>
+                              (fcGvSerial_txtSerial_0.current[index] = el)
+                            }
+                            // value={txtSerial[index]}
+                            defaultValue={serial}
                             onChange={(event) =>
                               handleSerialChange(index, event)
                             }
-                            onKeyDown={(event) => {
+                            onKeyDown={async (event) => {
                               if (event.key === "Enter") {
-                                event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
-                                if (index < dataGvSerial.length - 1) {
+                                event.preventDefault();
+                                data = await handleSerialChange(index, event);
+                                if (index < txtSerial.length - 1) {
                                   fcGvSerial_txtSerial_0.current[index + 1].focus();
-                                } else{
-                                  btnSave_Click()
+                                } else {
                                   event.target.blur();
+                                  settxtSerial(data);
+                                  btnSave_Click(data);
                                 }
                               }
                             }}
                           />
-                        </TableCell>
-                      </TableRow>
+                        </td>
+                      </tr>
                     ))}
-                  <TableRow>
-                 
-                  </TableRow>
+                    <TableRow></TableRow>
 
-                  <TableRow
-                  // style={{display:visibleConfirm}}
-                  >
-                    
-                  </TableRow>
-                  <TableRow>
-                    <TableCell colSpan={3} align="center">
-                      {/* <Button
+                    <TableRow
+                    // style={{display:visibleConfirm}}
+                    ></TableRow>
+                    <TableRow>
+                      <TableCell colSpan={3} align="center">
+                        {/* <Button
                        className="BtSave"
                        
                           onClick={btnSave_Click}
@@ -241,26 +271,32 @@ function ScanSMTSerialSpotHeat() {
                       >
                         Cancel
                       </Button> */}
-                           <AntButton
-                                               type="primary" className="BtSave"
-                                                onClick={btnSave_Click}
-                                              >
-                                                Save
-                                              </AntButton>{" "}
-                                              &nbsp;&nbsp;
-                                              <AntButton
-                                                
-                                               type="primary" className="BtCancel"
-                                                onClick={btnCancel_Click}
-                                              >
-                                                Cancel
-                                              </AntButton>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>)}
+                        <AntButton
+                          type="primary"
+                          className="BtSave"
+                          // onClick={btnSave_Click}
+                          onClick={() => {
+                            settxtSerial(data);
+                            btnSave_Click(data);
+                          }}
+                        >
+                          Save
+                        </AntButton>{" "}
+                        &nbsp;&nbsp;
+                        <AntButton
+                          type="primary"
+                          className="BtCancel"
+                          onClick={btnCancel_Click}
+                        >
+                          Cancel
+                        </AntButton>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              )}
             </Grid>
-          
+
             <Grid
               item
               xs={10}
@@ -273,46 +309,47 @@ function ScanSMTSerialSpotHeat() {
             >
               {visiblegvScanResult == false && (
                 <>
-              <img
-                // className="Img1"
-                style={{
-                  width: "360px",
-                  height: "300px",
-                  marginBottom: "30px",
-                }}
-                src={Pageimg}
-                
-              />
-              </>)}
+                  <img
+                    // className="Img1"
+                    style={{
+                      width: "360px",
+                      height: "300px",
+                      marginBottom: "30px",
+                    }}
+                    src={Pageimg}
+                  />
+                </>
+              )}
               {visiblegvScanResult && (
-              <>
-                <div style={{ display: "flex", gap: "10px", width: "100%" }}>
-                <Paper
-                  className="Card-lblResult"
-                  // elevation={3}
-                  style={{ background: lblResult.text !=='OK'? "red":"green",}}
-                  
-                
-                >
-                  <Typography
-                    variant="h4"
-                    style={{ paddingTop: "3px", color: "#fff" }}
-                  >{lblResult.text}</Typography>
-                </Paper>
-                </div>
-                <AntTable 
-                columns={columns}
-                dataSource={gvScanResult}
-                style={{ width:'100%'}}
-                pagination={false}
-                size="small"
-                bordered
-                className="tableGvResult"
-                rowClassName={getRowClassName}
-                
-
-                />
-              </>  )}
+                <>
+                  <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+                    <Paper
+                      className="Card-lblResult"
+                      // elevation={3}
+                      style={{
+                        background: lblResult.text !== "OK" ? "red" : "green",
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        style={{ paddingTop: "3px", color: "#fff" }}
+                      >
+                        {lblResult.text}
+                      </Typography>
+                    </Paper>
+                  </div>
+                  <AntTable
+                    columns={columns}
+                    dataSource={gvScanResult}
+                    style={{ width: "100%" }}
+                    pagination={false}
+                    size="small"
+                    bordered
+                    className="tableGvResult"
+                    rowClassName={getRowClassName}
+                  />
+                </>
+              )}
             </Grid>
           </Grid>
         </Box>

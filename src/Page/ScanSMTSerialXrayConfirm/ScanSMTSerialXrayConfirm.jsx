@@ -62,6 +62,9 @@ function ScanSMTSerialXrayConfirm() {
     fc_txtSerial,
     handletxtSerialChange,
     setTxtSerial,
+    handleSaveRef,
+    txtSerialChangeRef,
+    txtSerialClear,
   } = fn_ScanSMTSerialXrayConfirm();
   const { menuName } = fn_Homepage();
   return (
@@ -216,83 +219,45 @@ function ScanSMTSerialXrayConfirm() {
                     Array.from(
                       { length: gvSerial.value.length },
                       (_, index) => (
-                        <TableRow key={index}>
-                          <TableCell
+                        <tr key={index}>
+                          <td
                             align="center"
                             sx={{ borderRight: "1px solid #d9d9d9" }}
                           >
                             {index + 1}
-                          </TableCell>
-                          <TableCell>
-                            <TextField
+                          </td>
+                          <td>
+                            <input
                               key={index}
                               size="small"
                               fullWidth
                               autoComplete="off"
+                               className="txtinput"
+                               // className="input_txt"
+                              // style={{
+                              //   width: "98%",
+                              //   textTransform: "uppercase",
+                              //   padding: "0px",
+                              //   margin: "0px",
+                              // }}
                               id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
-                              // inputRef={(el) => (fc_txtSerial.current[index] = el)}
-                              className="input_txt"
-                              // value={txtSerial[index] || ""}
-                              value={txtSerial[index]}
-                              // onKeyDown={(event) => {
-                              //   if (event.key === "Enter") {
-                              //     event.preventDefault();
-                              //     if (Number(txtTotalPCS.value) === index + 1) {
-                              //       btnSave_Click();
-                              //       event.target.blur();
-                              //     } else {
-                              //       handleSerialChange(index, event);
-                              //     }
-                              //   }
-                              // }}
-                              // onKeyDown={(event) => {
-                              //   if (event.key === "Enter") {
-                              //     event.preventDefault();
-                              //     if (index < gvSerial.value.length - 1) {
-                              //       fc_txtSerial.current[index + 1].focus();
-                              //     } else {
-                              //       btnSave_Click();
-                              //       event.target.blur();
-                              //     }
-                              //   }
-                              // }}
-                              // onChange={(event) =>
-                              //   handleSerialChange(index, event)
-                              // }
+                              ref={(el) => (txtSerialClear.current[index] = el)}
                               onKeyDown={(e) => {
-                                let data
                                 if (e.key === "Enter") {
-                                  data= handletxtSerialChange(index, e);
-                                  console.log('index',index,"gvSerial.length-1",gvSerial.value.length-1 )
-                                  if(index<gvSerial.value.length-1){
+                                  console.log("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_", index,gvSerial.length - 1);
+                                  if (index < gvSerial.value.length - 1) {
                                     document.getElementById(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`).focus();
-                                    // fc_txtSerial.current[index + 1].focus();
+                                  } else {
+                                    handleSaveRef();
                                   }
-                                  else{
-                                    console.log('สุดท้าย',data);
-                                    setTxtSerial(data);
-                                    btnSave_Click();
-                                    //save เพิ่งset ข้อมูลจะไปไม่ทัน
-                                  }
-                  
                                 }
                               }}
+                              onChange={(e) => txtSerialChangeRef(index, e.target.value)}
                             />
-                          </TableCell>
-                        </TableRow>
+                          </td>
+                        </tr>
                       )
                     )}
-                  {/* <TableRow>
-                    <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <Button className="BtSave" onClick={btnSave_Click}>
-                        Save
-                      </Button>{" "}
-                      &nbsp;&nbsp;
-                      <Button className="BtCancel" onClick={btnCancel_Click}>
-                        Cancel
-                      </Button>
-                    </TableCell>
-                  </TableRow> */}
                   <TableRow>
                     <TableCell
                       colSpan={6}
@@ -300,7 +265,7 @@ function ScanSMTSerialXrayConfirm() {
                     >
                       <ButtonAndt
                         className="ButtonReplace"
-                        onClick={btnSave_Click}
+                        onClick={handleSaveRef}
                       >
                         Save
                       </ButtonAndt>
@@ -388,3 +353,72 @@ function ScanSMTSerialXrayConfirm() {
 }
 
 export default ScanSMTSerialXrayConfirm;
+
+
+
+
+
+
+
+// <TableBody>
+// {Array.isArray(gvSerial.value) &&
+//   Array.from(
+//     { length: gvSerial.value.length },
+//     (_, index) => (
+//       <TableRow key={index}>
+//         <TableCell
+//           align="center"
+//           sx={{ borderRight: "1px solid #d9d9d9" }}
+//         >
+//           {index + 1}
+//         </TableCell>
+//         <TableCell>
+//           <TextField
+//             key={index}
+//             size="small"
+//             fullWidth
+//             autoComplete="off"
+//             // id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
+//             inputRef={(el) => (fc_txtSerial.current[index] = el)}
+//             className="input_txt"
+//             value={txtSerial[index] || ""}
+//             // onKeyDown={(event) => {
+//             //   if (event.key === "Enter") {
+//             //     event.preventDefault();
+//             //     if (index < gvSerial.value.length - 1) {
+//             //       fc_txtSerial.current[index + 1].focus();
+//             //     } else {
+//             //       btnSave_Click();
+//             //       event.target.blur();
+//             //     }
+//             //   }
+//             // }}
+//             // onChange={(event) =>
+//             //   handleSerialChange(index, event)
+//             // }
+//           />
+//         </TableCell>
+//       </TableRow>
+//     )
+//   )}
+// <TableRow>
+//   <TableCell
+//     colSpan={6}
+//     style={{ textAlign: "center", verticalAlign: "middle" }}
+//   >
+//     <ButtonAndt
+//       className="ButtonReplace"
+//       onClick={btnSave_Click}
+//     >
+//       Save
+//     </ButtonAndt>
+//     &nbsp;&nbsp;
+//     <ButtonAndt
+//       className="ButtonDelete"
+//       onClick={btnCancel_Click}
+//     >
+//       Cancel
+//     </ButtonAndt>
+//   </TableCell>
+// </TableRow>
+// </TableBody>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Tag } from "antd";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import { useLoading } from "../../loading/fn_loading";
 import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTConfirmMOTP1() {
@@ -23,7 +24,7 @@ function fn_ScanSMTConfirmMOTP1() {
   const [gvSerialData, setgvSerialData] = useState([]);
   const [gvScanResult, setgvScanResult] = useState(false);
   const [gvScanData, setgvScanData] = useState([]);
-  const [txtgvSerial, settxtgvSerial] = useState("");
+  const [txtgvSerial, settxtgvSerial] = useState([]);
 
   //hiddenfield
   const hfUserID = localStorage.getItem("ipAddress");
@@ -84,6 +85,7 @@ function fn_ScanSMTConfirmMOTP1() {
   const inputTray = useRef([]);
 
   const { ConfigData } = DataConfig();
+  const { showLoading, hideLoading } = useLoading();
 
   const plantCode = ConfigData.FACTORY;
   const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
@@ -103,6 +105,13 @@ function fn_ScanSMTConfirmMOTP1() {
   useEffect(() => {
     PageLoad();
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const PageLoad = async () => {
     sethfMode("");
@@ -138,7 +147,7 @@ function fn_ScanSMTConfirmMOTP1() {
             .then((res) => {
               _strPrdName = res.data.prdName[0];
             });
-       
+
 
           let dtLotProduct = [];
           await axios
@@ -238,10 +247,17 @@ function fn_ScanSMTConfirmMOTP1() {
     }
   };
 
-  const handleChangeSerial = (index, e) => {
-    const newValues = [...txtgvSerial];
-    newValues[index] = e.target.value.trim().toUpperCase();
-    settxtgvSerial(newValues);
+  // const handleChangeSerial = (index, e) => {
+  //   const newValues = [...txtgvSerial];
+  //   newValues[index] = e.target.value.trim().toUpperCase();
+  //   settxtgvSerial(newValues);
+  // };
+
+  let newValues = [];
+  const handleChangeSerial = async (index, event) => {
+    newValues[index] = event.target.value.trim().toUpperCase();
+    // event.target.value = '';
+    return newValues;
   };
 
   useEffect(() => {
@@ -256,14 +272,15 @@ function fn_ScanSMTConfirmMOTP1() {
       const nextIndex = index + 1;
       if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
         inputgvSerial.current[nextIndex].focus();
-       
+
       } else if (nextIndex === nextIndex) {
         btnSaveClick();
       }
     }
   };
 
-  const btnSaveClick = async () => {
+  const btnSaveClick = async (txtgvSerial) => {
+    console.log(txtgvSerial, 'bbbbbbbbbbbbbbbbbbbbbb')
     let CheckValue = false;
     if (hfMode === "SERIAL") {
       if (Array.isArray(txtgvSerial)) {
@@ -272,22 +289,22 @@ function fn_ScanSMTConfirmMOTP1() {
       }
       if (txtgvSerial !== "" && CheckValue !== false) {
         setpnlLog(false);
-        await setSerialDataTray();
-        const newValues = [];
-        settxtgvSerial(newValues);
-        await new Promise((resolve) => setTimeout(resolve, 0));
+        await setSerialDataTray(txtgvSerial);
+        // const newValues = [];
+        // settxtgvSerial(newValues);
+        // await new Promise((resolve) => setTimeout(resolve, 0));
       } else {
         setlblLog(`Please Input Serial No.`);
         setpnlLog(true);
         inputgvSerial.current[0].focus();
-        settxtgvSerial("");
+        settxtgvSerial(Array(gvSerialData.length).fill(""));
       }
     }
   };
 
   const btnCancelClick = async () => {
     SetMode("SERIAL");
-    settxtgvSerial("");
+    settxtgvSerial(Array(gvSerialData.length).fill(""));
   };
 
   const SetMode = async (strType) => {
@@ -296,7 +313,7 @@ function fn_ScanSMTConfirmMOTP1() {
       setlblLot("");
       setpnlLog(false);
       setpnlSerial(false);
-      settxtgvSerial("");
+      settxtgvSerial(Array(gvSerialData.length).fill(""));
       setgvScanResult(false);
       setgvScanData([]);
       setTimeout(() => {
@@ -361,16 +378,22 @@ function fn_ScanSMTConfirmMOTP1() {
         SEQ: intRow,
       });
     }
+    console.log(dtData, 'hfSerialCount')
     setgvSerialData(dtData);
- 
+    settxtgvSerial(Array(dtData.length).fill(""))
+    inputgvSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
+    scrollToTop();
 
     // if (gvSerialData.length > 0 && hfTrayFlag === "N") {
     //    // inputgvSerial.current[0].focus();
     // }
   };
 
-  const setSerialDataTray = async () => {
-    const dtSerial = await getInputSerial();
+  const setSerialDataTray = async (txtgvSerial) => {
+    const dtSerial = await getInputSerial(txtgvSerial);
+    console.log(dtSerial, 'dtSerial')
     let _strLot = "";
     let _strPrdName = selProduct;
     let _strTray = " ";
@@ -378,6 +401,8 @@ function fn_ScanSMTConfirmMOTP1() {
     let _bolError = false;
     let _strScanResultAll = "OK";
     let _intRowSerial = 0;
+
+    showLoading('กำลังบันทึก กรุณารอสักครู่');
 
     if (!_bolTrayError) {
       if (hfCheckWeekCode === "Y") {
@@ -389,7 +414,7 @@ function fn_ScanSMTConfirmMOTP1() {
             _strSerialInfo: hfSerialInfo,
           })
           .then((res) => {
-          
+
             sethfWeekCode(res.data);
           });
       }
@@ -457,7 +482,7 @@ function fn_ScanSMTConfirmMOTP1() {
             .then((res) => {
               dtCarrierboard = res.data;
             });
-        
+
           if (dtCarrierboard === "") {
             _strMessageUpdate =
               "Serial not connect board / หมายเลขบาร์โค้ดยังไม่สแกนประกบบอร์ด";
@@ -614,7 +639,7 @@ function fn_ScanSMTConfirmMOTP1() {
                 _intCountNG = 1;
                 _bolError = true;
               } else if (hfLotAll.indexOf(strSheetLot) === -1) {
-           
+
                 _strMessageUpdate =
                   "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                 _strRemark = "Lot not same connect sheet  ";
@@ -780,9 +805,10 @@ function fn_ScanSMTConfirmMOTP1() {
     }
 
     getInitialSerial();
+    hideLoading();
   };
 
-  const getInputSerial = async () => {
+  const getInputSerial = async (txtgvSerial) => {
     let dtData = [];
     let intRow = 0;
 
@@ -1036,6 +1062,8 @@ function fn_ScanSMTConfirmMOTP1() {
     btnSaveClick,
     btnCancelClick,
     columnsgvResult,
+    settxtgvSerial,
+    gvSerialData
   };
 }
 

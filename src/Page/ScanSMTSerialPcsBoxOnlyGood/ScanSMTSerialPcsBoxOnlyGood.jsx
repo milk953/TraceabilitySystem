@@ -30,8 +30,10 @@ const { txtLot_TextChanged ,txtLot, settxtLot ,selectddlProduct, setselectddlPro
   ,gvSerial,pnlMachine,lblLastTray,lblBox,lblBoxTotal,lblPacking,lblPackingTotal,lblBoxStatus,lblLog
 ,lblBoxFull,btnSave_Click,ibtBox_Click,ibtPack_Click,pnlSerial,txtSerial
 ,pnlLog,pnlOP,handleSerialChange,lblResult,fntxtLot,fntxtMachine,fntxtTray,fntxtBox,fntxtPack,fc_txtSerial,fntxtOP,btnCancel,
-gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTSerialPcsBoxOnlyGood()
+gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns,settxtSerial} = fn_ScanSMTSerialPcsBoxOnlyGood()
    const { menuName } = fn_Homepage();
+   let data;
+
   return (
     <div>
       <Hearder />
@@ -390,49 +392,55 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns} = fn_ScanSMTS
                 <TableBody >
                   {/* <TableRow> */}
 
-                  {Array.from({ length: gvSerial.length }, (_, index) => (
-                    
-                      <TableRow key={index}>
-                      <TableCell
+                  {/* {Array.from({ length: gvSerial.length }, (_, index) => ( */}
+                  {txtSerial.map((serial, index) => (
+                      <tr key={index} style={{ borderBottom: "1px solid  #d9d9d9" }}>
+                      <td
                         align="center"
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
+                        style={{ borderRight: "1px solid #d9d9d9" }}
                       >
                         {index + 1}
-                      </TableCell>
-                      <TableCell>
-                        <TextField
-                         key={index} 
-                          className="input_txt"
-                          size="small"
+                      </td>
+                      <td>
+                        <input
+                        // key={index} 
+                        className="txtinput"
+                           type="text"
                           fullWidth
-                          inputRef={(el) => (fc_txtSerial.current[index] = el)}
-                          value={txtSerial[index]}
+                          ref={(el) => (fc_txtSerial.current[index] = el)}
+                          defaultValue={serial}
                           // onBlur={(event) => {
                           //   handleSerialChange(index, event);
                            
                           // }}
                           onChange={(event) => handleSerialChange(index, event)}
-                          onKeyDown={(event) => {
+                          onKeyDown={async (event) => {
                             if (event.key === "Enter") {
-                              event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter
-                              if (index < gvSerial.length - 1) {
+                              event.preventDefault();
+                              data = await handleSerialChange(index, event);
+                              if (index < txtSerial.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
-                              } else if(index ==(gvSerial.length - 1)){
-                                btnSave_Click()
+                              } else {
                                 event.target.blur();
+                                settxtSerial(data);
+                                btnSave_Click(data);
                               }
                             }
                           }}
                         />
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   ))}
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
                        <AntButton
                                                type="primary" className="BtSave"
-                                                onClick={btnSave_Click}
+                                                // onClick={btnSave_Click}
+                                                onClick={() => {
+                                                  settxtSerial(data);
+                                                  btnSave_Click(data);
+                                                }}
                                               >
                                                 Save
                                               </AntButton>{" "}
