@@ -140,7 +140,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     style: {},
   });
   const [gvSerial, setgvSerial] = useState([]);
-  const [txtSerial, settxtSerial] = useState(Array(gvSerial.length).fill(""));
+  const [txtSerial, settxtSerial] = useState([]);
 
   const [gvScanResult, setgvScanResult] = useState([]);
 
@@ -1154,6 +1154,9 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     }
     setgvSerial(dtData);
     settxtSerial(Array(gvSerial.length).fill(""));
+    fc_txtSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     if (gvSerial.length > 0) {
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
@@ -1436,7 +1439,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   //   }
   // };
 
-  const btnSave_Click = async () => {
+  const btnSave_Click = async (txtSerial) => {
     // ตรวจสอบว่า fc_txtSerial.current มีค่าก่อน
     if (!fc_txtSerial.current || !Array.isArray(fc_txtSerial.current)) {
       setlblLog((prevState) => ({
@@ -1455,7 +1458,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   
     if (hasAnyInput) {
       if (hfMode === "SERIAL") {
-        setSerialDataTray();
+        setSerialDataTray(txtSerial);
         scrollToTop();
       }
     } else {
@@ -1477,17 +1480,22 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       }, 0);
     }
   };
+  // const handleSerialChange = async (index, event) => {
+  //   const newValues = [...txtSerial];
+  //   newValues[index] = event.target.value.trim().toUpperCase();
+  //   settxtSerial(newValues);
+  // };
+  let newValues = [];
   const handleSerialChange = async (index, event) => {
-    const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
-    settxtSerial(newValues);
+    // event.target.value = '';
+    return newValues;
   };
-
-  const setSerialDataTray = async () => {
+  const setSerialDataTray = async (txtSerial) => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     try {
       // await fetchData();
-      let dtSerial = await getInputSerial();
+      let dtSerial = await getInputSerial(txtSerial);
       let _strLot = lblLot.value;
       let _strPrdName = selectddlProduct.value;
       let _strTray = "";
@@ -2455,7 +2463,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     }
   };
 
-  const getInputSerial = async () => {
+  const getInputSerial = async (txtSerial) => {
     let dtData = [];
     let intRow = 0;
 
@@ -2581,6 +2589,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     btnCancel,
     dis_ddlProduct,
     columns,
+    settxtSerial
   };
 }
 
