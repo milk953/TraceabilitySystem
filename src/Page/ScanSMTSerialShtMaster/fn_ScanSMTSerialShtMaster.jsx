@@ -31,7 +31,7 @@ function fn_ScanSMTSerialShtMaster() {
     const [gvSerialData, setgvSerialData] = useState([]);
     const [gvScanResult, setgvScanResult] = useState(false);
     const [gvScanData, setgvScanData] = useState([]);
-    const [txtgvSerial, settxtgvSerial] = useState("");
+    const [txtgvSerial, settxtgvSerial] = useState([]);
 
     //Disabled
     const [txtLotDisabled, settxtLotDisabled] = useState(false);
@@ -390,11 +390,17 @@ function fn_ScanSMTSerialShtMaster() {
         settxtMachineNo(txtMachineNo);
     };
 
-    const handleChangeSerial = (index, e) => {
-        const trimmedValue = e.target.value.trim().toUpperCase();
-        const newValue = [...txtgvSerial];
-        newValue[index] = trimmedValue;
-        settxtgvSerial(newValue);
+    // const handleChangeSerial = (index, e) => {
+    //     const trimmedValue = e.target.value.trim().toUpperCase();
+    //     const newValue = [...txtgvSerial];
+    //     newValue[index] = trimmedValue;
+    //     settxtgvSerial(newValue);
+    // };
+
+    let newValues = [];
+    const handleChangeSerial = async (index, event) => {
+      newValues[index] = event.target.value.trim().toUpperCase();
+      return newValues;
     };
 
     const handleChangegvBackSide = (index, e) => {
@@ -409,9 +415,9 @@ function fn_ScanSMTSerialShtMaster() {
         settxtSideFront(newValues);
     };
 
-    const btnSaveClick = async () => {
+    const btnSaveClick = async (txtgvSerial) => {
         if (hfMode === "SERIAL") {
-            await setSerialData();
+            await setSerialData(txtgvSerial);
             scrollToTop();
             // setTimeout(() => setlblResult(""), 5000);
             // setTimeout(() => setgvScanResult(false), 5000);
@@ -423,7 +429,10 @@ function fn_ScanSMTSerialShtMaster() {
         inputSideBack.current[0].focus();
         setgvScanData([]);
         setgvScanResult(false);
-        settxtgvSerial("");
+        settxtgvSerial(Array(gvSerialData.length).fill(""));
+        inputgvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+        });
         settxtSideBack("");
     };
 
@@ -498,7 +507,10 @@ function fn_ScanSMTSerialShtMaster() {
             }
         }
 
-        settxtgvSerial("");
+        settxtgvSerial(Array(dtData.length).fill(""));
+        inputgvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+        });
         settxtSideBack("");
         setgvSerialData(dtData);
   
@@ -525,11 +537,11 @@ function fn_ScanSMTSerialShtMaster() {
         });
     };
 
-    const setSerialData = async () => {
+    const setSerialData = async (txtgvSerial) => {
 
         showLoading('กำลังบันทึก กรุณารอสักครู่');
         if (txtMasterCode === MASTER_SHEET) {
-            const dtSerial = await getInputSerial();
+            const dtSerial = await getInputSerial(txtgvSerial);
 
             let _strLot = "";
             let _strLotRef = "";
@@ -606,7 +618,10 @@ function fn_ScanSMTSerialShtMaster() {
                             inputSideBack.current[0].focus();
                         }, 0);
                         settxtSideBack("");
-                        settxtgvSerial("");
+                        settxtgvSerial(Array(gvSerialData.length).fill(""));
+                        inputgvSerial.current.forEach((input) => {
+                            if (input) input.value = '';
+                        });
                         hideLoading();
                     }
 
@@ -617,7 +632,10 @@ function fn_ScanSMTSerialShtMaster() {
                             inputSideBack.current[0].focus();
                         }, 0);
                         settxtSideBack("");
-                        settxtgvSerial("");
+                        settxtgvSerial(Array(gvSerialData.length).fill(""));
+                        inputgvSerial.current.forEach((input) => {
+                            if (input) input.value = '';
+                        });
                         hideLoading();
                     }
                     //------------------------------------------
@@ -630,7 +648,10 @@ function fn_ScanSMTSerialShtMaster() {
                         setlblLog(`Please Input Serial No.`);
                         setpnlLog(true);
                         inputgvSerial.current[0].focus();
-                        settxtgvSerial("");
+                        settxtgvSerial(Array(gvSerialData.length).fill(""));
+                        inputgvSerial.current.forEach((input) => {
+                            if (input) input.value = '';
+                        });
                         setgvScanData([]);
                         setgvScanResult(false);
                         hideLoading();
@@ -1173,7 +1194,7 @@ function fn_ScanSMTSerialShtMaster() {
         hideLoading();
     };
 
-    const getInputSerial = async () => {
+    const getInputSerial = async (txtgvSerial) => {
         let dtData = [];
         let intRow = 0;
         let strFrontSide = "";
@@ -1543,7 +1564,7 @@ function fn_ScanSMTSerialShtMaster() {
         selProDisabled, txtRollLeafDisabled, inputLot, ddlProduct, inputRollLeaf, inputMachineNo, inputSideBack, inputgvSerial, inputMasterCode,
         handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeLotRef, handleChangeMasterCode, handleChangeRollLeaf, handleChangeMachine,
         handleChangeSerial, handleChangegvBackSide, handleChangegvFontSide, btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack,
-        columns, gvBackSide
+        columns, gvBackSide,settxtgvSerial
     }
 };
 

@@ -76,7 +76,7 @@ function P1ConnectBoard() {
     fcLotRef,
     lblResult,btnCancel_Click
   } = fn_P1ConnectBoard();
-
+let data=[]
 
   return (
     <div>
@@ -85,12 +85,9 @@ function P1ConnectBoard() {
         <Box sx={{ display: "flex", alignItems: "flex-start" }}>
           <Grid container spacing={2}>
             <Grid item xs={10} md={4}>
-              <Table className="Header_Left" component={Paper}>
+              <Table className="Header_Left" component={Card}>
                 <TableHead>
                   <TableCell colSpan={4} align="center">
-                    {/* <Typography variant="h6">
-                    P1 Connect CB & Pcs
-                    </Typography> */}
                      {menuName}
                   </TableCell>
                 </TableHead>
@@ -320,8 +317,10 @@ function P1ConnectBoard() {
                                 event.preventDefault(); 
                                 if (index <  GvBackSide.value.length - 1) {
                                   fcGvBackSide.current[index + 1].focus();
+                                  console.log("index1",index)
                                 } else {
                                   fcGvSerial.current[0].focus();
+                                  console.log("index0",index)
                                 }
                               
                               }
@@ -347,7 +346,7 @@ function P1ConnectBoard() {
                     SHEET
                   </TableCell>
                   <TableCell
-                    sx={{ borderRight: "1px solid #d9d9d9" ,width:'100px'}}
+                    sx={{ borderRight: "1px solid #d9d9d9" ,width:'30px'}}
                     align="center"
                   >
                     No.
@@ -356,54 +355,55 @@ function P1ConnectBoard() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
-                  {Array.from({ length: GvSerial.value.length }, (_, index) => (
-                    <TableRow key={index}>
-                      <TableCell
+                  {/* {Array.from({ length: GvSerial.value.length }, (_, index) => ( */}
+                  {txtSerial.map((serial, index) => (
+                    <tr key={index} style={{borderBottom: "1px solid #d9d9d9"}}>
+                      <td
                         align="center"
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
+                        style={{ borderRight: "1px solid #d9d9d9" }}
                         colSpan={GvSerial.value[index].SEQ === 0 ? 2 : 1} 
                       >
                         {GvSerial.value[index].SHEET}
-                      </TableCell>
+                      </td>
                       {GvSerial.value[index].SEQ !== 0 && (
-                        <TableCell sx={{ borderRight: "1px solid #d9d9d9" }}>
+                        <td  align="center" style={{ borderRight: "1px solid #d9d9d9" }}> 
                           {GvSerial.value[index].SEQ}
-                        </TableCell>
+                        </td>
                       )}
-                      <TableCell>
-                      <TextField
-                        className="input_txt"
-                        size="small"
-                        fullWidth
-                        value={txtSerial[index]}
-                        inputRef={(el) => (fcGvSerial.current[index] = el)}
+                      <td>
+                      <input
+                        className="styleSeraial"
+                        defaultValue={serial}
+                        ref={(el) => (fcGvSerial.current[index] = el)}
                         onChange={(event) =>
                           handleSerialChange(index, event)
                         }
-                        // onBlur={(event) => {
-                        //   handleSerialChange(index, event);
-                        // }}
-                      
-                        onKeyDown={(event) => {
+                       
+                        onKeyDown={async(event) => {
                           if (event.key === "Enter") {
                             event.preventDefault(); 
+                            data= await handleSerialChange(index, event)
                             if (index <  GvSerial.value.length - 1) {
                               fcGvSerial.current[index + 1].focus();
                             } else {
-                              btnSave_Click();
+                              settxtSerial(data);
+                              btnSave_Click(data);
                               event.target.blur();
                             }
                           }
                         }}
-                      ></TextField>         
-                      </TableCell>
-                    </TableRow>
+                      />         
+                      </td>
+                    </tr>
                   ))}
 
                   <TableRow>
                     <TableCell colSpan={3} style={{ textAlign: "center" }}>
                       <AntButton type="primary" className="BtSave" 
-                      onClick={btnSave_Click}
+                      onClick={() => {
+                        settxtSerial(data);
+                        btnSave_Click(data);
+                      }}
                       >
                         Save
                       </AntButton>{" "}

@@ -89,7 +89,9 @@ function ScanSMTSerialShtMaster() {
     handleKeySideBack,
     columns,
     gvBackSide,
+    settxtgvSerial
   } = fn_ScanSMTSerialShtMaster();
+  let data=[]
   return (
     <div>
       <Header />
@@ -407,36 +409,53 @@ function ScanSMTSerialShtMaster() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {Array.from({ length: gvSerialData.length }, (_, index) => (
-                      <TableRow key={index}>
-                        <TableCell
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                    {/* {Array.from({ length: gvSerialData.length }, (_, index) => ( */}
+                    {txtgvSerial.map((serial, index) => (
+                      <tr key={index} style={{borderBottom:'1px solid #d9d9d9'}}>
+                        <td
+                          style={{ borderRight: "1px solid #d9d9d9" }}
                           align="center"
                         >
                           {gvSerialData[index].SHEET}
-                        </TableCell>
-                        <TableCell
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                        </td>
+                        <td
+                          style={{ borderRight: "1px solid #d9d9d9" }}
                           align="center"
                         >
                           {gvSerialData[index].SEQ}
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            className="input_txt"
-                            size="small"
-                            fullWidth
-                            value={txtgvSerial[index] || ""}
-                            inputRef={(el) =>
+                        </td>
+                        <td>
+                          <input
+                            className="styleSeraial"
+                           
+                            defaultValue={serial}
+                            ref={(el) =>
                               (inputgvSerial.current[index] = el)
                             }
                             onChange={(e) => {
                               handleChangeSerial(index, e);
                             }}
-                            onKeyDown={(e) => handleKeygvSerial(e, index)}
+                            // onKeyDown={(e) => handleKeygvSerial(e, index)}
+                            onKeyDown={async(event) => {
+                            
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                                data= await handleChangeSerial(index, event)
+                                if (index < txtgvSerial.length - 1) {
+                                  inputgvSerial.current[
+                                    index + 1
+                                  ].focus();
+                              
+                                } else {
+                                  event.target.blur();
+                                  settxtgvSerial(data);
+                                  btnSaveClick(data);
+                                }
+                              }
+                            }}
                           />
-                        </TableCell>
-                      </TableRow>
+                        </td>
+                      </tr>
                     ))}
                   </TableBody>
                 </Table>
@@ -452,7 +471,11 @@ function ScanSMTSerialShtMaster() {
                   <AntButton
                     className="BtSave"
                     type="primary"
-                    onClick={btnSaveClick}
+                    // onClick={btnSaveClick}
+                    onClick={() => {
+                      settxtgvSerial(data);
+                      btnSaveClick(data);
+                    }}
                   >
                     Save
                   </AntButton>

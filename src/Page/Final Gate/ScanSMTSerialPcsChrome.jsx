@@ -67,6 +67,7 @@ function ScanSMTRoollSht() {
     txtOP_TextChanged,
     txtMachine_TextChanged,fc_txtMachine,fc_txtOP,ibtOPBack_Click,ibtMachineBack_Click,lblOP
   } = fn_ScanSMTSerialPcsChrome();
+  let data=[]
   return (
     <div>
       <Hearder />
@@ -351,7 +352,8 @@ function ScanSMTRoollSht() {
                 <TableBody>
                   {/* <TableRow> */}
 
-                  {Array.from({ length: gvSerial.value.length }, (_, index) => (
+                  {/* {Array.from({ length: gvSerial.value.length }, (_, index) => ( */}
+                  {txtSerial.map((serial, index) => (
                     <TableRow key={index}>
                       <TableCell
                         align="center"
@@ -360,25 +362,26 @@ function ScanSMTRoollSht() {
                         {index + 1}
                       </TableCell>
                       <TableCell>
-                        <TextField
+                        <input
                           key={index}
-                          className="input_txt"
-                          size="small"
-                          fullWidth
-                          inputRef={(el) => (fc_txtSerial.current[index] = el)}
-                          value={txtSerial[index]}
-                          // onBlur={(event) => {
-                          //   handleSerialChange(index, event);
-                          // }}
+                          className="styleSeraial"
+                          // size="small"
+                          // fullWidth
+                          ref={(el) => (fc_txtSerial.current[index] = el)}
+                          defaultValue={serial}
                           onChange={(event) => handleSerialChange(index, event)}
-                          onKeyDown={(event) => {
+                          onKeyDown={async(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
+                              data= await handleSerialChange(index, event)
                               if (index < gvSerial.value.length - 1) {
                                 fc_txtSerial.current[index + 1].focus();
                               } else {
-                                btnSave_Click();
+                                //btnSave_Click();
                                 event.target.blur();
+                                settxtSerial(data);
+                                btnSave_Click(data);
+                                
                               }
                             }
                           }}
@@ -389,7 +392,13 @@ function ScanSMTRoollSht() {
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <AntButton className="BtSave" onClick={btnSave_Click}>
+                      <AntButton className="BtSave" 
+                      // onClick={btnSave_Click}
+                      onClick={() => {
+                        settxtSerial(data);
+                        btnSave_Click(data);
+                      }}
+                      >
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;

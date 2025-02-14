@@ -535,7 +535,10 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       setlblSerialNG("");
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
-      settxtSerial("");
+      settxtSerial([]);
+      fc_txtSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
       setTimeout(() => {
         fc_txtLotNo.current.focus();
       }, 300);
@@ -655,6 +658,9 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
    
     setgvSerial((prevState) => ({ ...prevState, value: dtData }));
     settxtSerial(Array(gvSerial.value.length).fill(""));
+    fc_txtSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     if (gvSerial.value.length > 0 && hfTrayFlag == "N") {
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
@@ -688,9 +694,9 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     SetMode("SERIAL");
   };
 
-  const btnSave_Click = async () => {
+  const btnSave_Click = async (txtSerial) => {
     if (hfMode == "SERIAL") {
-      setSerialDataTray();
+      setSerialDataTray(txtSerial);
     }
   };
 
@@ -764,7 +770,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     }
   };
 
-  const getInputSerial = async () => {
+  const getInputSerial = async (txtSerial) => {
     let dtData = [];
     let intRow;
     for (let intSht = 0; intSht < gvSerial.value.length; intSht++) {
@@ -772,7 +778,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     
       dtData.push({
         SEQ: intSht + 1,
-        SERIAL: txtSerial[intSht],
+        SERIAL: txtSerial[intSht]||'',
         REJECT: "",
         TOUCH_UP: "",
         REJECT2: "",
@@ -803,13 +809,13 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     return dtData;
   };
 
+  let newValues = [];
   const handleSerialChange = async (index, event) => {
-    const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
-    settxtSerial(newValues);
+    return newValues;
   };
 
-  const setSerialDataTray = async () => {
+  const setSerialDataTray = async (txtSerial) => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     setlblSerialNG(0)
     setlblLog((prevState) => ({
@@ -818,7 +824,7 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
       visble: "none",
     }));
     try {
-      let dtSerial = await getInputSerial();
+      let dtSerial = await getInputSerial(txtSerial);
       let _strLot = lblLot.trim().toUpperCase();
       let _strPrdName = Sl_Product.value;
       let _strTray;
