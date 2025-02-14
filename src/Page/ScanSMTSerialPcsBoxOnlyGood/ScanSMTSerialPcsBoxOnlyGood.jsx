@@ -394,10 +394,10 @@ gvScanResult,pnlgvScanResult,lblTime,lblOP,dis_ddlProduct,columns,settxtSerial} 
 
                   {/* {Array.from({ length: gvSerial.length }, (_, index) => ( */}
                   {txtSerial.map((serial, index) => (
-                      <tr key={index}>
+                      <tr key={index} style={{ borderBottom: "1px solid  #d9d9d9" }}>
                       <td
                         align="center"
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
+                        style={{ borderRight: "1px solid #d9d9d9" }}
                       >
                         {index + 1}
                       </td>

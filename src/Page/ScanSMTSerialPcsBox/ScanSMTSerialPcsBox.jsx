@@ -89,7 +89,7 @@ function ScanSMTSerialPcsBox() {
     settxtSerial,
   } = fn_ScanSMTSerialPcsBox();
   const { menuName } = fn_Homepage();
-  let data;
+  let data=[];
   return (
     <div>
       <Hearder />
@@ -514,17 +514,17 @@ function ScanSMTSerialPcsBox() {
                     {/* {Array.from({ length: gvSerial.length }, (_, index) => ( */}
 
                     {txtSerial.map((serial, index) => (
-                      <tr key={index}>
+                      <tr key={index} style={{ borderBottom: "1px solid  #d9d9d9" }}>
                         <td
                           align="center"
-                          sx={{ borderRight: "1px solid #d9d9d9" }}
+                          style={{ borderRight: "1px solid #d9d9d9" }}
                         >
                           {index + 1}
                         </td>
                         <td>
                           <input
                             //  key={index}
-                            className="txtinput"
+                              className="styleSeraial"
                             type="text"
                             fullWidth
                             ref={(el) => (fc_txtSerial.current[index] = el)}
