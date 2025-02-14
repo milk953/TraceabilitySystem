@@ -129,7 +129,7 @@ function fn_ScanSMTSerialXrayConfirm() {
   });
   const fc_txtSerial = useRef([]);
   const [txtSerial, setTxtSerial] = useState(gvSerial.value.map(() => ""));
-
+  
   useEffect(() => {
     const fetchData = async () => {
       setHfMode("");
@@ -139,13 +139,28 @@ function fn_ScanSMTSerialXrayConfirm() {
     fetchData();
   }, []);
 
+// ----------------------------------------------------
+    const txtSerialref = useRef({});
+    const txtSerialClear = useRef([]);
+    const txtSerialChangeRef = (index, value) => {
+      txtSerialref.current[index] = value;
+    }
+    const handleSaveRef =  ()  => {
+      const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
+      const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
+      setTxtSerial(SerialArray);
+      console.log(SerialArray);
+      requestAnimationFrame(() => {
+        btnSave_Click(SerialArray);
+      });
+    }
+
+// ----------------------------------------------------
+
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
     setTxtSerial(newValues);
-    // if (event.key === "Enter") {
-    //   fnSetFocus(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`);
-    // }
   };
   let Valuesnew = [];
   const handletxtSerialChange = (index, event) => {
@@ -186,6 +201,11 @@ function fn_ScanSMTSerialXrayConfirm() {
     }));
     const newValues = [];
     setTxtSerial(newValues);
+    // setTxtSerial(newValues.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    txtSerialref.current = {};
     SetMode("LOT");
     fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
   };
@@ -194,6 +214,10 @@ function fn_ScanSMTSerialXrayConfirm() {
     statusBackupCount = true;
     const newValues = [];
     setTxtSerial(newValues);
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    txtSerialref.current = {};
     setPnlSerial((prevState) => ({
       ...prevState,
       visble: false,
@@ -210,7 +234,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     // }, 300);
   };
 
-  const btnSave_Click = async () => {
+  const btnSave_Click = async (txtSerial) => {
     // let CheckValue = false;
     // if (hfMode == "SERIAL") {
     //   showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
@@ -234,7 +258,7 @@ function fn_ScanSMTSerialXrayConfirm() {
         CheckValue = Value;
       }
       if (txtSerial !== "" && CheckValue !== false) {
-        await setSerialData();
+        await setSerialData(txtSerial);
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } else {
         setLblPnlLog((prevState) => ({
@@ -515,7 +539,7 @@ function fn_ScanSMTSerialXrayConfirm() {
           value: Product[0].prd_name,
         }));
         setTxtLot((prevState) => ({ ...prevState, value: "" }));
-        setGvSerial((prevState) => ({ ...prevState, value: "" }));
+        setGvSerial((prevState) => ({ ...prevState, value: [] }));
         setLblPnlLog((prevState) => ({
           ...prevState,
           value: "Invalid lot no.",
@@ -530,7 +554,7 @@ function fn_ScanSMTSerialXrayConfirm() {
         value: Product[0].prd_name,
       }));
       setTxtLot((prevState) => ({ ...prevState, value: "" }));
-      setGvSerial((prevState) => ({ ...prevState, value: "" }));
+      setGvSerial((prevState) => ({ ...prevState, value: [] }));
 
       setLblPnlLog((prevState) => ({
         ...prevState,
@@ -540,6 +564,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       }));
       setHfMode("LOT");
       fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
+      console.log("เข้ามา focus ได้ไหมนะ")
     }
   };
 
@@ -549,6 +574,10 @@ function fn_ScanSMTSerialXrayConfirm() {
       SetMode("SERIAL");
       const newValues = [];
       setTxtSerial(newValues);
+      Object.values(txtSerialClear.current).forEach((input) => {
+        if (input) input.value = "";
+      });
+      txtSerialref.current = {};
        fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
       // setTimeout(() => {
       //   fc_txtSerial.current[0].focus();
@@ -582,7 +611,7 @@ function fn_ScanSMTSerialXrayConfirm() {
     return 0;
   };
 
-  const getInputSerial = async () => {
+  const getInputSerial = async (txtSerial) => {
     const dtData = [];
     let strFrontSide = "";
     for (let intRow = 0; intRow < gvSerial.value.length; intRow++) {
@@ -604,8 +633,8 @@ function fn_ScanSMTSerialXrayConfirm() {
     return dtData;
   };
 
-  const setSerialData = async () => {
-    let dtSerial = await getInputSerial();
+  const setSerialData = async (SerialArray) => {
+    let dtSerial = await getInputSerial(SerialArray);
     let _strLotData = "";
     let _strLot = "";
     let _strPrdName = ddlProduct.value;
@@ -717,6 +746,10 @@ function fn_ScanSMTSerialXrayConfirm() {
       }));
       const newValues = [];
       setTxtSerial(newValues);
+      Object.values(txtSerialClear.current).forEach((input) => {
+        if (input) input.value = "";
+      });
+      txtSerialref.current = {};
     } else {
       setLblPnlLog((prevState) => ({
         ...prevState,
@@ -910,6 +943,7 @@ function fn_ScanSMTSerialXrayConfirm() {
       document.getElementById(`${txtField}`).focus();
     }, 0);
   }
+
   // function fnSetFocus(txtField) {
   //   const element = document.getElementById(txtField);
   //   if (element) {
@@ -941,6 +975,9 @@ function fn_ScanSMTSerialXrayConfirm() {
     fc_txtSerial,
     handletxtSerialChange,
     setTxtSerial,
+    handleSaveRef,
+    txtSerialChangeRef,
+    txtSerialClear,
   };
 }
 

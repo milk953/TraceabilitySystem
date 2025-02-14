@@ -12,7 +12,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import {Button as AntButton} from "antd";
+import { Button as AntButton } from "antd";
 import { Typography, Table as AntTable, Select } from "antd";
 import { fn_ScanSMTSerialShtCopy } from "./fn_ScanSMTSerialShtCopy";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
@@ -66,14 +66,16 @@ function ScanSMTSerialShtCopy() {
     lblResult,
     gvScanResult,
     columns,
-    getRowClassName
+    getRowClassName,
+     txtSerialref,//newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   } = fn_ScanSMTSerialShtCopy();
   return (
     <>
       <Header />
-      <Card component={Paper} 
-      className="Card-Common"
-      >
+      <Card component={Paper} className="Card-Common">
         <table>
           <tr>
             <td className="FinCopytxtFtable">
@@ -81,7 +83,7 @@ function ScanSMTSerialShtCopy() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={3} align="center">
-                    {menuName}
+                      {menuName}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -114,7 +116,7 @@ function ScanSMTSerialShtCopy() {
                     <TableCell colSpan={2}>
                       <Select
                         style={{
-                          width: '98%',
+                          width: "98%",
                           textAlign: "left",
                           padding: "0px 5px 0px 0px",
                         }}
@@ -125,7 +127,6 @@ function ScanSMTSerialShtCopy() {
                         onChange={(value) => {
                           ddlproduct_Change(value);
                         }}
-              
                         options={ddlProduct.map((item) => ({
                           label: item.prd_name,
                           value: item.prd_name,
@@ -137,18 +138,18 @@ function ScanSMTSerialShtCopy() {
                   <TableRow>
                     <TableCell>Lot Ref. No.:</TableCell>
                     <TableCell>
-                      <input className="FinCopytxtF" 
-                      id = 'txtLotRefFinCopy'
-                      value={txtLotRef} 
-                      onChange={(e) => {
-                        setTxtLotRef(e.target.value.trim());
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          handle_txtLotRef_Change(e);
-                        }
-                      }}
-                      
+                      <input
+                        className="FinCopytxtF"
+                        id="txtLotRefFinCopy"
+                        value={txtLotRef}
+                        onChange={(e) => {
+                          setTxtLotRef(e.target.value.trim());
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handle_txtLotRef_Change(e);
+                          }
+                        }}
                       ></input>
                     </TableCell>
                     <TableCell></TableCell>
@@ -186,12 +187,8 @@ function ScanSMTSerialShtCopy() {
                       </TableRow>
                       <TableRow>
                         <TableCell>Check Roll:</TableCell>
-                        <TableCell>
-                          <input
-                            className="FinCopytxtF"
-                            value={txtCheckRoll.text}
-                            style={txtCheckRoll.styled}
-                          ></input>
+                        <TableCell style={txtCheckRoll.styled}>
+                          {txtCheckRoll.text}
                         </TableCell>
                         <TableCell></TableCell>
                       </TableRow>
@@ -267,9 +264,7 @@ function ScanSMTSerialShtCopy() {
               &nbsp;
               {panalSerialState && (
                 <Table classname="FinCopygvSerial" component={Card}>
-                  <TableHead
-                    style={{ background: "#12422e" }}
-                  >
+                  <TableHead style={{ background: "#12422e" }}>
                     <TableRow>
                       <TableCell
                         className="FinCopygvSerialCell"
@@ -336,13 +331,28 @@ function ScanSMTSerialShtCopy() {
                               textTransform: "uppercase",
                             }}
                             maxLength="30"
-                            value={txtSerial[index]}
+                            ref={(el) => (txtSerialClear.current[index] = el)}
+                            // value={txtSerial[index]}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
-                                handletxtSerialChange(index, e);
+                                if (index < gvSerial.length - 1) {
+                                  document
+                                    .getElementById(`txtSerial_${index + 1}`)
+                                    .focus();
+                                } else {
+                                  handleSaveRef();
+                                }
                               }
                             }}
-                            onChange={(e) => handletxtSerialChange(index, e)}
+                            onChange={(e) =>
+                              txtSerialChangeRef(index, e.target.value)
+                            }
+                            // onKeyDown={(e) => {
+                            //   if (e.key === "Enter") {
+                            //     handletxtSerialChange(index, e);
+                            //   }
+                            // }}
+                            // onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
                       </TableRow>
@@ -358,7 +368,7 @@ function ScanSMTSerialShtCopy() {
                       >
                         <AntButton
                           className="BtSave"
-                          onClick={handle_Save_Click}
+                          onClick={handleSaveRef}
                         >
                           Save
                         </AntButton>
@@ -392,13 +402,18 @@ function ScanSMTSerialShtCopy() {
                     elevation={3}
                     style={{
                       alignItems: "center",
-                      background: lblResult.text === "OK" ? "green" : lblResult.text === "NG" ? "red" : "white",
                       background:
-                      lblResult.text === "OK"
-                        ? "green"
-                        : lblResult.text === "NG"
-                        ? "red"
-                        : "red",
+                        lblResult.text === "OK"
+                          ? "green"
+                          : lblResult.text === "NG"
+                          ? "red"
+                          : "white",
+                      background:
+                        lblResult.text === "OK"
+                          ? "green"
+                          : lblResult.text === "NG"
+                          ? "red"
+                          : "red",
                     }}
                   >
                     <Typography
@@ -412,15 +427,15 @@ function ScanSMTSerialShtCopy() {
                     </Typography>
                   </Paper>
                   <AntTable
-                  className="tableGvResult"
-                  columns={columns}
-                  bordered
-                  dataSource={gvScanResult}
-                  style={{ width: "980pxs",marginTop:"10px" }}
-                  pagination={false}
-                  size="small"
-                  rowClassName={getRowClassName}
-                />
+                    className="tableGvResult"
+                    columns={columns}
+                    bordered
+                    dataSource={gvScanResult}
+                    style={{ width: "980pxs", marginTop: "10px" }}
+                    pagination={false}
+                    size="small"
+                    rowClassName={getRowClassName}
+                  />
                   &nbsp; &nbsp;
                 </div>
               )}

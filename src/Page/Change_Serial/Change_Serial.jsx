@@ -178,24 +178,24 @@ function Change_Serial() {
               <TableBody>
                 {Array.isArray(gvSerial.value) &&
                   Array.from({ length: gvSerial.value.length }, (_, index) => (
-                    <TableRow key={index}>
-                      <TableCell
+                    <tr key={index}>
+                      <td
                         align="center"
                         sx={{ borderRight: "1px solid #d9d9d9" }}
                       >
                         {index + 1}
-                      </TableCell>
-                      <TableCell>
-                        <TextField
+                      </td>
+                      <td>
+                        <input
                           key={index}
                           size="small"
                           fullWidth
                           autoComplete="off"
                           // id={`gvSerial_txtSerialNoOld_${index}`}
-                          inputRef={(el) =>
+                          ref={(el) =>
                             (fc_txtSerialOld.current[index] = el)
                           }
-                          className="input_txt"
+                          className="txtinput"
                           value={txtSerialNoOld[index] || ""}
                           // onKeyDown={(event) => {
                           //   if (event.key === "Enter") {
@@ -220,18 +220,18 @@ function Change_Serial() {
                             handleSerialOldChange(index, event)
                           }
                         />
-                      </TableCell>
-                      <TableCell>
-                        <TextField
+                      </td>
+                      <td>
+                        <input
                           key={index}
                           size="small"
                           fullWidth
                           autoComplete="off"
                           // id={`gvSerial_txtSerialNoNew_${index}`}
-                          inputRef={(el) =>
+                          ref={(el) =>
                             (fc_txtSerialNew.current[index] = el)
                           }
-                          className="input_txt"
+                          className="txtinput"
                           value={txtSerialNoNew[index] || ""}
                           // onKeyDown={(event) => {
                           //   if (event.key === "Enter") {
@@ -258,8 +258,8 @@ function Change_Serial() {
                             handleSerialNewChange(index, event)
                           }
                         />
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   ))}
                 <TableRow>
                   <TableCell

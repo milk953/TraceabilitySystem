@@ -49,7 +49,11 @@ function ScanSMTSerialPcsNG() {
     columns,
     lblErrorState,
     getRowClassName,
-    isLastDisabled
+    isLastDisabled,
+    txtSerialref, //newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   } = fn_ScanSMTSerialPcsNG();
   return (
     <div>
@@ -210,16 +214,31 @@ function ScanSMTSerialPcsNG() {
                               textTransform: "uppercase",
                             }}
                             maxLength="30"
-                            value={txtSerial[index]}
+                            ref={(el) => (txtSerialClear.current[index] = el)}
                             onKeyDown={(e) => {
-                              if (e.key === "Enter" && index < ( gvSerial.length - 1)) {
-                                handletxtSerialChange(index, e);
-                              }else if (index === ( gvSerial.length - 1)) {
-                                handle_Save_Click();
-                                e.target.blur();
+                              if (e.key === "Enter") {
+                                if (index < gvSerial.length - 1) {
+                                  document
+                                    .getElementById(`txtSerial_${index + 1}`)
+                                    .focus();
+                                } else {
+                                  handleSaveRef();
+                                }
                               }
                             }}
-                            onChange={(e) => handletxtSerialChange(index, e)}
+                            onChange={(e) =>
+                              txtSerialChangeRef(index, e.target.value)
+                            }
+                            // value={txtSerial[index]}
+                            // onKeyDown={(e) => {
+                            //   if (e.key === "Enter" && index < ( gvSerial.length - 1)) {
+                            //     handletxtSerialChange(index, e);
+                            //   }else if (index === ( gvSerial.length - 1)) {
+                            //     handle_Save_Click();
+                            //     e.target.blur();
+                            //   }
+                            // }}
+                            // onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
                       </TableRow>
@@ -235,7 +254,7 @@ function ScanSMTSerialPcsNG() {
                       >
                         <AntButton 
                         className="BtSave" 
-                        onClick={handle_Save_Click}>
+                        onClick={handleSaveRef}>
                           Save
                         </AntButton>
                         &nbsp;&nbsp;

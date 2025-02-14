@@ -446,7 +446,6 @@ function ScanSMTSerialShtFINManySht() {
                               maxLength="30"
                               className="styleEnable"
                               ref={(el) => (txtSerialClear.current[index] = el)}
-                              // value={txtSerial[index]}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                   if (index < gvSerial.length - 1) {

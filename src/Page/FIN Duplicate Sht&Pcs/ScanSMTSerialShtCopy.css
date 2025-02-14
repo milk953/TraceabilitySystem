@@ -23,7 +23,7 @@
 }
 .FinCopyTable td {
   padding: 5px !important;
-  text-align: right;
+  text-align: left;
   margin-bottom: 10px;
 }
 .FinCopyTable .CelllblSpan {
