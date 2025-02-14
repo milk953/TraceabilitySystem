@@ -265,7 +265,7 @@ function ScanSMTSerialXrayConfirm() {
                     >
                       <ButtonAndt
                         className="ButtonReplace"
-                        onClick={btnSave_Click}
+                        onClick={handleSaveRef}
                       >
                         Save
                       </ButtonAndt>
