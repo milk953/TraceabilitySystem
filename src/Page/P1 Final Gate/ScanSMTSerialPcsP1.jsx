@@ -53,6 +53,10 @@ function ScanSMTSerialPcsP1() {
     handletxtSerialChange,
     columns,
     getRowClassName,
+    txtSerialref, //newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   } = fn_ScanSMTSerialPcsP1();
   useEffect(() => {
     if (panalSerialState == true) {
@@ -221,25 +225,40 @@ function ScanSMTSerialPcsP1() {
                               textTransform: "uppercase",
                             }}
                             maxLength="30"
-                            value={txtSerial[index]}
+                            ref={(el) => (txtSerialClear.current[index] = el)}
                             onKeyDown={(e) => {
-                              // if (e.key === "Enter") {
-                              //   handletxtSerialChange(index, e);
-                              // }
-                              if (
-                                e.key === "Enter" &&
-                                index < gvSerial.length - 1
-                              ) {
-                                handletxtSerialChange(index, e);
-                              } else if (
-                                e.key === "Enter" &&
-                                index === gvSerial.length - 1
-                              ) {
-                                btnSvae_Click();
-                                e.target.blur();
+                              if (e.key === "Enter") {
+                                if (index < gvSerial.length - 1) {
+                                  document
+                                    .getElementById(`txtSerial_${index + 1}`)
+                                    .focus();
+                                } else {
+                                  handleSaveRef();
+                                }
                               }
                             }}
-                            onChange={(e) => handletxtSerialChange(index, e)}
+                            onChange={(e) =>
+                              txtSerialChangeRef(index, e.target.value)
+                            }
+                            // value={txtSerial[index]}
+                            // onKeyDown={(e) => {
+                            //   // if (e.key === "Enter") {
+                            //   //   handletxtSerialChange(index, e);
+                            //   // }
+                            //   if (
+                            //     e.key === "Enter" &&
+                            //     index < gvSerial.length - 1
+                            //   ) {
+                            //     handletxtSerialChange(index, e);
+                            //   } else if (
+                            //     e.key === "Enter" &&
+                            //     index === gvSerial.length - 1
+                            //   ) {
+                            //     btnSvae_Click();
+                            //     e.target.blur();
+                            //   }
+                            // }}
+                            // onChange={(e) => handletxtSerialChange(index, e)}
                           />
                         </TableCell>
                       </TableRow>
@@ -253,7 +272,7 @@ function ScanSMTSerialPcsP1() {
                           gap: "10px",
                         }}
                       >
-                        <AntButton className="BtSave" onClick={btnSvae_Click}>
+                        <AntButton className="BtSave" onClick={handleSaveRef}>
                           Save
                         </AntButton>
                         &nbsp;&nbsp;

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Tag } from "antd";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import { useLoading } from "../../loading/fn_loading";
 import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTConfirmMOTP1() {
@@ -84,6 +85,7 @@ function fn_ScanSMTConfirmMOTP1() {
   const inputTray = useRef([]);
 
   const { ConfigData } = DataConfig();
+  const { showLoading, hideLoading } = useLoading();
 
   const plantCode = ConfigData.FACTORY;
   const DUPLICATE_CHECK_FLG = ConfigData.DUPLICATE_CHECK_FLG;
@@ -103,6 +105,13 @@ function fn_ScanSMTConfirmMOTP1() {
   useEffect(() => {
     PageLoad();
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const PageLoad = async () => {
     sethfMode("");
@@ -138,7 +147,7 @@ function fn_ScanSMTConfirmMOTP1() {
             .then((res) => {
               _strPrdName = res.data.prdName[0];
             });
-       
+
 
           let dtLotProduct = [];
           await axios
@@ -263,7 +272,7 @@ function fn_ScanSMTConfirmMOTP1() {
       const nextIndex = index + 1;
       if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
         inputgvSerial.current[nextIndex].focus();
-       
+
       } else if (nextIndex === nextIndex) {
         btnSaveClick();
       }
@@ -271,7 +280,7 @@ function fn_ScanSMTConfirmMOTP1() {
   };
 
   const btnSaveClick = async (txtgvSerial) => {
-    console.log(txtgvSerial,'bbbbbbbbbbbbbbbbbbbbbb')
+    console.log(txtgvSerial, 'bbbbbbbbbbbbbbbbbbbbbb')
     let CheckValue = false;
     if (hfMode === "SERIAL") {
       if (Array.isArray(txtgvSerial)) {
@@ -369,12 +378,13 @@ function fn_ScanSMTConfirmMOTP1() {
         SEQ: intRow,
       });
     }
-    console.log(dtData,'hfSerialCount')
+    console.log(dtData, 'hfSerialCount')
     setgvSerialData(dtData);
     settxtgvSerial(Array(dtData.length).fill(""))
     inputgvSerial.current.forEach((input) => {
       if (input) input.value = '';
     });
+    scrollToTop();
 
     // if (gvSerialData.length > 0 && hfTrayFlag === "N") {
     //    // inputgvSerial.current[0].focus();
@@ -383,7 +393,7 @@ function fn_ScanSMTConfirmMOTP1() {
 
   const setSerialDataTray = async (txtgvSerial) => {
     const dtSerial = await getInputSerial(txtgvSerial);
-    console.log(dtSerial,'dtSerial')
+    console.log(dtSerial, 'dtSerial')
     let _strLot = "";
     let _strPrdName = selProduct;
     let _strTray = " ";
@@ -391,6 +401,8 @@ function fn_ScanSMTConfirmMOTP1() {
     let _bolError = false;
     let _strScanResultAll = "OK";
     let _intRowSerial = 0;
+
+    showLoading('กำลังบันทึก กรุณารอสักครู่');
 
     if (!_bolTrayError) {
       if (hfCheckWeekCode === "Y") {
@@ -402,7 +414,7 @@ function fn_ScanSMTConfirmMOTP1() {
             _strSerialInfo: hfSerialInfo,
           })
           .then((res) => {
-          
+
             sethfWeekCode(res.data);
           });
       }
@@ -470,7 +482,7 @@ function fn_ScanSMTConfirmMOTP1() {
             .then((res) => {
               dtCarrierboard = res.data;
             });
-        
+
           if (dtCarrierboard === "") {
             _strMessageUpdate =
               "Serial not connect board / หมายเลขบาร์โค้ดยังไม่สแกนประกบบอร์ด";
@@ -627,7 +639,7 @@ function fn_ScanSMTConfirmMOTP1() {
                 _intCountNG = 1;
                 _bolError = true;
               } else if (hfLotAll.indexOf(strSheetLot) === -1) {
-           
+
                 _strMessageUpdate =
                   "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
                 _strRemark = "Lot not same connect sheet  ";
@@ -793,6 +805,7 @@ function fn_ScanSMTConfirmMOTP1() {
     }
 
     getInitialSerial();
+    hideLoading();
   };
 
   const getInputSerial = async (txtgvSerial) => {
@@ -1049,7 +1062,8 @@ function fn_ScanSMTConfirmMOTP1() {
     btnSaveClick,
     btnCancelClick,
     columnsgvResult,
-    settxtgvSerial
+    settxtgvSerial,
+    gvSerialData
   };
 }
 

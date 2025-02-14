@@ -59,7 +59,8 @@ function ScanSMTConfirmMOTP1() {
     btnSaveClick,
     btnCancelClick,
     columnsgvResult,
-    settxtgvSerial
+    settxtgvSerial,
+    gvSerialData
   } = fn_ScanSMTConfirmMOTP1();
   const { menuName } = fn_Homepage();
   return (
@@ -192,7 +193,6 @@ function ScanSMTConfirmMOTP1() {
                   </TableHead>
                   <TableBody>
                     {/* {Array.from({ length: hfSerialCount }, (_, index) => ( */}
-                    {console.log(txtgvSerial, "txtgvSerial")}
                     {txtgvSerial.map((serial, index) => (
                       <tr key={index}>
                         <td align="center">{index + 1}</td>
@@ -200,7 +200,7 @@ function ScanSMTConfirmMOTP1() {
                           <input
                             // className="input_txt"
                             // size="small"
-                            className="txtinput"
+                            className="styleSeraial"
                             type="text"
                             fullWidth
                             // value={txtgvSerial[index] || ""}
@@ -219,7 +219,7 @@ function ScanSMTConfirmMOTP1() {
                               if (event.key === "Enter") {
                                 event.preventDefault();
                                 data = await handleChangeSerial(index, event);
-                                if (index < txtgvSerial.length - 1) {
+                                if (index < gvSerialData.length - 1) {
                                   inputgvSerial.current[index + 1].focus();
                                 } else {
                                   settxtgvSerial(data);

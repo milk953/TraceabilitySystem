@@ -1121,19 +1121,19 @@ const fn_ScanSMTSerialShtFINManySht = () => {
 
     return dtData;
   }
-   const txtSerialref = useRef({});
-    const txtSerialClear = useRef([]);
-    const txtSerialChangeRef = (index, value) => {
-      txtSerialref.current[index] = value;
-    }
-    const handleSaveRef =  ()  => {
-      const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
-      const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
-      setTxtSerial(SerialArray);
-      requestAnimationFrame(() => {
-        btnSave_Click(SerialArray);
-      });
-    }
+  const txtSerialref = useRef({});
+  const txtSerialClear = useRef([]);
+  const txtSerialChangeRef = (index, value) => {
+    txtSerialref.current[index] = value;
+  }
+  const handleSaveRef =  ()  => {
+    const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
+    const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
+    setTxtSerial(SerialArray);
+    requestAnimationFrame(() => {
+      btnSave_Click(SerialArray);
+    });
+  }
   const handletxtSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
