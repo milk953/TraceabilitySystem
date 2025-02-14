@@ -1046,7 +1046,6 @@ function fn_ConfirmBarcodeGrade() {
   let newValues = [];
   const handleSerialChange = async (index, event) => {
     newValues[index] = event.target.value.trim().toUpperCase();
-    // event.target.value = '';
     return newValues;
   };
 

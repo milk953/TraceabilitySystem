@@ -456,7 +456,6 @@ function ConfirmBarcodeGrade() {
                                 } else {
                                   event.target.blur();
                                   settxtSerial(data);
-                                  
                                   btnSave_Click(data);
                                 }
                               }

@@ -42,9 +42,9 @@ function ScanSMTSerialSht() {
         txtSideFront, pnlSerial, gvSerialData, gvScanResult, gvScanData, txtgvSerial, handleChangeBoardNoB, txtLotDisabled, selProDisabled,
         txtRollLeafDisabled, inputLot, ddlProduct, inputRollLeaf, inputMachineNo, inputSideBack, inputgvSerial, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangeLotRef, handleChangeRollLeaf, handleChangeMachine, handleChangeSerial, handleChangegvBackSide, handleChangegvFontSide,
-        btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack, handleChangeBoardNoF, columns
+        btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack, handleChangeBoardNoF, columns, settxtgvSerial
     } = fn_ScanSMTSerialSht();
-
+let data=[]
     return (
         <div>
             <Header />
@@ -273,7 +273,7 @@ function ScanSMTSerialSht() {
                                                             id="SideBack"
                                                             size="small"
                                                             fullWidth
-                                                            value={txtSideBack[index] || ""}
+                                                            value={(console.log("txtSideBack[index]:", txtSideBack[index]), txtSideBack[index] || "")}
                                                             inputRef={el => inputSideBack.current[index] = el}
                                                             onChange={(e) => {
                                                                 handleChangegvBackSide(index, e);
@@ -442,16 +442,64 @@ function ScanSMTSerialSht() {
                                                     {gvSerialData[index].SEQ}
                                                 </TableCell>
                                                 <TableCell>
-                                                    <TextField
+                                                    {/* <TextField
                                                         className="input_txt"
                                                         size="small"
                                                         fullWidth
-                                                        value={txtgvSerial[index] || ""}
+                                                        value={txtgvSerial[index]}
                                                         inputRef={el => inputgvSerial.current[index] = el}
-                                                        onChange={(e) => {
-                                                            handleChangeSerial(index, e);
+                                                        onChange={(event) => {
+                                                            handleChangeSerial(index, event);
                                                         }}
-                                                        onKeyDown={(e) => handleKeygvSerial(e, index)}
+                                                        onKeyDown={async (event) => {
+                                                            let data
+                                                            if (event.key === "Enter") {
+                                                                event.preventDefault();
+                                                                data = await handleChangeSerial(index, event)
+                                                                console.log(data, 'mmmmmmmmmmmmmmm')
+                                                                if (index < txtgvSerial.length - 1) {
+
+                                                                    inputgvSerial.current[
+                                                                        index + 1
+                                                                    ].focus();
+
+                                                                } else {
+                                                                    event.target.blur();
+                                                                    settxtgvSerial(data);
+                                                                    btnSaveClick(data);
+                                                                }
+                                                            }
+                                                        }}
+                                                    /> */}
+                                                    <input
+                                                        className="styleSeraial"
+                                                        type="text"
+                                                        //defaultValue={serial}
+                                                        onChange={(event) =>
+                                                            handleChangeSerial(index, event)
+                                                        }
+                                                        ref={(el) =>
+                                                            (inputgvSerial.current[index] = el)
+                                                        }
+                                                        onKeyDown={(event) => {
+                                                          
+                                                            if (event.key === "Enter") {
+                                                                event.preventDefault();
+                                                                data = handleChangeSerial(index, event)
+                                                                console.log(data, 'mmmmmmmmmmmmmmm')
+                                                                if (index < txtgvSerial.length - 1) {
+
+                                                                    inputgvSerial.current[
+                                                                        index + 1
+                                                                    ].focus();
+
+                                                                } else {
+                                                                    event.target.blur();
+                                                                    settxtgvSerial(data);
+                                                                    btnSaveClick(data);
+                                                                }
+                                                            }
+                                                        }}
                                                     />
                                                 </TableCell>
                                             </TableRow>
@@ -468,7 +516,10 @@ function ScanSMTSerialSht() {
                                 >
                                     <AntButton className="BtSave"
                                         type="primary"
-                                        onClick={btnSaveClick}
+                                        onClick={() => {
+                                            settxtgvSerial(data);
+                                            btnSaveClick(data);
+                                          }}
                                     >
                                         Save
                                     </AntButton>
