@@ -41,8 +41,9 @@ function ScanSMTSerialPcsAutoTray() {
         txtPackingNoDisabled, inputLot, ddlProduct, inputPackingNo, inputgvSerial, inputTray, handleChangeLot, ibtBackClick,
         handleChangeProduct, handleChangePackingNo, ibtPackingBackClick, handleChangePcsTray, settxtLot, settxtPackingNo,
         settxtPcsTray, handleChangeSerial, handleKeygvSerial, btnSaveClick, btnCancelClick, gvScanData, gvScanResult, lblTimecolor,
-        lblLastTray, columns
+        lblLastTray, columns, settxtgvSerial, gvSerialData
     } = fn_ScanSMTSerialPcsAutoTray();
+    let data = []
 
     return (
         <div>
@@ -274,28 +275,46 @@ function ScanSMTSerialPcsAutoTray() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {Array.from({ length: hfSerialCount }, (_, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell
-                                                    sx={{ borderRight: "1px solid #d9d9d9" }}
-                                                    align="center"
-                                                >
-                                                    {index + 1}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <TextField
-                                                        className="input_txt"
-                                                        size="small"
+                                        {/* {Array.from({ length: hfSerialCount }, (_, index) => ( */}
+                                        {console.log(txtgvSerial, "txtgvSerial")}
+                                        {txtgvSerial.map((serial, index) => (
+                                            <tr key={index}>
+                                                <td align="center">{index + 1}</td>
+                                                <td>
+                                                    <input
+                                                        // className="input_txt"
+                                                        // size="small"
+                                                        className="styleSeraial"
+                                                        type="text"
                                                         fullWidth
-                                                        value={txtgvSerial[index] || ""}
-                                                        inputRef={el => inputgvSerial.current[index] = el}
+                                                        // value={txtgvSerial[index] || ""}
+                                                        defaultValue={serial}
+                                                        // inputRef={(el) =>
+                                                        //   (inputgvSerial.current[index] = el)
+                                                        // }
+                                                        ref={(el) =>
+                                                            (inputgvSerial.current[index] = el)
+                                                        }
                                                         onChange={(e) => {
                                                             handleChangeSerial(index, e);
                                                         }}
-                                                        onKeyDown={(e) => handleKeygvSerial(e, index)}
+                                                        // onKeyDown={(e) => handleKeygvSerial(e, index)}
+                                                        onKeyDown={async (event) => {
+                                                            if (event.key === "Enter") {
+                                                                event.preventDefault();
+                                                                data = await handleChangeSerial(index, event);
+                                                                if (index < gvSerialData.length - 1) {
+                                                                    inputgvSerial.current[index + 1].focus();
+                                                                } else {
+                                                                    settxtgvSerial(data);
+                                                                    btnSaveClick(data);
+                                                                    event.target.blur();
+                                                                }
+                                                            }
+                                                        }}
                                                     />
-                                                </TableCell>
-                                            </TableRow>
+                                                </td>
+                                            </tr>
                                         ))}
                                     </TableBody>
                                 </Table>
@@ -309,7 +328,10 @@ function ScanSMTSerialPcsAutoTray() {
                                 >
                                     <AntButton className="BtSave"
                                         type="primary"
-                                        onClick={btnSaveClick}
+                                        onClick={() => {
+                                            settxtgvSerial(data);
+                                            btnSaveClick(data);
+                                        }}
                                     >
                                         Save
                                     </AntButton>
