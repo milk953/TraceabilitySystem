@@ -23,7 +23,7 @@ function fn_ScanSMTConfirmMOTP1() {
   const [gvSerialData, setgvSerialData] = useState([]);
   const [gvScanResult, setgvScanResult] = useState(false);
   const [gvScanData, setgvScanData] = useState([]);
-  const [txtgvSerial, settxtgvSerial] = useState("");
+  const [txtgvSerial, settxtgvSerial] = useState([]);
 
   //hiddenfield
   const hfUserID = localStorage.getItem("ipAddress");
@@ -238,10 +238,17 @@ function fn_ScanSMTConfirmMOTP1() {
     }
   };
 
-  const handleChangeSerial = (index, e) => {
-    const newValues = [...txtgvSerial];
-    newValues[index] = e.target.value.trim().toUpperCase();
-    settxtgvSerial(newValues);
+  // const handleChangeSerial = (index, e) => {
+  //   const newValues = [...txtgvSerial];
+  //   newValues[index] = e.target.value.trim().toUpperCase();
+  //   settxtgvSerial(newValues);
+  // };
+
+  let newValues = [];
+  const handleChangeSerial = async (index, event) => {
+    newValues[index] = event.target.value.trim().toUpperCase();
+    // event.target.value = '';
+    return newValues;
   };
 
   useEffect(() => {
@@ -263,7 +270,8 @@ function fn_ScanSMTConfirmMOTP1() {
     }
   };
 
-  const btnSaveClick = async () => {
+  const btnSaveClick = async (txtgvSerial) => {
+    console.log(txtgvSerial,'bbbbbbbbbbbbbbbbbbbbbb')
     let CheckValue = false;
     if (hfMode === "SERIAL") {
       if (Array.isArray(txtgvSerial)) {
@@ -272,22 +280,22 @@ function fn_ScanSMTConfirmMOTP1() {
       }
       if (txtgvSerial !== "" && CheckValue !== false) {
         setpnlLog(false);
-        await setSerialDataTray();
-        const newValues = [];
-        settxtgvSerial(newValues);
-        await new Promise((resolve) => setTimeout(resolve, 0));
+        await setSerialDataTray(txtgvSerial);
+        // const newValues = [];
+        // settxtgvSerial(newValues);
+        // await new Promise((resolve) => setTimeout(resolve, 0));
       } else {
         setlblLog(`Please Input Serial No.`);
         setpnlLog(true);
         inputgvSerial.current[0].focus();
-        settxtgvSerial("");
+        settxtgvSerial(Array(gvSerialData.length).fill(""));
       }
     }
   };
 
   const btnCancelClick = async () => {
     SetMode("SERIAL");
-    settxtgvSerial("");
+    settxtgvSerial(Array(gvSerialData.length).fill(""));
   };
 
   const SetMode = async (strType) => {
@@ -296,7 +304,7 @@ function fn_ScanSMTConfirmMOTP1() {
       setlblLot("");
       setpnlLog(false);
       setpnlSerial(false);
-      settxtgvSerial("");
+      settxtgvSerial(Array(gvSerialData.length).fill(""));
       setgvScanResult(false);
       setgvScanData([]);
       setTimeout(() => {
@@ -361,16 +369,21 @@ function fn_ScanSMTConfirmMOTP1() {
         SEQ: intRow,
       });
     }
+    console.log(dtData,'hfSerialCount')
     setgvSerialData(dtData);
- 
+    settxtgvSerial(Array(dtData.length).fill(""))
+    inputgvSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
 
     // if (gvSerialData.length > 0 && hfTrayFlag === "N") {
     //    // inputgvSerial.current[0].focus();
     // }
   };
 
-  const setSerialDataTray = async () => {
-    const dtSerial = await getInputSerial();
+  const setSerialDataTray = async (txtgvSerial) => {
+    const dtSerial = await getInputSerial(txtgvSerial);
+    console.log(dtSerial,'dtSerial')
     let _strLot = "";
     let _strPrdName = selProduct;
     let _strTray = " ";
@@ -782,7 +795,7 @@ function fn_ScanSMTConfirmMOTP1() {
     getInitialSerial();
   };
 
-  const getInputSerial = async () => {
+  const getInputSerial = async (txtgvSerial) => {
     let dtData = [];
     let intRow = 0;
 
@@ -1036,6 +1049,7 @@ function fn_ScanSMTConfirmMOTP1() {
     btnSaveClick,
     btnCancelClick,
     columnsgvResult,
+    settxtgvSerial
   };
 }
 

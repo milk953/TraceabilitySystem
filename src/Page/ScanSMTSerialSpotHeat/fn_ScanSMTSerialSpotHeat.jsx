@@ -497,7 +497,6 @@ function fn_ScanSMTSerialSpotHeat() {
         REMARK: "",
       });
     }
-console.log(dtData,"dtData")
     return dtData;
   };
 
@@ -631,6 +630,7 @@ console.log(hfSerialCount,"hfSerialCount")
   //   newValues[index] = event.target.value.trim().toUpperCase();
   //   settxtSerial(newValues);
   // };
+  
   let newValues = [];
   const handleSerialChange = async (index, event) => {
     newValues[index] = event.target.value.trim().toUpperCase();
