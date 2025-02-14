@@ -331,6 +331,7 @@ function ScanSMTSerialShtCopy() {
                               textTransform: "uppercase",
                             }}
                             maxLength="30"
+                            ref={(el) => (txtSerialClear.current[index] = el)}
                             // value={txtSerial[index]}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {

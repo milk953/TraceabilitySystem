@@ -200,6 +200,11 @@ function fn_ScanSMTSerialShtCopy() {
   };
 
   const handle_Cancel_Click = async () => {
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     setGvScanResult([]);
     setLblResultState(false);
     setMode("SERIAL");
@@ -211,7 +216,7 @@ function fn_ScanSMTSerialShtCopy() {
     }else{
       SetFocus("txtbackSide_0");
     }
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
   };
   const handle_txtlotNo_Change = async (e) => {
     let strLotData = [];
@@ -934,7 +939,12 @@ function fn_ScanSMTSerialShtCopy() {
       }
 
       setGvScanResult(dtSerial);
-      setTxtSerial(gvSerial.map(() => ""));
+      // setTxtSerial(gvSerial.map(() => ""));
+      Object.values(txtSerialClear.current).forEach((input) => {
+        if (input) input.value = "";
+      });
+      setTxtSerial([])
+      txtSerialref.current = {};
       getIntitiaSheet();
       getInitialSerial();
     } else {
