@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import {useLoading} from "../../loading/fn_loading";  
 import {DataConfig} from "../Common/function_Common";
 
@@ -140,17 +140,22 @@ function fn_ScanSerialNo() {
   };
   
   //btnHandle  
-  const handle_Save_Click = () => {
+  const handle_Save_Click = (SerialArray) => {
   
     setLblErrorState(false);
-    setSerialDataTray();
+    setSerialDataTray(SerialArray);
   };
   const handle_Cancel_Click = () => {
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     setGvSerial([]);
     setHideImg(true);
     setGvSerialResult([]);
     SetFocus("txtSerial_0");
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
     setLblErrorState(false);
     setLblResultState(false);
     setMode("SERIAL");
@@ -159,7 +164,12 @@ function fn_ScanSerialNo() {
   };
   const handle_BtnBack_Click = () => {
     setPcs("");
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     Setdisable("enable", "txtPCS");
     setLblResultState(false);
     setGvSerialState(false);
@@ -168,21 +178,36 @@ function fn_ScanSerialNo() {
     
   };
   const handle_OperatorBack_Click = () => {
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     setGvSerialState(false);
     setLblResultState(false);
     setLblErrorState(false);
     setMode("OP");
   };
   const handle_LotBack_Click = () => {
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     setLblResultState(false);
     setGvSerialState(false);
     setLblErrorState(false);
     setMode("LOT");
   };
   const handle_MagazineBack_Click = () => {
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     setLblResultState(false);
     setGvSerialState(false);
     setLblErrorState(false);
@@ -374,7 +399,8 @@ function fn_ScanSerialNo() {
       hiddenParams.hfCheckSPIB = data[0].prm_sht_spi_b;
     }
   }
-  async function getInputSerial() {
+  async function getInputSerial(txtSerial) {
+    console.log(txtSerial,'txtSerial');
     let dtData = [];
     for (let i = 0; i < gvSerial.length; i++) {
       dtData.push({
@@ -514,9 +540,22 @@ function fn_ScanSerialNo() {
       }
     }
   };
-  async function setSerialDataTray() {
+  const txtSerialref = useRef({});
+  const txtSerialClear = useRef([]);
+  const txtSerialChangeRef = (index, value) => {
+    txtSerialref.current[index] = value;
+  }
+  const handleSaveRef =  ()  => {
+    const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
+    const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
+    setTxtSerial(SerialArray);
+    requestAnimationFrame(() => {
+      handle_Save_Click(SerialArray);
+    });
+  }
+  async function setSerialDataTray(SerialArray) {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
-    let dtSerial = await getInputSerial();
+    let dtSerial = await getInputSerial(SerialArray);
     await getData("getProductSerialMaster", product);
     let _bolTrayError = false;
     let _bolError = false;
@@ -675,7 +714,12 @@ function fn_ScanSerialNo() {
       let result = await getData("GetCountSerialByLotMagazine", lotNo);
       hiddenParams.hfSerialCount = parseInt(result);
       setTotal(result);
-      setTxtSerial(gvSerial.map(() => ""))
+      // setTxtSerial(gvSerial.map(() => ""))
+      Object.values(txtSerialClear.current).forEach((input) => {
+        if (input) input.value = "";
+      });
+      setTxtSerial([])
+      txtSerialref.current = {};
       setMode("SERIAL");
       
     }
@@ -729,7 +773,11 @@ function fn_ScanSerialNo() {
     gvSerialResult,
     getRowClassName,
     lblErrorState,
-    lblError
+    lblError,
+    txtSerialref,//newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   };
 }
 

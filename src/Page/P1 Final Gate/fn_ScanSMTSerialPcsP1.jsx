@@ -1,6 +1,6 @@
 import { Tag } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { useLoading } from "../../loading/fn_loading";
 import ExcelJS from "exceljs";
 import { saveAs } from 'file-saver';
@@ -254,7 +254,12 @@ function fn_ScanSMTSerialPcsP1() {
 
   const ibtBack_Click = () => {
     setddlProductState(false);
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     setlblResultState(false);
     setProductSelected(ddlproduct[0].prd_name);
     setScanLot("");
@@ -266,13 +271,18 @@ function fn_ScanSMTSerialPcsP1() {
     setHideImg(true);
   };
   const btnCancel_Click = () => {
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     SetFocus("txtSerial_0");
     setlblResultState(false);
     setHideImg(true);
   };
-  const btnSvae_Click = () => {
-    setSerialDataTray();
+  const btnSvae_Click = (SerialArray) => {
+    setSerialDataTray(SerialArray);
   };
   const ddlproduct_Change = async (e) => {
     await getData("getProductSerialMaster", e);
@@ -544,7 +554,7 @@ function fn_ScanSMTSerialPcsP1() {
     setGvSerial(dtData);
     setpanalSerialState(true);
   }
-  async function getInputSerial() {
+  async function getInputSerial(txtSerial) {
     let dtData = [];
     for (let i = 0; i < gvSerial.length; i++) {
       let row = {
@@ -597,11 +607,25 @@ function fn_ScanSMTSerialPcsP1() {
       }
     }
   };
-  async function setSerialDataTray() {
+  const txtSerialref = useRef({});
+    const txtSerialClear = useRef([]);
+    const txtSerialChangeRef = (index, value) => {
+      txtSerialref.current[index] = value;
+    }
+    const handleSaveRef =  ()  => {
+      const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
+      const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
+      setTxtSerial(SerialArray);
+      requestAnimationFrame(() => {
+        btnSvae_Click(SerialArray);
+      });
+    }
+  async function setSerialDataTray(SerialArray) {
     setlblSerialNG(0);
     setlblErrorState(false);
     showLoading('กำลังบันทึก กรุณารอสักครู่');
-    let dtSerial = await getInputSerial();
+    let dtSerial = await getInputSerial(SerialArray);
+    console.log(dtSerial,"dtSerial");
     await getData("getProductSerialMaster", productSelected);
     let _strLot = lblLot;
     let _strPrdName = productSelected;
@@ -1062,7 +1086,12 @@ function fn_ScanSMTSerialPcsP1() {
       setlblLotTotal(dtLotPassCount);
     }
     // btnCancel_Click();
-    setTxtSerial(gvSerial.map(() => ""));
+    // setTxtSerial(gvSerial.map(() => ""));
+    Object.values(txtSerialClear.current).forEach((input) => {
+      if (input) input.value = "";
+    });
+    setTxtSerial([])
+    txtSerialref.current = {};
     SetFocus("txtSerial_0");
     hideLoading();
     scrollToTop();
@@ -1210,7 +1239,11 @@ function fn_ScanSMTSerialPcsP1() {
     btnSvae_Click,
     handletxtSerialChange,
     setSerialDataTray,
-    getRowClassName
+    getRowClassName,
+    txtSerialref, //newadding
+    handleSaveRef, //newadding
+    txtSerialChangeRef, //newadding
+    txtSerialClear, //newadding
   };
 }
 
