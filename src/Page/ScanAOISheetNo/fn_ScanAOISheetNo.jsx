@@ -31,7 +31,7 @@ function fn_ScanAOISheetNo() {
   const [gvSerial, setgvSerial] = useState([]);
   const [pnlResult, setpnlResult] = useState(false);
   const [lblSEQ, setlblSEQ] = useState("");
-  const [txtgvSerial, settxtgvSerial] = useState("");
+  const [txtgvSerial, settxtgvSerial] = useState([]);
   const [lblResult, setlblResult] = useState("");
   const [lblResultcolor, setlblResultcolor] = useState("green");
   const [gvScanResult, setgvScanResult] = useState({
@@ -260,39 +260,45 @@ function fn_ScanAOISheetNo() {
     SetMode("LOT");
   };
 
-  const handleChangeSerial = (index, e) => {
-    const trimmedValue = e.target.value.trim().toUpperCase();
-    const newValue = [...txtgvSerial];
-    newValue[index] = trimmedValue;
-    settxtgvSerial(newValue);
+  // const handleChangeSerial = (index, e) => {
+  //   const trimmedValue = e.target.value.trim().toUpperCase();
+  //   const newValue = [...txtgvSerial];
+  //   newValue[index] = trimmedValue;
+  //   settxtgvSerial(newValue);
+  // };
+
+  let newValues = [];
+  const handleChangeSerial = async (index, event) => {
+    newValues[index] = event.target.value.trim().toUpperCase();
+    return newValues;
   };
 
-  const btnSave_Click = async () => {
+  const btnSave_Click = async (txtgvSerial) => {
     let CheckValue = false;
     if (hfMode === "SERIAL") {
-      await setSerialDataTray();
-      settxtgvSerial("");
-      setTimeout(() => {
-        inputSerial.current[0].focus();
-      }, 0);
-      // if (Array.isArray(txtgvSerial)) {
-      //   const Value = txtgvSerial.some((item) => item !== "");
-      //   CheckValue = Value;
-      // }
-      // if (txtgvSerial !== "" && CheckValue !== false) {
-      //   setpnlLog(false);
-      //   await setSerialDataTray();
-      //   const newValues = [];
-      //   settxtgvSerial(newValues);
-      //   await new Promise((resolve) => setTimeout(resolve, 1000));
-      // } else {
-      //   setlblLog(`Please Input Sheet No.`);
-      //   setpnlLog(true);
-      //   setTimeout(() => {
-      //     inputSerial.current[0].focus();
-      //   }, 0);
-      //   settxtgvSerial("");
-      // }
+      // await setSerialDataTray();
+      // settxtgvSerial(Array(gvSerial.length).fill(""));
+      // setTimeout(() => {
+      //   inputSerial.current[0].focus();
+      // }, 0);
+      if (Array.isArray(txtgvSerial)) {
+        const Value = txtgvSerial.some((item) => item !== "");
+        CheckValue = Value;
+      }
+      if (txtgvSerial !== "" && CheckValue !== false) {
+        setpnlLog(false);
+        await setSerialDataTray(txtgvSerial);
+      } else {
+        setlblLog(`Please Input Sheet No.`);
+        setpnlLog(true);
+        setTimeout(() => {
+          inputSerial.current[0].focus();
+        }, 0);
+        settxtgvSerial(Array(gvSerial.length).fill(""));
+        inputSerial.current.forEach((input) => {
+          if (input) input.value = '';
+        });
+      }
     }
   };
 
@@ -300,7 +306,10 @@ function fn_ScanAOISheetNo() {
     SetMode("SERIAL");
     // setgvScanResult(prevState => ({ ...prevState, visible: false, value: [] }));
     setgvReject((prevState) => ({ ...prevState, visible: false, value: [] }));
-    settxtgvSerial("");
+    settxtgvSerial(Array(gvSerial.length).fill(""));
+    inputSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     setlblResult("");
     setpnlLog(false);
   };
@@ -430,7 +439,10 @@ function fn_ScanAOISheetNo() {
       setibtLayerBack((prevState) => ({ ...prevState, disabled: false }));
       setpnlSerial(false);
       setgvSerial([]);
-      settxtgvSerial("");
+      settxtgvSerial(Array(gvSerial.length).fill(""));
+      inputSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
       setpnlResult(false);
       setlblResult("");
       //setgvScanResult(prevState => ({ ...prevState, value: GetAOISheetDataByLot("", txtLayer) }));
@@ -472,6 +484,10 @@ function fn_ScanAOISheetNo() {
         dtData.push(drRow);
       }
       setgvSerial(dtData);
+      settxtgvSerial(Array(dtData.length).fill(""))
+      inputSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
       if (dtData.length > 0) {
         setTimeout(() => {
           inputSerial.current[0].focus();
@@ -483,8 +499,8 @@ function fn_ScanAOISheetNo() {
     }
   };
 
-  const setSerialDataTray = async () => {
-    const dtSerial = getInputSerial();
+  const setSerialDataTray = async (txtgvSerial) => {
+    const dtSerial = getInputSerial(txtgvSerial);
     let _bolTrayError = false;
     let _bolError = false;
     let _strScanResultAll = "OK";
@@ -536,7 +552,7 @@ function fn_ScanAOISheetNo() {
 
               _bolError = true;
               _bolTrayError = true;
-  
+
             }
           }
 
@@ -554,7 +570,7 @@ function fn_ScanAOISheetNo() {
 
                 _bolError = true;
                 _bolTrayError = true;
-   
+
               }
             }
 
@@ -567,7 +583,7 @@ function fn_ScanAOISheetNo() {
 
                 _bolError = true;
                 _bolTrayError = true;
-         
+
               }
             }
           }
@@ -582,7 +598,7 @@ function fn_ScanAOISheetNo() {
 
               _bolError = true;
               _bolTrayError = true;
-            
+
             }
           }
 
@@ -603,7 +619,7 @@ function fn_ScanAOISheetNo() {
 
               _bolError = true;
               _bolTrayError = true;
-           
+
             }
           }
 
@@ -617,7 +633,7 @@ function fn_ScanAOISheetNo() {
           dtSerial[i].REMARK = "Barcode can not scan / สแกนบาร์โค้ดไม่ได้";
           dtSerial[i].ROW_UPDATE = "N";
           _bolTrayError = true;
-      
+
         }
         _intRowSerial = _intRowSerial + 1;
       }
@@ -665,7 +681,7 @@ function fn_ScanAOISheetNo() {
           .then((res) => {
             dtReject = res.data;
           });
-    
+
         if (dtReject.length > 0) {
           setgvReject((prevState) => ({
             ...prevState,
@@ -716,7 +732,7 @@ function fn_ScanAOISheetNo() {
     hideLoading();
   };
 
-  const getInputSerial = () => {
+  const getInputSerial = (txtgvSerial) => {
     let dtData = [];
     let intRow = 0;
 
@@ -750,7 +766,7 @@ function fn_ScanAOISheetNo() {
   };
 
   const btnDeleteClick = async (rowno) => {
- 
+
     let data = [];
 
     if (!isNaN(rowno)) {
@@ -770,7 +786,7 @@ function fn_ScanAOISheetNo() {
         );
 
         data = deleteRes.data.p_error;
-  
+
 
         await swal.fire("Success", "You delete data success", "success");
 
@@ -995,6 +1011,7 @@ function fn_ScanAOISheetNo() {
     pnlResult,
     pnlLog,
     lblLog,
+    settxtgvSerial
   };
 }
 
