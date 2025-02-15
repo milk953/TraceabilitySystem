@@ -728,7 +728,10 @@ function fn_ScanAOISheetNo() {
           }, 0);
         }
       });
-
+      settxtgvSerial(Array(gvSerial.length).fill(""));
+      inputSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
     hideLoading();
   };
 
