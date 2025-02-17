@@ -1737,7 +1737,6 @@ function fn_rpt_SheetTraceView() {
     hypLotNo,
     ddlCavity,
     selectddlCavity,
-    setselectddlCavity,
     lblShtMachine,
     hypMaterial,
     btnAOMEFPC,
@@ -1793,9 +1792,6 @@ function fn_rpt_SheetTraceView() {
     lblCavity,
     txtAOIEFPCMachine,
     columnstblData1,
-    fntxtSheetNo,
-
-    // onClick={() => btnAllLInk('AOI')}
   };
 }
 

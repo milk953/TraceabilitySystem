@@ -720,12 +720,13 @@ console.log(hfSerialCount,"hfSerialCount")
     txtTotalPCS,
     settxtTotalPCS,
     fcGvSerial_txtSerial_0,
+    handleTotal_Sht,
+    fcTotalSht,
     fcProduct,
     fcLotNo,
     lblLog,
     pnlLog,
     ibtBack_Click,
-    handleTotal_Sht,
     btnSave_Click,
     setSlProduct,
     hfMode,
@@ -735,14 +736,13 @@ console.log(hfSerialCount,"hfSerialCount")
     lblResult,
     visiblgvSerial,
     btnCancel_Click,
-    visiblpnlSerial,
     fcGvSerial,
     visiblegvScanResult,
     visibledll_product,
     dataGvSerial,
     columns,
     getRowClassName,
-    settxtSerial
+    settxtSerial,
   };
 }
 
