@@ -75,7 +75,7 @@ function ScanSMTRoollSht() {
     txtRollLeaf_TextChanged,
     ibtCancel_Click
   } = Fn_ScanSMTRollSht();
-let data
+let data =[]
   return (
     <div>
       <Hearder />
@@ -308,12 +308,9 @@ let data
                       >
                         {index + 1}
                       </TableCell>
-                      <TableCell style={{padding:0}}>
-                     
+                      <TableCell >
                         <input
                         key={index}
-                          // size="small"
-                          // fullWidth
                           className="styleSeraial"
                           ref={(el) => (fc_GvSerial.current[index] = el)}
                           defaultValue={LeafNo}
@@ -327,7 +324,6 @@ let data
                               if (index < GvSerial.value.length - 1) {
                                 fc_GvSerial.current[index + 1].focus();
                               } else {
-                     
                                 event.target.blur();
                                 SettxtLeafNo(data);
                                 Bt_Save(data);

@@ -111,7 +111,13 @@ function fn_Change_PartialNo() {
     }
     setgvSerial((prevState) => ({ ...prevState, visble: "", value: dtData }));
     settxtSerialNo(Array(gvSerial.value.length).fill(""));
+    fc_txtSerialOld.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     settxtSerialNoNew(Array(gvSerial.value.length).fill(""));
+    fc_txtSerialNew.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     sethfSerialCount(txtTotalPcs);
     if (dtData.length > 0) {
       setTimeout(() => {
@@ -120,9 +126,9 @@ function fn_Change_PartialNo() {
     }
   };
   
-  const getInputSerial = async (strError) => {
+  const getInputSerial = async (strError,txtSerialNoNew,txtSerialNo) => {
+    // console.log(txtSerialNoNew,txtSerialNo,'mamamamamama')
     let dtData = [];
-
     for (let intSeq = 0; intSeq < gvSerial.value.length; intSeq++) {
       dtData.push({
         SEQ: intSeq + 1,
@@ -163,12 +169,19 @@ function fn_Change_PartialNo() {
     settxtTotalPcs(1);
     setgvSerial((prevState) => ({ ...prevState, value: [{SEQ:1}] }));
     settxtSerialNo(Array(gvSerial.value.length).fill(""));
+    fc_txtSerialOld.current.forEach((input) => {
+      if (input) input.value = '';
+    });
+    settxtSerialNoNew(Array(gvSerial.value.length).fill(""));
+    fc_txtSerialNew.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     setTimeout(() => {
       fc_total.current.focus();
     }, 300);
   };
 
-  const BtnSubmit_Click = async () => {
+  const BtnSubmit_Click = async (txtSerialNoNew,txtSerialNo) => {
     // setloading(true)
 
     Swal.fire({
@@ -191,7 +204,7 @@ function fn_Change_PartialNo() {
         let strNewSerial = "";
         let CheckerOldSerialShtFlg = true;
         let dtData = [{}];
-        const result = await getInputSerial(strError);
+        const result = await getInputSerial(strError,txtSerialNoNew,txtSerialNo);
         [dtData, strError] = result;
         if (strError != "") {
           setTimeout(() => {
@@ -300,16 +313,28 @@ function fn_Change_PartialNo() {
     hideLoading();
   };
 
+  // const handleSerialOldChange = async (index, event) => {
+  //   const newValues = [...txtSerialNo];
+  //   newValues[index] = event.target.value;
+  //   settxtSerialNo(newValues);
+  // };
+
+  // const handleSerialNewChange = async (index, event) => {
+  //   const newValues = [...txtSerialNoNew];
+  //   newValues[index] = event.target.value;
+  //   settxtSerialNoNew(newValues);
+  // };
+
+  let newValuesOld = [];
   const handleSerialOldChange = async (index, event) => {
-    const newValues = [...txtSerialNo];
-    newValues[index] = event.target.value;
-    settxtSerialNo(newValues);
+    newValuesOld[index] = event.target.value.trim().toUpperCase();
+    return newValuesOld;
   };
 
+  let newValuesNew = [];
   const handleSerialNewChange = async (index, event) => {
-    const newValues = [...txtSerialNoNew];
-    newValues[index] = event.target.value;
-    settxtSerialNoNew(newValues);
+    newValuesNew[index] = event.target.value.trim().toUpperCase();
+    return newValuesNew;
   };
 
   return {

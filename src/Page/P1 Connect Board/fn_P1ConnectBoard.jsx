@@ -219,11 +219,7 @@ function fn_P1ConnectBoard() {
       disbled: false,
       style: {},
     }));
-    // setGvBackSide((prevState) => ({ ...prevState, visble: "none", value: "" }));
-    // settxtSideBack(Array(GvBackSide.value.length).fill(""));
-        // settxtSerial(Array(GvSerial.value.length).fill(""));
     setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
-    // settxtSerial(Array(GvSerial.value.length).fill(""));
     setlblResult((prevState) => ({
       ...prevState,
       value: "",
@@ -250,6 +246,9 @@ function fn_P1ConnectBoard() {
    
     settxtSideBack(Array(GvBackSide.value.length).fill(""));
     settxtSerial(Array(GvSerial.value.length).fill(""));
+    fcGvSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     setlblResult((prevState) => ({
       ...prevState,
       value: "",
@@ -268,10 +267,10 @@ function fn_P1ConnectBoard() {
     }, 300);
   };
 
-  const btnSave_Click = async () => {
+  const btnSave_Click = async (txtSerial) => {
    
     if (hfMode == "SERIAL") {
-      setSerialData();
+      setSerialData(txtSerial);
     }
   };
 
@@ -483,6 +482,9 @@ function fn_P1ConnectBoard() {
               visble: "none",
             }));
             settxtSerial(Array(GvSerial.value.length).fill(""));
+            fcGvSerial.current.forEach((input) => {
+              if (input) input.value = '';
+            });
             setlblLog((prevState) => ({
               ...prevState,
               value: strError,
@@ -501,6 +503,9 @@ function fn_P1ConnectBoard() {
           settxtLot((prevState) => ({ ...prevState, value: "" }));
           setGvSerial((prevState) => ({ ...prevState, visble: "none" }));
           settxtSerial(Array(GvSerial.value.length).fill(""));
+          fcGvSerial.current.forEach((input) => {
+            if (input) input.value = '';
+          });
           setlblLog((prevState) => ({
             ...prevState,
             value: "Invalid lot no.",
@@ -519,6 +524,9 @@ function fn_P1ConnectBoard() {
         settxtLot((prevState) => ({ ...prevState, value: "" }));
         setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
         settxtSerial(Array(GvSerial.value.length).fill(""));
+        fcGvSerial.current.forEach((input) => {
+          if (input) input.value = '';
+        });
         setlblLog((prevState) => ({
           ...prevState,
           value: "Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด",
@@ -572,6 +580,9 @@ function fn_P1ConnectBoard() {
       setGvBackSide((prevState) => ({ ...prevState, visble: "none", value: "" }));
       settxtSideBack(Array(GvBackSide.value.length).fill(""));
       settxtSerial(Array(GvSerial.value.length).fill(""));
+      fcGvSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
       setGvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
       settxtLotRef((prevState) => ({...prevState, value: ""}));
       setlblTotalSht((prevState) => ({ ...prevState, value: "" }));
@@ -715,7 +726,7 @@ function fn_P1ConnectBoard() {
     return dtData1;
   };
 
-  const getInputSerial = async () => {
+  const getInputSerial = async (txtSerial) => {
     const dtData = [];
     let intRow = 0;
     let strFrontSide = "";
@@ -772,13 +783,16 @@ function fn_P1ConnectBoard() {
         dtData.push(drRow);
       }
     }
-            settxtSerial(Array(GvSerial.value.length).fill(""));
+            
     setGvSerial((prevState) => ({
       ...prevState,
       value: dtData,
       visble: "",
     }));
-
+    settxtSerial(Array(dtData.length).fill(""));
+    fcGvSerial.current.forEach((input) => {
+      if (input) input.value = '';
+    });
     return dtData;
   };
 
@@ -821,10 +835,10 @@ function fn_P1ConnectBoard() {
     return _dtData;
   };
 
-  const setSerialData = async () => {
+  const setSerialData = async (txtSerial) => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     try {
-      let dtSerial = await getInputSerial();
+      let dtSerial = await getInputSerial(txtSerial);
    
       let _strLotData;
       let _strLotRefData;
@@ -1525,11 +1539,10 @@ function fn_P1ConnectBoard() {
     settxtSideBack(newData);
   };
 
-  const handleSerialChange = (index, event) => {
-    const newData = [...txtSerial];
-    newData[index] = event.target.value.trim().toUpperCase();;
-  
-    settxtSerial(newData);
+  let newValues = [];
+  const handleSerialChange = async (index, event) => {
+    newValues[index] = event.target.value.trim().toUpperCase();
+    return newValues;
   };
 
   const columns = [

@@ -83,7 +83,7 @@ function ConfirmBarcodeGrade() {
     columns,
     settxtSerial
   } = fn_ConfirmBarcodeGrade();
-  let data  
+  let data  =[]
   return (
     <div>
       <Hearder />
@@ -414,7 +414,7 @@ function ConfirmBarcodeGrade() {
                   {console.log(txtSerial,'dhvfhvfdgfhds')}
                   <TableBody>
                     {txtSerial.map((serial, index) => (
-                      <tr
+                      <tr 
                         key={index}
                         style={{ borderBottom: "1px solid  #d9d9d9" }}
                       >

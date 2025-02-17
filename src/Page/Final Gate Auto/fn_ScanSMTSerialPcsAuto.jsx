@@ -548,7 +548,10 @@ function fn_ScanSMTSerialPcsChrome() {
       setlblSerialNG("");
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
-      settxtSerial("");
+      settxtSerial([]);
+      fc_txtSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
       setTimeout(() => {
         fc_txtLotNo.current.focus();
       }, 300);
@@ -619,7 +622,10 @@ function fn_ScanSMTSerialPcsChrome() {
       }));
       setlblLog((prevState) => ({ ...prevState, visble: "none" }));
       setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
-      settxtSerial("");
+      settxtSerial([]);
+      fc_txtSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
 
       setTimeout(() => {
         fc_txtPackingNo.current.focus();
@@ -672,8 +678,12 @@ function fn_ScanSMTSerialPcsChrome() {
       });
     }
     setgvSerial((prevState) => ({ ...prevState, value: dtData }));
-    settxtSerial(Array(gvSerial.value.length).fill(""));
-    if (gvSerial.value.length > 0) {
+    settxtSerial(Array(dtData.length).fill(""));
+    // settxtSerial([]);
+      fc_txtSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
+    if (dtData.length.length > 0) {
       setTimeout(() => {
         fc_txtSerial.current[0].focus();
       }, 300);
@@ -712,9 +722,9 @@ function fn_ScanSMTSerialPcsChrome() {
     SetMode("SERIAL");
   };
 
-  const btnSave_Click = async () => {
+  const btnSave_Click = async (txtSerial) => {
     if (hfMode == "SERIAL") {
-      setSerialDataTray();
+      setSerialDataTray(txtSerial);
     }
   };
 
@@ -798,7 +808,7 @@ function fn_ScanSMTSerialPcsChrome() {
     }
   };
 
-  const getInputSerial = () => {
+  const getInputSerial = (txtSerial) => {
     let dtData = [];
     let intRow = 0;
 
@@ -806,7 +816,7 @@ function fn_ScanSMTSerialPcsChrome() {
       intRow++;
       let drRow = {
         SEQ: intRow,
-        SERIAL: txtSerial[intSeq].trim().toUpperCase(),
+        SERIAL: txtSerial[intSeq] ? txtSerial[intSeq].trim().toUpperCase() : "",
         REJECT: "",
         TOUCH_UP: "",
         REJECT2: "",
@@ -829,7 +839,7 @@ function fn_ScanSMTSerialPcsChrome() {
 
       if (drRow.SERIAL !== "") {
         for (let intNo = 0; intNo < intRow - 1; intNo++) {
-          if (drRow.SERIAL === txtSerial[intNo].trim().toUpperCase()) {
+          if (drRow.SERIAL === txtSerial[intNo]) {
             drRow.ROW_COUNT = 9;
             break;
           }
@@ -842,13 +852,13 @@ function fn_ScanSMTSerialPcsChrome() {
     return dtData;
   };
 
+  let newValues = [];
   const handleSerialChange = async (index, event) => {
-    const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim().toUpperCase();
-    settxtSerial(newValues);
+    return newValues;
   };
 
-  const setSerialDataTray = async () => {
+  const setSerialDataTray = async (txtSerial) => {
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     setlblSerialNG(0);
     setlblLog((prevState) => ({
@@ -857,7 +867,7 @@ function fn_ScanSMTSerialPcsChrome() {
       visble: "none",
     }));
     try {
-      let dtSerial = getInputSerial();
+      let dtSerial = getInputSerial(txtSerial);
       let _strLot = lblLot.trim().toUpperCase();
       let _strPrdName = Sl_Product.value;
       let _strTray;
