@@ -89,7 +89,9 @@ function ScanAOISheetNo() {
     pnlResult,
     pnlLog,
     lblLog,
+    settxtgvSerial
   } = fn_ScanAOISheetNo();
+  let data = [];
 
   return (
     <div>
@@ -386,7 +388,7 @@ function ScanAOISheetNo() {
                           {gvSerial[index].SEQ}
                         </TableCell>
                         <TableCell>
-                          <TextField
+                          {/* <TextField
                             className="input_txt"
                             size="small"
                             fullWidth
@@ -396,6 +398,30 @@ function ScanAOISheetNo() {
                               handleChangeSerial(index, e);
                             }}
                             onKeyDown={(e) => handleKeygvSerial(e, index)}
+                          /> */}
+                          <input
+                            className="styleSeraial"
+                            type="text"
+                            // defaultValue={serial}
+                            ref={(el) =>
+                              (inputSerial.current[index] = el)
+                            }
+                            onChange={(e) => {
+                              handleChangeSerial(index, e);
+                            }}
+                            onKeyDown={async (event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                                data = await handleChangeSerial(index, event);
+                                if (index < gvSerial.length - 1) {
+                                  inputSerial.current[index + 1].focus();
+                                } else {
+                                  settxtgvSerial(data);
+                                  btnSave_Click(data);
+                                  event.target.blur();
+                                }
+                              }
+                            }}
                           />
                         </TableCell>
                       </TableRow>
@@ -414,7 +440,10 @@ function ScanAOISheetNo() {
                   <AntButton
                     className="ButtonReplace"
                     type="primary"
-                    onClick={btnSave_Click}
+                    onClick={() => {
+                      settxtgvSerial(data);
+                      btnSave_Click(data);
+                    }}
                   >
                     Save
                   </AntButton>

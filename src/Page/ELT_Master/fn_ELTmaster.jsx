@@ -1,9 +1,9 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {DataConfig} from "../Common/function_Common";
+import { DataConfig } from "../Common/function_Common";
 function fn_ELTmaster() {
-  const{ConfigData} = DataConfig();
+  const { ConfigData } = DataConfig();
   // count pageload
   const [lblUser1, setlblUser1] = useState("");
   const [lblResult, setlblResult] = useState({ text: "", styled: {} });
@@ -21,7 +21,7 @@ function fn_ELTmaster() {
   let IP = "";
   let plant_code = ConfigData.FACTORY;
   IP = localStorage.getItem("ipAddress");
- 
+
   useEffect(() => {
     let Idcode = localStorage.getItem("IDCode");
     sethfUserName(Idcode);
@@ -41,8 +41,8 @@ function fn_ELTmaster() {
   };
 
   const Search_Data = async () => {
-    setselectddlReason1("")
-    settxtUpdateBy("")
+    setselectddlReason1("");
+    settxtUpdateBy("");
     setlblResult({
       text: "",
       styled: { color: "" },
@@ -69,21 +69,32 @@ function fn_ELTmaster() {
             settxtUpdateBy(response.data[0].rej_operator_code);
             setlblResult({
               text: "Data Read Complete",
-              styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
+              styled: {
+                color: "white",
+                backgroundColor: "green",
+                fontSize: "50px",
+              },
             });
           } else {
             setlblResult({
               text: "Data reject can not modify",
-              styled: { color: "white" ,backgroundColor:'red', fontSize:'50px' },
+              styled: {
+                color: "white",
+                backgroundColor: "red",
+                fontSize: "50px",
+              },
             });
             settxtSerialNo_TextChanged("");
             FctxtSerial.current.focus();
           }
-        } 
-        else {
+        } else {
           setlblResult({
             text: "Data Read Complete",
-            styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
+            styled: {
+              color: "white",
+              backgroundColor: "green",
+              fontSize: "50px",
+            },
           });
         }
       });
@@ -93,7 +104,7 @@ function fn_ELTmaster() {
     if (selectddlReason1.trim() == "") {
       setlblResult({
         text: "Please select before reject reason.",
-        styled: { color: "white" ,backgroundColor:'red', fontSize:'50px' },
+        styled: { color: "white", backgroundColor: "red", fontSize: "50px" },
       });
     } else {
       await axios
@@ -120,20 +131,32 @@ function fn_ELTmaster() {
             if (selectddlReason1 == "DELETE") {
               setlblResult({
                 text: "Data Delete Complete.",
-                styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
+                styled: {
+                  color: "white",
+                  backgroundColor: "green",
+                  fontSize: "50px",
+                },
               });
               settxtUpdateBy("");
             } else {
               setlblResult({
                 text: "Data Update Complete.",
-                styled: { color: "white",backgroundColor:'green' , fontSize:'50px' },
+                styled: {
+                  color: "white",
+                  backgroundColor: "green",
+                  fontSize: "50px",
+                },
               });
               settxtUpdateBy(hfUserName);
             }
           } else {
             setlblResult({
               text: res.data.message,
-              styled: { color: "white",backgroundColor:'red' , fontSize:'50px' },
+              styled: {
+                color: "white",
+                backgroundColor: "red",
+                fontSize: "50px",
+              },
             });
           }
         })
@@ -146,16 +169,16 @@ function fn_ELTmaster() {
     }
   };
   const handleBtnCancel = async () => {
-    settxtSerialNo_TextChanged("")
-    setselectddlReason1("")
-    settxtUpdateBy("")
+    settxtSerialNo_TextChanged("");
+    setselectddlReason1("");
+    settxtUpdateBy("");
     setlblResult({
       text: "",
       styled: { color: "" },
     });
     FctxtSerial.current.focus();
-  }
-  
+  };
+
   return {
     lblUser1,
     lblResult,
@@ -168,7 +191,7 @@ function fn_ELTmaster() {
     Search_Data,
     Submit,
     FctxtSerial,
-    handleBtnCancel
+    handleBtnCancel,
   };
 }
 

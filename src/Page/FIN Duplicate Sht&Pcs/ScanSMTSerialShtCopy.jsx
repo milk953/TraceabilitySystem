@@ -407,12 +407,6 @@ function ScanSMTSerialShtCopy() {
                           ? "green"
                           : lblResult.text === "NG"
                           ? "red"
-                          : "white",
-                      background:
-                        lblResult.text === "OK"
-                          ? "green"
-                          : lblResult.text === "NG"
-                          ? "red"
                           : "red",
                     }}
                   >

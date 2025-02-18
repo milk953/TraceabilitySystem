@@ -400,7 +400,6 @@ function fn_ScanSerialNo() {
     }
   }
   async function getInputSerial(txtSerial) {
-    console.log(txtSerial,'txtSerial');
     let dtData = [];
     for (let i = 0; i < gvSerial.length; i++) {
       dtData.push({

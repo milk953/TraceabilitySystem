@@ -238,7 +238,6 @@ let data=[]
                 
 
                   {/* {Array.from({ length: gvSerial.value.length }, (_, index) => (\ */}
-                 { console.log(txtSerial)}
                   {txtSerial.map((serial, index) => (
                     <tr key={index}>
                       <td
