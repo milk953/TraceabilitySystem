@@ -584,7 +584,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               let _intCount = 0;
               let _strrollLeaf = txtRollLeaf;
               _intCount  = await getData("GetRollLeafDuplicate", {strRollLeaf: txtRollLeaf,dtRowLeaf: dtRowLeaf});
-              console.log(_intCount);
               if ((parseInt(_intCount) == 1)) {
                 _bolError = true;
                 _strScanResultAll = "NG";
@@ -916,7 +915,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setlblLogState(false);
     setlblLog("");
     await getData("getProductSerialMaster", productSelect);
-    console.log(hfConnRollLength)
     if (txtRollLeaf != "" && txtRollLeaf.length == parseInt(hfConnRollLength)) {
       
       let strRollProduct = hfRollNo + hfCheckRollPrd;
@@ -1124,7 +1122,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
     const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
     setTxtSerial(SerialArray);
-    console.log(SerialArray);
     requestAnimationFrame(() => {
       btnSave_Click(SerialArray);
     });
@@ -1372,9 +1369,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           _dtRollLeaf: param.dtRowLeaf,
         })
         .then((res) => {
-          console.log(res.data);
           result =  res.data.intCount;
-          console.log(result);
         })
         .catch((error) => {
           setlblLog(`Error ${error.message}`);

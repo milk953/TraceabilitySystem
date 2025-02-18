@@ -610,7 +610,6 @@ function fn_ScanSMTSerialSht() {
       setTimeout(() => {
         inputSideBack.current[0].focus();
       }, 300);
-      console.log("gfgdfg")
       return;
     }
 

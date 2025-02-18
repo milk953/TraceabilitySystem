@@ -7,7 +7,6 @@ import {DataConfig} from "../Common/function_Common";
 
 function fn_rpt_SheetTraceView() {
   const{ConfigData} = DataConfig();
-
   const { showLoading, hideLoading } = useLoading();
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [txtProduct, settxtProduct] = useState("");

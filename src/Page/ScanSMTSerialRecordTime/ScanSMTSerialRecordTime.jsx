@@ -711,7 +711,6 @@ function ScanSMTSerialRecordTime() {
                                 if (index < gvSerialData.length - 1) {
                                   inputgvSerial.current[index + 1].focus();
                                 } else {
-                                  console.log("data", data);
                                   e.target.blur();
                                   settxtgvSerial(data);
                                   btnSaveClick(data);
