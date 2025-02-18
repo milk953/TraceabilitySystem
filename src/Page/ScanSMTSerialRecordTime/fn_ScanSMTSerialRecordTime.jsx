@@ -619,16 +619,7 @@ function fn_ScanSMTSerialRecordTime() {
     if (e.key === "Enter") {
       e.preventDefault();
       const nextIndex = index + 1;
-      console.log(
-        "No. 1 : ",
-        nextIndex,
-        "No. 2 : ",
-        gvSerialData.length,
-        "No. 3 : ",
-        inputgvSerial.current[nextIndex],
-        "No 4 : ",
-        nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]
-      );
+     
       if (nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]) {
         inputgvSerial.current[nextIndex].focus();
       } else if (nextIndex === gvSerialData.length) {
@@ -925,7 +916,7 @@ function fn_ScanSMTSerialRecordTime() {
   const getInputSerial = async (txtgvSerial) => {
     let dtData = [];
     let intRow = 0;
-    console.log("gvSerialData", gvSerialData);
+
     for (let intSeq = 0; intSeq < gvSerialData.length; intSeq++) {
       intRow = intRow + 1;
 
@@ -986,7 +977,7 @@ function fn_ScanSMTSerialRecordTime() {
     let bolError = false;
     let bolTrayError = false;
     let dtLotPassCount = [];
-    console.log("dtSerial", dtSerial);
+
     setlblLog("");
     showLoading("กำลังบันทึก กรุณารอสักครู่");
 
@@ -1405,7 +1396,6 @@ function fn_ScanSMTSerialRecordTime() {
   // };
   const btnSaveClick = async (txtgvSerial) => {
     if (hfMode === "SERIAL") {
-      console.log("txtgvSerial : ", txtgvSerial);
       await setSerialDataTray(txtgvSerial);
     }
   };

@@ -1531,7 +1531,6 @@ function fn_ScanSMTSerialShtCopy() {
   //   let _intRow = 0;
   //   let _strShtNoOld = "";
   //   let _strRollNo = "";
-  //   console.log(_dtSerial, "_dtSerial", _strProduct, "_strProduct", _strRollLeaf, "_strRollLeaf");
   //   _strRollNo = hfRollNo;
 
   //   for (let i = 0; i < _dtSerial; i++) {

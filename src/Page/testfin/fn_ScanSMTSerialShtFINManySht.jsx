@@ -944,7 +944,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setlblLogState(false);
     setlblLog("");
     await getData("getProductSerialMaster", productSelect);
-    console.log(hfConnRollLength)
     if (txtRollLeaf != "" && txtRollLeaf.length == parseInt(hfConnRollLength)) {
       
       let strRollProduct = hfRollNo + hfCheckRollPrd;
@@ -1048,7 +1047,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     }    
   };
   async function getInputSerial(txtSerial) {
-    console.log(txtSerial,'BBBBBBBBBBBBBBBBBBBBBBBB')
     await getData("getProductSerialMaster", productSelect);
 
     var dtData = [];
@@ -1151,7 +1149,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   let newValues = []; 
   const handletxtSerialChange = (index, event) => {
     newValues[index] = event.target.value.trim().toUpperCase();
-    console.log(newValues, "newValues");
     return newValues
   };
 

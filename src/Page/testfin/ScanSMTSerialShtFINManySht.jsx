@@ -484,10 +484,8 @@ function ScanSMTSerialShtFINManySht() {
           if (e.key === "Enter") {
             data= handletxtSerialChange(index, e);
             if (index < gvSerial.length - 1) {
-              console.log(data,',<<<<<<')
               document.getElementById(`txtSerial_${index + 1}`).focus();
             } else {
-              console.log("สุดท้าย", data);
               setTxtSerial(data);
               btnSave_Click(data); 
             }

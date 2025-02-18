@@ -486,7 +486,6 @@ let data=[]
                                                             if (event.key === "Enter") {
                                                                 event.preventDefault();
                                                                 data = handleChangeSerial(index, event)
-                                                                console.log(data, 'mmmmmmmmmmmmmmm')
                                                                 if (index < txtgvSerial.length - 1) {
 
                                                                     inputgvSerial.current[

@@ -280,7 +280,6 @@ function fn_ScanSMTConfirmMOTP1() {
   };
 
   const btnSaveClick = async (txtgvSerial) => {
-    console.log(txtgvSerial, 'bbbbbbbbbbbbbbbbbbbbbb')
     let CheckValue = false;
     if (hfMode === "SERIAL") {
       if (Array.isArray(txtgvSerial)) {
@@ -378,7 +377,6 @@ function fn_ScanSMTConfirmMOTP1() {
         SEQ: intRow,
       });
     }
-    console.log(dtData, 'hfSerialCount')
     setgvSerialData(dtData);
     settxtgvSerial(Array(dtData.length).fill(""))
     inputgvSerial.current.forEach((input) => {
@@ -393,7 +391,6 @@ function fn_ScanSMTConfirmMOTP1() {
 
   const setSerialDataTray = async (txtgvSerial) => {
     const dtSerial = await getInputSerial(txtgvSerial);
-    console.log(dtSerial, 'dtSerial')
     let _strLot = "";
     let _strPrdName = selProduct;
     let _strTray = " ";
