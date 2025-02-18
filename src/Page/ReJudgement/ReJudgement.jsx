@@ -135,7 +135,7 @@ function ReJudgement() {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+              <TableCell sx={{ textAlign: "center" }}>
                 Lot No.
               </TableCell>
               <TableCell>
@@ -172,7 +172,7 @@ function ReJudgement() {
       <Table className="ReJudgementTableSecond" component={Card}>
         <TableBody>
           <TableRow>
-            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+            <TableCell sx={{  textAlign: "right" }}>
               Reason :{" "}
             </TableCell>
             <TableCell>
@@ -196,7 +196,7 @@ function ReJudgement() {
                 }))}
               />
             </TableCell>
-            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+            <TableCell sx={{  textAlign: "right" }}>
               Operator :
             </TableCell>
             <TableCell>
@@ -215,7 +215,7 @@ function ReJudgement() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+            <TableCell sx={{  textAlign: "right" }}>
               Re-Judgement :
             </TableCell>
             <TableCell>
@@ -240,7 +240,7 @@ function ReJudgement() {
                 ]}
               />
             </TableCell>
-            <TableCell sx={{ textAlign: "center", textAlign: "right" }}>
+            <TableCell sx={{  textAlign: "right" }}>
               Qualified :
             </TableCell>
             <TableCell>
