@@ -887,8 +887,11 @@ function fn_ConfirmBarcodeGrade() {
 
   const getInputSerial = async (txtSerial) => {
     let dtData = [];
+    const serialLength = parseInt(hfSerialLength, 10);
+  
     let i = 0;
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
+      console.log("serialLength", txtSerial[i].trim().toUpperCase().substring(0, Math.min(txtSerial[i].length, serialLength)));
       for (let intRow = 0; intRow < hfSerialCount; intRow++) {
         dtData.push({
           SHEET: intSht + 1,
@@ -901,7 +904,7 @@ function fn_ConfirmBarcodeGrade() {
             : hfBarcodeErrorValue.includes(txtSerial[intRow]) && txtSerial[intRow]
             ? "X"
             : txtSerial[i].slice(-1),        
-          SERIAL: txtSerial[i] || "",
+          SERIAL: txtSerial[i] ? txtSerial[i].trim().toUpperCase().substring(0, Math.min(txtSerial[i].length, serialLength)) : "",
           GRADE_RESULT: "",
           SCAN_RESULT: "",
           REMARK: "",
@@ -1117,7 +1120,7 @@ function fn_ConfirmBarcodeGrade() {
       //   scrollToTop();
       //     return;
       // }
-
+      console.log("dtSerial", dtSerial);
       const allSerialEmpty = dtSerial.every(
         (item) => item.SERIAL === "" || item.length < 0
       );
@@ -1261,7 +1264,7 @@ function fn_ConfirmBarcodeGrade() {
                   _bolError = true;
                   _strErrorAll = "Serial duplicate/หมายเลขบาร์โค้ดซ้ำ";
                 }
-
+                console.log("_strSerial\\\\\\", _strSerial);
                 if (_strSerial.length == hfSerialLength) {
                   let _strFixDigit = "";
                   const start = parseInt(hfSerialStartDigit);
@@ -1407,7 +1410,7 @@ function fn_ConfirmBarcodeGrade() {
             }
           }
         }
-
+        console.log('กงนี้จ้า',dtSerial)
         if (!Check_Master && hfCheckSheetELT == "Y") {
           let _strReturn = "";
           // dtSerial.strIntSerialLength =hfSerialLength
@@ -1421,6 +1424,7 @@ function fn_ConfirmBarcodeGrade() {
           //   .then((res) => {
 
           //   })
+          
           for (let i = 0; i < dtSerial.length; i++) {
             await axios
               .post("/api/Common/setseriallotshtelttable", {
