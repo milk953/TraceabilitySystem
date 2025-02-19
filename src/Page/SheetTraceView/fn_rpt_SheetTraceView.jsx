@@ -7,7 +7,6 @@ import {DataConfig} from "../Common/function_Common";
 
 function fn_rpt_SheetTraceView() {
   const{ConfigData} = DataConfig();
-
   const { showLoading, hideLoading } = useLoading();
   const [txtSheetNo, settxtSheetNo] = useState("");
   const [txtProduct, settxtProduct] = useState("");
@@ -1737,7 +1736,6 @@ function fn_rpt_SheetTraceView() {
     hypLotNo,
     ddlCavity,
     selectddlCavity,
-    setselectddlCavity,
     lblShtMachine,
     hypMaterial,
     btnAOMEFPC,
@@ -1793,9 +1791,6 @@ function fn_rpt_SheetTraceView() {
     lblCavity,
     txtAOIEFPCMachine,
     columnstblData1,
-    fntxtSheetNo,
-
-    // onClick={() => btnAllLInk('AOI')}
   };
 }
 

@@ -4,11 +4,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
-import {DataConfig} from "../Common/function_Common";
+import { DataConfig } from "../Common/function_Common";
 import "../Common/StyleCommon.css";
 
 function fn_ScanSMTSerialPcsBoxOnlyGood() {
-  const{ConfigData} = DataConfig();
+  const { ConfigData } = DataConfig();
   const [enableState, setEnableState] = useState({
     styled: { backgroundColor: "" },
   });
@@ -171,7 +171,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   // disable
   const [dis_ddlProduct, setdis_ddlProduct] = useState(false);
 
-
   // const FAC = import.meta.env.VITE_FAC;
   // const FINAL_GATE_SPECIAL_FLG = import.meta.env.VITE_FINAL_GATE_SPECIAL_FLG;
   // const FINAL_GATE_SPECIAL_PRD = import.meta.env.VITE_FINAL_GATE_SPECIAL_PRD;
@@ -181,11 +180,6 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const FINAL_GATE_SPECIAL_FLG = ConfigData.FINAL_GATE_SPECIAL_FLG;
   const FINAL_GATE_SPECIAL_PRD = ConfigData.FINAL_GATE_SPECIAL_PRD;
   const FINAL_GATE_SPECIAL_MESSAGE = ConfigData.FINAL_GATE_SPECIAL_MESSAGE;
-
-
-  
-
-  
 
   //hf
   const hfLotLength = 9;
@@ -1155,7 +1149,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     setgvSerial(dtData);
     settxtSerial(Array(gvSerial.length).fill(""));
     fc_txtSerial.current.forEach((input) => {
-      if (input) input.value = '';
+      if (input) input.value = "";
     });
     if (gvSerial.length > 0) {
       setTimeout(() => {
@@ -1178,7 +1172,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const ibtBack_Click = () => {
     settxtPcsTray((prevState) => ({ ...prevState, value: "" }));
     setdis_ddlProduct(false);
-    setselectddlProduct((prevState) => ({value: ddlProduct[0].prd_name}));
+    setselectddlProduct((prevState) => ({ value: ddlProduct[0].prd_name }));
     settxtLot((prevState) => ({
       ...prevState,
       value: "",
@@ -1298,7 +1292,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       }
       settxtBox((prevState) => ({ ...prevState, value: _strBoxNo }));
       setlblBox((prevState) => ({ ...prevState, value: _strBoxNo }));
-   
+
       if (_strError == "") {
         let _dtTrayCount = [];
         setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));
@@ -1450,12 +1444,12 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       scrollToTop();
       return;
     }
-  
+
     // ตรวจสอบว่ามี input ใดที่ไม่ว่าง
     const hasAnyInput = Array.from(fc_txtSerial.current).some(
       (input) => input && input.value.trim() !== ""
     );
-  
+
     if (hasAnyInput) {
       if (hfMode === "SERIAL") {
         setSerialDataTray(txtSerial);
@@ -1470,7 +1464,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
       setpnlLog(true);
       setpnlgvScanResult(false);
       scrollToTop();
-  
+
       // รอ 0ms และโฟกัสที่ input แรก
       setTimeout(() => {
         if (fc_txtSerial.current[0]) {
@@ -1515,7 +1509,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
               {
                 strPlantCode: FAC,
                 strPrdname: _strPrdName,
-                strWeekCodeType: hfWeekCodeType
+                strWeekCodeType: hfWeekCodeType,
                 // strSerial: dtSerial[drRow].SERIAL,
               },
             ],
@@ -1747,18 +1741,17 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                   //   _intRow < dtSerial.length - 1;
                   //   _intRow++
                   // ) {
-                    if (isDuplicate) {
-                      _strMessageUpdate =
-                        "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
-                      _strRemark = "Serial duplicate in tray  ";
-                      _strScanResultUpdate = "NG";
-                      _strTestResultUpdate = _strTestResult;
-                      dtSerial[drRow].REMARK_UPDATE = _strRemark;
-                      dtSerial[drRow].ROW_UPDATE = "N";
-                      _intCountNG = 1;
-                      _bolError = true;
-                    }
-                  
+                  if (isDuplicate) {
+                    _strMessageUpdate =
+                      "Serial duplicate in tray / หมายเลขบาร์โค้ดซ้ำในถาดเดียวกัน";
+                    _strRemark = "Serial duplicate in tray  ";
+                    _strScanResultUpdate = "NG";
+                    _strTestResultUpdate = _strTestResult;
+                    dtSerial[drRow].REMARK_UPDATE = _strRemark;
+                    dtSerial[drRow].ROW_UPDATE = "N";
+                    _intCountNG = 1;
+                    _bolError = true;
+                  }
                 }
                 if (!_bolError && hfCheckPrdSht == "Y") {
                   let strSheetLot = "";
@@ -2278,7 +2271,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                     strLot: _strLot,
                     strUserID: hfUserID,
                     strStation: hfUserStation,
-                    strPage:'ScanSMTSerialPcsBoxOnlyGood',
+                    strPage: "ScanSMTSerialPcsBoxOnlyGood",
                     SCAN_RESULT: dtSerial[i].SCAN_RESULT,
                     SERIAL: dtSerial[i].SERIAL,
                     UPDATE_FLG: dtSerial[i].UPDATE_FLG,
@@ -2530,15 +2523,14 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     txtLot_TextChanged,
     txtLot,
     settxtLot,
-    ddlProduct_SelectedIndexChanged,
     selectddlProduct,
     setselectddlProduct,
+    ddlProduct_SelectedIndexChanged,
     ddlProduct,
     txtMachine_TextChanged,
     txtMachine,
     settxtMachine,
     ibtMachineBack_Click,
-    txtOP_TextChanged,
     txtOP_TextChanged,
     txtOP,
     settxtOP,
@@ -2564,32 +2556,32 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     lblPacking,
     lblPackingTotal,
     lblBoxStatus,
+    lblLog,
     lblBoxFull,
     btnSave_Click,
-    lblLog,
-    pnlLog,
     ibtBox_Click,
     ibtPack_Click,
-    pnlOP,
     pnlSerial,
-    handleSerialChange,
     txtSerial,
+    pnlLog,
+    pnlOP,
+    handleSerialChange,
     lblResult,
     fntxtLot,
     fntxtMachine,
-    fc_txtSerial,
     fntxtTray,
     fntxtBox,
     fntxtPack,
+    fc_txtSerial,
     fntxtOP,
+    btnCancel,
     gvScanResult,
     pnlgvScanResult,
     lblTime,
     lblOP,
-    btnCancel,
     dis_ddlProduct,
     columns,
-    settxtSerial
+    settxtSerial,
   };
 }
 

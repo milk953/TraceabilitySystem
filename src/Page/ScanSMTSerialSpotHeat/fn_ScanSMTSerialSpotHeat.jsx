@@ -603,7 +603,6 @@ function fn_ScanSMTSerialSpotHeat() {
 
   const getInitialSerial = async () => {
     let dtData = [];
-console.log(hfSerialCount,"hfSerialCount")
     for (let intRow = 0; intRow < hfSerialCount; intRow++) {
       dtData.push({
         SEQ: intRow + 1,
@@ -611,7 +610,6 @@ console.log(hfSerialCount,"hfSerialCount")
     }
     setvisiblgvSerial(true);
     setdataGvSerial(dtData);
-    console.log(dataGvSerial,"dataGvSerial")
     settxtSerial(Array(dtData.length).fill(""))
     fcGvSerial_txtSerial_0.current.forEach((input) => {
       if (input) input.value = '';
@@ -720,12 +718,13 @@ console.log(hfSerialCount,"hfSerialCount")
     txtTotalPCS,
     settxtTotalPCS,
     fcGvSerial_txtSerial_0,
+    handleTotal_Sht,
+    fcTotalSht,
     fcProduct,
     fcLotNo,
     lblLog,
     pnlLog,
     ibtBack_Click,
-    handleTotal_Sht,
     btnSave_Click,
     setSlProduct,
     hfMode,
@@ -735,14 +734,13 @@ console.log(hfSerialCount,"hfSerialCount")
     lblResult,
     visiblgvSerial,
     btnCancel_Click,
-    visiblpnlSerial,
     fcGvSerial,
     visiblegvScanResult,
     visibledll_product,
     dataGvSerial,
     columns,
     getRowClassName,
-    settxtSerial
+    settxtSerial,
   };
 }
 

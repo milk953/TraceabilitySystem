@@ -317,10 +317,8 @@ let data=[]
                                 event.preventDefault(); 
                                 if (index <  GvBackSide.value.length - 1) {
                                   fcGvBackSide.current[index + 1].focus();
-                                  console.log("index1",index)
                                 } else {
                                   fcGvSerial.current[0].focus();
-                                  console.log("index0",index)
                                 }
                               
                               }

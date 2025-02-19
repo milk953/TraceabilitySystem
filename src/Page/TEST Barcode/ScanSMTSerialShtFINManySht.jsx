@@ -411,7 +411,6 @@ function ConfirmBarcodeGrade() {
                     <TableCell align="center">Serial No.</TableCell>
                     <TableRow></TableRow>
                   </TableHead>
-                  {console.log(txtSerial,'dhvfhvfdgfhds')}
                   <TableBody>
                     {txtSerial.map((serial, index) => (
                       <tr
@@ -446,7 +445,6 @@ function ConfirmBarcodeGrade() {
                               if (event.key === "Enter") {
                                 event.preventDefault();
                                 data= await handleSerialChange(index, event)
-                                console.log(data,'mmmmmmmmmmmmmmm')
                                 if (index < txtSerial.length - 1) {
                                   
                                   fcGvSerial_txtSerial_0.current[

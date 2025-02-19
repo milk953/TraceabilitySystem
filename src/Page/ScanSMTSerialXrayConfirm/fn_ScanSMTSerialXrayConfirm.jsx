@@ -149,7 +149,6 @@ function fn_ScanSMTSerialXrayConfirm() {
       const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
       const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
       setTxtSerial(SerialArray);
-      console.log(SerialArray);
       requestAnimationFrame(() => {
         btnSave_Click(SerialArray);
       });
@@ -165,7 +164,6 @@ function fn_ScanSMTSerialXrayConfirm() {
   let Valuesnew = [];
   const handletxtSerialChange = (index, event) => {
     Valuesnew[index] = event.target.value.trim().toUpperCase();
-    console.log(Valuesnew, "Valuesnew");
     return Valuesnew
   };
 
@@ -564,7 +562,6 @@ function fn_ScanSMTSerialXrayConfirm() {
       }));
       setHfMode("LOT");
       fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
-      console.log("เข้ามา focus ได้ไหมนะ")
     }
   };
 

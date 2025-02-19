@@ -407,7 +407,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
     };
 
     const btnSaveClick = async (txtgvSerial) => {
-        console.log(txtgvSerial, 'bbbbbbbbbbbbbbbbbbbbbb')
         let CheckValue = false;
         if (hfMode === "SERIAL") {
             if (Array.isArray(txtgvSerial)) {

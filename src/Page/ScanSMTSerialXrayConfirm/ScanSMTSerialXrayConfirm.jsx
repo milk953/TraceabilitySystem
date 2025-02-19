@@ -244,7 +244,6 @@ function ScanSMTSerialXrayConfirm() {
                               ref={(el) => (txtSerialClear.current[index] = el)}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                  console.log("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_", index,gvSerial.length - 1);
                                   if (index < gvSerial.value.length - 1) {
                                     document.getElementById(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`).focus();
                                   } else {

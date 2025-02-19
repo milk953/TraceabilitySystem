@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
-import {DataConfig} from "../Common/function_Common";
+import { DataConfig } from "../Common/function_Common";
 import Swal from "sweetalert2";
 function fn_ScanSMTSerialPcsBox() {
-  const{ConfigData} = DataConfig();
+  const { ConfigData } = DataConfig();
   const [enableState, setEnableState] = useState({
     styled: { backgroundColor: "" },
   });
@@ -384,11 +384,11 @@ function fn_ScanSMTSerialPcsBox() {
 
       render: (text, record, index) => {
         // const backgroundColor =
-          // record.SCAN_RESULT === "NG"
-          //   ? "#f50"
-          //   : record.SCAN_RESULT === "OK"
-          //   ? "#87d068"
-          //   : "transparent";
+        // record.SCAN_RESULT === "NG"
+        //   ? "#f50"
+        //   : record.SCAN_RESULT === "OK"
+        //   ? "#87d068"
+        //   : "transparent";
 
         return text;
         // <Tag color={backgroundColor}>{text}</Tag>;
@@ -594,7 +594,7 @@ function fn_ScanSMTSerialPcsBox() {
 
   const ibtBack_Click = () => {
     setdis_ddlProduct(false);
-    setselectddlProduct((prevState) => ({ value:ddlProduct[0].prd_name }));
+    setselectddlProduct((prevState) => ({ value: ddlProduct[0].prd_name }));
     settxtPcsTray((prevState) => ({
       ...prevState,
       value: "",
@@ -654,12 +654,12 @@ function fn_ScanSMTSerialPcsBox() {
       scrollToTop();
       return;
     }
-  
+
     // ตรวจสอบว่ามี input ใดที่ไม่ว่าง
     const hasAnyInput = Array.from(fc_txtSerial.current).some(
       (input) => input && input.value.trim() !== ""
     );
-  
+
     if (hasAnyInput) {
       if (hfMode === "SERIAL") {
         setSerialDataTray(txtSerial);
@@ -674,7 +674,7 @@ function fn_ScanSMTSerialPcsBox() {
       setpnlLog(true);
       setpnlgvScanResult(false);
       scrollToTop();
-  
+
       // รอ 300ms และโฟกัสที่ input แรก
       setTimeout(() => {
         if (fc_txtSerial.current[0]) {
@@ -684,8 +684,7 @@ function fn_ScanSMTSerialPcsBox() {
       }, 0);
     }
   };
-  
-  
+
   const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
     setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     let GetFinalGateMasterCheckResult = "";
@@ -1239,7 +1238,7 @@ function fn_ScanSMTSerialPcsBox() {
     setgvSerial(dtData);
     settxtSerial(Array(dtData.length).fill(""));
     fc_txtSerial.current.forEach((input) => {
-      if (input) input.value = '';
+      if (input) input.value = "";
     });
     if (gvSerial.length > 0) {
       setTimeout(() => {
@@ -1790,7 +1789,7 @@ function fn_ScanSMTSerialPcsBox() {
                       },
                     })
                     .then((res) => {
-                       _intCheckPass = res.data;
+                      _intCheckPass = res.data;
                     });
                   if (_intCheckPass == 0) {
                     _strMessageUpdate = "USER SKIP TEST ELT2";
@@ -2017,7 +2016,7 @@ function fn_ScanSMTSerialPcsBox() {
                     strPrdName: _strPrdName,
                     strLot: _strLot,
                     strUserID: hfUserID,
-                    strPage:'ScanSMTSerialPcsBox',
+                    strPage: "ScanSMTSerialPcsBox",
                     data: [
                       {
                         SERIAL: dtSerial[drRow].SERIAL,
@@ -2170,8 +2169,14 @@ function fn_ScanSMTSerialPcsBox() {
           _dtTrayCount = res.data;
         });
       if (_dtTrayCount.length > 0) {
-        setlblBoxTotal((prevState) => ({...prevState, value: _dtTrayCount[0].BOX_COUNT, }));
-        setlblPackingTotal((prevState) => ({...prevState,value: _dtTrayCount[0].PACKING_COUNT,}));
+        setlblBoxTotal((prevState) => ({
+          ...prevState,
+          value: _dtTrayCount[0].BOX_COUNT,
+        }));
+        setlblPackingTotal((prevState) => ({
+          ...prevState,
+          value: _dtTrayCount[0].PACKING_COUNT,
+        }));
       }
       if (parseFloat(lblBoxTotal.value) == parseFloat(lblBoxFull.value)) {
         setlblBoxStatus((prevState) => ({ ...prevState, value: "OK" }));
@@ -2466,15 +2471,14 @@ function fn_ScanSMTSerialPcsBox() {
     txtLot_TextChanged,
     txtLot,
     settxtLot,
-    ddlProduct_SelectedIndexChanged,
     selectddlProduct,
     setselectddlProduct,
+    ddlProduct_SelectedIndexChanged,
     ddlProduct,
     txtMachine_TextChanged,
     txtMachine,
     settxtMachine,
     ibtMachineBack_Click,
-    txtOP_TextChanged,
     txtOP_TextChanged,
     txtOP,
     settxtOP,
@@ -2491,6 +2495,7 @@ function fn_ScanSMTSerialPcsBox() {
     settxtPcsTray,
     txtPcsTray_TextChanged,
     lblSerialNG,
+    ibtBack_Click,
     gvSerial,
     pnlMachine,
     lblLastTray,
@@ -2499,33 +2504,32 @@ function fn_ScanSMTSerialPcsBox() {
     lblPacking,
     lblPackingTotal,
     lblBoxStatus,
+    lblLog,
     lblBoxFull,
     btnSave_Click,
-    lblLog,
-    pnlLog,
     ibtBox_Click,
     ibtPack_Click,
-    pnlOP,
     pnlSerial,
-    handleSerialChange,
     txtSerial,
+    pnlLog,
+    pnlOP,
+    handleSerialChange,
     lblResult,
     fntxtLot,
     fntxtMachine,
-    fc_txtSerial,
     fntxtTray,
     fntxtBox,
     fntxtPack,
+    fc_txtSerial,
     fntxtOP,
+    btnCancel_Click,
     gvScanResult,
     pnlgvScanResult,
     lblTime,
     lblOP,
     dis_ddlProduct,
-    btnCancel_Click,
-    ibtBack_Click,
     columns,
-    settxtSerial
+    settxtSerial,
   };
 }
 

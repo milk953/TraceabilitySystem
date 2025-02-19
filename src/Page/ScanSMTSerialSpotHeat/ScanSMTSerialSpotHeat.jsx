@@ -60,7 +60,7 @@ function ScanSMTSerialSpotHeat() {
     settxtSerial,
   } = fn_ScanSMTSerialSpotHeat();
   const { menuName } = fn_Homepage();
-  let data=[];
+  let data = [];
 
   return (
     <div>
@@ -205,7 +205,10 @@ function ScanSMTSerialSpotHeat() {
                     {/* {console.log(dataGvSerial, "Data")}
                     {Array.from({ length: dataGvSerial.length }, (_, index) => ( */}
                     {txtSerial.map((serial, index) => (
-                      <tr key={index} style={{ borderBottom: "1px solid  #d9d9d9" }}>
+                      <tr
+                        key={index}
+                        style={{ borderBottom: "1px solid  #d9d9d9" }}
+                      >
                         <td
                           align="center"
                           style={{ borderRight: "1px solid #d9d9d9" }}
@@ -236,7 +239,9 @@ function ScanSMTSerialSpotHeat() {
                                 event.preventDefault();
                                 data = await handleSerialChange(index, event);
                                 if (index < txtSerial.length - 1) {
-                                  fcGvSerial_txtSerial_0.current[index + 1].focus();
+                                  fcGvSerial_txtSerial_0.current[
+                                    index + 1
+                                  ].focus();
                                 } else {
                                   event.target.blur();
                                   settxtSerial(data);

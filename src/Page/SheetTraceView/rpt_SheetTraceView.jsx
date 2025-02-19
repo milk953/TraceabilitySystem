@@ -21,7 +21,7 @@ import { Input, Button } from "antd";
 import "../Common/StyleCommon.css";
 import Header from "../Header/Header";
 import "./rpt_SheetTraceView.css";
-import { SearchOutlined, ClearOutlined, UndoOutlined } from "@ant-design/icons";
+import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
 import { fn_rpt_SheetTraceView } from "./fn_rpt_SheetTraceView";
 
 function rpt_SheetTraceView() {
@@ -89,7 +89,6 @@ function rpt_SheetTraceView() {
     btnAllLInk,
     ddlCavity_SelectedIndexChanged,
     lblCavity,
-    fntxtSheetNo,
     txtAOIEFPCMachine,
     columnstblData1,
   } = fn_rpt_SheetTraceView();

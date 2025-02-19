@@ -301,14 +301,14 @@ let data =[]
               
                   {/* {Array.from({ length: GvSerial.value.length }, (_, index) => ( */}
                   {txtLeafNo.map((LeafNo, index) => (
-                    <TableRow key={index}>
-                      <TableCell
+                    <tr key={index}>
+                      <td
                         align="center"
                         sx={{ borderRight: "1px solid #d9d9d9" }}
                       >
                         {index + 1}
-                      </TableCell>
-                      <TableCell >
+                      </td>
+                      <td >
                         <input
                         key={index}
                           className="styleSeraial"
@@ -331,8 +331,8 @@ let data =[]
                             }
                           }}
                         />
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   ))}
 
                   <TableRow>

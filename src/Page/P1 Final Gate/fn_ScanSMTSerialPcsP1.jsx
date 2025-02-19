@@ -625,7 +625,6 @@ function fn_ScanSMTSerialPcsP1() {
     setlblErrorState(false);
     showLoading('กำลังบันทึก กรุณารอสักครู่');
     let dtSerial = await getInputSerial(SerialArray);
-    console.log(dtSerial,"dtSerial");
     await getData("getProductSerialMaster", productSelected);
     let _strLot = lblLot;
     let _strPrdName = productSelected;
