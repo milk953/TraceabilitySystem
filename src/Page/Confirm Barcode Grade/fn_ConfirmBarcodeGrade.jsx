@@ -891,12 +891,12 @@ function fn_ConfirmBarcodeGrade() {
   
     let i = 0;
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
-      console.log("serialLength", txtSerial[i].trim().toUpperCase().substring(0, Math.min(txtSerial[i].length, serialLength)));
+     
       for (let intRow = 0; intRow < hfSerialCount; intRow++) {
         dtData.push({
           SHEET: intSht + 1,
-          BACK_SIDE: txtSideBack.value[intSht],
-          FRONT_SIDE: txtSideFront[intSht],
+          BACK_SIDE: txtSideBack.value[intSht]||'',
+          FRONT_SIDE: txtSideFront[intSht]||'',
           SEQ: intRow + 1,
           SERIAL_GRADE:
           !txtSerial[i] || txtSerial[i] === undefined // เช็คว่าค่าว่างหรือไม่
@@ -1120,7 +1120,7 @@ function fn_ConfirmBarcodeGrade() {
       //   scrollToTop();
       //     return;
       // }
-      console.log("dtSerial", dtSerial);
+
       const allSerialEmpty = dtSerial.every(
         (item) => item.SERIAL === "" || item.length < 0
       );
@@ -1264,7 +1264,7 @@ function fn_ConfirmBarcodeGrade() {
                   _bolError = true;
                   _strErrorAll = "Serial duplicate/หมายเลขบาร์โค้ดซ้ำ";
                 }
-                console.log("_strSerial\\\\\\", _strSerial);
+
                 if (_strSerial.length == hfSerialLength) {
                   let _strFixDigit = "";
                   const start = parseInt(hfSerialStartDigit);
@@ -1410,7 +1410,7 @@ function fn_ConfirmBarcodeGrade() {
             }
           }
         }
-        console.log('กงนี้จ้า',dtSerial)
+
         if (!Check_Master && hfCheckSheetELT == "Y") {
           let _strReturn = "";
           // dtSerial.strIntSerialLength =hfSerialLength
