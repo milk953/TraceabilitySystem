@@ -1943,7 +1943,7 @@ function fn_ScanSMTSerialPcsChrome() {
                   .post("/api/Common/setSerialRecordTimeTrayTable", {
                     dataList: {
                       strUserID: txtOP.value,
-                      strProgram: "frm_ScanSMTSerialRecordTime",
+                      strProgram: "ScanSMTSerialPcs",
                       strPlantCode: Fac,
                       strStation: hfUserStation,
                       data: [

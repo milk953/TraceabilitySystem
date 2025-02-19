@@ -263,7 +263,7 @@ function fn_Change_PartialNo() {
                   IP_ADDRESS: IP,
                   PLANT_CODE: Fac,
                   strOldSerial: strOldSerial,
-                  update_program : 'Replace Partial No'
+                  update_program : 'Change_PartialNo'
                 },
               })
               .then((res) => {

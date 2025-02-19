@@ -1130,7 +1130,6 @@ function fn_ScanSMTSerialShtMaster() {
                     })
                         .then((res) => {
                             _strUpdateError = res.data.p_error;
-          
                         });
                 }
 

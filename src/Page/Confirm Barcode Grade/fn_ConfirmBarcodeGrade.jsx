@@ -1418,12 +1418,6 @@ function fn_ConfirmBarcodeGrade() {
             ...item,
             strIntSerialLength: hfSerialLength,
           }));
-          // await axios
-          // .post("/api/Common/SetSerialRecordTimeTrayTableTest", {
-          //   dataList: dtSerial})
-          //   .then((res) => {
-
-          //   })
           
           for (let i = 0; i < dtSerial.length; i++) {
             await axios
@@ -1637,6 +1631,7 @@ function fn_ConfirmBarcodeGrade() {
                     dtRowLeaf[i].strPlantCode = Fac;
                     dtRowLeaf[i]._strUserID = txtOperator.value;
                     dtRowLeaf[i]._strStation = hfUserStation;
+                    dtRowLeaf[i].strPage = 'ConfirmBarcodeGrade';
                   }
                   await axios
                     .post("/api/Common/SetRollSheetTrayTable", {
