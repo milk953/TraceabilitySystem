@@ -557,6 +557,7 @@ function fn_ConfirmBarcodeGrade() {
       .then((res) => {
         dtCavity = res.data;
       });
+      console.log(dtCavity, 'dtCavity');
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
       if (dtCavity.length > 0) {
         for (let dr = 0; dr < dtCavity.length; dr++) {
@@ -1587,7 +1588,7 @@ function fn_ConfirmBarcodeGrade() {
                   .then((res) => {
                     _intCount = res.data;
                   });
-                if ((_intCount = 1)) {
+                if ((_intCount == 1)) {
                   _bolError = true;
                   for (let i = 0; i < dtRowLeaf.length; i++) {
                     dtRowLeaf[i].UPDATE_FLG = "N";

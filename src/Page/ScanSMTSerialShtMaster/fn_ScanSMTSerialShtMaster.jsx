@@ -1033,7 +1033,7 @@ function fn_ScanSMTSerialShtMaster() {
                                     .then((res) => {
                                         _intCount = res.data;
                                     });
-                                if (_intCount = 1) {
+                                if (_intCount == 1) {
                                     _bolError = true;
                                     _strScanResultAll = "NG";
                                     for (let i = 0; i < dtRowLeaf.length; i++) {
