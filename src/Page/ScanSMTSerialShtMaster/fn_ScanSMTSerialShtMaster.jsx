@@ -303,7 +303,7 @@ function fn_ScanSMTSerialShtMaster() {
                 setlblLog("");
                 const datagetPd = await getProductSerialMaster(selProduct);
                 // await getInitialSheet(datagetPd.slm_sht_scan);
-         
+
                 if (datagetPd.prm_conn_roll_sht_flg === "Y") {
                     setpnlRollLeaf(true);
                     settxtRollLeaf("");
@@ -343,7 +343,7 @@ function fn_ScanSMTSerialShtMaster() {
     const handleChangeRollLeaf = async () => {
         setpnlLog(false);
         setlblLog("");
-  
+
         if (txtRollLeaf !== "" && txtRollLeaf.length === parseInt(hfConnRollLength)) {
             let strRollProduct = hfRollNo + hfCheckRollPrd;
             if (hfCheckRollPrdFlg === "Y" &&
@@ -399,8 +399,8 @@ function fn_ScanSMTSerialShtMaster() {
 
     let newValues = [];
     const handleChangeSerial = async (index, event) => {
-      newValues[index] = event.target.value.trim().toUpperCase();
-      return newValues;
+        newValues[index] = event.target.value.trim().toUpperCase();
+        return newValues;
     };
 
     const handleChangegvBackSide = (index, e) => {
@@ -513,7 +513,7 @@ function fn_ScanSMTSerialShtMaster() {
         });
         settxtSideBack("");
         setgvSerialData(dtData);
-  
+
         return dtData;
     };
 
@@ -601,7 +601,7 @@ function fn_ScanSMTSerialShtMaster() {
                     })
                         .then((res) => {
                             sethfWeekCode(res.data);
-                     
+
                         });
                 }
 
@@ -772,7 +772,7 @@ function fn_ScanSMTSerialShtMaster() {
                                 const end = parseInt(hfSerialEndDigit);
                                 _strFixDigit = _strSerial.substring(start - 1, end);
 
-                     
+
                                 if (_strFixDigit !== hfSerialDigit) {
                                     _strScanResultUpdate = "NG";
                                     _strRemark = "Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -914,7 +914,7 @@ function fn_ScanSMTSerialShtMaster() {
                         })
                             .then((res) => {
                                 _strReturn = res.data[0].p_error;
-                             
+
                                 if (_strReturn !== "") {
                                     dtSerial[i].SCAN_RESULT = "NG";
                                     dtSerial[i].REMARK = "No sheet ELT result / ไม่พบผลการทดสอบ ELT";
@@ -1026,14 +1026,24 @@ function fn_ScanSMTSerialShtMaster() {
                                 );
                                 let _intCount = 0;
                                 let _strRollLeaf = txtRollLeaf.toUpperCase().trim();
-                                await axios.post("/api/ScanFin/GetRollLeafDuplicate", {
-                                    strRollLeaf: _strRollLeaf,
-                                    _dtRollLeaf: dtRowLeaf,
+                                // await axios.post("/api/Common/GetRollLeafDuplicate", {
+                                //     strRollLeaf: _strRollLeaf,
+                                //     _dtRollLeaf: dtRowLeaf,
+                                // })
+                                //     .then((res) => {
+                                //         _intCount = res.data;
+                                //     });
+                                await axios.post("/api/Common/GetRollLeafDuplicate", {
+                                    dataList: { 
+                                        strRollLeaf: _strRollLeaf, 
+                                        strPlantCode: plantCode 
+                                    },
+                                    _dtRollLeaf: dtSerial,
                                 })
                                     .then((res) => {
                                         _intCount = res.data;
                                     });
-                                if (_intCount = 1) {
+                                if (_intCount == 1) {
                                     _bolError = true;
                                     _strScanResultAll = "NG";
                                     for (let i = 0; i < dtRowLeaf.length; i++) {
@@ -1208,7 +1218,7 @@ function fn_ScanSMTSerialShtMaster() {
 
             if (gvSerialData[intSeq].TYPE === "SHT") {
                 strFrontSide = txtgvSerial[intSeq];
-              
+
             } else {
                 const backSideIndex = txtSideBack[0];
                 const backSideText = backSideIndex;
@@ -1399,7 +1409,7 @@ function fn_ScanSMTSerialShtMaster() {
             .then((res) => {
                 dtSerailCount = res.data[0];
             });
-    
+
         if (dtSerailCount.length !== "") {
             setlblTotalSht(dtSerailCount.count_sht.toLocaleString('en-US'));
             setlblTotalPcs(dtSerailCount.count_pcs.toLocaleString('en-US'));
@@ -1466,7 +1476,7 @@ function fn_ScanSMTSerialShtMaster() {
             if (nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]
             ) {
                 inputgvSerial.current[nextIndex].focus();
-         
+
             } else if (nextIndex === gvSerialData.length) {
                 btnSaveClick();
             }
@@ -1563,7 +1573,7 @@ function fn_ScanSMTSerialShtMaster() {
         selProDisabled, txtRollLeafDisabled, inputLot, ddlProduct, inputRollLeaf, inputMachineNo, inputSideBack, inputgvSerial, inputMasterCode,
         handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeLotRef, handleChangeMasterCode, handleChangeRollLeaf, handleChangeMachine,
         handleChangeSerial, handleChangegvBackSide, handleChangegvFontSide, btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack,
-        columns, gvBackSide,settxtgvSerial
+        columns, gvBackSide, settxtgvSerial
     }
 };
 

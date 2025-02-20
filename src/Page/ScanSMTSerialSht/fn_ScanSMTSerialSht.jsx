@@ -1057,14 +1057,16 @@ function fn_ScanSMTSerialSht() {
               let dtRowLeaf = await getConnectRollSheetData(dtSerial);
               let _intCount = 0;
               let _strRollLeaf = txtRollLeaf.toUpperCase().trim();
-              await axios.post("/api/ScanFin/GetRollLeafDuplicate", {
-                strRollLeaf: _strRollLeaf,
-                _dtRollLeaf: dtRowLeaf,
+              await axios.post("/api/Common/GetRollLeafDuplicate", {
+                dataList: {
+                  strRollLeaf: _strRollLeaf,
+                  strPlantCode: plantCode
+                },
+                _dtRollLeaf: dtSerial,
               })
                 .then((res) => {
-                  _intCount = res.data.intCount;
+                  _intCount = res.data;
                 });
-
 
               if (_intCount === 1) {
 
