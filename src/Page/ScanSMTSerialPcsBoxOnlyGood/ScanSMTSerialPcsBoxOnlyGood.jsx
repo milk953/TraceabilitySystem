@@ -556,8 +556,8 @@ function ScanSMTRoollSht() {
                             //   handleSerialChange(index, event);
 
                             // }}
-                            onChange={(event) =>
-                              handleSerialChange(index, event)
+                            onChange={async(event) =>
+                             data = await handleSerialChange(index, event)
                             }
                             onKeyDown={async (event) => {
                               if (event.key === "Enter") {
