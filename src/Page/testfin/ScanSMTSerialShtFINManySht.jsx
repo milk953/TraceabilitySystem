@@ -95,13 +95,13 @@ function ScanSMTSerialShtFINManySht() {
     setTxtSerial,
     newValues
   } = fn_ScanSMTSerialShtFINManySht();
-  // console.log(txtSerial,'mmmmmmmm')
+
   // const setTxtSerialja = () => {
 
   // }
   const memoizedSerials = useMemo(() => {
     return
-    // {console.log(txtSerial,'นี่จ้าาาา')}
+  
   }, [gvSerial, txtSerial]);
   return (
     <div>
@@ -499,7 +499,7 @@ function ScanSMTSerialShtFINManySht() {
         //       document.getElementById(`txtSerial_${index + 1}`).focus();
         //     }
         //     else{
-        //       console.log('สุดท้าย',data)
+        //    
         //       setTxtSerial(data)
         //       await btnSave_Click(data);
         //       // setTxtSerial(new Array(gvSerial.length).fill(""));

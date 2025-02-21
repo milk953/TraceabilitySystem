@@ -1580,7 +1580,6 @@ function fn_ScanSMTSerialSht() {
     // if (event.key === "Enter") {
     //   event.preventDefault();
     //   data = await handleChangeSerial(index, event)
-    //   console.log(data, 'mmmmmmmmmmmmmmm')
     //   if (index < txtgvSerial.length - 1) {
 
     //     inputgvSerial.current[

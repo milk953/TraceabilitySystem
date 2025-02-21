@@ -202,7 +202,7 @@ function ScanSMTSerialSpotHeat() {
                     <TableRow></TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* {console.log(dataGvSerial, "Data")}
+                    {/* 
                     {Array.from({ length: dataGvSerial.length }, (_, index) => ( */}
                     {txtSerial.map((serial, index) => (
                       <tr

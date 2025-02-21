@@ -276,7 +276,6 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableHead>
                                     <TableBody>
                                         {/* {Array.from({ length: hfSerialCount }, (_, index) => ( */}
-                                        {console.log(txtgvSerial, "txtgvSerial")}
                                         {txtgvSerial.map((serial, index) => (
                                             <tr key={index}>
                                                 <td align="center">{index + 1}</td>

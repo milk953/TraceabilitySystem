@@ -916,7 +916,6 @@ function fn_ConfirmBarcodeGrade() {
         i += 1;
       }
     }
-    console.log(dtData,'dddddddd');
     return dtData;
   };
 
