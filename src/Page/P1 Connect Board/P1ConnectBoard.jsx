@@ -373,9 +373,7 @@ let data=[]
                         className="styleSeraial"
                         defaultValue={serial}
                         ref={(el) => (fcGvSerial.current[index] = el)}
-                        onChange={(event) =>
-                          handleSerialChange(index, event)
-                        }
+                        onChange={async(event) => data=await handleSerialChange(index, event)}
                        
                         onKeyDown={async(event) => {
                           if (event.key === "Enter") {

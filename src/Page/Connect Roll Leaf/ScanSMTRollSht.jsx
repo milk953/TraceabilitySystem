@@ -75,7 +75,7 @@ function ScanSMTRoollSht() {
     txtRollLeaf_TextChanged,
     ibtCancel_Click
   } = Fn_ScanSMTRollSht();
-let data =[]
+
   return (
     <div>
       <Hearder />
@@ -288,62 +288,55 @@ let data =[]
                 component={Card}
               >
                 <TableHead>
-                
-                  <TableRow> <TableCell
+                  <TableCell
                     sx={{ borderRight: "1px solid #d9d9d9" }}
                     align="center"
                   >
                     No.
                   </TableCell>
-                  <TableCell align="center">Leaf No.</TableCell></TableRow>
+                  <TableCell align="center">Leaf No.</TableCell>
+                  <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
               
-                  {/* {Array.from({ length: GvSerial.value.length }, (_, index) => ( */}
-                  {txtLeafNo.map((LeafNo, index) => (
-                    <tr key={index}>
-                      <td
+                  {Array.from({ length: GvSerial.value.length }, (_, index) => (
+                    <TableRow key={index}>
+                      <TableCell
                         align="center"
                         sx={{ borderRight: "1px solid #d9d9d9" }}
                       >
                         {index + 1}
-                      </td>
-                      <td >
-                        <input
-                        key={index}
-                          className="styleSeraial"
-                          ref={(el) => (fc_GvSerial.current[index] = el)}
-                          defaultValue={LeafNo}
+                      </TableCell>
+                      <TableCell>
+                     
+                        <TextField
+                          size="small"
+                          fullWidth
+                          className="input_txt"
+                          inputRef={(el) => (fc_GvSerial.current[index] = el)}
+                          value={txtLeafNo[index]}
                           onChange={(event) =>
                             handleTextFieldChange(index, event)
                           }
-                          onKeyDown={async(event) => {
+                          onKeyDown={(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
-                              data= await handleTextFieldChange(index, event)
                               if (index < GvSerial.value.length - 1) {
                                 fc_GvSerial.current[index + 1].focus();
                               } else {
+                                Bt_Save();
                                 event.target.blur();
-                                SettxtLeafNo(data);
-                                Bt_Save(data);
                               }
                             }
                           }}
                         />
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   ))}
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <AntButton type="primary" className="ButtonReplace" 
-                      // onClick={Bt_Save}
-                      onClick={() => {
-                        SettxtLeafNo(data);
-                        Bt_Save(data);
-                      }}
-                      >
+                      <AntButton type="primary" className="ButtonReplace" onClick={Bt_Save}>
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;

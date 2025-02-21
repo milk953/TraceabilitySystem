@@ -434,8 +434,8 @@ function ConfirmBarcodeGrade() {
                             className="styleSeraial"
                             type="text"
                             defaultValue={serial}
-                            onChange={(event) =>
-                              handleSerialChange(index, event)
+                            onChange={async(event) =>
+                              data=await handleSerialChange(index, event)
                             }
                             ref={(el) =>
                               (fcGvSerial_txtSerial_0.current[index] = el)

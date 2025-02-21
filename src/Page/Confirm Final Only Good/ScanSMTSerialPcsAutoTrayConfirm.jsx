@@ -252,7 +252,7 @@ let data=[]
                           className="styleSeraial"
                           ref={(el) => (fc_txtSerial.current[index] = el)}
                           defaultValue={serial}
-                          onChange={(event) => handleSerialChange(index, event)}
+                          onChange={async(event) => data=await handleSerialChange(index, event)}
                           onKeyDown={async(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault(); // ป้องกันการทำงานค่าเริ่มต้นของ Enter

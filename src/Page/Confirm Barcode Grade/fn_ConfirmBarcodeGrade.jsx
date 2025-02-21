@@ -557,7 +557,6 @@ function fn_ConfirmBarcodeGrade() {
       .then((res) => {
         dtCavity = res.data;
       });
-      console.log(dtCavity, 'dtCavity');
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
       if (dtCavity.length > 0) {
         for (let dr = 0; dr < dtCavity.length; dr++) {
@@ -900,7 +899,7 @@ function fn_ConfirmBarcodeGrade() {
           FRONT_SIDE: txtSideFront[intSht]||'',
           SEQ: intRow + 1,
           SERIAL_GRADE:
-          !txtSerial[i] || txtSerial[i] === undefined // เช็คว่าค่าว่างหรือไม่
+          !txtSerial[i] || txtSerial[i] === undefined 
             ? ''
             : hfBarcodeErrorValue.includes(txtSerial[intRow]) && txtSerial[intRow]
             ? "X"
@@ -917,6 +916,7 @@ function fn_ConfirmBarcodeGrade() {
         i += 1;
       }
     }
+    console.log(dtData,'dddddddd');
     return dtData;
   };
 
