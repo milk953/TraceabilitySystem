@@ -355,6 +355,7 @@ let data=[]
                 <TableBody>
                   {/* {Array.from({ length: GvSerial.value.length }, (_, index) => ( */}
                   {txtSerial.map((serial, index) => (
+                    GvSerial.value[index] && (
                     <tr key={index} style={{borderBottom: "1px solid #d9d9d9"}}>
                       <td
                         align="center"
@@ -391,6 +392,7 @@ let data=[]
                       />         
                       </td>
                     </tr>
+                    )
                   ))}
 
                   <TableRow>

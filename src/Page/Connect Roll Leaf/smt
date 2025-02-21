@@ -1,0 +1,48 @@
+ {txtSerial.map(
+                    (serial, index) =>
+                      GvSerial.value[index] && (
+                        <tr
+                          key={index}
+                          style={{ borderBottom: "1px solid #d9d9d9" }}
+                        >
+                          <td
+                            align="center"
+                            style={{ borderRight: "1px solid #d9d9d9" }}
+                            colSpan={GvSerial.value[index].SEQ === 0 ? 2 : 1}
+                          >
+                            {GvSerial.value[index].SHEET}
+                          </td>
+                          {GvSerial.value[index].SEQ !== 0 && (
+                            <td
+                              align="center"
+                              style={{ borderRight: "1px solid #d9d9d9" }}
+                            >
+                              {GvSerial.value[index].SEQ}
+                            </td>
+                          )}
+                          <td>
+                            <input
+                              className="styleSeraial"
+                              defaultValue={serial}
+                              ref={(el) => (fcGvSerial.current[index] = el)}
+                              onChange={async (event) =>
+                                (data = await handleSerialChange(index, event))
+                              }
+                              onKeyDown={async (event) => {
+                                if (event.key === "Enter") {
+                                  event.preventDefault();
+                                  data = await handleSerialChange(index, event);
+                                  if (index < GvSerial.value.length - 1) {
+                                    fcGvSerial.current[index + 1].focus();
+                                  } else {
+                                    settxtSerial(data);
+                                    btnSave_Click(data);
+                                    event.target.blur();
+                                  }
+                                }
+                              }}
+                            />
+                          </td>
+                        </tr>
+                      )
+                  )}
