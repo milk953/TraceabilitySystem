@@ -298,7 +298,7 @@ function ScanSMTRoollSht() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
-              
+              {console.log(txtLeafNo,'txtLeafNo')}
                   {Array.from({ length: GvSerial.value.length }, (_, index) => (
                     <TableRow key={index}>
                       <TableCell

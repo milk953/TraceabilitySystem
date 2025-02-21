@@ -279,7 +279,7 @@ function Fn_ScanSMTRollSht() {
   }, [hfSerialCount]);
 
   const getInitialSheet = async () => {
- 
+      
     let dtData = [];
     setHfSerialCount(txtTotalLeaf);
     for (let intRow = 0; intRow < hfSerialCount; intRow++) {
@@ -523,6 +523,7 @@ function Fn_ScanSMTRollSht() {
       }));
       setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
+      SettxtLeafNo(Array(txtTotalLeaf).fill(""));
       setHfMode("SHEET");
       await getInitialSheet();
     }
@@ -604,6 +605,42 @@ function Fn_ScanSMTRollSht() {
       });
     }
     return dtData;
+  };
+  const txtRollLeaf_TextChanged = (RollLeaf) => {
+    setTimeout(() => {
+      fc_GvSerial.current[0].focus();
+    }, 300);
+    // setgvScanResult((prevState) => ({
+    //   ...prevState,
+    //   visible: false,
+    //   value: "",
+    // }));
+    // if (RollLeaf != "") {
+    //   if (hfConnRollLength == txtRollLeaf.value.length ) {
+    //     setlbllog((prevState) => ({
+    //       ...prevState,
+    //       visible: false,
+    //       value: "",
+    //     }));
+     
+    //     setTimeout(() => {
+    //       fc_GvSerial.current[0].focus();
+    //     }, 300);
+        
+    //   }
+    //   else{
+    //     setlbllog((prevState) => ({
+    //       ...prevState,
+    //       visible: true,
+    //       value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
+    //     }));
+    //     setTimeout(() => {
+    //       fc_txtRollleaf.current.focus();
+    //     }, 300);
+    //   }
+
+    // }
+  
   };
 
   const setRollSheetData = async () => {
@@ -975,6 +1012,9 @@ function Fn_ScanSMTRollSht() {
             value: dtSheet,
             visible: true,
           }));
+        }
+        else{
+
         } 
       } else {
         _bolError = true;
@@ -985,6 +1025,7 @@ function Fn_ScanSMTRollSht() {
           visible: true,
           value: "Please input operator / กรุณาระบุพนักงาน",
         }));
+
       }
     } else {
    
@@ -1045,24 +1086,28 @@ function Fn_ScanSMTRollSht() {
       }, 300);
     } else {
     
-      if (lbllog.value != "") {
-       await getInitialSheet();
-        settxtRollLeaf((prevState) => ({
-          ...prevState,
-          value: "",
-          disbled: false,
-        }));
+      // if (lbllog.value != "") {
+      //  await getInitialSheet();
+      //   settxtRollLeaf((prevState) => ({
+      //     ...prevState,
+      //     value: "",
+      //     disbled: false,
+      //   }));
 
-        SetGvSerial((prevState) => ({ ...prevState, visible: false }));
-        setHfMode("SHEET");
-      } else {
-        SetMode("ROLL");
-      }
+      //   SetGvSerial((prevState) => ({ ...prevState, visible: false }));
+      //   setHfMode("SHEET");
+      // } else {
+      //   SetMode("ROLL");
+      // }
+      settxtRollLeaf((prevState) => ({
+        ...prevState,
+        value: '',
+      }));
       setTimeout(() => {
         fc_txtRollleaf.current.focus();
       }, 300);
       ExportGridToCSV(dtSheet, columns);
-     
+      await getInitialSheet();
     }
     scrollToTop();
     hideLoading();
@@ -1181,39 +1226,7 @@ function Fn_ScanSMTRollSht() {
     }
   };
 
-  const txtRollLeaf_TextChanged = (RollLeaf) => {
-    setgvScanResult((prevState) => ({
-      ...prevState,
-      visible: false,
-      value: "",
-    }));
-    if (RollLeaf != "") {
-      if (hfConnRollLength == txtRollLeaf.value.length ) {
-        setlbllog((prevState) => ({
-          ...prevState,
-          visible: false,
-          value: "",
-        }));
-     
-        setTimeout(() => {
-          fc_GvSerial.current[0].focus();
-        }, 300);
-        
-      }
-      else{
-        setlbllog((prevState) => ({
-          ...prevState,
-          visible: true,
-          value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
-        }));
-        setTimeout(() => {
-          fc_txtRollleaf.current.focus();
-        }, 300);
-      }
 
-    }
-  
-  };
   
   const scrollToTop = () => {
     window.scrollTo({
