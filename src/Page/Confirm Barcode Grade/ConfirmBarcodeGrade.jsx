@@ -253,17 +253,14 @@ function ConfirmBarcodeGrade() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        // inputRef={fcRollleaf}
                         inputRef={(el) => (fcRollleaf.current = el)}
                         value={txtRollLeaf.value}
                         onChange={(e) => {
-                          // settxtRollLeaf(e.target.value);
-                          settxtRollLeaf((prevState) => ({
+                           settxtRollLeaf((prevState) => ({
                             ...prevState,
-                            value: e.target.value.trim(),
+                            value: e.target.value,
                           }));
                         }}
-                        // onBlur={handleTxt_RollLeaf}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             handleTxt_RollLeaf();

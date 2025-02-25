@@ -262,7 +262,7 @@ let data =[];
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            txtRollLeaf_TextChanged(e.target.value);
+                            fc_GvSerial.current[0].focus();
                           }
                         }}
                         fullWidth
@@ -300,7 +300,7 @@ let data =[];
                     style={{ borderBottom: "1px solid  #d9d9d9" }}>
                       <td
                         align="center"
-                        sx={{ borderRight: "1px solid #d9d9d9" }}
+                        style={{ borderRight: "1px solid #d9d9d9" }}
                       >
                         {index + 1}
                       </td>
@@ -308,26 +308,12 @@ let data =[];
                         <input
                           size="small"
                           fullWidth
-                           className="txtinput"
-                          // className="input_txt"
-                          // inputRef={(el) => (fc_GvSerial.current[index] = el)}
+                          className="txtinput"
                           ref={(el) => (fc_GvSerial.current[index] = el)}
-                          // value={txtLeafNo[index]}
                           defaultValue={serial}
                           onChange={async(event) =>
                           data= await handleTextFieldChange(index, event)
                           }
-                          // onKeyDown={(event) => {
-                          //   if (event.key === "Enter") {
-                          //     event.preventDefault();
-                          //     if (index < GvSerial.value.length - 1) {
-                          //       fc_GvSerial.current[index + 1].focus();
-                          //     } else {
-                          //       Bt_Save();
-                          //       event.target.blur();
-                          //     }
-                          //   }
-                          // }}
                           onKeyDown={async (event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();

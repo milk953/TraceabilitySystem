@@ -254,14 +254,14 @@ function fn_ConfirmBarcodeGrade() {
               await getInitialSheet();
               setTimeout(() => {
                 fcOperator.current.focus();
-              }, 300);
+              }, 0);
               if (datagetPd.prm_conn_roll_sht_flg == "Y") {
                 settxtRollLeaf((prevState) => ({
                   ...prevState,
                   value: "",
                   visble: "",
                 }));
-                SetMode("SERIAL");
+                // SetMode("SERIAL");
               } else {
                 SetMode("SERIAL");
                 settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
@@ -270,10 +270,6 @@ function fn_ConfirmBarcodeGrade() {
                     ...prevState,
                     visble: "",
                   }));
-
-                  // setTimeout(() => {
-                  //   fctMachchine.current.focus();
-                  // }, 300);
                 } else {
                   settxtMachineNo((prevState) => ({
                     ...prevState,
@@ -289,7 +285,7 @@ function fn_ConfirmBarcodeGrade() {
               }));
               setTimeout(() => {
                 fcProduct.current.focus();
-              }, 300);
+              }, 0);
               return;
             }
           } catch (error) {
@@ -308,7 +304,7 @@ function fn_ConfirmBarcodeGrade() {
                   }));
                   setTimeout(() => {
                     fcRollleaf.current.focus();
-                  }, 300);
+                  }, 0);
                 } else {
                   SetMode("SERIAL");
                   settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
@@ -319,7 +315,7 @@ function fn_ConfirmBarcodeGrade() {
                     }));
                     setTimeout(() => {
                       fctMachchine.current.focus();
-                    }, 300);
+                    }, 0);
                   } else {
                     settxtMachineNo((prevState) => ({
                       ...prevState,
@@ -327,7 +323,7 @@ function fn_ConfirmBarcodeGrade() {
                     }));
                     setTimeout(() => {
                       fcGvBackSide_txtsideback_0.current.focus();
-                    }, 300);
+                    }, 0);
                   }
                 }
               } catch (error) {
@@ -338,7 +334,7 @@ function fn_ConfirmBarcodeGrade() {
                 }));
                 setTimeout(() => {
                   fcProduct.current.focus();
-                }, 300);
+                }, 0);
               }
             } else {
               setlblLog((prevState) => ({
@@ -348,7 +344,7 @@ function fn_ConfirmBarcodeGrade() {
               }));
               setTimeout(() => {
                 fcProduct.current.focus();
-              }, 300);
+              }, 0);
             }
           }
         } else {
@@ -366,7 +362,7 @@ function fn_ConfirmBarcodeGrade() {
           setHfMode("LOT");
           setTimeout(() => {
             fcLotNo.current.focus();
-          }, 300);
+          }, 0);
         }
       } else {
         setSlProduct((prevState) => ({
@@ -383,13 +379,13 @@ function fn_ConfirmBarcodeGrade() {
         setHfMode("LOT");
         setTimeout(() => {
           fcLotNo.current.focus();
-        }, 300);
+        }, 0);
       }
     } else {
       GetProductSerialMaster(SlProduct.value);
       setTimeout(() => {
         fcProduct.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
@@ -584,7 +580,7 @@ function fn_ConfirmBarcodeGrade() {
       }));
       settxtSerial(Array(dtData.length).fill(""));
       fcGvSerial_txtSerial_0.current.forEach((input) => {
-        if (input) input.value = '';
+        if (input) input.value = "";
       });
     } else {
       setdataGvSerial((prevState) => ({
@@ -600,7 +596,9 @@ function fn_ConfirmBarcodeGrade() {
 
   useEffect(() => {
     if (hfShtScan != "" && hfSerialCount != "") {
-      getInitialSerial();
+      if (hfMode === "SERIAL") {
+        getInitialSerial();
+      }
     }
   }, [hfSerialCount, hfShtScan]);
 
@@ -632,7 +630,7 @@ function fn_ConfirmBarcodeGrade() {
     await SetMode("LOT");
     setTimeout(() => {
       fcLotNo.current.focus();
-    }, 300);
+    }, 0);
   };
 
   const btnCancel_Click = async () => {
@@ -650,37 +648,15 @@ function fn_ConfirmBarcodeGrade() {
     await SetMode("SERIAL");
     setTimeout(() => {
       fcGvBackSide_txtsideback_0.current[0].focus();
-    }, 300);
+    }, 0);
 
     // set
   };
 
   const btnSave_Click = async (serial) => {
-    // if (hfMode == "SERIAL") {
-    //   setSerialData();
-    // }
-    //   const hasAnyInput = Array.from(fcGvSerial_txtSerial_0.current).some(
-    //     (input) => input.value.trim() !== ""
-    // );
-
-    // if (hasAnyInput == true) {
     if (hfMode === "SERIAL") {
       setSerialData(serial);
-      // scrollToTop();
     }
-    // } else{
-    //   setlblLog((prevState) => ({
-    //     ...prevState,
-    //     value: "Please input serial no./กรุณากรอก Serial No.",
-    //     visble: true,
-    //   }));
-
-    //     setTimeout(() => {
-    //       fcGvSerial_txtSerial_0.current[0].focus();
-    //     }, 300);
-
-    //     scrollToTop();
-    //    }
   };
 
   const handleSL_Product = async (value) => {
@@ -698,7 +674,7 @@ function fn_ConfirmBarcodeGrade() {
         }));
         setTimeout(() => {
           fcRollleaf.current.focus();
-        }, 300);
+        }, 0);
       } else {
         await SetMode("SERIAL");
         settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
@@ -706,11 +682,11 @@ function fn_ConfirmBarcodeGrade() {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
           setTimeout(() => {
             fctMachchine.current.focus();
-          }, 300);
+          }, 0);
         } else {
           setTimeout(() => {
             fcGvBackSide_txtsideback_0.current[0].focus();
-          }, 300);
+          }, 0);
         }
       }
     } else {
@@ -725,7 +701,7 @@ function fn_ConfirmBarcodeGrade() {
   const handleTxt_RollLeaf = async () => {
     setlblLog((prevState) => ({ ...prevState, value: "", visble: false }));
     //ถ้าถูกติ้ก
-
+    console.log(txtRollLeaf.value, "กงนี้ๆๆๆๆ1",hfConnRollLength,txtRollLeaf.value.length);
     if (
       Check_Master == true ||
       (txtRollLeaf.value !== "" &&
@@ -753,7 +729,7 @@ function fn_ConfirmBarcodeGrade() {
           settxtRollLeaf((prevState) => ({ ...prevState, value: "" }));
           setTimeout(() => {
             fcRollleaf.current.focus();
-          }, 300);
+          }, 0);
         } else {
           SetMode("SERIAL");
           settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
@@ -761,12 +737,12 @@ function fn_ConfirmBarcodeGrade() {
             settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
             setTimeout(() => {
               fctMachchine.current.focus();
-            }, 300);
+            }, 0);
           } else {
             settxtMachineNo((prevState) => ({ ...prevState, visble: "none" }));
             setTimeout(() => {
               fcGvBackSide_txtsideback_0.current[0].focus();
-            }, 300);
+            }, 0);
           }
         }
       } else {
@@ -776,12 +752,12 @@ function fn_ConfirmBarcodeGrade() {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
           setTimeout(() => {
             fctMachchine.current.focus();
-          }, 300);
+          }, 0);
         } else {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "none" }));
           setTimeout(() => {
             fcGvBackSide_txtsideback_0.current[0].focus();
-          }, 300);
+          }, 0);
         }
       }
     } else {
@@ -796,7 +772,7 @@ function fn_ConfirmBarcodeGrade() {
       settxtRollLeaf((prevState) => ({ ...prevState, value: "" }));
       setTimeout(() => {
         fcRollleaf.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
@@ -805,7 +781,7 @@ function fn_ConfirmBarcodeGrade() {
     settxtLotRef((prevState) => ({ ...prevState, value: strLotData[0] }));
     setTimeout(() => {
       fcOperator.current.focus();
-    }, 300);
+    }, 0);
   };
 
   const SetMode = async (_strType) => {
@@ -826,7 +802,7 @@ function fn_ConfirmBarcodeGrade() {
       setHfMode("LOT");
       setTimeout(() => {
         fcLotNo.current.focus();
-      }, 300);
+      }, 0);
     }
     if (_strType == "LOT_ERROR") {
       settxt_lotNo((prevState) => ({
@@ -840,7 +816,7 @@ function fn_ConfirmBarcodeGrade() {
       setHfMode("LOT");
       setTimeout(() => {
         fcLotNo.current.focus();
-      }, 300);
+      }, 0);
     }
     if (_strType == "SERIAL") {
       settxt_lotNo((prevState) => ({
@@ -872,7 +848,7 @@ function fn_ConfirmBarcodeGrade() {
       await getInitialSerial();
       setTimeout(() => {
         fcGvSerial.current.focus();
-      }, 300);
+      }, 0);
     }
     if (_strType == "SERIAL_NG") {
       settxt_lotNo((prevState) => ({
@@ -888,23 +864,28 @@ function fn_ConfirmBarcodeGrade() {
   const getInputSerial = async (txtSerial) => {
     let dtData = [];
     const serialLength = parseInt(hfSerialLength, 10);
-  
+
     let i = 0;
     for (let intSht = 0; intSht < hfShtScan; intSht++) {
-     
       for (let intRow = 0; intRow < hfSerialCount; intRow++) {
         dtData.push({
           SHEET: intSht + 1,
-          BACK_SIDE: txtSideBack.value[intSht]||'',
-          FRONT_SIDE: txtSideFront[intSht]||'',
+          BACK_SIDE: txtSideBack.value[intSht] || "",
+          FRONT_SIDE: txtSideFront[intSht] || "",
           SEQ: intRow + 1,
           SERIAL_GRADE:
-          !txtSerial[i] || txtSerial[i] === undefined 
-            ? ''
-            : hfBarcodeErrorValue.includes(txtSerial[intRow]) && txtSerial[intRow]
-            ? "X"
-            : txtSerial[i].slice(-1),        
-          SERIAL: txtSerial[i] ? txtSerial[i].trim().toUpperCase().substring(0, Math.min(txtSerial[i].length, serialLength)) : "",
+            !txtSerial[i] || txtSerial[i] === undefined
+              ? ""
+              : hfBarcodeErrorValue.includes(txtSerial[intRow]) &&
+                txtSerial[intRow]
+              ? "X"
+              : txtSerial[i].slice(-1),
+          SERIAL: txtSerial[i]
+            ? txtSerial[i]
+                .trim()
+                .toUpperCase()
+                .substring(0, Math.min(txtSerial[i].length, serialLength))
+            : "",
           GRADE_RESULT: "",
           SCAN_RESULT: "",
           REMARK: "",
@@ -998,7 +979,7 @@ function fn_ConfirmBarcodeGrade() {
           //   disbled: true,
           //   style: "#e0e0e0",
           // }));
-        }, 300);
+        }, 0);
       } else {
         await SetMode("SERIAL");
         settxtMachineNo((prevState) => ({ ...prevState, value: "" }));
@@ -1012,7 +993,7 @@ function fn_ConfirmBarcodeGrade() {
             //   disbled: true,
             //   style: "#e0e0e0",
             // }));
-          }, 300);
+          }, 0);
         } else {
           fcGvBackSide_txtsideback_0.current[0].focus();
           // settxtOperator((prevState) => ({
@@ -1026,7 +1007,7 @@ function fn_ConfirmBarcodeGrade() {
       settxtOperator((prevState) => ({ ...prevState, value: "" }));
       setTimeout(() => {
         fcOperator.current.focus();
-      }, 300);
+      }, 0);
       setlblLog((prevState) => ({
         ...prevState,
         value: "Please input operator / กรุณาระบุพนักงาน",
@@ -1098,7 +1079,7 @@ function fn_ConfirmBarcodeGrade() {
 
         setTimeout(() => {
           fcGvBackSide_txtsideback_0.current[0].focus();
-        }, 300);
+        }, 0);
         scrollToTop();
         return;
       }
@@ -1116,7 +1097,7 @@ function fn_ConfirmBarcodeGrade() {
 
       //   setTimeout(() => {
       //     fcGvBackSide_txtsideback_0.current[0].focus();
-      //   }, 300);
+      //   }, 0);
       //   scrollToTop();
       //     return;
       // }
@@ -1144,7 +1125,7 @@ function fn_ConfirmBarcodeGrade() {
         // setgvSerial((prevState) => ({ ...prevState, visble: "none", value: "" }));
         setTimeout(() => {
           fcGvSerial_txtSerial_0.current[0].focus();
-        }, 300);
+        }, 0);
         scrollToTop();
         return;
       }
@@ -1418,7 +1399,7 @@ function fn_ConfirmBarcodeGrade() {
             ...item,
             strIntSerialLength: hfSerialLength,
           }));
-          
+
           for (let i = 0; i < dtSerial.length; i++) {
             await axios
               .post("/api/Common/setseriallotshtelttable", {
@@ -1587,7 +1568,7 @@ function fn_ConfirmBarcodeGrade() {
                   .then((res) => {
                     _intCount = res.data;
                   });
-                if ((_intCount == 1)) {
+                if (_intCount == 1) {
                   _bolError = true;
                   for (let i = 0; i < dtRowLeaf.length; i++) {
                     dtRowLeaf[i].UPDATE_FLG = "N";
@@ -1631,7 +1612,7 @@ function fn_ConfirmBarcodeGrade() {
                     dtRowLeaf[i].strPlantCode = Fac;
                     dtRowLeaf[i]._strUserID = txtOperator.value;
                     dtRowLeaf[i]._strStation = hfUserStation;
-                    dtRowLeaf[i].strPage = 'ConfirmBarcodeGrade';
+                    dtRowLeaf[i].strPage = "ConfirmBarcodeGrade";
                   }
                   await axios
                     .post("/api/Common/SetRollSheetTrayTable", {
@@ -1710,11 +1691,11 @@ function fn_ConfirmBarcodeGrade() {
             settxtMachineNo((prevState) => ({ ...prevState, visble: "true" }));
             setTimeout(() => {
               fctMachchine.current.focus();
-            }, 300);
+            }, 0);
           } else {
             setTimeout(() => {
               fcGvBackSide_txtsideback_0.current[0].focus();
-            }, 300);
+            }, 0);
           }
         } else {
           // setgvScanResult(dtSerial);
@@ -1737,11 +1718,11 @@ function fn_ConfirmBarcodeGrade() {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "" }));
           setTimeout(() => {
             fctMachchine.current.focus();
-          }, 300);
+          }, 0);
         } else {
           setTimeout(() => {
             fcGvBackSide_txtsideback_0.current[0].focus();
-          }, 300);
+          }, 0);
         }
       }
       scrollToTop();
