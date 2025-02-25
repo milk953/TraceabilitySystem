@@ -33,7 +33,7 @@ import "./ScanSmt.css";
 import "../Common/StyleCommon.css";
 import Hearder from "../Header/Header";
 import { Fn_ScanSMTRollSht } from "./function_ScanSMTRollSht";
-import { Table as AntTable,Button as AntButton } from "antd";
+import { Table as AntTable, Button as AntButton } from "antd";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 function ScanSMTRoollSht() {
   const { menuName } = fn_Homepage();
@@ -73,9 +73,9 @@ function ScanSMTRoollSht() {
     columns,
     txtOperator_TextChanged,
     txtRollLeaf_TextChanged,
-    ibtCancel_Click
+    ibtCancel_Click,
   } = Fn_ScanSMTRollSht();
-
+let data =[];
   return (
     <div>
       <Hearder />
@@ -154,7 +154,7 @@ function ScanSMTRoollSht() {
                     <TableCell align="right">
                       <Typography>Check Roll :</Typography>
                     </TableCell>
-                  
+
                     <TableCell colSpan={1}>
                       {" "}
                       <div style={lblCheckRoll.style}>
@@ -190,10 +190,7 @@ function ScanSMTRoollSht() {
                         value={txtOperator}
                         onChange={(e, value) => {
                           settxtOperator(e.target.value);
-                        
-                      }}
-                   
-
+                        }}
                       ></TextField>
                     </TableCell>
                   </TableRow>
@@ -268,14 +265,13 @@ function ScanSMTRoollSht() {
                             txtRollLeaf_TextChanged(e.target.value);
                           }
                         }}
-                        
                         fullWidth
                       ></TextField>
                     </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-          
+
               {lbllog.visible == true && (
                 <Paper elevation={3} className="Card-lblLog">
                   {lbllog.value}
@@ -298,48 +294,81 @@ function ScanSMTRoollSht() {
                   <TableRow></TableRow>
                 </TableHead>
                 <TableBody>
-                  {Array.from({ length: GvSerial.value.length }, (_, index) => (
-                    <TableRow key={index}>
-                      <TableCell
+                  {/* {Array.from({ length: GvSerial.value.length }, (_, index) => ( */}
+                  {txtLeafNo.map((serial, index) => (
+                    <tr key={index}
+                    style={{ borderBottom: "1px solid  #d9d9d9" }}>
+                      <td
                         align="center"
                         sx={{ borderRight: "1px solid #d9d9d9" }}
                       >
                         {index + 1}
-                      </TableCell>
-                      <TableCell>
-                     
-                        <TextField
+                      </td>
+                      <td>
+                        <input
                           size="small"
                           fullWidth
-                          className="input_txt"
-                          inputRef={(el) => (fc_GvSerial.current[index] = el)}
-                          value={txtLeafNo[index]}
-                          onChange={(event) =>
-                            handleTextFieldChange(index, event)
+                           className="txtinput"
+                          // className="input_txt"
+                          // inputRef={(el) => (fc_GvSerial.current[index] = el)}
+                          ref={(el) => (fc_GvSerial.current[index] = el)}
+                          // value={txtLeafNo[index]}
+                          defaultValue={serial}
+                          onChange={async(event) =>
+                          data= await handleTextFieldChange(index, event)
                           }
-                          onKeyDown={(event) => {
+                          // onKeyDown={(event) => {
+                          //   if (event.key === "Enter") {
+                          //     event.preventDefault();
+                          //     if (index < GvSerial.value.length - 1) {
+                          //       fc_GvSerial.current[index + 1].focus();
+                          //     } else {
+                          //       Bt_Save();
+                          //       event.target.blur();
+                          //     }
+                          //   }
+                          // }}
+                          onKeyDown={async (event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
-                              if (index < GvSerial.value.length - 1) {
-                                fc_GvSerial.current[index + 1].focus();
+                              data = await handleTextFieldChange(index, event);
+                              if (index < txtLeafNo.length - 1) {
+                                fc_GvSerial.current[
+                                  index + 1
+                                ].focus();
                               } else {
-                                Bt_Save();
                                 event.target.blur();
+                                SettxtLeafNo(data);
+                                Bt_Save(data);
                               }
                             }
                           }}
                         />
-                      </TableCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   ))}
 
                   <TableRow>
                     <TableCell colSpan={2} style={{ textAlign: "center" }}>
-                      <AntButton type="primary" className="ButtonReplace" onClick={Bt_Save}>
+                      <AntButton
+                        type="primary"
+                        className="ButtonReplace"
+                        // onClick={Bt_Save}
+                        onClick={() => {
+                          SettxtLeafNo(data);
+                          Bt_Save(data);
+                        }}
+                      >
                         Save
                       </AntButton>{" "}
                       &nbsp;&nbsp;
-                      <AntButton  type="primary" className="BtCancel" onClick={ibtCancel_Click}>Cancel</AntButton>
+                      <AntButton
+                        type="primary"
+                        className="BtCancel"
+                        onClick={ibtCancel_Click}
+                      >
+                        Cancel
+                      </AntButton>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -372,7 +401,8 @@ function ScanSMTRoollSht() {
                       className="Card-lblResult"
                       elevation={3}
                       style={{
-                        backgroundColor: lblResult.value=='OK' ? "green" : "red" ,
+                        backgroundColor:
+                          lblResult.value == "OK" ? "green" : "red",
                         display: gvScanResult,
                       }}
                     >
@@ -392,7 +422,13 @@ function ScanSMTRoollSht() {
                     size="small"
                     bordered
                     className="tableGvResult"
-                    rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                    rowClassName={(record) =>
+                      record.SCAN_RESULT === "NG"
+                        ? "row-red"
+                        : record.SCAN_RESULT === "OK"
+                        ? "row-green"
+                        : ""
+                    }
                   />
                 </>
               )}
