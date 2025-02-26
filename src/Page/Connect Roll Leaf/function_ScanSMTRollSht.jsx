@@ -1271,7 +1271,7 @@ function Fn_ScanSMTRollSht() {
 
     const bom = "\uFEFF";
     const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, `ConnectRollLeaf.csv`);
+    saveAs(blob, `${ConfigData.ROLL_SHT_EXPORT_FILENAME}`);
   };
 
   return {
