@@ -714,7 +714,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       }
       if (_strErrorAll != "") {
         setlblResult({
-          text: _strScanResultAll + _strErrorAll,
+          text: _strScanResultAll +' ' + _strErrorAll,
           styled: { backgroundColor: "red", color: "white" },
         });
       }
