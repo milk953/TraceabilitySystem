@@ -1107,7 +1107,7 @@ function fn_ScanSMTSerialPcsP1() {
     const filteredData = DtData.filter(row => row.SERIAL !== '');
     const csv = Papa.unparse(filteredData); 
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, `P1_FINAL_GATE_${formattedDate}.csv`); 
+    saveAs(blob, `ELTResult.csv`); 
   }
   function ExportExcel(DtData) {
     const workbook = new ExcelJS.Workbook();
