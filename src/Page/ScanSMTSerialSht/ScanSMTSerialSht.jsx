@@ -273,7 +273,7 @@ let data=[]
                                                             id="SideBack"
                                                             size="small"
                                                             fullWidth
-                                                            value={(console.log("txtSideBack[index]:", txtSideBack[index]), txtSideBack[index] || "")}
+                                                            value={ txtSideBack[index] || ""}
                                                             inputRef={el => inputSideBack.current[index] = el}
                                                             onChange={(e) => {
                                                                 handleChangegvBackSide(index, e);
@@ -456,7 +456,6 @@ let data=[]
                                                             if (event.key === "Enter") {
                                                                 event.preventDefault();
                                                                 data = await handleChangeSerial(index, event)
-                                                                console.log(data, 'mmmmmmmmmmmmmmm')
                                                                 if (index < txtgvSerial.length - 1) {
 
                                                                     inputgvSerial.current[

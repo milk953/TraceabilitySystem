@@ -1303,7 +1303,10 @@ function fn_P1ConnectBoard() {
                   ddlProduct.value,
                   txtRollLeaf.value
                 );
-              
+                for (let i = 0; i < dtRowLeaf.length; i++) {
+                  dtRowLeaf[i].strPage = 'P1ConnectBoard';
+                 
+                }
                 if (dtRowLeaf.length > 0) {
                   await axios
                     .post("/api/Common/SetRollSheetTrayTable", {
@@ -1340,6 +1343,7 @@ function fn_P1ConnectBoard() {
                   USER_ID: hfUserID,
                   REMARK: dtSerial[i].REMARK,
                   LOT: _strLot,
+                  strProgram: "P1ConnectBoard",
                 })
                 .then((res) => {
                   _strUpdateError = res.data.p_error;

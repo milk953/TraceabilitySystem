@@ -6,6 +6,7 @@ import { Tag } from "antd";
 import { useLoading } from "../../loading/fn_loading";
 import { DataConfig } from "../Common/function_Common";
 import "../Common/StyleCommon.css";
+import { values } from "lodash";
 
 function fn_ScanSMTSerialPcsBoxOnlyGood() {
   const { ConfigData } = DataConfig();
@@ -92,7 +93,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     style: {},
   });
   const [lblBoxStatus, setlblBoxStatus] = useState({
-    valusettxtSeriale: "",
+    values: "",
     disbled: "",
     visble: "",
     style: { textAlign: "center", width: "15%" },
@@ -2343,7 +2344,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
                     .post("/api/Common/setSerialRecordTimeTrayTable", {
                       dataList: {
                         strUserID: txtOP.value,
-                        strProgram: "frm_ScanSMTSerialRecordTime",
+                        strProgram: "ScanSMTSerialPcsBoxOnlyGood",
                         strPlantCode: FAC,
                         strStation: hfUserStation,
                         data: [

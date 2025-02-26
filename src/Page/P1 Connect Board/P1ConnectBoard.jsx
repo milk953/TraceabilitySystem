@@ -355,6 +355,7 @@ let data=[]
                 <TableBody>
                   {/* {Array.from({ length: GvSerial.value.length }, (_, index) => ( */}
                   {txtSerial.map((serial, index) => (
+                    GvSerial.value[index] && (
                     <tr key={index} style={{borderBottom: "1px solid #d9d9d9"}}>
                       <td
                         align="center"
@@ -373,9 +374,7 @@ let data=[]
                         className="styleSeraial"
                         defaultValue={serial}
                         ref={(el) => (fcGvSerial.current[index] = el)}
-                        onChange={(event) =>
-                          handleSerialChange(index, event)
-                        }
+                        onChange={async(event) => data=await handleSerialChange(index, event)}
                        
                         onKeyDown={async(event) => {
                           if (event.key === "Enter") {
@@ -393,6 +392,7 @@ let data=[]
                       />         
                       </td>
                     </tr>
+                    )
                   ))}
 
                   <TableRow>

@@ -690,11 +690,12 @@ function ScanSMTSerialRecordTime() {
                           style={{
                             textAlign: "center",
                             borderRight: "1px solid #d9d9d9",
+                            borderBottom: "1px solid #d9d9d9",
                           }}
                         >
                           {index + 1}
                         </td>
-                        <td>
+                        <td style={{ borderBottom: "1px solid #d9d9d9" }}>
                           <input
                             className="styleSeraial"
                             size="small"

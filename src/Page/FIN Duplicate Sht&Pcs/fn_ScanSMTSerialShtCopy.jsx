@@ -1573,7 +1573,6 @@ function fn_ScanSMTSerialShtCopy() {
   //     }
   //     _strShtNoOld = drRow.FRONT_SIDE;
   //   }
-  //   console.log(_dtData, "_dtData");
   //   return _dtData;
   // }
   async function getConnectRollSheetData(dtSerial) {

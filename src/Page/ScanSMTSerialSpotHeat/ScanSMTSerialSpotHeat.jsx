@@ -202,7 +202,7 @@ function ScanSMTSerialSpotHeat() {
                     <TableRow></TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* {console.log(dataGvSerial, "Data")}
+                    {/* 
                     {Array.from({ length: dataGvSerial.length }, (_, index) => ( */}
                     {txtSerial.map((serial, index) => (
                       <tr
@@ -231,8 +231,8 @@ function ScanSMTSerialSpotHeat() {
                             }
                             // value={txtSerial[index]}
                             defaultValue={serial}
-                            onChange={(event) =>
-                              handleSerialChange(index, event)
+                            onChange={async(event) =>
+                             data = await handleSerialChange(index, event)
                             }
                             onKeyDown={async (event) => {
                               if (event.key === "Enter") {

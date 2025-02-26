@@ -907,6 +907,10 @@ function fn_ScanSMTSerialRecordTime() {
         setTimeout(() => {
           inputRackNo.current.focus();
         }, 0);
+        settxtgvSerial(Array(dtData.length).fill(""));
+        inputgvSerial.current.forEach((input) => {
+          if (input) input.value = "";
+        });
       }
     }
 

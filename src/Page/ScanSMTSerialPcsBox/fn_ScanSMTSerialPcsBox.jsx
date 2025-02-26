@@ -2091,7 +2091,7 @@ function fn_ScanSMTSerialPcsBox() {
                     .post("/api/Common/setSerialRecordTimeTrayTable", {
                       dataList: {
                         strUserID: txtOP.value,
-                        strProgram: "frm_ScanSMTSerialRecordTime",
+                        strProgram: "ScanSMTSerialPcsBox",
                         strPlantCode: FAC,
                         strStation: hfUserStation,
                         data: [

@@ -74,7 +74,7 @@
 //       }
 
 //       setHistory((prev) => [...prev, value]); // บันทึกประวัติการสแกน
-//       console.log("Scanned Barcode:", value);
+//     
 //       setBarcode("");
 //       setError(""); // เคลียร์ข้อผิดพลาด
 //     }

@@ -253,17 +253,14 @@ function ConfirmBarcodeGrade() {
                       <TextField
                         className="input_txt"
                         size="small"
-                        // inputRef={fcRollleaf}
                         inputRef={(el) => (fcRollleaf.current = el)}
                         value={txtRollLeaf.value}
                         onChange={(e) => {
-                          // settxtRollLeaf(e.target.value);
-                          settxtRollLeaf((prevState) => ({
+                           settxtRollLeaf((prevState) => ({
                             ...prevState,
-                            value: e.target.value.trim(),
+                            value: e.target.value,
                           }));
                         }}
-                        // onBlur={handleTxt_RollLeaf}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             handleTxt_RollLeaf();
@@ -434,8 +431,8 @@ function ConfirmBarcodeGrade() {
                             className="styleSeraial"
                             type="text"
                             defaultValue={serial}
-                            onChange={(event) =>
-                              handleSerialChange(index, event)
+                            onChange={async(event) =>
+                              data=await handleSerialChange(index, event)
                             }
                             ref={(el) =>
                               (fcGvSerial_txtSerial_0.current[index] = el)

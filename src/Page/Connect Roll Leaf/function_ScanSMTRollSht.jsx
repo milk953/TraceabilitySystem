@@ -49,8 +49,10 @@ function Fn_ScanSMTRollSht() {
     visible: "none",
     style: {},
   });
-  const [txtLeafNo, SettxtLeafNo] = useState(Array(txtTotalLeaf).fill(""));
+  // const [txtLeafNo, SettxtLeafNo] = useState(Array(txtTotalLeaf).fill(""));
   // SettxtLeafNo(Array(txtTotalLeaf).fill(""))
+  const [txtLeafNo, SettxtLeafNo] = useState([]);
+
   const [lblResult, setlblResult] = useState({
     value: "",
     disbled: "",
@@ -279,7 +281,7 @@ function Fn_ScanSMTRollSht() {
   }, [hfSerialCount]);
 
   const getInitialSheet = async () => {
- 
+      
     let dtData = [];
     setHfSerialCount(txtTotalLeaf);
     for (let intRow = 0; intRow < hfSerialCount; intRow++) {
@@ -446,10 +448,6 @@ function Fn_ScanSMTRollSht() {
       setlbltotalSht('')
       setgvScanResult((prevState) => ({ ...prevState, visible: false,value:'' }));
       settxtOperator('')
-      SettxtLeafNo(Array(GvSerial.value.length).fill(""))
-      fc_GvSerial.current.forEach((input) => {
-        if (input) input.value = '';
-      });
       setlblCheckRoll((prevState) => ({ ...prevState ,value:'',style:{}}));
       setHfMode("LOT");
       setTimeout(() => {
@@ -520,9 +518,7 @@ function Fn_ScanSMTRollSht() {
       }));
       setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
-
       setHfMode("SHEET");
-
     }
     if (_strType == "SHEET") {
       settxt_lotNo((prevState) => ({
@@ -532,6 +528,10 @@ function Fn_ScanSMTRollSht() {
       }));
       setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "" }));
+      SettxtLeafNo(Array(txtTotalLeaf).fill(""));
+      fc_GvSerial.current.forEach((input) => {
+        if (input) input.value = '';
+      });
       setHfMode("SHEET");
       await getInitialSheet();
     }
@@ -552,9 +552,9 @@ function Fn_ScanSMTRollSht() {
       setlbllog((prevState) => ({ ...prevState, visible: false }));
       SetGvSerial((prevState) => ({ ...prevState, visible: "none" }));
       await getInitialSheet();
-      // setTimeout(() => {
+      setTimeout(() => {
         fc_GvSerial.current[0].focus();
-      // }, 0);
+      }, 0);
     }
     if (_strType == "SHEET_NG") {
       settxt_lotNo((prevState) => ({
@@ -589,7 +589,7 @@ function Fn_ScanSMTRollSht() {
     }
   };
 
-  const Bt_Save = async () => {
+  const Bt_Save = async (txtLeafNo) => {
     if (hfMode == "SHEET") {
       await setRollSheetData(txtLeafNo);
     }
@@ -613,6 +613,42 @@ function Fn_ScanSMTRollSht() {
       });
     }
     return dtData;
+  };
+  const txtRollLeaf_TextChanged = (RollLeaf) => {
+    setTimeout(() => {
+      fc_GvSerial.current[0].focus();
+    }, 0);
+    // setgvScanResult((prevState) => ({
+    //   ...prevState,
+    //   visible: false,
+    //   value: "",
+    // }));
+    // if (RollLeaf != "") {
+    //   if (hfConnRollLength == txtRollLeaf.value.length ) {
+    //     setlbllog((prevState) => ({
+    //       ...prevState,
+    //       visible: false,
+    //       value: "",
+    //     }));
+     
+    //     setTimeout(() => {
+    //       fc_GvSerial.current[0].focus();
+    //     }, 0);
+        
+    //   }
+    //   else{
+    //     setlbllog((prevState) => ({
+    //       ...prevState,
+    //       visible: true,
+    //       value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
+    //     }));
+    //     setTimeout(() => {
+    //       fc_txtRollleaf.current.focus();
+    //     }, 0);
+    //   }
+
+    // }
+  
   };
 
   const setRollSheetData = async (txtLeafNo) => {
@@ -639,9 +675,9 @@ function Fn_ScanSMTRollSht() {
         ...prevState,
         value: '',
       }));
-      // setTimeout(() => {
+      setTimeout(() => {
       fc_GvSerial.current[0].focus();
-    // }, 0);
+    }, 0);
       return;        
     }
     let _strRollLeaf = txtRollLeaf.value;
@@ -653,8 +689,8 @@ function Fn_ScanSMTRollSht() {
             _dtRollLeaf: dtSheet,
           })
           .then((res) => {
-          
-            _intCount = res.data.intCount;
+            _intCount = res.data.intCount
+            console.log(res.data.intCount,'มา')
           });
         if (_intCount == 1) {
           _bolError = true;
@@ -882,7 +918,9 @@ function Fn_ScanSMTRollSht() {
                     })
                     .then((res) => {
                     
-                      _intCountDup = res.data;
+                      _intCountDup = res.data.intCount;
+                      _strShtNoDup=res.data.strLeafDup;
+                      console.log(res.data,'มา>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
                     });
                   if (_intCountDup != 0) {
                     _strScanResultAll = "NG";
@@ -968,6 +1006,7 @@ function Fn_ScanSMTRollSht() {
 
                 });
             }
+            console.log(_strUpdateError,'มา2')
             if (_strUpdateError != "") {
               _strScanResultAll = "NG";
            
@@ -981,6 +1020,9 @@ function Fn_ScanSMTRollSht() {
             value: dtSheet,
             visible: true,
           }));
+        }
+        else{
+
         } 
       } else {
         _bolError = true;
@@ -991,6 +1033,7 @@ function Fn_ScanSMTRollSht() {
           visible: true,
           value: "Please input operator / กรุณาระบุพนักงาน",
         }));
+
       }
     } else {
    
@@ -1051,27 +1094,28 @@ function Fn_ScanSMTRollSht() {
       }, 0);
     } else {
     
-      if (lbllog.value != "") {
-       await getInitialSheet();
-        settxtRollLeaf((prevState) => ({
-          ...prevState,
-          value: "",
-          disbled: false,
-        }));
+      // if (lbllog.value != "") {
+      //  await getInitialSheet();
+      //   settxtRollLeaf((prevState) => ({
+      //     ...prevState,
+      //     value: "",
+      //     disbled: false,
+      //   }));
 
-        SetGvSerial((prevState) => ({ ...prevState, visible: false }));
-        setHfMode("SHEET");
-      } else {
-        SetMode("ROLL");
-      }
+      //   SetGvSerial((prevState) => ({ ...prevState, visible: false }));
+      //   setHfMode("SHEET");
+      // } else {
+      //   SetMode("ROLL");
+      // }
+      settxtRollLeaf((prevState) => ({
+        ...prevState,
+        value: '',
+      }));
       setTimeout(() => {
         fc_txtRollleaf.current.focus();
       }, 0);
       ExportGridToCSV(dtSheet, columns);
-      SettxtLeafNo(Array(txtTotalLeaf).fill(""))
-      fc_GvSerial.current.forEach((input) => {
-        if (input) input.value = '';
-      });
+      await getInitialSheet();
     }
     scrollToTop();
     hideLoading();
@@ -1094,8 +1138,10 @@ function Fn_ScanSMTRollSht() {
   let newValues = [];
   const handleTextFieldChange = async (index, event) => {
     newValues[index] = event.target.value.trim().toUpperCase();
+    // event.target.value = '';
     return newValues;
   };
+
   const ibtback_Click = () => {
     settxtTotalLeaf(0);
     SetMode("LOT");
@@ -1113,7 +1159,7 @@ function Fn_ScanSMTRollSht() {
       visible: false,
       value: "",
     }));
-    SettxtLeafNo(Array(GvSerial.value.length).fill(""))
+    SettxtLeafNo(Array(txtTotalLeaf).fill(""))
     fc_GvSerial.current.forEach((input) => {
       if (input) input.value = '';
     });
@@ -1197,39 +1243,7 @@ function Fn_ScanSMTRollSht() {
     }
   };
 
-  const txtRollLeaf_TextChanged = (RollLeaf) => {
-    setgvScanResult((prevState) => ({
-      ...prevState,
-      visible: false,
-      value: "",
-    }));
-    if (RollLeaf != "") {
-      if (hfConnRollLength == txtRollLeaf.value.length ) {
-        setlbllog((prevState) => ({
-          ...prevState,
-          visible: false,
-          value: "",
-        }));
-     
-        setTimeout(() => {
-          fc_GvSerial.current[0].focus();
-        }, 0);
-        
-      }
-      else{
-        setlbllog((prevState) => ({
-          ...prevState,
-          visible: true,
-          value: `Roll/Sht. length <> ${hfConnRollLength} digits / หมายเลขบาร์โค้ดยาว <> ${hfConnRollLength} ตัว`,
-        }));
-        setTimeout(() => {
-          fc_txtRollleaf.current.focus();
-        }, 0);
-      }
 
-    }
-  
-  };
   
   const scrollToTop = () => {
     window.scrollTo({
