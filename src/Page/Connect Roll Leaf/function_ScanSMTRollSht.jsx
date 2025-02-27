@@ -1114,7 +1114,7 @@ function Fn_ScanSMTRollSht() {
       setTimeout(() => {
         fc_txtRollleaf.current.focus();
       }, 0);
-      ExportGridToCSV(dtSheet, columns);
+      ExportGridToCSV(dtSheet,_strScanResultAll,sl_Product.value);
       await getInitialSheet();
     }
     scrollToTop();
@@ -1252,27 +1252,23 @@ function Fn_ScanSMTRollSht() {
     });
   };
 
-  const ExportGridToCSV = (data, ColumnsHeader) => {
-    const filteredColumns = ColumnsHeader.filter(
-      (col) => col.title !== "" && col.key !== null && col.title !== undefined
-    );
-  
-    const headers = filteredColumns.map((col) => col.key);
-  
-    const filteredData = data.map((row) =>
-      filteredColumns.map((col) => row[col.dataIndex] || "")
-    );
-  
-    const csvContent = [
-      headers.join(","), 
-      ...filteredData.map((row) => row.join(",")) 
-    ].join("\n");
-  
+const ExportGridToCSV = (data,lblresult,Product) => {
 
-    const bom = "\uFEFF";
-    const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, `${ConfigData.ROLL_SHT_EXPORT_FILENAME}`);
-  };
+console.log(lblresult, Product,'mayyyyyy1')
+  const filteredData = data.map((row) => {
+   let rowData =[]
+   rowData.push( Product,lblresult);
+    return rowData;
+  });
+
+  const csvContent = [
+    ...filteredData.map((row) => row.join(",")) 
+  ].join("\n");
+
+  const bom = "\uFEFF";
+  const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+  saveAs(blob, `${ConfigData.ROLL_SHT_EXPORT_FILENAME}`);
+};
 
   return {
     settxt_lotNo,

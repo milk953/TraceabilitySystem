@@ -740,9 +740,9 @@ function fn_ConfirmBarcodeGrade() {
             }, 0);
           } else {
             settxtMachineNo((prevState) => ({ ...prevState, visble: "none" }));
-            setTimeout(() => {
+            // setTimeout(() => {
               fcGvBackSide_txtsideback_0.current[0].focus();
-            }, 0);
+            // }, 0);
           }
         }
       } else {
@@ -755,9 +755,9 @@ function fn_ConfirmBarcodeGrade() {
           }, 0);
         } else {
           settxtMachineNo((prevState) => ({ ...prevState, visble: "none" }));
-          setTimeout(() => {
+          // setTimeout(() => {
             fcGvBackSide_txtsideback_0.current[0].focus();
-          }, 0);
+          // }, 0);
         }
       }
     } else {
