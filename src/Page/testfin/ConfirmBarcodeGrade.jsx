@@ -81,7 +81,8 @@ function ConfirmBarcodeGrade() {
     dataGvSerial,
     fcGvBackSide_txtsideback_1,
     columns,
-    settxtSerial
+    settxtSerial,
+    btnBack_Click,
   } = fn_ConfirmBarcodeGrade();
   let data  =[]
   return (
@@ -431,9 +432,10 @@ function ConfirmBarcodeGrade() {
                             className="styleSeraial"
                             type="text"
                             defaultValue={serial}
-                            onChange={async(event) =>
-                              data=await handleSerialChange(index, event)
-                            }
+                            onChange={async (event) => {
+                              // data = serial;
+                              data = await handleSerialChange(index, event);
+                            }}
                             ref={(el) =>
                               (fcGvSerial_txtSerial_0.current[index] = el)
                             }
@@ -483,6 +485,13 @@ function ConfirmBarcodeGrade() {
                           onClick={btnCancel_Click}
                         >
                           Cancel
+                        </AntButton>&nbsp;&nbsp;
+                        <AntButton
+                          type="primary"
+                          className="BtCancel"
+                          onClick={btnBack_Click}
+                        >
+                          Back
                         </AntButton>
                       </TableCell>
                     </TableRow>

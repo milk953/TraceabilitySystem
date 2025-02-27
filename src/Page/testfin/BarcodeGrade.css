@@ -1,0 +1,45 @@
+
+
+/* .gvBackSideBarcode{
+    margin-top: 10px;
+    margin: left;
+    width: 450px;
+}
+
+.gvBackSideBarcode td {
+    padding: 3px;
+  
+  }
+  .gvBackSideBarcode input {
+    width: 100px !important;
+  } */
+
+
+.CSS-GvSerialBarcode th{
+    background-color: #12422e !important ;
+    color: #fff;
+    padding: 5px;
+}
+
+.CSS-GvSerialBarcode td{
+    padding: 4px 4px 4px 4px!important;
+}
+
+/* style={{margin: 'auto',width:'400px' }} */
+.TableBarcode{
+    width:  450px;
+    
+}
+
+.TableBarcode th{
+    padding: 3px !important;
+    background-color: #8c8c8c !important ;
+    border-radius: 5px  5px 0 0!important;
+    color: #fff;
+}
+
+.TableBarcode td{
+    padding: 4px 4px 4px 4px!important;
+}
+
+

@@ -90,7 +90,7 @@ import {LoadingProvider} from "./loading/fn_loading";
 import Scantest from "./Page/Scantest/Scantest";
 import TestFin from "./Page/TEST FIN Connect Sht & Pcs/ScanSMTSerialShtFINManySht";
 // import TestBarcode from './Page/TEST Barcode/ScanSMTSerialShtFINManySht'
-import Test_data from "./Page/testfin/ScanSMTSerialShtFINManySht";
+import Test_data from "./Page/testfin/ConfirmBarcodeGrade";
 // import Prdmaster from "./Page/ProductMasterMay/prdmaster";
  
 // const backendUrl = import.meta.env.VITE_SERVICE_URL;
