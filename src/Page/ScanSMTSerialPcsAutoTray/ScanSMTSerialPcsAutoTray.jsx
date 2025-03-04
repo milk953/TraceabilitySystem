@@ -281,8 +281,12 @@ function ScanSMTSerialPcsAutoTray() {
                                         {/* {Array.from({ length: hfSerialCount }, (_, index) => ( */}
                                         {txtgvSerial.map((serial, index) => (
                                             <tr key={index}>
-                                                <td align="center">{index + 1}</td>
-                                                <td>
+                                                <td style={{
+                                                    textAlign: "center",
+                                                    borderRight: "1px solid #d9d9d9",
+                                                    borderBottom: "1px solid #d9d9d9",
+                                                }}>{index + 1}</td>
+                                                <td style={{ borderBottom: "1px solid #d9d9d9" }}>
                                                     <input
                                                         // className="input_txt"
                                                         // size="small"
