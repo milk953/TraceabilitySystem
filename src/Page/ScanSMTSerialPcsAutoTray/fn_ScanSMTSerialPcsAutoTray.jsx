@@ -1207,55 +1207,34 @@ function fn_ScanSMTSerialPcsAutoTray() {
             }
 
             let _strErrorUpdate = "";
-            for (let i = 0; i < dtSerial.length; i++) {
-                // await axios.post("/api/Common/SetSerialLotTrayTableGood", {
-                //     dataList: {
-                //         strPlantCode: plantCode,
-                //         strPrdName: _strPrdName,
-                //         strLot: _strLot,
-                //         strUserID: hfUserID,
-                //         strStation: hfUserStation,
-                //         data: [
-                //             {
+            _strErrorUpdate = await SaveSetSerialLotTrayTableGood(dtSerial);
+            // for (let i = 0; i < dtSerial.length; i++) {
+
+                //     await axios
+                //         .post("/api/Common/SetSerialLotTrayTableGood2", {
+                //             dataList: {
+                //                 strPlantCode: plantCode,
+                //                 strPrdName: _strPrdName,
+                //                 strLot: _strLot,
+                //                 strUserID: hfUserID,
+                //                 strStation: hfUserStation,
+                //                 SCAN_RESULT: dtSerial[i].SCAN_RESULT,
                 //                 SERIAL: dtSerial[i].SERIAL,
                 //                 UPDATE_FLG: dtSerial[i].UPDATE_FLG,
                 //                 ROW_UPDATE: dtSerial[i].ROW_UPDATE,
                 //                 REJECT_CODE: dtSerial[i].REJECT_CODE,
                 //                 TEST_RESULT: dtSerial[i].TEST_RESULT,
                 //                 REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-                //                 SCAN_RESULT: dtSerial[i].SCAN_RESULT,
                 //                 PACKING_NO: dtSerial[i].PACKING_NO,
+                //                 strPage: 'ScanSMTSerialPcsAutoTray'
                 //             },
-                //         ],
-                //     },
-                // })
-                //     .then((res) => {
-                //         _strErrorUpdate = res.data.p_error;
+                //         })
+                //         .then((res) => {
+                //             _strErrorUpdate = res.data.p_error;
+                //         });
+                // }
 
-                //     });
-                await axios
-                    .post("/api/Common/SetSerialLotTrayTableGood2", {
-                        dataList: {
-                            strPlantCode: plantCode,
-                            strPrdName: _strPrdName,
-                            strLot: _strLot,
-                            strUserID: hfUserID,
-                            strStation: hfUserStation,
-                            SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-                            SERIAL: dtSerial[i].SERIAL,
-                            UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                            ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                            REJECT_CODE: dtSerial[i].REJECT_CODE,
-                            TEST_RESULT: dtSerial[i].TEST_RESULT,
-                            REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-                            PACKING_NO: dtSerial[i].PACKING_NO,
-                            strPage: 'ScanSMTSerialPcsAutoTray'
-                        },
-                    })
-                    .then((res) => {
-                        _strErrorUpdate = res.data.p_error;
-                    });
-            }
+            // }
 
             if (_strErrorUpdate !== "") {
                 setlblResult("Error : " + _strErrorUpdate);
@@ -1323,6 +1302,36 @@ function fn_ScanSMTSerialPcsAutoTray() {
         getInitialSerial();
 
         hideLoading();
+    };
+
+    const SaveSetSerialLotTrayTableGood = async (dtSerial) => {
+        let _strErrorUpdate = ''
+        for (let i = 0; i < dtSerial.length; i++) {
+
+            await axios
+                .post("/api/Common/SetSerialLotTrayTableGood2", {
+                    dataList: {
+                        strPlantCode: plantCode,
+                        strPrdName: selProduct,
+                        strLot: lblLot,
+                        strUserID: hfUserID,
+                        strStation: hfUserStation,
+                        SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+                        SERIAL: dtSerial[i].SERIAL,
+                        UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                        ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                        REJECT_CODE: dtSerial[i].REJECT_CODE,
+                        TEST_RESULT: dtSerial[i].TEST_RESULT,
+                        REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
+                        PACKING_NO: dtSerial[i].PACKING_NO,
+                        strPage: 'ScanSMTSerialPcsAutoTray'
+                    },
+                })
+                .then((res) => {
+                    _strErrorUpdate = res.data.p_error;
+                });
+        }
+        return _strErrorUpdate
     };
 
     const getInputSerial = async (txtgvSerial) => {

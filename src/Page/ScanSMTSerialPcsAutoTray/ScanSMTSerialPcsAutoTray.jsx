@@ -209,7 +209,10 @@ function ScanSMTSerialPcsAutoTray() {
                                                     width: "60px"
                                                 }}
                                                 onChange={(e) => {
-                                                    settxtPcsTray(e.target.value);
+                                                    const value = e.target.value;
+                                                    if (/^\d*$/.test(value) && value.length <= 3) {
+                                                        settxtPcsTray(value);
+                                                    }
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.key === "Enter") {
@@ -283,6 +286,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                     <input
                                                         // className="input_txt"
                                                         // size="small"
+                                                        key={index}
                                                         className="styleSeraial"
                                                         type="text"
                                                         fullWidth
