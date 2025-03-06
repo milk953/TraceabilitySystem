@@ -194,7 +194,7 @@ function ScanSMTSerialShtConfirm() {
                                                             (inputgvSerial.current[index] = el)
                                                         }
                                                         onChange={(e) => {
-                                                            handleChangeSerial(index, e);
+                                                           data = handleChangeSerial(index, e);
                                                         }}
                                                         // onKeyDown={(e) => handleKeygvSerial(e, index)}
                                                         onKeyDown={async (event) => {

@@ -475,7 +475,7 @@ let data=[]
                                                         type="text"
                                                         //defaultValue={serial}
                                                         onChange={(event) =>
-                                                            handleChangeSerial(index, event)
+                                                            data =handleChangeSerial(index, event)
                                                         }
                                                         ref={(el) =>
                                                             (inputgvSerial.current[index] = el)
