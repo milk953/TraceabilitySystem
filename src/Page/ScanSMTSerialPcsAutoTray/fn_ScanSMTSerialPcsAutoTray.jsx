@@ -577,6 +577,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         dtSerial: dtSerial,
                     })
                     .then((res) => {
+                        console.log('>>>>>>>')
                         dtSerial = res.data;
                     });
 
@@ -594,6 +595,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 }
 
                 for (let i = 0; i < dtSerial.length; i++) {
+                   console.log('รอบที่',i)
                     if (dtSerial[i].SERIAL !== "") {
                         let _intCount = 0;
                         let _intCountOK = 0;
@@ -607,7 +609,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         let _bolScanDuplicate = false;
                         let _strPrdNameOrg = "";
                         let _strLotOrg = "";
-                        let _strTrayOrg = "";
+                        let _strTrayOrg = ""; 
                         let _strTestResultOrg = "";
                         let _strOK = "OK";
                         let _strNG = "NG";
@@ -802,6 +804,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                             if (!_bolError && hfCheckPrdSht === "Y") {
                                 let strSheetLot = "";
                                 let _strShtNo;
+                                console.log('>>>>>>ช้า')
                                 await axios
                                     .post("/api/common/GetSheetNoBySerialNo", {
                                         data: {
@@ -1306,62 +1309,60 @@ function fn_ScanSMTSerialPcsAutoTray() {
                     setlblTimecolor("#fff");
                 }
 
+                let _strErrorUpdate = "";
+                for (let i = 0; i < dtSerial.length; i++) {
+                   
+                  if (dtSerial[i].SERIAL == "") {
+                    continue;
+                  }
+                  await axios
+                    .post("/api/Common/SetSerialLotTrayTableGood2", {
+                      dataList: {
+                        strPlantCode: plantCode,
+                        strPrdName: _strPrdName,
+                        strLot: _strLot,
+                        strUserID: hfUserID,
+                        strStation: hfUserStation,
+                        SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+                        SERIAL: dtSerial[i].SERIAL,
+                        UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                        ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                        REJECT_CODE: dtSerial[i].REJECT_CODE,
+                        TEST_RESULT: dtSerial[i].TEST_RESULT,
+                        REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
+                        PACKING_NO: dtSerial[i].PACKING_NO,
+                        strPage: "ScanSMTSerialPcsAutoTray",
+                      },
+                    })
+                    .then((res) => {
+                      _strErrorUpdate = res.data.p_error;
+                      console.log("maaaa")
+                    });
+                }
+
                 // let _strErrorUpdate = "";
-                // for (let i = 0; i < dtSerial.length; i++) {
-                //   if (dtSerial[i].SERIAL == "") {
-                //     continue;
-                //   }
-                //   await axios
-                //     .post("/api/Common/SetSerialLotTrayTableGood2", {
-                //       dataList: {
+                // await axios.post("/api/Common/SetSerialLotTrayTableGood2", {
+                //     dataList: {
                 //         strPlantCode: plantCode,
                 //         strPrdName: _strPrdName,
                 //         strLot: _strLot,
                 //         strUserID: hfUserID,
                 //         strStation: hfUserStation,
-                //         SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-                //         SERIAL: dtSerial[i].SERIAL,
-                //         UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                //         ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                //         REJECT_CODE: dtSerial[i].REJECT_CODE,
-                //         TEST_RESULT: dtSerial[i].TEST_RESULT,
-                //         REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-                //         PACKING_NO: dtSerial[i].PACKING_NO,
+                //         // SCAN_RESULT: item.SCAN_RESULT,
+                //         // SERIAL: item.SERIAL,
+                //         // UPDATE_FLG: item.UPDATE_FLG,
+                //         // ROW_UPDATE: item.ROW_UPDATE,
+                //         // REJECT_CODE: item.REJECT_CODE,
+                //         // TEST_RESULT: item.TEST_RESULT,
+                //         // REMARK_UPDATE: item.REMARK_UPDATE,
+                //         // PACKING_NO: item.PACKING_NO,
                 //         strPage: "ScanSMTSerialPcsAutoTray",
-                //       },
-                //     })
+                //     },
+                //     dtSerial: dtSerial,
+                // })
                 //     .then((res) => {
-                //       _strErrorUpdate = res.data.p_error;
+                //         _strErrorUpdate = res.data.p_error;
                 //     });
-                // }
-
-                let _strErrorUpdate = "";
-                const validSerials = dtSerial.filter(serial => serial.SERIAL !== "");
-
-                if (validSerials.length > 0) {
-                    await axios
-                        .post("/api/Common/SetSerialLotTrayTableGood2", {
-                            dataList: validSerials.map(serial => ({
-                                strPlantCode: plantCode,
-                                strPrdName: _strPrdName,
-                                strLot: _strLot,
-                                strUserID: hfUserID,
-                                strStation: hfUserStation,
-                                SCAN_RESULT: serial.SCAN_RESULT,
-                                SERIAL: serial.SERIAL,
-                                UPDATE_FLG: serial.UPDATE_FLG,
-                                ROW_UPDATE: serial.ROW_UPDATE,
-                                REJECT_CODE: serial.REJECT_CODE,
-                                TEST_RESULT: serial.TEST_RESULT,
-                                REMARK_UPDATE: serial.REMARK_UPDATE,
-                                PACKING_NO: serial.PACKING_NO,
-                                strPage: "ScanSMTSerialPcsAutoTray",
-                            })),
-                        })
-                        .then((res) => {
-                            _strErrorUpdate = res.data.p_error;
-                        });
-                }
 
                 if (_strErrorUpdate !== "") {
                     setlblResult("Error : " + _strErrorUpdate);
