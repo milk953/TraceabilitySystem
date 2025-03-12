@@ -595,7 +595,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 }
 
                 for (let i = 0; i < dtSerial.length; i++) {
-                   console.log('รอบที่',i)
+                    console.log('รอบที่', i)
                     if (dtSerial[i].SERIAL !== "") {
                         let _intCount = 0;
                         let _intCountOK = 0;
@@ -609,7 +609,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         let _bolScanDuplicate = false;
                         let _strPrdNameOrg = "";
                         let _strLotOrg = "";
-                        let _strTrayOrg = ""; 
+                        let _strTrayOrg = "";
                         let _strTestResultOrg = "";
                         let _strOK = "OK";
                         let _strNG = "NG";
@@ -1159,7 +1159,7 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 let _strEFPCResult = "";
                                 let _strEFPCRemark = "";
                                 await axios
-                                    .post("/api/Common/GetEFPCSheetInspectionResult", {
+                                    .get("/api/Common/GetEFPCSheetInspectionResult", {
                                         _strPlantCode: plantCode,
                                         _strProduct: _strPrdName,
                                         _strFrontSheetNo: dtSerial[i].FRONT_SHEET_NO,
@@ -1311,33 +1311,33 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                 let _strErrorUpdate = "";
                 for (let i = 0; i < dtSerial.length; i++) {
-                   
-                  if (dtSerial[i].SERIAL == "") {
-                    continue;
-                  }
-                  await axios
-                    .post("/api/Common/SetSerialLotTrayTableGood2", {
-                      dataList: {
-                        strPlantCode: plantCode,
-                        strPrdName: _strPrdName,
-                        strLot: _strLot,
-                        strUserID: hfUserID,
-                        strStation: hfUserStation,
-                        SCAN_RESULT: dtSerial[i].SCAN_RESULT,
-                        SERIAL: dtSerial[i].SERIAL,
-                        UPDATE_FLG: dtSerial[i].UPDATE_FLG,
-                        ROW_UPDATE: dtSerial[i].ROW_UPDATE,
-                        REJECT_CODE: dtSerial[i].REJECT_CODE,
-                        TEST_RESULT: dtSerial[i].TEST_RESULT,
-                        REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
-                        PACKING_NO: dtSerial[i].PACKING_NO,
-                        strPage: "ScanSMTSerialPcsAutoTray",
-                      },
-                    })
-                    .then((res) => {
-                      _strErrorUpdate = res.data.p_error;
-                      console.log("maaaa")
-                    });
+
+                    if (dtSerial[i].SERIAL == "") {
+                        continue;
+                    }
+                    await axios
+                        .post("/api/Common/SetSerialLotTrayTableGood2", {
+                            dataList: {
+                                strPlantCode: plantCode,
+                                strPrdName: _strPrdName,
+                                strLot: _strLot,
+                                strUserID: hfUserID,
+                                strStation: hfUserStation,
+                                SCAN_RESULT: dtSerial[i].SCAN_RESULT,
+                                SERIAL: dtSerial[i].SERIAL,
+                                UPDATE_FLG: dtSerial[i].UPDATE_FLG,
+                                ROW_UPDATE: dtSerial[i].ROW_UPDATE,
+                                REJECT_CODE: dtSerial[i].REJECT_CODE,
+                                TEST_RESULT: dtSerial[i].TEST_RESULT,
+                                REMARK_UPDATE: dtSerial[i].REMARK_UPDATE,
+                                PACKING_NO: dtSerial[i].PACKING_NO,
+                                strPage: "ScanSMTSerialPcsAutoTray",
+                            },
+                        })
+                        .then((res) => {
+                            _strErrorUpdate = res.data.p_error;
+                            console.log("maaaa")
+                        });
                 }
 
                 // let _strErrorUpdate = "";
