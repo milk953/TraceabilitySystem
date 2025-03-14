@@ -1160,16 +1160,18 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 let _strEFPCRemark = "";
                                 await axios
                                     .get("/api/Common/GetEFPCSheetInspectionResult", {
-                                        _strPlantCode: plantCode,
-                                        _strProduct: _strPrdName,
-                                        _strFrontSheetNo: dtSerial[i].FRONT_SHEET_NO,
-                                        _strBackSheetNo: dtSerial[i].BACK_SHEET_NO,
-                                        _intPcsNo: dtSerial[i].SHEET_PCS_NO,
-                                        _strAOMFlg: hfCheckEFPCAOM,
-                                        _strAOIFlg: hfCheckEFPCAOI,
-                                        _strOSTFlg: hfCheckEFPCOST,
-                                        _strAVIFlg: hfCheckEFPCAVI,
-                                        _strResult: _strEFPCResult,
+                                        params: {
+                                            _strPlantCode: plantCode,
+                                            _strProduct: _strPrdName,
+                                            _strFrontSheetNo: dtSerial[i].FRONT_SHEET_NO,
+                                            _strBackSheetNo: dtSerial[i].BACK_SHEET_NO,
+                                            _intPcsNo: dtSerial[i].SHEET_PCS_NO,
+                                            _strAOMFlg: hfCheckEFPCAOM,
+                                            _strAOIFlg: hfCheckEFPCAOI,
+                                            _strOSTFlg: hfCheckEFPCOST,
+                                            _strAVIFlg: hfCheckEFPCAVI,
+                                            _strResult: _strEFPCResult,
+                                        },
                                     })
                                     .then((res) => {
                                         _strEFPCRemark = res.data;
