@@ -703,7 +703,7 @@ function ScanSMTSerialRecordTime() {
                             defaultValue={serial}
                             ref={(el) => (inputgvSerial.current[index] = el)}
                             onChange={(e) => {
-                              handleChangeSerial(index, e);
+                              data = handleChangeSerial(index, e);
                             }}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {

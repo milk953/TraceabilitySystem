@@ -407,7 +407,7 @@ function ScanAOISheetNo() {
                               (inputSerial.current[index] = el)
                             }
                             onChange={(e) => {
-                              handleChangeSerial(index, e);
+                              data = handleChangeSerial(index, e);
                             }}
                             onKeyDown={async (event) => {
                               if (event.key === "Enter") {

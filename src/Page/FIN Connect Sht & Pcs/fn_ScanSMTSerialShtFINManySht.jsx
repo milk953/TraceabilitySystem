@@ -150,7 +150,12 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const [txtSerial, setTxtSerial] = useState(gvSerial.map(() => ""));
   const [txtBoardNoF, setTxtBoardNoF] = useState("");
   const [txtBoardNoB, setTxtBoardNoB] = useState("");
-
+  const [revertData, setRevertData] = useState(gvSerial.map(() => ""));
+  const [revertFBData, setRevertFBData] = useState({
+    FRONT_SIDE: "",
+    BACK_SIDE: "",
+    ROLL_LEAF:"",
+  });
   //endregion
   useEffect(() => {
     Pageload();
@@ -227,10 +232,29 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         FctxtOperator.current.focus();
         return;
       }
+      setRevertData(SerialArray);
+      setRevertFBData({
+        FRONT_SIDE: txtSideFront,
+        BACK_SIDE: txtSideBack,
+        ROLL_LEAF: txtRollLeaf,
+      })
       setSerialData(SerialArray);      
     }
   };
+  const btnRevert_Click = () => {
+    console.log(revertFBData,'revertFBData');
+    setTxtSideBack(revertFBData.BACK_SIDE);
+    setTxtSideFront(revertFBData.FRONT_SIDE);
+    setTxtRollLeaf(revertFBData.ROLL_LEAF);
+    revertData.forEach((value, index) => {
+      if (txtSerialClear.current[index]) {
+        txtSerialClear.current[index].value = value.toUpperCase(); 
+      }
+    });
+    scrollToTop();
+  }
   async function setSerialData(SerialArray) {
+    
     await getData("getProductSerialMaster", productSelect);
     if(txtSideFront == '' || txtSideBack  == '' ){
       setlblLog("Please input Sheet Side No. !!!");
@@ -245,6 +269,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     var dtSerial = [];
     dtSerial = await getInputSerial(SerialArray);
+    console.log(dtSerial,'dtSerial');
 
 
     const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
@@ -721,7 +746,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       setGvScanResult(dtSerial);
       setTxtSideBack(gvBackSide.map(() => ""));
       setTxtSideFront(gvBackSide.map(() => ""));
-      // setTxtSerial(gvSerial.map(() => ""));
+
       Object.values(txtSerialClear.current).forEach((input) => {
         if (input) input.value = "";
       });
@@ -749,7 +774,7 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       //   hideLoading();
       //   SetFocus("gvBackside_0");
       // }, 200);
-      
+      setRevertData(SerialArray);
       SetFocus("gvBackside_0");
       scrollToTop();
     }
@@ -1126,9 +1151,10 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const txtSerialChangeRef = (index, value) => {
     txtSerialref.current[index] = value;
   }
-  const handleSaveRef =  ()  => {
-    const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
-    const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
+  const handleSaveRef =  (SerialArray)  => {
+    // const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
+    // const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
+    console.log(SerialArray,'SerialArray');
     setTxtSerial(SerialArray);
     requestAnimationFrame(() => {
       btnSave_Click(SerialArray);
@@ -1781,14 +1807,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     },
   },
 ];
-const getRowClassName = (record) => {
-  if (record.SCAN_RESULT === "NG") {
-    return 'row-red';
-  } else if (record.SCAN_RESULT === "OK") {
-    return 'row-green';
-  }
-  return '';
-};
+  const getRowClassName = (record) => {
+    if (record.SCAN_RESULT === "NG") {
+      return 'row-red';
+    } else if (record.SCAN_RESULT === "OK") {
+      return 'row-green';
+    }
+    return '';
+  };
   return {
     txtSerialref,//newadding
     handleSaveRef, //newadding
@@ -1857,7 +1883,9 @@ const getRowClassName = (record) => {
     hideImg,
     columns,
     getRowClassName,
-    setTxtSerial
+    setTxtSerial,
+    btnRevert_Click,
+    revertData
   };
 };
 

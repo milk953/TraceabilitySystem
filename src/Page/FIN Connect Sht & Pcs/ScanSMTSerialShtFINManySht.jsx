@@ -97,6 +97,7 @@ function ScanSMTSerialShtFINManySht() {
     handleSaveRef, //newadding
     txtSerialChangeRef, //newadding
     txtSerialClear, //newadding
+    btnRevert_Click, //newadding
   } = fn_ScanSMTSerialShtFINManySht();
   return (
     <div>
@@ -229,7 +230,7 @@ function ScanSMTSerialShtFINManySht() {
                             ref={FCtxtRollleaf}
                             value={txtRollLeaf}
                             onChange={(e) => {
-                              setTxtRollLeaf(e.target.value);
+                              setTxtRollLeaf(e.target.value.toUpperCase());
                             }}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
@@ -453,13 +454,26 @@ function ScanSMTSerialShtFINManySht() {
                                       .getElementById(`txtSerial_${index + 1}`)
                                       .focus();
                                   } else {
-                                    handleSaveRef();
+                                    // handleSaveRef();
+                                    console.log(
+                                      txtSerialClear.current.map((el) => el)
+                                    );
+                                    // btnSave_Click(
+                                    //   txtSerialClear.current.map(
+                                    //     (el) => el.value
+                                    //   )
+                                    // );
+                                    btnSave_Click(
+                                      txtSerialClear.current
+                                        .filter((el) => el !== null)
+                                        .map((el) => el.value.toUpperCase())
+                                    );
                                   }
                                 }
                               }}
-                              onChange={(e) =>
-                                txtSerialChangeRef(index, e.target.value)
-                              }
+                              // onChange={(e) =>
+                              //   txtSerialChangeRef(index, e.target.value)
+                              // }
                             />
                           </td>
                         </tr>
@@ -473,16 +487,40 @@ function ScanSMTSerialShtFINManySht() {
                             gap: "10px",
                           }}
                         >
-                          <AntButton className="BtSave" onClick={handleSaveRef}>
+                          <AntButton
+                            className="BtSave"
+                            // onClick={() => btnSave_Click(txtSerialClear.current.map((el) => el.value))}
+                            onClick={() =>
+                              btnSave_Click(
+                                txtSerialClear.current
+                                  .filter((el) => el !== null)
+                                  .map((el) => el.value.toUpperCase())
+                              )
+                            }
+                            // onClick={() =>
+                            //   handleSaveRef(
+                            //     txtSerialClear.current.map((el) => el.value)
+                            //   )
+                            // }
+                          >
                             Save
                           </AntButton>
                           &nbsp;&nbsp;
                           <AntButton
                             className="BtCancel"
+                            // onClick={btnCancel_Click}
                             onClick={btnCancel_Click}
                           >
                             {" "}
                             Cancel
+                          </AntButton>
+                          <AntButton
+                            className="BtCancel"
+                            // onClick={btnCancel_Click}
+                            onClick={btnRevert_Click}
+                          >
+                            {" "}
+                            Back
                           </AntButton>
                         </TableCell>
                       </TableRow>
