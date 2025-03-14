@@ -8,7 +8,6 @@ function fn_ConfirmBarcodeGrade() {
   const { ConfigData } = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
-
   const [Check_Master, setCheck_Master] = useState(false);
   const [txt_lotNo, settxt_lotNo] = useState({
     value: "",
@@ -82,6 +81,13 @@ function fn_ConfirmBarcodeGrade() {
     disbled: "",
     visble: false,
     style: "",
+  });
+
+  const [valueback, setvalueback] = useState({
+    Front: [],
+    Back:[],
+    Serial: []
+    // style: "",
   });
 
   const [txtSerial, settxtSerial] = useState(
@@ -652,8 +658,20 @@ function fn_ConfirmBarcodeGrade() {
 
     // set
   };
+  
+  const btnBack_Click = async () => {
+    // settxtSerial(valueback.Serial);
+    fcGvSerial_txtSerial_0.current.forEach((input, index) => {
+      if (input) input.value = valueback.Serial[index] ;
+    });
+    settxtSideFront(valueback.Front);
+    settxtSideBack((prevState) => ({ ...prevState, value: valueback.Back }));
+    scrollToTop();
+  };
+
 
   const btnSave_Click = async (serial) => {
+    setvalueback((prevState) => ({ ...prevState, Front: txtSideFront, Back: txtSideBack.value, Serial: serial }));
     if (hfMode === "SERIAL") {
       setSerialData(serial);
     }
@@ -876,10 +894,10 @@ function fn_ConfirmBarcodeGrade() {
           SERIAL_GRADE:
             !txtSerial[i] || txtSerial[i] === undefined
               ? ""
-              : hfBarcodeErrorValue.includes(txtSerial[intRow]) &&
+              : hfBarcodeErrorValue.includes(txtSerial[intRow].toUpperCase()) &&
                 txtSerial[intRow]
               ? "X"
-              : txtSerial[i].slice(-1),
+              : txtSerial[i].toUpperCase().slice(-1),
           SERIAL: txtSerial[i]
             ? txtSerial[i]
                 .trim()
@@ -1021,6 +1039,7 @@ function fn_ConfirmBarcodeGrade() {
     newValues[index] = event.target.value.trim().toUpperCase();
     settxtSideFront(newValues);
   };
+
   const handleBackSideChange = async (index, event) => {
     const newValues = [...txtSideBack.value];
     newValues[index] = event.target.value.trim().toUpperCase();
@@ -1755,6 +1774,15 @@ function fn_ConfirmBarcodeGrade() {
       align: "center",
     },
     {
+      title: "No.",
+      dataIndex: "SEQ",
+      key: "Sheet",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+    {
       title: "Serial No.",
       dataIndex: "SERIAL",
       key: "Serial No.",
@@ -1847,6 +1875,7 @@ function fn_ConfirmBarcodeGrade() {
     fcGvBackSide_txtsideback_1,
     columns,
     settxtSerial,
+    btnBack_Click
   };
 }
 

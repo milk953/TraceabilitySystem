@@ -658,18 +658,15 @@ function fn_ConfirmBarcodeGrade() {
 
     // set
   };
+  
   const btnBack_Click = async () => {
-    settxtSerial(valueback.Serial);
+    // settxtSerial(valueback.Serial);
     fcGvSerial_txtSerial_0.current.forEach((input, index) => {
       if (input) input.value = valueback.Serial[index] ;
     });
     settxtSideFront(valueback.Front);
     settxtSideBack((prevState) => ({ ...prevState, value: valueback.Back }));
-    // await handleSerialChange()
-    // setvalueback((prevState) => ({ ...prevState, Front: txtSideFront, Back: txtSideBack.value, Serial: serial }));
-    // if (hfMode === "SERIAL") {
-    //   setSerialData(serial);
-    // }
+    scrollToTop();
   };
 
 
@@ -1042,6 +1039,7 @@ function fn_ConfirmBarcodeGrade() {
     newValues[index] = event.target.value.trim().toUpperCase();
     settxtSideFront(newValues);
   };
+
   const handleBackSideChange = async (index, event) => {
     const newValues = [...txtSideBack.value];
     newValues[index] = event.target.value.trim().toUpperCase();
@@ -1769,6 +1767,15 @@ function fn_ConfirmBarcodeGrade() {
     {
       title: "Sheet",
       dataIndex: "SHEET",
+      key: "Sheet",
+      render: (text, record, index) => {
+        return text;
+      },
+      align: "center",
+    },
+    {
+      title: "No.",
+      dataIndex: "SEQ",
       key: "Sheet",
       render: (text, record, index) => {
         return text;

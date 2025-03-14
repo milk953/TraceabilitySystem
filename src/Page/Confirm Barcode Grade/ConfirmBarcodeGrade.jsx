@@ -81,7 +81,8 @@ function ConfirmBarcodeGrade() {
     dataGvSerial,
     fcGvBackSide_txtsideback_1,
     columns,
-    settxtSerial
+    settxtSerial,
+    btnBack_Click,
   } = fn_ConfirmBarcodeGrade();
   let data  =[]
   return (
@@ -430,10 +431,11 @@ function ConfirmBarcodeGrade() {
                         <input
                             className="styleSeraial"
                             type="text"
-                            defaultValue={serial}
-                            onChange={async(event) =>
-                              data=await handleSerialChange(index, event)
-                            }
+                            // defaultValue={serial}
+                            // onChange={async (event) => {
+                            //   // data = serial;
+                            //   data = await handleSerialChange(index, event);
+                            // }}
                             ref={(el) =>
                               (fcGvSerial_txtSerial_0.current[index] = el)
                             }
@@ -441,7 +443,7 @@ function ConfirmBarcodeGrade() {
                             
                               if (event.key === "Enter") {
                                 event.preventDefault();
-                                data= await handleSerialChange(index, event)
+                                // data= await handleSerialChange(index, event)
                                 if (index < txtSerial.length - 1) {
                                   
                                   fcGvSerial_txtSerial_0.current[
@@ -450,8 +452,9 @@ function ConfirmBarcodeGrade() {
                               
                                 } else {
                                   event.target.blur();
-                                  settxtSerial(data);
-                                  btnSave_Click(data);
+                                  console.log('Current Serial Values:', fcGvSerial_txtSerial_0.current.map(el => el.value));
+                                  settxtSerial(fcGvSerial_txtSerial_0.current.map(el => el.value));
+                                  btnSave_Click(fcGvSerial_txtSerial_0.current.map(el => el.value));
                                 }
                               }
                             }}
@@ -470,8 +473,8 @@ function ConfirmBarcodeGrade() {
                           type="primary"
                           className="ButtonReplace"
                           onClick={() => {
-                            settxtSerial(data);
-                            btnSave_Click(data);
+                            settxtSerial(fcGvSerial_txtSerial_0.current.map(el => el.value));
+                            btnSave_Click(fcGvSerial_txtSerial_0.current.map(el => el.value));
                           }}
                         >
                           Yes
@@ -483,6 +486,13 @@ function ConfirmBarcodeGrade() {
                           onClick={btnCancel_Click}
                         >
                           Cancel
+                        </AntButton>&nbsp;&nbsp;
+                        <AntButton
+                          type="primary"
+                          className="BtCancel"
+                          onClick={btnBack_Click}
+                        >
+                          Back
                         </AntButton>
                       </TableCell>
                     </TableRow>
