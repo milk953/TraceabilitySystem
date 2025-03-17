@@ -224,7 +224,9 @@ function fn_ScanSMTSerialPcsChrome() {
     if (gvSerial.visble == "") {
       getInitialSerial();
       if (gvSerial.value.length > 0) {
+        setTimeout(() => {
         fc_txtSerial.current[0].focus();
+      }, 0 );
       }
     }
   }, [gvSerial.visble, gvSerial.value.length]);
@@ -313,6 +315,7 @@ function fn_ScanSMTSerialPcsChrome() {
                     if (hfFQC == "Y") {
                       SetMode("MACHINE");
                     } else {
+                      console.log(datagetPd.prm_final_packing_group_flg ,'mayyyyy')
                       if (datagetPd.prm_final_packing_group_flg == "Y") {
                         SetMode("PACK");
                       } else {
@@ -733,6 +736,7 @@ function fn_ScanSMTSerialPcsChrome() {
         fc_txtPackingNo.current.focus();
       }, 300);
     } else if (mode == "SERIAL") {
+      //กงนี้จ้า
       settxtLot((prevState) => ({
         ...prevState,
         disbled: true,

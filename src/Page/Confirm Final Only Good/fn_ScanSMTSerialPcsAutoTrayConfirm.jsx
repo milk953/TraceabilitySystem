@@ -194,7 +194,9 @@ function fn_ScanSMTSerialPcsAutoTrayConfirm() {
     if (gvSerial.visble == "") {
       getInitialSerial();
       if (gvSerial.value.length > 0) {
+        setTimeout(() => {
         fc_txtSerial.current[0].focus();
+      }, 0);
       }
     }
   }, [gvSerial.visble, gvSerial.value.length]);
