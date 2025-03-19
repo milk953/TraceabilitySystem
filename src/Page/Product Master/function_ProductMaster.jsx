@@ -329,13 +329,17 @@ function fn_ProductMaster() {
   const [ErrorPassWord, setErrorPassWord] = useState(false);
   const [ErrorPassWordMessage, setErrorPassWordMessage] = useState("");
 
-  const [hfUserName, sethfUserName] = useState("");
+  // const [hfUserName, sethfUserName] = useState("");
   const MST_PASSWORD = "";
   const FIX_CHECK_PRODUCT_MIX = "Y";
   const FIX_CHECK_PRODUCT_MIX_START = "11";
   const FIX_CHECK_PRODUCT_MIX_END = "16";
   const plantCode = import.meta.env.VITE_FAC;
   const ip = localStorage.getItem("ipAddress");
+  const user = localStorage.getItem("Username");
+  const surname = localStorage.getItem("Lastname");
+
+  let hfUserName = `${user}.${surname.charAt(0)}`;
 
   useEffect(() => {
     PageLoad();
@@ -344,7 +348,7 @@ function fn_ProductMaster() {
   const PageLoad = async () => {
 
     if (hfUserName === "") {
-      sethfUserName("");
+      hfUserName = "";
 
       if (FIX_CHECK_PRODUCT_MIX === "Y") {
         setcbxReqCheckPrdShtDisabled(true);
@@ -1188,6 +1192,21 @@ function fn_ProductMaster() {
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    date.setHours(date.getHours()); 
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); 
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  };
+
   const GetDataProductMaster = async () => {
     if (txtProduct === "") {
       setErrorPrdName(true);
@@ -1518,7 +1537,8 @@ function fn_ProductMaster() {
         settxtAddInfo(Data.p_prm_additional_info);
         settxtSerialStartCode(Data.p_prm_serial_start_code);
         settxtUpdateBy(Data.p_prm_update_by);
-        settxtUpdateDate(Data.p_prm_update_date);
+        console.log(Data.p_prm_update_by);
+        settxtUpdateDate(formatDate(Data.p_prm_update_date));
 
         if (Data.p_prm_req_check_prd_sht === "Y") {
           if (FIX_CHECK_PRODUCT_MIX === "Y") {
@@ -2714,8 +2734,9 @@ function fn_ProductMaster() {
           setErrorRevision(true);
           setErrorRevisionMessage("Please input revision.");
         }
+        console.log(txtPcsTray);
 
-        if (txtPcsTray === "") {
+        if (txtPcsTray === "" || txtPcsTray === undefined) {
           Swal.fire({
             icon: "error",
             text: "Please input pcs/tray.",
@@ -3074,7 +3095,7 @@ function fn_ProductMaster() {
             cbxConnshtpcsduplicate: ConnShtDuplicateFlg
           })
             .then((res2) => {
- 
+
               Swal.fire("Success", "Summit Data Success", "success").then(
                 (result) => {
                   if (result.isConfirmed) {
@@ -3091,8 +3112,8 @@ function fn_ProductMaster() {
             });
         }
       } catch (error) {
-        lblMessageColor("#ff4d4f");
-        lblMessage(`Error: ${error.message}`);
+        setlblMessageColor("#ff4d4f");
+        setlblMessage(`Error: ${error.message}`);
         setpnlMessage(true);
       }
 
@@ -3135,7 +3156,7 @@ function fn_ProductMaster() {
     ErrorRollCheckPrdLeafToMessage, ErrorRollCheckLotLeafFrom, ErrorRollCheckLotLeafFromMessage, ErrorRollCheckLotLeafTo, ErrorRollCheckLotLeafToMessage, ErrorDateFromProc, ErrorDateFromProcMessage, ErrorWeekCodeStart, ErrorWeekCodeStartMessage, ErrorWeekCodeEnd,
     ErrorWeekCodeEndMessage, ErrorProcControlTime, ErrorProcControlTimeMessage, ErrorShtPlasmaTime, ErrorShtPlasmaTimeMessage, ErrorFinInspectProc, ErrorFinInspectProcMessage, ErrorselSheetType, ErrorselSheetTypeMessage, ErrorselDateType, ErrorselDateTypeMessage,
     ErrorEngCode, ErrorEngCodeMessage, ErrorRevision, ErrorRevisionMessage, ErrorPcsTray, ErrorPcsTrayMessage, ErrorPcsScan, ErrorPcsScanMessage, ErrorChkStartDig, ErrorChkStartDigMessage, ErrorChkEndDig, ErrorChkEndDigMessage, ErrorChkWord, ErrorChkWordMessage,
-    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg, ConnShtDuplicateFlg, 
+    ErrorSerialLength, ErrorSerialLengthMessage, ErrorSerialFormat, ErrorSerialFormatMessage, ErrorLaminationSide, ErrorLaminationSideMessage, ErrorPassWord, ErrorPassWordMessage, pnlMessage, ConnShtReqProductFlg, setConnShtReqProductFlg, ConnShtDuplicateFlg,
     setConnShtDuplicateFlg
   }
 };

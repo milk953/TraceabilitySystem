@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLoading } from "../../loading/fn_loading";
 import { DataConfig } from "../Common/function_Common"; 
+import { set } from "lodash";
 
 function fn_PieceTraceView() {
   const { ConfigData } = DataConfig();
@@ -249,12 +250,18 @@ function fn_PieceTraceView() {
     }, 200);
   }, []);
 
+  // useEffect(() => {
+  //   if (SerialSearch !== "") {
+  //     Clear_View();
+  //     ViewData();
+  //   }
+  // }, [SerialSearch]);
+
   useEffect(() => {
-    if (SerialSearch !== "") {
+    if (txtSerialNo !== "" && Serial == null) {
       Clear_View();
-      ViewData();
     }
-  }, [SerialSearch]);
+  }, [txtSerialNo]);
 
   const PageLoad = async () => {
     if (Serial == "" || Serial == null || Serial == undefined) {
@@ -267,6 +274,8 @@ function fn_PieceTraceView() {
   };
 
   const Clear_View = () => {
+    
+    setlblMessage("");
     settxtProduct("");
     sethypLotNo("");
     //sethypLotNo.NavigateUrl = ""
@@ -278,6 +287,7 @@ function fn_PieceTraceView() {
 
     //SPI
     setbtnSPIFColor("#B6BBC4");
+    setbtnSPIF(prevState => ({ ...prevState, value: "" }));
     settxtSPICntF("");
     settxtSPITimeF("");
     setbtnSPIBColor("#B6BBC4");
@@ -286,6 +296,7 @@ function fn_PieceTraceView() {
 
     //PreAOI
     setbtnPreAOIFColor("#B6BBC4");
+    setbtnPreAOIF(prevState => ({ ...prevState, value: "" }));
     settxtPreAOICntF("");
     settxtPreTimeF("");
     setbtnPreAOIB("");
@@ -295,6 +306,7 @@ function fn_PieceTraceView() {
 
     //AOI
     setbtnAOIFColor("#B6BBC4");
+    setbtnAOIF(prevState => ({ ...prevState, value: "" }));
     settxtAOICntF("");
     settxtAOITimeF("");
     setbtnAOIBColor("#B6BBC4");
@@ -303,6 +315,7 @@ function fn_PieceTraceView() {
 
     //XRAY
     setbtnXRAY_FColor("#B6BBC4");
+    setbtnXRAY_F("");
     settxtXRAYCnt_F("");
     settxtXRAYTime_F("");
     setbtnXRAY_BColor("#B6BBC4");
@@ -311,6 +324,7 @@ function fn_PieceTraceView() {
 
     //AOICOAT
     setbtnAOICOAFColor("#B6BBC4");
+    setbtnAOICOAF(prevState => ({ ...prevState, value: "" }));
     settxtAOICOACntF("");
     settxtAOICOATimeF("");
     setbtnAOICOABColor("#B6BBC4");
@@ -319,6 +333,7 @@ function fn_PieceTraceView() {
 
     //SMT
     setbtnSMTIntFColor("#B6BBC4");
+    setbtnSMTIntF("");
     settxtSMTIntCntF("");
     settxtSMTIntTimeF("");
     setbtnSMTIntBColor("#B6BBC4");
@@ -327,60 +342,74 @@ function fn_PieceTraceView() {
 
     //Reject1
     setbtnReject1Color("#B6BBC4");
+    setbtnReject1("");
     settxtRejectCnt1("");
     settxtRejectTime1("");
 
     //TouchUp
     setbtnTouchUpColor("#B6BBC4");
+    setbtnTouchUp("");
     settxtTouchUpCnt("");
     settxtTouchUpTime("");
 
     //FQC
     setbtnFQCColor("#B6BBC4");
+    setbtnFQC(prevState => ({ ...prevState, value: "" }));
     settxtFQCTime(prevState => ({ ...prevState, value: "" }));
+    setlblFQCMachine(prevState => ({ ...prevState, visible: false, value: "" }));
+    setlblFQCOperator(prevState => ({ ...prevState, visible: false, value: "" }));
 
     //Bending
     setbtnBendingColor("#B6BBC4");
+    setbtnBending("");
     settxtBendingTime("");
     setlblBendingMachine("");
 
     //ELT1
     setbtnELT1Color("#B6BBC4");
+    setbtnELT1(prevState => ({ ...prevState, value: "" }));
     settxtELTCnt1(prevState => ({ ...prevState, value: "" }));
     settxtELTTime1(prevState => ({ ...prevState, value: "" }));
 
     //ELT2
     setbtnELT2Color("#B6BBC4");
+    setbtnELT2(prevState => ({ ...prevState, value: "" }));
     settxtELTCnt2(prevState => ({ ...prevState, value: "" }));
     settxtELTTime2(prevState => ({ ...prevState, value: "" }));
 
     //ELT3
     setbtnELT3Color("#B6BBC4");
+    setbtnELT3(prevState => ({ ...prevState, value: "" }));
     settxtELTCnt3(prevState => ({ ...prevState, value: "" }));
     settxtELTTime3(prevState => ({ ...prevState, value: "" }));
 
     //ELT4
     setbtnELT4Color("#B6BBC4");
+    setbtnELT4(prevState => ({ ...prevState, value: "" }));
     settxtELTCnt4(prevState => ({ ...prevState, value: "" }));
     settxtELTTime4(prevState => ({ ...prevState, value: "" }));
 
     //ELT5
     setbtnELT5Color("#B6BBC4");
+    setbtnELT5(prevState => ({ ...prevState, value: "" }));
     settxtELTCnt5(prevState => ({ ...prevState, value: "" }));
     settxtELTTime5(prevState => ({ ...prevState, value: "" }));
 
     //ELT6
     setbtnELT6Color("#B6BBC4");
+    setbtnELT6(prevState => ({ ...prevState, value: "" }));
     settxtELTCnt6(prevState => ({ ...prevState, value: "" }));
     settxtELTTime6(prevState => ({ ...prevState, value: "" }));
 
     //ELT7
     setbtnELT7Color("#B6BBC4");
+    setbtnELT7(prevState => ({ ...prevState, value: "" }));
     settxtELTCnt7(prevState => ({ ...prevState, value: "" }));
     settxtELTTime7(prevState => ({ ...prevState, value: "" }));
 
     //AOMEFPC
     setbtnAOMEFPCColor("#B6BBC4");
+    setbtnAOMEFPC(prevState => ({ ...prevState, value: "" }));
     settxtAOMEFPCCntF("");
     settxtAOMEFPCTimeF("");
     sethfAOMRollLeafNo("");
@@ -389,6 +418,7 @@ function fn_PieceTraceView() {
 
     //AOIEFPC
     setbtnAOIEFPCColor("#B6BBC4");
+    setbtnAOIEFPC(prevState => ({ ...prevState, value: "" }));
     settxtAOIEFPCCntF("");
     settxtAOIEFPCTimeF("");
     sethfAOIRollLeafNo("");
@@ -397,6 +427,7 @@ function fn_PieceTraceView() {
 
     //OST
     setbtnOSTColor("#B6BBC4");
+    setbtnOST(prevState => ({ ...prevState, value: "" }));
     settxtOSTCntF("");
     settxtOSTTimeF("");
     sethfOSTSheetNo("");
@@ -404,39 +435,48 @@ function fn_PieceTraceView() {
 
     //AVI
     setbtnAVIFColor("#B6BBC4");
+    setbtnAVIF(prevState => ({ ...prevState, value: "" }));
     settxtAVICntF("");
     settxtAVITimeF("");
 
     setbtnAVIBColor("#B6BBC4");
+    setbtnAVIB(prevState => ({ ...prevState, value: "" }));
     settxtAVICntB("");
     settxtAVITimeB("");
 
     setbtnAVIMarkFColor("#B6BBC4");
+    setbtnAVIMarkF(prevState => ({ ...prevState, value: "" }));
     settxtAVIMarkCntF("");
     settxtAVIMarkTimeF("");
 
     setbtnAVIMarkBColor("#B6BBC4");
+    setbtnAVIMarkB(prevState => ({ ...prevState, value: "" }));
     settxtAVIMarkCntB("");
     settxtAVIMarkTimeB("");
 
     //Reflow
     setbtnReflowFColor("#B6BBC4");
+    setbtnReflowF(prevState => ({ ...prevState, value: "" }));
     settxtReflowCntF("");
     settxtReflowTimeF("");
 
     setbtnReflowBColor("#B6BBC4");
+    setbtnReflowB(prevState => ({ ...prevState, value: "" }));
     settxtReflowCntB("");
     settxtReflowTimeB("");
 
     //FinalGate
     setbtnFinalGateColor("#B6BBC4");
+    setbtnFinalGate("");
     settxtFinalGateTime("");
     setlblFinalGateRemark("");
     //BarcodeGrade
     setbtnBarcodeGradeColor("#B6BBC4");
+    setbtnBarcodeGrade(prevState => ({ ...prevState, value: "" }));
     settxtBarcodeGradeTime(prevState => ({ ...prevState, value: "" }));
     //ScanPack
     setbtnScanPackColor("#B6BBC4");
+    setbtnScanPack("");
     setlblScanPackRemark("");
   };
 
@@ -2494,8 +2534,8 @@ function fn_PieceTraceView() {
 
   const btnRetrive_Click = async () => {
     localStorage.setItem("SERIAL_NO", txtSerialNo);
-    ViewData();
     //Clear_View();
+    ViewData();
   };
 
   const btnSPIF_Click = async () => {

@@ -105,7 +105,11 @@ function ProductMaster() {
                         style={{
                             background: lblMessageColor,
                             textAlign: "center",
-                            marginBottom: "5px"
+                            marginBottom: "5px",
+                            display: "inline-block",
+                            height: "25px",
+                            width: "520px",
+                            padding: "5px 10px"  
                         }}
                     >
                         <Typography
