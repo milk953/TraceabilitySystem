@@ -749,15 +749,15 @@ const fn_ScanSMTSerialShtFINManySht = () => {
         });
       }
       setGvScanResult(dtSerial);
-      // setTxtSideBack(gvBackSide.map(() => ""));
-      // setTxtSideFront(gvBackSide.map(() => ""));
+      setTxtSideBack(gvBackSide.map(() => ""));
+      setTxtSideFront(gvBackSide.map(() => ""));
 
-      // Object.values(txtSerialClear.current).forEach((input) => {
-      //   if (input) input.value = "";
-      // });
-      // txtSerialref.current = {};
-      // getIntitiaSheet();
-      // getInitialSerial();
+      Object.values(txtSerialClear.current).forEach((input) => {
+        if (input) input.value = "";
+      });
+      txtSerialref.current = {};
+      getIntitiaSheet();
+      getInitialSerial();
     } else {
       setlblLogState(true);
       setlblLog("Please input Sheet Side No. !!!");
