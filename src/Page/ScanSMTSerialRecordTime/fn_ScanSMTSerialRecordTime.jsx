@@ -629,6 +629,7 @@ function fn_ScanSMTSerialRecordTime() {
   };
 
   const SetMode = (strType) => {
+    console.log("strType", strType);
     if (strType === "RECORD") {
       setpnlMachine(true);
       setpnlRackNo(false);
@@ -892,6 +893,7 @@ function fn_ScanSMTSerialRecordTime() {
     }
     setgvSerialData(dtData);
 
+    console.log("dtData", dtData);
     if (dtData.length > 0) {
       if (selectedrbt === "rbtRecordTime") {
         settxtgvSerial(Array(dtData.length).fill(""));
@@ -902,7 +904,7 @@ function fn_ScanSMTSerialRecordTime() {
           inputgvSerial.current[0].focus();
         }, 0);
       } else {
-        settxtRackNo("");
+        //settxtRackNo("");
         setistxtRackDisabled(false);
         setTimeout(() => {
           inputRackNo.current.focus();
@@ -1377,6 +1379,9 @@ function fn_ScanSMTSerialRecordTime() {
     }
 
     getInitialSerial();
+    setTimeout(() => {
+      inputgvSerial.current[0].focus();
+    }, 0);
     hideLoading();
   };
 
@@ -1414,8 +1419,11 @@ function fn_ScanSMTSerialRecordTime() {
         inputgvSerial.current[0].focus();
       }, 0);
     } else {
+      // setTimeout(() => {
+      //   inputRackNo.current.focus();
+      // }, 0);
       setTimeout(() => {
-        inputRackNo.current.focus();
+        inputgvSerial.current[0].focus();
       }, 0);
     }
   };
