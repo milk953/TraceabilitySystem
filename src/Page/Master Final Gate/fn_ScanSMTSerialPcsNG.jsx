@@ -1379,39 +1379,59 @@ function fn_ScanSMTSerialPcsNG() {
           });
         }
         let _strErrorUpdate = "";
-
-        for (let insertDt = 0; insertDt < dtSerial.length; insertDt++) {
-          if (
-            dtSerial[insertDt].SERIAL != "" ||
-            dtSerial[insertDt].SERIAL != null
-          ) {
-     
-            _strErrorUpdate = await getData("SetSerialLotTrayTable", {
-              strPlantCode: Fac,
-              strPrdName: _strPrdName,
-              strLot: _strLot,
-              strHfUserId: ip,
-              strSerial: dtSerial[insertDt].SERIAL,
-              strUpdateFlg: dtSerial[insertDt].UPDATE_FLG,
-              strRowUpdate: dtSerial[insertDt].ROW_UPDATE,
-              strRejectCode: dtSerial[insertDt].REJECT_CODE,
-              strTestResult: dtSerial[insertDt].TEST_RESULT,
-              strRemarkUpdate: dtSerial[insertDt].REMARK_UPDATE,
-              strScanResult: dtSerial[insertDt].SCAN_RESULT,
-              strPage:'ScanSMTSerialPcsNG',
-            });
-
-            if (_strErrorUpdate != "") {
-              if (
-                _strErrorUpdate ==
-                'duplicate key value violates unique constraint "pk_final_gate_header"'
-              ) {
-                dtSerial[insertDt].REMARK = "duplicate serial";
-              }
+        const serialsToUpdate = dtSerial.filter(item => item.SERIAL && item.SERIAL !== "");
+        console.log((serialsToUpdate.length))
+        const updatePromises = serialsToUpdate.map(async (item) => {
+          console.log('item', item);
+          const _strErrorUpdate = await getData("SetSerialLotTrayTable", {
+            strPlantCode: Fac,
+            strPrdName: _strPrdName,
+            strLot: _strLot,
+            strHfUserId: ip,
+            strSerial: item.SERIAL,
+            strUpdateFlg: item.UPDATE_FLG,
+            strRowUpdate: item.ROW_UPDATE,
+            strRejectCode: item.REJECT_CODE,
+            strTestResult: item.TEST_RESULT._strresult,
+            strRemarkUpdate: item.REMARK_UPDATE,
+            strScanResult: item.SCAN_RESULT,
+            strPage: 'ScanSMTSerialPcsNG',
+          });
         
-            }
+          if (_strErrorUpdate === 'duplicate key value violates unique constraint "pk_final_gate_header"') {
+            item.REMARK = "duplicate serial";
           }
-        }
+        });
+        
+        await Promise.all(updatePromises);        
+        // for (let insertDt = 0; insertDt < dtSerial.length; insertDt++) {
+        //   if (dtSerial[insertDt].SERIAL != "" ||dtSerial[insertDt].SERIAL != null) {
+        //     _strErrorUpdate = await getData("SetSerialLotTrayTable", {
+        //       strPlantCode: Fac,
+        //       strPrdName: _strPrdName,
+        //       strLot: _strLot,
+        //       strHfUserId: ip,
+        //       strSerial: dtSerial[insertDt].SERIAL,
+        //       strUpdateFlg: dtSerial[insertDt].UPDATE_FLG,
+        //       strRowUpdate: dtSerial[insertDt].ROW_UPDATE,
+        //       strRejectCode: dtSerial[insertDt].REJECT_CODE,
+        //       strTestResult: dtSerial[insertDt].TEST_RESULT,
+        //       strRemarkUpdate: dtSerial[insertDt].REMARK_UPDATE,
+        //       strScanResult: dtSerial[insertDt].SCAN_RESULT,
+        //       strPage:'ScanSMTSerialPcsNG',
+        //     });
+
+        //     if (_strErrorUpdate != "") {
+        //       if (
+        //         _strErrorUpdate ==
+        //         'duplicate key value violates unique constraint "pk_final_gate_header"'
+        //       ) {
+        //         dtSerial[insertDt].REMARK = "duplicate serial";
+        //       }
+        
+        //     }
+        //   }
+        // }
         if (_strErrorUpdate != "") {
           setLblError(`Error : ${_strErrorUpdate}`);
           setLblErrorState(true);

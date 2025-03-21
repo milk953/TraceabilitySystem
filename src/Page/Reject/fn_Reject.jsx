@@ -38,7 +38,11 @@ function fn_Reject() {
     if (rejectCombo == "") {
       PageLoad();
     }
-  }, []);
+    if (dtDataSearch.length > 0) {//Checkbox all
+      const allKeys = dtDataSearch.map((item) => item.rem_serial_no);//Checkbox all
+      setSelectedRows(allKeys); //Checkbox all
+    }
+  }, [dtDataSearch]); //Checkbox all
   // function
   function SetFocus(txtField) {
     document.getElementById(`${txtField}`).focus();
@@ -371,15 +375,33 @@ function fn_Reject() {
             rem_serial_no: params.Serialno,
           };
           const newData = [updatedData];
-
+          console.log(response);
+          console.log(response.message);  
+            // setDtDataSearch((prevData) => [...prevData, updatedData]);
+            // setLblResult({
+            //   text: "Data Read Complete",
+            //   styled: { color: "black" },
+            // });
+            // setIsShowlblResult(true);
+            // setPnlTableDisplaySatate(true);
+            //User req to ignore data not found
+          if(response.data.message != "Data Not found" || response.data.message == null){
+            setDtDataSearch((prevData) => [...prevData, updatedData]);
+            setLblResult({
+              text: "Data Read Complete",
+              styled: { color: "black" },
+            });
+            setIsShowlblResult(true);
+            setPnlTableDisplaySatate(true);
+          }else{
+            setLblResult({
+              text: "Not Found Data",
+              styled: { color: "red" },
+            });
+            setIsShowlblResult(true);
+          }
           // setDtDataSearch(newData);
-          setDtDataSearch((prevData) => [...prevData, updatedData]);
-          setLblResult({
-            text: "Data Read Complete",
-            styled: { color: "black" },
-          });
-          setIsShowlblResult(true);
-          setPnlTableDisplaySatate(true);
+          
         })
         .catch((error) => {
           setLblResult({

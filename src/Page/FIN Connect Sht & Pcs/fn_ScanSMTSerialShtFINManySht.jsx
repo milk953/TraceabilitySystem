@@ -299,7 +299,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     setlblLogState(false);
     if (lotValue != "" && dtSerial.length > 0) {
       if (hfCheckWeekCode == "Y") {
-        hfCheckWeekCode = await getData("GetWeekCodebyLot", {lotValue,hfDateInProc,hfWeekCodeType,hfSerialInfo});
+        hfWeekCode = await getData("GetWeekCodebyLot", {lotValue,hfDateInProc,hfWeekCodeType,hfSerialInfo});
+        console.log(hfCheckWeekCode)
       }
       let _intRowSerial = 0;
       for (let i = 0; i < dtSerial.length; i++) {
@@ -363,7 +364,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             strSheetnoB: _strShtNoBack,
             strSheetType: hfSheetType,
           });
-
+          console.log(_strShtNoFront,':',_strShtNoBack,':',hfSheetType)
+          console.log('_inCountSeq: ',_inCountSeq)
           if (parseInt(_inCountSeq) > 1) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet no. duplicate";
@@ -377,7 +379,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             _bolError = true;
           }
         }
-        if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) != _strShtNoFront.length &&parseInt(hfConnLeafLength) != _strShtNoBack.length) {
+        if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) != _strShtNoFront.length || parseInt(hfConnLeafLength) != _strShtNoBack.length) {
+          console.log('in')
           _strScanResultAll = "NG";
           _strErrorAll = "Invalid sheet length";
           _bolError = true;
@@ -439,12 +442,14 @@ const fn_ScanSMTSerialShtFINManySht = () => {
                   _bolError = true;
                 }
               }
-              if (hfCheckWeekCode === "Y" && _strScanResultUpdate === "NG") {
+              if (hfCheckWeekCode === "Y" && _strScanResultUpdate != "NG") {
                 var _strWeekCode = "";
+                console.log(_strSerial)
+                console.log(parseInt(hfCheckWeekCodeStart),";", parseInt(hfCheckWeekCodeEnd))
                 _strWeekCode = _strSerial.substring(parseInt(hfCheckWeekCodeStart) -1 ,parseInt(hfCheckWeekCodeEnd));
                 if (_strWeekCode !== hfWeekCode) {
                   _strScanResultUpdate = "NG";
-                  _strMessageUpdate = `Serial barcode mix product / หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น`;
+                  _strMessageUpdate = `Serial barcode mix week code / หมายเลขบาร์โค้ดปนรหัสสัปดาห์กัน`;
                   _strScanResultAll = "NG";
                   _bolError = true;
                 }
@@ -1243,7 +1248,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           _strSerialInfo: param.hfSerialInfo,
         })
         .then((res) => {
-          result = res.data.strReturn;
+          console.log(result)
+          result = res.data;
         })
         .catch((error) => {
           result = error.message;
