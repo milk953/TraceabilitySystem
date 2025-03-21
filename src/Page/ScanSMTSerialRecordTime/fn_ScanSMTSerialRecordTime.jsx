@@ -629,7 +629,6 @@ function fn_ScanSMTSerialRecordTime() {
   };
 
   const SetMode = (strType) => {
-    console.log("strType", strType);
     if (strType === "RECORD") {
       setpnlMachine(true);
       setpnlRackNo(false);
