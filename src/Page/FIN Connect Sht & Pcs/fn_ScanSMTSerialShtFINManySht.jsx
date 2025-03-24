@@ -242,7 +242,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     }
   };
   const btnRevert_Click = () => {
-    console.log(revertFBData,'revertFBData');
     setTxtSideBack(revertFBData.BACK_SIDE);
     setTxtSideFront(revertFBData.FRONT_SIDE);
     setTxtRollLeaf(revertFBData.ROLL_LEAF);
@@ -269,7 +268,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
     var dtSerial = [];
     dtSerial = await getInputSerial(SerialArray);
-    console.log(dtSerial,'dtSerial');
 
 
     const allSerialEmpty = dtSerial.every(item => item.SERIAL === "");
@@ -300,14 +298,18 @@ const fn_ScanSMTSerialShtFINManySht = () => {
     if (lotValue != "" && dtSerial.length > 0) {
       if (hfCheckWeekCode == "Y") {
         hfWeekCode = await getData("GetWeekCodebyLot", {lotValue,hfDateInProc,hfWeekCodeType,hfSerialInfo});
-        console.log(hfCheckWeekCode)
       }
       let _intRowSerial = 0;
+      
       for (let i = 0; i < dtSerial.length; i++) {
         _strShtNoBack = dtSerial[i].BACK_SIDE;
         _strShtNoFront = dtSerial[i].FRONT_SIDE;
 
-        
+        if(txtSideBack[0] == txtSideFront[0]){
+          _strScanResultAll = "NG";
+          _strErrorAll = "Duplicate Product sheet F,B";
+          _bolError = true;
+        }
         if (hfSheetType == "D" && _strShtNoBack == _strShtNoFront) {
           _strScanResultAll = "NG";
           _strErrorAll = "Double Product sheet F,B not same";
@@ -364,8 +366,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
             strSheetnoB: _strShtNoBack,
             strSheetType: hfSheetType,
           });
-          console.log(_strShtNoFront,':',_strShtNoBack,':',hfSheetType)
-          console.log('_inCountSeq: ',_inCountSeq)
           if (parseInt(_inCountSeq) > 1) {
             _strScanResultAll = "NG";
             _strErrorAll = "Sheet no. duplicate";
@@ -380,7 +380,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           }
         }
         if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) != _strShtNoFront.length || parseInt(hfConnLeafLength) != _strShtNoBack.length) {
-          console.log('in')
           _strScanResultAll = "NG";
           _strErrorAll = "Invalid sheet length";
           _bolError = true;
@@ -444,8 +443,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
               }
               if (hfCheckWeekCode === "Y" && _strScanResultUpdate != "NG") {
                 var _strWeekCode = "";
-                console.log(_strSerial)
-                console.log(parseInt(hfCheckWeekCodeStart),";", parseInt(hfCheckWeekCodeEnd))
                 _strWeekCode = _strSerial.substring(parseInt(hfCheckWeekCodeStart) -1 ,parseInt(hfCheckWeekCodeEnd));
                 if (_strWeekCode !== hfWeekCode) {
                   _strScanResultUpdate = "NG";
@@ -1159,7 +1156,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
   const handleSaveRef =  (SerialArray)  => {
     // const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
     // const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
-    console.log(SerialArray,'SerialArray');
     setTxtSerial(SerialArray);
     requestAnimationFrame(() => {
       btnSave_Click(SerialArray);
@@ -1248,7 +1244,6 @@ const fn_ScanSMTSerialShtFINManySht = () => {
           _strSerialInfo: param.hfSerialInfo,
         })
         .then((res) => {
-          console.log(result)
           result = res.data;
         })
         .catch((error) => {
