@@ -1193,18 +1193,13 @@ function fn_ProductMaster() {
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-  
-    return date.toLocaleString("en-GB", { 
-      timeZone: "Asia/Bangkok", 
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false, 
-    }).replace(",", ""); 
+    const [datePart, timePart] = dateString.split("T");
+    const [year, month, day] = datePart.split("-");
+    const [hours, minutes, secondsWithFraction] = timePart.split(":");
+
+    const seconds = secondsWithFraction.split(".")[0];
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   };
 
   const GetDataProductMaster = async () => {
