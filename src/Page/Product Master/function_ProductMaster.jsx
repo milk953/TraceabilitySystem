@@ -1591,17 +1591,17 @@ function fn_ProductMaster() {
           setcbxReqUpdatePlasmaDisabled(false);
 
           if (Data.p_prm_plasma_time_by === "PCS") {
-            setrbtPlasmaTime("rbtPlasmaTimePCSCheck");
+            setTimeout(() => setrbtPlasmaTime("rbtPlasmaTimePCSCheck"), 0);
           } else {
             setrbtPlasmaTime("");
           }
           if (Data.p_prm_plasma_time_by === "SHT") {
-            setrbtPlasmaTime("rbtPlasmaTimeSHTCheck");
+            setTimeout(() => setrbtPlasmaTime("rbtPlasmaTimeSHTCheck"), 0);
           } else {
             setrbtPlasmaTime("");
           }
           if (Data.p_prm_plasma_time_by === "GROUP") {
-            setrbtPlasmaTime("rbtPlasmaTimeGRPCheck");
+            setTimeout(() => setrbtPlasmaTime("rbtPlasmaTimeGRPCheck"), 0);
           } else {
             setrbtPlasmaTime("");
           }
