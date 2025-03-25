@@ -2534,8 +2534,8 @@ function fn_PieceTraceView() {
 
   const btnRetrive_Click = async () => {
     localStorage.setItem("SERIAL_NO", txtSerialNo);
-    //Clear_View();
-    ViewData();
+    await Clear_View();
+    ViewData(txtSerialNo);
   };
 
   const btnSPIF_Click = async () => {

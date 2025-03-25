@@ -33,12 +33,12 @@ function AOICOAResult() {
                     >
                         {lbl_Message}
                     </Typography>
-                    <a id="PieceTraceView"
+                    {/* <a id="PieceTraceView"
                         href={`/TraceabilitySystem/PieceTraceView`}
                         style={{ fontSize: "16px", marginRight: "20px" }}
                     >
                         Return to viewdata
-                    </a>
+                    </a> */}
                     <Button
                         size="small"
                         icon={<Avatar shape="square" src={excel} size="small" />}

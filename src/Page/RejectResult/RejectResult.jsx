@@ -25,12 +25,12 @@ function RejectResult() {
 
                     }}
                 >
-                    <a id="PieceTraceView"
+                    {/* <a id="PieceTraceView"
                         href={`/TraceabilitySystem/PieceTraceView`}
                         style={{ fontSize: "16px", marginRight: "10px" }}
                     >
                         Return to viewdata
-                    </a>
+                    </a> */}
                 </div>
                 <Table
                     dataSource={gvViewReject}
