@@ -375,8 +375,6 @@ function fn_Reject() {
             rem_serial_no: params.Serialno,
           };
           const newData = [updatedData];
-          console.log(response);
-          console.log(response.message);  
             // setDtDataSearch((prevData) => [...prevData, updatedData]);
             // setLblResult({
             //   text: "Data Read Complete",
@@ -394,11 +392,19 @@ function fn_Reject() {
             setIsShowlblResult(true);
             setPnlTableDisplaySatate(true);
           }else{
-            setLblResult({
-              text: "Not Found Data",
-              styled: { color: "red" },
+            // setDtDataSearch((prevData) => [...prevData, updatedData]);
+            setDtDataSearch((prevData) => {
+              if (!prevData.some(item => item.rem_serial_no === updatedData.rem_serial_no)) {
+                return [...prevData, updatedData];
+              }
+              return prevData;
             });
             setIsShowlblResult(true);
+            setLblResult({
+              text: "Data Read Complete",
+              styled: { color: "black" },
+            });
+            setPnlTableDisplaySatate(true);
           }
           // setDtDataSearch(newData);
           

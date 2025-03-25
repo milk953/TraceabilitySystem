@@ -174,7 +174,9 @@ function fn_ScanSMTSerialPcsNG() {
           if (ddlproduct.some((x) => x.prd_name == strPrdName)) {
             setProductSelected(strPrdName);
             await getData("getProductSerialMaster", strPrdName);
+
             setMode("SERIAL");
+            SetFocus("txtMasterCode");
           } else {
            
             setLblError("Product " + strPrdName + " not found");
@@ -651,8 +653,7 @@ function fn_ScanSMTSerialPcsNG() {
     } else if (strType == "SERIAL") {
       setTxtMasterCode("");
       Setdisable("disable", "txtLot");
-      setPanalSerialState(true);
-
+      if(txtMasterCode != '') setPanalSerialState(true); else setPanalSerialState(false);
       hfMode = "SERIAL";
       getInitialSerial();
       SetFocus("txtMasterCode");
@@ -676,11 +677,12 @@ function fn_ScanSMTSerialPcsNG() {
       });
     }
     setGvSerial(dtData);
-    setPanalSerialState(true);
+    if(txtMasterCode != '') setPanalSerialState(true); else setPanalSerialState(false);
   }
   const handle_ibtBack = () => {
     setTxtMasterCode("");
     setLblError("");
+    setHideImg(true)
     setLblErrorState(false);
     setTxtLot("");
     Setdisable("", "txtLot");
@@ -794,7 +796,11 @@ function fn_ScanSMTSerialPcsNG() {
     if (txtMasterCode == FINAL_GATE_MASTER_CODE) {
       setLblError("");
       setLblErrorState(false);
-      SetFocus("txtSerial_0");
+      setPanalSerialState(true);
+      setTimeout(() => {
+        SetFocus("txtSerial_0");
+      }, 0);
+      
     } else {
       setLblError("Scan master code incorrect / สแกน master code ไม่ถูกต้อง");
       setLblErrorState(true);
