@@ -543,10 +543,10 @@ function fn_ScanSMTSerialPcsNG() {
         });
       return result;
     } else if (type == "GetEFPCSheetInspectionResult") {
-      // Wrong
+      console.log(params)
       let result = "";
       await axios
-        .post("/api/Common/GetEFPCSheetInspectionResult", {
+        .get("/api/Common/GetEFPCSheetInspectionResult", {params:{
           _strPlantCode: params.strPlantCode,
           _strProduct: params.strProduct,
           _strFrontSheetNo: params.strFrontSheetNo,
@@ -557,7 +557,7 @@ function fn_ScanSMTSerialPcsNG() {
           _strOSTFlg: params.strHfCheckEFPCOST,
           _strAVIFlg: params.strHfCheckEFPCAVI,
           _strResult: params.strEFPCResult,
-        })
+        }})
         .then((res) => {
           result = res.data;
         })
@@ -1154,7 +1154,7 @@ function fn_ScanSMTSerialPcsNG() {
                   }
                 }
                 if (!_bolError) {
-
+                  console.log(_strTouchUp,'Touchup')
                   if (hfTestResultFlag == "Y") {
                     if (_strTouchUp == "NG" && _strRejectGroup != "MASTER") {
                       if (_strTestResult == "OK") {
@@ -1256,8 +1256,7 @@ function fn_ScanSMTSerialPcsNG() {
                 }
                 if (hfCheckEFPCAOM == "Y" ||hfCheckEFPCAOI == "Y" ||hfCheckEFPCOST == "Y" ||hfCheckEFPCAVI == "Y") {
                   let _strEFPCResult = "";
-                  let _strEFPCRemark;
-                  // รอทำต่อ
+                  let _strEFPCRemark = "";
                   _strEFPCResult = await getData(
                     "GetEFPCSheetInspectionResult",
                     {
@@ -1270,8 +1269,10 @@ function fn_ScanSMTSerialPcsNG() {
                       strHfCheckEFPCAOI: hfCheckEFPCAOI,
                       strHfCheckEFPCOST: hfCheckEFPCOST,
                       strHfCheckEFPCAVI: hfCheckEFPCAVI,
-                    }
+                    }                    
                   );
+                  _strEFPCResult = _strEFPCResult.result;
+                  _strEFPCRemark = _strEFPCResult.remark;
                   if (_strEFPCResult == "NG") {
                     _strMessageUpdate = _strEFPCRemark;
                     _strRemark = _strEFPCRemark;
