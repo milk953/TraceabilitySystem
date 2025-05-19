@@ -29,13 +29,7 @@ function HomePage() {
     checkmenuState,
     setCheckmenuState,
   } = fn_Homepage();
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+
   return (
     <>
       <Hearder />
@@ -43,27 +37,7 @@ function HomePage() {
       <div className="Background">
         <div className="col_style">
           {/* <div className="Space"> */}
-          <Typography.Text
-            style={{
-              width: "30%",
-              justifyContent: "center",
-              display: "flex",
-              margin: "10px auto",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "20px",
-              fontWeight: "bold",
-              gap: "8px",
-            }}
-          >
-            <ClockCircleOutlined style={{ color: "#F7B733", fontSize: 26 }} />
-            {`${currentDateTime.getDate().toString().padStart(2, "0")}/${(
-              currentDateTime.getMonth() + 1
-            )
-              .toString()
-              .padStart(2, "0")}/${currentDateTime.getFullYear()}`}{" "}
-            {currentDateTime.toLocaleTimeString([], { hour12: false })}
-          </Typography.Text>
+ 
           <Row className="RowCardHeader">
             <Col>
               <Card
