@@ -304,8 +304,8 @@ const fn_ScanSMTSerialShtFINManySht = () => {
       for (let i = 0; i < dtSerial.length; i++) {
         _strShtNoBack = dtSerial[i].BACK_SIDE;
         _strShtNoFront = dtSerial[i].FRONT_SIDE;
-
-        if(txtSideBack[0] == txtSideFront[0]){
+        console.log(txtSideBack,'back',txtSideFront,'front')
+        if(txtSideBack[0] == txtSideBack[1] || txtSideFront[0] == txtSideFront[1]){
           _strScanResultAll = "NG";
           _strErrorAll = "Duplicate Product sheet F,B";
           _bolError = true;
