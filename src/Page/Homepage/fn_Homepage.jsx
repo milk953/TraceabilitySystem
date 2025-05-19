@@ -111,6 +111,7 @@ function fn_Homepage() {
     });
     localStorage.setItem("Fac", import.meta.env.VITE_FAC);
   };
+  
   useEffect(() => {
     MenuHome();
     page_load();
