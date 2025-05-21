@@ -24,6 +24,8 @@ import ImgTitle from "../Header/checklist.png";
 import ImgBurger from "../Header/menu (3).png";
 import ImgUser from "../Header/data-management.png";
 import "../Common/StyleCommon.css";
+import { ClockCircleOutlined } from "@ant-design/icons";
+
 // Typography
 
 function Hearder() {
@@ -31,6 +33,13 @@ function Hearder() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const user = localStorage.getItem("Username");
   const surname = localStorage.getItem("Lastname");
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -125,12 +134,36 @@ function Hearder() {
                   fontFamily: "Montserrat, sans-serif",
                 }}
                 onClick={() => {
-                  window.location.href ="/TraceabilitySystem";
+                  window.location.href = "/TraceabilitySystem";
                 }}
               >
                 TRACEABILITY SYSTEM
               </Typography.Title>
-
+              {menuName == "" &&(
+              <Typography.Text
+                style={{
+                  width: "30%",
+                  justifyContent: "center",
+                  display: "flex",
+                  margin: "10px auto",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  gap: "8px",
+                  color: "white",
+                }}
+              >
+                <ClockCircleOutlined
+                  style={{ color: "#F7B733", fontSize: 26 }}
+                />
+                {`${currentDateTime.getDate().toString().padStart(2, "0")}/${(
+                  currentDateTime.getMonth() + 1
+                )
+                  .toString()
+                  .padStart(2, "0")}/${currentDateTime.getFullYear()}`}{" "}
+                {currentDateTime.toLocaleTimeString([], { hour12: false })}
+              </Typography.Text>)}
               <Typography.Text
                 style={{
                   fontSize: "20px",
