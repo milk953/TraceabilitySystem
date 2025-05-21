@@ -49,7 +49,6 @@ function HomePage() {
               justifyContent: "center",
               display: "flex",
               margin: "10px auto",
-              justifyContent: "center",
               alignItems: "center",
               fontSize: "20px",
               fontWeight: "bold",
