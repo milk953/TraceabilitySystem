@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --mode production",
+    "deploy76": "bash deploy76.sh",
+    "deploy119": "bash deploy119.sh",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
