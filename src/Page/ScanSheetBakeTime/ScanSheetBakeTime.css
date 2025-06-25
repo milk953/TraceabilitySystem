@@ -34,7 +34,7 @@
 #TableResultBaking td {
   /* font-size: 80px; */
   text-align: center;
-  border:15px;
+  border: 15px;
 }
 #TableResultBakingred td {
   /* font-size: 80px; */
@@ -58,7 +58,6 @@
 #lbltxtBaking {
   width: 150px;
   text-align: right;
-  
 }
 .txtFieldBaking {
   width: 280px;
@@ -68,19 +67,9 @@
   width: 200px;
   padding: 1px;
 }
-#txtProcessBaking{
-  padding: 3px 3px 3px 3px;
-}
-#txtMcBaking{
-  padding: 3px 3px 3px 3px;
-}
-#txtLotNoBaking{
-  padding: 3px 3px 3px 3px;
-}
-#txtProductNameBaking{
-  padding: 3px 3px 3px 3px;
-}
-#txtSheetNoBaking{
-  padding: 3px 3px 3px 3px;
 
+.txtFileBaking {
+  padding: 3px 3px 3px 3px !important;
+  width: 280px !important;
+  height: 30px !important;
 }
