@@ -69,6 +69,7 @@ function ScanSheetReflowTime() {
                 <TextField
                   size="small"
                   className="txtFieldReflow"
+                  id="txtMCNo"
                   disabled={txtmcNoState.disabled}
                   sx={txtmcNoState.styled}
                   inputRef={FctxtmcNo}
@@ -85,7 +86,7 @@ function ScanSheetReflowTime() {
                 ></TextField>
               </TableCell>
               <TableCell>
-                <MuiBtn  onClick={btnIbtback_Click}>
+                <MuiBtn  id='ibtback' onClick={btnIbtback_Click}>
                   <BackspaceIcon />
                 </MuiBtn>
               </TableCell>
@@ -95,6 +96,7 @@ function ScanSheetReflowTime() {
               <TableCell>
                 <TextField
                   size="small"
+                  id='txtSheetNo'
                   className="txtFieldReflow"
                   disabled={txtSheetNoState.disabled}
                   sx={txtSheetNoState.styled}
@@ -114,7 +116,7 @@ function ScanSheetReflowTime() {
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={3} sx={{ textAlign: "center",fontSize:'14px' }}>
+              <TableCell colSpan={3} sx={{ textAlign: "center",fontSize:'14px' }} id='lblSheet'>
                 {lblSheet}
               </TableCell>
             </TableRow>
@@ -132,6 +134,7 @@ function ScanSheetReflowTime() {
                 color: lblResult.styled?.color || "defaultColor",
                 background: lblResult.styled?.background || "defaultBackground",
               }}
+              id="lblResult"
             >
               {lblResult.text}
             </TableCell>
@@ -147,6 +150,7 @@ function ScanSheetReflowTime() {
                 border : lblRemark.styled?.border || "defaultBorder",
                 whiteSpace: "pre-line"
               }}
+              id="lblRemark"
             >
               {lblRemark.text}
             </TableCell>
@@ -159,13 +163,13 @@ function ScanSheetReflowTime() {
           <Table id="TableSave" component={Card}>
             <TableRow>
               <TableCell>
-                <Button variant="contained" className="ButtonReplace" size="middle" onClick={btnReplace_Click}>Replace</Button>
+                <Button variant="contained" id='btnReplace' className="ButtonReplace" size="middle" onClick={btnReplace_Click}>Replace</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonDelete" size="middle" onClick={btnDelete_Click}>Delete</Button>
+                <Button variant="contained" id='btnDelete' className="ButtonDelete" size="middle" onClick={btnDelete_Click}>Delete</Button>
               </TableCell>
               <TableCell>
-                <Button variant="contained" className="ButtonCancel" size="middle" onClick={btnCancel_Click}>Cancel</Button>
+                <Button variant="contained" id='btnCancel' className="ButtonCancel" size="middle" onClick={btnCancel_Click}>Cancel</Button>
               </TableCell>
             </TableRow>
           </Table>
