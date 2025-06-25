@@ -46,15 +46,18 @@ function ScanSheetDispenserTime() {
     txtSheetno_change,
     handleCbNoChange,
     txtCbno_change,
-    pnlResultState
+    pnlResultState,
   } = fn_ScanSheetDispenserTime();
+  function setFocus(txtField) {
+    document.getElementById(`${txtField}`).focus();
+  }
   useEffect(() => {
     if (txtmcNo == "" && txtmcNoState.focused == true) {
-      Fctxtmcno.current.focus();
+      setFocus("txtMCNo");
     } else if (txtSheetNo == "" && txtSheetNoState.focused == true) {
-      FctxtSheetNo.current.focus();
+      setFocus("txtSheetNo");
     } else if (txtCBno == "" && txtCBnoState.focused == true) {
-      FctxtCBno.current.focus();
+      setFocus("txtCBNo");
     }
   }, [
     txtmcNoState,
@@ -68,22 +71,23 @@ function ScanSheetDispenserTime() {
     <div>
       <Hearder />
       {/* <h1>ScanSheetDispenserTime</h1> */}
-      <div style={{marginTop:'80px'}}></div>
+      <div style={{ marginTop: "80px" }}></div>
       <div className="DispenserpnlMain">
         <Table id="DispenserTableMain" component={Card}>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={3}>{menuName || 'Dispenser Control Time'}</TableCell>
+              <TableCell colSpan={3}>
+                {menuName || "Dispenser Control Time"}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell id="Dispenserlbltxt">Machine/Line:</TableCell>
               <TableCell>
-                <TextField
-                  size="small"
+                <input
                   className="DispensertxtField"
-                  id='txtMcnoDispenser'
+                  id="txtMCNo"
                   disabled={txtmcNoState.disabled}
                   sx={txtmcNoState.styled}
                   inputRef={Fctxtmcno}
@@ -97,11 +101,10 @@ function ScanSheetDispenserTime() {
                     setTxtmcNo(e.target.value);
                   }}
                   value={txtmcNo}
-                ></TextField>
+                ></input>
               </TableCell>
               <TableCell>
-                <MuiBtn onClick={ibtback_Click}>
-                  {" "}
+                <MuiBtn onClick={ibtback_Click} id ='ibtback'>
                   <BackspaceIcon />
                 </MuiBtn>
               </TableCell>
@@ -109,10 +112,10 @@ function ScanSheetDispenserTime() {
             <TableRow>
               <TableCell id="Dispenserlbltxt">Sheet No.:</TableCell>
               <TableCell>
-                <TextField
+                <input
                   size="small"
                   className="DispensertxtField"
-                  id = "txtSheetNoDispenser"
+                  id="txtSheetNo"
                   disabled={txtSheetNoState.disabled}
                   sx={txtSheetNoState.styled}
                   // onBlur={txtSheetno_change}
@@ -121,12 +124,11 @@ function ScanSheetDispenserTime() {
                       txtSheetno_change();
                     }
                   }}
-                  inputRef={FctxtSheetNo}
                   value={txtSheetNo}
                   onChange={(e) => {
                     setTxtSheetNo(e.target.value.trim());
                   }}
-                ></TextField>
+                ></input>
               </TableCell>
 
               <TableCell></TableCell>
@@ -135,30 +137,28 @@ function ScanSheetDispenserTime() {
               <TableRow>
                 <TableCell id="Dispenserlbltxt">CB No.</TableCell>
                 <TableCell>
-                  <TextField
-                    size="small"
-                    id='txtCbnoDispenser'
+                  <input
+                    id="txtCBNo"
                     className="DispensertxtField"
                     disabled={txtCBnoState.disabled}
-                    // onBlur={txtSheetno_change}                    
+                    // onBlur={txtSheetno_change}
                     sx={txtCBnoState.styled}
-                    inputRef={FctxtCBno}
                     value={txtCBno}
                     onChange={(e) => {
                       handleCbNoChange(e);
                     }}
                     onKeyDown={(e) => {
                       if (e.key == "Enter") {
-                        txtCbno_change()
+                        txtCbno_change();
                       }
                     }}
-                  ></TextField>
+                  ></input>
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>
             )}
             <TableRow>
-              <TableCell colSpan={3} sx={{ textAlign: "center" }}>
+              <TableCell colSpan={3} sx={{ textAlign: "center" }} id="lblSheet">
                 {lblSheet}
               </TableCell>
             </TableRow>
@@ -167,49 +167,85 @@ function ScanSheetDispenserTime() {
       </div>
       &nbsp;
       {pnlResultState && (
-      <div className="DispenserpnlResult">
-        <Table id={lblResult.text == "NG" ? "DispenserTableResultred" : "DispenserTableResult"} component={Card} style={{ height: '180px' }}>
-          <TableRow>
-            <TableCell
-              sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled,backgroundColor:lblResult.backgroundColor }}
-            >
-              {lblResult.text}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell 
-            sx={{ 
-              fontSize: "34px", 
-              padding: "0px",
-              whiteSpace: 'pre-line',
-              color: lblRemark.color,
-              background: lblRemark.text === "" ? "white" : lblRemark.backgroundColor 
-            }}
+        <div className="DispenserpnlResult">
+          <Table
+            id={
+              lblResult.text == "NG"
+                ? "DispenserTableResultred"
+                : "DispenserTableResult"
+            }
+            component={Card}
+            style={{ height: "180px" }}
           >
-              {lblRemark.text}
-            </TableCell>
-          </TableRow>
-        </Table>
-      </div>
+            <TableRow>
+              <TableCell
+                id="lblResult"
+                sx={{
+                  fontSize: "60px",
+                  padding: "0px",
+                  color: lblResult.styled,
+                  backgroundColor: lblResult.backgroundColor,
+                }}
+              >
+                {lblResult.text}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell
+                id="lblRemark"
+                sx={{
+                  fontSize: "34px",
+                  padding: "0px",
+                  whiteSpace: "pre-line",
+                  color: lblRemark.color,
+                  background:
+                    lblRemark.text === "" ? "white" : lblRemark.backgroundColor,
+                }}
+              >
+                {lblRemark.text}
+              </TableCell>
+            </TableRow>
+          </Table>
+        </div>
       )}
       {pnlSaveState && (
         <div className="DispenserpnlSave">
           <Table id="DispenserTableSave" component={Card}>
             <TableRow>
               <TableCell>
-                <Button  className="ButtonReplace"  size='middle' onClick={btnReplace_Click}>Replace</Button>
+                <Button
+                  className="ButtonReplace"
+                  id="btnReplace"
+                  size="middle"
+                  onClick={btnReplace_Click}
+                >
+                  Replace
+                </Button>
               </TableCell>
               <TableCell>
-                <Button  className="ButtonDelete" size='middle' onClick={btnDelete_Click}>Delete</Button>
+                <Button
+                  id="btnDelete"
+                  className="ButtonDelete"
+                  size="middle"
+                  onClick={btnDelete_Click}
+                >
+                  Delete
+                </Button>
               </TableCell>
               <TableCell>
-                <Button  className="ButtonCancel" size='middle' onClick={btnCancel_Click}>Cancel</Button>
+                <Button
+                  id="btnCancel"
+                  className="ButtonCancel"
+                  size="middle"
+                  onClick={btnCancel_Click}
+                >
+                  Cancel
+                </Button>
               </TableCell>
             </TableRow>
           </Table>
         </div>
       )}
-     
     </div>
   );
 }
