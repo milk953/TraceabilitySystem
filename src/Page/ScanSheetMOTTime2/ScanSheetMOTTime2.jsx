@@ -97,6 +97,7 @@ function ScanSheetMOTTime() {
                       <TextField
                         size="small"
                         fullWidth
+                        id='txtMCNo'
                         value={txtMCNo.value}
                         // inputRef={fctxtMcNo}
                         inputRef={(el) => (fctxtMcNo.current = el)}
@@ -124,6 +125,7 @@ function ScanSheetMOTTime() {
                     <TableCell>
                       <TextField
                         size="small"
+                        id='txtLotNo'
                         fullWidth
                         value={txtlot.value}
                         style={txtlot.style}
@@ -145,7 +147,7 @@ function ScanSheetMOTTime() {
                       />
                     </TableCell>
                     <TableCell>
-                    <MuiButton type="text" onClick={BtClick_back}>
+                    <MuiButton  id='ibtback' type="text" onClick={BtClick_back}>
                         <BackspaceIcon />
                       </MuiButton>
                     </TableCell>
@@ -155,7 +157,7 @@ function ScanSheetMOTTime() {
                       <Typography>Product Name :</Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
-                      <Typography>{lblProductName}</Typography>
+                      <Typography id='lblProductName'>{lblProductName}</Typography>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -166,6 +168,7 @@ function ScanSheetMOTTime() {
                     <TableCell colSpan={2}>
                       <TextField
                         size="small"
+                         id='txtSheetNo'
                         fullWidth
                         value={txtSheet.value}
                         style={txtSheet.style}
@@ -196,6 +199,7 @@ function ScanSheetMOTTime() {
                       <TextField
                         size="small"
                         fullWidth
+                        id='txtCBNo'
                         value={txtCBNo.value}
                         style={txtCBNo.style}
                         disabled={txtCBNo.disbled}
@@ -224,6 +228,7 @@ function ScanSheetMOTTime() {
                       <TextField
                         size="small"
                         fullWidth
+                        id='txtSUSNo'
                         value={txtSUSNo.value}
                         disabled={txtSUSNo.disbled}
                         style={txtSUSNo.style}
@@ -246,7 +251,7 @@ function ScanSheetMOTTime() {
                   </TableRow>
                 
                   <TableRow style={{ display: lblSheet === "" ? 'none' : "" }}>
-                    <TableCell colSpan={3} align="center" style={{fontSize:'16px'}}>
+                    <TableCell id='lblSheet' colSpan={3} align="center" style={{fontSize:'16px'}}>
                        {lblSheet}
                     </TableCell>
                   </TableRow>
@@ -263,11 +268,12 @@ function ScanSheetMOTTime() {
                         <Typography
                           align="center"
                           style={{ color:'#fff', marginTop: "40px", fontSize: "90px"  }}
+                          id='lblResult'
                         >
                           {lblResult.value}
                         </Typography>
                         {/* marginTop: lblResult.value === '' ? "380px" : "0px", */}
-                        <Typography align="center" style={{ fontSize: "34px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "65px" : "0px",whiteSpace: "pre-line"}}>
+                        <Typography id='lblRemark' align="center" style={{ fontSize: "34px",marginTop: lblResult.value === '' || lblResult.value === undefined ? "65px" : "0px",whiteSpace: "pre-line"}}>
                           {lblRemark}
                         </Typography>
                       </Card>
@@ -278,9 +284,9 @@ function ScanSheetMOTTime() {
                   <TableCell colSpan={3} align="center">
                   <Box display="flex" justifyContent="center" alignItems="center" width="100%">
                     <Box display="flex" justifyContent="space-between" alignItems="center" width="90%">
-                      <Button  type="primary" size="middle" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
-                      <Button  type="primary" size="middle" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
-                      <Button  type="primary" size="middle"  onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
+                      <Button id='btnReplace'  type="primary" size="middle" onClick={BtClick_Replace} className="ButtonReplace">Replace</Button>
+                      <Button id='btnDelete' type="primary" size="middle" onClick={BtClick_Delete} className="ButtonDelete">Delete</Button>
+                      <Button id='btnCancel' type="primary" size="middle"  onClick={BtClick_Cancel} className="ButtonCancel">Cancel</Button>
                     </Box>
                   </Box>
                 </TableCell>
