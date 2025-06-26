@@ -34,12 +34,15 @@ function ScanSheetOvenTime() {
     handleTxtSheetNo,
     pnlResultState,
   } = fn_ScanSheetOvenTime();
+  function setFocus(id) {
+    document.getElementById(id).focus();
+  }
   useEffect(() => {
     if (txtmcNo == "" && txtmcNoState.styled.focus == true) {
-      FctxtmcNo.current.focus();
+      setFocus("txtMCNo");
     }
     if (txtSheetNo == "" && txtSheetNoState.styled.focus == true) {
-      FctxtSheetNo.current.focus();
+      setFocus("txtSheetNo"); 
     }
   }, [txtmcNoState, txtSheetNoState]);
   return (
@@ -59,26 +62,24 @@ function ScanSheetOvenTime() {
             <TableRow>
               <TableCell id="lbltxt">Machine/Line:</TableCell>
               <TableCell>
-                <TextField
-                  size="small"
+                <input
+                  id='txtMCNo'
                   className="txtFieldOven"
                   disabled={txtmcNoState.styled.disabled}
                   sx={txtmcNoState.styled}
-                  inputRef={FctxtmcNo}
                   onChange={(e) => {
                     setTxtmcNo(e.target.value);
                   }}
-                  // onBlur={handleTxtMcNo}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleTxtMcNo();
                     }
                   }}
                   value={txtmcNo}
-                ></TextField>
+                ></input>
               </TableCell>
               <TableCell>
-                <Button onClick={btnIbtback_Click}>
+                <Button onClick={btnIbtback_Click} id ='ibtback'>
                   {" "}
                   <BackspaceIcon />
                 </Button>
@@ -87,8 +88,8 @@ function ScanSheetOvenTime() {
             <TableRow>
               <TableCell id="lbltxt">Sheet No.:</TableCell>
               <TableCell>
-                <TextField
-                  size="small"
+                <input
+                  id='txtSheetNo'
                   className="txtFieldOven"
                   disabled={txtSheetNoState.styled.disabled}
                   sx={txtSheetNoState.styled}
@@ -103,12 +104,12 @@ function ScanSheetOvenTime() {
                       handleTxtSheetNo();
                     }
                   }}
-                ></TextField>
+                ></input>
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={3} sx={{ textAlign: "center" }}>
+              <TableCell colSpan={3} sx={{ textAlign: "center" }} id='lblSheet'>
                 {lblSheet}
               </TableCell>
             </TableRow>
@@ -120,6 +121,7 @@ function ScanSheetOvenTime() {
            <Table id={lblResult.text == "NG" ? "TableResultOvenTimered" : "TableResultOvenTime"} component={Card} style={{ height: '180px' }}>
             <TableRow>
               <TableCell
+              id='lblResult'
                  sx={{ fontSize: "60px", padding: "0px", color: lblResult.styled,backgroundColor:lblResult.backgroundColor }}
               >
                 {lblResult.text}
@@ -127,6 +129,7 @@ function ScanSheetOvenTime() {
             </TableRow>
             <TableRow>
               <TableCell
+              id="lblRemark"
                  sx={{ 
                   fontSize: "34px", 
                   padding: "0px",

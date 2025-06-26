@@ -36,11 +36,6 @@ function fn_ScanSheetBakeTime() {
   });
   const [pnlSaveState, setPnlSaveState] = useState(false);
   const [PnlShowresult, setPnlShowresult] = useState(false);
-  // focus item
-  const FctxtProcess = useRef(null);
-  const Fctxtmc = useRef(null);
-  const FctxtLotNo = useRef(null);
-  const FctxtSheetNo = useRef(null);
   //Hidden item
   const [hfURL, setHfURL] = useState("");
   const [hfPeriod, setHfPeriod] = useState("0.2");
@@ -66,16 +61,16 @@ function fn_ScanSheetBakeTime() {
   }, []);
   useEffect(() => {
     if (txtLotNoState.Focus) {
-      setFocus("txtLotNoBaking");
+      setFocus("txtLotNo");
     }
     if (txtSheetNoState.Focus) {
-      setFocus("txtSheetNoBaking");
+      setFocus("txtSheetNo");
     }
     if (txtProcessState.Focus) {
-      setFocus("txtProcessBaking");
+      setFocus("txtProcess");
     }
     if (txtmcState.Focus) {
-      setFocus("txtMcBaking");
+      setFocus("txtMCNo");
     }
   }, [txtLotNoState.Focus, txtSheetNoState.Focus, txtProcessState.Focus, txtmcState.Focus]);
   const PageLoad = () => {
@@ -121,7 +116,7 @@ function fn_ScanSheetBakeTime() {
       styled: { backgroundColor: "white" },
       Focus: true,
     });
-    setFocus("txtLotNoBaking");
+    setFocus("txtLotNo");
 
   };
   const handleTxtProcess_Change = () => {
@@ -132,10 +127,10 @@ function fn_ScanSheetBakeTime() {
         styled: { backgroundColor: "white" },
         Focus: true,
       });
-      setFocus("txtMcBaking");
+      setFocus("txtMCNo");
     } else {
       setTxtProcess("");
-      setFocus("txtProcessBaking");
+      setFocus("txtProcess");
     }
   };
   const handleTxtmc_Change = () => {
@@ -150,7 +145,7 @@ function fn_ScanSheetBakeTime() {
         styled: { backgroundColor: "white" },
         Focus: true,
       });
-      setFocus("txtLotNoBaking");
+      setFocus("txtLotNo");
     } else {
       setTxtmc("");
     }
@@ -308,7 +303,7 @@ function fn_ScanSheetBakeTime() {
       }
     });
     if (txtSheetNo == "") {
-      setFocus("txtSheetNoBaking");
+      setFocus("txtSheetNo");
     }else{
       await deleteData();
     }
@@ -339,11 +334,11 @@ function fn_ScanSheetBakeTime() {
     PnlmainEnable();
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
-    setFocus("txtSheetNoBaking");
+    setFocus("txtSheetNo");
   }
   const btnReplace = async () => {
     if (txtSheetNo == "") {
-      setFocus("txtSheetNoBaking");
+      setFocus("txtSheetNo");
     }else{
       await Replace();
     }
@@ -393,7 +388,7 @@ function fn_ScanSheetBakeTime() {
     PnlmainEnable();
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
-    setFocus("txtSheetNoBaking");
+    setFocus("txtSheetNo");
   }
   const btnCancel = () => {
     setPnlSaveState(false);
@@ -404,7 +399,7 @@ function fn_ScanSheetBakeTime() {
     setLblResult("");
     setTxtSheetNo("");
     setTxtSheetNoState({ Focus: true });
-    setFocus("txtSheetNoBaking");
+    setFocus("txtSheetNo");
   };
   function PnlmainDisable() {
     setTxtProcessState({
@@ -618,13 +613,6 @@ function fn_ScanSheetBakeTime() {
     txtLotNoState,
     txtSheetNoState,
     pnlSaveState,
-
-    //foucus item
-    FctxtProcess,
-    Fctxtmc,
-    FctxtLotNo,
-    FctxtSheetNo,
-
     //txtChange
     handleTxtProcess_Change,
     handleTxtmc_Change,

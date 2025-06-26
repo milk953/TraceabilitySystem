@@ -61,11 +61,11 @@ function fn_ScanSheetOvenTime() {
     setLblSheet("");
     setLblRemark("");
     setLblResult("");
-    FctxtmcNo.current.focus();
+    setFocus("txtMCNo");
   };
   const handleTxtMcNo = () => {
     if (txtmcNo == "") {
-      FctxtmcNo.current.focus();
+      setFocus("txtMCNo");
     } else {
       setTxtmcNoState({
         styled: { disabled: true, focus: false, backgroundColor: "#e0e0e0" },
@@ -76,6 +76,10 @@ function fn_ScanSheetOvenTime() {
       });
     }
   };
+
+  function setFocus(id) {
+    document.getElementById(id).focus();
+  }
 
   const handleTxtSheetNo = async () => {
     if (txtSheetNo !== "") {
