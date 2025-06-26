@@ -193,7 +193,7 @@ function fn_ScanSMTSerialControlTime() {
             .then((res) => {
                 strPrdName = res.data.prdName[0];
             });
-      
+
         if (strPrdName !== undefined) {
             setlblLog("");
             setvisiblelog(false);
@@ -202,7 +202,7 @@ function fn_ScanSMTSerialControlTime() {
             const datagetPd = await getProductSerialMaster(strPrdName);
             try {
                 setselProduct(strPrdName);
-               
+
 
                 if (datagetPd.prm_proc_control_time_flg === "Y") {
                     SetMode("SERIAL");
@@ -349,10 +349,10 @@ function fn_ScanSMTSerialControlTime() {
                                 }
                             ]
                         });
-                     
+
                     } catch (error) {
                         alert(error);
-                  
+
                     }
                 }
             }
@@ -401,7 +401,7 @@ function fn_ScanSMTSerialControlTime() {
                                     const end = parseInt(hfSerialEndDigit);
                                     _strFixDigit = _strSerial.substring(start - 1, end);
 
-                                
+
 
                                     if (_strFixDigit !== hfSerialDigit) {
                                         _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
@@ -416,7 +416,7 @@ function fn_ScanSMTSerialControlTime() {
                                         const start = parseInt(hfConfigStart);
                                         const end = parseInt(hfConfigEnd);
                                         _strConfigDigit = _strSerial.substring(start - 1, end);
-                                      
+
                                         if (_strConfigDigit !== hfConfigCode) {
                                             _strMessageUpdate = "Serial barcode mix product" + _strTagNewLine + "หมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                             _strRemark = "Serial barcode mix product";
@@ -536,7 +536,7 @@ function fn_ScanSMTSerialControlTime() {
                     })
                         .then((res) => {
                             _strErrorUpdate = res.data.p_error;
-                       
+
                             if (_strErrorUpdate !== "") {
                                 _strScanResultAll = "NG";
                                 setlblResult(_strScanResultAll);
@@ -658,14 +658,14 @@ function fn_ScanSMTSerialControlTime() {
                     sethfProcControlTime(dtProductSerial.prm_proc_control_time);
                     sethfConnShtPcsTime(dtProductSerial.prm_conn_sht_control_time_flg);
                     sethfSerialStartCode(dtProductSerial.prm_serial_start_code);
-                 
+
 
                 }
             });
         return dtProductSerial;
     };
 
-    const getInputSerial =async (txtgvSerial) => {
+    const getInputSerial = async (txtgvSerial) => {
         let dtData = [];
         let intRow = 0;
 
@@ -700,7 +700,7 @@ function fn_ScanSMTSerialControlTime() {
         setgvSerialData(dtData);
         inputgvSerial.current.forEach((input) => {
             if (input) input.value = '';
-            });
+        });
         return dtData;
     };
 
@@ -733,7 +733,7 @@ function fn_ScanSMTSerialControlTime() {
             const nextIndex = index + 1;
             if (nextIndex < hfSerialCount && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-          
+
             } else if (nextIndex === nextIndex) {
 
                 btnSaveClick();
@@ -853,20 +853,28 @@ function fn_ScanSMTSerialControlTime() {
     // };
     let newValues = [];
     const handleChangeSerial = async (index, event) => {
-      newValues[index] = event.target.value.trim().toUpperCase();
-      // event.target.value = '';
-      return newValues;
+        newValues[index] = event.target.value.trim().toUpperCase();
+        // event.target.value = '';
+        return newValues;
     };
 
-    const btnSaveClick = (txtgvSerial) => {
-       
+    const btnSaveClick = (txtSerial) => {
+        let data = [];
+        const serialTable = document.getElementById("gvSerial");
+        const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
+        serialInputs.forEach((input) => {
+            data.push(input.value);
+            console.log(input.value);
+        });
+
         if (hfMode === "SERIAL") {
-            setSerialDataTray(txtgvSerial);
+            setSerialDataTray(data);
             settxtgvSerial(Array(gvSerialData.length).fill(""));
             inputgvSerial.current.forEach((input) => {
                 if (input) input.value = '';
-                });
+            });
             inputgvSerial.current[0].focus();
+            scrollToTop();
         }
     };
 
@@ -878,7 +886,14 @@ function fn_ScanSMTSerialControlTime() {
         settxtgvSerial(Array(gvSerialData.length).fill(""));
         inputgvSerial.current.forEach((input) => {
             if (input) input.value = '';
-            });
+        });
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
     const columns = [
@@ -931,7 +946,7 @@ function fn_ScanSMTSerialControlTime() {
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
-        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns,settxtgvSerial
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns, settxtgvSerial
     }
 };
 

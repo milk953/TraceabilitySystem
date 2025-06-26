@@ -74,6 +74,7 @@ function ScanSMTPlasmaStopStart() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="txtLot"
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
@@ -93,7 +94,7 @@ function ScanSMTPlasmaStopStart() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="Bt_ibtBack" onClick={ibtBackClick}>
+                                        <Button className="Bt_ibtBack" id="ibtBack" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
                                                 <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
@@ -107,6 +108,7 @@ function ScanSMTPlasmaStopStart() {
                                     <TableCell colSpan={2}>
                                         <Autocomplete
                                             className="Select_dropDown"
+                                            id="ddlProduct"
                                             disabled={selProductDisabled}
                                             style={{
                                                 backgroundColor: selProductDisabled ? "#e0e0e0" : "inherit",
@@ -145,6 +147,7 @@ function ScanSMTPlasmaStopStart() {
                                                                 color: "white"
                                                             },
                                                         }}
+                                                        id="rbtStop"
                                                         checked={selectedrbt === "rbtStop"}
                                                     />
                                                 }
@@ -166,6 +169,7 @@ function ScanSMTPlasmaStopStart() {
                                                                 color: "white"
                                                             },
                                                         }}
+                                                        id="rbtStart"
                                                         checked={selectedrbt === "rbtStart"}
                                                     />
                                                 }
@@ -187,6 +191,7 @@ function ScanSMTPlasmaStopStart() {
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="txtPartialNo"
                                             size="small"
                                             inputRef={inputPartial}
                                             fullWidth
@@ -224,6 +229,7 @@ function ScanSMTPlasmaStopStart() {
                             Partial/Packing No. :
                         </Typography>
                         <Typography
+                            id="lblPartialNo"
                             style={{
                                 fontSize: "16px",
                                 marginLeft: "6px",
@@ -238,6 +244,7 @@ function ScanSMTPlasmaStopStart() {
                         <Paper
                             elevation={3}
                             className="Card-lblLog"
+                            id="lblLog"
                             style={{
                                 width: "503px",
                             }}
@@ -258,6 +265,7 @@ function ScanSMTPlasmaStopStart() {
                             }}
                         >
                             <Typography
+                                id="lblStatus"
                                 variant="h2"
                                 color={"#fff"}
                             >

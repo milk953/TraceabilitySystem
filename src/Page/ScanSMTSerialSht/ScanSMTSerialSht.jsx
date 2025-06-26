@@ -44,7 +44,7 @@ function ScanSMTSerialSht() {
         handleChangeProduct, handleChangeLotRef, handleChangeRollLeaf, handleChangeMachine, handleChangeSerial, handleChangegvBackSide, handleChangegvFontSide,
         btnSaveClick, btnCancelClick, handleKeygvSerial, handleKeySideBack, handleChangeBoardNoF, columns, settxtgvSerial
     } = fn_ScanSMTSerialSht();
-let data=[]
+    let data = []
     return (
         <div>
             <Header />
@@ -79,6 +79,7 @@ let data=[]
                                     </TableCell>
                                     <TableCell>
                                         <TextField
+                                            id="txtLot"
                                             className="input_txt"
                                             size="small"
                                             inputRef={inputLot}
@@ -99,7 +100,7 @@ let data=[]
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="Bt_ibtBack" onClick={ibtBackClick}>
+                                        <Button id="ibtback" className="Bt_ibtBack" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
                                                 <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
@@ -111,24 +112,27 @@ let data=[]
                                         <Typography>Product :</Typography>
                                     </TableCell>
                                     <TableCell colSpan={2}>
-                                        <Autocomplete
-                                            className="Select_dropDown"
-                                            disabled={selProDisabled}
-                                            style={{
-                                                backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
-                                            }}
-                                            value={selProduct}
-                                            onChange={(e, value) => handleChangeProduct(value)}
-                                            options={Productdata.map((item) => item.prd_name)}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    inputRef={ddlProduct}
-                                                    {...params}
-                                                    size="small"
-                                                    sx={{ textAlign: "left" }}
-                                                />
-                                            )}
-                                        />
+                                        <FormControl fullWidth>
+                                            <Autocomplete
+                                                id="ddlProduct"
+                                                className="Select_dropDown"
+                                                disabled={selProDisabled}
+                                                style={{
+                                                    backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
+                                                }}
+                                                value={selProduct}
+                                                onChange={(e, value) => handleChangeProduct(value)}
+                                                options={Productdata.map((item) => item.prd_name)}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        inputRef={ddlProduct}
+                                                        {...params}
+                                                        size="small"
+                                                        sx={{ textAlign: "left" }}
+                                                    />
+                                                )}
+                                            />
+                                        </FormControl>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -137,6 +141,7 @@ let data=[]
                                     </TableCell>
                                     <TableCell>
                                         <TextField
+                                            id="txtLotRef"
                                             className="input_txt"
                                             size="small"
                                             fullWidth
@@ -157,7 +162,7 @@ let data=[]
                                         <Typography>Total Sht :</Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>{lblTotalSht}</Typography>
+                                        <Typography id="lblTotalSht">{lblTotalSht}</Typography>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -165,7 +170,7 @@ let data=[]
                                         <Typography>Total Pcs :</Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>{lblTotalPcs}</Typography>
+                                        <Typography id="lblTotalPcs">{lblTotalPcs}</Typography>
                                     </TableCell>
                                 </TableRow>
                                 {pnlRollLeaf && (
@@ -176,6 +181,7 @@ let data=[]
                                             </TableCell>
                                             <TableCell colSpan={3}>
                                                 <TextField
+                                                    id="txtRollLeaf"
                                                     className="input_txt"
                                                     size="small"
                                                     inputRef={inputRollLeaf}
@@ -202,6 +208,7 @@ let data=[]
                                             </TableCell>
                                             <TableCell>
                                                 <Typography
+                                                    id="lblCheckRoll"
                                                     style={{
                                                         color: "#fff",
                                                         backgroundColor: lblCheckRollcolor
@@ -221,6 +228,7 @@ let data=[]
                                         </TableCell>
                                         <TableCell colSpan={3}>
                                             <TextField
+                                                id="txtMachineNo"
                                                 className="input_txt"
                                                 size="small"
                                                 inputRef={inputMachineNo}
@@ -255,7 +263,7 @@ let data=[]
                                     border: "1px solid #d9d9d9",
                                 }}
                             >
-                                <Table>
+                                <Table id="gvBackSide">
                                     <TableBody>
                                         {Array.from(
                                             { length: gvBackSide.length },
@@ -270,10 +278,10 @@ let data=[]
                                                     <TableCell>
                                                         <TextField
                                                             className="input_txt"
-                                                            id="SideBack"
+                                                            id="txtSideBack"
                                                             size="small"
                                                             fullWidth
-                                                            value={ txtSideBack[index] || ""}
+                                                            value={txtSideBack[index] || ""}
                                                             inputRef={el => inputSideBack.current[index] = el}
                                                             onChange={(e) => {
                                                                 handleChangegvBackSide(index, e);
@@ -301,7 +309,7 @@ let data=[]
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Table>
+                                <Table id="gvFrontSide">
                                     <TableBody>
                                         <TableRow>
                                             <TableCell
@@ -313,7 +321,7 @@ let data=[]
                                             <TableCell>
                                                 <TextField
                                                     className="input_txt"
-                                                    id="SideFront"
+                                                    id="txtSideFront"
                                                     size="small"
                                                     fullWidth
                                                     value={txtSideFront}
@@ -351,6 +359,7 @@ let data=[]
                                             <TableCell>
                                                 <TextField
                                                     className="input_txt"
+                                                    id="txtBoardNoB"
                                                     size="small"
                                                     fullWidth
                                                     value={txtBoardNoB}
@@ -373,7 +382,8 @@ let data=[]
                                             </TableCell>
                                             <TableCell>
                                                 <TextField
-                                                    id="txtfield"
+                                                    className="input_txt"
+                                                    id="txtBoardNoF"
                                                     size="small"
                                                     fullWidth
                                                     value={txtBoardNoF}
@@ -401,13 +411,14 @@ let data=[]
                             style={{
                                 width: "432px",
                             }}
+                            id="lblLog"
                         >
                             {lblLog}
                         </Paper>
                     )}
 
                     {pnlSerial && (
-                        <div className="divgvSerialShtPcs">
+                        <div className="divgvSerialShtPcs" id="pnlSerial">
                             <TableContainer
                                 component={Card}
                                 style={{
@@ -418,7 +429,7 @@ let data=[]
                                     marginTop: "10px"
                                 }}
                             >
-                                <Table>
+                                <Table id="gvSerial">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Sheet</TableCell>
@@ -472,16 +483,17 @@ let data=[]
                                                     /> */}
                                                     <input
                                                         className="styleSeraial"
+                                                        id={`txtSerial${index}`}
                                                         type="text"
                                                         //defaultValue={serial}
                                                         onChange={(event) =>
-                                                            data =handleChangeSerial(index, event)
+                                                            data = handleChangeSerial(index, event)
                                                         }
                                                         ref={(el) =>
                                                             (inputgvSerial.current[index] = el)
                                                         }
                                                         onKeyDown={(event) => {
-                                                          
+
                                                             if (event.key === "Enter") {
                                                                 event.preventDefault();
                                                                 data = handleChangeSerial(index, event)
@@ -512,18 +524,21 @@ let data=[]
                                     // marginBottom: "2px"
                                 }}
                                 >
-                                    <AntButton className="BtSave"
+                                    <AntButton
+                                        className="BtSave"
+                                        id="btnSave"
                                         type="primary"
                                         onClick={() => {
                                             settxtgvSerial(data);
                                             btnSaveClick(data);
-                                          }}
+                                        }}
                                     >
                                         Save
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
                                         className="ButtonDelete"
+                                        id="btnCancel"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}
@@ -561,6 +576,7 @@ let data=[]
                                     }}
                                 >
                                     <Typography
+                                        id="lblResult"
                                         variant="h4"
                                         style={{ paddingTop: "5px", color: "#fff" }}
                                     >
@@ -578,9 +594,9 @@ let data=[]
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                id="gvScanResult"
                                 rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
-
                         </>
                     )}
                 </div>

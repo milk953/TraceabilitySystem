@@ -150,6 +150,7 @@ function ScanSMTSerialRecordTime() {
                       onChange={handleChangerbt}
                     >
                       <FormControlLabel
+                        id="rbtRecordTime"
                         value="rbtRecordTime"
                         control={
                           <Radio
@@ -165,6 +166,7 @@ function ScanSMTSerialRecordTime() {
                         sx={{ marginLeft: 7 }}
                       />
                       <FormControlLabel
+                        id="rbtPlasmaTime"
                         value="rbtPlasmaTime"
                         control={
                           <Radio
@@ -190,6 +192,7 @@ function ScanSMTSerialRecordTime() {
                     <TableCell colSpan={3}>
                       <TextField
                         className="input_txt"
+                        id="txtMachine"
                         size="small"
                         fullWidth
                         inputRef={inputMachine}
@@ -216,6 +219,7 @@ function ScanSMTSerialRecordTime() {
                     <TableCell>
                       <Button
                         className="Bt_ibtBack"
+                        id="ibtMCBack"
                         disabled={isibtMCBackDisabled}
                         onClick={ibtMCBackClick}
                       >
@@ -233,6 +237,7 @@ function ScanSMTSerialRecordTime() {
                   <TableCell colSpan={3}>
                     <TextField
                       className="input_txt"
+                      id="txtOperator"
                       size="small"
                       fullWidth
                       inputRef={inputOperator}
@@ -259,6 +264,7 @@ function ScanSMTSerialRecordTime() {
                   <TableCell>
                     <Button
                       className="Bt_ibtBack"
+                      id="ibtOperator"
                       disabled={isibtOperatorDisabled}
                       onClick={ibtOperatorClick}
                     >
@@ -277,6 +283,7 @@ function ScanSMTSerialRecordTime() {
                     <TableCell colSpan={3}>
                       <TextField
                         className="input_txt"
+                        id="txtOPRejudge"
                         size="small"
                         fullWidth
                         inputRef={inputOPRejudge}
@@ -303,6 +310,7 @@ function ScanSMTSerialRecordTime() {
                     <TableCell>
                       <Button
                         className="Bt_ibtBack"
+                        id="ibtOPRejudge"
                         disabled={ibtOPRejudgeDisabled}
                         onClick={ibtOPRejudgeClick}
                       >
@@ -322,6 +330,7 @@ function ScanSMTSerialRecordTime() {
                     <TableCell colSpan={3}>
                       <TextField
                         className="input_txt"
+                        id="txtAreaRejudge"
                         size="small"
                         fullWidth
                         inputRef={inputAreaRejudge}
@@ -346,6 +355,7 @@ function ScanSMTSerialRecordTime() {
                         }}
                       />
                       <Button
+                        id="ibtAreaConfirm"
                         onClick={ibtAreaConfirmClick}
                         disabled={ibtAreaConfirmDisabled}
                         style={{ padding: 0, minWidth: 0 }}
@@ -364,6 +374,7 @@ function ScanSMTSerialRecordTime() {
                     <TableCell>
                       <Button
                         className="Bt_ibtBack"
+                        id="ibtAreaRejudge"
                         disabled={ibtAreaRejudgeDisabled}
                         onClick={ibtAreaRejudgeClick}
                       >
@@ -382,6 +393,7 @@ function ScanSMTSerialRecordTime() {
                   <TableCell>
                     <TextField
                       className="input_txt"
+                      id="txtTotalPcs"
                       size="small"
                       style={{
                         width: "60px",
@@ -428,7 +440,7 @@ function ScanSMTSerialRecordTime() {
                                 fontSize: 19,
                               },
                             }}
-                            id="selpcssht"
+                            id="rbtPcs"
                             checked={selrbtPcsSht === "rbtPcs"}
                           />
                         }
@@ -445,7 +457,7 @@ function ScanSMTSerialRecordTime() {
                               },
                             }}
                             checked={selrbtPcsSht === "rbtSht"}
-                            id="selpcssht"
+                            id="rbtSht"
                           />
                         }
                         label="SHT"
@@ -456,6 +468,7 @@ function ScanSMTSerialRecordTime() {
                   <TableCell>
                     <Button
                       className="Bt_ibtBack"
+                      id="ibtPcsBack"
                       disabled={isibtPcsBackDisabled}
                       onClick={ibtPcsBackClick}
                     >
@@ -472,8 +485,8 @@ function ScanSMTSerialRecordTime() {
                   <TableCell colSpan={3}>
                     <TextField
                       className="input_txt"
+                      id="txtLot"
                       size="small"
-                      id="lotno"
                       inputRef={inputLot}
                       fullWidth
                       value={txtLotNo.trim()}
@@ -494,7 +507,7 @@ function ScanSMTSerialRecordTime() {
                     />
                   </TableCell>
                   <TableCell>
-                    <Button className="Bt_ibtBack" onClick={ibtBackClick}>
+                    <Button className="Bt_ibtBack" id="ibtBack" onClick={ibtBackClick}>
                       <Tooltip title="Clear Lot" placement="right-end">
                         <BackspaceIcon className="Icon_ibtBack" />
                       </Tooltip>
@@ -507,7 +520,7 @@ function ScanSMTSerialRecordTime() {
                   </TableCell>
                   <TableCell colSpan={4}>
                     <Autocomplete
-                      id="select"
+                      id="ddlProduct"
                       disabled={isselProDisabled}
                       style={{
                         backgroundColor: isselProDisabled
@@ -536,6 +549,7 @@ function ScanSMTSerialRecordTime() {
                     <TableCell colSpan={3}>
                       <TextField
                         className="input_txt"
+                        id="txtRackNo"
                         size="small"
                         fullWidth
                         inputRef={inputRackNo}
@@ -583,6 +597,7 @@ function ScanSMTSerialRecordTime() {
                 fontSize: "16px",
                 paddingRight: "150px",
               }}
+              id="lblLot"
             >
               {lblLot}
             </Typography>
@@ -594,6 +609,7 @@ function ScanSMTSerialRecordTime() {
                 fontSize: "16px",
                 //color: "green"
               }}
+              id="lblLotTotal"
             >
               {lblLotTotal}
             </Typography>
@@ -614,6 +630,7 @@ function ScanSMTSerialRecordTime() {
               }}
             >
               <Typography
+                id="lblOP"
                 style={{
                   fontSize: "20px",
                   marginLeft: "0",
@@ -633,6 +650,7 @@ function ScanSMTSerialRecordTime() {
             <Paper
               elevation={3}
               className="Card-lblLog"
+              id="lblLog"
               style={{
                 width: "500px",
                 marginLeft: "2px",
@@ -654,7 +672,7 @@ function ScanSMTSerialRecordTime() {
                   marginTop: "10px",
                 }}
               >
-                <Table>
+                <Table id="gvSerial">
                   <TableHead>
                     <TableRow>
                       <TableCell>No.</TableCell>
@@ -698,6 +716,7 @@ function ScanSMTSerialRecordTime() {
                         <td style={{ borderBottom: "1px solid #d9d9d9" }}>
                           <input
                             className="styleSeraial"
+                            id={`txtSerial${index}`}
                             size="small"
                             fullWidth
                             defaultValue={serial}
@@ -735,6 +754,7 @@ function ScanSMTSerialRecordTime() {
                 >
                   <AntButton
                     className="BtSave"
+                    id="btnSave"
                     type="primary"
                     // onClick={btnSaveClick}
                     onClick={() => {
@@ -747,6 +767,7 @@ function ScanSMTSerialRecordTime() {
                   &nbsp;&nbsp;
                   <AntButton
                     className="ButtonDelete"
+                    id="btnCancel"
                     style={{ height: "30px" }}
                     type="primary"
                     onClick={btnCancelClick}
@@ -782,6 +803,7 @@ function ScanSMTSerialRecordTime() {
                   }}
                 >
                   <Typography
+                    id="lblResult"
                     variant="h4"
                     style={{ paddingTop: "5px", color: "#fff" }}
                   >
@@ -799,12 +821,13 @@ function ScanSMTSerialRecordTime() {
                 size="small"
                 bordered
                 className="tableGvResult"
+                id="gvScanResult"
                 rowClassName={(record) =>
                   record.SCAN_RESULT === "NG"
                     ? "row-red"
                     : record.SCAN_RESULT === "OK"
-                    ? "row-green"
-                    : ""
+                      ? "row-green"
+                      : ""
                 }
               />
             </>

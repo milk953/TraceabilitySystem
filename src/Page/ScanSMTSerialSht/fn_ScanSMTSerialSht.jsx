@@ -306,6 +306,8 @@ function fn_ScanSMTSerialSht() {
     settxtLotRef("");
     setlblTotalSht("");
     setlblTotalPcs("");
+    setpnlRollLeaf(false);
+    setlblCheckRoll("");
     setpnlBackSide(false);
     setgvScanResult(false);
   };
@@ -463,9 +465,17 @@ function fn_ScanSMTSerialSht() {
     settxtBoardNoF(txtBoardNoF);
   };
 
-  const btnSaveClick = async (txtgvSerial) => {
+  const btnSaveClick = async (txtSerial) => {
+    let data = [];
+    const serialTable = document.getElementById("gvSerial");
+    const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
+    serialInputs.forEach((input) => {
+      data.push(input.value);
+      console.log(input.value);
+    });
     if (hfMode === "SERIAL") {
-      await setSerialData(txtgvSerial);
+      await setSerialData(data);
+      scrollToTop();
     }
   };
 
@@ -1606,6 +1616,13 @@ function fn_ScanSMTSerialSht() {
         }, 0);
       }
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const columns = [

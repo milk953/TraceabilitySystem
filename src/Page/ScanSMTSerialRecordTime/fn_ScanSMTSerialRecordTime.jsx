@@ -619,7 +619,7 @@ function fn_ScanSMTSerialRecordTime() {
     if (e.key === "Enter") {
       e.preventDefault();
       const nextIndex = index + 1;
-     
+
       if (nextIndex < gvSerialData.length && inputgvSerial.current[nextIndex]) {
         inputgvSerial.current[nextIndex].focus();
       } else if (nextIndex === gvSerialData.length) {
@@ -1010,10 +1010,10 @@ function fn_ScanSMTSerialRecordTime() {
       } else {
         setlblLog(
           _strLot +
-            " invalid lot no.!" +
-            _strTagNewLine +
-            _strLot +
-            " หมายเลขล็อตไม่ถูกต้อง"
+          " invalid lot no.!" +
+          _strTagNewLine +
+          _strLot +
+          " หมายเลขล็อตไม่ถูกต้อง"
         );
         setlblLot("");
         setlblLotTotal("");
@@ -1251,7 +1251,7 @@ function fn_ScanSMTSerialRecordTime() {
                     (item, index) =>
                       index !== i &&
                       _strSerial.toUpperCase() ===
-                        item.SERIAL.toString().trim().toUpperCase()
+                      item.SERIAL.toString().trim().toUpperCase()
                   );
 
                   if (isDuplicate) {
@@ -1402,9 +1402,17 @@ function fn_ScanSMTSerialRecordTime() {
   //         settxtgvSerial("");
   //     }
   // };
-  const btnSaveClick = async (txtgvSerial) => {
+  const btnSaveClick = async (txtSerial) => {
+    let data = [];
+    const serialTable = document.getElementById("gvSerial");
+    const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
+    serialInputs.forEach((input) => {
+      data.push(input.value);
+      console.log(input.value);
+    });
     if (hfMode === "SERIAL") {
-      await setSerialDataTray(txtgvSerial);
+      await setSerialDataTray(data);
+      scrollToTop();
     }
   };
 
@@ -1425,6 +1433,13 @@ function fn_ScanSMTSerialRecordTime() {
         inputgvSerial.current[0].focus();
       }, 0);
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const columns = [
