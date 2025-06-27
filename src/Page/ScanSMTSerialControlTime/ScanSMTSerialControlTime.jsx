@@ -39,9 +39,9 @@ function ScanSMTSerialControlTime() {
         lblLot, lblLog, visiblelog, lblResult, lblResultcolor, txtMachineDisabled, txtOpDisabled, txtTotalPcsDisabled, txtLotDisabled, selProDisabled,
         ibtMCBackDisabled, ibtOperatorDisabled, ibtPcsBackDisabled, inputMachine, inputOperator, inputTotalPcs, inputLot, ddlProduct, pnlSerial, gvSerialData,
         gvScanResult, gvScanData, txtgvSerial, inputgvSerial, Productdata, ibtBackMCClick, handleChangeOperator, ibtBackOPClick, handleChangeTotalPcs, ibtPcsBackClick,
-        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns,settxtgvSerial
+        handleChangeLot, ibtBackClick, handleChangeProduct, handleChangeSerial, btnSaveClick, btnCancelClick, handleKeygvSerial, columns, settxtgvSerial
     } = fn_ScanSMTSerialControlTime();
-let data=[]
+    let data = []
     return (
         <div>
             <Hearder />
@@ -76,6 +76,7 @@ let data=[]
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="txtMachine"
                                             size="small"
                                             fullWidth
                                             inputRef={inputMachine}
@@ -100,6 +101,7 @@ let data=[]
                                     <TableCell>
                                         <Button
                                             className="btIcon"
+                                            id="ibtBackMC"
                                             disabled={ibtMCBackDisabled}
                                             onClick={ibtBackMCClick}
                                         >
@@ -116,6 +118,7 @@ let data=[]
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="txtOperator"
                                             size="small"
                                             fullWidth
                                             inputRef={inputOperator}
@@ -140,6 +143,7 @@ let data=[]
                                     <TableCell>
                                         <Button
                                             className="btIcon"
+                                            id="ibtBackOP"
                                             disabled={ibtOperatorDisabled}
                                             onClick={ibtBackOPClick}
                                         >
@@ -156,6 +160,7 @@ let data=[]
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="txtTotalPcs"
                                             size="small"
                                             style={{
                                                 width: "60px",
@@ -187,6 +192,7 @@ let data=[]
                                     <TableCell>
                                         <Button
                                             className="btIcon"
+                                            id="ibtPcsBack"
                                             disabled={ibtPcsBackDisabled}
                                             onClick={ibtPcsBackClick}
                                         >
@@ -203,6 +209,7 @@ let data=[]
                                     <TableCell>
                                         <TextField
                                             className="input_txt"
+                                            id="txtLot"
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
@@ -222,7 +229,7 @@ let data=[]
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="btIcon" onClick={ibtBackClick}>
+                                        <Button className="btIcon" id="ibtBack" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
                                                 <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
@@ -235,7 +242,7 @@ let data=[]
                                     </TableCell>
                                     <TableCell colSpan={2}>
                                         <Autocomplete
-                                            id="selectPdControl"
+                                            id="ddlProduct"
                                             disabled={selProDisabled}
                                             style={{
                                                 backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
@@ -273,6 +280,7 @@ let data=[]
                             Lot :
                         </Typography>
                         <Typography
+                            id="lblLot"
                             style={{
                                 fontSize: "16px",
                                 paddingRight: "150px",
@@ -286,6 +294,7 @@ let data=[]
                         <Paper
                             elevation={3}
                             className="Card-lblLog"
+                            id="lblLog"
                             style={{
                                 width: "451px",
                                 // marginLeft: "2px",
@@ -308,7 +317,7 @@ let data=[]
                                     border: "1px solid #d9d9d9",
                                 }}
                             >
-                                <Table>
+                                <Table id="gvSerial">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>No.</TableCell>
@@ -318,12 +327,13 @@ let data=[]
                                     <TableBody>
                                         {txtgvSerial.map((serial, index) => (
                                             <tr key={index} style={{ borderBottom: "1px solid #d9d9d9" }}>
-                                                <td style={{ textAlign: "center" , borderRight: "1px solid #d9d9d9"}} >
-                                                    {index+1}
+                                                <td style={{ textAlign: "center", borderRight: "1px solid #d9d9d9" }} >
+                                                    {index + 1}
                                                 </td>
                                                 <td>
                                                     <input
                                                         className="styleSeraial"
+                                                        id={`txtSerial${index}`}
                                                         size="small"
                                                         fullWidth
                                                         defaultValue={serial}
@@ -333,18 +343,17 @@ let data=[]
                                                         }}
                                                         onKeyDown={async (event) => {
                                                             if (event.key === "Enter") {
-                                                              event.preventDefault();
-                                                              data = await handleChangeSerial(index, event);
-                                                              if (index < txtgvSerial.length - 1) {
-                                                                inputgvSerial.current[index + 1].focus();
-                                                              } else {
-                                                                settxtgvSerial(data);
-                                                                btnSaveClick(data);
-                                                                event.target.blur();
-                                                              }
+                                                                event.preventDefault();
+                                                                data = await handleChangeSerial(index, event);
+                                                                if (index < txtgvSerial.length - 1) {
+                                                                    inputgvSerial.current[index + 1].focus();
+                                                                } else {
+                                                                    settxtgvSerial(data);
+                                                                    btnSaveClick(data);
+                                                                    event.target.blur();
+                                                                }
                                                             }
                                                         }}
-                                                        // onKeyDown={(e) => handleKeygvSerial(e, index)}
                                                     />
                                                 </td>
                                             </tr>
@@ -360,18 +369,20 @@ let data=[]
                                 }}
                                 >
                                     <AntButton className="BtSave"
+                                        id="btnSave"
                                         type="primary"
                                         // onClick={btnSaveClick}
                                         onClick={() => {
                                             settxtgvSerial(data);
                                             btnSaveClick(data);
-                                          }}
+                                        }}
                                     >
                                         Save
                                     </AntButton>
                                     &nbsp;&nbsp;
                                     <AntButton
                                         className="ButtonDelete"
+                                        id="btnCancel"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}
@@ -408,6 +419,7 @@ let data=[]
                                     }}
                                 >
                                     <Typography
+                                        id="lblResult"
                                         variant="h4"
                                         style={{ paddingTop: "5px", color: "#fff" }}
                                     >
@@ -415,7 +427,7 @@ let data=[]
                                     </Typography>
                                 </Paper>
                             </div>
-                            
+
                             <AntTable
                                 columns={columns}
                                 dataSource={gvScanData}
@@ -425,7 +437,8 @@ let data=[]
                                 size="small"
                                 bordered
                                 className="tableGvResult"
-                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT ===  "OK" ? "row-green" : "")}
+                                id="gvScanResult"
+                                rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
 
                         </>

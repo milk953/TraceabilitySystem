@@ -130,7 +130,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 .then((res) => {
                     strPrdName = res.data.prdName[0];
                 });
-          
+
             if (strPrdName !== undefined) {
                 setlblLog("");
                 setvisiblelog(false);
@@ -144,7 +144,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                         settxtTotalPCS(datagetPd.slm_serial_sht);
                     }
                     SetMode("SERIAL");
-                   
+
                 } catch (error) {
                     const intProduct = strPrdName.indexOf('-', 12);
                     if (intProduct > -1) {
@@ -188,7 +188,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             inputLot.current.focus();
         }
     };
-3
+    3
     const ibtBackClick = () => {
         settxtLotNo("");
         settxtLotDisabled(false);
@@ -197,7 +197,7 @@ function fn_ScanSMTSerialBackendConfirm() {
         settxtgvSerial(Array(gvSerialData.length).fill(""))
         inputgvSerial.current.forEach((input) => {
             if (input) input.value = '';
-            });
+        });
         setgvSerialData([]);
         setgvScanResult(false);
         setgvScanData([]);
@@ -224,7 +224,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             settxtgvSerial(Array(gvSerialData.length).fill(""))
             inputgvSerial.current.forEach((input) => {
                 if (input) input.value = '';
-                });
+            });
             inputgvSerial.current[0].focus();
         } else {
             settxtTotalPCS("");
@@ -240,13 +240,21 @@ function fn_ScanSMTSerialBackendConfirm() {
     // };
     let newValues = [];
     const handleChangeSerial = async (index, event) => {
-      newValues[index] = event.target.value.trim().toUpperCase();
-      // event.target.value = '';
-      return newValues;
+        newValues[index] = event.target.value.trim().toUpperCase();
+        // event.target.value = '';
+        return newValues;
     };
-    const btnSaveClick = async (txtgvSerial) => {
+    const btnSaveClick = async (txtSerial) => {
+        let data = [];
+        const serialTable = document.getElementById("gvSerial");
+        const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
+        serialInputs.forEach((input) => {
+            data.push(input.value);
+            console.log(input.value);
+        });
         if (hfMode === "SERIAL") {
-            setSerialData(txtgvSerial);
+            await setSerialData(data);
+            scrollToTop();
         }
     };
 
@@ -255,8 +263,15 @@ function fn_ScanSMTSerialBackendConfirm() {
         settxtgvSerial(Array(gvSerialData.length).fill(""));
         inputgvSerial.current.forEach((input) => {
             if (input) input.value = '';
-            });
+        });
         inputgvSerial.current[0].focus();
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
     const SetMode = async (strType) => {
@@ -271,7 +286,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             settxtgvSerial(Array(gvSerialData.length).fill(""));
             inputgvSerial.current.forEach((input) => {
                 if (input) input.value = '';
-                });
+            });
             sethfMode("LOT");
             inputLot.current.focus();
         } else if (strType === "LOT_ERROR") {
@@ -322,13 +337,13 @@ function fn_ScanSMTSerialBackendConfirm() {
         setgvSerialData(dtData);
         settxtgvSerial(Array(dtData.length).fill(""))
         inputgvSerial.current.forEach((input) => {
-        if (input) input.value = '';
+            if (input) input.value = '';
         });
         setTimeout(() => {
             inputgvSerial.current[0].focus();
         }, 50);
         return dtData;
-        
+
     };
 
     const setSerialData = async (txtgvSerial) => {
@@ -370,7 +385,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 })
                     .then((res) => {
                         _strReturn = res.data;
-                      
+
                     });
                 dtSerial[i].FRONT_SHEET_NO = _strReturn.FRONT_SHEET_NO;
                 dtSerial[i].BACK_SHEET_NO = _strReturn.BACK_SHEET_NO;
@@ -378,7 +393,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 dtSerial[i].ROLL_LEAF_NO = _strReturn.ROLL_LEAF_NO;
             }
 
-            
+
 
             let _intRowSerial = 0;
             for (let i = 0; i < dtSerial.length; i++) {
@@ -415,7 +430,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                                 _strSerialResult = res.data.backen_result;
                                 _strMessage = res.data.message;
                             });
-                      
+
 
                         if (_strSerialResult !== "OK") {
                             _strScanResultUpdate = _strSerialResult;
@@ -465,7 +480,7 @@ function fn_ScanSMTSerialBackendConfirm() {
         settxtgvSerial(Array(gvSerialData.length).fill(""));
         inputgvSerial.current.forEach((input) => {
             if (input) input.value = '';
-            });
+        });
         hideLoading();
     };
 
@@ -488,7 +503,7 @@ function fn_ScanSMTSerialBackendConfirm() {
                 ROLL_LEAF_NO: ""
             });
         }
-     
+
         return dtData;
     };
 
@@ -615,7 +630,7 @@ function fn_ScanSMTSerialBackendConfirm() {
             const nextIndex = index + 1;
             if (nextIndex < txtTotalPCS && inputgvSerial.current[nextIndex]) {
                 inputgvSerial.current[nextIndex].focus();
-              
+
             } else if (nextIndex === nextIndex) {
 
                 btnSaveClick();
@@ -672,7 +687,7 @@ function fn_ScanSMTSerialBackendConfirm() {
         txtLotNo, settxtLotNo, selProduct, Productdata, txtTotalPCS, settxtTotalPCS, lblLog, visiblelog, lblResultcolor, lblResult,
         pnlSerial, gvScanResult, txtgvSerial, txtLotDisabled, selProDisabled, txtTotalDisabled, gvScanData, handleChangeLot,
         handleChangeProduct, handleChangeTotalPCS, hfSerialCount, ibtBackClick, btnSaveClick, btnCancelClick, handleChangeSerial, inputLot,
-        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial, columns,settxtgvSerial
+        ddlProduct, inputTotal, inputgvSerial, handleKeygvSerial, columns, settxtgvSerial
     }
 
 };

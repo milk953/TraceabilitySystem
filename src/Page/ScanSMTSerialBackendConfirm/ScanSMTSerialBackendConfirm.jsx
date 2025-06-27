@@ -67,17 +67,17 @@ function ScanSMTSerialBackendConfirm() {
     columns,
     settxtgvSerial
   } = fn_ScanSMTSerialBackendConfirm();
-let data =[];
+  let data = [];
   return (
     <div>
       <Hearder />
       <Card component={Paper} className="Card-Common" sx={{ display: "flex" }}>
         <Box
           justifyContent="space-between"
-          // sx={{
-          //     marginLeft: "-6px",
-          //     marginTop: "-10px"
-          // }}
+        // sx={{
+        //     marginLeft: "-6px",
+        //     marginTop: "-10px"
+        // }}
         >
           <TableContainer
             component={Card}
@@ -105,6 +105,7 @@ let data =[];
                   <TableCell>
                     <TextField
                       className="input_txt"
+                      id="txtLot"
                       size="small"
                       inputRef={inputLot}
                       fullWidth
@@ -129,7 +130,7 @@ let data =[];
                     />
                   </TableCell>
                   <TableCell>
-                    <Button className="Bt_ibtBack" onClick={ibtBackClick}>
+                    <Button className="Bt_ibtBack" id="ibtback" onClick={ibtBackClick}>
                       <Tooltip title="Clear Lot" placement="right-end">
                         <BackspaceIcon className="Icon_ibtBack" />
                       </Tooltip>
@@ -143,6 +144,7 @@ let data =[];
                   <TableCell>
                     <Autocomplete
                       className="Select_dropDown"
+                      id="ddlProduct"
                       disabled={selProDisabled}
                       style={{
                         backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
@@ -169,6 +171,7 @@ let data =[];
                     <Box display="flex" alignItems="center">
                       <TextField
                         className="input_txt"
+                        id="txtTotalPCS"
                         size="small"
                         inputRef={inputTotal}
                         fullWidth
@@ -213,6 +216,7 @@ let data =[];
             <Paper
               elevation={3}
               className="Card-lblLog"
+              id="lblLog"
               style={{
                 width: "430px",
                 // marginLeft: "20px",
@@ -235,7 +239,7 @@ let data =[];
                   border: "1px solid #d9d9d9",
                 }}
               >
-                <Table>
+                <Table id="gvSerial">
                   <TableHead>
                     <TableRow>
                       <TableCell>No.</TableCell>
@@ -254,36 +258,30 @@ let data =[];
                         </td>
                         <td>
                           <input
-                            // className="input_txt"
-                            // size="small"
                             fullWidth
-                                className="styleSeraial"
+                            className="styleSeraial"
+                            id={`txtSerial${index}`}
                             type="text"
-                            // value={txtgvSerial[index] || ""}
-                            // inputRef={(el) =>
-                            //   (inputgvSerial.current[index] = el)
-                            // }
                             defaultValue={serial}
                             ref={(el) =>
-                                (inputgvSerial.current[index] = el)
-                              }
+                              (inputgvSerial.current[index] = el)
+                            }
                             onChange={(e) => {
                               data = handleChangeSerial(index, e);
                             }}
-                            // onKeyDown={(e) => handleKeygvSerial(e, index)}
                             onKeyDown={async (event) => {
-                                if (event.key === "Enter") {
-                                  event.preventDefault();
-                                  data = await handleChangeSerial(index, event);
-                                  if (index < txtgvSerial.length - 1) {
-                                    inputgvSerial.current[index + 1].focus();
-                                  } else {
-                                    settxtgvSerial(data);
-                                    btnSaveClick(data);
-                                    event.target.blur();
-                                  }
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                                data = await handleChangeSerial(index, event);
+                                if (index < txtgvSerial.length - 1) {
+                                  inputgvSerial.current[index + 1].focus();
+                                } else {
+                                  settxtgvSerial(data);
+                                  btnSaveClick(data);
+                                  event.target.blur();
                                 }
-                              }}
+                              }
+                            }}
                           />
                         </td>
                       </tr>
@@ -301,17 +299,19 @@ let data =[];
                 >
                   <AntButton
                     className="BtSave"
+                    id="btnSave"
                     type="primary"
                     onClick={() => {
-                        settxtgvSerial(data);
-                        btnSaveClick(data);
-                      }}
+                      settxtgvSerial(data);
+                      btnSaveClick(data);
+                    }}
                   >
                     Save
                   </AntButton>
                   &nbsp;&nbsp;
                   <AntButton
                     className="ButtonDelete"
+                    id="btnCancel"
                     style={{ height: "30px" }}
                     type="primary"
                     onClick={btnCancelClick}
@@ -347,6 +347,7 @@ let data =[];
                   }}
                 >
                   <Typography
+                    id="lblResult"
                     variant="h4"
                     style={{ paddingTop: "5px", color: "#fff" }}
                   >
@@ -364,12 +365,13 @@ let data =[];
                 size="small"
                 bordered
                 className="tableGvResult"
+                id="gvScanResult"
                 rowClassName={(record) =>
                   record.SCAN_RESULT === "NG"
                     ? "row-red"
                     : record.SCAN_RESULT === "OK"
-                    ? "row-green"
-                    : ""
+                      ? "row-green"
+                      : ""
                 }
               />
             </>

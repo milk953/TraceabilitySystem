@@ -419,6 +419,13 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
     const btnSaveClick = async (txtgvSerial) => {
         let CheckValue = false;
+        let data = [];
+        const serialTable = document.getElementById("gvSerial");
+        const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
+        serialInputs.forEach((input) => {
+            data.push(input.value);
+            console.log(input.value);
+        });
         if (hfMode === "SERIAL") {
             if (Array.isArray(txtgvSerial)) {
                 const Value = txtgvSerial.some((item) => item.trim() !== "");
@@ -426,7 +433,8 @@ function fn_ScanSMTSerialPcsAutoTray() {
             }
             if (txtgvSerial !== "" && CheckValue !== false) {
                 setvisiblelog(false);
-                await setSerialDataTray(txtgvSerial);
+                await setSerialDataTray(data);
+                scrollToTop();
             } else {
                 setlblLog(`Please Input Serial No.`);
                 setvisiblelog(true);
@@ -440,6 +448,13 @@ function fn_ScanSMTSerialPcsAutoTray() {
         SetMode("SERIAL");
         //setlblSerialNG("0");
         settxtgvSerial(Array(gvSerialData.length).fill(""));
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
     const SetMode = async (strType) => {
@@ -1158,16 +1173,16 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 let _strEFPCRemark = "";
                                 await axios
                                     .post("/api/Common/GetEFPCSheetInspectionResult", {
-                                            _strPlantCode: plantCode,
-                                            _strProduct: _strPrdName,
-                                            _strFrontSheetNo: dtSerial[i].FRONT_SHEET_NO,
-                                            _strBackSheetNo: dtSerial[i].BACK_SHEET_NO,
-                                            _intPcsNo: dtSerial[i].SHEET_PCS_NO,
-                                            _strAOMFlg: hfCheckEFPCAOM,
-                                            _strAOIFlg: hfCheckEFPCAOI,
-                                            _strOSTFlg: hfCheckEFPCOST,
-                                            _strAVIFlg: hfCheckEFPCAVI,
-                                            _strResult: _strEFPCResult,
+                                        _strPlantCode: plantCode,
+                                        _strProduct: _strPrdName,
+                                        _strFrontSheetNo: dtSerial[i].FRONT_SHEET_NO,
+                                        _strBackSheetNo: dtSerial[i].BACK_SHEET_NO,
+                                        _intPcsNo: dtSerial[i].SHEET_PCS_NO,
+                                        _strAOMFlg: hfCheckEFPCAOM,
+                                        _strAOIFlg: hfCheckEFPCAOI,
+                                        _strOSTFlg: hfCheckEFPCOST,
+                                        _strAVIFlg: hfCheckEFPCAVI,
+                                        _strResult: _strEFPCResult,
                                     })
                                     .then((res) => {
                                         _strEFPCRemark = res.data;
