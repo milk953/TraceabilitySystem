@@ -47,6 +47,7 @@ function ScanAVIConfirmResult() {
     lblNo,
     tableData,
     ShowtableRow,
+    reftxtSerialBarcode,
   } = fn_ScanAVIConfirmResult();
   const { menuName } = fn_Homepage();
   return (
@@ -60,7 +61,6 @@ function ScanAVIConfirmResult() {
                 <TableRow>
                   <TableCell colSpan={4} align="center">
                     {menuName ? menuName : " AVI Result Checking"}
-                    
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -73,6 +73,7 @@ function ScanAVIConfirmResult() {
                   <TableCell colSpan={2}>
                     <FormControl fullWidth>
                       <Autocomplete
+                        id="ddlProduct"
                         size="small"
                         className="Select_dropDown"
                         value={ddlProduct.value}
@@ -98,6 +99,7 @@ function ScanAVIConfirmResult() {
                   <TableCell colSpan={2}>
                     <FormControl fullWidth>
                       <Autocomplete
+                      id="ddlTestType"
                         size="small"
                         className="Select_dropDown"
                         value={ddlTestType.value}
@@ -125,7 +127,7 @@ function ScanAVIConfirmResult() {
                   <TableCell colSpan={2}>
                     <TextField
                       id="txtSerialBarcode"
-                      // id="txtLot_ScanSMTConnectRollConfirm_focus"
+                      inputRef={reftxtSerialBarcode}
                       className="input_txt"
                       size="small"
                       fullWidth
@@ -150,9 +152,7 @@ function ScanAVIConfirmResult() {
                 {lblNo.value !== "" && (
                   <TableRow style={{ backgroundColor: "white" }}>
                     <TableCell align="center" colSpan={4}>
-                      <Typography
-                        style={{ color: "black", fontSize: "16px" }}
-                      >
+                      <Typography style={{ color: "black", fontSize: "16px" }}>
                         {lblNo.value}
                       </Typography>
                     </TableCell>
