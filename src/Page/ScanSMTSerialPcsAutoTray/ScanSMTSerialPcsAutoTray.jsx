@@ -84,6 +84,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     <TableCell colSpan={3}>
                                         <TextField
                                             className="input_txt"
+                                            id="txtLot"
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
@@ -103,7 +104,7 @@ function ScanSMTSerialPcsAutoTray() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button className="Bt_ibtBack" onClick={ibtBackClick}>
+                                        <Button className="Bt_ibtBack" id="ibtback" onClick={ibtBackClick}>
                                             <Tooltip title="Clear Lot" placement="right-end">
                                                 <BackspaceIcon className="Icon_ibtBack" />
                                             </Tooltip>
@@ -117,6 +118,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     <TableCell colSpan={4}>
                                         <Autocomplete
                                             className="Select_dropDown"
+                                            id="ddlProduct"
                                             disabled={selProDisabled}
                                             style={{
                                                 backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
@@ -144,6 +146,7 @@ function ScanSMTSerialPcsAutoTray() {
                                         <TableCell colSpan={3}>
                                             <TextField
                                                 className="input_txt"
+                                                id="txtPackingNo"
                                                 size="small"
                                                 inputRef={inputPackingNo}
                                                 fullWidth
@@ -163,7 +166,7 @@ function ScanSMTSerialPcsAutoTray() {
                                             />
                                         </TableCell>
                                         <TableCell>
-                                            <Button className="Bt_ibtBack" onClick={ibtPackingBackClick}>
+                                            <Button className="Bt_ibtBack" id="ibtPackingBack" onClick={ibtPackingBackClick}>
                                                 <Tooltip title="Clear Lot" placement="right-end">
                                                     <BackspaceIcon className="Icon_ibtBack" />
                                                 </Tooltip>
@@ -177,10 +180,11 @@ function ScanSMTSerialPcsAutoTray() {
                                         <Typography>Lot :</Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography>{lblLot}</Typography>
+                                        <Typography id="lblLot">{lblLot}</Typography>
                                     </TableCell>
-                                    <TableCell id="lblLotNG">
+                                    <TableCell>
                                         <Typography
+                                            id="lblLotNG"
                                             style={{ color: "green" }}
                                         >
                                             OK :
@@ -188,7 +192,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableCell>
                                     <TableCell>
                                         <Typography
-                                        // style={{ color: "green" }}
+                                            id="lblLotTotal"
                                         >
                                             {lblLotTotal}
                                         </Typography>
@@ -202,6 +206,7 @@ function ScanSMTSerialPcsAutoTray() {
                                         <Box display="flex" alignItems="center">
                                             <TextField
                                                 className="input_txt"
+                                                id="txtPcsTray"
                                                 size="small"
                                                 inputRef={inputTray}
                                                 value={txtPcsTray}
@@ -220,7 +225,7 @@ function ScanSMTSerialPcsAutoTray() {
                                                     }
                                                 }}
                                             />
-                                            <Typography style={{ marginLeft: "10px" }}>
+                                            <Typography id="lblLastTray" style={{ marginLeft: "10px" }}>
                                                 {lblLastTray}
                                             </Typography>
                                         </Box>
@@ -234,6 +239,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     </TableCell>
                                     <TableCell>
                                         <Typography
+                                            id="lblSerialNG"
                                         // style={{ color: "red" }}
                                         >
                                             {lblSerialNG}
@@ -248,6 +254,7 @@ function ScanSMTSerialPcsAutoTray() {
                         <Paper
                             elevation={3}
                             className="Card-lblLog"
+                            id="lblLog"
                             style={{
                                 width: "420px",
                                 //marginLeft: "22px",
@@ -270,7 +277,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     border: "1px solid #d9d9d9",
                                 }}
                             >
-                                <Table>
+                                <Table id="gvSerial">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>No.</TableCell>
@@ -278,7 +285,6 @@ function ScanSMTSerialPcsAutoTray() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {/* {Array.from({ length: hfSerialCount }, (_, index) => ( */}
                                         {txtgvSerial.map((serial, index) => (
                                             <tr key={index}>
                                                 <td style={{
@@ -288,24 +294,18 @@ function ScanSMTSerialPcsAutoTray() {
                                                 }}>{index + 1}</td>
                                                 <td style={{ borderBottom: "1px solid #d9d9d9" }}>
                                                     <input
-                                                        // className="input_txt"
-                                                        // size="small"
                                                         key={index}
                                                         className="styleSeraial"
+                                                        id={`txtSerial${index}`}
                                                         type="text"
                                                         fullWidth
-                                                        // value={txtgvSerial[index] || ""}
                                                         defaultValue={serial}
-                                                        // inputRef={(el) =>
-                                                        //   (inputgvSerial.current[index] = el)
-                                                        // }
                                                         ref={(el) =>
                                                             (inputgvSerial.current[index] = el)
                                                         }
                                                         onChange={(e) => {
-                                                          data=  handleChangeSerial(index, e);
+                                                            data = handleChangeSerial(index, e);
                                                         }}
-                                                        // onKeyDown={(e) => handleKeygvSerial(e, index)}
                                                         onKeyDown={async (event) => {
                                                             if (event.key === "Enter") {
                                                                 event.preventDefault();
@@ -334,6 +334,7 @@ function ScanSMTSerialPcsAutoTray() {
                                 }}
                                 >
                                     <AntButton className="BtSave"
+                                        id="btnSave"
                                         type="primary"
                                         onClick={() => {
                                             settxtgvSerial(data);
@@ -345,6 +346,7 @@ function ScanSMTSerialPcsAutoTray() {
                                     &nbsp;&nbsp;
                                     <AntButton
                                         className="ButtonDelete"
+                                        id="btnCancel"
                                         style={{ height: "30px" }}
                                         type="primary"
                                         onClick={btnCancelClick}
@@ -394,7 +396,7 @@ function ScanSMTSerialPcsAutoTray() {
                                         textAlign: "center",
                                     }}
                                 >
-                                    <Typography variant="h4" style={{ paddingTop: "5px", color: "#fff" }}>
+                                    <Typography id="lblResult" variant="h4" style={{ paddingTop: "5px", color: "#fff" }}>
                                         {lblResult}
                                     </Typography>
                                 </Paper>
@@ -409,7 +411,7 @@ function ScanSMTSerialPcsAutoTray() {
                                         display: lblTime === '' ? 'none' : '',
                                     }}
                                 >
-                                    <Typography variant="h4" style={{ paddingTop: "5px", color: "#fff" }}>
+                                    <Typography id="lblTime" variant="h4" style={{ paddingTop: "5px", color: "#fff" }}>
                                         {lblTime}
                                     </Typography>
                                 </Paper>
@@ -424,6 +426,7 @@ function ScanSMTSerialPcsAutoTray() {
                                 size="small"
                                 bordered
                                 className="tableGvResult"
+                                id="gvScanResult"
                                 rowClassName={(record) => (record.SCAN_RESULT === "NG" ? "row-red" : record.SCAN_RESULT === "OK" ? "row-green" : "")}
                             />
                         </>

@@ -65,6 +65,9 @@ function ScanSMTSerialXrayConfirm() {
     handleSaveRef,
     txtSerialChangeRef,
     txtSerialClear,
+    refLotNo,
+    reftxtSerial,
+    refTotalPCS,
   } = fn_ScanSMTSerialXrayConfirm();
   const { menuName } = fn_Homepage();
   return (
@@ -78,7 +81,7 @@ function ScanSMTSerialXrayConfirm() {
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={4} align="center">
-                    {menuName ? menuName : 'X-Ray Result Checking'}
+                      {menuName ? menuName : "X-Ray Result Checking"}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -89,7 +92,9 @@ function ScanSMTSerialXrayConfirm() {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <TextField
-                        id="txtLot_ScanSMTSerialXrayConfirm_focus"
+                        // id="txtLot_ScanSMTSerialXrayConfirm_focus" -- พึ่งปิดไป
+                        id="txtLot"
+                        inputRef={refLotNo}
                         className="input_txt"
                         size="small"
                         fullWidth
@@ -113,7 +118,11 @@ function ScanSMTSerialXrayConfirm() {
                       ></TextField>
                     </TableCell>
                     <TableCell>
-                      <Button onClick={ibtBack_Click} className="Bt_ibtBack">
+                      <Button
+                        onClick={ibtBack_Click}
+                        className="Bt_ibtBack"
+                        id="ibtback"
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -125,7 +134,8 @@ function ScanSMTSerialXrayConfirm() {
                     <TableCell colSpan={3}>
                       <FormControl fullWidth>
                         <Autocomplete
-                          id="ddlProduct_ScanSMTConnectRollConfirm_focus"
+                          // id="ddlProduct_ScanSMTSerialXrayConfirm_focus" -- พึ่งปิดไป
+                          id="ddlProduct"
                           size="small"
                           className="Select_dropDown"
                           autoComplete="off"
@@ -154,7 +164,9 @@ function ScanSMTSerialXrayConfirm() {
                     </TableCell>
                     <TableCell>
                       <TextField
-                        id="lblTotalSht_ScanSMTSerialXrayConfirm_focus"
+                        // id="lblTotalSht_ScanSMTSerialXrayConfirm_focus" -- พึ่งปิดไป
+                        id="txtTotalPCS"
+                        inputRef={refTotalPCS}
                         autoComplete="off"
                         className="input_txt"
                         size="small"
@@ -198,6 +210,7 @@ function ScanSMTSerialXrayConfirm() {
 
               <Table
                 className="CSS-GvSerial"
+                id={`gvSerial`}
                 style={{
                   display: pnlSerial.visble ? "" : "none",
                 }}
@@ -232,26 +245,30 @@ function ScanSMTSerialXrayConfirm() {
                               size="small"
                               fullWidth
                               autoComplete="off"
-                               className="txtinput"
-                               // className="input_txt"
+                              className="txtinput"
+                              // className="input_txt"
                               // style={{
                               //   width: "98%",
                               //   textTransform: "uppercase",
                               //   padding: "0px",
                               //   margin: "0px",
                               // }}
-                              id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`}
-                              ref={(el) => (txtSerialClear.current[index] = el)}
+                              // id={`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index}`} -- พึ่งปิดไป
+                              id={`txtSerial${index}`}
+                              ref={(el) => (reftxtSerial.current[index] = el)}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                   if (index < gvSerial.value.length - 1) {
-                                    document.getElementById(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`).focus();
+                                    // document.getElementById(`gvSerial_txtSerial_ScanSMTSerialXrayConfirm_${index + 1}`).focus(); -- พึ่งปิดไป
+                                    reftxtSerial.current[index + 1]?.focus();
                                   } else {
                                     handleSaveRef();
                                   }
                                 }
                               }}
-                              onChange={(e) => txtSerialChangeRef(index, e.target.value)}
+                              onChange={(e) =>
+                                txtSerialChangeRef(index, e.target.value)
+                              }
                             />
                           </td>
                         </tr>
@@ -352,12 +369,6 @@ function ScanSMTSerialXrayConfirm() {
 }
 
 export default ScanSMTSerialXrayConfirm;
-
-
-
-
-
-
 
 // <TableBody>
 // {Array.isArray(gvSerial.value) &&

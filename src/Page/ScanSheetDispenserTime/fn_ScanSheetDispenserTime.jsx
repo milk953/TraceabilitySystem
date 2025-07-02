@@ -101,7 +101,7 @@ function fn_ScanSheetDispenserTime() {
       styled: { backgroundColor: "white" },
       focused: true,
     });
-    FctxtSheetNo.current.focus();
+    setFocus('txtSheetNo')
   };
   const txtSheetno_change = async () => {
     setPnlResultState(false);
@@ -177,7 +177,7 @@ function fn_ScanSheetDispenserTime() {
           focused: true,
           open: true,
         });
-        FctxtCBno.current.focus();
+        setFocus('txtCBNo')
       }
     } else {
       setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });
@@ -262,7 +262,7 @@ function fn_ScanSheetDispenserTime() {
           styled: { backgroundColor: "white" },
           open: true,
         })
-        setFocus('txtSheetNoDispenser')
+        setFocus('txtSheetNo')
         hideLoading();
       } else {
         setLblResult({ text: "NG",  styled: "white",backgroundColor:'red' });

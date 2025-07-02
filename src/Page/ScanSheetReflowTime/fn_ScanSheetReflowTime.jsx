@@ -59,16 +59,28 @@ function fn_ScanSheetReflowTime() {
     setPnlShowresult(false);
     FctxtmcNo.current.focus();
   };
+   function setFocus(id) {
+    document.getElementById(id).focus();
+  }
   const handleTxtMcNo = () => {
+    const txtMcnoReq = document.getElementById("txtMCNo").value;
+    if (txtMcnoReq !== "") {
+      setTxtmcNo(txtMcnoReq);
+    }
     setTxtmcNoState({
       disabled: true,
       styled: { backgroundColor: "#e0e0e0" },
       open: true,
     });
     setTxtSheetNo("");
+    setFocus("txtSheetNo");
     setTxtSheetNoState({ disabled: false, state: true });
   };
   const handleTxtSheetNo = async (e) => {
+    const txtSheetNo = document.getElementById("txtSheetNo").value;
+    if (txtSheetNo !== "") {
+      setTxtSheetNo(txtSheetNo);
+    }
     let rowCount = 0;
     setLblRemark({text:"",styled:{color: "",background:''}})
     setLblResult({ text: "", styled: { color: "" } });

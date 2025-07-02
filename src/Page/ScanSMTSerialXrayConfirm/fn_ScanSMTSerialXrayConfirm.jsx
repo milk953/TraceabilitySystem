@@ -127,9 +127,13 @@ function fn_ScanSMTSerialXrayConfirm() {
     visble: false,
     style: {},
   });
-  const fc_txtSerial = useRef([]);
   const [txtSerial, setTxtSerial] = useState(gvSerial.value.map(() => ""));
-  
+  const fc_txtSerial = useRef([]);
+  const reftxtSerial = useRef([]);
+  const refLotNo = useRef(null);
+  const refProduct = useRef(null);
+  const refTotalPCS = useRef(null);
+
   useEffect(() => {
     const fetchData = async () => {
       setHfMode("");
@@ -139,22 +143,36 @@ function fn_ScanSMTSerialXrayConfirm() {
     fetchData();
   }, []);
 
-// ----------------------------------------------------
-    const txtSerialref = useRef({});
-    const txtSerialClear = useRef([]);
-    const txtSerialChangeRef = (index, value) => {
-      txtSerialref.current[index] = value;
-    }
-    const handleSaveRef =  ()  => {
-      const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number)); 
-      const SerialArray = Array.from({ length: maxIndex + 1 }, (_, i) => txtSerialref.current[i] || ""); 
-      setTxtSerial(SerialArray);
-      requestAnimationFrame(() => {
-        btnSave_Click(SerialArray);
+  // ----------------------------------------------------
+  const txtSerialref = useRef({});
+  const txtSerialClear = useRef([]);
+  const txtSerialChangeRef = (index, value) => {
+    txtSerialref.current[index] = value;
+  };
+  // const handleSaveRef = () => { -- พึ่งปิดไป
+  //   const maxIndex = Math.max(...Object.keys(txtSerialref.current).map(Number));
+  //   const SerialArray = Array.from(
+  //     { length: maxIndex + 1 },
+  //     (_, i) => txtSerialref.current[i] || ""
+  //   );
+  //   setTxtSerial(SerialArray);
+  //   requestAnimationFrame(() => {
+  //     btnSave_Click(SerialArray);
+  //   });
+  // };
+  const handleSaveRef = () => {
+    requestAnimationFrame(() => {
+      const data = [];
+      const serialTable = document.getElementById("gvSerial");
+      const serialInputs = serialTable?.querySelectorAll("[id^='txtSerial']");
+      serialInputs?.forEach((input) => {
+        data.push(input.value);
       });
-    }
+      btnSave_Click(data);
+    });
+  };
 
-// ----------------------------------------------------
+  // ----------------------------------------------------
 
   const handleSerialChange = async (index, event) => {
     const newValues = [...txtSerial];
@@ -164,10 +182,8 @@ function fn_ScanSMTSerialXrayConfirm() {
   let Valuesnew = [];
   const handletxtSerialChange = (index, event) => {
     Valuesnew[index] = event.target.value.trim().toUpperCase();
-    return Valuesnew
+    return Valuesnew;
   };
-
-  
 
   const getProduct = async () => {
     await axios.get("/api/Common/GetProductData").then((res) => {
@@ -205,7 +221,8 @@ function fn_ScanSMTSerialXrayConfirm() {
     });
     txtSerialref.current = {};
     SetMode("LOT");
-    fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
+    // fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");  -- พึ่งปิดไป
+    fnSetFocus(refLotNo);
   };
 
   const btnCancel_Click = async () => {
@@ -226,28 +243,14 @@ function fn_ScanSMTSerialXrayConfirm() {
       visble: false,
     }));
     SetMode("SERIAL");
-    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0"); -- พึ่งปิดไป
+    fnSetFocus(reftxtSerial, 0);
     // setTimeout(() => {
     //   fc_txtSerial.current[0].focus();
     // }, 300);
   };
 
   const btnSave_Click = async (txtSerial) => {
-    // let CheckValue = false;
-    // if (hfMode == "SERIAL") {
-    //   showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
-    //   if (Array.isArray(txtSerial)) {
-    //     const Value = txtSerial.some((item) => item !== "");
-    //     CheckValue = Value;
-    //   }
-    //   if (txtSerial !== "" && CheckValue !== false) {
-    //     await setSerialData();
-    //     await new Promise((resolve) => setTimeout(resolve, 1000));
-    //   } else {
-    //     fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-    //   }
-    //   hideLoading();
-    // }
     let CheckValue = false;
     if (hfMode == "SERIAL") {
       showLoading("กำลังบันทึกข้อมูล กรุณารอสักครู่...");
@@ -273,12 +276,8 @@ function fn_ScanSMTSerialXrayConfirm() {
           visble: false,
           value: "",
         }));
-        setTimeout(() => {
-          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
-        }, 0);
-        // setTimeout(() => {
-        //   fc_txtSerial.current[0].focus();
-        // }, 300);
+        // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0"); -- พึ่งปิดไป
+        fnSetFocus(reftxtSerial, 0);
       }
       hideLoading();
     }
@@ -335,7 +334,8 @@ function fn_ScanSMTSerialXrayConfirm() {
         visble: false,
       }));
       setHfMode("LOT");
-      fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
+      // fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus"); -- พึ่งปิดไป
+      fnSetFocus(refLotNo);
     }
     if (_strType == "LOT_ERROR") {
       setTxtLot((prevState) => ({
@@ -358,7 +358,8 @@ function fn_ScanSMTSerialXrayConfirm() {
         visble: false,
       }));
       setHfMode("LOT");
-      fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
+      // fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus"); -- พึ่งปิดไป
+      fnSetFocus(refLotNo);
     }
     if (_strType == "PCS") {
       setTxtLot((prevState) => ({
@@ -380,7 +381,8 @@ function fn_ScanSMTSerialXrayConfirm() {
         visble: true,
       }));
       setHfMode("PCS");
-      fnSetFocus("txtTotalPCS_ScanSMTConnectRollConfirm_focus");
+      // fnSetFocus("txtTotalPCS_ScanSMTConnectRollConfirm_focus"); -- พึ่งปิดไป
+      fnSetFocus(refTotalPCS);
     }
     if (_strType == "SERIAL") {
       setTxtLot((prevState) => ({
@@ -484,7 +486,8 @@ function fn_ScanSMTSerialXrayConfirm() {
             }));
           }
           SetMode("SERIAL");
-          fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+          // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0"); -- พึ่งปิดไป
+          fnSetFocus(reftxtSerial, 0);
           // setTimeout(() => {
           //   fc_txtSerial.current[0].focus();
           // }, 300);
@@ -510,7 +513,8 @@ function fn_ScanSMTSerialXrayConfirm() {
                 }));
               }
               SetMode("SERIAL");
-               fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+              // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0"); -- พึ่งปิดไป
+              fnSetFocus(reftxtSerial, 0);
               // setTimeout(() => {
               //   fc_txtSerial.current[0].focus();
               // }, 300);
@@ -520,7 +524,8 @@ function fn_ScanSMTSerialXrayConfirm() {
                 value: `Product ${strPrdName} not found.`,
                 visble: true,
               }));
-              fnSetFocus("ddlProduct_ScanSMTSerialXrayConfirm_focus");
+              // fnSetFocus("ddlProduct_ScanSMTSerialXrayConfirm_focus"); -- พึ่งปิดไป
+              fnSetFocus(refProduct);
             }
           } else {
             setLblPnlLog((prevState) => ({
@@ -528,7 +533,8 @@ function fn_ScanSMTSerialXrayConfirm() {
               value: `Product ${strPrdName} not found.`,
               visble: true,
             }));
-            fnSetFocus("ddlProduct_ScanSMTSerialXrayConfirm_focus");
+            // fnSetFocus("ddlProduct_ScanSMTSerialXrayConfirm_focus"); -- พึ่งปิดไป
+            fnSetFocus(refProduct);
           }
         }
       } else {
@@ -544,7 +550,8 @@ function fn_ScanSMTSerialXrayConfirm() {
           visble: true,
         }));
         setHfMode("LOT");
-        fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
+        // fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus"); -- พึ่งปิดไป
+        fnSetFocus(refLotNo);
       }
     } else {
       setDdlProduct((prevState) => ({
@@ -561,7 +568,8 @@ function fn_ScanSMTSerialXrayConfirm() {
         visble: true,
       }));
       setHfMode("LOT");
-      fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus");
+      // fnSetFocus("txtLot_ScanSMTSerialXrayConfirm_focus"); -- พึ่งปิดไป
+      fnSetFocus(refLotNo);
     }
   };
 
@@ -575,7 +583,8 @@ function fn_ScanSMTSerialXrayConfirm() {
         if (input) input.value = "";
       });
       txtSerialref.current = {};
-       fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+      // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0"); -- พึ่งปิดไป
+      fnSetFocus(reftxtSerial, 0);
       // setTimeout(() => {
       //   fc_txtSerial.current[0].focus();
       // }, 300);
@@ -584,7 +593,8 @@ function fn_ScanSMTSerialXrayConfirm() {
         ...prevState,
         value: "",
       }));
-      fnSetFocus("txtTotalPCS_ScanSMTConnectRollConfirm_focus");
+      // fnSetFocus("txtTotalPCS_ScanSMTConnectRollConfirm_focus"); -- พึ่งปิดไป
+      fnSetFocus(refTotalPCS);
     }
   };
 
@@ -754,7 +764,8 @@ function fn_ScanSMTSerialXrayConfirm() {
       }));
       SetMode("SERIAL_ERROR");
     }
-    fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0");
+    // fnSetFocus("gvSerial_txtSerial_ScanSMTSerialXrayConfirm_0"); -- พึ่งปิดไป
+    fnSetFocus(reftxtSerial, 0);
     // setTimeout(() => {
     //   fc_txtSerial.current[0].focus();
     // }, 300);
@@ -862,7 +873,6 @@ function fn_ScanSMTSerialXrayConfirm() {
             setHfCheckSPIB(dtProductSerial.prm_sht_spi_b);
             setHfSerialStartCode(dtProductSerial.slm_serial_start_code);
             setHfSerialInfo(dtProductSerial.prm_additional_info);
-      
           }
         });
     } catch (ex) {
@@ -935,18 +945,28 @@ function fn_ScanSMTSerialXrayConfirm() {
     },
   ];
 
-  function fnSetFocus(txtField) {
-    setTimeout(() => {
-      document.getElementById(`${txtField}`).focus();
-    }, 0);
-  }
-
-  // function fnSetFocus(txtField) {
-  //   const element = document.getElementById(txtField);
-  //   if (element) {
-  //     element.focus();
-  //   }
+  // function fnSetFocus(txtField) {  -- พึ่งปิดไป
+  //   setTimeout(() => {
+  //     document.getElementById(`${txtField}`).focus();
+  //   }, 0);
   // }
+
+  // const fnSetFocus = (ref) => {
+  //   setTimeout(() => {
+  //     ref?.current?.focus();
+  //   }, 0);
+  // };
+
+  const fnSetFocus = (ref, index = null) => {
+    setTimeout(() => {
+      if (index !== null && Array.isArray(ref.current)) {
+        ref.current[index]?.focus();
+      } else {
+        ref?.current?.focus();
+      }
+    }, 0);
+  };
+
   return {
     txtLot,
     setTxtLot,
@@ -975,6 +995,9 @@ function fn_ScanSMTSerialXrayConfirm() {
     handleSaveRef,
     txtSerialChangeRef,
     txtSerialClear,
+    refLotNo,
+    reftxtSerial,
+    refTotalPCS,
   };
 }
 
