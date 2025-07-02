@@ -2,16 +2,26 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "../Common/StyleCommon.css";
 import { useLoading } from "../../loading/fn_loading";
-import {DataConfig} from "../Common/function_Common";
+import { DataConfig } from "../Common/function_Common";
 
 function fn_ScanSMTSerialSpotHeat() {
-  const{ConfigData} = DataConfig();
+  const { ConfigData } = DataConfig();
   const { showLoading, hideLoading } = useLoading();
   const [Product, setProduct] = useState([]);
   const [visibledll_product, setvisibledll_product] = useState(true);
-  const [txtLot, settxtLot] = useState({value: "",disbled: "",visble: "",style: "",});
+  const [txtLot, settxtLot] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
   const [SlProduct, setSlProduct] = useState("");
-  const [txtTotalPCS, settxtTotalPCS] = useState({value: "",disbled: "",visble: "",style: "",});
+  const [txtTotalPCS, settxtTotalPCS] = useState({
+    value: "",
+    disbled: "",
+    visble: "",
+    style: "",
+  });
   const [lblLog, setlblLog] = useState("");
   const [dataGvSerial, setdataGvSerial] = useState([]);
   const [gvScanResult, setgvScanResult] = useState("");
@@ -100,7 +110,6 @@ function fn_ScanSMTSerialSpotHeat() {
   const CONNECT_SERIAL_ERROR = ConfigData.CONNECT_SERIAL_ERROR;
   const FAC1 = ConfigData.FACTORY;
 
-
   useEffect(() => {
     const fetchData = async () => {
       await GetProductData();
@@ -119,14 +128,15 @@ function fn_ScanSMTSerialSpotHeat() {
     axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
       setProduct(data);
-      setSlProduct(data[0].prd_name)
+      setSlProduct(data[0].prd_name);
     });
   };
- 
+
   const handletxt_Lotno = async () => {
     let strLot = "";
     let strPrdName = "";
-    const strLotData = txtLot.value.toUpperCase().split(";");
+    const serialTable = document.getElementById("txtLot").value;
+    const strLotData = serialTable.toUpperCase().split(";");
 
     if (strLotData.length >= 2) {
       strLot = strLotData[0];
@@ -156,16 +166,15 @@ function fn_ScanSMTSerialSpotHeat() {
                 ...prevState,
                 value: dataDT.slm_serial_sht,
               }));
-            } 
+            }
             // else {
-              SetMode("SERIAL");
+            SetMode("SERIAL");
             // }
           } else {
             setlblLog(`Product ${strPrdName} not found.`);
             setvisibleLog(true);
             return;
           }
-         
         } catch (error) {
           const intProduct = strPrdName.indexOf("-", 12);
           if (intProduct > -1) {
@@ -178,10 +187,10 @@ function fn_ScanSMTSerialSpotHeat() {
                   ...prevState,
                   value: dataDT.SLM_SERIAL_SHT,
                 }));
-              } 
+              }
               //else {
-                SetMode("SERIAL");
-                setTimeout(() => {
+              SetMode("SERIAL");
+              setTimeout(() => {
                 fcGvSerial_txtSerial_0.current[0].focus();
               }, 50);
               //}
@@ -193,8 +202,8 @@ function fn_ScanSMTSerialSpotHeat() {
             setlblLog("Product " + strPrdName + " not found.");
             setpnlLog(true);
             setTimeout(() => {
-            fcProduct.current.focus();
-          }, 0);
+              fcProduct.current.focus();
+            }, 0);
           }
         }
       } else {
@@ -205,8 +214,8 @@ function fn_ScanSMTSerialSpotHeat() {
         setpnlLog(true);
         setHfMode("LOT");
         setTimeout(() => {
-        fcLotNo.current.focus();
-      }, 0);
+          fcLotNo.current.focus();
+        }, 0);
       }
     } else {
       setSlProduct(Product[0].prd_name);
@@ -219,12 +228,119 @@ function fn_ScanSMTSerialSpotHeat() {
     }
   };
 
+  // const handletxt_Lotno = async () => {
+  //   let strLot = "";
+  //   let strPrdName = "";
+  //   const strLotData = txtLot.value.toUpperCase().split(";");
+
+  //   if (strLotData.length >= 2) {
+  //     strLot = strLotData[0];
+
+  //     await axios
+  //       .post("/api/Common/GetProductNameByLot", {
+  //         strLot: strLot,
+  //       })
+  //       .then((res) => {
+  //         strPrdName = res.data.prdName[0];
+  //       });
+  //     if (strPrdName != null) {
+  //       setlblLog("");
+  //       setpnlLog(false);
+  //       settxtLot((prevState) => ({ ...prevState, value: strLot }));
+  //       const dataDT = await GetProductSerialMaster(strPrdName);
+
+  //       try {
+  //         const isInArray = Product.some(
+  //           (item) => item.prd_name === strPrdName
+  //         );
+
+  //         if (isInArray) {
+  //           setSlProduct(strPrdName);
+  //           if (txtTotalPCS.value == "") {
+  //             settxtTotalPCS((prevState) => ({
+  //               ...prevState,
+  //               value: dataDT.slm_serial_sht,
+  //             }));
+  //           }
+  //           // else {
+  //           SetMode("SERIAL");
+  //           // }
+  //         } else {
+  //           setlblLog(`Product ${strPrdName} not found.`);
+  //           setvisibleLog(true);
+  //           return;
+  //         }
+  //       } catch (error) {
+  //         const intProduct = strPrdName.indexOf("-", 12);
+  //         if (intProduct > -1) {
+  //           strPrdName =
+  //             strPrdName.substring(0, intProduct) +
+  //             strPrdName.substring(intProduct + 1, intProduct + 11).trim();
+  //           try {
+  //             if (txtTotalPCS.value == "") {
+  //               settxtTotalPCS((prevState) => ({
+  //                 ...prevState,
+  //                 value: dataDT.SLM_SERIAL_SHT,
+  //               }));
+  //             }
+  //             //else {
+  //             SetMode("SERIAL");
+  //             setTimeout(() => {
+  //               fcGvSerial_txtSerial_0.current[0].focus();
+  //             }, 50);
+  //             //}
+  //           } catch (error) {
+  //             setlblLog(`Product ${strPrdName} not found.`);
+  //             setpnlLog(true);
+  //           }
+  //         } else {
+  //           setlblLog("Product " + strPrdName + " not found.");
+  //           setpnlLog(true);
+  //           setTimeout(() => {
+  //             fcProduct.current.focus();
+  //           }, 0);
+  //         }
+  //       }
+  //     } else {
+  //       setSlProduct(Product[0].prd_name);
+  //       settxtLot((prevState) => ({ ...prevState, value: "" }));
+  //       setvisiblgvSerial(false);
+  //       setlblLog("Invalid lot no.");
+  //       setpnlLog(true);
+  //       setHfMode("LOT");
+  //       setTimeout(() => {
+  //         fcLotNo.current.focus();
+  //       }, 0);
+  //     }
+  //   } else {
+  //     setSlProduct(Product[0].prd_name);
+  //     settxtLot((prevState) => ({ ...prevState, value: "" }));
+  //     setvisiblgvSerial(false);
+  //     setlblLog("Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด");
+  //     setpnlLog(true);
+  //     setHfMode("LOT");
+  //     fcLotNo.current.focus();
+  //   }
+  // };
+
+  // const handleTotal_Sht = async () => {
+  //   if (!isNaN(txtTotalPCS.value)) {
+  //     setHfSerialCount(txtTotalPCS.value);
+  //     SetMode("SERIAL");
+  //   } else {
+  //     settxtTotalPCS((prevState) => ({ ...prevState, value: "value" }));
+  //     fcTotalSht.current.focus();
+  //   }
+  // };
   const handleTotal_Sht = async () => {
-    if (!isNaN(txtTotalPCS.value)) {
-      setHfSerialCount(txtTotalPCS.value);
+    const txtTotalPCS = document.getElementById("txtTotalPCS").value;
+
+    if (!isNaN(txtTotalPCS)) {
+      setHfSerialCount(txtTotalPCS);
+      settxtTotalPCS((prevState) => ({ ...prevState, value: txtTotalPCS }));
       SetMode("SERIAL");
     } else {
-      settxtTotalPCS((prevState) => ({ ...prevState, value: "value" }));
+      settxtTotalPCS((prevState) => ({ ...prevState, value: "" }));
       fcTotalSht.current.focus();
     }
   };
@@ -363,7 +479,7 @@ function fn_ScanSMTSerialSpotHeat() {
 
   const btnCancel_Click = async () => {
     await SetMode("SERIAL");
-    setvisiblegvScanResult(false)
+    setvisiblegvScanResult(false);
     setTimeout(() => {
       fcGvSerial_txtSerial_0.current[0].focus();
     }, 50);
@@ -376,31 +492,23 @@ function fn_ScanSMTSerialSpotHeat() {
     });
   };
 
-  const btnSave_Click = (txtSerial) => { 
-    
-    // const hasAnyInput = Array.from(fcGvSerial_txtSerial_0.current).some(
-    //     (input) => input.value.trim() !== ""
-    // );
-
-    // if (hasAnyInput == true) {
-        if (hfMode === "SERIAL") {
-            setSerialData(txtSerial);
-            scrollToTop();
-           
-        }
-    // } else{
-    //   setlblLog("Please Input Serial No.");
-    //     setpnlLog(true);
-    //     setTimeout(() => {
-    //       fcGvSerial_txtSerial_0.current[0].focus();
-    //     }, 0);
-    //     setvisiblegvScanResult(false)
-    //     scrollToTop();
-    //    }
-};
+  // const btnSave_Click = (txtSerial) => {
+  const btnSave_Click = () => {
+    let data = [];
+    console.log(txtSerial, "input");
+    const serialTable = document.getElementById("gvSerial");
+    const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
+    serialInputs.forEach((input) => {
+      data.push(input.value);
+    });
+    if (hfMode === "SERIAL") {
+      setSerialData(data);
+      scrollToTop();
+    }
+  };
 
   const handleddlProduct = async (prdname) => {
-    setSlProduct(prdname)
+    setSlProduct(prdname);
     GetProductSerialMaster(prdname);
 
     if (txtLot.value != "") {
@@ -514,20 +622,20 @@ function fn_ScanSMTSerialSpotHeat() {
     let _strErrorAll = "";
     let _strUpdateError = "";
     let _bolError = false;
-    const allSerialEmpty = dtSerial.every(item => item.SERIAL === "" ||item.SERIAL === undefined);
+    const allSerialEmpty = dtSerial.every(
+      (item) => item.SERIAL === "" || item.SERIAL === undefined
+    );
     if (allSerialEmpty) {
       setlblLog("Please Input Serial No.");
-        setpnlLog(true);
-        setTimeout(() => {
-          fcGvSerial_txtSerial_0.current[0].focus();
-        }, 50);
-        setvisiblegvScanResult(false)
-        scrollToTop();
-        hideLoading();
-      return;        
+      setpnlLog(true);
+      setTimeout(() => {
+        fcGvSerial_txtSerial_0.current[0].focus();
+      }, 50);
+      setvisiblegvScanResult(false);
+      scrollToTop();
+      hideLoading();
+      return;
     }
-
-
 
     strLotData = txtLot.value.split(";");
     _strLot = strLotData[0];
@@ -594,7 +702,7 @@ function fn_ScanSMTSerialSpotHeat() {
       setlblLog("Please input lot no. ");
       SetMode("SERIAL_ERROR");
     }
-    setpnlLog(false)
+    setpnlLog(false);
     setTimeout(() => {
       fcGvSerial_txtSerial_0.current[0].focus();
     }, 50);
@@ -610,15 +718,15 @@ function fn_ScanSMTSerialSpotHeat() {
     }
     setvisiblgvSerial(true);
     setdataGvSerial(dtData);
-    settxtSerial(Array(dtData.length).fill(""))
+    settxtSerial(Array(dtData.length).fill(""));
     fcGvSerial_txtSerial_0.current.forEach((input) => {
-      if (input) input.value = '';
+      if (input) input.value = "";
     });
     // if (dataGvSerial.length > 0) {
     //   setTimeout(() => {
     //     fcGvSerial_txtSerial_0.current[0].focus();
     //     }, 0);
-    
+
     // }
     return 0;
   };
@@ -628,7 +736,7 @@ function fn_ScanSMTSerialSpotHeat() {
   //   newValues[index] = event.target.value.trim().toUpperCase();
   //   settxtSerial(newValues);
   // };
-  
+
   let newValues = [];
   const handleSerialChange = async (index, event) => {
     newValues[index] = event.target.value.trim().toUpperCase();
@@ -637,14 +745,12 @@ function fn_ScanSMTSerialSpotHeat() {
   };
 
   const columns = [
-   
     {
       title: "No.",
       dataIndex: "SEQ",
       key: "No.",
       render: (text, record, index) => {
         return index + 1;
-        
       },
       align: "center",
     },
@@ -654,12 +760,12 @@ function fn_ScanSMTSerialSpotHeat() {
       key: "Serial No.",
       align: "left",
       render: (text, record, index) => {
-          // return text;
-          if(record.SERIAL == "" ||record.SERIAL==undefined){
-            return '';
-          }else{
-            return text ;   
-          }
+        // return text;
+        if (record.SERIAL == "" || record.SERIAL == undefined) {
+          return "";
+        } else {
+          return text;
+        }
       },
     },
     {
@@ -667,10 +773,10 @@ function fn_ScanSMTSerialSpotHeat() {
       key: "Scan Result",
       dataIndex: "SCAN_RESULT",
       render: (text, record, index) => {
-        if(record.SERIAL == "" ||record.SERIAL==undefined){
-          return '';
-        }else{
-          return text ;   
+        if (record.SERIAL == "" || record.SERIAL == undefined) {
+          return "";
+        } else {
+          return text;
         }
         //?
         // (
@@ -681,32 +787,32 @@ function fn_ScanSMTSerialSpotHeat() {
       },
       align: "center",
     },
-    
+
     {
       title: "Remark",
       key: "Remark",
       dataIndex: "REMARK",
 
       render: (text, record, index) => {
-        if(record.SERIAL == "" ||record.SERIAL==undefined){
-          return '';
-        }else{
-          return text ;   
+        if (record.SERIAL == "" || record.SERIAL == undefined) {
+          return "";
+        } else {
+          return text;
         }
       },
       align: "center",
     },
   ];
   const getRowClassName = (record) => {
-    if(record.SERIAL == "" ||record.SERIAL==undefined){
-      return '';
+    if (record.SERIAL == "" || record.SERIAL == undefined) {
+      return "";
     }
     if (record.SCAN_RESULT === "NG" || record.SCAN_RESULT === "NO") {
-      return 'row-red';
+      return "row-red";
     } else if (record.SCAN_RESULT === "OK") {
-      return 'row-green';
+      return "row-green";
     }
-    return '';
+    return "";
   };
   return {
     handletxt_Lotno,

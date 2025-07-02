@@ -93,7 +93,7 @@ function fn_ScanSMTSerialPcsBoxOnlyGood() {
     style: {},
   });
   const [lblBoxStatus, setlblBoxStatus] = useState({
-    values: "",
+    value: "",
     disbled: "",
     visble: "",
     style: { textAlign: "center", width: "15%" },

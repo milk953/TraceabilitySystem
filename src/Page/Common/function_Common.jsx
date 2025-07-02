@@ -77,7 +77,6 @@ const DataConfig =() =>{
     const data = () => {
       axios.post("/api/Common/GetDataConfig").then((res) => {
         setConfigData(res.data);
-     
       });
     };
     data();

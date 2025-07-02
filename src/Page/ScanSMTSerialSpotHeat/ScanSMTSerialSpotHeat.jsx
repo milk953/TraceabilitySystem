@@ -94,6 +94,7 @@ function ScanSMTSerialSpotHeat() {
                       <TextField
                         className="input_txt"
                         size="small"
+                        id="txtLot"
                         fullWidth
                         disabled={txtLot.disbled}
                         value={txtLot.value.trim()}
@@ -118,7 +119,11 @@ function ScanSMTSerialSpotHeat() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
+                      <Button
+                        id="ibtback"
+                        className="Bt_ibtBack"
+                        onClick={ibtBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -130,6 +135,7 @@ function ScanSMTSerialSpotHeat() {
                     <TableCell colSpan={2}>
                       <FormControl fullWidth>
                         <Autocomplete
+                          id="ddlProduct"
                           // inputRef={fcProduct}
                           inputRef={(el) => (fcProduct.current = el)}
                           className="Select_dropDown"
@@ -160,6 +166,7 @@ function ScanSMTSerialSpotHeat() {
                       <TextField
                         size="small"
                         className="input_txt"
+                        id="txtTotalPCS"
                         value={txtTotalPCS.value}
                         inputRef={fcTotalSht}
                         onChange={(e) => {
@@ -181,7 +188,7 @@ function ScanSMTSerialSpotHeat() {
               </Table>
 
               {pnlLog == true && (
-                <Card component={Paper} className="Card-lblLog">
+                <Card component={Paper} className="Card-lblLog" id="lblLog">
                   {lblLog}
                 </Card>
               )}
@@ -190,6 +197,7 @@ function ScanSMTSerialSpotHeat() {
                   className="CSS-GvSerial"
                   component={Card}
                   inputRef={fcGvSerial}
+                  id="gvSerial"
                 >
                   <TableHead>
                     <TableCell
@@ -217,8 +225,7 @@ function ScanSMTSerialSpotHeat() {
                         </td>
                         <td>
                           <input
-                            // className="input_txt"
-                            // size="small"
+                            id={`txtSerial${index}`}
                             className="txtinput"
                             type="text"
                             fullWidth
@@ -231,8 +238,8 @@ function ScanSMTSerialSpotHeat() {
                             }
                             // value={txtSerial[index]}
                             defaultValue={serial}
-                            onChange={async(event) =>
-                             data = await handleSerialChange(index, event)
+                            onChange={async (event) =>
+                              (data = await handleSerialChange(index, event))
                             }
                             onKeyDown={async (event) => {
                               if (event.key === "Enter") {
@@ -277,6 +284,7 @@ function ScanSMTSerialSpotHeat() {
                         Cancel
                       </Button> */}
                         <AntButton
+                          id="btnSave"
                           type="primary"
                           className="BtSave"
                           // onClick={btnSave_Click}
@@ -289,6 +297,7 @@ function ScanSMTSerialSpotHeat() {
                         </AntButton>{" "}
                         &nbsp;&nbsp;
                         <AntButton
+                          id="btnCancel"
                           type="primary"
                           className="BtCancel"
                           onClick={btnCancel_Click}
@@ -329,6 +338,7 @@ function ScanSMTSerialSpotHeat() {
                 <>
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                     <Paper
+                      id="lblResult"
                       className="Card-lblResult"
                       // elevation={3}
                       style={{
@@ -337,6 +347,7 @@ function ScanSMTSerialSpotHeat() {
                     >
                       <Typography
                         variant="h4"
+                        // id='txtNG'
                         style={{ paddingTop: "3px", color: "#fff" }}
                       >
                         {lblResult.text}
@@ -345,6 +356,7 @@ function ScanSMTSerialSpotHeat() {
                   </div>
                   <AntTable
                     columns={columns}
+                    id="gvScanResult"
                     dataSource={gvScanResult}
                     style={{ width: "100%" }}
                     pagination={false}
