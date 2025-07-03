@@ -94,6 +94,8 @@ function fn_ScanSheetDispenserTime() {
   }
 //txtChange 
   const txtMcno_change = () => {
+    if( document.getElementById('txtMCNo').value != "") setTxtmcNo(document.getElementById('txtMCNo').value);    
+    setPnlSaveState(false);
     setTxtmcNoState({ disabled: true, styled: { backgroundColor: "#e0e0e0" } });
     setTxtSheetNo("");
     setTxtSheetNoState({
@@ -104,6 +106,7 @@ function fn_ScanSheetDispenserTime() {
     setFocus('txtSheetNo')
   };
   const txtSheetno_change = async () => {
+    if( document.getElementById('txtSheetNo').value != "") setTxtSheetNo(document.getElementById('txtSheetNo').value);
     setPnlResultState(false);
     let rowCount = 0;
     let strError = "";
@@ -191,6 +194,9 @@ function fn_ScanSheetDispenserTime() {
     }
   };
   const txtCbno_change = async () => {
+    if ( document.getElementById('txtCBNo').value != "") setTxtCBno(document.getElementById('txtCBNo').value);
+
+
     let strError = "";
     let strStatus = "";
     setLblResult("");

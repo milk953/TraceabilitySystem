@@ -6,14 +6,12 @@ import "../Common/StyleCommon.css";
 import { fn_ScanSheetDispenserTime } from "./fn_ScanSheetDispenserTime";
 import { fn_Homepage } from "../Homepage/fn_Homepage";
 import {
-  TextField,
   Table,
   TableBody,
   TableCell,
   TableRow,
   Button as MuiBtn,
   TableHead,
-  Paper,
   Card,
 } from "@mui/material";
 import { Button } from "antd";
@@ -29,16 +27,12 @@ function ScanSheetDispenserTime() {
     lblResult,
     lblRemark,
     lblSheet,
-    btnReturn_Click,
     txtmcNo,
     setTxtmcNo,
     txtSheetNo,
     setTxtSheetNo,
     txtCBno,
-    setTxtCBno,
     Fctxtmcno,
-    FctxtSheetNo,
-    FctxtCBno,
     txtCBnoState,
     txtSheetNoState,
     txtmcNoState,
@@ -70,7 +64,6 @@ function ScanSheetDispenserTime() {
   return (
     <div>
       <Hearder />
-      {/* <h1>ScanSheetDispenserTime</h1> */}
       <div style={{ marginTop: "80px" }}></div>
       <div className="DispenserpnlMain">
         <Table id="DispenserTableMain" component={Card}>

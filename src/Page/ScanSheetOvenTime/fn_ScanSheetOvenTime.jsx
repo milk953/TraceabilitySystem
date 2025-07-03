@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
-import {useLoading} from "../../loading/fn_loading";
+import { useLoading } from "../../loading/fn_loading";
 import Swal from "sweetalert2";
-import {DataConfig} from "../Common/function_Common";
+import { DataConfig } from "../Common/function_Common";
 function fn_ScanSheetOvenTime() {
-  const{ConfigData} = DataConfig();
-  const Fac = ConfigData.FACTORY;  
+  const { ConfigData } = DataConfig();
+  const Fac = ConfigData.FACTORY;
   const [txtmcNo, setTxtmcNo] = useState("");
   const [txtmcNoState, setTxtmcNoState] = useState({
     styled: { disabled: false, focus: true, backgroundColor: "white" },
@@ -25,7 +25,7 @@ function fn_ScanSheetOvenTime() {
     text: "",
     styled: { color: "" },
   });
-  const {showLoading,hideLoading} = useLoading();
+  const { showLoading, hideLoading } = useLoading();
   const [pnlResultState, setPnlResultState] = useState(false);
   //Hidden Field
   const [hfURL, setHfURL] = useState("");
@@ -64,6 +64,8 @@ function fn_ScanSheetOvenTime() {
     setFocus("txtMCNo");
   };
   const handleTxtMcNo = () => {
+    if (document.getElementById("txtMCNo").value != "")
+      setTxtmcNo(document.getElementById("txtMCNo").value);
     if (txtmcNo == "") {
       setFocus("txtMCNo");
     } else {
@@ -82,37 +84,36 @@ function fn_ScanSheetOvenTime() {
   }
 
   const handleTxtSheetNo = async () => {
-    if (txtSheetNo !== "") {
+    if (document.getElementById("txtSheetNo").value != "")  setTxtSheetNo(document.getElementById("txtSheetNo").value);
+    if (txtSheetNo == "") setTxtSheetNo(document.getElementById("txtSheetNo").value);
+    let txtSheetNoHtml = ""
+    txtSheetNoHtml = (txtSheetNo == "") ? document.getElementById("txtSheetNo").value : txtSheetNo;
+    if (txtSheetNo  !== "" || txtSheetNoHtml !== "") {      
       let strError = "";
       let strStatus = "";
       const currentTime = new Date().toLocaleTimeString("en-US", {
         hour12: false,
       });
-      if (
-        parseInt(hfConnLeafLength) > 0 &&
-        parseInt(hfConnLeafLength) !== txtSheetNo.length &&
-        strStatus !== "F"
-      ) {
+      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) !== (txtSheetNo || txtSheetNoHtml).length &&  strStatus !== "F"  ) {
         strStatus = "F";
         strError = "Invalid Sheet length";
       }
       if (strStatus !== "F") {
-        showLoading('กำลังบันทึก กรุณารอสักครู่')
+        showLoading("กำลังบันทึก กรุณารอสักครู่");
         const res = await axios
           .post("api/setsmtprocflowoven", {
-            p_sheet_no: txtSheetNo,
+            p_sheet_no: txtSheetNo || txtSheetNoHtml,
             p_user: "ScanSheetOvenTime",
             p_station: txtmcNo,
             strPlantCode: Fac,
           })
           .then((res) => {
-         
             strError = res.data.P_ERROR;
           });
       }
 
       // setLblRemark(strError)
-      setLblSheet(`${txtSheetNo} [${currentTime}]`);
+      setLblSheet(`${txtSheetNo || txtSheetNoHtml} [${currentTime}]`);
       if (strError === "") {
         // setLblRemark({text:"ok", styled:{color:"green"}})
         setLblResult({ text: "OK", styled: "white", backgroundColor: "green" });
