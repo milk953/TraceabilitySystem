@@ -495,7 +495,6 @@ function fn_ScanSMTSerialSpotHeat() {
   // const btnSave_Click = (txtSerial) => {
   const btnSave_Click = () => {
     let data = [];
-    console.log(txtSerial, "input");
     const serialTable = document.getElementById("gvSerial");
     const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
     serialInputs.forEach((input) => {

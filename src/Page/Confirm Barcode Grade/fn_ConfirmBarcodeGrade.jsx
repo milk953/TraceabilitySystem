@@ -719,7 +719,6 @@ function fn_ConfirmBarcodeGrade() {
   const handleTxt_RollLeaf = async () => {
     setlblLog((prevState) => ({ ...prevState, value: "", visble: false }));
     //ถ้าถูกติ้ก
-    console.log(txtRollLeaf.value, "กงนี้ๆๆๆๆ1",hfConnRollLength,txtRollLeaf.value.length);
     if (
       Check_Master == true ||
       (txtRollLeaf.value !== "" &&

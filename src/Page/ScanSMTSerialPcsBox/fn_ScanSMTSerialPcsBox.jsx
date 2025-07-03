@@ -720,9 +720,7 @@ function fn_ScanSMTSerialPcsBox() {
   };
 
   const txtBox_TextChanged = async () => {
-    console.log("เข้าจ้า1", txtBox.value);
     if (txtBox.value.trim() !== "") {
-      console.log("เข้าจ้า2", txtBox.value);
       let _strBoxNo;
       let _strItem;
       let _strPrd;
@@ -733,11 +731,9 @@ function fn_ScanSMTSerialPcsBox() {
       let datalblFull = 0;
 
       _strBox = txtBox.value.toUpperCase().split(";");
-      console.log("เข้าจ้า3", txtBox.value);
       if (_strBox.length > 1) {
         _strItem = _strBox[0];
         _strBoxNo = _strBox[1];
-        console.log("เข้าจ้า4", _strBoxNo, selectddlProduct.value);
         await axios
           .post("/api/Common/GetBoxCount", {
             prdName: selectddlProduct.value,
@@ -1184,7 +1180,6 @@ function fn_ScanSMTSerialPcsBox() {
           setpnlMachine(false);
         }
         setHfMode("PACK");
-        console.log("fntxtPack", fntxtPack,"มานี่นะ");
         setTimeout(() => {
           fntxtPack.current.focus();
         }, 0);

@@ -452,7 +452,6 @@ function ConfirmBarcodeGrade() {
                               
                                 } else {
                                   event.target.blur();
-                                  console.log('Current Serial Values:', fcGvSerial_txtSerial_0.current.map(el => el.value));
                                   settxtSerial(fcGvSerial_txtSerial_0.current.map(el => el.value));
                                   btnSave_Click(fcGvSerial_txtSerial_0.current.map(el => el.value));
                                 }

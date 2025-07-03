@@ -892,7 +892,6 @@ function fn_ScanSMTSerialRecordTime() {
     }
     setgvSerialData(dtData);
 
-    console.log("dtData", dtData);
     if (dtData.length > 0) {
       if (selectedrbt === "rbtRecordTime") {
         settxtgvSerial(Array(dtData.length).fill(""));
@@ -1408,7 +1407,6 @@ function fn_ScanSMTSerialRecordTime() {
     const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
     serialInputs.forEach((input) => {
       data.push(input.value);
-      console.log(input.value);
     });
     if (hfMode === "SERIAL") {
       await setSerialDataTray(data);

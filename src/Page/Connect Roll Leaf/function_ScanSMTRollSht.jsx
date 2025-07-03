@@ -690,7 +690,6 @@ function Fn_ScanSMTRollSht() {
           })
           .then((res) => {
             _intCount = res.data.intCount
-            console.log(res.data.intCount,'มา')
           });
         if (_intCount == 1) {
           _bolError = true;
@@ -920,7 +919,6 @@ function Fn_ScanSMTRollSht() {
                     
                       _intCountDup = res.data.intCount;
                       _strShtNoDup=res.data.strLeafDup;
-                      console.log(res.data,'มา>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
                     });
                   if (_intCountDup != 0) {
                     _strScanResultAll = "NG";
@@ -1006,7 +1004,6 @@ function Fn_ScanSMTRollSht() {
 
                 });
             }
-            console.log(_strUpdateError,'มา2')
             if (_strUpdateError != "") {
               _strScanResultAll = "NG";
            
@@ -1254,7 +1251,6 @@ function Fn_ScanSMTRollSht() {
 
 const ExportGridToCSV = (data,lblresult,Product) => {
 
-console.log(lblresult, Product,'mayyyyyy1')
   const filteredData = data.map((row) => {
    let rowData =[]
    rowData.push( Product,lblresult);

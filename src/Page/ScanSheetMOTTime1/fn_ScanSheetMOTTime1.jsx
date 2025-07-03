@@ -188,7 +188,6 @@ function fn_ScanSheetMOTTime() {
     }
     if (MotMachince != "") {
       // alert("txtMCNo_TextChanged: " + MotMachince);
-      console.log("txtMCNo_TextChanged: " + MotMachince);
       setTimeout(() => {
         fctxtLotno.current.focus();
       }, 0);

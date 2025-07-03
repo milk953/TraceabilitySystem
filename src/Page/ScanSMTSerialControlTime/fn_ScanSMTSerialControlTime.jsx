@@ -864,7 +864,6 @@ function fn_ScanSMTSerialControlTime() {
         const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
         serialInputs.forEach((input) => {
             data.push(input.value);
-            console.log(input.value);
         });
 
         if (hfMode === "SERIAL") {

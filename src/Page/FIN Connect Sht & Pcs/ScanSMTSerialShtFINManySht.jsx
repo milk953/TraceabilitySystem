@@ -455,9 +455,7 @@ function ScanSMTSerialShtFINManySht() {
                                       .focus();
                                   } else {
                                     // handleSaveRef();
-                                    console.log(
-                                      txtSerialClear.current.map((el) => el)
-                                    );
+                            
                                     // btnSave_Click(
                                     //   txtSerialClear.current.map(
                                     //     (el) => el.value

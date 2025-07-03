@@ -127,7 +127,7 @@ function fn_Change_PartialNo() {
   };
   
   const getInputSerial = async (strError,txtSerialNoNew,txtSerialNo) => {
-    // console.log(txtSerialNoNew,txtSerialNo,'mamamamamama')
+   
     let dtData = [];
     for (let intSeq = 0; intSeq < gvSerial.value.length; intSeq++) {
       dtData.push({

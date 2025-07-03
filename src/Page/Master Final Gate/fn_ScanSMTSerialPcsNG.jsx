@@ -543,7 +543,6 @@ function fn_ScanSMTSerialPcsNG() {
         });
       return result;
     } else if (type == "GetEFPCSheetInspectionResult") {
-      console.log(params)
       let result = "";
       await axios
         .get("/api/Common/GetEFPCSheetInspectionResult", {params:{
@@ -1154,7 +1153,6 @@ function fn_ScanSMTSerialPcsNG() {
                   }
                 }
                 if (!_bolError) {
-                  console.log(_strTouchUp,'Touchup')
                   if (hfTestResultFlag == "Y") {
                     if (_strTouchUp == "NG" && _strRejectGroup != "MASTER") {
                       if (_strTestResult == "OK") {
@@ -1387,9 +1385,7 @@ function fn_ScanSMTSerialPcsNG() {
         }
         let _strErrorUpdate = "";
         const serialsToUpdate = dtSerial.filter(item => item.SERIAL && item.SERIAL !== "");
-        console.log((serialsToUpdate.length))
         const updatePromises = serialsToUpdate.map(async (item) => {
-          console.log('item', item);
           const _strErrorUpdate = await getData("SetSerialLotTrayTable", {
             strPlantCode: Fac,
             strPrdName: _strPrdName,

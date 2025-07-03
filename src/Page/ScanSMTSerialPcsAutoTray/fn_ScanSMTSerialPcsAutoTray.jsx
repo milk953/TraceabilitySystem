@@ -424,7 +424,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
         const serialInputs = serialTable.querySelectorAll("[id^='txtSerial']");
         serialInputs.forEach((input) => {
             data.push(input.value);
-            console.log(input.value);
         });
         if (hfMode === "SERIAL") {
             if (Array.isArray(txtgvSerial)) {
@@ -592,7 +591,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         dtSerial: dtSerial,
                     })
                     .then((res) => {
-                        //console.log('>>>>>>>')
                         dtSerial = res.data;
                     });
 
@@ -610,7 +608,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
                 }
 
                 for (let i = 0; i < dtSerial.length; i++) {
-                    //console.log('รอบที่', i)
                     if (dtSerial[i].SERIAL !== "") {
                         let _intCount = 0;
                         let _intCountOK = 0;
@@ -836,7 +833,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
                                 _strPrdSht = _strShtNo.substring(start - 1, end);
 
                                 if (_strShtNo !== "" && hfCheckPrdAbbr !== _strPrdSht) {
-                                    //console.log(hfCheckPrdAbbr, _strPrdSht);
                                     _strMessageUpdate =
                                         "Change serial barcode mix product / เปลี่ยนหมายเลขบาร์โค้ดปนกันกับชิ้นงานอื่น";
                                     _strRemark = "Change serial barcode mix product  ";
@@ -858,7 +854,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                                     _intCountNG = 1;
                                     _bolError = true;
-                                    //console.log("เข้าเงื่อนไขนี้");
                                 } else if (hfLotAll && !hfLotAll.includes(strSheetLot)) {
                                     _strMessageUpdate =
                                         "Lot not same connect sheet / ล๊อตไม่ตรงตามที่แสกนประกบกับหมายเลขชีส";
@@ -1280,13 +1275,11 @@ function fn_ScanSMTSerialPcsAutoTray() {
 
                         if (_strScanResultUpdate === "NG") {
                             _strScanResultAll = "NG";
-                            //console.log(_strScanResultAll, "mmmmm");
                         }
                     } else {
                         dtSerial[i].SCAN_RESULT = "";
                         dtSerial[i].ROW_UPDATE = "N";
                         _strScanResultAll = "NG";
-                        //console.log(_strScanResultAll, "nnnnnn");
                     }
                     _intRowSerial = _intRowSerial + 1;
                 }
@@ -1349,7 +1342,6 @@ function fn_ScanSMTSerialPcsAutoTray() {
                         })
                         .then((res) => {
                             _strErrorUpdate = res.data.p_error;
-                            //console.log("maaaa")
                         });
                 }
 

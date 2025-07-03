@@ -1532,7 +1532,6 @@ function fn_ProductMaster() {
         settxtAddInfo(Data.p_prm_additional_info);
         settxtSerialStartCode(Data.p_prm_serial_start_code);
         settxtUpdateBy(Data.p_prm_update_by);
-        console.log(Data.p_prm_update_by);
         settxtUpdateDate(formatDate(Data.p_prm_update_date));
 
         if (Data.p_prm_req_check_prd_sht === "Y") {
@@ -2729,7 +2728,7 @@ function fn_ProductMaster() {
           setErrorRevision(true);
           setErrorRevisionMessage("Please input revision.");
         }
-        console.log(txtPcsTray);
+      
 
         if (txtPcsTray === "" || txtPcsTray === undefined) {
           Swal.fire({

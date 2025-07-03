@@ -315,7 +315,6 @@ function fn_ScanSMTSerialPcsChrome() {
                     if (hfFQC == "Y") {
                       SetMode("MACHINE");
                     } else {
-                      console.log(datagetPd.prm_final_packing_group_flg ,'mayyyyy')
                       if (datagetPd.prm_final_packing_group_flg == "Y") {
                         SetMode("PACK");
                       } else {
