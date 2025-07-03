@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import {DataConfig} from "../Common/function_Common"; 
+import { DataConfig } from "../Common/function_Common";
 function fn_ScanSheetMOTTime() {
-  const{ConfigData} = DataConfig();
+  const { ConfigData } = DataConfig();
   const [txtlot, settxtlot] = useState({
     value: "",
     disbled: "",
@@ -38,10 +38,9 @@ function fn_ScanSheetMOTTime() {
     disbled: "",
     visble: "none",
     style: {},
-    focus: false, 
-  }); 
+    focus: false,
+  });
 
- 
   const [lblProductName, setlblProductName] = useState("");
   const [lblSheet, setlblSheet] = useState("");
   const [lblRemark, setlblRemark] = useState("");
@@ -82,14 +81,17 @@ function fn_ScanSheetMOTTime() {
   let hfZPRNProcID = "";
 
   if (partweb.toUpperCase() == "ScanSheetMOTTime") {
-    hfZPRNProcID =  ConfigData.hfZPRNProcID_MOT1;
+    hfZPRNProcID = ConfigData.hfZPRNProcID_MOT1;
   } else if (partweb.toUpperCase() == "ScanSheetMOTTime2") {
-    hfZPRNProcID =  ConfigData.hfZPRNProcID_MOT2;
+    hfZPRNProcID = ConfigData.hfZPRNProcID_MOT2;
   }
   const Fac = ConfigData.FACTORY;
   const VITE_FINAL_GATE_AUTO_PRD = import.meta.env.VITE_FINAL_GATE_AUTO_PRD;
 
   useEffect(() => {
+    document.getElementById("txtMCNo").value='';
+    document.getElementById("txtLotNo").value='';
+    document.getElementById("txtSheetNo").value='';
     settxtMCNo((prevState) => ({
       ...prevState,
       value: "",
@@ -117,6 +119,8 @@ function fn_ScanSheetMOTTime() {
     setpnlSave("none");
     if (CB != null) {
       if (CB.toUpperCase() == "Y") {
+            document.getElementById("txtCBNo").value='';
+
         settxtCBNo((prevState) => ({
           ...prevState,
           value: "",
@@ -131,6 +135,7 @@ function fn_ScanSheetMOTTime() {
 
     if (SUS != null) {
       if (SUS.toUpperCase() == "Y") {
+         document.getElementById("txtSUSNo").value='';
         settxtSUSNo((prevState) => ({
           ...prevState,
           value: "",
@@ -148,7 +153,10 @@ function fn_ScanSheetMOTTime() {
     }, 300);
   }, []);
 
-  const txtMCNo_TextChanged = async (MotMachince) => {
+  const txtMCNo_TextChanged = async () => {
+    const MotMachince = document.getElementById("txtMCNo").value;
+    // alert("txtMCNo_TextChanged: " + MotMachince);
+    document.getElementById("txtSheetNo").value='';
     settxtSheet((prevState) => ({
       ...prevState,
       value: "",
@@ -161,6 +169,7 @@ function fn_ScanSheetMOTTime() {
       style: { background: "" },
     }));
     if (txtCBNo.visble) {
+      document.getElementById("txtCBNo").value='';
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: true,
@@ -169,6 +178,7 @@ function fn_ScanSheetMOTTime() {
       }));
     }
     if (txtSUSNo.visble == "") {
+      document.getElementById("txtSUSNo").value='';
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: true,
@@ -177,30 +187,32 @@ function fn_ScanSheetMOTTime() {
       }));
     }
     if (MotMachince != "") {
+      // alert("txtMCNo_TextChanged: " + MotMachince);
+      console.log("txtMCNo_TextChanged: " + MotMachince);
       setTimeout(() => {
         fctxtLotno.current.focus();
-      }, 300);
+      }, 0);
     }
   };
 
   const txtLotNo_TextChanged = async () => {
+    const txtlot = document.getElementById("txtLotNo").value;
     setlblProductName("");
     setlblRemark("");
     setlblResult((prevState) => ({ ...prevState, value: "" }));
     setlblSheet("");
     let dtProductSerial;
 
-    if (txtlot.value != "") {
+    if (txtlot != "") {
       let _strPrdName = "";
       let _strLot = "";
-      let _strLotAll = txtlot.value.toUpperCase().split(";");
+      let _strLotAll = txtlot.toUpperCase().split(";");
       _strLot = _strLotAll[0];
       await axios
         .post("/api/Common/GetProductNameByLot", {
           strLot: _strLot,
         })
         .then((res) => {
-
           _strPrdName = res.data.prdName;
         });
 
@@ -212,17 +224,15 @@ function fn_ScanSheetMOTTime() {
           })
           .then((res) => {
             dtProductSerial = res.data[0];
-      
           });
         if (dtProductSerial != null) {
-
           sethfCheckPrdSht(dtProductSerial.prm_req_check_prd_sht);
           sethfCheckPrdShtStart(dtProductSerial.prm_check_prd_sht_start);
           sethfCheckPrdShtEnd(dtProductSerial.prm_check_prd_sht_end);
           sethfCheckPrdAbbr(dtProductSerial.prm_abbr);
           sethfConnLeafLength(dtProductSerial.prm_conn_leaf_length);
         }
-
+         document.getElementById("txtLotNo").value=_strLot;
         settxtlot((prevState) => ({
           ...prevState,
           value: _strLot,
@@ -235,7 +245,7 @@ function fn_ScanSheetMOTTime() {
           disbled: true,
           style: { background: "#e0e0e0" },
         }));
-
+ document.getElementById("txtSheetNo").value='';
         settxtSheet((prevState) => ({
           ...prevState,
           disbled: false,
@@ -244,6 +254,7 @@ function fn_ScanSheetMOTTime() {
         }));
 
         if (txtCBNo.visble == "") {
+           document.getElementById("txtCBNo").value='';
           settxtCBNo((prevState) => ({
             ...prevState,
             disbled: false,
@@ -252,12 +263,14 @@ function fn_ScanSheetMOTTime() {
           }));
         }
         if (txtSUSNo.visble == "") {
+          
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,
             style: { background: "" },
           }));
         }
+        document.getElementById("txtSUSNo").value='';
         settxtSUSNo((prevState) => ({
           ...prevState,
           value: "",
@@ -266,13 +279,12 @@ function fn_ScanSheetMOTTime() {
           ...prevState,
           focus: true,
         }));
-
         setTimeout(() => {
           fctxtSheetNo.current.focus();
         }, 300);
       } else {
+        document.getElementById("txtLotNo").value='';
         settxtlot((prevState) => ({ ...prevState, value: "", focus: true }));
-
         setTimeout(() => {
           fctxtLotno.current.focus();
         }, 300);
@@ -281,14 +293,17 @@ function fn_ScanSheetMOTTime() {
   };
 
   const txtSheetNo_TextChanged = async () => {
-    if (txtSheet.value != "") {
+    const txtSheet = document.getElementById("txtSheetNo").value;
+    const txtlot = document.getElementById("txtLotNo").value;
+    const txtMCNo = document.getElementById("txtMCNo").value;
+    if (txtSheet != "") {
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
       setlblRemark("");
       setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
-        const sheetNo = txtSheet.value.trim().toUpperCase();
+        const sheetNo = txtSheet.trim().toUpperCase();
         const midValue = sheetNo.substring(
           parseInt(hfCheckPrdShtStart) - 1,
           parseInt(hfCheckPrdShtEnd)
@@ -300,8 +315,8 @@ function fn_ScanSheetMOTTime() {
       }
 
       const connLeafLength = parseInt(hfConnLeafLength);
-      const sheetLength = txtSheet.value.trim().toUpperCase().length;
-  
+      const sheetLength = txtSheet.trim().toUpperCase().length;
+
       if (
         connLeafLength > 0 &&
         connLeafLength !== sheetLength &&
@@ -311,8 +326,8 @@ function fn_ScanSheetMOTTime() {
         strError = "Invalid sheet length";
       }
       if (strStatus != "F") {
-
         if (txtCBNo.visble == "") {
+           document.getElementById("txtCBNo").value='';
           settxtCBNo((prevState) => ({
             ...prevState,
             disbled: false,
@@ -326,6 +341,7 @@ function fn_ScanSheetMOTTime() {
           }));
           fctxtCBNo.current.focus();
         } else if (txtSUSNo.visble == "") {
+           document.getElementById("txtSUSNo").value='';
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,
@@ -335,18 +351,16 @@ function fn_ScanSheetMOTTime() {
 
           fctxtSUSNo.current.focus();
         } else {
-
           await axios
             .post("/api/GetMOTRecordTimeData", {
               dataList: {
-                strSheetNo: txtSheet.value,
+                strSheetNo: txtSheet,
                 strProcId: hfZPRNProcID,
                 strPlantCode: Fac,
               },
             })
             .then((res) => {
               rowCount = res.data;
-    
             });
 
           if (rowCount == 0) {
@@ -356,21 +370,20 @@ function fn_ScanSheetMOTTime() {
             setlblRemark("");
             await axios
               .post("/api/CallFPCSheetLeadTimeResult", {
-                LotNo: txtlot.value,
+                LotNo: txtlot,
                 PROC_ID: hfZPRNProcID,
-                SHT_NO: txtSheet.value,
-                MACHINE_NO: txtMCNo.value,
+                SHT_NO: txtSheet,
+                MACHINE_NO: txtMCNo,
                 PROGRAM: "frm_ScanSheetMOTTime",
                 CB_NO: "",
                 SUS_NO: "",
                 strStatus: strStatus,
               })
               .then((res) => {
-              
                 strError = res.data.strReturn;
                 strStatus = res.data.strStatus;
               });
-            setlblSheet(txtSheet.value + " [" + currentTime+"] Save Success");
+            setlblSheet(txtSheet + " [" + currentTime + "] Save Success");
             setlblRemark(strError);
             if (strStatus == "P") {
               setlblResult((prevState) => ({
@@ -386,8 +399,7 @@ function fn_ScanSheetMOTTime() {
               }));
             }
           } else {
-           
-            setlblSheet(txtSheet.value);
+            setlblSheet(txtSheet);
             setpnlSave("");
             setlblResult("");
             setlblRemark("Exists record time,\nPlease be confirm.");
@@ -396,6 +408,7 @@ function fn_ScanSheetMOTTime() {
               style: { color: "black", background: "yellow" },
             }));
           }
+          document.getElementById("txtSheetNo").value='';
           settxtSheet((prevState) => ({
             ...prevState,
             disbled: false,
@@ -411,6 +424,7 @@ function fn_ScanSheetMOTTime() {
           style: { color: "#fff", background: "red" },
         }));
         setlblRemark(strError);
+        document.getElementById("txtSheetNo").value='';
         settxtSheet((prevState) => ({
           ...prevState,
           disbled: false,
@@ -423,6 +437,7 @@ function fn_ScanSheetMOTTime() {
         }, 300);
       }
     } else {
+      document.getElementById("txtSheetNo").value='';
       settxtSheet((prevState) => ({
         ...prevState,
         disbled: false,
@@ -433,25 +448,29 @@ function fn_ScanSheetMOTTime() {
   };
 
   const txtCBNo_TextChanged = async () => {
-    if (txtSheet.value != "" && txtCBNo.value != "") {
+    const txtSheet = document.getElementById("txtSheetNo").value;
+    const txtCBNo = document.getElementById("txtCBNo").value;
+    const txtlot = document.getElementById("txtLotNo").value;
+    const txtMCNo = document.getElementById("txtMCNo").value;
+    if (txtSheet != "" && txtCBNo != "") {
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: true,
         style: { background: "#e0e0e0" },
       }));
-    
+
       let strError = "";
       let strStatus = "";
       let rowCount = 0;
       setlblRemark("");
       setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
-        const sheetNo = txtSheet.value.trim().toUpperCase();
+        const sheetNo = txtSheet.trim().toUpperCase();
         const start = parseInt(hfCheckPrdShtStart, 10);
         const end = parseInt(hfCheckPrdShtEnd, 10);
 
         const extractedValue = sheetNo.substring(start - 1, end);
-       
+
         if (hfCheckPrdAbbr !== extractedValue) {
           strStatus = "F";
           strError = "Sheet product mix";
@@ -459,7 +478,7 @@ function fn_ScanSheetMOTTime() {
       }
 
       const connLeafLength = parseInt(hfConnLeafLength, 10);
-      const sheetNoLength = txtSheet.value.trim().toUpperCase().length;
+      const sheetNoLength = txtSheet.trim().toUpperCase().length;
 
       if (
         connLeafLength > 0 &&
@@ -470,7 +489,9 @@ function fn_ScanSheetMOTTime() {
         strError = "Invalid sheet length";
       }
       if (strStatus != "F") {
+     
         if (txtSUSNo.visble == "") {
+             document.getElementById("txtSUSNo").value='';
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,
@@ -483,26 +504,25 @@ function fn_ScanSheetMOTTime() {
           await axios
             .post("/api/GetMOTRecordTimeData", {
               dataList: {
-                strSheetNo: txtSheet.value,
+                strSheetNo: txtSheet,
                 strProcId: hfZPRNProcID,
                 strPlantCode: Fac,
               },
             })
             .then((res) => {
               rowCount = res.data;
-            
             });
 
           if (rowCount == 0) {
             setlblRemark("");
             await axios
               .post("/api/CallFPCSheetLeadTimeResult", {
-                LotNo: txtlot.value,
+                LotNo: txtlot,
                 PROC_ID: hfZPRNProcID,
-                SHT_NO: txtSheet.value,
-                MACHINE_NO: txtMCNo.value,
+                SHT_NO: txtSheet,
+                MACHINE_NO: txtMCNo,
                 PROGRAM: "frm_ScanSheetMOTTime",
-                CB_NO: txtCBNo.value,
+                CB_NO: txtCBNo,
                 SUS_NO: "",
                 strStatus: strStatus,
               })
@@ -511,7 +531,7 @@ function fn_ScanSheetMOTTime() {
                 strStatus = res.data.strStatus;
               });
 
-              setlblSheet(txtSheet.value + " [" + currentTime+"] Save Success");
+            setlblSheet(txtSheet + " [" + currentTime + "] Save Success");
             setlblRemark(strError);
             if (strStatus == "P") {
               setlblResult((prevState) => ({
@@ -527,7 +547,7 @@ function fn_ScanSheetMOTTime() {
               }));
             }
           } else {
-            setlblSheet(txtSheet.value);
+            setlblSheet(txtSheet);
             setpnlSave("");
             /// pnlMain.Enabled = False
             setlblResult("");
@@ -537,12 +557,14 @@ function fn_ScanSheetMOTTime() {
               style: { color: "Black", background: "yellow" },
             }));
           }
+             document.getElementById("txtSheetNo").value='';
           settxtSheet((prevState) => ({
             ...prevState,
             disbled: false,
             style: { background: "" },
             value: "",
           }));
+          document.getElementById("txtCBNo").value='';
           settxtCBNo((prevState) => ({
             ...prevState,
             value: "",
@@ -558,6 +580,7 @@ function fn_ScanSheetMOTTime() {
           style: { color: "#fff", background: "red" },
         }));
         setlblRemark(strError);
+        document.getElementById("txtSheetNo").value='';
         settxtSheet((prevState) => ({
           ...prevState,
           disbled: false,
@@ -569,6 +592,7 @@ function fn_ScanSheetMOTTime() {
         }, 300);
       }
     } else {
+       document.getElementById("txtSheetNo").value='';
       settxtSheet((prevState) => ({
         ...prevState,
         disbled: false,
@@ -583,7 +607,11 @@ function fn_ScanSheetMOTTime() {
   };
 
   const txtSUSNo_TextChanged = async () => {
-    if (txtSheet.value != "" && txtCBNo.value != "") {
+    const txtSheet = document.getElementById("txtSheetNo").value;
+    const txtCBNo = document.getElementById("txtCBNo").value;
+    const txtSUSNo = document.getElementById("txtSUSNo").value;
+    const txtlot = document.getElementById("txtLotNo").value;
+    if (txtSheet != "" && txtCBNo != "") {
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: true,
@@ -595,12 +623,12 @@ function fn_ScanSheetMOTTime() {
       setlblRemark("");
       setpnlSave("none");
       if (hfCheckPrdSht == "Y") {
-        const sheetNo = txtSheet.value.trim().toUpperCase();
+        const sheetNo = txtSheet.trim().toUpperCase();
         const start = parseInt(hfCheckPrdShtStart, 10);
         const end = parseInt(hfCheckPrdShtEnd, 10);
 
         const extractedValue = sheetNo.substring(start - 1, end);
-    
+
         if (hfCheckPrdAbbr !== extractedValue) {
           strStatus = "F";
           strError = "Sheet product mix";
@@ -608,7 +636,7 @@ function fn_ScanSheetMOTTime() {
       }
 
       const connLeafLength = parseInt(hfConnLeafLength, 10);
-      const sheetNoLength = txtSheet.value.trim().toUpperCase().length;
+      const sheetNoLength = txtSheet.trim().toUpperCase().length;
 
       if (
         connLeafLength > 0 &&
@@ -622,27 +650,26 @@ function fn_ScanSheetMOTTime() {
         await axios
           .post("/api/GetMOTRecordTimeData", {
             dataList: {
-              strSheetNo: txtSheet.value,
+              strSheetNo: txtSheet,
               strProcId: hfZPRNProcID,
               strPlantCode: Fac,
             },
           })
           .then((res) => {
             rowCount = res.data;
-          
           });
 
         if (rowCount == 0) {
           setlblRemark("");
           await axios
             .post("/api/CallFPCSheetLeadTimeResult", {
-              LotNo: txtlot.value,
+              LotNo: txtlot,
               PROC_ID: hfZPRNProcID,
-              SHT_NO: txtSheet.value,
-              MACHINE_NO: txtMCNo.value,
+              SHT_NO: txtSheet,
+              MACHINE_NO: txtMCNo,
               PROGRAM: "frm_ScanSheetMOTTime",
-              CB_NO: txtCBNo.value,
-              SUS_NO: txtSUSNo.value,
+              CB_NO: txtCBNo,
+              SUS_NO: txtSUSNo,
               strStatus: strStatus,
             })
             .then((res) => {
@@ -650,7 +677,7 @@ function fn_ScanSheetMOTTime() {
               strStatus = res.data.strStatus;
             });
 
-          setlblSheet(txtSheet.value + " [" + currentTime+"] Save Success");
+          setlblSheet(txtSheet + " [" + currentTime + "] Save Success");
           setlblRemark(strError);
           if (strStatus == "P") {
             setlblResult((prevState) => ({
@@ -669,7 +696,7 @@ function fn_ScanSheetMOTTime() {
             fctxtSheetNo.current.focus();
           }, 300);
         } else {
-          setlblSheet(txtSheet.value);
+          setlblSheet(txtSheet);
           setpnlSave("");
           setlblResult("");
           setlblRemark("Exists record time,\nPlease be confirm.");
@@ -678,18 +705,21 @@ function fn_ScanSheetMOTTime() {
             style: { color: "black", background: "yellow" },
           }));
         }
+        document.getElementById("txtSheetNo").value='';
         settxtSheet((prevState) => ({
           ...prevState,
           disbled: false,
           style: { background: "" },
           value: "",
         }));
+        document.getElementById("txtCBNo").value='';
         settxtCBNo((prevState) => ({
           ...prevState,
           value: "",
           disbled: false,
           style: { background: "" },
         }));
+        document.getElementById("txtSUSNo").value='';
         settxtSUSNo((prevState) => ({
           ...prevState,
           value: "",
@@ -705,18 +735,21 @@ function fn_ScanSheetMOTTime() {
           style: { color: "#fff", background: "red" },
         }));
         setlblRemark(strError);
+        document.getElementById("txtSheetNo").value='';
         settxtSheet((prevState) => ({
           ...prevState,
           disbled: false,
           style: { background: "" },
           value: "",
         }));
+        document.getElementById("txtCBNo").value='';
         settxtCBNo((prevState) => ({
           ...prevState,
           value: "",
           disbled: false,
           style: { background: "" },
         }));
+        document.getElementById("txtSUSNo").value='';
         settxtSUSNo((prevState) => ({
           ...prevState,
           value: "",
@@ -728,18 +761,21 @@ function fn_ScanSheetMOTTime() {
         }, 300);
       }
     } else {
+       document.getElementById("txtSheetNo").value='';
       settxtSheet((prevState) => ({
         ...prevState,
         disbled: false,
         style: { background: "" },
         value: "",
       }));
+       document.getElementById("txtCBNo").value='';
       settxtCBNo((prevState) => ({
         ...prevState,
         value: "",
         disbled: false,
         style: { background: "" },
       }));
+       document.getElementById("txtSUSNo").value='';
       settxtSUSNo((prevState) => ({
         ...prevState,
         value: "",
@@ -759,21 +795,21 @@ function fn_ScanSheetMOTTime() {
     setlblRemark("");
     settxtSheet((prevState) => ({ ...prevState, value: "" }));
     setlblResult((prevState) => ({ ...prevState, value: "" }));
-
+     document.getElementById("txtLotNo").value='';
     settxtlot((prevState) => ({
       ...prevState,
       disbled: false,
       style: { background: "" },
       value: "",
     }));
-
+document.getElementById("txtMCNo").value='';
     settxtMCNo((prevState) => ({
       ...prevState,
       disbled: false,
       style: { background: "" },
       value: "",
     }));
-
+document.getElementById("txtSheetNo").value='';
     settxtSheet((prevState) => ({
       ...prevState,
       disbled: true,
@@ -782,6 +818,7 @@ function fn_ScanSheetMOTTime() {
     }));
 
     if (txtCBNo.visble == "") {
+      document.getElementById("txtCBNo").value='';
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: true,
@@ -790,6 +827,7 @@ function fn_ScanSheetMOTTime() {
       }));
     }
     if (txtSUSNo.visble == "") {
+       document.getElementById("txtSUSNo").value='';
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: true,
@@ -811,6 +849,7 @@ function fn_ScanSheetMOTTime() {
     setlblResult((prevState) => ({ ...prevState, value: "" }));
 
     if (txtCBNo.visble == "") {
+       document.getElementById("txtCBNo").value='';
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
@@ -819,6 +858,7 @@ function fn_ScanSheetMOTTime() {
       }));
     }
     if (txtSUSNo.visble == "") {
+       document.getElementById("txtSUSNo").value='';
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
@@ -832,18 +872,20 @@ function fn_ScanSheetMOTTime() {
   };
 
   const BtClick_Replace = async () => {
+    const txtlot = document.getElementById("txtLotNo").value;
+    const txtMCNo = document.getElementById("txtMCNo").value;
     setTimeout(() => {
       fctxtSheetNo.current.focus();
     }, 300);
     let strError = "";
     let strStatus = "";
-  
+
     await axios
       .post("/api/CallFPCSheetLeadTimeResult", {
-        LotNo: txtlot.value,
+        LotNo: txtlot,
         PROC_ID: hfZPRNProcID,
         SHT_NO: lblSheet,
-        MACHINE_NO: txtMCNo.value,
+        MACHINE_NO: txtMCNo,
         PROGRAM: "frm_ScanSheetMOTTime",
         CB_NO: "",
         SUS_NO: "",
@@ -853,7 +895,7 @@ function fn_ScanSheetMOTTime() {
         strError = res.data.strReturn;
         strStatus = res.data.strStatus;
       });
-    setlblSheet(lblSheet + " [" + currentTime+"] Replace Success");
+    setlblSheet(lblSheet + " [" + currentTime + "] Replace Success");
     setlblRemark(strError);
 
     setpnlSave("none");
@@ -873,11 +915,13 @@ function fn_ScanSheetMOTTime() {
     }
     setpnlSave("none");
     /// pnlMain.Enabled = True
+     document.getElementById("txtSheetNo").value='';
     settxtSheet((prevState) => ({
       ...prevState,
       value: "",
     }));
     if (txtCBNo.visble == "") {
+      document.getElementById("txtCBNo").value='';
       settxtCBNo((prevState) => ({
         ...prevState,
         disbled: false,
@@ -886,6 +930,7 @@ function fn_ScanSheetMOTTime() {
       }));
     }
     if (txtSUSNo.visble == "") {
+      document.getElementById("txtSUSNo").value='';
       settxtSUSNo((prevState) => ({
         ...prevState,
         disbled: false,
@@ -931,6 +976,7 @@ function fn_ScanSheetMOTTime() {
           value: "",
         }));
         if (txtCBNo.visble == "") {
+           document.getElementById("txtCBNo").value='';
           settxtCBNo((prevState) => ({
             ...prevState,
             disbled: false,
@@ -939,6 +985,7 @@ function fn_ScanSheetMOTTime() {
           }));
         }
         if (txtSUSNo.visble == "") {
+           document.getElementById("txtSUSNo").value='';
           settxtSUSNo((prevState) => ({
             ...prevState,
             disbled: false,

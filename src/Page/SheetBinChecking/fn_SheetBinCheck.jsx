@@ -68,26 +68,26 @@ function fn_SheetBinCheck() {
       FctxtSht.current.focus();
     }, 0);
   }, []);
-  useEffect(() => {
-    const handleExternalSet = (e) => {
-      const id = e.type;
-      const value = e.detail;
-      switch (id) {
-        case "txtSheetNo":
-          document.getElementById("txtSheetNo").value = value;
-      }
-    };
+  // useEffect(() => {
+  //   const handleExternalSet = (e) => {
+  //     const id = e.type;
+  //     const value = e.detail;
+  //     switch (id) {
+  //       case "txtSheetNo":
+  //         document.getElementById("txtSheetNo").value = value;
+  //     }
+  //   };
 
-    const fields = ["txtSheetNo"];
-    fields.forEach((field) =>
-      window.addEventListener(field, handleExternalSet)
-    );
-    return () => {
-      fields.forEach((field) =>
-        window.removeEventListener(field, handleExternalSet)
-      );
-    };
-  }, []);
+  //   const fields = ["txtSheetNo"];
+  //   fields.forEach((field) =>
+  //     window.addEventListener(field, handleExternalSet)
+  //   );
+  //   return () => {
+  //     fields.forEach((field) =>
+  //       window.removeEventListener(field, handleExternalSet)
+  //     );
+  //   };
+  // }, []);
 
   return {
     txtSheetNo,

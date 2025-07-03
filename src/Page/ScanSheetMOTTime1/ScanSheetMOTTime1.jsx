@@ -102,19 +102,19 @@ function ScanSheetMOTTime() {
                         size="small"
                         id='txtMCNo'
                         fullWidth
-                        value={txtMCNo.value}
+                        // value={txtMCNo.value}
                         inputRef={(el) => (fctxtMcNo.current = el)}
                         disabled={txtMCNo.disbled} //falseพิมได้ 
                         style={txtMCNo.style}
-                        onChange={(e) => {
-                          settxtMCNo((prevState) => ({
-                            ...prevState,
-                            value: e.target.value.trim(),
-                          }));
-                        }}
+                        // onChange={(e) => {
+                        //   settxtMCNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value.trim(),
+                        //   }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            txtMCNo_TextChanged(e.target.value);
+                            txtMCNo_TextChanged();
                           }
                         }}
                       />
@@ -129,15 +129,15 @@ function ScanSheetMOTTime() {
                         size="small"
                         fullWidth
                         id='txtLotNo'
-                        value={txtlot.value}
+                        // value={txtlot.value}
                         style={txtlot.style}
                         disabled={txtlot.disbled}
-                        onChange={(e) => {
-                          settxtlot((prevState) => ({
-                            ...prevState,
-                            value: e.target.value.trim(),
-                          }));
-                        }}
+                        // onChange={(e) => {
+                        //   settxtlot((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value.trim(),
+                        //   }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtLotNo_TextChanged();
@@ -170,15 +170,15 @@ function ScanSheetMOTTime() {
                       id='txtSheetNo'
                         size="small"
                         fullWidth
-                        value={txtSheet.value}
+                        // value={txtSheet.value}
                         style={txtSheet.style}
                         disabled={txtSheet.disbled}
-                        onChange={(e) => {
-                          settxtSheet((prevState) => ({
-                            ...prevState,
-                            value: e.target.value.trim(),
-                          }));
-                        }}
+                        // onChange={(e) => {
+                        //   settxtSheet((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value.trim(),
+                        //   }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtSheetNo_TextChanged();
@@ -198,16 +198,16 @@ function ScanSheetMOTTime() {
                         size="small"
                         id='txtCBNo'
                         fullWidth
-                        value={txtCBNo.value}
+                        // value={txtCBNo.value}
                         style={txtCBNo.style}
                         disabled={txtCBNo.disbled}
                         inputRef={(el) => (fctxtCBNo.current = el)}
-                        onChange={(e) => {
-                          settxtCBNo((prevState) => ({
-                            ...prevState,
-                            value: e.target.value.trim(),
-                          }));
-                        }}
+                        // onChange={(e) => {
+                        //   settxtCBNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value.trim(),
+                        //   }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtCBNo_TextChanged();
@@ -221,22 +221,22 @@ function ScanSheetMOTTime() {
                       <Typography align="right">SUS No. :</Typography>
                     </TableCell>
   
-                    <TableCell colSpan={2}>
+                    <TableCell colSptxtSUSNoan={2}>
                       <TextField
                         size="small"
                         id='txtSUSNo'
                         fullWidth
-                        value={txtSUSNo.value}
+                        // value={txtSUSNo.value}
                         disabled={txtSUSNo.disbled}
                         style={txtSUSNo.style}
                         // inputRef={fctxtSUSNo}
                         inputRef={(el) => (fctxtSUSNo.current = el)}
-                        onChange={(e) => {
-                          settxtSUSNo((prevState) => ({
-                            ...prevState,
-                            value: e.target.value.trim(),
-                          }));
-                        }}
+                        // onChange={(e) => {
+                        //   settxtSUSNo((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value.trim(),
+                        //   }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtSUSNo_TextChanged();
