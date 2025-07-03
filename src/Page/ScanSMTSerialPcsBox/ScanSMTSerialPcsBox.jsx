@@ -89,7 +89,7 @@ function ScanSMTSerialPcsBox() {
     settxtSerial,
   } = fn_ScanSMTSerialPcsBox();
   const { menuName } = fn_Homepage();
-  let data=[];
+  let data = [];
   return (
     <div>
       <Hearder />
@@ -110,6 +110,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <TextField
+                        id="txtLot"
                         className="input_txt"
                         size="small"
                         style={{
@@ -145,6 +146,7 @@ function ScanSMTSerialPcsBox() {
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
                         <Autocomplete
+                          id="ddlProduct"
                           className="Select_dropDown"
                           value={selectddlProduct.value}
                           disabled={dis_ddlProduct}
@@ -193,6 +195,7 @@ function ScanSMTSerialPcsBox() {
                           <TextField
                             className="input_txt"
                             size="small"
+                            id="txtMachine"
                             inputRef={(el) => (fntxtMachine.current = el)}
                             value={txtMachine.value}
                             onChange={(e) => {
@@ -229,6 +232,7 @@ function ScanSMTSerialPcsBox() {
                           <TextField
                             className="input_txt"
                             size="small"
+                            id="txtOP"
                             inputRef={(el) => (fntxtOP.current = el)}
                             value={txtOP.value}
                             onChange={(e) => {
@@ -267,6 +271,7 @@ function ScanSMTSerialPcsBox() {
                       <TextField
                         className="input_txt"
                         size="small"
+                        id="txtBox"
                         inputRef={(el) => (fntxtBox.current = el)}
                         value={txtBox.value.trim()}
                         onChange={(e) => {
@@ -298,6 +303,7 @@ function ScanSMTSerialPcsBox() {
                       <TextField
                         className="input_txt"
                         size="small"
+                        id="txtPack"
                         value={txtPack.value}
                         onChange={(e) => {
                           settxtPack((prevState) => ({
@@ -327,11 +333,17 @@ function ScanSMTSerialPcsBox() {
                     <TableCell align="right">
                       <Typography>Lot :</Typography>
                     </TableCell>
-                    <TableCell colSpan={1}>{lblLot.value}</TableCell>
+                    <TableCell id="lblLot" colSpan={1}>
+                      {lblLot.value}
+                    </TableCell>
                     <TableCell align="right">
                       <Typography style={{ color: "green" }}>OK :</Typography>
                     </TableCell>
-                    <TableCell style={{ width: "70px" }} colSpan={2}>
+                    <TableCell
+                      id="lblLotTotal"
+                      style={{ width: "70px" }}
+                      colSpan={2}
+                    >
                       {lblLotTotal.value}
                     </TableCell>
                   </TableRow>
@@ -351,6 +363,7 @@ function ScanSMTSerialPcsBox() {
                         size="small"
                         inputRef={(el) => (fntxtTray.current = el)}
                         value={txtPcsTray.value}
+                        id="txtPcsTray"
                         onChange={(e) => {
                           const newValue = e.target.value;
                           if (/^\d*$/.test(newValue)) {
@@ -380,7 +393,9 @@ function ScanSMTSerialPcsBox() {
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography style={{ color: "red" }}>NG :</Typography>
                     </TableCell>
-                    <TableCell colSpan={2}>{lblSerialNG.value}</TableCell>
+                    <TableCell id="lblSerialNG" colSpan={2}>
+                      {lblSerialNG.value}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -395,6 +410,7 @@ function ScanSMTSerialPcsBox() {
                       Box :
                     </TableCell>
                     <TableCell
+                      id="lblBox"
                       className="input_txt"
                       sx={{
                         width: "25%",
@@ -405,6 +421,7 @@ function ScanSMTSerialPcsBox() {
                       {lblBox.value}
                     </TableCell>
                     <TableCell
+                      id="lblBoxFull"
                       className="input_txt"
                       sx={{
                         width: "10%",
@@ -416,6 +433,7 @@ function ScanSMTSerialPcsBox() {
                       {lblBoxFull.value}
                     </TableCell>
                     <TableCell
+                      id="lblBoxTotal"
                       className="input_txt"
                       sx={{
                         width: "10%",
@@ -428,6 +446,7 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell
                       className="input_txt"
+                      id="lblBoxStatus"
                       rowSpan={2}
                       sx={{
                         textAlign: "center",
@@ -448,6 +467,7 @@ function ScanSMTSerialPcsBox() {
                       Packing :
                     </TableCell>
                     <TableCell
+                      id="lblPacking"
                       className="input_txt"
                       sx={{
                         width: "15%",
@@ -459,6 +479,7 @@ function ScanSMTSerialPcsBox() {
                       {lblPacking.value}
                     </TableCell>
                     <TableCell
+                      id="lblPackingTotal"
                       className="input_txt"
                       sx={{
                         textAlign: "center",
@@ -488,18 +509,19 @@ function ScanSMTSerialPcsBox() {
                     fontWeight: "bold",
                     marginTop: "30px",
                   }}
+                  id="lblOP"
                 >
                   {lblOP.value}
                 </Paper>
               )}
 
               {pnlLog && (
-                <Paper elevation={3} className="Card-lblLog">
+                <Paper id="lblLog" elevation={3} className="Card-lblLog">
                   {lblLog.value}
                 </Paper>
               )}
               {pnlSerial && (
-                <Table className="CSS-GvSerial" component={Card}>
+                <Table id="gvSerial" className="CSS-GvSerial" component={Card}>
                   <TableHead>
                     <TableCell
                       sx={{ borderRight: "1px solid #d9d9d9" }}
@@ -514,7 +536,10 @@ function ScanSMTSerialPcsBox() {
                     {/* {Array.from({ length: gvSerial.length }, (_, index) => ( */}
 
                     {txtSerial.map((serial, index) => (
-                      <tr key={index} style={{ borderBottom: "1px solid  #d9d9d9" }}>
+                      <tr
+                        key={index}
+                        style={{ borderBottom: "1px solid  #d9d9d9" }}
+                      >
                         <td
                           align="center"
                           style={{ borderRight: "1px solid #d9d9d9" }}
@@ -524,13 +549,13 @@ function ScanSMTSerialPcsBox() {
                         <td>
                           <input
                             //  key={index}
-                              className="styleSeraial"
+                            className="styleSeraial"
                             type="text"
                             fullWidth
                             ref={(el) => (fc_txtSerial.current[index] = el)}
                             defaultValue={serial}
-                            onChange={ async(event) =>
-                            data = await  handleSerialChange(index, event)
+                            onChange={async (event) =>
+                              (data = await handleSerialChange(index, event))
                             }
                             // onKeyDown={(event) => {
                             //   if (event.key === "Enter") {
@@ -564,6 +589,7 @@ function ScanSMTSerialPcsBox() {
                     <TableRow>
                       <TableCell colSpan={2} style={{ textAlign: "center" }}>
                         <AntButton
+                          id="btnSave"
                           type="primary"
                           className="BtSave"
                           // onClick={btnSave_Click}
@@ -576,6 +602,7 @@ function ScanSMTSerialPcsBox() {
                         </AntButton>{" "}
                         &nbsp;&nbsp;
                         <AntButton
+                          id="btnCancel"
                           type="primary"
                           className="BtCancel"
                           onClick={btnCancel_Click}
@@ -623,6 +650,7 @@ function ScanSMTSerialPcsBox() {
                       <Typography
                         variant="h4"
                         style={{ paddingTop: "5px", color: "#fff" }}
+                        id="lblResult"
                       >
                         {lblResult.value}
                       </Typography>
@@ -642,6 +670,7 @@ function ScanSMTSerialPcsBox() {
                   </div>
 
                   <AntTable
+                    id="gvScanResult"
                     columns={columns}
                     dataSource={gvScanResult}
                     style={{ width: "100%" }}

@@ -88,6 +88,7 @@ function fn_ScanAVIConfirmResult() {
   // const plantCode = import.meta.env.VITE_FAC;
   const { ConfigData } = DataConfig();
   const plantCode = ConfigData.FACTORY;
+  const reftxtSerialBarcode = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,7 +127,7 @@ function fn_ScanAVIConfirmResult() {
       };
       await GetProductDataAVIResultConfirm();
       await GetTestTypeAVIResultConfirm();
-      fnSetFocus("txtSerialBarcode");
+       fnSetFocus(reftxtSerialBarcode);
     };
     fetchData();
   }, [plantCode]);
@@ -217,7 +218,7 @@ function fn_ScanAVIConfirmResult() {
       }));
     }
 
-    fnSetFocus("txtSerialBarcode");
+     fnSetFocus(reftxtSerialBarcode);
   };
 
   const ClearResult = async (strProduct, strTestType) => {
@@ -244,7 +245,7 @@ function fn_ScanAVIConfirmResult() {
         ...prevState,
         disbled: false,
       }));
-      fnSetFocus("txtSerialBarcode");
+       fnSetFocus(reftxtSerialBarcode);
     } else {
       setTxtSerialBarcode((prevState) => ({
         ...prevState,
@@ -377,11 +378,21 @@ function fn_ScanAVIConfirmResult() {
     }));
   };
 
-  function fnSetFocus(txtField) {
+  // function fnSetFocus(txtField) {
+  //   setTimeout(() => {
+  //     document.getElementById(`${txtField}`).focus();
+  //   }, 0);
+  // }
+
+    const fnSetFocus = (ref, index = null) => {
     setTimeout(() => {
-      document.getElementById(`${txtField}`).focus();
+      if (index !== null && Array.isArray(ref.current)) {
+        ref.current[index]?.focus();
+      } else {
+        ref?.current?.focus();
+      }
     }, 0);
-  }
+  };
 
   //----------------------------------------  เนื้อหาของ const DataTable ส่วนนี้เก็บไว้ก่อนอาจต้องใช้  {
   const [tableData, setTableData] = useState(null);
@@ -509,6 +520,7 @@ function fn_ScanAVIConfirmResult() {
     lblNo,
     tableData,
     ShowtableRow,
+    reftxtSerialBarcode,
   };
 }
 

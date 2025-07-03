@@ -114,6 +114,7 @@ function ScanSMTRoollSht() {
                       <TextField
                         className="input_txt"
                         size="small"
+                        id="txtLot"
                         style={{
                           ...txtLot.style,
                           backgroundColor: txtLot.disbled
@@ -151,6 +152,7 @@ function ScanSMTRoollSht() {
                         <Autocomplete
                           className="Select_dropDown"
                           // inputRef={fc_SlProduct}
+                          id="ddlProduct"
                           value={selectddlProduct.value}
                           disabled={dis_ddlProduct} //true พิมไม่ได้
                           sx={{
@@ -200,6 +202,7 @@ function ScanSMTRoollSht() {
                             className="input_txt"
                             size="small"
                             inputRef={(el) => (fntxtMachine.current = el)}
+                            id="txtMachine"
                             value={txtMachine.value}
                             onChange={(e) => {
                               settxtMachine((prevState) => ({
@@ -223,6 +226,7 @@ function ScanSMTRoollSht() {
                           ></TextField>
                           <Button
                             className="Bt_ibtBack"
+                            id="ibtMachineBack"
                             onClick={ibtMachineBack_Click}
                           >
                             <BackspaceIcon />
@@ -237,6 +241,7 @@ function ScanSMTRoollSht() {
                           <TextField
                             className="input_txt"
                             size="small"
+                            id="txtOP"
                             inputRef={(el) => (fntxtOP.current = el)}
                             value={txtOP.value}
                             onChange={(e) => {
@@ -261,6 +266,7 @@ function ScanSMTRoollSht() {
                           ></TextField>
                           <Button
                             className="Bt_ibtBack"
+                            id="ibtOPBack"
                             onClick={ibtOPBack_Click}
                           >
                             <BackspaceIcon />
@@ -277,6 +283,7 @@ function ScanSMTRoollSht() {
                       <TextField
                         className="input_txt"
                         size="small"
+                        id="txtBox"
                         inputRef={(el) => (fntxtBox.current = el)}
                         value={txtBox.value.trim()}
                         onChange={(e) => {
@@ -299,7 +306,11 @@ function ScanSMTRoollSht() {
                         }}
                         //onBlur={txtBox_TextChanged}
                       ></TextField>
-                      <Button className="Bt_ibtBack" onClick={ibtBox_Click}>
+                      <Button
+                        id="ibtBox"
+                        className="Bt_ibtBack"
+                        onClick={ibtBox_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -313,7 +324,7 @@ function ScanSMTRoollSht() {
                         className="input_txt"
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
-
+                        id="txtPack"
                         value={txtPack.value.trim()}
                         onChange={(e) => {
                           settxtPack((prevState) => ({
@@ -335,7 +346,11 @@ function ScanSMTRoollSht() {
                         }}
                         //onBlur={txtPack_TextChanged}
                       ></TextField>
-                      <Button className="Bt_ibtBack" onClick={ibtPack_Click}>
+                      <Button
+                        className="Bt_ibtBack"
+                        id="ibtPack"
+                        onClick={ibtPack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -344,11 +359,17 @@ function ScanSMTRoollSht() {
                     <TableCell align="right">
                       <Typography>Lot :</Typography>
                     </TableCell>
-                    <TableCell colSpan={1}>{lblLot.value}</TableCell>
+                    <TableCell id="lblLot" colSpan={1}>
+                      {lblLot.value}
+                    </TableCell>
                     <TableCell align="right">
                       <Typography style={{ color: "green" }}>OK :</Typography>
                     </TableCell>
-                    <TableCell style={{ width: "70px" }} colSpan={2}>
+                    <TableCell
+                      id="lblLotTotal"
+                      style={{ width: "70px" }}
+                      colSpan={2}
+                    >
                       {lblLotTotal.value}
                     </TableCell>
                   </TableRow>
@@ -366,6 +387,7 @@ function ScanSMTRoollSht() {
                       <TextField
                         className="input_txt"
                         size="small"
+                        id="txtPcsTray"
                         inputRef={(el) => (fntxtTray.current = el)}
                         value={txtPcsTray.value}
                         onChange={(e) => {
@@ -395,7 +417,9 @@ function ScanSMTRoollSht() {
                     <TableCell align="right" style={{ width: "40px" }}>
                       <Typography style={{ color: "red" }}>NG :</Typography>
                     </TableCell>
-                    <TableCell colSpan={2}>{lblSerialNG.value}</TableCell>
+                    <TableCell id="lblSerialNG" colSpan={2}>
+                      {lblSerialNG.value}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -411,6 +435,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell
                       className="input_txt"
+                      id="lblBox"
                       sx={{
                         width: "25%",
                         textAlign: "center",
@@ -421,6 +446,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell
                       className="input_txt"
+                      id="lblBoxFull"
                       sx={{
                         width: "10%",
                         textAlign: "center",
@@ -432,6 +458,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell
                       className="input_txt"
+                      id="lblBoxTotal"
                       sx={{
                         width: "10%",
                         textAlign: "center",
@@ -443,6 +470,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell
                       className="input_txt"
+                      id="lblBoxStatus"
                       rowSpan={2}
                       sx={{
                         textAlign: "center",
@@ -464,6 +492,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell
                       className="input_txt"
+                      id="lblPacking"
                       sx={{
                         width: "15%",
                         textAlign: "center",
@@ -475,6 +504,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell
                       className="input_txt"
+                      id="lblPackingTotal"
                       sx={{
                         textAlign: "center",
                         width: "15%",
@@ -503,18 +533,20 @@ function ScanSMTRoollSht() {
                     fontWeight: "bold",
                     marginTop: "30px",
                   }}
+                  id="lblOP"
                 >
                   {lblOP.value}
                 </Paper>
               )}
               {pnlLog && (
-                <Paper elevation={3} className="Card-lblLog">
+                <Paper id="lblLog" elevation={3} className="Card-lblLog">
                   {lblLog.value}
                 </Paper>
               )}
               {pnlSerial && (
                 <Table
                   className="CSS-GvSerial"
+                  id="gvSerial"
                   // style={{ marginTop: "20px",
                   //    }}
                   component={Card}
@@ -556,8 +588,8 @@ function ScanSMTRoollSht() {
                             //   handleSerialChange(index, event);
 
                             // }}
-                            onChange={async(event) =>
-                             data = await handleSerialChange(index, event)
+                            onChange={async (event) =>
+                              (data = await handleSerialChange(index, event))
                             }
                             onKeyDown={async (event) => {
                               if (event.key === "Enter") {
@@ -581,6 +613,7 @@ function ScanSMTRoollSht() {
                       <TableCell colSpan={2} style={{ textAlign: "center" }}>
                         <AntButton
                           type="primary"
+                          id="btnSave"
                           className="BtSave"
                           // onClick={btnSave_Click}
                           onClick={() => {
@@ -592,6 +625,7 @@ function ScanSMTRoollSht() {
                         </AntButton>{" "}
                         &nbsp;&nbsp;
                         <AntButton
+                          id="btnCancel"
                           type="primary"
                           className="BtCancel"
                           onClick={btnCancel}
@@ -635,6 +669,7 @@ function ScanSMTRoollSht() {
                   <div style={{ display: "flex", gap: "10px", width: "100%" }}>
                     <Paper
                       className="Card-lblResult"
+                      id="lblResult"
                       style={{
                         background: lblResult.value == "NG" ? "red" : "green",
                       }}
@@ -664,6 +699,7 @@ function ScanSMTRoollSht() {
                   </div>
                   <AntTable
                     columns={columns}
+                    id="gvScanResult"
                     dataSource={gvScanResult}
                     style={{ width: "100%" }}
                     pagination={false}
