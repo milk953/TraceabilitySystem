@@ -89,9 +89,8 @@ function fn_ScanSheetReflowTime() {
     if (txtmcNo !== "" && txtSheetNo !== "") {
       let strError = "";
       let strStatus = "";
-      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) !== txtSheetNo.length &&
-        strStatus !== "F"
-      ) {
+      console.log("hf",parseInt(hfConnLeafLength) ,"___", parseInt(hfConnLeafLength) ,"____" , txtSheetNo.length ,"____", strStatus);
+      if (parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) !== txtSheetNo.length && strStatus !== "F" ) {
         strStatus = "F";
         strError = "Invalid sheet length";
       }
@@ -126,7 +125,7 @@ function fn_ScanSheetReflowTime() {
               setLblRemark({text:error,styled:{color: "white",background:'red',border:'1px solid red'}});
             setPnlShowresult(true);
             });
-          
+          console.log("strError", strError);
           if (strError == "") {
             const currentTime = new Date().toLocaleTimeString("en-US", {
               hour12: false,
@@ -153,7 +152,8 @@ function fn_ScanSheetReflowTime() {
       } else {
         // setLblResult({ text: "NG", styled: "red" });
         setLblResult({ text: "NG", styled:{color: "white",background:'red'} });
-        setLblRemark(strError);
+        setLblRemark({text:strError,styled:{color: "white",background:'red',border:'1px solid red'}});
+        setPnlShowresult(true);
       }
       setTxtSheetNo("");
       setTxtmcNoState({
