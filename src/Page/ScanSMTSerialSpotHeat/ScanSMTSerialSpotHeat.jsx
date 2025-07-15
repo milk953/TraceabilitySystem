@@ -167,15 +167,15 @@ function ScanSMTSerialSpotHeat() {
                         size="small"
                         className="input_txt"
                         id="txtTotalPCS"
-                        value={txtTotalPCS.value}
+                        // value={txtTotalPCS.value}
                         inputRef={fcTotalSht}
-                        onChange={(e) => {
-                          const value = e.target.value.replace(/[^0-9]/g, ""); // กรองอักขระที่ไม่ใช่ตัวเลขออก
-                          settxtTotalPCS((prevState) => ({
-                            ...prevState,
-                            value: value,
-                          }));
-                        }}
+                        // onChange={(e) => {
+                        //   const value = e.target.value.replace(/[^0-9]/g, ""); // กรองอักขระที่ไม่ใช่ตัวเลขออก
+                        //   // settxtTotalPCS((prevState) => ({
+                        //   //   ...prevState,
+                        //   //   value: value,
+                        //   // }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             handleTotal_Sht();

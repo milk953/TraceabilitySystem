@@ -121,20 +121,24 @@ function ScanSMTSerialPcsBox() {
                         }}
                         disabled={txtLot.disbled}
                         inputRef={(el) => (fntxtLot.current = el)}
-                        value={txtLot.value.trim()}
-                        onChange={(e) => {
-                          settxtLot((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
+                        // value={txtLot.value.trim()}
+                        // onChange={(e) => {
+                        //   settxtLot((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtLot_TextChanged();
                           }
                         }}
                       ></TextField>
-                      <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
+                      <Button
+                        className="Bt_ibtBack"
+                        id="ibtback"
+                        onClick={ibtBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -218,6 +222,7 @@ function ScanSMTSerialPcsBox() {
                           ></TextField>
                           <Button
                             className="Bt_ibtBack"
+                            id="ibtMachineBack"
                             onClick={ibtMachineBack_Click}
                           >
                             <BackspaceIcon />
@@ -255,6 +260,7 @@ function ScanSMTSerialPcsBox() {
                           ></TextField>
                           <Button
                             className="Bt_ibtBack"
+                            id="ibtMachineBack"
                             onClick={ibtOPBack_Click}
                           >
                             <BackspaceIcon />
@@ -273,13 +279,13 @@ function ScanSMTSerialPcsBox() {
                         size="small"
                         id="txtBox"
                         inputRef={(el) => (fntxtBox.current = el)}
-                        value={txtBox.value.trim()}
-                        onChange={(e) => {
-                          settxtBox((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
+                        // value={txtBox.value.trim()}
+                        // onChange={(e) => {
+                        //   settxtBox((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
                         style={{
                           background: txtBox.disbled ? "#e0e0e0" : "inherit",
                         }}
@@ -290,7 +296,11 @@ function ScanSMTSerialPcsBox() {
                           }
                         }}
                       ></TextField>
-                      <Button className="Bt_ibtBack" onClick={ibtBox_Click}>
+                      <Button
+                        className="Bt_ibtBack"
+                        id="ibtBox"
+                        onClick={ibtBox_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -304,13 +314,13 @@ function ScanSMTSerialPcsBox() {
                         className="input_txt"
                         size="small"
                         id="txtPack"
-                        value={txtPack.value}
-                        onChange={(e) => {
-                          settxtPack((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
+                        // value={txtPack.value}
+                        // onChange={(e) => {
+                        //   settxtPack((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
                         style={{
                           backgroundColor: txtPack.disbled
                             ? "#e0e0e0"
@@ -324,7 +334,11 @@ function ScanSMTSerialPcsBox() {
                           }
                         }}
                       ></TextField>
-                      <Button className="Bt_ibtBack" onClick={ibtPack_Click}>
+                      <Button
+                        className="Bt_ibtBack"
+                        id="ibtPack"
+                        onClick={ibtPack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -362,17 +376,17 @@ function ScanSMTSerialPcsBox() {
                         className="input_txt"
                         size="small"
                         inputRef={(el) => (fntxtTray.current = el)}
-                        value={txtPcsTray.value}
+                        // value={txtPcsTray.value}
                         id="txtPcsTray"
-                        onChange={(e) => {
-                          const newValue = e.target.value;
-                          if (/^\d*$/.test(newValue)) {
-                            settxtPcsTray((prevState) => ({
-                              ...prevState,
-                              value: newValue,
-                            }));
-                          }
-                        }}
+                        // onChange={(e) => {
+                        //   const newValue = e.target.value;
+                        //   if (/^\d*$/.test(newValue)) {
+                        //     settxtPcsTray((prevState) => ({
+                        //       ...prevState,
+                        //       value: newValue,
+                        //     }));
+                        //   }
+                        // }}
                         style={{
                           backgroundColor: txtPcsTray.disbled
                             ? "#e0e0e0"
@@ -549,6 +563,7 @@ function ScanSMTSerialPcsBox() {
                         <td>
                           <input
                             //  key={index}
+                            id={`txtSerial${index}`}
                             className="styleSeraial"
                             type="text"
                             fullWidth
@@ -594,7 +609,7 @@ function ScanSMTSerialPcsBox() {
                           className="BtSave"
                           // onClick={btnSave_Click}
                           onClick={() => {
-                            settxtSerial(data);
+                            // settxtSerial(data);
                             btnSave_Click(data);
                           }}
                         >

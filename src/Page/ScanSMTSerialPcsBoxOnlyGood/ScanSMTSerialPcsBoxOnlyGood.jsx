@@ -124,13 +124,13 @@ function ScanSMTRoollSht() {
                         disabled={txtLot.disbled} //true พิมไม่ได้
                         //inputRef={fntxtLot}
                         inputRef={(el) => (fntxtLot.current = el)}
-                        value={txtLot.value.trim()}
-                        onChange={(e) => {
-                          settxtLot((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
+                        // value={txtLot.value.trim()}
+                        // onChange={(e) => {
+                        //   settxtLot((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             txtLot_TextChanged();
@@ -138,7 +138,11 @@ function ScanSMTRoollSht() {
                         }}
                         // onBlur={txtLot_TextChanged}
                       ></TextField>
-                      <Button className="Bt_ibtBack" onClick={ibtBack_Click}>
+                      <Button
+                        className="Bt_ibtBack"
+                        id="ibtback"
+                        onClick={ibtBack_Click}
+                      >
                         <BackspaceIcon />
                       </Button>
                     </TableCell>
@@ -285,13 +289,13 @@ function ScanSMTRoollSht() {
                         size="small"
                         id="txtBox"
                         inputRef={(el) => (fntxtBox.current = el)}
-                        value={txtBox.value.trim()}
-                        onChange={(e) => {
-                          settxtBox((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
+                        // value={txtBox.value.trim()}
+                        // onChange={(e) => {
+                        //   settxtBox((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
                         style={{
                           backgroundColor: txtBox.disbled
                             ? "#e0e0e0"
@@ -325,13 +329,13 @@ function ScanSMTRoollSht() {
                         size="small"
                         // inputRef={(el) => (fc_txtPackingNo.current = el)}
                         id="txtPack"
-                        value={txtPack.value.trim()}
-                        onChange={(e) => {
-                          settxtPack((prevState) => ({
-                            ...prevState,
-                            value: e.target.value,
-                          }));
-                        }}
+                        // value={txtPack.value.trim()}
+                        // onChange={(e) => {
+                        //   settxtPack((prevState) => ({
+                        //     ...prevState,
+                        //     value: e.target.value,
+                        //   }));
+                        // }}
                         style={{
                           backgroundColor: txtPack.disbled
                             ? "#e0e0e0"
@@ -389,14 +393,14 @@ function ScanSMTRoollSht() {
                         size="small"
                         id="txtPcsTray"
                         inputRef={(el) => (fntxtTray.current = el)}
-                        value={txtPcsTray.value}
-                        onChange={(e) => {
-                          const value = e.target.value.replace(/[^0-9]/g, ""); // กรองอักขระพิเศษออก
-                          settxtPcsTray((prevState) => ({
-                            ...prevState,
-                            value: value,
-                          }));
-                        }}
+                        // value={txtPcsTray.value}
+                        // onChange={(e) => {
+                        //   const value = e.target.value.replace(/[^0-9]/g, ""); // กรองอักขระพิเศษออก
+                        //   settxtPcsTray((prevState) => ({
+                        //     ...prevState,
+                        //     value: value,
+                        //   }));
+                        // }}
                         style={{
                           backgroundColor: txtPcsTray.disbled
                             ? "#e0e0e0"
@@ -579,6 +583,7 @@ function ScanSMTRoollSht() {
                         <td>
                           <input
                             // key={index}
+                            id={`txtSerial${index}`}
                             className="txtinput"
                             type="text"
                             fullWidth
