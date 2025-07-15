@@ -116,11 +116,7 @@ function fn_ScanSheetDispenserTime() {
     setLblRemark("");
     setPnlSaveState(false);
     if (txtSheetNo != "") {
-      if (
-        parseInt(hfConnLeafLength) > 0 &&
-        parseInt(hfConnLeafLength) != txtSheetNo.length &&
-        strStatus != "F"
-      ) {
+      if ( parseInt(hfConnLeafLength) > 0 && parseInt(hfConnLeafLength) != txtSheetNo.length && strStatus != "F") {
         strError = "Invalid sheet length";
         strStatus = "F";
       }
