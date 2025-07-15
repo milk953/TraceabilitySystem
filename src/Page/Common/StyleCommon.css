@@ -112,7 +112,11 @@
   height: 12px;
   padding: 10px 12px;
 }
-
+.Select_dropDown2  {
+   width: 80%;
+   height: 30px;
+  font-size: 16px !important;
+}
 .Bt_ibtBack {
   height: 10px;
   line-height: 10px;

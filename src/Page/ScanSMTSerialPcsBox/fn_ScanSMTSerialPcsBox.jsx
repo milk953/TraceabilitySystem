@@ -331,10 +331,13 @@ function fn_ScanSMTSerialPcsBox() {
     await axios.get("/api/Common/GetProductData").then(async (res) => {
       let data = res.data.flat();
       setddlProduct(data);
-      setselectddlProduct((prevState) => ({
-        ...prevState,
-        value: data[0].prd_name,
-      }));
+      console.log("Product Data:", data);
+      document.getElementById("ddlProduct").value = data[0].prd_name;
+
+      // setselectddlProduct((prevState) => ({
+      //   ...prevState,
+      //   value: data[0].prd_name,
+      // }));
       // await getProductSerialMaster(data[0].prd_name);
     });
   };
@@ -433,6 +436,8 @@ function fn_ScanSMTSerialPcsBox() {
 
   const txtLot_TextChanged = async () => {
     const txtLot = document.getElementById("txtLot").value;
+    const selectddlProduct = document.getElementById("ddlProduct").value;
+
     if (txtLot !== "") {
       let _strPrdName = "";
       let _strLot = "";
@@ -440,7 +445,7 @@ function fn_ScanSMTSerialPcsBox() {
 
       if (_strLotAll.length > 2) {
         _strLot = _strLotAll[0];
-        _strPrdName = selectddlProduct.value;
+        _strPrdName = selectddlProduct;
         setHfTestResultFlag("Y");
         if (_strLot.length == parseInt(hfLotLength, 10)) {
           await axios
@@ -487,10 +492,12 @@ function fn_ScanSMTSerialPcsBox() {
               (item) => item.prd_name === _strPrdName
             );
             if (isInArray) {
-              setselectddlProduct((prevState) => ({
-                ...prevState,
-                value: _strPrdName,
-              }));
+              document.getElementById("ddlProduct").value = _strPrdName;
+
+              // setselectddlProduct((prevState) => ({
+              //   ...prevState,
+              //   value: _strPrdName,
+              // }));
               await axios
                 .post("/api/Common/GetFinalGateMasterCheckResult", {
                   strProduct: _strLot,
@@ -540,7 +547,8 @@ function fn_ScanSMTSerialPcsBox() {
                 _strPrdName.substring(0, intProduct) +
                 _strPrdName.substring(intProduct + 1, intProduct + 11).trim();
               try {
-                setselectddlProduct(_strPrdName);
+                // setselectddlProduct(_strPrdName);
+                document.getElementById("ddlProduct").value = _strPrdName;
                 await axios
                   .post("/api/Common/GetFinalGateMasterCheckResult", {
                     strProduct: _strLot,
@@ -619,7 +627,9 @@ function fn_ScanSMTSerialPcsBox() {
 
   const ibtBack_Click = () => {
     setdis_ddlProduct(false);
-    setselectddlProduct((prevState) => ({ value: ddlProduct[0].prd_name }));
+    // setselectddlProduct((prevState) => ({ value: ddlProduct[0].prd_name }));
+    document.getElementById("ddlProduct").value = ddlProduct[0].prd_name;
+
     settxtPcsTray((prevState) => ({
       ...prevState,
       value: "",
@@ -716,8 +726,10 @@ function fn_ScanSMTSerialPcsBox() {
     }
   };
 
-  const ddlProduct_SelectedIndexChanged = async (selectvalue) => {
-    setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
+  const ddlProduct_SelectedIndexChanged = async () => {
+    const selectddlProduct = document.getElementById("ddlProduct").value;
+    console.log("Selected Product:", selectddlProduct);
+    // setselectddlProduct((prevState) => ({ ...prevState, value: selectvalue }));
     let GetFinalGateMasterCheckResult = "";
     if (lblLot.value !== "") {
       await axios
@@ -752,6 +764,8 @@ function fn_ScanSMTSerialPcsBox() {
 
   const txtBox_TextChanged = async () => {
     const txtBox = document.getElementById("txtBox").value;
+    const selectddlProduct = document.getElementById("ddlProduct").value;
+
     if (txtBox.trim() !== "") {
       let _strBoxNo;
       let _strItem;
@@ -767,7 +781,7 @@ function fn_ScanSMTSerialPcsBox() {
         _strBoxNo = _strBox[1];
         await axios
           .post("/api/Common/GetBoxCount", {
-            prdName: selectddlProduct.value,
+            prdName: selectddlProduct,
             boxNo: _strBoxNo,
           })
           .then((res) => {
@@ -786,7 +800,7 @@ function fn_ScanSMTSerialPcsBox() {
         _strBoxNo = txtBox.toUpperCase();
         await axios
           .post("/api/Common/GetBoxCount", {
-            prdName: selectddlProduct.value,
+            prdName: selectddlProduct,
             boxNo: _strBoxNo,
           })
           .then((res) => {
@@ -810,7 +824,7 @@ function fn_ScanSMTSerialPcsBox() {
         setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));
         await axios
           .post("/api/Common/GetCountTrayByBoxPacking", {
-            prdName: selectddlProduct.value,
+            prdName: selectddlProduct,
             boxNo: _strBoxNo,
             srtPack: "",
           })
@@ -853,6 +867,8 @@ function fn_ScanSMTSerialPcsBox() {
 
   const txtPack_TextChanged = async () => {
     const txtPack = document.getElementById("txtPack").value;
+    const selectddlProduct = document.getElementById("ddlProduct").value;
+
     if (txtPack.toUpperCase() !== "") {
       let _dtTrayCount = [];
       setlblBoxTotal((prevState) => ({ ...prevState, value: "0" }));
@@ -863,7 +879,7 @@ function fn_ScanSMTSerialPcsBox() {
       }));
       await axios
         .post("/api/Common/GetCountTrayByBoxPacking", {
-          prdName: selectddlProduct.value,
+          prdName: selectddlProduct,
           boxNo: lblBox.value,
           srtPack: txtPack.toUpperCase(),
         })
@@ -905,7 +921,8 @@ function fn_ScanSMTSerialPcsBox() {
   };
 
   const txtOP_TextChanged = () => {
-    let OP = txtOP.value.trim().toUpperCase(); // ตัดช่องว่างและแปลงเป็นตัวพิมพ์ใหญ่
+    const txtOP = document.getElementById("txtOP").value;
+    let OP = txtOP.trim().toUpperCase(); // ตัดช่องว่างและแปลงเป็นตัวพิมพ์ใหญ่
     if (OP !== "") {
       if (hfOP !== "") {
         let strOPData = lblOP.value.trim().toUpperCase().split(","); // แยกข้อความที่มีอยู่ใน lblOP ด้วยเครื่องหมายจุลภาค
@@ -922,17 +939,17 @@ function fn_ScanSMTSerialPcsBox() {
           if (strOPData.length === parseInt(hfOP, 10)) {
             setlblOP((prevState) => ({
               ...prevState,
-              value: lblOP.value + txtOP.value,
+              value: lblOP.value + txtOP,
             }));
             settxtOP((prevState) => ({
               ...prevState,
-              value: lblOP.value + txtOP.value,
+              value: lblOP.value + txtOP,
             }));
             SetMode("BOX");
           } else {
             setlblOP((prevState) => ({
               ...prevState,
-              value: lblOP.value + txtOP.value + ",",
+              value: lblOP.value + txtOP + ",",
             }));
             settxtOP((prevState) => ({ ...prevState, value: "" }));
             fntxtOP.current.focus();
@@ -1295,12 +1312,14 @@ function fn_ScanSMTSerialPcsBox() {
 
   const setSerialDataTray = async (txtSerial) => {
     const txtPack = document.getElementById("txtPack").value;
+    const selectddlProduct = document.getElementById("ddlProduct").value;
+
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     // await fetchData();
     try {
       let dtSerial = await getInputSerial(txtSerial);
       let _strLot = lblLot.value.trim().toUpperCase();
-      let _strPrdName = selectddlProduct.value;
+      let _strPrdName = selectddlProduct;
       let _strTray = " ";
       let _bolTrayError = false;
       let _bolError = false;
@@ -1859,7 +1878,7 @@ function fn_ScanSMTSerialPcsBox() {
                   await axios
                     .post("/api/Common/GetEFPCSheetInspectionResult", {
                       _strPlantCode: FAC,
-                      _strProduct: selectddlProduct.value,
+                      _strProduct: selectddlProduct,
                       _strFrontSheetNo: dtSerial[drRow].FRONT_SHEET_NO,
                       _strBackSheetNo: dtSerial[drRow].BACK_SHEET_NO,
                       _intPcsNo: parseInt(dtSerial[drRow].SHEET_PCS_NO),
@@ -2192,7 +2211,7 @@ function fn_ScanSMTSerialPcsBox() {
       setlblBoxFull((prevState) => ({ ...prevState, value: "0" }));
       await axios
         .post("/api/Common/GetBoxCount", {
-          prdName: selectddlProduct.value,
+          prdName: selectddlProduct,
           boxNo: lblBox.value,
         })
         .then((res) => {
@@ -2207,7 +2226,7 @@ function fn_ScanSMTSerialPcsBox() {
       // setlblPackingTotal((prevState) => ({ ...prevState, value: "0" }));
       await axios
         .post("/api/Common/GetCountTrayByBoxPacking", {
-          prdName: selectddlProduct.value,
+          prdName: selectddlProduct,
           boxNo: lblBox.value,
           srtPack: txtPack,
         })
@@ -2260,6 +2279,7 @@ function fn_ScanSMTSerialPcsBox() {
 
   const getInputSerial = async (txtSerial) => {
     const txtPack = document.getElementById("txtPack").value;
+    const selectddlProduct = document.getElementById("ddlProduct").value;
 
     let dtData = [];
     let intRow = 0;
@@ -2290,7 +2310,7 @@ function fn_ScanSMTSerialPcsBox() {
         SHEET_PCS_NO: 0,
         ROLL_LEAF_NO: "",
         MACHINE: txtMachine.value.trim().toUpperCase(),
-        PRODUCT: selectddlProduct.value,
+        PRODUCT: selectddlProduct,
         LOT: lblLot.value,
         DATA_TYPE: "PCS",
       });
@@ -2449,7 +2469,8 @@ function fn_ScanSMTSerialPcsBox() {
             ...prevState,
             value: dtProductSerial.slm_serial_count,
           }));
-          document.getElementById("txtPcsTray").value = dtProductSerial.slm_serial_count;
+          document.getElementById("txtPcsTray").value =
+            dtProductSerial.slm_serial_count;
         }
       });
     await axios
@@ -2491,7 +2512,8 @@ function fn_ScanSMTSerialPcsBox() {
             ...prevState,
             value: dtProductBox.SLM_SERIAL_COUNT,
           }));
-          document.getElementById("txtPcsTray").value = dtProductBox.SLM_SERIAL_COUNT;
+          document.getElementById("txtPcsTray").value =
+            dtProductBox.SLM_SERIAL_COUNT;
         } else {
           setpnlLog(true);
           setlblLog((prevState) => ({
