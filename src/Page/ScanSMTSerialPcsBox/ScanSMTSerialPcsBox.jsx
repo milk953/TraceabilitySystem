@@ -149,43 +149,26 @@ function ScanSMTSerialPcsBox() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
-                        <Autocomplete
+                        <select
                           id="ddlProduct"
-                          className="Select_dropDown"
-                          value={selectddlProduct.value}
+                          className="Select_dropDown2"
                           disabled={dis_ddlProduct}
-                          sx={{
-                            "& .MuiAutocomplete-root": {
-                              backgroundColor: dis_ddlProduct
-                                ? "#e0e0e0"
-                                : "inherit",
-                            },
-                            "& .MuiAutocomplete-inputRoot": {
-                              backgroundColor: dis_ddlProduct
-                                ? "#e0e0e0"
-                                : "inherit",
-                            },
-                            "& .MuiAutocomplete-input": {
-                              backgroundColor: dis_ddlProduct
-                                ? "#e0e0e0"
-                                : "inherit",
-                            },
-                            "& .MuiAutocomplete-inputDisabled": {
-                              backgroundColor: "#e0e0e0",
-                            },
-                          }}
-                          onChange={(e, value) =>
-                            ddlProduct_SelectedIndexChanged(value)
+                          onChange={(e) =>
+                            ddlProduct_SelectedIndexChanged(e.target.value)
                           }
-                          options={ddlProduct.map((item) => item.prd_name)}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              size="small"
-                              sx={{ textAlign: "left" }}
-                            />
-                          )}
-                        />
+                          style={{
+                            backgroundColor: dis_ddlProduct
+                              ? "#e0e0e0"
+                              : "inherit",
+                           
+                          }}
+                        >
+                          {ddlProduct.map((item) => (
+                            <option key={item.prd_id} value={item.prd_id}>
+                              {item.prd_name}
+                            </option>
+                          ))}
+                        </select>
                       </FormControl>
                     </TableCell>
                   </TableRow>
@@ -239,13 +222,13 @@ function ScanSMTSerialPcsBox() {
                             size="small"
                             id="txtOP"
                             inputRef={(el) => (fntxtOP.current = el)}
-                            value={txtOP.value}
-                            onChange={(e) => {
-                              settxtOP((prevState) => ({
-                                ...prevState,
-                                value: e.target.value,
-                              }));
-                            }}
+                            // value={txtOP.value}
+                            // onChange={(e) => {
+                            //   settxtOP((prevState) => ({
+                            //     ...prevState,
+                            //     value: e.target.value,
+                            //   }));
+                            // }}
                             style={{
                               backgroundColor: txtOP.disbled
                                 ? "#e0e0e0"
