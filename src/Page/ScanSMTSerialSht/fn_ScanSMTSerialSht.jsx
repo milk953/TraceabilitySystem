@@ -332,6 +332,8 @@ function fn_ScanSMTSerialSht() {
   const handleChangeProduct = async (value) => {
     //setselProduct(value);
     const selProduct = document.getElementById("ddlProduct").value;
+    const txtLotNo = document.getElementById("txtLot").value;
+
     await getProductSerialMaster(value);
     if (txtLotNo !== "") {
       setlblLog("");
@@ -637,7 +639,7 @@ function fn_ScanSMTSerialSht() {
 
   const setSerialData = async (txtgvSerial) => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
-    const txtLotNo = document.getElementById("txtLot") ? document.getElementById("txtLot").value : "";
+    const txtLotNo = document.getElementById("txtLot").value;
     const txtRollLeaf = document.getElementById("txtRollLeaf") ? document.getElementById("txtRollLeaf").value : "";
     const txtMachineNo = document.getElementById("txtMachineNo") ? document.getElementById("txtMachineNo").value : "";
     const dtSerial = await getInputSerial(txtgvSerial);
