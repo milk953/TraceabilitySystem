@@ -84,14 +84,14 @@ function ScanSMTSerialSht() {
                                             size="small"
                                             inputRef={inputLot}
                                             fullWidth
-                                            value={txtLotNo.trim()}
+                                            // value={txtLotNo.trim()}
                                             disabled={txtLotDisabled}
                                             style={{
                                                 backgroundColor: txtLotDisabled ? "#e0e0e0" : "inherit",
                                             }}
-                                            onChange={(e) => {
-                                                settxtLotNo(e.target.value);
-                                            }}
+                                            // onChange={(e) => {
+                                            //     settxtLotNo(e.target.value);
+                                            // }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     handleChangeLot();
@@ -113,15 +113,15 @@ function ScanSMTSerialSht() {
                                     </TableCell>
                                     <TableCell colSpan={2}>
                                         <FormControl fullWidth>
-                                            <Autocomplete
+                                            {/* <Autocomplete
                                                 id="ddlProduct"
                                                 className="Select_dropDown"
                                                 disabled={selProDisabled}
                                                 style={{
                                                     backgroundColor: selProDisabled ? "#e0e0e0" : "inherit",
                                                 }}
-                                                value={selProduct}
-                                                onChange={(e, value) => handleChangeProduct(value)}
+                                                //value={selProduct}
+                                                //onChange={(e, value) => handleChangeProduct(value)}
                                                 options={Productdata.map((item) => item.prd_name)}
                                                 renderInput={(params) => (
                                                     <TextField
@@ -131,7 +131,27 @@ function ScanSMTSerialSht() {
                                                         sx={{ textAlign: "left" }}
                                                     />
                                                 )}
-                                            />
+                                            /> */}
+                                            <select
+                                                id="ddlProduct"
+                                                className="Select_dropDown2"
+                                                disabled={selProDisabled}
+                                                style={{
+                                                    width: "98%",
+                                                    backgroundColor: selProDisabled
+                                                        ? "#e0e0e0"
+                                                        : "inherit",
+                                                }}
+                                                onChange={(e, value) =>
+                                                    handleChangeProduct(value)
+                                                }
+                                            >
+                                                {Productdata.map((item, index) => (
+                                                    <option key={index} value={item.prd_name}>
+                                                        {item.prd_name}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </FormControl>
                                     </TableCell>
                                 </TableRow>
@@ -145,10 +165,10 @@ function ScanSMTSerialSht() {
                                             className="input_txt"
                                             size="small"
                                             fullWidth
-                                            value={txtLotRef}
-                                            onChange={(e) => {
-                                                settxtLotRef(e.target.value);
-                                            }}
+                                            // value={txtLotRef}
+                                            // onChange={(e) => {
+                                            //     settxtLotRef(e.target.value);
+                                            // }}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter") {
                                                     handleChangeLotRef();
@@ -186,14 +206,14 @@ function ScanSMTSerialSht() {
                                                     size="small"
                                                     inputRef={inputRollLeaf}
                                                     fullWidth
-                                                    value={txtRollLeaf}
+                                                    //value={txtRollLeaf}
                                                     disabled={txtRollLeafDisabled}
                                                     style={{
                                                         backgroundColor: txtRollLeafDisabled ? "#e0e0e0" : "inherit",
                                                     }}
-                                                    onChange={(e) => {
-                                                        settxtRollLeaf(e.target.value);
-                                                    }}
+                                                    // onChange={(e) => {
+                                                    //     settxtRollLeaf(e.target.value);
+                                                    // }}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
                                                             handleChangeRollLeaf();
@@ -233,10 +253,10 @@ function ScanSMTSerialSht() {
                                                 size="small"
                                                 inputRef={inputMachineNo}
                                                 fullWidth
-                                                value={txtMachineNo}
-                                                onChange={(e) => {
-                                                    settxtMachineNo(e.target.value);
-                                                }}
+                                                // value={txtMachineNo}
+                                                // onChange={(e) => {
+                                                //     settxtMachineNo(e.target.value);
+                                                // }}
                                                 onKeyDown={(e) => {
                                                     if (e.key === "Enter") {
                                                         handleChangeMachine();
@@ -281,7 +301,7 @@ function ScanSMTSerialSht() {
                                                             id="txtSideBack"
                                                             size="small"
                                                             fullWidth
-                                                            value={txtSideBack[index] || ""}
+                                                            //value={txtSideBack[index] || ""}
                                                             inputRef={el => inputSideBack.current[index] = el}
                                                             onChange={(e) => {
                                                                 handleChangegvBackSide(index, e);
@@ -362,10 +382,10 @@ function ScanSMTSerialSht() {
                                                     id="txtBoardNoB"
                                                     size="small"
                                                     fullWidth
-                                                    value={txtBoardNoB}
-                                                    onChange={(e) => {
-                                                        settxtBoardNoB(e.target.value);
-                                                    }}
+                                                    // value={txtBoardNoB}
+                                                    // onChange={(e) => {
+                                                    //     settxtBoardNoB(e.target.value);
+                                                    // }}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
                                                             handleChangeBoardNoB();
@@ -386,10 +406,10 @@ function ScanSMTSerialSht() {
                                                     id="txtBoardNoF"
                                                     size="small"
                                                     fullWidth
-                                                    value={txtBoardNoF}
-                                                    onChange={(e) => {
-                                                        settxtBoardNoF(e.target.value);
-                                                    }}
+                                                    // value={txtBoardNoF}
+                                                    // onChange={(e) => {
+                                                    //     settxtBoardNoF(e.target.value);
+                                                    // }}
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
                                                             handleChangeBoardNoF();
@@ -529,7 +549,7 @@ function ScanSMTSerialSht() {
                                         id="btnSave"
                                         type="primary"
                                         onClick={() => {
-                                            settxtgvSerial(data);
+                                            //settxtgvSerial(data);
                                             btnSaveClick(data);
                                         }}
                                     >
