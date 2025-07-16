@@ -72,11 +72,11 @@ function ScanAVIConfirmResult() {
                   </TableCell>
                   <TableCell colSpan={2}>
                     <FormControl fullWidth>
-                      <Autocomplete
+                      {/* <Autocomplete
                         id="ddlProduct"
                         size="small"
                         className="Select_dropDown"
-                        value={ddlProduct.value}
+                        // value={ddlProduct.value}
                         onChange={(e, value) =>
                           ddlProduct_SelectedIndexChanged(value)
                         }
@@ -88,7 +88,21 @@ function ScanAVIConfirmResult() {
                             sx={{ textAlign: "left" }}
                           />
                         )}
-                      />
+                      /> */}
+                      <select
+                        id="ddlProduct"
+                        className="Select_dropDown"
+                        style={{ width: "100%", height: "32px" }}
+                        onChange={(e, value) =>
+                          ddlProduct_SelectedIndexChanged(value)
+                        }
+                      >
+                        {Product.map((item, index) => (
+                          <option key={index} value={item.prd_name}>
+                            {item.prd_name}
+                          </option>
+                        ))}
+                      </select>
                     </FormControl>
                   </TableCell>
                 </TableRow>
@@ -98,11 +112,11 @@ function ScanAVIConfirmResult() {
                   </TableCell>
                   <TableCell colSpan={2}>
                     <FormControl fullWidth>
-                      <Autocomplete
-                      id="ddlTestType"
+                      {/* <Autocomplete
+                        id="ddlTestType"
                         size="small"
                         className="Select_dropDown"
-                        value={ddlTestType.value}
+                        // value={ddlTestType.value}
                         style={{ width: "60%" }}
                         onChange={(e, value) =>
                           ddlTestType_SelectedIndexChanged(value)
@@ -115,7 +129,21 @@ function ScanAVIConfirmResult() {
                             sx={{ textAlign: "left" }}
                           />
                         )}
-                      />
+                      /> */}
+                      <select
+                        id="ddlTestType"
+                        className="Select_dropDown"
+                        style={{ width: "60%", height: "32px" }}
+                        onChange={(e, value) =>
+                          ddlTestType_SelectedIndexChanged(value)
+                        }
+                      >
+                        {TestType.map((item, index) => (
+                          <option key={index} value={item.test_type}>
+                            {item.test_type}
+                          </option>
+                        ))}
+                      </select>
                     </FormControl>
                   </TableCell>
                 </TableRow>
@@ -125,7 +153,7 @@ function ScanAVIConfirmResult() {
                     <Typography>Serial Barcode :</Typography>
                   </TableCell>
                   <TableCell colSpan={2}>
-                    <TextField
+                    {/* <TextField
                       id="txtSerialBarcode"
                       inputRef={reftxtSerialBarcode}
                       className="input_txt"
@@ -134,19 +162,38 @@ function ScanAVIConfirmResult() {
                       autoComplete="off"
                       disabled={txtSerialBarcode.disbled}
                       style={txtSerialBarcode.style}
-                      value={txtSerialBarcode.value}
-                      onChange={(e) => {
-                        setTxtSerialBarcode((prevState) => ({
-                          ...prevState,
-                          value: e.target.value.trim().toLocaleUpperCase(),
-                        }));
+                      // value={txtSerialBarcode.value}
+                      // onChange={(e) => {
+                      //   setTxtSerialBarcode((prevState) => ({
+                      //     ...prevState,
+                      //     value: e.target.value.trim().toLocaleUpperCase(),
+                      //   }));
+                      // }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          txtSerialBarcode_TextChanged();
+                        }
+                      }}
+                    ></TextField> */}
+                    <input
+                      id="txtSerialBarcode"
+                      ref={reftxtSerialBarcode}
+                      className="input_txt"
+                      type="text"
+                      autoComplete="off"
+                      disabled={txtSerialBarcode.disbled}
+                      style={{
+                        width: "96%",
+                        height: "22px",
+                        padding: "4px 8px",
+                        ...txtSerialBarcode.style,
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           txtSerialBarcode_TextChanged();
                         }
                       }}
-                    ></TextField>
+                    />
                   </TableCell>
                 </TableRow>
                 {lblNo.value !== "" && (

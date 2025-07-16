@@ -102,10 +102,11 @@ function fn_ScanAVIConfirmResult() {
             let data = res.data;
             p_name = data[0].prd_name;
             setProduct(data);
-            setDdlProduct((prevState) => ({
-              ...prevState,
-              value: data[0].prd_name,
-            }));
+            // setDdlProduct((prevState) => ({
+            //   ...prevState,
+            //   value: data[0].prd_name,
+            // }));
+            document.getElementById("ddlProduct").value = data[0].prd_name;
           });
       };
       const GetTestTypeAVIResultConfirm = async () => {
@@ -119,59 +120,68 @@ function fn_ScanAVIConfirmResult() {
           .then((res) => {
             let data = res.data;
             setTestType(data);
-            setDdlTestType((prevState) => ({
-              ...prevState,
-              value: data[0].test_type,
-            }));
+            // setDdlTestType((prevState) => ({
+            //   ...prevState,
+            //   value: data[0].test_type,
+            // }));
+            document.getElementById("ddlTestType").value = data[0].test_type;
           });
       };
       await GetProductDataAVIResultConfirm();
       await GetTestTypeAVIResultConfirm();
-       fnSetFocus(reftxtSerialBarcode);
+      fnSetFocus(reftxtSerialBarcode);
     };
     fetchData();
   }, [plantCode]);
 
   const ddlProduct_SelectedIndexChanged = async () => {
+    let ddlTestType;
+    const ddlProduct = document.getElementById("ddlProduct").value;
     await axios
       .post("/api/GetTestTypeAVIResultConfirm", {
         dataList: {
           strplantcode: plantCode,
-          strprdname: ddlProduct.value,
+          strprdname: ddlProduct,
         },
       })
       .then((res) => {
         let data = res.data;
         setTestType(data);
-        setDdlTestType((prevState) => ({
-          ...prevState,
-          value: data[0].test_type,
-        }));
+        setTimeout(() => {
+          document.getElementById("ddlTestType").value = data[0].test_type;
+        }, 0);
+        ddlTestType = data[0].test_type;
       });
-    await ClearResult(ddlProduct.value, ddlTestType.value);
+
+    await ClearResult(ddlProduct, ddlTestType);
   };
   const ddlTestType_SelectedIndexChanged = async () => {
-    await ClearResult(ddlProduct.value, ddlTestType.value);
+    const ddlProduct = document.getElementById("ddlProduct").value;
+    const ddlTestType = document.getElementById("ddlTestType").value;
+    await ClearResult(ddlProduct, ddlTestType);
   };
 
   const txtSerialBarcode_TextChanged = async () => {
-    if (txtSerialBarcode.value.trim().length > 0) {
+    const ddlProduct = document.getElementById("ddlProduct").value;
+    const ddlTestType = document.getElementById("ddlTestType").value;
+    const txtSerialBarcode = document.getElementById("txtSerialBarcode").value;
+    if (txtSerialBarcode.trim().length > 0) {
       const strSerial = await axios.post("/api/GetSerialNoByVendorBarcode", {
         dataList: {
           strplant_code: plantCode,
-          strbarcode: txtSerialBarcode.value.toUpperCase().trim(),
+          strbarcode: txtSerialBarcode.toUpperCase().trim(),
           strbarcodetype: hfBarcodeType.value,
         },
       });
       const dtResult = await axios.post("/api/GetAVIResultConfirmSerial", {
         dataList: {
           strplant_code: plantCode,
-          strprdname: ddlProduct.value,
+          strprdname: ddlProduct,
           strserialno: strSerial.data[0].serial_no,
           strserialokcolor: hfOKColor.value,
           strserialngcolor: hfNGColor.value,
           strserialerror: hfSerialError.value,
-          strtesttype: ddlTestType.value,
+          strtesttype: ddlTestType,
         },
       });
       if (hfBarcodeType.value === "TSIP" || hfBarcodeType.value === "DSIP") {
@@ -195,7 +205,7 @@ function fn_ScanAVIConfirmResult() {
 
         setLblNo((prevState) => ({
           ...prevState,
-          value: txtSerialBarcode.value.toUpperCase().trim(),
+          value: txtSerialBarcode.toUpperCase().trim(),
         }));
         await showResult(dtResult.data);
         await DataTable(dtResult.data);
@@ -207,10 +217,10 @@ function fn_ScanAVIConfirmResult() {
       value: "",
     }));
 
-    if (txtSerialBarcode.value.trim().length <= 0) {
+    if (txtSerialBarcode.trim().length <= 0) {
       setLblNo((prevState) => ({
         ...prevState,
-        value: txtSerialBarcode.value.toUpperCase().trim(),
+        value: txtSerialBarcode.toUpperCase().trim(),
       }));
       setShowtableRow((prevState) => ({
         ...prevState,
@@ -218,10 +228,12 @@ function fn_ScanAVIConfirmResult() {
       }));
     }
 
-     fnSetFocus(reftxtSerialBarcode);
+    fnSetFocus(reftxtSerialBarcode);
   };
 
   const ClearResult = async (strProduct, strTestType) => {
+    const ddlProduct = document.getElementById("ddlProduct").value;
+    console.log("strTestType", strTestType);
     let dtResult = [];
     await axios
       .post("/api/GetAVIResultConfirmDefault", {
@@ -240,12 +252,12 @@ function fn_ScanAVIConfirmResult() {
       drRow.type_color = hfDefaultColor.value;
     }
     await showResult(dtResult);
-    if (ddlProduct.value.length > 0) {
+    if (ddlProduct.length > 0) {
       setTxtSerialBarcode((prevState) => ({
         ...prevState,
         disbled: false,
       }));
-       fnSetFocus(reftxtSerialBarcode);
+      fnSetFocus(reftxtSerialBarcode);
     } else {
       setTxtSerialBarcode((prevState) => ({
         ...prevState,
@@ -384,7 +396,7 @@ function fn_ScanAVIConfirmResult() {
   //   }, 0);
   // }
 
-    const fnSetFocus = (ref, index = null) => {
+  const fnSetFocus = (ref, index = null) => {
     setTimeout(() => {
       if (index !== null && Array.isArray(ref.current)) {
         ref.current[index]?.focus();
