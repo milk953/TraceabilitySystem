@@ -915,7 +915,8 @@ function fn_ScanSMTSerialPcsBox() {
   };
 
   const txtMachine_TextChanged = async () => {
-    if (txtMachine.value.trim().toUpperCase()) {
+    const txtMachine = document.getElementById("txtMachine").value;
+    if (txtMachine.trim().toUpperCase()) {
       SetMode("OP");
     }
   };
@@ -941,17 +942,20 @@ function fn_ScanSMTSerialPcsBox() {
               ...prevState,
               value: lblOP.value + txtOP,
             }));
-            settxtOP((prevState) => ({
-              ...prevState,
-              value: lblOP.value + txtOP,
-            }));
+            // settxtOP((prevState) => ({
+            //   ...prevState,
+            //   value: lblOP.value + txtOP,
+            // }));
+            document.getElementById("txtOP").value = lblOP.value + txtOP;
             SetMode("BOX");
           } else {
             setlblOP((prevState) => ({
               ...prevState,
               value: lblOP.value + txtOP + ",",
             }));
-            settxtOP((prevState) => ({ ...prevState, value: "" }));
+            // settxtOP((prevState) => ({ ...prevState, value: "" }));
+            document.getElementById("txtOP").value = "";
+
             fntxtOP.current.focus();
           }
         }
@@ -968,7 +972,8 @@ function fn_ScanSMTSerialPcsBox() {
 
   const ibtOPBack_Click = () => {
     SetMode("OP");
-    settxtOP((prevState) => ({ ...prevState, value: "" }));
+    // settxtOP((prevState) => ({ ...prevState, value: "" }));
+    document.getElementById("txtOP").value = "";
     setpnlgvScanResult(false);
   };
 
@@ -1008,8 +1013,10 @@ function fn_ScanSMTSerialPcsBox() {
         seibtPack(false);
         setpnlLog(false);
         setpnlSerial(false);
-        settxtMachine((prevState) => ({ ...prevState, value: "" }));
-        settxtOP((prevState) => ({ ...prevState, value: "" }));
+        // settxtMachine((prevState) => ({ ...prevState, value: "" }));
+        document.getElementById("txtMachine").value = "";
+        // settxtOP((prevState) => ({ ...prevState, value: "" }));
+        document.getElementById("txtOP").value = "";
         setlblOP((prevState) => ({ ...prevState, value: "" }));
         setibtMachineBack(false);
         setibtOPBack(false);
@@ -1047,8 +1054,10 @@ function fn_ScanSMTSerialPcsBox() {
         setpnlLog(true);
         setpnlSerial(false);
         setHfMode("LOT");
-        settxtMachine((prevState) => ({ ...prevState, value: "" }));
-        settxtOP((prevState) => ({ ...prevState, value: "" }));
+        // settxtMachine((prevState) => ({ ...prevState, value: "" }));
+         document.getElementById("txtMachine").value = "";
+        // settxtOP((prevState) => ({ ...prevState, value: "" }));
+        document.getElementById("txtOP").value = "";
         setlblOP((prevState) => ({ ...prevState, value: "" }));
         setibtMachineBack(false);
         setibtOPBack(false);
@@ -1084,10 +1093,12 @@ function fn_ScanSMTSerialPcsBox() {
         setpnlOP(false);
         settxtMachine((prevState) => ({
           ...prevState,
-          value: "",
+          // value: "",
           disbled: false,
         }));
-        settxtOP((prevState) => ({ ...prevState, value: "", disbled: true }));
+         document.getElementById("txtMachine").value = "";
+        settxtOP((prevState) => ({ ...prevState, disbled: true }));
+        document.getElementById("txtOP").value = "";
         setlblOP((prevState) => ({ ...prevState, value: "" }));
         setibtMachineBack(true);
         setibtOPBack(false);
@@ -1114,7 +1125,6 @@ function fn_ScanSMTSerialPcsBox() {
         seibtPack(false);
         setpnlLog(false);
         setpnlSerial(false);
-
         setpnlOP(true);
         settxtMachine((prevState) => ({ ...prevState, disbled: true }));
         settxtOP((prevState) => ({ ...prevState, disbled: false }));
@@ -1313,6 +1323,8 @@ function fn_ScanSMTSerialPcsBox() {
   const setSerialDataTray = async (txtSerial) => {
     const txtPack = document.getElementById("txtPack").value;
     const selectddlProduct = document.getElementById("ddlProduct").value;
+    const txtOP = document.getElementById("txtOP") ? document.getElementById("txtOP").value : "";
+
 
     showLoading("กำลังบันทึก กรุณารอสักครู่");
     // await fetchData();
@@ -2155,7 +2167,7 @@ function fn_ScanSMTSerialPcsBox() {
                   await axios
                     .post("/api/Common/setSerialRecordTimeTrayTable", {
                       dataList: {
-                        strUserID: txtOP.value,
+                        strUserID: txtOP,
                         strProgram: "ScanSMTSerialPcsBox",
                         strPlantCode: FAC,
                         strStation: hfUserStation,
@@ -2280,6 +2292,9 @@ function fn_ScanSMTSerialPcsBox() {
   const getInputSerial = async (txtSerial) => {
     const txtPack = document.getElementById("txtPack").value;
     const selectddlProduct = document.getElementById("ddlProduct").value;
+    // const txtMachine = document.getElementById("txtMachine").value;
+    const txtMachine = document.getElementById("txtMachine") ? document.getElementById("txtMachine").value : "";
+
 
     let dtData = [];
     let intRow = 0;
@@ -2309,7 +2324,7 @@ function fn_ScanSMTSerialPcsBox() {
         BACK_SHEET_NO: "",
         SHEET_PCS_NO: 0,
         ROLL_LEAF_NO: "",
-        MACHINE: txtMachine.value.trim().toUpperCase(),
+        MACHINE: txtMachine.trim().toUpperCase(),
         PRODUCT: selectddlProduct,
         LOT: lblLot.value,
         DATA_TYPE: "PCS",

@@ -160,7 +160,6 @@ function ScanSMTSerialPcsBox() {
                             backgroundColor: dis_ddlProduct
                               ? "#e0e0e0"
                               : "inherit",
-                           
                           }}
                         >
                           {ddlProduct.map((item) => (
@@ -184,13 +183,13 @@ function ScanSMTSerialPcsBox() {
                             size="small"
                             id="txtMachine"
                             inputRef={(el) => (fntxtMachine.current = el)}
-                            value={txtMachine.value}
-                            onChange={(e) => {
-                              settxtMachine((prevState) => ({
-                                ...prevState,
-                                value: e.target.value,
-                              }));
-                            }}
+                            // value={txtMachine.value}
+                            // onChange={(e) => {
+                            //   settxtMachine((prevState) => ({
+                            //     ...prevState,
+                            //     value: e.target.value,
+                            //   }));
+                            // }}
                             style={{
                               backgroundColor: txtMachine.disbled
                                 ? "#e0e0e0"
@@ -383,7 +382,10 @@ function ScanSMTSerialPcsBox() {
                           }
                         }}
                       ></TextField>
-                      &nbsp; <p style={{ margin: 0 }}>{lblLastTray.value}</p>
+                      &nbsp;{" "}
+                      <p id="lblLastTray" style={{ margin: 0 }}>
+                        {lblLastTray.value}
+                      </p>
                       {/* &nbsp; 
                       {lblLastTray.value} */}
                     </TableCell>
