@@ -153,7 +153,7 @@ function ScanSMTRoollSht() {
                     </TableCell>
                     <TableCell colSpan={4}>
                       <FormControl fullWidth>
-                        <Autocomplete
+                        {/* <Autocomplete
                           className="Select_dropDown"
                           // inputRef={fc_SlProduct}
                           id="ddlProduct"
@@ -191,7 +191,26 @@ function ScanSMTRoollSht() {
                               sx={{ textAlign: "left" }}
                             />
                           )}
-                        />
+                        /> */}
+                         <select
+                          id="ddlProduct"
+                          className="Select_dropDown2"
+                          disabled={dis_ddlProduct}
+                          onChange={(e) =>
+                            ddlProduct_SelectedIndexChanged(e.target.value)
+                          }
+                          style={{
+                            backgroundColor: dis_ddlProduct
+                              ? "#e0e0e0"
+                              : "inherit",
+                          }}
+                        >
+                          {ddlProduct.map((item) => (
+                            <option key={item.prd_id} value={item.prd_id}>
+                              {item.prd_name}
+                            </option>
+                          ))}
+                        </select>
                       </FormControl>
                     </TableCell>
                   </TableRow>
@@ -207,13 +226,13 @@ function ScanSMTRoollSht() {
                             size="small"
                             inputRef={(el) => (fntxtMachine.current = el)}
                             id="txtMachine"
-                            value={txtMachine.value}
-                            onChange={(e) => {
-                              settxtMachine((prevState) => ({
-                                ...prevState,
-                                value: e.target.value,
-                              }));
-                            }}
+                            // value={txtMachine.value}
+                            // onChange={(e) => {
+                            //   settxtMachine((prevState) => ({
+                            //     ...prevState,
+                            //     value: e.target.value,
+                            //   }));
+                            // }}
                             style={{
                               backgroundColor: txtMachine.disbled
                                 ? "#e0e0e0"
@@ -247,13 +266,13 @@ function ScanSMTRoollSht() {
                             size="small"
                             id="txtOP"
                             inputRef={(el) => (fntxtOP.current = el)}
-                            value={txtOP.value}
-                            onChange={(e) => {
-                              settxtOP((prevState) => ({
-                                ...prevState,
-                                value: e.target.value,
-                              }));
-                            }}
+                            // value={txtOP.value}
+                            // onChange={(e) => {
+                            //   settxtOP((prevState) => ({
+                            //     ...prevState,
+                            //     value: e.target.value,
+                            //   }));
+                            // }}
                             style={{
                               backgroundColor: txtOP.disbled
                                 ? "#e0e0e0"

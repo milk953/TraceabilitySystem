@@ -164,12 +164,14 @@ function fn_ScanSMTSerialSht() {
     axios.get("/api/Common/GetProductData").then((res) => {
       let data = res.data.flat();
       setProductdata(data);
-      setselProduct(data[0].prd_name);
+      //setselProduct(data[0].prd_name);
+      document.getElementById("ddlProduct").value = data[0].prd_name;
       getProductSerialMaster(data[0].prd_name);
     });
   };
 
   const handleChangeLot = async () => {
+    const txtLotNo = document.getElementById("txtLot").value;
     let strLot = "";
     let strPrdName = "";
     let dtLotData = [];
@@ -195,12 +197,15 @@ function fn_ScanSMTSerialSht() {
       if (strPrdName !== "") {
         setlblLog("");
         setpnlLog(false);
-        settxtLotNo(strLot);
-        settxtLotRef(strLot);
+        // settxtLotNo(strLot);
+        document.getElementById("txtLot").value = strLot;
+        //settxtLotRef(strLot);
+        document.getElementById("txtLotRef").value = strLot;
         await getCountDataBylot(strLot);
         let dt = "";
         try {
-          setselProduct(strPrdName);
+          //setselProduct(strPrdName);
+          document.getElementById("ddlProduct").value = strPrdName;
           await axios.post("/api/Common/getconnectshtmastercheckresult", {
             strProduct: strPrdName,
           })
@@ -213,7 +218,8 @@ function fn_ScanSMTSerialSht() {
             await getInitialSheet(datagetPd.slm_sht_scan);
             if (datagetPd.prm_conn_roll_sht_flg === "Y") {
               setpnlRollLeaf(true);
-              settxtRollLeaf("");
+              //settxtRollLeaf("");
+              document.getElementById("txtRollLeaf").value = "";
               setTimeout(() => {
                 inputRollLeaf.current.focus();
               }, 0);
@@ -231,8 +237,10 @@ function fn_ScanSMTSerialSht() {
               }
             }
           } else {
-            setselProduct(Productdata[0].prd_name);
-            settxtLotNo("");
+            //setselProduct(Productdata[0].prd_name);
+            document.getElementById("ddlProduct").value = Productdata[0].prd_name;
+            // settxtLotNo("");
+            document.getElementById("txtLot").value = "";
             setgvSerialData([]);
             setlblLog(`${strPrdName} not test master!  /  ${strPrdName} ยังไม่ทดสอบมาสเตอร์`);
             setpnlLog(true);
@@ -245,12 +253,14 @@ function fn_ScanSMTSerialSht() {
           if (intProduct > -1) {
             strPrdName = strPrdName.substring(0, intProduct) + strPrdName.substring(intProduct + 1, intProduct + 11).trim();
             try {
-              setselProduct(strPrdName);
+              //setselProduct(strPrdName);
+              document.getElementById("ddlProduct").value = strPrdName;
               const datagetPd = await getProductSerialMaster(strPrdName);
               await getInitialSheet(datagetPd.slm_sht_scan);
               if (datagetPd.prm_conn_roll_sht_flg === "Y") {
                 setpnlRollLeaf(true);
-                settxtRollLeaf("");
+                //settxtRollLeaf("");
+                document.getElementById("txtRollLeaf").value = "";
                 inputRollLeaf.current?.focus();
               } else {
                 SetMode("SERIAL");
@@ -275,8 +285,10 @@ function fn_ScanSMTSerialSht() {
           }
         }
       } else {
-        setselProduct(Productdata[0].prd_name);
-        settxtLotNo("");
+        //setselProduct(Productdata[0].prd_name);
+        document.getElementById("ddlProduct").value = Productdata[0].prd_name;
+        //settxtLotNo("");
+        document.getElementById("txtLot").value = "";
         setgvSerialData([]);
         setlblLog("Invalid lot no.");
         setpnlLog(true);
@@ -284,8 +296,10 @@ function fn_ScanSMTSerialSht() {
         inputLot.current.focus();
       }
     } else {
-      setselProduct(Productdata[0].prd_name);
-      settxtLotNo("");
+      //setselProduct(Productdata[0].prd_name);
+      document.getElementById("ddlProduct").value = Productdata[0].prd_name;
+      //settxtLotNo("");
+      document.getElementById("txtLot").value = "";
       setgvSerialData([]);
       setlblLog(`Please scan QR Code! / กรุณาสแกนที่คิวอาร์โค้ด`);
       setpnlLog(true);
@@ -295,15 +309,18 @@ function fn_ScanSMTSerialSht() {
   };
 
   const ibtBackClick = () => {
-    settxtLotNo("");
+    //settxtLotNo("");
+    document.getElementById("txtLot").value = "";
     settxtLotDisabled(false);
     setpnlSerial(false);
-    setselProduct(Productdata[0].prd_name);
+    //setselProduct(Productdata[0].prd_name);
+    document.getElementById("ddlProduct").value = Productdata[0].prd_name;
     SetMode("LOT");
     setTimeout(() => {
       inputLot.current.focus();
     }, 0);
-    settxtLotRef("");
+    //settxtLotRef("");
+    document.getElementById("txtLotRef").value = "";
     setlblTotalSht("");
     setlblTotalPcs("");
     setpnlRollLeaf(false);
@@ -313,7 +330,10 @@ function fn_ScanSMTSerialSht() {
   };
 
   const handleChangeProduct = async (value) => {
-    setselProduct(value);
+    //setselProduct(value);
+    const selProduct = document.getElementById("ddlProduct").value;
+    const txtLotNo = document.getElementById("txtLot").value;
+
     await getProductSerialMaster(value);
     if (txtLotNo !== "") {
       setlblLog("");
@@ -331,11 +351,13 @@ function fn_ScanSMTSerialSht() {
         await getInitialSheet(value);
         if (hfCheckRollSht === "Y") {
           setpnlRollLeaf(true);
-          settxtRollLeaf("");
+          //settxtRollLeaf("");
+          document.getElementById("txtRollLeaf").value = "";
           inputRollLeaf.current.focus();
         } else {
           SetMode("SERIAL");
-          settxtMachineNo("");
+          //settxtMachineNo("");
+          document.getElementById("txtMachineNo").value = "";
           if (hfReqMachine === "Y") {
             setpnlMachine(true);
             inputMachineNo.current.focus();
@@ -344,8 +366,10 @@ function fn_ScanSMTSerialSht() {
           }
         }
       } else {
-        setselProduct(Productdata[0].prd_name);
-        settxtLotNo("");
+        //setselProduct(Productdata[0].prd_name);
+        document.getElementById("ddlProduct").value = Productdata[0].prd_name;
+        //settxtLotNo("");
+        document.getElementById("txtLot").value = "";
         setgvSerialData([]);
         setlblLog(`${selProduct} not test master! /${selProduct} ยังไม่ทดสอบมาสเตอร์`);
         setpnlLog(true);
@@ -353,22 +377,27 @@ function fn_ScanSMTSerialSht() {
         inputLot.current.focus();
       }
     } else {
-      setselProduct(Productdata[0].prd_name);
+      //setselProduct(Productdata[0].prd_name);
+      document.getElementById("ddlProduct").value = Productdata[0].prd_name;
       SetMode("LOT");
     }
   };
 
   const handleChangeLotRef = () => {
     if (txtLotRef !== "") {
+      const txtLotRef = document.getElementById("txtLotRef").value;
       const strLotData = txtLotRef.toUpperCase().trim().split(";");
-      settxtLotRef(strLotData[0]);
+      //settxtLotRef(strLotData[0]);
+      document.getElementById("txtLotRef").value = strLotData[0];
       if (hfCheckRollSht === "Y") {
         setpnlRollLeaf(true);
-        settxtRollLeaf("");
+        //settxtRollLeaf("");
+        document.getElementById("txtRollLeaf").value = "";
         inputRollLeaf.current.focus();
       } else {
         SetMode("SERIAL");
-        settxtMachineNo("");
+        //settxtMachineNo("");
+        document.getElementById("txtMachineNo").value = "";
         if (hfReqMachine === "Y") {
           setpnlMachine(true);
           inputMachineNo.current.focus();
@@ -382,6 +411,7 @@ function fn_ScanSMTSerialSht() {
   const handleChangeRollLeaf = async () => {
     setpnlLog(false);
     setlblLog("");
+    const txtRollLeaf = document.getElementById("txtRollLeaf").value;
 
     if (txtRollLeaf !== "" && txtRollLeaf.length === parseInt(hfConnRollLength)) {
       let strRollProduct = hfRollNo + hfCheckRollPrd;
@@ -397,11 +427,13 @@ function fn_ScanSMTSerialSht() {
           setpnlSerial(false);
           sethfMode("ROLL");
           await getInitialSheet();
-          settxtRollLeaf("");
+          //settxtRollLeaf("");
+          document.getElementById("txtRollLeaf").value = "";
           inputRollLeaf.current.focus();
         } else {
           SetMode("SERIAL");
-          settxtMachineNo("");
+          //settxtMachineNo("");
+          document.getElementById("txtMachineNo").value = "";
           if (hfReqMachine === "Y") {
             setpnlMachine(true);
             inputMachineNo.current.focus();
@@ -412,7 +444,8 @@ function fn_ScanSMTSerialSht() {
         }
       } else {
         SetMode("SERIAL");
-        settxtMachineNo("");
+        //settxtMachineNo("");
+        document.getElementById("txtMachineNo").value = "";
         if (hfReqMachine === "Y") {
           setpnlMachine(true);
           inputMachineNo.current.focus();
@@ -427,14 +460,15 @@ function fn_ScanSMTSerialSht() {
       setpnlSerial(false);
       sethfMode("ROLL");
       await getInitialSheet();
-      settxtRollLeaf("");
+      //settxtRollLeaf("");
+      document.getElementById("txtRollLeaf").value = "";
       inputRollLeaf.current.focus();
     }
   };
 
   const handleChangeMachine = (event) => {
     const txtMachineNo = event.target.value;
-    settxtMachineNo(txtMachineNo);
+    document.getElementById("txtMachineNo").value = txtMachineNo;
   };
 
   let newData = [];
@@ -446,7 +480,8 @@ function fn_ScanSMTSerialSht() {
   const handleChangegvBackSide = (index, e) => {
     const newValues = [...txtSideBack];
     newValues[index] = e.target.value.trim().toUpperCase();
-    settxtSideBack(newValues);
+    //settxtSideBack(newValues);
+    document.getElementById("txtSideBack").value = newValues;
   };
 
   const handleChangegvFontSide = (index, e) => {
@@ -457,12 +492,14 @@ function fn_ScanSMTSerialSht() {
 
   const handleChangeBoardNoB = (event) => {
     const txtBoardNoB = event.target.value;
-    settxtBoardNoB(txtBoardNoB);
+    //settxtBoardNoB(txtBoardNoB);
+    document.getElementById("txtBoardNoB").value = txtBoardNoB;
   };
 
   const handleChangeBoardNoF = (event) => {
     const txtBoardNoF = event.target.value;
-    settxtBoardNoF(txtBoardNoF);
+    //settxtBoardNoF(txtBoardNoF);
+    document.getElementById("txtBoardNoF").value = txtBoardNoF;
   };
 
   const btnSaveClick = async (txtSerial) => {
@@ -487,13 +524,15 @@ function fn_ScanSMTSerialSht() {
     // inputgvSerial.current.forEach((input) => {
     //   if (input) input.value = '';
     // });
-    settxtSideBack("");
+    //settxtSideBack("");
+    document.getElementById("txtSideBack").value = "";
   };
 
   const SetMode = async (strType) => {
     if (strType === "LOT") {
       setselProDisabled(false);
-      settxtLotNo("");
+      //settxtLotNo("");
+      document.getElementById("txtLot").value = "";
       settxtLotDisabled(false);
       setpnlLog(false);
       setpnlSerial(false);
@@ -501,7 +540,8 @@ function fn_ScanSMTSerialSht() {
       sethfMode("LOT");
       inputLot.current.focus();
     } else if (strType === "LOT_ERROR") {
-      settxtLotNo("");
+      //settxtLotNo("");
+      document.getElementById("txtLot").value = "";
       settxtLotDisabled(false);
       setpnlLog(true);
       setpnlSerial(false);
@@ -566,7 +606,10 @@ function fn_ScanSMTSerialSht() {
       }
     }
 
-    settxtSideBack("");
+    //settxtSideBack("");
+    setTimeout(() => {
+      document.getElementById("txtSideBack").value = "";
+    }, 0);
     settxtgvSerial(Array(dtData.length).fill(""));
     inputgvSerial.current.forEach((input) => {
       if (input) input.value = '';
@@ -585,17 +628,24 @@ function fn_ScanSMTSerialSht() {
       });
     }
 
-    settxtSideBack("");
+    //settxtSideBack("");
+    setTimeout(() => {
+      document.getElementById("txtSideBack").value = "";
+    }, 0);
+
     setGvBackSide(dtData1);
     setpnlBackSide(true);
   };
 
   const setSerialData = async (txtgvSerial) => {
     showLoading('กำลังบันทึก กรุณารอสักครู่')
+    const txtLotNo = document.getElementById("txtLot").value;
+    const txtRollLeaf = document.getElementById("txtRollLeaf") ? document.getElementById("txtRollLeaf").value : "";
+    const txtMachineNo = document.getElementById("txtMachineNo") ? document.getElementById("txtMachineNo").value : "";
     const dtSerial = await getInputSerial(txtgvSerial);
     let _strLot = "";
     let _strLotRef = "";
-    let _strPrdName = selProduct;
+    let _strPrdName = document.getElementById("ddlProduct").value;
     let _strShtNoBack = "";
     let _strShtNoFront = "";
     let _strTray = " ";
@@ -1238,9 +1288,19 @@ function fn_ScanSMTSerialSht() {
 
     await getCountDataBylot(txtLotNo);
     settxtRollLeaf("");
-    settxtMachineNo("");
-    settxtBoardNoB("");
-    settxtBoardNoF("");
+    //document.getElementById("txtRollLeaf").value = "";
+    //settxtMachineNo("");
+    setTimeout(() => {
+      document.getElementById("txtMachineNo").value = "";
+    }, 0);
+    //settxtBoardNoB("");
+    setTimeout(() => {
+      document.getElementById("txtBoardNoB").value = "";
+    }, 0);
+    //settxtBoardNoF("");
+    setTimeout(() => {
+      document.getElementById("txtBoardNoF").value = "";
+    }, 0);
     if (hfCheckRollSht === "Y") {
       setpnlRollLeaf(true);
       settxtRollLeafDisabled(false);
@@ -1259,6 +1319,11 @@ function fn_ScanSMTSerialSht() {
     let dtData = [];
     let intRow = 0;
     let strFrontSide = "";
+    const txtLotNo = document.getElementById("txtLot") ? document.getElementById("txtLot").value : "";
+    const txtMachineNo = document.getElementById("txtMachineNo") ? document.getElementById("txtMachineNo").value : "";
+    const txtSideBack = document.getElementById("txtSideBack") ? document.getElementById("txtSideBack").value : "";
+    const txtBoardNoB = document.getElementById("txtBoardNoB") ? document.getElementById("txtBoardNoB").value : "";
+    const txtBoardNoF = document.getElementById("txtBoardNoF") ? document.getElementById("txtBoardNoF").value : "";
     const strLotData = txtLotNo.toUpperCase().split(";");
     let _strSerialData = "";
     let _strLot = "";
@@ -1524,7 +1589,8 @@ function fn_ScanSMTSerialSht() {
     let _intRow = 0;
     let _strShtNoOld = "";
     let _strRollNo = "";
-
+    const txtRollLeaf = document.getElementById("txtRollLeaf") ? document.getElementById("txtRollLeaf").value : "";
+    const txtMachineNo = document.getElementById("txtMachineNo") ? document.getElementById("txtMachineNo").value : "";
     _strRollNo = hfRollNo;
 
     for (let i = 0; i < dtSerial.length; i++) {
