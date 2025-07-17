@@ -133,10 +133,18 @@ function fn_ScanAVIConfirmResult() {
     };
     fetchData();
   }, [plantCode]);
+  const ddlRef = useRef(null);
+  useEffect(() => {
+    if (ddlRef.current) {
+      ddlRef.current.value = "NewValue";
+      ddlRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }, []);
 
   const ddlProduct_SelectedIndexChanged = async () => {
     let ddlTestType;
     const ddlProduct = document.getElementById("ddlProduct").value;
+    console.log("ddlProduct00", ddlProduct);
     await axios
       .post("/api/GetTestTypeAVIResultConfirm", {
         dataList: {
@@ -152,7 +160,7 @@ function fn_ScanAVIConfirmResult() {
         }, 0);
         ddlTestType = data[0].test_type;
       });
-
+    console.log("ddlProduct", ddlProduct);
     await ClearResult(ddlProduct, ddlTestType);
   };
   const ddlTestType_SelectedIndexChanged = async () => {
@@ -252,6 +260,7 @@ function fn_ScanAVIConfirmResult() {
       drRow.type_color = hfDefaultColor.value;
     }
     await showResult(dtResult);
+    console.log("ShowtableRow", ShowtableRow);
     if (ddlProduct.length > 0) {
       setTxtSerialBarcode((prevState) => ({
         ...prevState,
@@ -272,6 +281,7 @@ function fn_ScanAVIConfirmResult() {
     visble: false,
   });
   const showResult = async (dtResult) => {
+    console.log(dtResult, "nnnnnnnnnnnnnnnnn");
     setShowtableRow((prevState) => ({
       ...prevState,
       visble: true,
@@ -533,6 +543,7 @@ function fn_ScanAVIConfirmResult() {
     tableData,
     ShowtableRow,
     reftxtSerialBarcode,
+    ddlRef,
   };
 }
 

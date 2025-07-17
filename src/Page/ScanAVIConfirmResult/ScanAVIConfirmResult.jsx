@@ -48,6 +48,7 @@ function ScanAVIConfirmResult() {
     tableData,
     ShowtableRow,
     reftxtSerialBarcode,
+    ddlRef,
   } = fn_ScanAVIConfirmResult();
   const { menuName } = fn_Homepage();
   return (
@@ -93,8 +94,9 @@ function ScanAVIConfirmResult() {
                         id="ddlProduct"
                         className="Select_dropDown"
                         style={{ width: "100%", height: "32px" }}
-                        onChange={(e, value) =>
-                          ddlProduct_SelectedIndexChanged(value)
+                         ref={ddlRef}
+                        onChange={(e) =>
+                          ddlProduct_SelectedIndexChanged(e.target.value)
                         }
                       >
                         {Product.map((item, index) => (
